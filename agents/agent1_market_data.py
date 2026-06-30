@@ -10,12 +10,31 @@ import pandas as pd
 import numpy as np
 from dataclasses import dataclass
 
+# Suffix, market open/close (local time, 24h), expected 5-min bars per session
+# Bars measured empirically from yfinance output; used for vol normalisation
+# and "data completeness" checks in downstream agents.
+#
+# China-A has a lunch break (09:30-11:30, 13:00-15:00) → 49 bars
+# Vietnam HOSE has a lunch break  (09:15-11:30, 13:00-14:45) → 46 bars
+# Thailand SET has a lunch break  (10:00-12:30, 14:00-16:30) → 61 bars
+# Indonesia IDX has a lunch break (09:00-12:00, 13:30-16:00) → 67 bars (Mon-Thu)
 MARKET_INFO = {
-    "Taiwan (TWSE)":    {"suffix": ".TW", "open": "09:00", "close": "13:30", "bars": 54},
-    "Hong Kong (HKEX)": {"suffix": ".HK", "open": "09:30", "close": "16:00", "bars": 78},
-    "Japan (TSE)":      {"suffix": ".T",  "open": "09:00", "close": "15:30", "bars": 78},
-    "Korea (KRX)":      {"suffix": ".KS", "open": "09:00", "close": "15:30", "bars": 78},
-    "US":               {"suffix": "",    "open": "09:30", "close": "16:00", "bars": 78},
+    # ── Core ──────────────────────────────────────────────────────────────
+    "Taiwan (TWSE)":        {"suffix": ".TW", "open": "09:00", "close": "13:30", "bars": 54},
+    "Hong Kong (HKEX)":     {"suffix": ".HK", "open": "09:30", "close": "16:00", "bars": 78},
+    "Japan (TSE)":          {"suffix": ".T",  "open": "09:00", "close": "15:30", "bars": 78},
+    "Korea (KRX)":          {"suffix": ".KS", "open": "09:00", "close": "15:30", "bars": 78},
+    "US":                   {"suffix": "",    "open": "09:30", "close": "16:00", "bars": 78},
+    # ── Extended Asia ─────────────────────────────────────────────────────
+    "Singapore (SGX)":      {"suffix": ".SI", "open": "09:00", "close": "17:00", "bars": 85},
+    "China-A Shanghai":     {"suffix": ".SS", "open": "09:30", "close": "15:00", "bars": 49},
+    "China-A Shenzhen":     {"suffix": ".SZ", "open": "09:30", "close": "15:00", "bars": 49},
+    "India (NSE)":          {"suffix": ".NS", "open": "09:15", "close": "15:30", "bars": 75},
+    "Australia (ASX)":      {"suffix": ".AX", "open": "10:00", "close": "16:00", "bars": 73},
+    "Thailand (SET)":       {"suffix": ".BK", "open": "10:00", "close": "16:30", "bars": 61},
+    "Indonesia (IDX)":      {"suffix": ".JK", "open": "09:00", "close": "16:15", "bars": 67},
+    "Malaysia (KLSE)":      {"suffix": ".KL", "open": "09:00", "close": "17:00", "bars": 71},
+    "Vietnam (HOSE)":       {"suffix": ".VN", "open": "09:15", "close": "14:45", "bars": 46},
 }
 
 @dataclass
