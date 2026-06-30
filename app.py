@@ -57,10 +57,24 @@ if page == "📈 Execution Algorithm Simulator":
     c1,c2,c3,c4 = st.columns(4)
     with c1: market = st.selectbox("Market", list(MARKET_INFO.keys()))
     with c2:
-        ex = {"Taiwan (TWSE)":"2330","Hong Kong (HKEX)":"0005",
-              "Japan (TSE)":"7203","Korea (KRX)":"005930","US":"AAPL"}
+        ex = {
+            "Taiwan (TWSE)":    "2330",
+            "Hong Kong (HKEX)": "0700",
+            "Japan (TSE)":      "7203",
+            "Korea (KRX)":      "005930",
+            "US":               "AAPL",
+            "Singapore (SGX)":  "D05",
+            "China-A Shanghai": "600519",
+            "China-A Shenzhen": "000858",
+            "India (NSE)":      "RELIANCE",
+            "Australia (ASX)":  "BHP",
+            "Thailand (SET)":   "PTT",
+            "Indonesia (IDX)":  "BBCA",
+            "Malaysia (KLSE)":  "1155",
+            "Vietnam (HOSE)":   "VCB",
+        }
         sfx = MARKET_INFO[market]["suffix"]
-        ticker_input = st.text_input(f"Ticker (excl. '{sfx}')", value=ex[market])
+        ticker_input = st.text_input(f"Ticker (excl. '{sfx}')", value=ex.get(market, ""))
     with c3: order_pct_adv = st.slider("Order Size (% ADV)", 1, 25, 5)
     with c4: urgency = st.radio("Urgency", ["Low","Medium","High"], horizontal=True)
 
