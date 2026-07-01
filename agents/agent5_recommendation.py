@@ -17,7 +17,7 @@ future work rather than built here.
 from dataclasses import dataclass, field
 from agents.agent1_market_data import MarketData
 from agents.agent2_market_regime import RegimeAssessment
-from agents.agent3_algo_simulation import SimulationResult
+from agents.agent3_algo_simulation import SimulationResult, FILL_QUALIFY_THRESH
 from agents.agent4_performance_comparison import PerformanceComparison
 
 
@@ -62,8 +62,19 @@ def _select_algos(regime: RegimeAssessment, comparison: PerformanceComparison,
     elif trend == "Trending" and urgency == "High":
         primary = "IS"
 
-    ranked    = comparison.summary["Mean (bps)"].sort_values().index.tolist()
-    secondary = next(a for a in ranked if a != primary)
+    # Fill-qualified fallback: same rationale as Agent 4's best_algo gating --
+    # don't recommend a thinly-filled algo as the fallback plan just because
+    # it posted a favorable average cost on a low, unrepresentative fill.
+    # Excludes primary first, then falls back to the full unfiltered ranking
+    # if primary was the only algo clearing the threshold.
+    qualifying = [a for a in comparison.summary.index
+                  if comparison.summary.loc[a, "Avg Fill"] >= FILL_QUALIFY_THRESH]
+    pool = qualifying if qualifying else comparison.summary.index.tolist()
+    ranked = comparison.summary.loc[pool, "Mean (bps)"].sort_values().index.tolist()
+    secondary = next((a for a in ranked if a != primary), None)
+    if secondary is None:
+        ranked_all = comparison.summary["Mean (bps)"].sort_values().index.tolist()
+        secondary = next(a for a in ranked_all if a != primary)
 
     return primary, secondary
 

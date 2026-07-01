@@ -31,8 +31,6 @@ page = st.sidebar.radio("Module", [
     "📈 Execution Algorithm Simulator",
     "🔄 Index Rebalancing Analysis",
 ])
-st.sidebar.markdown("---")
-st.sidebar.caption("Built with yfinance · Claude Agent SDK · Streamlit")
 
 # ── Colour helpers ────────────────────────────────────────────────────────────
 _VC = {"Tight":"#3b82f6","Normal":"#22c55e","Trending":"#f97316","Extremely Trending":"#ef4444"}

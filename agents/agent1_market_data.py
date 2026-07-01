@@ -18,12 +18,23 @@ from dataclasses import dataclass
 # Vietnam HOSE has a lunch break  (09:15-11:30, 13:00-14:45) → 46 bars
 # Thailand SET has a lunch break  (10:00-12:30, 14:00-16:30) → 61 bars
 # Indonesia IDX has a lunch break (09:00-12:00, 13:30-16:00) → 67 bars (Mon-Thu)
+# Hong Kong HKEX has a lunch break (09:30-12:00, 13:00-16:00) → ~67 bars — not
+#   previously documented; "bars": 78 assumed a continuous session and
+#   overstated realized_vol_ann's annualization factor by ~8% (sqrt(78/67)).
+#   Fixed after live yfinance verification.
+# Japan TSE has a lunch break (09:00-11:30, 12:30-15:30) → ~65 bars — likewise
+#   not previously documented; "bars": 78 overstated annualized vol by ~10%
+#   (sqrt(78/65)). Fixed after live yfinance verification.
+# Korea KRX: yfinance's intraday feed consistently ends ~30 min before the
+#   official 15:30 close (last bar ~14:55) → ~72 bars, not 78. Whatever the
+#   cause, this is what the data source actually delivers, so it's what the
+#   vol/impact model should assume. Fixed after live yfinance verification.
 MARKET_INFO = {
     # ── Core ──────────────────────────────────────────────────────────────
     "Taiwan (TWSE)":        {"suffix": ".TW", "open": "09:00", "close": "13:30", "bars": 54},
-    "Hong Kong (HKEX)":     {"suffix": ".HK", "open": "09:30", "close": "16:00", "bars": 78},
-    "Japan (TSE)":          {"suffix": ".T",  "open": "09:00", "close": "15:30", "bars": 78},
-    "Korea (KRX)":          {"suffix": ".KS", "open": "09:00", "close": "15:30", "bars": 78},
+    "Hong Kong (HKEX)":     {"suffix": ".HK", "open": "09:30", "close": "16:00", "bars": 67},
+    "Japan (TSE)":          {"suffix": ".T",  "open": "09:00", "close": "15:30", "bars": 65},
+    "Korea (KRX)":          {"suffix": ".KS", "open": "09:00", "close": "15:30", "bars": 72},
     "US":                   {"suffix": "",    "open": "09:30", "close": "16:00", "bars": 78},
     # ── Extended Asia ─────────────────────────────────────────────────────
     "Singapore (SGX)":      {"suffix": ".SI", "open": "09:00", "close": "17:00", "bars": 85},

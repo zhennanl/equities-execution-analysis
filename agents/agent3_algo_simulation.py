@@ -109,6 +109,17 @@ MOO_WINDOW_PCT = 0.15
 # day's own realized volume (the pre-fix behavior) and flag it as such.
 MIN_HISTORY_DAYS = 2
 
+# Minimum average fill rate (across the comparison window) an algo must clear
+# to be eligible for "best algo" / "secondary" selection in Agent 4 / Agent 5.
+# Without this, POV/Liquidity-Seeking/Stealth can win purely on favorable
+# ex-post opportunity-cost variance from a low, unrepresentative fill (e.g.
+# Stealth at 14.5% completion "winning" on a small sample) even though the
+# order was barely executed. Algos below the threshold are still shown in the
+# comparison table, just excluded from being recommended as primary/secondary
+# unless every algo fails to qualify (in which case we fall back to the
+# unfiltered global minimum rather than recommending nothing).
+FILL_QUALIFY_THRESH = 0.90
+
 
 def _speed_factor(name: str, urgency: str) -> float:
     """Look up an algo's speed factor, resolving urgency-dependent dict entries."""
