@@ -12,10 +12,10 @@ import sys, os, datetime
 sys.path.insert(0, os.path.dirname(__file__))
 from agents.agent1_market_data      import fetch_market_data, MarketData, MARKET_INFO
 from agents.agent2_market_regime    import assess_regime
-from agents.agent3_algo_simulation  import simulate_algos
+from agents.agent3_algo_simulation  import simulate_algos, IS_KAPPA_T
 from agents.agent4_performance_comparison import compare_performance
 from agents.agent5_recommendation   import generate_memo
-from agents.rebalancing_event_study import run_event_study
+from agents.rebalancing_event_study import run_event_study, build_execution_insights
 
 st.set_page_config(page_title="Execution Analytics Platform",
                    page_icon="📊", layout="wide",
@@ -37,7 +37,8 @@ st.sidebar.caption("Built with yfinance · Claude Agent SDK · Streamlit")
 # ── Colour helpers ────────────────────────────────────────────────────────────
 _VC = {"Tight":"#3b82f6","Normal":"#22c55e","Trending":"#f97316","Extremely Trending":"#ef4444"}
 _TC = {"Trending":"#f97316","Mean-Reverting":"#8b5cf6","Neutral":"#6b7280"}
-_AC = {"VWAP":"#1f77b4","TWAP":"#2ca02c","POV":"#ff7f0e","IS":"#9467bd"}
+_AC = {"VWAP":"#1f77b4","TWAP":"#2ca02c","POV":"#ff7f0e","IS":"#9467bd",
+       "MOC":"#17becf","MOO":"#bcbd22","LIQ":"#e377c2","STEALTH":"#7f7f7f"}
 
 def _badge(txt, col):
     return (f'<span style="background:{col};color:white;padding:3px 10px;'
@@ -230,6 +231,7 @@ if page == "📈 Execution Algorithm Simulator":
             "Avg Exec Price": f"${r.avg_exec_price:.2f}",
             "Slippage (bps)": f"{r.slippage_bps:+.1f}",
             "Mkt Impact (bps)": f"{r.market_impact_bps:.1f}",
+            "Opp. Cost (bps)": f"{r.opportunity_cost_bps:+.1f}",
             "Total Cost (bps)": f"{r.total_cost_bps:.1f}",
             "Fill Rate": f"{r.completion_pct:.0%}",
         } for n, r in sim.algos.items()]
@@ -238,16 +240,23 @@ if page == "📈 Execution Algorithm Simulator":
         st.dataframe(df3.style.apply(
             lambda row: ["background-color:#dcfce7;"]*len(row) if row.name==best3 else [""]*len(row), axis=1
         ), use_container_width=True)
+        st.caption("Opp. Cost = Perold (1988) opportunity cost on any unfilled shares, priced against "
+                   "the simulation day's period-end close vs. arrival — already included in Total Cost.")
 
         a_names = list(sim.algos.keys())
         fc = go.Figure()
         fc.add_trace(go.Bar(name="Slippage",x=a_names,y=[sim.algos[a].slippage_bps for a in a_names],marker_color="#60a5fa"))
         fc.add_trace(go.Bar(name="Mkt Impact",x=a_names,y=[sim.algos[a].market_impact_bps for a in a_names],marker_color="#f87171"))
+        fc.add_trace(go.Bar(name="Opp. Cost",x=a_names,y=[sim.algos[a].opportunity_cost_bps for a in a_names],marker_color="#fbbf24"))
         fc.update_layout(barmode="stack",yaxis_title="Cost (bps)",height=260,
                          margin=dict(l=40,r=20,t=10,b=30),plot_bgcolor="white",
                          yaxis=dict(gridcolor="#eee"),
                          legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1))
         st.plotly_chart(fc, use_container_width=True)
+
+        with st.expander("🕰️ Schedule Data Source (look-ahead-bias check)"):
+            for name, r in sim.algos.items():
+                st.caption(f"**{name}** — {r.schedule_note}")
 
         with st.expander("📅 Execution Schedules — Shares per Bar"):
             tabs3 = st.tabs(list(sim.algos.keys()))
@@ -285,7 +294,9 @@ if page == "📈 Execution Algorithm Simulator":
             st.dataframe(disp.style.apply(_hi,axis=1), use_container_width=True)
 
         with st.expander("📐 Order Size Sensitivity — Total Cost (bps)"):
-            st.markdown("*Mean slippage from simulation days + square root market impact model*")
+            st.markdown("*Each order size is fully re-simulated across every historical day — not a "
+                        "formula shortcut — so fill-rate degradation and Perold opportunity cost show "
+                        "up correctly for POV / Liquidity-Seeking / Stealth at larger sizes.*")
             def _color_sens(val):
                 try:
                     v=float(val)
@@ -294,6 +305,29 @@ if page == "📈 Execution Algorithm Simulator":
                         else f"background-color:rgba(34,197,94,{min(1,(100-v)/100):.2f});"
                 except: return ""
             st.dataframe(comp.sensitivity.style.applymap(_color_sens), use_container_width=True)
+
+        with st.expander("⚖️ Almgren-Chriss Efficient Frontier (IS trajectory shape)"):
+            st.markdown("*Implementation Shortfall now trades the real Almgren-Chriss (2000) optimal "
+                        "trajectory. This shows the cost/risk trade-off the urgency setting is picking "
+                        "a point on — higher κT front-loads execution to cut timing risk, at the cost "
+                        "of concentrating market impact.*")
+            cur_kt = IS_KAPPA_T.get(urgency)
+            fac = go.Figure()
+            fac.add_trace(go.Scatter(x=comp.ac_frontier["risk_score_norm"], y=comp.ac_frontier["pct_in_first_third"],
+                                     mode="lines+markers", line=dict(color="#9467bd", width=2),
+                                     marker=dict(size=7), name="κT grid",
+                                     text=[f"κT={k}" for k in comp.ac_frontier["kappa_T"]],
+                                     hovertemplate="%{text}<br>Risk (norm): %{x:.2f}<br>% in first third: %{y:.0f}%<extra></extra>"))
+            if cur_kt is not None:
+                cur_row = comp.ac_frontier.iloc[(comp.ac_frontier["kappa_T"] - cur_kt).abs().argsort()[:1]]
+                fac.add_trace(go.Scatter(x=cur_row["risk_score_norm"], y=cur_row["pct_in_first_third"],
+                                         mode="markers", marker=dict(size=14, color="#ef4444", symbol="star"),
+                                         name=f"Current ({urgency}, κT={cur_kt})"))
+            fac.update_layout(xaxis_title="Timing-risk proxy (normalized)", yaxis_title="% of order in first third of session",
+                              height=300, plot_bgcolor="white", yaxis=dict(gridcolor="#eee"), xaxis=dict(gridcolor="#eee"),
+                              margin=dict(l=40,r=20,t=10,b=40),
+                              legend=dict(orientation="h",yanchor="bottom",y=1.02))
+            st.plotly_chart(fac, use_container_width=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -324,6 +358,32 @@ elif page == "🔄 Index Rebalancing Analysis":
         st.markdown("")
         run_rebal = st.button("▶ Run Event Study", type="primary", use_container_width=True)
 
+    with st.expander("⚙️ Execution-Cost Analysis Inputs (optional)"):
+        st.caption("Feeds the closing-auction concentration, reversal, drift, flow-to-trade, "
+                   "and impact-calibration analyses below. All optional — leave blank to skip.")
+        e1, e2, e3 = st.columns(3)
+        with e1:
+            objective = st.radio("Execution Objective", ["Cost-Minimizing", "Index Tracker"],
+                                 help="Index Tracker = must match the benchmark's closing print "
+                                      "(tracking-error constrained). Cost-Minimizing = no such "
+                                      "constraint; free to trade opportunistically.")
+        with e2:
+            know_announcement = st.checkbox("I know the announcement date")
+            announcement_date = st.date_input(
+                "Announcement Date", value=datetime.date(2024, 8, 16),
+                disabled=not know_announcement
+            ) if know_announcement else None
+        with e3:
+            weight_change_pct = st.number_input(
+                "Index weight change (%)", min_value=0.0, value=0.0, step=0.01, format="%.3f",
+                help="Full index weight assigned on inclusion (or removed on deletion)."
+            )
+            tracked_aum_b = st.number_input(
+                "AUM tracking this index ($B)", min_value=0.0, value=0.0, step=1.0,
+                help="Estimated total AUM benchmarked to this index — drives the flow-to-trade estimate."
+            )
+            tracked_aum_usd = tracked_aum_b * 1e9
+
     st.markdown("---")
 
     if run_rebal:
@@ -340,6 +400,17 @@ elif page == "🔄 Index Rebalancing Analysis":
                 st.error(f"❌ {e}"); st.stop()
             except Exception as e:
                 st.error(f"❌ Unexpected error: {e}"); st.stop()
+
+            try:
+                insights = build_execution_insights(
+                    es, market_added, objective=objective,
+                    announcement_date=announcement_date,
+                    weight_change_pct=weight_change_pct if weight_change_pct > 0 else None,
+                    tracked_aum_usd=tracked_aum_usd if tracked_aum_usd > 0 else None,
+                )
+            except Exception as e:
+                insights = None
+                st.warning(f"⚠️ Execution-cost insights could not be computed: {e}")
 
         st.success(f"✅ Event study complete — {es.ticker} · {es.index_name} · T = {es.T.date()}")
         st.markdown(f"**Market model:** α = {es.alpha:.5f}, β = {es.beta:.3f}")
@@ -421,3 +492,82 @@ elif page == "🔄 Index Rebalancing Analysis":
                 margin=dict(l=50, r=30, t=50, b=50),
             )
             st.plotly_chart(fig_px, use_container_width=True)
+
+        # ── EXECUTION-COST INSIGHTS ───────────────────────────────────────────
+        if insights is not None:
+            st.markdown("---")
+            st.markdown("### Execution-Cost Insights")
+            st.caption("Extends the event study above into inputs for an execution-algorithm "
+                       "decision around the rebalancing date, rather than just measuring the "
+                       "price/volume effect.")
+
+            ic1, ic2 = st.columns(2)
+
+            with ic1:
+                st.markdown("**Closing Auction Concentration**")
+                c = insights.concentration
+                if c.available:
+                    st.metric("Final-window volume concentration",
+                             f"{c.concentration_multiple_window:.1f}×" if c.concentration_multiple_window else "n/a",
+                             delta=f"T: {c.t_last_window_pct:.1f}% vs baseline {c.baseline_last_window_pct:.1f}%",
+                             delta_color="off")
+                    st.caption(f"Final bar alone: {c.t_last_bar_pct:.1f}% of day's volume on T "
+                              f"vs {c.baseline_last_bar_pct:.1f}% baseline "
+                              f"({c.n_baseline_days} comparison days).")
+                else:
+                    st.info(f"ℹ️ {c.reason}")
+
+                st.markdown("")
+                st.markdown("**Post-Event Reversal**")
+                r = insights.reversal
+                if r.available:
+                    st.markdown(_badge(r.classification, "#f97316" if "Transient" in r.classification
+                                       else "#3b82f6" if "Partial" in r.classification
+                                       else "#22c55e" if "Permanent" in r.classification
+                                       else "#8b5cf6" if "Momentum" in r.classification else "#6b7280"),
+                               unsafe_allow_html=True)
+                    st.caption(f"Pre-event run-up: {r.pre_event_runup_pct:+.2f}% · "
+                              f"Post-event move (5d): {r.post_event_move_5d_pct:+.2f}% · "
+                              f"Reversal fraction: {r.reversal_fraction_5d:+.0%}"
+                              if r.reversal_fraction_5d is not None else
+                              f"Pre-event run-up: {r.pre_event_runup_pct}")
+                else:
+                    st.info(f"ℹ️ {r.reason}")
+
+            with ic2:
+                st.markdown("**Pre-Announcement vs Pre-Effective Drift**")
+                d = insights.drift
+                if d.available:
+                    st.caption(f"Pre-announcement CAR: {d.pre_announcement_car_pct:+.2f}% · "
+                              f"Announcement→T CAR: {d.announcement_to_effective_car_pct:+.2f}%")
+                    if d.pct_of_pre_event_move_after_announcement is not None:
+                        st.metric("% of pre-event move after announcement",
+                                 f"{d.pct_of_pre_event_move_after_announcement:.0f}%")
+                else:
+                    st.info(f"ℹ️ {d.reason}")
+
+                st.markdown("")
+                st.markdown("**Flow-to-Trade / Impact Calibration**")
+                f, ec = insights.flow, insights.eta_calib
+                if f is not None:
+                    st.caption(f"Estimated flow: {f.shares:,.0f} shares (${f.notional_usd/1e6:.1f}M)"
+                              + (f" · {f.flow_pct_adv:.1f}% of estimation-window ADV" if f.flow_pct_adv else ""))
+                else:
+                    st.caption("Enter index weight change % and tracked AUM above to estimate flow-to-trade.")
+                if ec.available:
+                    st.caption(f"Implied event-day η ≈ {ec.implied_eta:.2f} vs baseline η = {ec.baseline_eta:.2f} "
+                              f"(shock CAR T-1→T+1: {ec.shock_car_pct:+.2f}%)")
+                else:
+                    st.caption(f"η calibration: {ec.reason}")
+
+            st.markdown("")
+            st.warning(f"⚠️ **Crowding caveat:** {insights.crowding_note}")
+
+            st.markdown("")
+            rec = insights.recommendation
+            algo_col = _AC.get(rec.recommended_algo, "#6b7280")
+            st.markdown(f"**Recommended strategy — {rec.objective} objective**")
+            st.markdown(_badge(rec.recommended_algo, algo_col), unsafe_allow_html=True)
+            st.markdown(rec.rationale)
+            for note in rec.notes:
+                st.caption(f"• {note}")

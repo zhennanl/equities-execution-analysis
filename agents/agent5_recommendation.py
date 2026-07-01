@@ -2,6 +2,16 @@
 Agent 5: Recommendation Memo (rule-based, no API key required)
 Combines regime, simulation, and multi-day comparison to produce a
 structured execution recommendation.
+
+Design note — rule-based + data-driven, not RL: a 2025 industry survey of
+execution-algorithm research found hybrid RL-plus-domain-knowledge approaches
+growing from 15% to 42% adoption while pure RL fell from 85% to 58%, with
+implementation quality and domain knowledge mattering more than algorithm
+sophistication. This agent's fixed rules layered on top of Agent 4's
+data-driven "best average cost" comparison is structurally that same hybrid
+pattern. A full reinforcement-learning execution agent would need historical
+fill/reward data this yfinance-only pipeline doesn't have, so it's treated as
+future work rather than built here.
 """
 
 from dataclasses import dataclass, field
@@ -61,7 +71,7 @@ def _select_algos(regime: RegimeAssessment, comparison: PerformanceComparison,
 # ── Risk flags ────────────────────────────────────────────────────────────────
 
 def _build_flags(regime: RegimeAssessment, sim: SimulationResult,
-                 order_pct_adv: float, urgency: str) -> list:
+                 order_pct_adv: float, urgency: str, primary: str = None) -> list:
     flags = []
     if regime.vol_label in ("Trending", "Extremely Trending"):
         flags.append(
@@ -79,10 +89,27 @@ def _build_flags(regime: RegimeAssessment, sim: SimulationResult,
             f"POV fill rate {pov_fill:.0%} on simulation day — insufficient liquidity "
             f"to complete the order at current urgency ({urgency}). Avoid POV or increase rate."
         )
+    stealth = sim.algos.get("STEALTH")
+    if stealth and stealth.completion_pct < 1.0:
+        flags.append(
+            f"Stealth fill rate {stealth.completion_pct:.0%} on simulation day — the low-footprint "
+            f"participation cap is too restrictive for this order size. Raise urgency or accept a "
+            f"multi-day execution horizon."
+        )
     if regime.trend_label == "Trending" and urgency == "Low":
         flags.append(
             "Positive return autocorrelation with Low urgency — intraday momentum may "
             "widen cost if execution is too slow. Consider upgrading to Medium urgency."
+        )
+    primary_result = sim.algos.get(primary) if primary else None
+    if primary_result and primary_result.completion_pct < 0.999 and abs(primary_result.opportunity_cost_bps) >= 5:
+        direction = "cost" if primary_result.opportunity_cost_bps > 0 else "benefit"
+        flags.append(
+            f"{primary} left {1 - primary_result.completion_pct:.0%} of the order unfilled on the "
+            f"simulation day. Perold (1988) opportunity cost on the unfilled portion — priced against "
+            f"the day's period-end close versus arrival — was {primary_result.opportunity_cost_bps:+.1f} bps "
+            f"(a {direction} relative to a fully-filled paper portfolio, already reflected in the total "
+            f"cost above)."
         )
     if not flags:
         flags.append("No material risk flags. Conditions are within normal parameters.")
@@ -123,10 +150,14 @@ def _build_memo(market_data: MarketData, regime: RegimeAssessment,
     }.get(regime.trend_label, "")
 
     algo_rationale = {
-        "VWAP": f"tracks the natural volume curve, aligning execution with open/close liquidity and minimising market footprint.",
-        "TWAP": f"spreads the order evenly over the session, avoiding timing bias and minimising impact at a low participation rate.",
-        "IS":   f"front-loads execution to minimise exposure to adverse intraday price drift under elevated urgency.",
-        "POV":  f"maintains a consistent participation rate with market volume, adapting to real-time liquidity.",
+        "VWAP":    f"tracks the natural volume curve, aligning execution with open/close liquidity and minimising market footprint.",
+        "TWAP":    f"spreads the order evenly over the session, avoiding timing bias and minimising impact at a low participation rate.",
+        "IS":      f"trades an Almgren-Chriss (2000) optimal front-loaded trajectory, balancing impact against timing risk under elevated urgency.",
+        "POV":     f"maintains a consistent participation rate with market volume, adapting to real-time liquidity.",
+        "MOC":     f"holds back size until the closing window, concentrating execution into the close where auction liquidity is assumed to absorb it efficiently.",
+        "MOO":     f"concentrates execution into the opening window, prioritising early completion at the cost of higher opening-print adverse-selection risk.",
+        "LIQ":     f"opportunistically increases participation when price dips favourably versus its recent short-term mean, seeking liquidity while minimising footprint.",
+        "STEALTH": f"caps participation per bar and randomises child-order size to avoid signalling — trading completion speed for minimal footprint.",
     }.get(primary, "delivered the lowest average total cost across the simulation window.")
 
     lines = [
@@ -166,8 +197,10 @@ def _build_memo(market_data: MarketData, regime: RegimeAssessment,
         "---",
         "",
         "*Simulated using public OHLCV data (Yahoo Finance). Market impact estimated via the "
-        "square root model (η = 0.3, speed-adjusted per algorithm). Results are for research "
-        "and educational purposes only and do not constitute investment advice.*",
+        "square-root model (η = 0.3, speed-adjusted per algorithm) — one of the more robust "
+        "empirical findings in market microstructure. Total cost includes Perold (1988) opportunity "
+        "cost on any unfilled shares. Results are for research and educational purposes only and "
+        "do not constitute investment advice.*",
     ]
 
     return "\n".join(lines)
@@ -183,7 +216,7 @@ def generate_memo(market_data: MarketData, regime: RegimeAssessment,
         if log: log(msg)
 
     primary, secondary = _select_algos(regime, comparison, urgency)
-    flags    = _build_flags(regime, sim, order_pct_adv, urgency)
+    flags    = _build_flags(regime, sim, order_pct_adv, urgency, primary=primary)
     memo_txt = _build_memo(market_data, regime, comparison, primary, secondary,
                            flags, order_pct_adv, urgency)
 
