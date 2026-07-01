@@ -11,10 +11,8 @@ import sys, os, datetime
 
 sys.path.insert(0, os.path.dirname(__file__))
 from agents.agent1_market_data      import fetch_market_data, MarketData, MARKET_INFO
-from agents.agent2_market_regime    import assess_regime
-from agents.agent3_algo_simulation  import simulate_algos, IS_KAPPA_T
-from agents.agent4_performance_comparison import compare_performance
-from agents.agent5_recommendation   import generate_memo
+from agents.agent3_algo_simulation  import IS_KAPPA_T
+from agents.orchestrator            import run_pipeline
 from agents.rebalancing_event_study import run_event_study, build_execution_insights
 
 st.set_page_config(page_title="Execution Analytics Platform",
@@ -81,50 +79,49 @@ if page == "📈 Execution Algorithm Simulator":
     st.markdown("---")
 
     if run:
-        labs = ["1 · Market Data","2 · Regime","3 · Simulation","4 · Comparison","5 · Memo"]
-        cols = st.columns(5)
-        ph   = [c.empty() for c in cols]
-
-        def ss(i, s):
-            icons = {"waiting":"⬜","running":"🔄","done":"✅","soon":"🔲"}
-            ph[i].markdown(f"**{icons[s]} Agent {labs[i]}**")
-
-        for i in range(5): ss(i, "waiting")
-
-        # Agent 1
-        ss(0, "running")
+        # -- Fetch (still owns its own cache — the orchestrator wraps
+        # everything downstream of the fetch, not the fetch itself, so
+        # re-running the pipeline for a different order size/urgency on the
+        # same ticker doesn't get blocked by a stale cached full-pipeline
+        # result; see agents/orchestrator.py's module docstring) ----------
         msg = st.empty(); msg.info("⏳ Fetching market data…")
         try:
-            data = _cached_fetch(ticker_input, market); ss(0, "done")
+            data = _cached_fetch(ticker_input, market)
         except RuntimeError as e:
-            ss(0,"waiting"); s=str(e)
+            s = str(e)
             (st.warning if "rate" in s.lower() else st.error)(f"❌ {s}"); st.stop()
         except Exception as e:
-            ss(0,"waiting"); st.error(f"❌ {e}"); st.stop()
+            st.error(f"❌ {e}"); st.stop()
         msg.success("✅ Market data loaded — cached 5 min.")
 
-        # Agent 2
-        ss(1,"running")
-        try: regime = assess_regime(data); ss(1,"done")
-        except Exception as e: ss(1,"waiting"); st.error(f"❌ Agent 2: {e}"); st.stop()
+        # -- Orchestrator: runs Agents 2-8, conditionally skipping/degrading
+        # at runtime rather than a fixed unconditional sequence; see
+        # agents/orchestrator.py and agents/context.py ----------------------
+        with st.spinner("Running agent pipeline…"):
+            ctx = run_pipeline(data, order_pct_adv, urgency)
 
-        # Agent 3
-        ss(2,"running")
-        try: sim = simulate_algos(data, order_pct_adv, urgency); ss(2,"done")
-        except Exception as e: ss(2,"waiting"); st.error(f"❌ Agent 3: {e}"); st.stop()
+        _icon = {"ran": "✅", "skipped": "⏭️", "failed": "❌"}
+        _trace_line = "&nbsp;&nbsp;".join(
+            f"{_icon[t['status']]} {t['agent'].replace('agent', 'A').replace('_', ' ')}"
+            for t in ctx.trace
+        )
+        st.markdown(f"<div style='font-size:0.85rem'>{_trace_line}</div>", unsafe_allow_html=True)
+        with st.expander("Orchestration detail (what ran, what was skipped, and why)"):
+            for t in ctx.trace:
+                st.caption(f"{_icon[t['status']]} **{t['agent']}** — {t['status']}" + (f": {t['detail']}" if t['detail'] else ""))
 
-        # Agent 4
-        ss(3,"running")
-        try: comp = compare_performance(data, order_pct_adv, urgency); ss(3,"done")
-        except Exception as e: ss(3,"waiting"); st.error(f"❌ Agent 4: {e}"); st.stop()
+        if ctx.memo is None:
+            failed = [t for t in ctx.trace if t["status"] == "failed"]
+            detail = "; ".join(f"{t['agent']}: {t['detail']}" for t in failed) or "an upstream agent did not complete"
+            st.error(f"❌ Could not produce a recommendation — {detail}")
+            st.stop()
 
-        # Agent 5
-        ss(4,"running")
-        try: memo = generate_memo(data, regime, sim, comp, urgency, order_pct_adv); ss(4,"done")
-        except Exception as e: ss(4,"waiting"); st.error(f"❌ Agent 5: {e}"); st.stop()
+        regime, sim, comp, memo   = ctx.regime, ctx.sim, ctx.comp, ctx.memo
+        pretrade, posttrade       = ctx.pretrade, ctx.posttrade
+        earnings, critic          = ctx.earnings, ctx.critic
 
         st.markdown("---")
-        order_shares = data.adv_shares * (order_pct_adv / 100)
+        order_shares = ctx.order_shares
 
         # ── AGENT 5 — RECOMMENDATION (pinned top) ────────────────────────────
         st.markdown("### Agent 5 — Recommendation")
@@ -147,6 +144,23 @@ if page == "📈 Execution Algorithm Simulator":
                 st.warning(f"⚠️ {flag}")
         with st.expander("📄 Full Recommendation Memo"):
             st.markdown(memo.memo_text)
+
+        # ── AGENT 8 — CRITIC REVIEW (independent second opinion) ─────────────
+        st.markdown("")
+        if critic is not None:
+            if critic.approved:
+                st.success("✅ **Critic Review:** No material issues found — recommendation approved as-is.")
+            else:
+                st.warning("⚠️ **Critic Review:** flagged concerns worth confirming before executing.")
+            for f in critic.findings:
+                if f.message.startswith("No material"):
+                    continue
+                (st.warning if f.severity == "override" else st.caption)(
+                    f"{'⚠️ ' if f.severity == 'override' else '• '}{f.message}"
+                )
+        st.caption("Independent second pass over Agent 5's pick (Agent 8) — checks fill-qualification, "
+                  "earnings-date risk, and spread-reliability/size interaction. Doesn't silently change "
+                  "the recommendation; it flags concerns for the analyst to confirm.")
 
         # ── AGENT 1 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
@@ -180,6 +194,103 @@ if page == "📈 Execution Algorithm Simulator":
                              yaxis=dict(gridcolor="#eee"),showlegend=False)
             st.plotly_chart(fp, use_container_width=True)
 
+        # ── PRE-TRADE ANALYTICS ───────────────────────────────────────────────
+        st.markdown("---")
+        st.markdown("### Pre-Trade Analytics")
+        st.caption("What this order should cost, and whether the market can absorb it — "
+                   "computed before committing to an algorithm.")
+        if pretrade is not None:
+            pc1, pc2 = st.columns(2)
+            with pc1:
+                st.markdown("**Estimated Spread Cost**")
+                if pretrade.spread_bps is not None:
+                    sc1, sc2 = st.columns(2)
+                    sc1.metric("Quoted spread (median)", f"{pretrade.spread_bps:.1f} bps")
+                    sc2.metric("Est. one-way crossing cost", f"{pretrade.half_spread_bps:.1f} bps")
+                    st.caption(f"Corwin-Schultz high-low estimator, {pretrade.spread_n_obs} recent "
+                              f"daily observations (mean {pretrade.spread_mean_bps:.1f} bps).")
+                    if pretrade.spread_reliability != "Normal":
+                        st.warning(f"⚠️ {pretrade.spread_reliability}")
+                else:
+                    st.info(f"ℹ️ {pretrade.spread_note}")
+
+            with pc2:
+                st.markdown("**Capacity — Days to Complete**")
+                st.dataframe(pretrade.capacity, use_container_width=True)
+                st.caption(f"At {urgency} urgency's participation rate, this order needs "
+                          f"~{pretrade.days_at_chosen_urgency:.2f} trading days to complete.")
+
+            st.markdown("")
+            st.markdown("**Expected Cost Range by Algorithm (bps)**")
+            st.caption(f"Method: {pretrade.cost_range_method}. Percentile bands are used over Mean ± Std "
+                      "when enough simulated days are available, since impact-cost distributions are "
+                      "known to be fat-tailed (Almgren et al. 2005) rather than symmetric-Gaussian.")
+            st.dataframe(pretrade.expected_cost_range.style.format({
+                "Low (bps)": "{:+.1f}", "Expected (bps)": "{:+.1f}", "High (bps)": "{:+.1f}",
+                "Avg Fill": "{:.1%}",
+            }), use_container_width=True)
+
+            if pretrade.almgren.available:
+                st.markdown("")
+                st.markdown("**Almgren et al. (2005) Calibrated Impact Cross-Check**")
+                am1, am2, am3 = st.columns(3)
+                am1.metric("Permanent impact", f"{pretrade.almgren.permanent_impact_bps:.1f} bps")
+                am2.metric("Temporary impact", f"{pretrade.almgren.temporary_impact_bps:.1f} bps")
+                am3.metric("Total expected impact", f"{pretrade.almgren.realized_impact_bps:.1f} bps")
+                st.caption(pretrade.almgren.note)
+
+            for note in pretrade.notes:
+                if "Spread estimate reliability" in note or "Almgren et al." in note:
+                    continue   # already shown inline above
+                st.caption(f"• {note}")
+        else:
+            st.info("ℹ️ Pre-trade estimate not available for this ticker — see Orchestration detail above.")
+
+        st.markdown("")
+        st.markdown("**Earnings Calendar Check** (Agent 7)")
+        if earnings is not None and earnings.available:
+            ne1, ne2 = st.columns(2)
+            ne1.metric("Next earnings", str(earnings.next_earnings_date.date()))
+            ne2.metric("Trading days until", earnings.trading_days_until,
+                      delta="near-term" if earnings.is_near_term else "outside near-term window",
+                      delta_color="inverse" if earnings.is_near_term else "off")
+            (st.warning if earnings.is_near_term else st.caption)(earnings.risk_note)
+        else:
+            st.caption(f"ℹ️ {earnings.reason if earnings is not None else 'Earnings check unavailable.'}")
+
+        # ── AGENT 9 — MARKET MICROSTRUCTURE & ORDER-FLOW TOXICITY ────────────
+        st.markdown("")
+        st.markdown("**Market Microstructure & Liquidity** (Agent 9)")
+        micro = ctx.microstructure
+        if micro is not None:
+            mc1, mc2 = st.columns(2)
+            with mc1:
+                st.markdown("*Kyle's Lambda (price impact per unit order flow)*")
+                kl = micro.kyle_lambda
+                if kl.available:
+                    st.metric("λ (bps per 1% ADV net flow, next-bar)", f"{kl.lambda_bps_per_pct_adv:+.2f}",
+                             delta=f"t={kl.t_stat:.1f}, R²={kl.r_squared:.1%}, n={kl.n_obs}", delta_color="off")
+                    st.caption(kl.note)
+                else:
+                    st.info(f"ℹ️ {kl.reason}")
+            with mc2:
+                st.markdown("*VPIN (order-flow toxicity, time-bar approximation)*")
+                vp = micro.vpin
+                if vp.available:
+                    vpin_color = {"Low": "#22c55e", "Normal": "#3b82f6",
+                                 "Elevated": "#f97316", "High": "#ef4444"}.get(vp.label, "#6b7280")
+                    st.markdown(_badge(f"{vp.label} ({vp.vpin_score:.2f})", vpin_color), unsafe_allow_html=True)
+                    st.caption(f"{vp.note} ({vp.window_bars}-bar trailing window.)")
+                else:
+                    st.info(f"ℹ️ {vp.reason}")
+            st.caption("Kyle's lambda and VPIN are estimated from Bulk Volume Classification (Easley, "
+                      "Lopez de Prado & O'Hara 2012) applied to 5-min OHLCV bars — a time-bar "
+                      "approximation, not canonical tick-data microstructure, since no free order-book "
+                      "or trade-level feed is available across these markets. See Agent 9's module "
+                      "docstring for the full methodology and caveats.")
+        else:
+            st.info("ℹ️ Microstructure assessment not available — see Orchestration detail above.")
+
         # ── AGENT 2 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
         st.markdown("### Agent 2 — Market Regime")
@@ -209,13 +320,26 @@ if page == "📈 Execution Algorithm Simulator":
 
         tc=_TC.get(regime.trend_label,"#6b7280")
         with r3:
-            st.markdown("**Return Autocorrelation**")
+            st.markdown("**Price Trend (Variance Ratio Test)**")
             st.markdown(_badge(regime.trend_label, tc), unsafe_allow_html=True); st.markdown("")
-            st.metric("Lag-1 autocorr",f"{regime.autocorr:+.3f}",delta="5-min returns",delta_color="off")
-            tcaps={"Trending":"Positive autocorr — IS may front-load beneficially.",
-                   "Mean-Reverting":"Negative autocorr — patient algos favoured.",
-                   "Neutral":"No strong intraday direction."}
+            if regime.vr_available:
+                st.metric(f"VR(q={regime.vr_q})", f"{regime.vr_ratio:.2f}",
+                         delta=f"z*={regime.vr_zstat:+.2f} ({'significant' if regime.vr_significant else 'not significant'})",
+                         delta_color="off")
+            else:
+                st.metric("VR test", "insufficient bars", delta_color="off")
+            tcaps={"Trending":"VR(q)>1, significant — positive serial correlation; IS may front-load beneficially.",
+                   "Mean-Reverting":"VR(q)<1, significant — negative serial correlation; patient algos favoured.",
+                   "Neutral":"VR(q) not significantly different from 1 (random walk) at this horizon."}
             st.caption(tcaps.get(regime.trend_label,""))
+            st.caption(f"Supporting stat — lag-1 autocorr: {regime.autocorr:+.3f}")
+            if regime.vr_detail:
+                with st.expander("Variance ratio detail (Lo-MacKinlay 1988)"):
+                    vr_df = pd.DataFrame(regime.vr_detail)
+                    st.dataframe(vr_df, use_container_width=True, hide_index=True)
+                    st.caption("z_robust is the heteroskedasticity-robust statistic (used for the "
+                              "headline label above); |z| >= 1.96 ≈ 95% significance under the "
+                              "random-walk null.")
 
         # ── AGENT 3 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
@@ -327,6 +451,68 @@ if page == "📈 Execution Algorithm Simulator":
                               legend=dict(orientation="h",yanchor="bottom",y=1.02))
             st.plotly_chart(fac, use_container_width=True)
 
+        # ── POST-TRADE TCA ────────────────────────────────────────────────────
+        st.markdown("---")
+        st.markdown("### Post-Trade TCA")
+        st.caption(f"How the {memo.primary_algo} fill actually did, benchmarked against the standard "
+                   "TCA reference set — computed after execution.")
+        if posttrade is not None:
+            tc1, tc2 = st.columns([3, 2])
+            with tc1:
+                st.markdown("**Benchmark Comparison**")
+                bt = posttrade.benchmarks.table
+                st.dataframe(bt.style.format({
+                    "Benchmark Price": "${:.4f}", "Slippage vs Benchmark (bps)": "{:+.2f}",
+                }).apply(
+                    lambda row: ["background-color:#fee2e2;" if row["Slippage vs Benchmark (bps)"] > 0
+                                else "background-color:#dcfce7;"] * len(row), axis=1
+                ), use_container_width=True)
+                st.caption("Positive = paid more than that benchmark; negative = paid less. "
+                          "Arrival matches the Total Cost table above; VWAP/TWAP/Close are the "
+                          "additional standard TCA reference points.")
+
+            with tc2:
+                st.markdown("**Cost Percentile**")
+                pctl = posttrade.cost_percentile
+                if pctl.available:
+                    st.metric(f"{memo.primary_algo} today vs its own history",
+                             f"{pctl.percentile:.0f}th percentile",
+                             delta="lower = cheaper than usual", delta_color="off")
+                    st.caption(f"Based on {pctl.n_obs} historical simulated days.")
+                else:
+                    st.info(f"ℹ️ {pctl.reason}")
+
+            st.markdown("")
+            st.markdown("**Impact Reversion Check**")
+            rev = posttrade.reversion
+            if rev.available:
+                rv1, rv2, rv3 = st.columns(3)
+                rv1.metric("Price at last fill", f"${rev.price_at_last_fill:.2f}")
+                rv2.metric("Price at day end", f"${rev.price_at_day_end:.2f}")
+                rv3.metric("Reversion", f"{rev.reversion_bps:+.1f} bps")
+                st.caption(rev.interpretation)
+            else:
+                st.info(f"ℹ️ {rev.reason}")
+            st.caption("⚠️ Directional diagnostic only — there is no control group to isolate impact "
+                      "we caused from ordinary intraday drift or news, so this should not be read as "
+                      "a precise measurement.")
+
+            st.markdown("")
+            st.markdown("**Impact Decomposition** (Almgren et al. 2005 — Permanent / Temporary)")
+            decomp = posttrade.impact_decomposition
+            if decomp.available:
+                dc1, dc2, dc3 = st.columns(3)
+                dc1.metric("Permanent (I)", f"{decomp.permanent_impact_bps:+.1f} bps")
+                dc2.metric("Realized total (J)", f"{decomp.realized_impact_bps:+.1f} bps")
+                dc3.metric("Temporary (K = J - I/2)", f"{decomp.temporary_impact_bps:+.1f} bps")
+                st.caption(decomp.note)
+            else:
+                st.info(f"ℹ️ {decomp.reason}")
+            st.caption("⚠️ Same caveat as the reversion check above — no control group, directional "
+                      "evidence only. I uses the day's closing price as the 'settled' reference point "
+                      "(the paper's convention is ~30 min post-execution); K nets out half of I per "
+                      "the model's own bookkeeping (see agent6's module docstring).")
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PAGE 2 — INDEX REBALANCING ANALYSIS
@@ -347,7 +533,7 @@ elif page == "🔄 Index Rebalancing Analysis":
         market_added = st.selectbox("Market", list(MARKET_INFO.keys()), key="rebal_mkt")
     with i2:
         rebal_date   = st.date_input("Rebalancing Effective Date",
-                                     value=datetime.date(2024, 8, 30))
+                                     value=datetime.date.today())
         event_window = st.slider("Event Window (±days)", 5, 20, 10)
     with i3:
         ticker_added = st.text_input("Added Constituent Ticker", value="2330",

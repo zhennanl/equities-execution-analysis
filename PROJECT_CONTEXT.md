@@ -1,10 +1,82 @@
 # Execution Analytics Platform — Project Context
-*Last updated: 2026-07-01. Paste this file at the start of a new chat to resume work.*
+*Last updated: 2026-07-01 (institutional-grade analytics pass). Paste this file at the start of a new chat to resume work.*
 
 ---
 
 ## Purpose
 A multi-agent Streamlit app built to demonstrate equity execution algorithm knowledge for Goldman Sachs GSET (Quantitative Execution Analyst) and CLSA job applications. Deployed at: https://equities-execution-analysis.streamlit.app (GitHub: https://github.com/zhennanl/equities-execution-analysis)
+
+---
+
+## Design Philosophy: Why "Agents", and What Genuine Multi-Agent Would Add
+
+**Honest self-assessment first.** "Agent 1–6" as currently built is well-factored
+component-wise programming, not architecturally multi-agent. Each module is a
+pure function with a typed dataclass in, typed dataclass out; app.py calls them
+in one fixed order every run (`data → regime → sim → comp → memo → pretrade/
+posttrade`); Agent 5's "decision" is a static if/elif rule table, not autonomous
+reasoning. Calling these "agents" is a naming/organizational convention — good
+separation of concerns, same thing as five well-named functions. That's a
+legitimate and defensible choice, not a shortcoming: this pipeline handles
+money-adjacent numbers (cost estimates, market impact), so deterministic,
+reproducible, cheaply-testable, git-diffable code is the *right* engineering
+trade-off. A test suite can assert `total_cost_bps` to the cent; you cannot
+assert that about an LLM's output.
+
+**What makes a system genuinely multi-agent** (vs. this component pipeline):
+- **Autonomy** — each agent decides its own action from goals + context, not a
+  sequence the caller dictates. Valuable once the "decision function" is too
+  open-ended for an enumerable if/elif tree (e.g. synthesizing conflicting
+  signals across regimes never explicitly anticipated by the programmer).
+- **Dynamic orchestration** — which agents run, in what order, is decided at
+  runtime (typically by a planner/orchestrator), not hard-coded. Buys
+  conditional/skippable steps and the ability to add new specialists without
+  rewriting the pipeline.
+- **Loose coupling via shared state** — agents read/write a shared context
+  instead of every downstream function importing specific upstream dataclasses
+  by name. Right now adding Agent 6 meant threading `pretrade`/`posttrade`
+  explicitly through app.py and importing `PerformanceComparison`,
+  `SimulationResult`, etc. by name — textbook tight coupling.
+- **Negotiation / verification** — independent agents can evaluate the same
+  question and reconcile disagreement (a risk agent that can veto a strategy
+  agent), rather than one function producing one deterministic answer.
+- **Concurrency** — agents without a real dependency chain can run in
+  parallel (Market Regime and the spread estimator both only depend on Market
+  Data, not on each other — currently sequential purely as an implementation
+  artifact).
+- **Memory / adaptation across runs** — agents that remember past outcomes
+  (e.g. the Post-Trade TCA cost-percentile history) and adjust future
+  estimates accordingly, rather than a fixed historical window recomputed
+  from scratch every session.
+
+**Where I would *not* introduce agentic/LLM behavior**: the core cost math
+(square-root impact, Perold opportunity cost, Almgren-Chriss trajectory,
+Corwin-Schultz spread) should stay deterministic Python. Knowing where
+agentic reasoning adds value vs. where it just adds latency, cost, and
+non-determinism to something that should be auditable is the substantive
+point, not "replace everything with an LLM call."
+
+**Modification directions considered, roughly low → high effort/complexity:**
+1. Orchestrator that decides which specialist agents to invoke at runtime
+   (e.g. skip the spread estimator when daily history is too short; only run
+   an elevated-volatility deep-dive when Agent 2 flags Extremely Trending) —
+   fully deterministic, no LLM needed.
+2. Blackboard-style shared `ExecutionContext` object instead of explicit
+   dataclass threading through app.py — decouples agents so new ones don't
+   require touching every call site.
+3. Verification/critic agent — a second pass that independently reviews
+   Agent 5's pick against a risk policy and can flag disagreement, upgrading
+   today's static risk-flag strings into an actual second opinion.
+4. LLM-backed synthesis agent on top of the deterministic quant agents —
+   Agents 1–4/6 stay exactly as-is (auditable math), but a reasoning layer
+   reads their structured output and produces the narrative recommendation,
+   handling edge cases the fixed rule tree can't enumerate, and can answer
+   free-form follow-up questions about the analysis.
+5. Concurrent execution of independent agents (asyncio/threading) where
+   there's no real sequential dependency.
+6. Persistent memory agent — store realized-vs-expected cost outcomes across
+   sessions and let future pre-trade estimates be informed by this name's own
+   track record, not just a bigger static lookback window.
 
 ---
 
@@ -15,12 +87,18 @@ C:\Users\Bill\Downloads\execution_analytics\
 ├── requirements.txt
 ├── agents/
 │   ├── __init__.py
-│   ├── agent1_market_data.py           # Fetches OHLCV from yfinance
-│   ├── agent2_market_regime.py         # Regime classification (vol/volume/trend)
-│   ├── agent3_algo_simulation.py       # VWAP / TWAP / POV / IS simulation
+│   ├── context.py                      # ExecutionContext blackboard (shared agent state)
+│   ├── orchestrator.py                 # run_pipeline() — dynamic/conditional agent invocation
+│   ├── agent1_market_data.py           # Fetches OHLCV (+ best-effort shares outstanding) from yfinance
+│   ├── agent2_market_regime.py         # Regime classification (vol/volume/trend via variance ratio test)
+│   ├── agent3_algo_simulation.py       # VWAP/TWAP/POV/IS/MOC/MOO/LIQ/STEALTH simulation
 │   ├── agent4_performance_comparison.py # Multi-day comparison + sensitivity
 │   ├── agent5_recommendation.py        # Rule-based memo generator
-│   └── rebalancing_event_study.py      # Event study (CAR, abnormal vol)
+│   ├── agent6_pretrade_posttrade.py    # Pre-trade cost estimate + post-trade TCA
+│   ├── agent7_earnings_calendar.py     # Earnings-date overnight-gap risk flag
+│   ├── agent8_critic.py                # Independent verification/critic pass
+│   ├── agent9_microstructure.py        # Kyle's lambda, VPIN, Almgren (2005) impact cross-check
+│   └── rebalancing_event_study.py      # Event study (CAR, abnormal vol) — Page 2
 ```
 
 ---
@@ -70,8 +148,13 @@ Three independent dimensions:
    - >1.50 → Extremely Trending | 1.20–1.50 → Trending | 0.80–1.20 → Normal | <0.80 → Tight
 2. **Volume pattern**: avg(first 25% bars, last 25% bars) / middle 50% bars
    - >1.5 → U-Shaped | ≥0.80 → Uniform | <0.80 → Midday-Heavy
-3. **Trend** (lag-1 autocorr of 5-min returns):
-   - >+0.10 → Trending | <-0.10 → Mean-Reverting | else → Neutral
+3. **Trend** — Lo-MacKinlay (1988) variance ratio test on the most recent day's
+   5-min log returns (grid q=2,4,8; q=4 heteroskedasticity-robust z* is the
+   headline stat): significant (|z*|≥1.96) + VR>1 → Trending | significant +
+   VR<1 → Mean-Reverting | else → Neutral. Lag-1 autocorrelation is retained
+   as a simpler supporting statistic alongside it (see "Institutional-Grade
+   Analytics" section below for why the VR test replaced a raw autocorr
+   threshold).
 
 ### Agent 3 — Algorithm Simulation (`agent3_algo_simulation.py`)
 Simulates on most recent complete trading day (≥80% of expected bars).
@@ -101,6 +184,108 @@ Rule-based (no API key needed). Selection logic priority:
 6. Default → comparison.best_algo
 
 Risk flags: elevated vol, large order (≥15% ADV), POV fill <100%, trending+low urgency mismatch.
+
+### Agent 6 — Pre-Trade / Post-Trade Analytics (`agent6_pretrade_posttrade.py`)
+- **Pre-trade**: Corwin-Schultz spread estimate, capacity table, expected cost
+  range (empirical P10/P50/P90 percentile bands when ≥5 simulated days are
+  available, else falls back to Mean±Std), and the Almgren et al. (2005)
+  calibrated impact cross-check (see below).
+- **Post-trade**: multi-benchmark comparison (Arrival/VWAP/TWAP/Close), cost
+  percentile vs. own history, impact-reversion check, and the Almgren et al.
+  (2005) I/J/K permanent-temporary impact decomposition (see below).
+
+### Agent 7 — Earnings Calendar (`agent7_earnings_calendar.py`)
+Flags overnight-gap risk when a scheduled earnings print falls within
+`NEAR_TERM_TRADING_DAYS` (5) of the order. Data: `yfinance.Ticker.get_earnings_dates()`.
+
+### Agent 8 — Critic / Verification (`agent8_critic.py`)
+Independent second pass over Agent 5's pick — checks fill-qualification
+(defense in depth), earnings-date risk vs. urgency, degraded-spread/size
+interaction, elevated VPIN (Agent 9), and statistically significant Kyle's
+lambda (Agent 9) vs. the fixed square-root impact model. Raises findings;
+never silently overrides `memo.primary_algo`.
+
+### Agent 9 — Market Microstructure & Order-Flow Toxicity (`agent9_microstructure.py`)
+The institutional-grade liquidity/impact layer added in the 2026-07-01 pass —
+see "Institutional-Grade Analytics" section immediately below for full
+methodology, formulas, and sources.
+
+---
+
+## Institutional-Grade Analytics — Methodology & Sources (2026-07-01 pass)
+
+Added after reviewing published institutional/academic TCA and market-
+microstructure literature, with the explicit goal of moving the platform's
+analysis closer to how real execution desks and quant researchers evaluate
+trading costs and liquidity — while being honest about what a free,
+OHLCV-only data feed (no order book, no tick-level trade prints, no venue-
+level data) can and can't support. Every new metric below documents its
+approximation relative to the canonical (tick/order-book) version in its
+own module docstring; this section is the consolidated summary.
+
+**1. Kyle's Lambda** (Kyle, 1985) — price impact per unit of signed order
+flow, the standard liquidity/depth metric on institutional microstructure
+desks. Estimated via OLS of NEXT-bar returns on THIS-bar's Bulk-Volume-
+Classified net order flow (deliberately lagged, not contemporaneous, to
+avoid a near-tautological regression — see `agent9_microstructure.py`'s
+docstring). In the spirit of the regression approach in Breen, Hodrick &
+Korajczyk (2002), cited in Almgren et al. (2005).
+
+**2. VPIN — Volume-Synchronized Probability of Informed Trading** (Easley,
+López de Prado & O'Hara; bulk-volume classification from their 2012 paper
+"Bulk Classification of Trading Activity"). Order-flow "toxicity" measure
+that reached historically elevated levels in the hour before the May 6,
+2010 Flash Crash; a Lawrence Berkeley National Laboratory study for the SEC
+called it "the strongest early warning signal known to us at this time."
+Implemented here as a TIME-BAR approximation of Bulk Volume Classification
+(5-min OHLCV bars standing in for tick-level trade prints / true volume
+buckets) — disclosed explicitly as an approximation, not a canonical
+tick-data VPIN reading.
+
+**3. Almgren et al. (2005) calibrated impact model** — "Direct Estimation
+of Equity Market Impact" (Almgren, Thum, Hauptmann & Li, Citigroup Global
+Quantitative Research), fit to ~29,500 real Citigroup institutional equity
+orders (Dec 2001–Jun 2003). Splits impact into a linear permanent component
+(γ=0.314, α=1) and a concave temporary component (η=0.142, β=0.60 — the
+paper rejects the classical square-root law's β=0.5 at 95% confidence in
+favor of a 3/5 power law) with an optional turnover liquidity factor
+(shares outstanding / ADV)^0.25. Reported alongside — not in place of —
+Agent 3's independent η=0.3 square-root model as a literature-anchored
+cross-check; the two disagreeing is itself informative. Also used
+post-trade for the I (permanent) / J (realized) / K (temporary = J − I/2)
+impact decomposition, using arrival price, average execution price, and
+day-end price already computed elsewhere in the pipeline.
+
+**4. Lo-MacKinlay (1988) variance ratio test** — replaced Agent 2's raw
+lag-1-autocorrelation-vs-±0.10-threshold trend classifier. Computes VR(q)
+at q=2,4,8 with both the homoscedastic and heteroskedasticity-robust z*
+statistics (the latter correcting for volatility clustering, well-documented
+in intraday equity returns); q=4's robust z* drives the Trending/Mean-
+Reverting/Neutral label at ~95% significance. A materially more standard
+academic test than an arbitrary autocorrelation cutoff.
+
+**5. Percentile-band pre-trade cost estimates** — Expected Cost Range
+switched from Mean±Std to empirical P10/P50/P90 quantiles of Agent 4's
+simulated daily-cost distribution (when ≥5 days are available), since
+Almgren et al. (2005)'s own residual analysis found impact-cost residuals
+"extremely fat-tailed" even though "a standard Gaussian is a reasonable fit
+to the central part" — a symmetric Mean±Std band understates tail risk.
+
+**Known data limitations (unchanged from before this pass, restated for
+completeness):** no free order-book/NBBO feed, no tick-level trade prints,
+no venue/dark-pool routing data, no cross-sectional peer universe for
+percentile ranking (VPIN and cost percentiles are read against a name's own
+history, not a peer set). Every metric above is built to degrade gracefully
+and disclose its approximation rather than silently presenting a proxy as
+the canonical figure.
+
+**Sources consulted:**
+- Almgren, Thum, Hauptmann & Li (2005), "Direct Estimation of Equity Market Impact" — https://www.cis.upenn.edu/~mkearns/finread/costestim.pdf
+- Easley, López de Prado & O'Hara — VPIN overview and Bulk Volume Classification — https://www.quantresearch.org/VPIN.pdf
+- Kyle (1985) lambda — estimation methodology survey — https://metricgate.com/docs/kyle-lambda-price-impact/
+- Lo & MacKinlay (1988) variance ratio test — https://mingze-gao.com/posts/lomackinlay1988/
+- Effective/realized spread & price-impact decomposition survey (Ødegaard) — https://ba-odegaard.no/teach/notes/liquidity_estimators/spread/spread_lectures.pdf
+- 2024-2025 European buy-side TCA benchmark usage survey (Bloomberg Professional Services) — https://www.bloomberg.com/professional/insights/trading/european-institutional-equity-trading-study-technology/
 
 ### Index Rebalancing Event Study (`agents/rebalancing_event_study.py`)
 - Estimation window: T-70 to T-11 trading days

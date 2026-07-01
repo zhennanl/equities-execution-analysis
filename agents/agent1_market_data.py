@@ -59,6 +59,7 @@ class MarketData:
     current_price: float
     realized_vol_ann: float
     vol_profile: pd.DataFrame
+    shares_outstanding: float = None   # best-effort; None if unavailable (see fetch_market_data)
 
 def _raise_friendly(exc, ticker):
     msg = str(exc)
@@ -135,6 +136,23 @@ def fetch_market_data(ticker_base, market, log=None):
     )
     vol_profile["volume_pct"] = vol_profile["avg_volume"] / vol_profile["avg_volume"].sum()
     _log(f"Volume profile: {len(vol_profile)} time buckets")
+
+    # Shares outstanding -- best-effort only. Used by Agent 9's Almgren et al.
+    # (2005) turnover liquidity factor; NOT required for anything else in the
+    # pipeline, so failure here must never block the fetch. `.info` is a
+    # heavier/slower call than `.history()` and more prone to rate-limiting,
+    # so this is wrapped in its own try/except and simply left as None (Agent
+    # 9 already handles None by omitting the liquidity factor) rather than
+    # retried or raised.
+    shares_outstanding = None
+    try:
+        info = stock.info
+        shares_outstanding = info.get("sharesOutstanding")
+        if shares_outstanding:
+            _log(f"Shares outstanding: {shares_outstanding:,.0f}")
+    except Exception as e:
+        _log(f"Shares outstanding unavailable (non-blocking): {e}")
+
     _log("Agent 1 complete.")
 
     return MarketData(
@@ -147,4 +165,5 @@ def fetch_market_data(ticker_base, market, log=None):
         current_price=current_price,
         realized_vol_ann=realized_vol_ann,
         vol_profile=vol_profile,
+        shares_outstanding=shares_outstanding,
     )
