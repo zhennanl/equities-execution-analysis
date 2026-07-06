@@ -11,9 +11,9 @@ import sys, os, datetime
 
 sys.path.insert(0, os.path.dirname(__file__))
 from agents.agent1_market_data      import fetch_market_data, MarketData, MARKET_INFO
-from agents.agent3_algo_simulation  import IS_KAPPA_T
+from agents.agent3_algo_simulation  import IS_KAPPA_T, simulate_midsession_switch
 from agents.orchestrator            import run_pipeline
-from agents.rebalancing_event_study import run_event_study, build_execution_insights
+from agents.rebalancing_event_study import run_event_study, build_execution_insights, INDEX_PROXIES
 
 st.set_page_config(page_title="Execution Analytics Platform",
                    page_icon="📊", layout="wide",
@@ -29,6 +29,37 @@ page = st.sidebar.radio("Module", [
     "📈 Execution Algorithm Simulator",
     "🔄 Index Rebalancing Analysis",
 ])
+
+st.sidebar.markdown("---")
+with st.sidebar.expander("ℹ️ Data Sources & Limitations"):
+    st.markdown(
+        "**Provider:** [Yahoo Finance](https://finance.yahoo.com) via the free "
+        "`yfinance` Python library — no API key, no paid feed."
+    )
+    st.markdown("**What this app fetches:**")
+    st.markdown(
+        "- 5-min intraday OHLCV bars, trailing **5 days** (Execution Simulator)\n"
+        "- Daily OHLCV bars, trailing **60 days** (ADV, volatility, spread estimate)\n"
+        "- Best-effort shares outstanding (used for one turnover-liquidity factor; "
+        "silently omitted if unavailable)\n"
+        "- Earnings-date calendar (past/upcoming print dates)\n"
+        "- Daily OHLCV over a custom date range + 5-min intraday, capped at yfinance's "
+        "~60-day retention (Index Rebalancing event study)"
+    )
+    st.markdown("**What it does *not* include:**")
+    st.markdown(
+        "- No order book, bid/ask quotes, or market depth\n"
+        "- No individual trade prints — only bar-aggregated OHLCV\n"
+        "- No venue/dark-pool breakdown\n"
+        "- No index-constituent-change feed — rebalancing ticker & date are user-supplied, "
+        "not auto-detected"
+    )
+    st.caption(
+        "Every metric built on top of this feed (spread, VPIN, Kyle's lambda) is a "
+        "disclosed *approximation* reconstructed from OHLCV bars — see each metric's "
+        "own caption for its specific caveat. Free-tier requests are also subject to "
+        "occasional rate-limiting."
+    )
 
 # ── Colour helpers ────────────────────────────────────────────────────────────
 _VC = {"Tight":"#3b82f6","Normal":"#22c55e","Trending":"#f97316","Extremely Trending":"#ef4444"}
@@ -51,7 +82,7 @@ if page == "📈 Execution Algorithm Simulator":
                 "conditions and recommends the optimal execution algorithm.")
 
     st.markdown("### Inputs")
-    c1,c2,c3,c4 = st.columns(4)
+    c1,c2,c3,c4,c5 = st.columns(5)
     with c1: market = st.selectbox("Market", list(MARKET_INFO.keys()))
     with c2:
         ex = {
@@ -74,6 +105,15 @@ if page == "📈 Execution Algorithm Simulator":
         ticker_input = st.text_input(f"Ticker (excl. '{sfx}')", value=ex.get(market, ""))
     with c3: order_pct_adv = st.slider("Order Size (% ADV)", 1, 25, 5)
     with c4: urgency = st.radio("Urgency", ["Low","Medium","High"], horizontal=True)
+    with c5:
+        benchmark_target = st.selectbox(
+            "Benchmark Target", ["Arrival", "VWAP", "Close", "Open"],
+            help="The TCA benchmark this order is measured against — mirrors the client-stated "
+                 "objective a GSET-style algo wheel takes as an input. 'Arrival' is neutral (every "
+                 "algo's cost is already arrival-relative); VWAP/Close/Open each steer the "
+                 "recommendation toward the algo built to track that specific benchmark, unless a "
+                 "higher-priority urgency/volatility rule overrides it."
+        )
 
     run = st.button("▶ Run Agent Pipeline", type="primary", use_container_width=True)
     st.markdown("---")
@@ -98,7 +138,32 @@ if page == "📈 Execution Algorithm Simulator":
         # at runtime rather than a fixed unconditional sequence; see
         # agents/orchestrator.py and agents/context.py ----------------------
         with st.spinner("Running agent pipeline…"):
-            ctx = run_pipeline(data, order_pct_adv, urgency)
+            ctx = run_pipeline(data, order_pct_adv, urgency, benchmark_target=benchmark_target)
+
+        # Persist to session_state so results (and the Mid-Session Adjustment
+        # widgets below) survive later reruns triggered by *other* widgets --
+        # Streamlit reruns the whole script on every interaction, and `run`
+        # (st.button's return value) is only True on the exact rerun where
+        # this button was clicked, so without this the whole page would blank
+        # out the moment the user touches the mid-session checkpoint slider.
+        st.session_state["p1_ctx"] = ctx
+        st.session_state["p1_data"] = data
+        st.session_state["p1_order_pct_adv"] = order_pct_adv
+        st.session_state["p1_urgency"] = urgency
+        st.session_state["p1_benchmark_target"] = benchmark_target
+        # A fresh pipeline run means any previously-applied mid-session switch
+        # was computed against the OLD ticker/order/urgency's schedule -- drop
+        # it so the Mid-Session Adjustment section below doesn't show a stale
+        # blended result against a new run's data.
+        st.session_state.pop("p1_switch", None)
+        st.session_state.pop("p1_switch_meta", None)
+
+    if "p1_ctx" in st.session_state:
+        ctx = st.session_state["p1_ctx"]
+        data = st.session_state["p1_data"]
+        order_pct_adv = st.session_state["p1_order_pct_adv"]
+        urgency = st.session_state["p1_urgency"]
+        benchmark_target = st.session_state["p1_benchmark_target"]
 
         _icon = {"ran": "✅", "skipped": "⏭️", "failed": "❌"}
         _trace_line = "&nbsp;&nbsp;".join(
@@ -397,6 +462,102 @@ if page == "📈 Execution Algorithm Simulator":
                                      legend=dict(orientation="h",yanchor="bottom",y=1.02))
                     st.plotly_chart(fs, use_container_width=True)
 
+        # ── MID-SESSION ADJUSTMENT (interactive checkpoint-and-resume) ───────
+        st.markdown("---")
+        st.markdown("### Mid-Session Adjustment — Interactive Intervention")
+        st.caption(
+            "Real buy-side desks monitor execution intraday on a GSET/REDIPlus-style "
+            "blotter and can intervene mid-session — pause, change urgency, or switch "
+            "strategy — if the fill or slippage-so-far no longer matches conditions. "
+            "This replays that: everything up to the checkpoint is exactly what already "
+            "happened under the **algo running before** (sliced from its full-day "
+            "schedule above, not re-simulated); only the still-unfilled shares are "
+            "re-planned under a **new algo/urgency** for the rest of the session. "
+            "Backtest-style — the same historical bars are replayed, not a live feed."
+        )
+
+        canonical_times = list(sim.algos[a_names[0]].schedule["time"])
+        ck_options = canonical_times[1:-1]   # exclude first/last bar -- not a meaningful "partway" checkpoint
+
+        if len(ck_options) >= 1:
+            ms1, ms2 = st.columns(2)
+            with ms1:
+                ms_algo_before = st.selectbox(
+                    "Algo running before checkpoint", a_names,
+                    index=a_names.index(memo.primary_algo) if memo.primary_algo in a_names else 0,
+                    key="ms_algo_before")
+            with ms2:
+                checkpoint_time = st.select_slider(
+                    "Checkpoint time", options=ck_options,
+                    value=ck_options[len(ck_options)//2],
+                    format_func=lambda t: pd.Timestamp(t).strftime("%H:%M"),
+                    key="ms_checkpoint")
+
+            ms3, ms4, ms5 = st.columns(3)
+            with ms3:
+                ms_new_algo = st.selectbox(
+                    "New algo for remainder", a_names,
+                    index=a_names.index(memo.primary_algo) if memo.primary_algo in a_names else 0,
+                    key="ms_new_algo")
+            with ms4:
+                ms_new_urgency = st.selectbox(
+                    "New urgency for remainder", ["Low", "Medium", "High"],
+                    index=["Low", "Medium", "High"].index(urgency), key="ms_new_urgency")
+            with ms5:
+                st.markdown("")
+                st.markdown("")
+                apply_switch = st.button("🔀 Apply Mid-Session Switch", key="ms_apply",
+                                         use_container_width=True)
+
+            if apply_switch:
+                st.session_state["p1_switch"] = simulate_midsession_switch(
+                    data, sim, ms_algo_before, checkpoint_time, ms_new_algo, ms_new_urgency,
+                )
+                st.session_state["p1_switch_meta"] = (ms_algo_before, ms_new_algo, ms_new_urgency)
+
+            if "p1_switch" in st.session_state:
+                switch = st.session_state["p1_switch"]
+                algo_before, new_algo, new_urg = st.session_state["p1_switch_meta"]
+                blended = switch["blended"]
+
+                st.markdown(f"**As of {switch['checkpoint_time'].strftime('%H:%M')}, under {algo_before}:**")
+                im1, im2, im3 = st.columns(3)
+                im1.metric("Filled so far", f"{switch['phase1_filled']:,.0f} sh",
+                          delta=f"{switch['phase1_pct_complete']:.0%} of order", delta_color="off")
+                im2.metric("Avg price so far", f"${switch['phase1_avg_price']:.2f}")
+                im3.metric("Slippage so far", f"{switch['phase1_slippage_bps']:+.1f} bps")
+
+                st.markdown(f"**Remainder re-planned under {new_algo} ({new_urg}):** "
+                           f"{switch['remaining_shares']:,.0f} sh were still unfilled at the checkpoint; "
+                           f"{switch['phase2_filled']:,.0f} sh filled under the new plan.")
+
+                bm1, bm2, bm3, bm4 = st.columns(4)
+                bm1.metric("Blended fill rate", f"{blended.completion_pct:.0%}")
+                bm2.metric("Blended avg exec price", f"${blended.avg_exec_price:.2f}")
+                bm3.metric("Blended total cost", f"{blended.total_cost_bps:.1f} bps")
+                orig_total = sim.algos[algo_before].total_cost_bps
+                delta_bps = blended.total_cost_bps - orig_total
+                bm4.metric(f"vs. staying on {algo_before} all day", f"{delta_bps:+.1f} bps",
+                          delta="worse" if delta_bps > 0 else "better", delta_color="inverse")
+
+                with st.expander("Blended schedule — cumulative shares, checkpoint marked"):
+                    fms = go.Figure()
+                    fms.add_trace(go.Bar(x=blended.schedule["time"], y=blended.schedule["shares_traded"],
+                                         name="Shares/bar", marker_color="#9467bd"))
+                    fms.add_trace(go.Scatter(x=blended.schedule["time"], y=blended.schedule["cumulative"],
+                                             name="Cumulative", yaxis="y2",
+                                             line=dict(color="#6b7280", width=1.5, dash="dot")))
+                    fms.add_shape(type="line", x0=switch["checkpoint_time"], x1=switch["checkpoint_time"],
+                                 y0=0, y1=1, yref="paper", line=dict(color="red", dash="dash", width=1.5))
+                    fms.update_layout(height=260, margin=dict(l=40,r=60,t=10,b=30),
+                                     plot_bgcolor="white", yaxis=dict(gridcolor="#eee"),
+                                     yaxis2=dict(overlaying="y", side="right", showgrid=False),
+                                     legend=dict(orientation="h", yanchor="bottom", y=1.02))
+                    st.plotly_chart(fms, use_container_width=True)
+                    st.caption(blended.schedule_note)
+        else:
+            st.info("ℹ️ Not enough bars in this session to demo a mid-session checkpoint.")
+
         # ── AGENT 4 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
         st.markdown("### Agent 4 — Performance Comparison")
@@ -426,7 +587,7 @@ if page == "📈 Execution Algorithm Simulator":
                     return f"background-color:rgba(239,68,68,{min(1,v/200):.2f});" if v>50 \
                         else f"background-color:rgba(34,197,94,{min(1,(100-v)/100):.2f});"
                 except: return ""
-            st.dataframe(comp.sensitivity.style.applymap(_color_sens), use_container_width=True)
+            st.dataframe(comp.sensitivity.style.map(_color_sens), use_container_width=True)
 
         with st.expander("⚖️ Almgren-Chriss Efficient Frontier (IS trajectory shape)"):
             st.markdown("*Implementation Shortfall now trades the real Almgren-Chriss (2000) optimal "
@@ -461,15 +622,24 @@ if page == "📈 Execution Algorithm Simulator":
             with tc1:
                 st.markdown("**Benchmark Comparison**")
                 bt = posttrade.benchmarks.table
+                _bench_row_map = {"Arrival": "Arrival (Open)", "VWAP": "Full-Day VWAP",
+                                 "Close": "Close", "Open": "Arrival (Open)"}
+                _target_row = _bench_row_map.get(benchmark_target, "Arrival (Open)")
+
+                def _style_bench(row):
+                    bg = ("background-color:#fee2e2;" if row["Slippage vs Benchmark (bps)"] > 0
+                         else "background-color:#dcfce7;")
+                    if row.name == _target_row:
+                        bg += "border:2px solid #1f2937;font-weight:700;"
+                    return [bg] * len(row)
+
                 st.dataframe(bt.style.format({
                     "Benchmark Price": "${:.4f}", "Slippage vs Benchmark (bps)": "{:+.2f}",
-                }).apply(
-                    lambda row: ["background-color:#fee2e2;" if row["Slippage vs Benchmark (bps)"] > 0
-                                else "background-color:#dcfce7;"] * len(row), axis=1
-                ), use_container_width=True)
-                st.caption("Positive = paid more than that benchmark; negative = paid less. "
-                          "Arrival matches the Total Cost table above; VWAP/TWAP/Close are the "
-                          "additional standard TCA reference points.")
+                }).apply(_style_bench, axis=1), use_container_width=True)
+                st.caption(f"Positive = paid more than that benchmark; negative = paid less. "
+                          f"Bordered/bold row = client's stated **Benchmark Target** ({benchmark_target}). "
+                          f"Arrival matches the Total Cost table above; VWAP/TWAP/Close are the "
+                          f"additional standard TCA reference points.")
 
             with tc2:
                 st.markdown("**Cost Percentile**")
@@ -529,7 +699,7 @@ elif page == "🔄 Index Rebalancing Analysis":
     st.markdown("### Inputs")
     i1,i2,i3 = st.columns(3)
     with i1:
-        index_choice = st.selectbox("Index", ["MSCI Taiwan","Hang Seng","Nikkei 225","KOSPI 200"])
+        index_choice = st.selectbox("Index", list(INDEX_PROXIES.keys()))
         market_added = st.selectbox("Market", list(MARKET_INFO.keys()), key="rebal_mkt")
     with i2:
         rebal_date   = st.date_input("Rebalancing Effective Date",

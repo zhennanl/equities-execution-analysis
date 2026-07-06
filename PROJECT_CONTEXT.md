@@ -287,6 +287,69 @@ the canonical figure.
 - Effective/realized spread & price-impact decomposition survey (Ødegaard) — https://ba-odegaard.no/teach/notes/liquidity_estimators/spread/spread_lectures.pdf
 - 2024-2025 European buy-side TCA benchmark usage survey (Bloomberg Professional Services) — https://www.bloomberg.com/professional/insights/trading/european-institutional-equity-trading-study-technology/
 
+---
+
+## Free Order-Book / Tick Data — Feasibility Investigation (2026-07-06)
+
+Investigated whether free order-book depth or tick-level trade data exists
+anywhere (live or historical, any market) as a genuine upgrade path beyond
+OHLCV bars for Agent 9's Kyle's lambda / VPIN / BVC approximations. Findings,
+in order of practical usefulness:
+
+**1. IEX Exchange HIST — the best standing (ongoing, free, live) option.**
+https://iextrading.com/trading/market-data/#hist-download — IEX publishes
+free, no-registration-required downloads of its own full order-book depth
+(DEEP) and top-of-book (TOPS) feeds, in raw pcap format, for every symbol it
+trades. Rolling trailing-12-months history plus new data added T+1 (over
+17TB / ~5,000 files as of March 2026). This is genuine tick-by-tick
+order-book data — real quote updates and trade prints — not a BVC-style
+approximation. Caveat: IEX is one venue among ~16 in the fragmented US
+equity market and carries roughly 3-6% of a given US stock's consolidated
+volume (Q4 2025 IEX-reported figures) — a real, live, currently-updating
+order book, but a single-venue view, not the full NBBO-consolidated book.
+Needs a pcap parser; open-source Python libraries already exist (`IEXTools`,
+`iex_parser` on PyPI/GitHub), so this is a real, buildable integration, not
+just a data dump with no path to use it.
+
+**2. LOBSTER free samples — the best one-time ground-truth benchmark.**
+https://lobsterdata.com — fully reconstructed limit-order-book data (at
+1/5/10/30/50 price-level depths), built from real NASDAQ TotalView-ITCH
+data — genuinely research-grade. The free samples are frozen to a single
+historical trading day (June 21, 2012) for exactly five tickers: AAPL,
+AMZN, GOOG, INTC, MSFT. Not live and not extensible to other tickers/dates
+without a paid subscription, but ideal as a fixed, one-time benchmark to
+validate this project's BVC/VPIN approximation against a real, fully
+reconstructed order book on that one day.
+
+**3. Databento — $125 free credit, not a standing free source.** Full L3
+market-by-order data across 15 US exchanges + 30 ATSs since 2018 — the best
+coverage/quality of anything found — but it's a depleting credit rather
+than an ongoing free tier. Usable for one focused validation pull, not a
+permanent data source for this project.
+
+**4. Asian markets: confirmed no free tick/order-book data exists
+anywhere.** Directly checked HKEX and JPX (the two most relevant exchanges
+for this project's Taiwan/Hong Kong/Japan coverage) — both offer only paid
+real-time and historical tick/order-book products (JPX in fact just
+launched a new *paid* 10-level order-book historical dataset in June 2026,
+underscoring this is an active commercial product line, not one trending
+toward free). This means any order-book upgrade to this project can only
+ever cover the US-ticker subset of the 14 supported markets — the 13 Asian
+markets remain OHLCV-only regardless of which option above is chosen.
+
+**Implication for this project:** IEX HIST is the most promising path to a
+genuine (not approximated) order-flow-toxicity/impact estimate — for US,
+IEX-eligible tickers specifically — since it's free, real, and ongoing
+rather than a frozen sample. LOBSTER's 2012 AAPL sample is a good
+complementary one-time benchmark: reconstruct real Kyle's lambda/VPIN from
+the actual order book on that one day, and compare against what the
+BVC-approximation methodology currently in Agent 9 produces on the same
+day, as a direct accuracy check of the approximation. **Not yet
+implemented** — this is a feasibility finding pending a scope/priority
+decision, not a completed integration.
+
+---
+
 ### Index Rebalancing Event Study (`agents/rebalancing_event_study.py`)
 - Estimation window: T-70 to T-11 trading days
 - OLS market model: R_stock = α + β × R_index

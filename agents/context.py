@@ -29,6 +29,7 @@ class ExecutionContext:
     market: str = ""
     order_pct_adv: float = 0.0
     urgency: str = "Medium"
+    benchmark_target: str = "Arrival"   # "Arrival" | "VWAP" | "Close" | "Open" -- client's stated TCA objective
 
     # -- Derived once market_data is available --------------------------------
     order_shares: float = 0.0

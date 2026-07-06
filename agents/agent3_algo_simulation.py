@@ -562,3 +562,112 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
 
     _log("Agent 3 complete.")
     return result
+
+
+# -- Mid-session interactive adjustment ---------------------------------------
+
+_ALGO_FUNCS = {
+    "VWAP": _sim_vwap, "TWAP": _sim_twap, "POV": _sim_pov, "IS": _sim_is,
+    "MOC": _sim_moc, "MOO": _sim_moo, "LIQ": _sim_liquidity_seeking, "STEALTH": _sim_stealth,
+}
+
+
+def simulate_midsession_switch(market_data: MarketData, original_sim: SimulationResult,
+                               original_algo_name: str, checkpoint_time,
+                               new_algo_name: str, new_urgency: str, log=None) -> dict:
+    """
+    Models a buy-side trader monitoring execution intraday (as on a GSET-style
+    blotter) and intervening partway through the session, the way a real desk
+    would if the fill/slippage-so-far no longer matched conditions.
+
+    Everything up to `checkpoint_time` is taken exactly as already executed
+    under `original_algo_name`'s full-day schedule (sliced straight out of
+    `original_sim`, i.e. simulate_algos()'s output -- no re-simulation, since
+    that's genuinely what already happened under the original plan). Only the
+    shares still unfilled at the checkpoint are re-planned, using
+    `new_algo_name` / `new_urgency`, over the bars still remaining in the same
+    historical day. The two segments are then stitched into one blended
+    AlgoResult via the existing _build_result() cost math, using a
+    fill-weighted blend of the two segments' speed factors for the market-
+    impact term (a reasonable approximation for a single sqrt-law total-size
+    impact estimate split across two different aggressiveness regimes).
+
+    This is backtest-style ("what if I had intervened at this point on this
+    historical day"), not a live feed -- the underlying prices are the same
+    historical bars simulate_algos() already used, replayed rather than new
+    data arriving in real time.
+    """
+    def _log(msg):
+        if log: log(msg)
+
+    bars_expected = MARKET_INFO[market_data.market]["bars"]
+    day = _sim_day(market_data.intraday, bars_expected)
+    n = len(day)
+    sim_date = day.index[0].normalize()
+    period_end_price = float(day["Close"].iloc[-1])
+
+    orig_sched = original_sim.algos[original_algo_name].schedule
+    checkpoint_ts = pd.Timestamp(checkpoint_time)
+
+    phase1 = orig_sched[orig_sched["time"] <= checkpoint_ts].copy()
+    phase1_filled = float(phase1["shares_traded"].sum())
+    phase1_avg_price = (
+        float((phase1["shares_traded"] * phase1["price"]).sum() / phase1_filled)
+        if phase1_filled > 0 else original_sim.arrival_price
+    )
+
+    remaining_shares = max(0.0, original_sim.order_shares - phase1_filled)
+    remaining_day = day[day.index > checkpoint_ts]
+
+    hist_curve_full, _ = _historical_volume_weights(market_data.intraday, sim_date, n)
+    hist_curve_remaining = None
+    if hist_curve_full is not None:
+        mask = np.asarray(day.index > checkpoint_ts)
+        sliced = hist_curve_full[mask]
+        total = sliced.sum()
+        hist_curve_remaining = sliced / total if total > 0 else None
+
+    fn = _ALGO_FUNCS[new_algo_name]
+    if len(remaining_day) > 0:
+        phase2_sched = fn(day=remaining_day, order_shares=remaining_shares,
+                          urgency=new_urgency, hist_curve=hist_curve_remaining)
+    else:
+        phase2_sched = pd.DataFrame(columns=["time", "shares_traded", "price", "cumulative"])
+    phase2_filled = float(phase2_sched["shares_traded"].sum()) if len(phase2_sched) else 0.0
+
+    frames = [phase1[["time", "shares_traded", "price"]]]
+    if len(phase2_sched):
+        frames.append(phase2_sched[["time", "shares_traded", "price"]])
+    combined = pd.concat(frames, ignore_index=True)
+    combined["cumulative"] = combined["shares_traded"].cumsum()
+
+    total_filled = phase1_filled + phase2_filled
+    sf_orig = _speed_factor(original_algo_name, original_sim.urgency)
+    sf_new  = _speed_factor(new_algo_name, new_urgency)
+    sf_blend = ((phase1_filled * sf_orig + phase2_filled * sf_new) / total_filled
+               if total_filled > 0 else sf_new)
+
+    label = original_algo_name if original_algo_name == new_algo_name else f"{original_algo_name}→{new_algo_name}"
+    note = (f"Mid-session switch at {checkpoint_ts.strftime('%H:%M')}: {phase1_filled:,.0f} sh already filled "
+           f"under {original_algo_name} ({original_sim.urgency}); remaining {remaining_shares:,.0f} sh "
+           f"re-planned under {new_algo_name} ({new_urgency}).")
+
+    blended = _build_result(label, combined, original_sim.arrival_price,
+                            original_sim.order_shares, market_data.adv_shares,
+                            market_data.realized_vol_ann, sf_blend,
+                            period_end_price, schedule_note=note)
+
+    _log(f"Mid-session switch: {phase1_filled:,.0f} sh @ {original_algo_name} -> "
+         f"{phase2_filled:,.0f} sh @ {new_algo_name}; blended total cost {blended.total_cost_bps:.1f} bps")
+
+    return {
+        "blended": blended,
+        "checkpoint_time": checkpoint_ts,
+        "phase1_filled": phase1_filled,
+        "phase1_avg_price": phase1_avg_price,
+        "phase1_pct_complete": (phase1_filled / original_sim.order_shares) if original_sim.order_shares > 0 else 0.0,
+        "phase1_slippage_bps": (phase1_avg_price - original_sim.arrival_price) / original_sim.arrival_price * 10_000
+                               if original_sim.arrival_price > 0 else 0.0,
+        "remaining_shares": remaining_shares,
+        "phase2_filled": phase2_filled,
+    }

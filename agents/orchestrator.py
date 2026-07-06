@@ -43,14 +43,15 @@ from agents.agent9_microstructure import assess_microstructure
 MIN_DAILY_BARS_FOR_SPREAD = 22
 
 
-def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None) -> ExecutionContext:
+def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None,
+                 benchmark_target: str = "Arrival") -> ExecutionContext:
     def _log(msg):
         if log:
             log(msg)
 
     ctx = ExecutionContext(
         ticker_base=market_data.ticker, market=market_data.market,
-        order_pct_adv=order_pct_adv, urgency=urgency,
+        order_pct_adv=order_pct_adv, urgency=urgency, benchmark_target=benchmark_target,
     )
     ctx.market_data = market_data
     ctx.order_shares = market_data.adv_shares * (order_pct_adv / 100)
@@ -80,7 +81,8 @@ def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None) -> E
     # Agent 5 — recommendation memo (needs regime, sim, comp)
     if ctx.regime is not None and ctx.sim is not None and ctx.comp is not None:
         try:
-            ctx.memo = generate_memo(market_data, ctx.regime, ctx.sim, ctx.comp, urgency, order_pct_adv, log=log)
+            ctx.memo = generate_memo(market_data, ctx.regime, ctx.sim, ctx.comp, urgency, order_pct_adv, log=log,
+                                     benchmark_target=benchmark_target)
             ctx.record("agent5_recommendation", "ran")
         except Exception as e:
             ctx.record("agent5_recommendation", "failed", str(e))

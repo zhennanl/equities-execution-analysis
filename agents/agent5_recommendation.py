@@ -31,17 +31,29 @@ class RecommendationMemo:
 
 # ── Rule-based algorithm selection ────────────────────────────────────────────
 
+_BENCHMARK_ALGO = {"VWAP": "VWAP", "Close": "MOC", "Open": "MOO"}   # "Arrival" deliberately absent -- see docstring
+
+
 def _select_algos(regime: RegimeAssessment, comparison: PerformanceComparison,
-                  urgency: str) -> tuple:
+                  urgency: str, benchmark_target: str = "Arrival") -> tuple:
     """
     Priority order:
       1. Extremely Trending + Medium/High urgency → IS (speed needed)
       2. High urgency → IS
-      3. Tight/Normal vol + U-Shaped volume + Low urgency → VWAP
-      4. Uniform volume + Low/Medium urgency → TWAP
-      5. Mean-Reverting + Low urgency → TWAP (patience rewarded)
-      6. Trending returns + High urgency → IS
-      7. Default → lowest average cost from comparison
+      3. Explicit non-Arrival benchmark target (VWAP/Close/Open) → the algo
+         built to track that benchmark (VWAP→VWAP, Close→MOC, Open→MOO)
+      4. Tight/Normal vol + U-Shaped volume + Low urgency → VWAP
+      5. Uniform volume + Low/Medium urgency → TWAP
+      6. Mean-Reverting + Low urgency → TWAP (patience rewarded)
+      7. Trending returns + High urgency → IS
+      8. Default → lowest average cost from comparison
+
+    Benchmark-target note: "Arrival" is the neutral default (every algo's
+    Total Cost is already measured relative to arrival price, so it isn't
+    "a" preference the way VWAP/Close/Open are) and deliberately does NOT
+    short-circuit the regime-driven rules below it -- only an explicit,
+    non-default client objective reorders the pick. This keeps existing
+    regime-sensitive behaviour unchanged for anyone not using the new input.
     """
     vol    = regime.vol_label
     volume = regime.volume_label
@@ -53,6 +65,8 @@ def _select_algos(regime: RegimeAssessment, comparison: PerformanceComparison,
         primary = "IS"
     elif urgency == "High":
         primary = "IS"
+    elif benchmark_target in _BENCHMARK_ALGO:
+        primary = _BENCHMARK_ALGO[benchmark_target]
     elif vol in ("Tight", "Normal") and volume == "U-Shaped" and urgency == "Low":
         primary = "VWAP"
     elif volume == "Uniform" and urgency in ("Low", "Medium"):
@@ -131,7 +145,8 @@ def _build_flags(regime: RegimeAssessment, sim: SimulationResult,
 
 def _build_memo(market_data: MarketData, regime: RegimeAssessment,
                 comparison: PerformanceComparison, primary: str, secondary: str,
-                flags: list, order_pct_adv: float, urgency: str) -> str:
+                flags: list, order_pct_adv: float, urgency: str,
+                benchmark_target: str = "Arrival") -> str:
 
     order_shares   = market_data.adv_shares * (order_pct_adv / 100)
     order_notional = order_shares * market_data.current_price
@@ -171,12 +186,21 @@ def _build_memo(market_data: MarketData, regime: RegimeAssessment,
         "STEALTH": f"caps participation per bar and randomises child-order size to avoid signalling — trading completion speed for minimal footprint.",
     }.get(primary, "delivered the lowest average total cost across the simulation window.")
 
+    benchmark_note = ""
+    if _BENCHMARK_ALGO.get(benchmark_target) == primary:
+        benchmark_note = (f" Client-stated benchmark target is **{benchmark_target}** — {primary} is the "
+                          f"algo built to track it, which drove this pick ahead of the regime-based default.")
+    elif benchmark_target != "Arrival":
+        benchmark_note = (f" Note: client-stated benchmark target is **{benchmark_target}**, but a "
+                          f"higher-priority rule (urgency/volatility) took precedence over aligning "
+                          f"the algo to it — confirm this is acceptable given the {benchmark_target} mandate.")
+
     lines = [
         "**EXECUTION RECOMMENDATION MEMO**",
         "",
         f"**Ticker:** {market_data.ticker}  |  **Market:** {market_data.market}",
         f"**Order:** {order_pct_adv}% ADV · {order_shares:,.0f} shares · ${order_notional/1e6:.2f}M notional",
-        f"**Urgency:** {urgency}",
+        f"**Urgency:** {urgency}  |  **Benchmark Target:** {benchmark_target}",
         "",
         "---",
         "",
@@ -191,7 +215,7 @@ def _build_memo(market_data: MarketData, regime: RegimeAssessment,
         "",
         f"{primary} {algo_rationale} "
         f"Across {n_days} simulated trading days, it averaged **{mean_cost:.1f} bps** and ranked best "
-        f"on **{wins}/{n_days} days**.",
+        f"on **{wins}/{n_days} days**.{benchmark_note}",
         "",
         f"**Secondary / Fallback: {secondary}** ({sec_cost:.1f} bps avg) — recommended if intraday "
         f"liquidity conditions deviate materially from the simulation day.",
@@ -221,15 +245,16 @@ def _build_memo(market_data: MarketData, regime: RegimeAssessment,
 
 def generate_memo(market_data: MarketData, regime: RegimeAssessment,
                   sim: SimulationResult, comparison: PerformanceComparison,
-                  urgency: str, order_pct_adv: float, log=None) -> RecommendationMemo:
+                  urgency: str, order_pct_adv: float, log=None,
+                  benchmark_target: str = "Arrival") -> RecommendationMemo:
 
     def _log(msg):
         if log: log(msg)
 
-    primary, secondary = _select_algos(regime, comparison, urgency)
+    primary, secondary = _select_algos(regime, comparison, urgency, benchmark_target)
     flags    = _build_flags(regime, sim, order_pct_adv, urgency, primary=primary)
     memo_txt = _build_memo(market_data, regime, comparison, primary, secondary,
-                           flags, order_pct_adv, urgency)
+                           flags, order_pct_adv, urgency, benchmark_target)
 
     _log(f"Primary: {primary}  Secondary: {secondary}")
     _log("Agent 5 complete.")
