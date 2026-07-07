@@ -11,7 +11,8 @@ import sys, os, datetime
 
 sys.path.insert(0, os.path.dirname(__file__))
 from agents.agent1_market_data      import fetch_market_data, MarketData, MARKET_INFO
-from agents.agent3_algo_simulation  import IS_KAPPA_T, simulate_midsession_switch
+from agents.agent3_algo_simulation  import IS_KAPPA_T, simulate_with_interventions
+from agents.agent10_hypothesis_test import run_hypothesis_test, METRIC_MAP, ALTERNATIVES
 from agents.orchestrator            import run_pipeline
 from agents.rebalancing_event_study import run_event_study, build_execution_insights, INDEX_PROXIES
 
@@ -151,12 +152,15 @@ if page == "📈 Execution Algorithm Simulator":
         st.session_state["p1_order_pct_adv"] = order_pct_adv
         st.session_state["p1_urgency"] = urgency
         st.session_state["p1_benchmark_target"] = benchmark_target
-        # A fresh pipeline run means any previously-applied mid-session switch
-        # was computed against the OLD ticker/order/urgency's schedule -- drop
-        # it so the Mid-Session Adjustment section below doesn't show a stale
-        # blended result against a new run's data.
-        st.session_state.pop("p1_switch", None)
-        st.session_state.pop("p1_switch_meta", None)
+        # A fresh pipeline run means any previously-queued interventions or
+        # hypothesis-test result were computed against the OLD ticker/order/
+        # urgency's schedule -- drop them and reseed the Live Execution
+        # Monitor's base algo/urgency from THIS run's own recommendation, so
+        # the sections below always start clean for the run just completed.
+        st.session_state["p1_interventions"] = []
+        st.session_state["p1_base_algo"] = ctx.memo.primary_algo if ctx.memo is not None else None
+        st.session_state["p1_base_urgency"] = urgency
+        st.session_state.pop("p1_ht_result", None)
 
     if "p1_ctx" in st.session_state:
         ctx = st.session_state["p1_ctx"]
@@ -462,101 +466,152 @@ if page == "📈 Execution Algorithm Simulator":
                                      legend=dict(orientation="h",yanchor="bottom",y=1.02))
                     st.plotly_chart(fs, use_container_width=True)
 
-        # ── MID-SESSION ADJUSTMENT (interactive checkpoint-and-resume) ───────
+        # ── LIVE EXECUTION MONITOR & MID-SESSION ADJUSTMENT ──────────────────
         st.markdown("---")
-        st.markdown("### Mid-Session Adjustment — Interactive Intervention")
+        st.markdown("### Live Execution Monitor — Evolving Cost vs. Benchmark")
         st.caption(
-            "Real buy-side desks monitor execution intraday on a GSET/REDIPlus-style "
-            "blotter and can intervene mid-session — pause, change urgency, or switch "
-            "strategy — if the fill or slippage-so-far no longer matches conditions. "
-            "This replays that: everything up to the checkpoint is exactly what already "
-            "happened under the **algo running before** (sliced from its full-day "
-            "schedule above, not re-simulated); only the still-unfilled shares are "
-            "re-planned under a **new algo/urgency** for the rest of the session. "
+            "Real buy-side desks watch fills and slippage-vs-benchmark intraday on a "
+            "GSET/REDIPlus-style blotter, and intervene — possibly more than once — if "
+            "the algo is behaving suboptimally. This replays that: scrub the slider forward "
+            "to watch the (already-computed) execution unfold bar-by-bar, see how the running "
+            "average execution price is tracking Arrival and interval-VWAP-to-date, and add an "
+            "intervention at any point to re-plan the remainder under a new algo/urgency. "
             "Backtest-style — the same historical bars are replayed, not a live feed."
         )
 
-        canonical_times = list(sim.algos[a_names[0]].schedule["time"])
-        ck_options = canonical_times[1:-1]   # exclude first/last bar -- not a meaningful "partway" checkpoint
+        live = simulate_with_interventions(
+            data, order_shares, st.session_state["p1_base_algo"], st.session_state["p1_base_urgency"],
+            st.session_state["p1_interventions"],
+        )
+        full_schedule = live["schedule"]
+        scrub_options = list(full_schedule["time"])[1:]   # exclude the very first bar -- nothing filled yet
 
-        if len(ck_options) >= 1:
-            ms1, ms2 = st.columns(2)
-            with ms1:
-                ms_algo_before = st.selectbox(
-                    "Algo running before checkpoint", a_names,
-                    index=a_names.index(memo.primary_algo) if memo.primary_algo in a_names else 0,
-                    key="ms_algo_before")
-            with ms2:
-                checkpoint_time = st.select_slider(
-                    "Checkpoint time", options=ck_options,
-                    value=ck_options[len(ck_options)//2],
-                    format_func=lambda t: pd.Timestamp(t).strftime("%H:%M"),
-                    key="ms_checkpoint")
+        if len(scrub_options) >= 1:
+            lm1, lm2 = st.columns(2)
+            with lm1:
+                base_algo_choice = st.selectbox(
+                    "Algo you started the day on", a_names,
+                    index=a_names.index(st.session_state["p1_base_algo"])
+                    if st.session_state["p1_base_algo"] in a_names else 0,
+                    key="lm_base_algo")
+            with lm2:
+                base_urgency_choice = st.selectbox(
+                    "Starting urgency", ["Low", "Medium", "High"],
+                    index=["Low", "Medium", "High"].index(st.session_state["p1_base_urgency"]),
+                    key="lm_base_urgency")
 
-            ms3, ms4, ms5 = st.columns(3)
-            with ms3:
-                ms_new_algo = st.selectbox(
-                    "New algo for remainder", a_names,
-                    index=a_names.index(memo.primary_algo) if memo.primary_algo in a_names else 0,
-                    key="ms_new_algo")
-            with ms4:
-                ms_new_urgency = st.selectbox(
-                    "New urgency for remainder", ["Low", "Medium", "High"],
-                    index=["Low", "Medium", "High"].index(urgency), key="ms_new_urgency")
-            with ms5:
-                st.markdown("")
-                st.markdown("")
-                apply_switch = st.button("🔀 Apply Mid-Session Switch", key="ms_apply",
-                                         use_container_width=True)
+            # Changing the starting point invalidates any interventions already
+            # queued against the OLD starting point -- clear rather than mix plans.
+            if (base_algo_choice != st.session_state["p1_base_algo"]
+                    or base_urgency_choice != st.session_state["p1_base_urgency"]):
+                st.session_state["p1_base_algo"] = base_algo_choice
+                st.session_state["p1_base_urgency"] = base_urgency_choice
+                st.session_state["p1_interventions"] = []
+                st.rerun()
 
-            if apply_switch:
-                st.session_state["p1_switch"] = simulate_midsession_switch(
-                    data, sim, ms_algo_before, checkpoint_time, ms_new_algo, ms_new_urgency,
-                )
-                st.session_state["p1_switch_meta"] = (ms_algo_before, ms_new_algo, ms_new_urgency)
+            scrub_time = st.select_slider(
+                "▶ Playback — viewing execution as of:", options=scrub_options,
+                value=scrub_options[len(scrub_options) // 2],
+                format_func=lambda t: pd.Timestamp(t).strftime("%H:%M"),
+                key="lm_scrub")
 
-            if "p1_switch" in st.session_state:
-                switch = st.session_state["p1_switch"]
-                algo_before, new_algo, new_urg = st.session_state["p1_switch_meta"]
-                blended = switch["blended"]
+            view = full_schedule[full_schedule["time"] <= pd.Timestamp(scrub_time)]
+            last = view.iloc[-1]
+            pct_complete = (last["cumulative"] / order_shares) if order_shares > 0 else 0.0
 
-                st.markdown(f"**As of {switch['checkpoint_time'].strftime('%H:%M')}, under {algo_before}:**")
-                im1, im2, im3 = st.columns(3)
-                im1.metric("Filled so far", f"{switch['phase1_filled']:,.0f} sh",
-                          delta=f"{switch['phase1_pct_complete']:.0%} of order", delta_color="off")
-                im2.metric("Avg price so far", f"${switch['phase1_avg_price']:.2f}")
-                im3.metric("Slippage so far", f"{switch['phase1_slippage_bps']:+.1f} bps")
+            sv1, sv2, sv3, sv4 = st.columns(4)
+            sv1.metric("Filled as of scrub", f"{last['cumulative']:,.0f} sh",
+                      delta=f"{pct_complete:.0%} of order", delta_color="off")
+            sv2.metric("Avg exec price so far", f"${last['cum_avg_price']:.2f}")
+            sv3.metric("Slippage vs Arrival", f"{last['running_slip_vs_arrival_bps']:+.1f} bps",
+                      delta="worse" if last["running_slip_vs_arrival_bps"] > 0 else "better",
+                      delta_color="inverse")
+            sv4.metric("Slippage vs VWAP-to-date", f"{last['running_slip_vs_vwap_bps']:+.1f} bps",
+                      delta="worse" if last["running_slip_vs_vwap_bps"] > 0 else "better",
+                      delta_color="inverse")
 
-                st.markdown(f"**Remainder re-planned under {new_algo} ({new_urg}):** "
-                           f"{switch['remaining_shares']:,.0f} sh were still unfilled at the checkpoint; "
-                           f"{switch['phase2_filled']:,.0f} sh filled under the new plan.")
+            fev = go.Figure()
+            fev.add_trace(go.Scatter(x=view["time"], y=view["running_slip_vs_arrival_bps"],
+                                     name="vs Arrival", mode="lines", line=dict(color="#1f77b4", width=2)))
+            fev.add_trace(go.Scatter(x=view["time"], y=view["running_slip_vs_vwap_bps"],
+                                     name="vs VWAP-to-date", mode="lines", line=dict(color="#f97316", width=2)))
+            fev.add_shape(type="line", x0=view["time"].iloc[0], x1=view["time"].iloc[-1],
+                         y0=0, y1=0, line=dict(color="gray", dash="dot", width=1))
+            for iv in st.session_state["p1_interventions"]:
+                ck = pd.Timestamp(iv["checkpoint_time"])
+                if ck <= pd.Timestamp(scrub_time):
+                    fev.add_shape(type="line", x0=ck, x1=ck, y0=0, y1=1, yref="paper",
+                                 line=dict(color="#ef4444", dash="dash", width=1))
+            fev.update_layout(height=280, margin=dict(l=40, r=20, t=10, b=30),
+                             plot_bgcolor="white",
+                             yaxis=dict(gridcolor="#eee", title="Running slippage (bps)"),
+                             legend=dict(orientation="h", yanchor="bottom", y=1.02))
+            st.plotly_chart(fev, use_container_width=True)
+            st.caption(
+                "Positive = paid more than that benchmark so far (buy order). If a line is "
+                "trending up as you scrub forward, the algo is losing ground to that benchmark — "
+                "exactly the situation a trader would use to decide whether to intervene below. "
+                "Red dashed lines mark interventions already applied."
+            )
 
-                bm1, bm2, bm3, bm4 = st.columns(4)
-                bm1.metric("Blended fill rate", f"{blended.completion_pct:.0%}")
-                bm2.metric("Blended avg exec price", f"${blended.avg_exec_price:.2f}")
-                bm3.metric("Blended total cost", f"{blended.total_cost_bps:.1f} bps")
-                orig_total = sim.algos[algo_before].total_cost_bps
-                delta_bps = blended.total_cost_bps - orig_total
-                bm4.metric(f"vs. staying on {algo_before} all day", f"{delta_bps:+.1f} bps",
-                          delta="worse" if delta_bps > 0 else "better", delta_color="inverse")
+            with st.expander("🔀 Intervene here — switch algo/urgency for the remainder"):
+                iv1, iv2, iv3 = st.columns(3)
+                with iv1:
+                    iv_algo = st.selectbox(
+                        "New algo", a_names,
+                        index=a_names.index(memo.primary_algo) if memo.primary_algo in a_names else 0,
+                        key="lm_iv_algo")
+                with iv2:
+                    iv_urg = st.selectbox(
+                        "New urgency", ["Low", "Medium", "High"],
+                        index=["Low", "Medium", "High"].index(urgency), key="lm_iv_urgency")
+                with iv3:
+                    st.markdown("")
+                    st.markdown("")
+                    add_iv = st.button("➕ Add intervention at scrub time", key="lm_add_iv",
+                                       use_container_width=True)
+                if add_iv:
+                    existing = [pd.Timestamp(iv["checkpoint_time"]) for iv in st.session_state["p1_interventions"]]
+                    if pd.Timestamp(scrub_time) in existing:
+                        st.warning("⚠️ An intervention already exists at this exact bar — "
+                                  "move the slider to a different bar first.")
+                    else:
+                        st.session_state["p1_interventions"].append(
+                            {"checkpoint_time": scrub_time, "algo": iv_algo, "urgency": iv_urg})
+                        st.rerun()
 
-                with st.expander("Blended schedule — cumulative shares, checkpoint marked"):
-                    fms = go.Figure()
-                    fms.add_trace(go.Bar(x=blended.schedule["time"], y=blended.schedule["shares_traded"],
-                                         name="Shares/bar", marker_color="#9467bd"))
-                    fms.add_trace(go.Scatter(x=blended.schedule["time"], y=blended.schedule["cumulative"],
-                                             name="Cumulative", yaxis="y2",
-                                             line=dict(color="#6b7280", width=1.5, dash="dot")))
-                    fms.add_shape(type="line", x0=switch["checkpoint_time"], x1=switch["checkpoint_time"],
-                                 y0=0, y1=1, yref="paper", line=dict(color="red", dash="dash", width=1.5))
-                    fms.update_layout(height=260, margin=dict(l=40,r=60,t=10,b=30),
-                                     plot_bgcolor="white", yaxis=dict(gridcolor="#eee"),
-                                     yaxis2=dict(overlaying="y", side="right", showgrid=False),
-                                     legend=dict(orientation="h", yanchor="bottom", y=1.02))
-                    st.plotly_chart(fms, use_container_width=True)
-                    st.caption(blended.schedule_note)
+            if st.session_state["p1_interventions"]:
+                st.markdown("**Interventions applied (in order):**")
+                for i, iv in enumerate(st.session_state["p1_interventions"]):
+                    st.caption(f"{i + 1}. @ {pd.Timestamp(iv['checkpoint_time']).strftime('%H:%M')} "
+                              f"→ switch to **{iv['algo']}** ({iv['urgency']})")
+                ub1, ub2 = st.columns(2)
+                with ub1:
+                    if st.button("↩️ Undo last intervention", key="lm_undo", use_container_width=True):
+                        st.session_state["p1_interventions"].pop()
+                        st.rerun()
+                with ub2:
+                    if st.button("🔄 Reset to no interventions", key="lm_reset", use_container_width=True):
+                        st.session_state["p1_interventions"] = []
+                        st.rerun()
+
+            st.markdown("")
+            st.markdown(f"**Final outcome if this plan holds for the rest of the day** "
+                       f"({len(st.session_state['p1_interventions'])} intervention(s) applied):")
+            blended = live["blended"]
+            fo1, fo2, fo3, fo4 = st.columns(4)
+            fo1.metric("Fill rate", f"{blended.completion_pct:.0%}")
+            fo2.metric("Avg exec price", f"${blended.avg_exec_price:.2f}")
+            fo3.metric("Total cost", f"{blended.total_cost_bps:.1f} bps")
+            baseline_algo = st.session_state["p1_base_algo"]
+            baseline_total = (sim.algos[baseline_algo].total_cost_bps
+                              if baseline_algo in sim.algos else blended.total_cost_bps)
+            delta_bps = blended.total_cost_bps - baseline_total
+            fo4.metric(f"vs. staying on {baseline_algo} all day", f"{delta_bps:+.1f} bps",
+                      delta="worse" if delta_bps > 0 else "better", delta_color="inverse")
+            st.caption(blended.schedule_note)
         else:
-            st.info("ℹ️ Not enough bars in this session to demo a mid-session checkpoint.")
+            st.info("ℹ️ Not enough bars in this session to demo the live execution monitor.")
 
         # ── AGENT 4 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
@@ -611,6 +666,101 @@ if page == "📈 Execution Algorithm Simulator":
                               margin=dict(l=40,r=20,t=10,b=40),
                               legend=dict(orientation="h",yanchor="bottom",y=1.02))
             st.plotly_chart(fac, use_container_width=True)
+
+        # ── HYPOTHESIS TESTING ────────────────────────────────────────────────
+        st.markdown("---")
+        st.markdown("### 🧪 Hypothesis Testing — Is Configuration A Actually Better Than B?")
+        st.caption(
+            "Real algo-wheel A/B testing (GSET/REDIPlus/EMSX, or vendor wheels like BestEx "
+            "Research's) randomizes many different LIVE orders across arms over weeks and "
+            "regression-adjusts for order size/vol/spread — not available here, since this "
+            "platform simulates hypothetical orders against historical bars rather than "
+            "routing live flow. This instead runs the paired-backtest version quant desks use "
+            "for a faster read: replay the SAME historical days under both configurations, so "
+            "market-condition noise is held constant and only the configuration differs — then "
+            "a paired t-test (plus a Wilcoxon signed-rank check and bootstrap CI, since "
+            "impact-cost distributions are fat-tailed) tells you if the difference is real."
+        )
+
+        ht1, ht2 = st.columns(2)
+        with ht1:
+            st.markdown("**Configuration A**")
+            ha1, ha2, ha3 = st.columns(3)
+            with ha1:
+                ht_algo_a = st.selectbox("Algo", a_names,
+                                         index=a_names.index(memo.primary_algo) if memo.primary_algo in a_names else 0,
+                                         key="ht_algo_a")
+            with ha2:
+                ht_urg_a = st.selectbox("Urgency", ["Low", "Medium", "High"],
+                                        index=["Low", "Medium", "High"].index(urgency), key="ht_urg_a")
+            with ha3:
+                ht_size_a = st.slider("% ADV", 1, 25, order_pct_adv, key="ht_size_a")
+        with ht2:
+            st.markdown("**Configuration B**")
+            hb1, hb2, hb3 = st.columns(3)
+            with hb1:
+                ht_algo_b = st.selectbox("Algo", a_names,
+                                         index=a_names.index(memo.secondary_algo) if memo.secondary_algo in a_names else 1,
+                                         key="ht_algo_b")
+            with hb2:
+                ht_urg_b = st.selectbox("Urgency", ["Low", "Medium", "High"],
+                                        index=["Low", "Medium", "High"].index(urgency), key="ht_urg_b")
+            with hb3:
+                ht_size_b = st.slider("% ADV", 1, 25, order_pct_adv, key="ht_size_b")
+
+        ht3, ht4, ht5, ht6 = st.columns(4)
+        with ht3:
+            ht_metric = st.selectbox("Metric to test", list(METRIC_MAP.keys()), key="ht_metric")
+        with ht4:
+            ht_alt = st.selectbox("Alternative hypothesis", list(ALTERNATIVES.keys()), key="ht_alt")
+        with ht5:
+            ht_alpha = st.selectbox("Significance level (α)", [0.01, 0.05, 0.10], index=1, key="ht_alpha")
+        with ht6:
+            st.markdown("")
+            st.markdown("")
+            run_ht = st.button("▶ Run Hypothesis Test", key="ht_run", use_container_width=True)
+
+        if run_ht:
+            config_a = {"algo": ht_algo_a, "urgency": ht_urg_a, "order_pct_adv": ht_size_a}
+            config_b = {"algo": ht_algo_b, "urgency": ht_urg_b, "order_pct_adv": ht_size_b}
+            st.session_state["p1_ht_result"] = run_hypothesis_test(
+                data, comp, order_pct_adv, urgency, config_a, config_b,
+                ht_metric, ht_alt, ht_alpha,
+            )
+
+        if "p1_ht_result" in st.session_state:
+            ht_res = st.session_state["p1_ht_result"]
+            if not ht_res.available:
+                st.warning(f"⚠️ {ht_res.reason}")
+            else:
+                (st.success if ht_res.reject_null else st.info)(
+                    ("✅ " if ht_res.reject_null else "ℹ️ ") + ht_res.verdict_text
+                )
+                htc1, htc2, htc3, htc4 = st.columns(4)
+                htc1.metric("Mean difference (A-B)", f"{ht_res.mean_diff:+.2f}")
+                htc2.metric("95% CI", f"[{ht_res.ci_low:+.2f}, {ht_res.ci_high:+.2f}]")
+                htc3.metric("Cohen's d", f"{ht_res.cohens_d:+.2f}")
+                htc4.metric("n (paired days)", ht_res.n_days)
+
+                with st.expander("Distribution of daily paired differences (A − B)"):
+                    fhd = go.Figure(go.Histogram(
+                        x=ht_res.daily_diffs, marker_color="#8b5cf6",
+                        nbinsx=min(20, max(5, ht_res.n_days))))
+                    fhd.add_shape(type="line", x0=0, x1=0, y0=0, y1=1, yref="paper",
+                                 line=dict(color="red", dash="dash", width=1.5))
+                    fhd.update_layout(height=240, margin=dict(l=40, r=20, t=10, b=30),
+                                     plot_bgcolor="white",
+                                     xaxis_title=f"Daily difference ({ht_res.metric})",
+                                     yaxis=dict(gridcolor="#eee"))
+                    st.plotly_chart(fhd, use_container_width=True)
+                    st.caption(f"Configuration A data source: {ht_res.note_a}")
+                    st.caption(f"Configuration B data source: {ht_res.note_b}")
+
+                with st.expander("Assumptions & caveats"):
+                    for c in ht_res.caveats:
+                        st.caption(f"• {c}")
+        else:
+            st.caption("Configure both sides above and click **Run Hypothesis Test** to see results.")
 
         # ── POST-TRADE TCA ────────────────────────────────────────────────────
         st.markdown("---")

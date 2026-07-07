@@ -368,13 +368,13 @@ def _sim_moc(day: pd.DataFrame, order_shares: float, hist_curve=None, **kw) -> p
     shares = np.zeros(n)
     w = max(1, int(round(n * MOC_WINDOW_PCT)))
     if hist_curve is not None and len(hist_curve) == n:
-        window_w = hist_curve[-w:]
-        tv = window_w.sum()
-        shares[-w:] = (window_w / tv * order_shares) if tv > 0 else (order_shares / w)
+        close_w = hist_curve[-w:]
+        tv = close_w.sum()
+        shares[-w:] = (close_w / tv * order_shares) if tv > 0 else (order_shares / w)
     else:
-        window_vol = day["Volume"].values[-w:]
-        tv = window_vol.sum()
-        shares[-w:] = (window_vol / tv * order_shares) if tv > 0 else (order_shares / w)
+        close_vol = day["Volume"].values[-w:]
+        tv = close_vol.sum()
+        shares[-w:] = (close_vol / tv * order_shares) if tv > 0 else (order_shares / w)
     return pd.DataFrame({
         "time": day.index,
         "shares_traded": shares,
@@ -395,13 +395,13 @@ def _sim_moo(day: pd.DataFrame, order_shares: float, hist_curve=None, **kw) -> p
     shares = np.zeros(n)
     w = max(1, int(round(n * MOO_WINDOW_PCT)))
     if hist_curve is not None and len(hist_curve) == n:
-        window_w = hist_curve[:w]
-        tv = window_w.sum()
-        shares[:w] = (window_w / tv * order_shares) if tv > 0 else (order_shares / w)
+        open_w = hist_curve[:w]
+        tv = open_w.sum()
+        shares[:w] = (open_w / tv * order_shares) if tv > 0 else (order_shares / w)
     else:
-        window_vol = day["Volume"].values[:w]
-        tv = window_vol.sum()
-        shares[:w] = (window_vol / tv * order_shares) if tv > 0 else (order_shares / w)
+        open_vol = day["Volume"].values[:w]
+        tv = open_vol.sum()
+        shares[:w] = (open_vol / tv * order_shares) if tv > 0 else (order_shares / w)
     return pd.DataFrame({
         "time": day.index,
         "shares_traded": shares,
@@ -564,7 +564,17 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
     return result
 
 
-# -- Mid-session interactive adjustment ---------------------------------------
+# -- Live execution monitor / chained mid-session adjustment ------------------
+#
+# Generalizes a single "checkpoint and resume" switch into an arbitrary CHAIN
+# of interventions -- a trader watching the blotter can act more than once in
+# a session, not just at one point -- and attaches per-bar RUNNING metrics
+# (cumulative avg execution price vs. two passive market benchmarks: interval
+# VWAP-to-date and interval TWAP-to-date) so the app can plot how the
+# execution is tracking its benchmark as the (simulated) session unfolds,
+# not just report a single end-of-day number. This is what lets the UI show
+# "is this algo behaving suboptimally *right now*", which a single final
+# total-cost figure cannot.
 
 _ALGO_FUNCS = {
     "VWAP": _sim_vwap, "TWAP": _sim_twap, "POV": _sim_pov, "IS": _sim_is,
@@ -572,30 +582,84 @@ _ALGO_FUNCS = {
 }
 
 
-def simulate_midsession_switch(market_data: MarketData, original_sim: SimulationResult,
-                               original_algo_name: str, checkpoint_time,
-                               new_algo_name: str, new_urgency: str, log=None) -> dict:
+def _running_benchmark_curves(day: pd.DataFrame):
+    """
+    Interval (expanding-window) VWAP and TWAP computed from the day's own
+    realized OHLCV -- a passive market benchmark independent of our simulated
+    order's own fills, exactly the "how am I doing vs. VWAP-to-date" number a
+    real intraday TCA dashboard shows. Returns (vwap_to_date, twap_to_date),
+    each a length-n array aligned to `day`'s bar index.
+    """
+    closes  = day["Close"].values.astype(float)
+    volumes = day["Volume"].values.astype(float)
+    cum_vol      = np.cumsum(volumes)
+    cum_notional = np.cumsum(closes * volumes)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        vwap_to_date = np.where(cum_vol > 0, cum_notional / cum_vol, closes[0])
+    twap_to_date = np.cumsum(closes) / np.arange(1, len(closes) + 1)
+    return vwap_to_date, twap_to_date
+
+
+def _attach_running_metrics(combined: pd.DataFrame, day: pd.DataFrame,
+                            arrival_price: float) -> pd.DataFrame:
+    """
+    Adds, per bar of the combined (possibly multi-leg) schedule: the
+    cumulative fill-weighted execution price so far, and running slippage
+    (bps) vs. arrival and vs. interval-VWAP-to-date. Zero before the first
+    fill (nothing to compare yet) rather than NaN, so charts don't break.
+    """
+    vwap_to_date, twap_to_date = _running_benchmark_curves(day)
+    bench_df = pd.DataFrame({
+        "time": day.index, "vwap_to_date": vwap_to_date, "twap_to_date": twap_to_date,
+    })
+    out = combined.merge(bench_df, on="time", how="left")
+    cum_shares   = out["shares_traded"].cumsum()
+    cum_notional = (out["shares_traded"] * out["price"]).cumsum()
+    with np.errstate(divide="ignore", invalid="ignore"):
+        cum_avg_price = np.where(cum_shares > 0, cum_notional / cum_shares, arrival_price)
+    out["cum_avg_price"] = cum_avg_price
+    out["running_slip_vs_arrival_bps"] = np.where(
+        cum_shares > 0, (cum_avg_price - arrival_price) / arrival_price * 10_000, 0.0)
+    out["running_slip_vs_vwap_bps"] = np.where(
+        (cum_shares > 0) & (out["vwap_to_date"] > 0),
+        (cum_avg_price - out["vwap_to_date"]) / out["vwap_to_date"] * 10_000, 0.0)
+    return out
+
+
+def simulate_with_interventions(market_data: MarketData, order_shares: float,
+                                base_algo: str, base_urgency: str,
+                                interventions: list, log=None) -> dict:
     """
     Models a buy-side trader monitoring execution intraday (as on a GSET-style
-    blotter) and intervening partway through the session, the way a real desk
+    blotter) and intervening -- possibly more than once -- the way a real desk
     would if the fill/slippage-so-far no longer matched conditions.
 
-    Everything up to `checkpoint_time` is taken exactly as already executed
-    under `original_algo_name`'s full-day schedule (sliced straight out of
-    `original_sim`, i.e. simulate_algos()'s output -- no re-simulation, since
-    that's genuinely what already happened under the original plan). Only the
-    shares still unfilled at the checkpoint are re-planned, using
-    `new_algo_name` / `new_urgency`, over the bars still remaining in the same
-    historical day. The two segments are then stitched into one blended
-    AlgoResult via the existing _build_result() cost math, using a
-    fill-weighted blend of the two segments' speed factors for the market-
-    impact term (a reasonable approximation for a single sqrt-law total-size
-    impact estimate split across two different aggressiveness regimes).
+    `interventions` is a list of {"checkpoint_time", "algo", "urgency"} dicts
+    (any order; sorted here by checkpoint_time). An empty list degenerates
+    to a plain single-algo/urgency run of `base_algo`/`base_urgency` for the
+    whole day. Each leg is simulated fresh, sized to only the shares still
+    unfilled entering that leg, over only the bars in that leg's window --
+    everything BEFORE a given checkpoint is never re-simulated once computed
+    (each leg is computed once, in order), matching what "already happened
+    under the plan so far" means for a real trader. Legs are stitched into
+    one blended AlgoResult via the existing _build_result() cost math, using
+    a fill-weighted blend of every leg's speed factor for the market-impact
+    term (a reasonable approximation for a single sqrt-law total-size impact
+    estimate split across several different aggressiveness regimes).
 
-    This is backtest-style ("what if I had intervened at this point on this
+    This is backtest-style ("what if I had intervened at these points on this
     historical day"), not a live feed -- the underlying prices are the same
     historical bars simulate_algos() already used, replayed rather than new
     data arriving in real time.
+
+    Returns a dict with:
+      schedule       -- combined per-bar DataFrame (time, shares_traded, price,
+                         cumulative, cum_avg_price, running_slip_vs_arrival_bps,
+                         running_slip_vs_vwap_bps) -- one row per bar of the day
+      legs           -- list of {start_time, end_time, algo, urgency, filled_shares}
+      blended        -- AlgoResult for the full (all interventions applied) day
+      day            -- the simulated day's OHLCV (for chart axis reuse)
+      arrival_price, period_end_price
     """
     def _log(msg):
         if log: log(msg)
@@ -604,70 +668,76 @@ def simulate_midsession_switch(market_data: MarketData, original_sim: Simulation
     day = _sim_day(market_data.intraday, bars_expected)
     n = len(day)
     sim_date = day.index[0].normalize()
+    arrival_price = float(day["Open"].iloc[0]) if "Open" in day.columns else float(day["Close"].iloc[0])
     period_end_price = float(day["Close"].iloc[-1])
 
-    orig_sched = original_sim.algos[original_algo_name].schedule
-    checkpoint_ts = pd.Timestamp(checkpoint_time)
-
-    phase1 = orig_sched[orig_sched["time"] <= checkpoint_ts].copy()
-    phase1_filled = float(phase1["shares_traded"].sum())
-    phase1_avg_price = (
-        float((phase1["shares_traded"] * phase1["price"]).sum() / phase1_filled)
-        if phase1_filled > 0 else original_sim.arrival_price
-    )
-
-    remaining_shares = max(0.0, original_sim.order_shares - phase1_filled)
-    remaining_day = day[day.index > checkpoint_ts]
-
     hist_curve_full, _ = _historical_volume_weights(market_data.intraday, sim_date, n)
-    hist_curve_remaining = None
-    if hist_curve_full is not None:
-        mask = np.asarray(day.index > checkpoint_ts)
-        sliced = hist_curve_full[mask]
-        total = sliced.sum()
-        hist_curve_remaining = sliced / total if total > 0 else None
 
-    fn = _ALGO_FUNCS[new_algo_name]
-    if len(remaining_day) > 0:
-        phase2_sched = fn(day=remaining_day, order_shares=remaining_shares,
-                          urgency=new_urgency, hist_curve=hist_curve_remaining)
+    ivs = sorted(interventions, key=lambda x: pd.Timestamp(x["checkpoint_time"]))
+    boundaries = ([day.index[0] - pd.Timedelta(seconds=1)]
+                 + [pd.Timestamp(iv["checkpoint_time"]) for iv in ivs]
+                 + [day.index[-1]])
+    leg_configs = [(base_algo, base_urgency)] + [(iv["algo"], iv["urgency"]) for iv in ivs]
+
+    remaining_shares = order_shares
+    frames, legs_meta = [], []
+    sf_weighted_sum = 0.0
+
+    for i, (algo, urg) in enumerate(leg_configs):
+        seg_start, seg_end = boundaries[i], boundaries[i + 1]
+        seg_day = day[(day.index > seg_start) & (day.index <= seg_end)]
+        if len(seg_day) == 0 or remaining_shares <= 0:
+            legs_meta.append({"start_time": seg_start, "end_time": seg_end, "algo": algo,
+                              "urgency": urg, "filled_shares": 0.0})
+            continue
+
+        hist_seg = None
+        if hist_curve_full is not None:
+            mask = np.asarray((day.index > seg_start) & (day.index <= seg_end))
+            sliced = hist_curve_full[mask]
+            tot = sliced.sum()
+            hist_seg = sliced / tot if tot > 0 else None
+
+        fn = _ALGO_FUNCS[algo]
+        seg_sched = fn(day=seg_day, order_shares=remaining_shares, urgency=urg, hist_curve=hist_seg)
+        seg_filled = float(seg_sched["shares_traded"].sum())
+        remaining_shares = max(0.0, remaining_shares - seg_filled)
+        sf_weighted_sum += seg_filled * _speed_factor(algo, urg)
+
+        frames.append(seg_sched[["time", "shares_traded", "price"]])
+        legs_meta.append({"start_time": seg_start, "end_time": seg_end, "algo": algo,
+                          "urgency": urg, "filled_shares": seg_filled})
+
+    if frames:
+        combined = pd.concat(frames, ignore_index=True)
     else:
-        phase2_sched = pd.DataFrame(columns=["time", "shares_traded", "price", "cumulative"])
-    phase2_filled = float(phase2_sched["shares_traded"].sum()) if len(phase2_sched) else 0.0
+        combined = pd.DataFrame(columns=["time", "shares_traded", "price"])
+    combined["cumulative"] = combined["shares_traded"].cumsum() if len(combined) else []
 
-    frames = [phase1[["time", "shares_traded", "price"]]]
-    if len(phase2_sched):
-        frames.append(phase2_sched[["time", "shares_traded", "price"]])
-    combined = pd.concat(frames, ignore_index=True)
-    combined["cumulative"] = combined["shares_traded"].cumsum()
+    total_filled = order_shares - remaining_shares
+    sf_blend = (sf_weighted_sum / total_filled) if total_filled > 0 else _speed_factor(base_algo, base_urgency)
 
-    total_filled = phase1_filled + phase2_filled
-    sf_orig = _speed_factor(original_algo_name, original_sim.urgency)
-    sf_new  = _speed_factor(new_algo_name, new_urgency)
-    sf_blend = ((phase1_filled * sf_orig + phase2_filled * sf_new) / total_filled
-               if total_filled > 0 else sf_new)
+    label = base_algo + "".join(f"→{iv['algo']}" for iv in ivs)
+    note_parts = [f"Base: {base_algo} ({base_urgency})"]
+    for iv in ivs:
+        note_parts.append(f"switch @ {pd.Timestamp(iv['checkpoint_time']).strftime('%H:%M')} "
+                          f"-> {iv['algo']} ({iv['urgency']})")
+    note = "; ".join(note_parts)
 
-    label = original_algo_name if original_algo_name == new_algo_name else f"{original_algo_name}→{new_algo_name}"
-    note = (f"Mid-session switch at {checkpoint_ts.strftime('%H:%M')}: {phase1_filled:,.0f} sh already filled "
-           f"under {original_algo_name} ({original_sim.urgency}); remaining {remaining_shares:,.0f} sh "
-           f"re-planned under {new_algo_name} ({new_urgency}).")
+    blended = _build_result(label, combined, arrival_price, order_shares,
+                            market_data.adv_shares, market_data.realized_vol_ann,
+                            sf_blend, period_end_price, schedule_note=note)
 
-    blended = _build_result(label, combined, original_sim.arrival_price,
-                            original_sim.order_shares, market_data.adv_shares,
-                            market_data.realized_vol_ann, sf_blend,
-                            period_end_price, schedule_note=note)
+    combined = _attach_running_metrics(combined, day, arrival_price)
 
-    _log(f"Mid-session switch: {phase1_filled:,.0f} sh @ {original_algo_name} -> "
-         f"{phase2_filled:,.0f} sh @ {new_algo_name}; blended total cost {blended.total_cost_bps:.1f} bps")
+    _log(f"Interventions ({len(ivs)}): filled {total_filled:,.0f}/{order_shares:,.0f} sh; "
+         f"blended total cost {blended.total_cost_bps:.1f} bps")
 
     return {
+        "schedule": combined,
+        "legs": legs_meta,
         "blended": blended,
-        "checkpoint_time": checkpoint_ts,
-        "phase1_filled": phase1_filled,
-        "phase1_avg_price": phase1_avg_price,
-        "phase1_pct_complete": (phase1_filled / original_sim.order_shares) if original_sim.order_shares > 0 else 0.0,
-        "phase1_slippage_bps": (phase1_avg_price - original_sim.arrival_price) / original_sim.arrival_price * 10_000
-                               if original_sim.arrival_price > 0 else 0.0,
-        "remaining_shares": remaining_shares,
-        "phase2_filled": phase2_filled,
+        "day": day,
+        "arrival_price": arrival_price,
+        "period_end_price": period_end_price,
     }

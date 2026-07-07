@@ -22,7 +22,9 @@ Given a ticker and an order (size as % of ADV, urgency, benchmark target), a pip
 | 8 — Critic | Independent second pass over Agent 5's pick — checks fill-qualification and earnings-date risk without silently overriding the recommendation |
 | 9 — Market Microstructure | Kyle's Lambda (price impact per unit signed order flow) and VPIN (order-flow toxicity), both estimated via Bulk Volume Classification on 5-min bars since no tick/order-book feed is free at this granularity |
 
-**Mid-Session Adjustment (interactive intervention):** real buy-side desks monitor fills on a GSET/REDIPlus-style blotter and can intervene mid-session. This is modeled directly: pick the algo that ran before a checkpoint, drag to any bar mid-session, choose a new algo/urgency for the remainder, and apply. Everything before the checkpoint is sliced from the already-computed original schedule (not re-simulated); only the unfilled remainder is re-planned and blended into one result, shown against the "no intervention" baseline. Backtest-style — same historical bars replayed under a hypothetical intervention, not a live feed.
+**Live Execution Monitor (scrubbable playback + chained mid-session adjustment):** real buy-side desks watch fills and slippage-vs-benchmark intraday on a broker execution-management-system (EMS) blotter, and intervene — potentially more than once — if the algo is behaving suboptimally. This is modeled directly: a playback slider scrubs forward through the (already-computed) execution schedule bar-by-bar, showing running fill %, average execution price, and running slippage against both Arrival and interval-VWAP-to-date, so it's visible in real time whether the algo is gaining or losing ground. At any scrub point the user can add an intervention — switch algo/urgency for the remainder — and stack multiple interventions across the session (e.g. VWAP → POV → IS), each one re-planning only the shares still unfilled over the remaining bars. Interventions can be undone individually or reset entirely, and the final blended outcome is shown against the "stayed on the original algo all day" baseline. Backtest-style — the same historical bars are replayed under the hypothetical plan, not a live feed.
+
+**Hypothesis Testing on execution parameters:** lets a user define two configurations (algo / urgency / order size) and click a button to get a formal statistical verdict on whether one significantly beats the other on a chosen metric (Total Cost, Slippage, Market Impact, Opportunity Cost, or Fill Rate). Since this platform can't route live orders through two algos at once, it uses the practical analog quant desks use: a **paired backtest** — replaying the exact same historical days under both configurations so market-condition noise is held constant and only the configuration differs. Reports a paired t-test, a Wilcoxon signed-rank robustness check, a 5,000-resample bootstrap confidence interval on the mean difference, and Cohen's d, plus a histogram of daily paired differences and disclosed caveats (small-sample warnings, fast-path vs. re-simulated data provenance). When a tested configuration exactly matches the current pipeline's settings it reuses Agent 4's already-computed daily data instead of re-simulating.
 
 **Supported markets (14):** US, Taiwan (TWSE), Hong Kong (HKEX), Japan (TSE), Korea (KRX), Singapore (SGX), China-A (Shanghai & Shenzhen), India (NSE), Australia (ASX), Thailand (SET), Indonesia (IDX), Malaysia (KLSE), Vietnam (HOSE).
 
@@ -44,10 +46,6 @@ Event study of price and volume dynamics around an index constituent addition/re
 - **Agents are independent and composable**, not a fixed monolithic script — see `PROJECT_CONTEXT.md` for the full multi-agent design write-up, including what a genuinely LLM-driven version of this pipeline would add on top of the current rule-based logic.
 - **Look-ahead bias is actively guarded against**: VWAP/MOC/MOO schedules are built from a leave-one-out historical volume curve rather than the simulated day's own (unknowable, in real time) volume; Kyle's Lambda regresses next-bar returns on this-bar's classified flow rather than a contemporaneous (circular) regression.
 
-## Roadmap
-
-- **Hypothesis testing on execution parameters** — a planned feature to let users define two configurations (algo/urgency/order size) and run a formal paired significance test (paired t-test + Wilcoxon signed-rank + bootstrap CI) on whether one significantly beats the other, reusing the multi-day paired simulation data Agent 4 already computes. Design proposed; not yet implemented.
-
 ## Running locally
 
 ```bash
@@ -60,7 +58,7 @@ streamlit run app.py
 - **Data:** [yfinance](https://github.com/ranaroussi/yfinance) (free Yahoo Finance data, no API key)
 - **UI:** Streamlit
 - **Charts:** Plotly
-- **Analysis:** pandas, NumPy — statistical/rule-based agents (variance ratio test, Corwin-Schultz, Bulk Volume Classification, Almgren-Chriss), not LLM-backed
+- **Analysis:** pandas, NumPy, SciPy — statistical/rule-based agents (variance ratio test, Corwin-Schultz, Bulk Volume Classification, Almgren-Chriss, paired t-test / Wilcoxon / bootstrap for hypothesis testing), not LLM-backed
 
 ## Repository structure
 
@@ -69,13 +67,14 @@ app.py                              # Streamlit UI — Page 1 (simulator) + Page
 agents/
   agent1_market_data.py             # Market data fetch, ADV, realized vol, volume profile
   agent2_market_regime.py           # Volatility / volume / trend regime classification
-  agent3_algo_simulation.py         # 8-algorithm single-day simulation + mid-session switch
+  agent3_algo_simulation.py         # 8-algorithm single-day simulation + chained live-execution interventions
   agent4_performance_comparison.py  # Multi-day comparison, sensitivity grid, AC frontier
   agent5_recommendation.py          # Rule-based recommendation memo
   agent6_pretrade_posttrade.py      # Pre-trade estimate + post-trade TCA
   agent7_earnings_calendar.py       # Earnings-date gap-risk flag
   agent8_critic.py                  # Independent recommendation review
   agent9_microstructure.py          # Kyle's Lambda, VPIN, Almgren impact cross-check
+  agent10_hypothesis_test.py        # Paired-backtest hypothesis testing (t-test/Wilcoxon/bootstrap)
   rebalancing_event_study.py        # CAR/abnormal-volume event study + execution insights
   orchestrator.py                   # Runs Agents 2-9, conditional skip/fail handling
   context.py                        # Shared ExecutionContext ("blackboard") state

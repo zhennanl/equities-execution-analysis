@@ -36,6 +36,9 @@ from agents.agent3_algo_simulation import (
 class PerformanceComparison:
     daily_costs: pd.DataFrame     # index=date, cols=algo names (total cost bps, incl. opportunity cost)
     daily_slips: pd.DataFrame     # same structure, slippage only
+    daily_impact: pd.DataFrame    # same structure, market impact (bps) only
+    daily_opp: pd.DataFrame       # same structure, Perold opportunity cost (bps) only
+    daily_fills: pd.DataFrame     # same structure, fill fraction (0-1)
     summary: pd.DataFrame         # mean, std, min, max, avg fill, win-days per algo
     sensitivity: pd.DataFrame     # index=algo, cols=order pct labels (re-simulated, not a formula shortcut)
     best_algo: str
@@ -43,17 +46,41 @@ class PerformanceComparison:
     ac_frontier: pd.DataFrame     # Almgren-Chriss kappa*T grid: front-loading % vs risk proxy
 
 
+def _build_valid_days(market_data: MarketData) -> list:
+    """
+    Shared "which historical days are usable, and what's their leave-one-out
+    historical volume curve" pre-pass -- factored out so agent10's hypothesis
+    tests can re-simulate a different urgency/order-size config across
+    EXACTLY the same day set Agent 4 used (paired-sample requirement: both
+    arms of a hypothesis test must be compared on the same historical days),
+    without duplicating this logic.
+    """
+    bars_expected = MARKET_INFO[market_data.market]["bars"]
+    intraday = market_data.intraday
+    valid_days = []
+    for d in sorted(intraday.index.normalize().unique()):
+        day = intraday[intraday.index.normalize() == d]
+        if len(day) < int(bars_expected * 0.5):
+            continue
+        hist_curve, _n_hist = _historical_volume_weights(intraday, d, len(day))
+        valid_days.append((d, day, hist_curve))
+    return valid_days
+
+
 def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
                  adv_shares: float, vol_ann: float, hist_curve=None) -> dict:
     """
     Simulate all 8 algos on a single day's bar data.
-    Returns {algo_name: (slippage_bps, total_cost_bps, fill_frac)}. total_cost_bps
-    is slippage + market impact + Perold (1988) opportunity cost on any unfilled
-    shares (priced against the day's period-end close vs arrival). fill_frac is
-    the fraction of order_shares actually completed on this day, used by
-    compare_performance() to gate "best algo" selection on FILL_QUALIFY_THRESH
-    so a thinly-filled algo can't win purely on favorable ex-post opportunity
-    cost.
+    Returns {algo_name: (slippage_bps, market_impact_bps, opportunity_cost_bps,
+    total_cost_bps, fill_frac)}. total_cost_bps is slippage + market impact +
+    Perold (1988) opportunity cost on any unfilled shares (priced against the
+    day's period-end close vs arrival) -- the three components are also
+    returned individually so callers (Agent 4's tables, Agent 10's hypothesis
+    tests) can test/report on any one of them, not just the combined total.
+    fill_frac is the fraction of order_shares actually completed on this day,
+    used by compare_performance() to gate "best algo" selection on
+    FILL_QUALIFY_THRESH so a thinly-filled algo can't win purely on favorable
+    ex-post opportunity-cost variance.
 
     hist_curve, if provided, is the leave-one-out historical volume-share
     curve from _historical_volume_weights() -- used to schedule VWAP/MOC/MOO
@@ -75,14 +102,14 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         filled = shares.sum()
         fill_frac = 1.0 if order_shares <= 0 else min(1.0, filled / order_shares)
         if filled <= 0:
-            return 0.0, 0.0, round(fill_frac, 4)
+            return 0.0, 0.0, 0.0, 0.0, round(fill_frac, 4)
         avg_px   = (shares * closes).sum() / filled
         slip     = (avg_px - arrival) / arrival * 10_000
         mi       = IMPACT_ETA * sigma_d * np.sqrt(order_shares / adv_shares) * sf * 10_000
         unfilled = max(0.0, order_shares - filled)
         opp      = ((unfilled / order_shares) * (period_end - arrival) / arrival * 10_000
                     if order_shares > 0 else 0.0)
-        return round(slip, 2), round(slip + mi + opp, 2), round(fill_frac, 4)
+        return round(slip, 2), round(mi, 2), round(opp, 2), round(slip + mi + opp, 2), round(fill_frac, 4)
 
     # VWAP
     if hist_curve is not None and len(hist_curve) == n:
@@ -90,11 +117,11 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
     else:
         tv = volumes.sum()
         vwap_w = volumes / tv * order_shares if tv > 0 else np.full(n, order_shares / n)
-    vwap_slip, vwap_tot, vwap_fill = _cost(vwap_w, SPEED_FACTORS["VWAP"])
+    vwap_res = _cost(vwap_w, SPEED_FACTORS["VWAP"])
 
     # TWAP
     twap_w = np.full(n, order_shares / n)
-    twap_slip, twap_tot, twap_fill = _cost(twap_w, SPEED_FACTORS["TWAP"])
+    twap_res = _cost(twap_w, SPEED_FACTORS["TWAP"])
 
     # POV
     rate = POV_RATES[urgency]
@@ -105,11 +132,11 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         traded = min(rem, volumes[i] * rate)
         pov_w[i] = traded
         rem -= traded
-    pov_slip, pov_tot, pov_fill = _cost(pov_w, SPEED_FACTORS["POV"])
+    pov_res = _cost(pov_w, SPEED_FACTORS["POV"])
 
     # IS -- Almgren-Chriss trajectory (replaces the old ad hoc exponential decay)
     is_w = _ac_trajectory_weights(n, IS_KAPPA_T[urgency]) * order_shares
-    is_slip, is_tot, is_fill = _cost(is_w, SPEED_FACTORS["IS"][urgency])
+    is_res = _cost(is_w, SPEED_FACTORS["IS"][urgency])
 
     # MOC -- concentrate into the closing window, historical shape when available
     w_close = max(1, int(round(n * MOC_WINDOW_PCT)))
@@ -122,7 +149,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         close_vol = volumes[-w_close:]
         tv_c = close_vol.sum()
         moc_w[-w_close:] = (close_vol / tv_c * order_shares) if tv_c > 0 else (order_shares / w_close)
-    moc_slip, moc_tot, moc_fill = _cost(moc_w, SPEED_FACTORS["MOC"])
+    moc_res = _cost(moc_w, SPEED_FACTORS["MOC"])
 
     # MOO -- concentrate into the opening window, historical shape when available
     w_open = max(1, int(round(n * MOO_WINDOW_PCT)))
@@ -135,7 +162,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         open_vol = volumes[:w_open]
         tv_o = open_vol.sum()
         moo_w[:w_open] = (open_vol / tv_o * order_shares) if tv_o > 0 else (order_shares / w_open)
-    moo_slip, moo_tot, moo_fill = _cost(moo_w, SPEED_FACTORS["MOO"])
+    moo_res = _cost(moo_w, SPEED_FACTORS["MOO"])
 
     # Liquidity-Seeking -- participation tilted by short-term price favorability
     base_rate = LIQ_BASE_RATE[urgency]
@@ -154,7 +181,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         traded = min(remaining, volumes[i] * base_rate * mult)
         liq_w[i] = traded
         remaining -= traded
-    liq_slip, liq_tot, liq_fill = _cost(liq_w, SPEED_FACTORS["LIQ"][urgency])
+    liq_res = _cost(liq_w, SPEED_FACTORS["LIQ"][urgency])
 
     # Stealth -- capped, randomized, near-equal participation (iceberg-style)
     cap_rate = STEALTH_CAP[urgency]
@@ -174,17 +201,11 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         stealth_w[i] = traded
         carry = max(0.0, want - traded)
         remaining -= traded
-    stealth_slip, stealth_tot, stealth_fill = _cost(stealth_w, SPEED_FACTORS["STEALTH"][urgency])
+    stealth_res = _cost(stealth_w, SPEED_FACTORS["STEALTH"][urgency])
 
     return {
-        "VWAP":    (vwap_slip,    vwap_tot,    vwap_fill),
-        "TWAP":    (twap_slip,    twap_tot,    twap_fill),
-        "POV":     (pov_slip,     pov_tot,     pov_fill),
-        "IS":      (is_slip,      is_tot,      is_fill),
-        "MOC":     (moc_slip,     moc_tot,     moc_fill),
-        "MOO":     (moo_slip,     moo_tot,     moo_fill),
-        "LIQ":     (liq_slip,     liq_tot,     liq_fill),
-        "STEALTH": (stealth_slip, stealth_tot, stealth_fill),
+        "VWAP": vwap_res, "TWAP": twap_res, "POV": pov_res, "IS": is_res,
+        "MOC": moc_res, "MOO": moo_res, "LIQ": liq_res, "STEALTH": stealth_res,
     }
 
 
@@ -200,43 +221,44 @@ def compare_performance(market_data: MarketData, order_pct_adv: float,
     vol_ann       = market_data.realized_vol_ann
 
     algos = ["VWAP", "TWAP", "POV", "IS", "MOC", "MOO", "LIQ", "STEALTH"]
-    cost_rows, slip_rows = [], []
+    cost_rows, slip_rows, impact_rows, opp_rows = [], [], [], []
     win_counts = {a: 0 for a in algos}
 
     # -- Pre-compute each valid day + its leave-one-out historical curve ------
-    valid_days = []
-    for d in sorted(intraday.index.normalize().unique()):
-        day = intraday[intraday.index.normalize() == d]
-        if len(day) < int(bars_expected * 0.5):
-            continue
-        hist_curve, _n_hist = _historical_volume_weights(intraday, d, len(day))
-        valid_days.append((d, day, hist_curve))
+    valid_days = _build_valid_days(market_data)
 
     # -- Multi-day loop at the requested order size ---------------------------
+    # Tuple layout from _sim_day_all: (slip, mi, opp, total, fill)
     fill_rows = []
     for d, day, hist_curve in valid_days:
         res = _sim_day_all(day, order_shares, urgency, adv_shares, vol_ann, hist_curve=hist_curve)
         if res is None:
             continue
-        cost_row = {"date": d.date(), **{a: res[a][1] for a in algos}}
-        slip_row = {"date": d.date(), **{a: res[a][0] for a in algos}}
-        fill_row = {"date": d.date(), **{a: res[a][2] for a in algos}}
+        cost_row   = {"date": d.date(), **{a: res[a][3] for a in algos}}
+        slip_row   = {"date": d.date(), **{a: res[a][0] for a in algos}}
+        impact_row = {"date": d.date(), **{a: res[a][1] for a in algos}}
+        opp_row    = {"date": d.date(), **{a: res[a][2] for a in algos}}
+        fill_row   = {"date": d.date(), **{a: res[a][4] for a in algos}}
         cost_rows.append(cost_row)
         slip_rows.append(slip_row)
+        impact_rows.append(impact_row)
+        opp_rows.append(opp_row)
         fill_rows.append(fill_row)
 
         # Fill-qualified "best day" -- an algo that barely filled shouldn't win
         # a day purely on favorable ex-post opportunity-cost variance. Fall
         # back to the unfiltered minimum only if nothing qualifies that day.
-        qualifying_today = [a for a in algos if res[a][2] >= FILL_QUALIFY_THRESH]
+        qualifying_today = [a for a in algos if res[a][4] >= FILL_QUALIFY_THRESH]
         pool_today = qualifying_today if qualifying_today else algos
-        best_day = min(pool_today, key=lambda a: res[a][1])
+        best_day = min(pool_today, key=lambda a: res[a][3])
         win_counts[best_day] += 1
-        _log(f"  {d.date()}: best={best_day} ({res[best_day][1]:.1f} bps, fill {res[best_day][2]:.0%})")
+        _log(f"  {d.date()}: best={best_day} ({res[best_day][3]:.1f} bps, fill {res[best_day][4]:.0%})")
 
-    daily_costs = pd.DataFrame(cost_rows).set_index("date")
-    daily_slips = pd.DataFrame(slip_rows).set_index("date")
-    daily_fills = pd.DataFrame(fill_rows).set_index("date")
+    daily_costs  = pd.DataFrame(cost_rows).set_index("date")
+    daily_slips  = pd.DataFrame(slip_rows).set_index("date")
+    daily_impact = pd.DataFrame(impact_rows).set_index("date")
+    daily_opp    = pd.DataFrame(opp_rows).set_index("date")
+    daily_fills  = pd.DataFrame(fill_rows).set_index("date")
     avg_fill = daily_fills.mean()
 
     summary = pd.DataFrame({
@@ -266,7 +288,7 @@ def compare_performance(market_data: MarketData, order_pct_adv: float,
             if res is None:
                 continue
             for a in algos:
-                per_algo_costs[a].append(res[a][1])
+                per_algo_costs[a].append(res[a][3])
         for a in algos:
             vals = per_algo_costs[a]
             sens_rows[a][f"{pct}% ADV"] = round(float(np.mean(vals)), 1) if vals else None
@@ -290,6 +312,9 @@ def compare_performance(market_data: MarketData, order_pct_adv: float,
     return PerformanceComparison(
         daily_costs=daily_costs,
         daily_slips=daily_slips,
+        daily_impact=daily_impact,
+        daily_opp=daily_opp,
+        daily_fills=daily_fills,
         summary=summary,
         sensitivity=sensitivity,
         best_algo=best_algo,
