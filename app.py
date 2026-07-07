@@ -164,8 +164,9 @@ if page == "📈 Execution Algorithm Simulator":
         st.session_state["p1_interventions"] = []
         st.session_state["p1_base_algo"] = ctx.memo.primary_algo if ctx.memo is not None else None
         st.session_state["p1_base_urgency"] = urgency
+        st.session_state["p1_base_benchmark"] = benchmark_target
         st.session_state.pop("p1_ht_result", None)
-        # Time-lapse transport state -- fresh run always restarts playback
+        # Playback transport state -- fresh run always restarts the simulation
         # from the first bar, paused, at Normal speed.
         st.session_state["lm_cursor_idx"] = 0
         st.session_state["p1_playing"] = False
@@ -203,16 +204,17 @@ if page == "📈 Execution Algorithm Simulator":
 
         a_names = list(sim.algos.keys())
 
-        # ── LIVE TRADING SESSION (time-lapse) ─────────────────────────────────
-        st.markdown("### 🔴 Live Trading Session — Time-Lapse Playback")
+        # ── LIVE TRADING SESSION (interactive simulation) ─────────────────────
+        st.markdown("### 🔴 Live Trading Session — Interactive Simulation")
         st.caption(
             "Press **Play** and watch the session unfold bar-by-bar, exactly as a trader would "
             "experience it on a broker execution-management-system (EMS) blotter — every panel "
             "below (Market Regime, Microstructure, Pre-Trade re-underwrite, the recommendation "
             "check, and TCA) recomputes using ONLY the bars observed so far, not the full "
-            "(already-known) day the sections above use. Pause at any point to tweak the algo/"
-            "urgency for the rest of the session. Backtest-style — the same historical bars are "
-            "replayed on a timer, not a live feed."
+            "(already-known) day the sections above use. Change the algo, urgency, or benchmark "
+            "target below to alter the execution strategy — at the start of the day, or mid-session "
+            "via an intervention — and pause at any point to review the effect before resuming. "
+            "Backtest-style — the same historical bars are replayed on a timer, not a live feed."
         )
 
         if "lm_cursor_idx" not in st.session_state:
@@ -237,7 +239,7 @@ if page == "📈 Execution Algorithm Simulator":
             # is instantiated this run -- Streamlit forbids writing to
             # st.session_state[key] AFTER a widget with that key has already
             # been created in the same script pass. Sleeping first paces the
-            # time-lapse; the slider (and everything below it) then renders
+            # simulation; the slider (and everything below it) then renders
             # using the just-advanced position.
             if st.session_state["p1_playing"]:
                 if st.session_state["lm_cursor_idx"] >= n_opts - 1:
@@ -247,7 +249,10 @@ if page == "📈 Execution Algorithm Simulator":
                     time.sleep(delay)
                     st.session_state["lm_cursor_idx"] += 1
 
-            lm1, lm2 = st.columns(2)
+            if "p1_base_benchmark" not in st.session_state:
+                st.session_state["p1_base_benchmark"] = benchmark_target
+
+            lm1, lm2, lm3 = st.columns(3)
             with lm1:
                 base_algo_choice = st.selectbox(
                     "Algo you started the day on", a_names,
@@ -259,13 +264,23 @@ if page == "📈 Execution Algorithm Simulator":
                     "Starting urgency", ["Low", "Medium", "High"],
                     index=["Low", "Medium", "High"].index(st.session_state["p1_base_urgency"]),
                     key="lm_base_urgency")
+            with lm3:
+                base_benchmark_choice = st.selectbox(
+                    "Starting benchmark target", ["Arrival", "VWAP", "Close", "Open"],
+                    index=["Arrival", "VWAP", "Close", "Open"].index(st.session_state["p1_base_benchmark"])
+                    if st.session_state["p1_base_benchmark"] in ["Arrival", "VWAP", "Close", "Open"] else 0,
+                    key="lm_base_benchmark",
+                    help="What this order is measured against -- steers Agent 5's rule when it "
+                         "re-fires against the live regime below.")
 
             # Changing the starting point invalidates any interventions already
             # queued against the OLD starting point -- clear rather than mix plans.
             if (base_algo_choice != st.session_state["p1_base_algo"]
-                    or base_urgency_choice != st.session_state["p1_base_urgency"]):
+                    or base_urgency_choice != st.session_state["p1_base_urgency"]
+                    or base_benchmark_choice != st.session_state["p1_base_benchmark"]):
                 st.session_state["p1_base_algo"] = base_algo_choice
                 st.session_state["p1_base_urgency"] = base_urgency_choice
+                st.session_state["p1_base_benchmark"] = base_benchmark_choice
                 st.session_state["p1_interventions"] = []
                 st.session_state["lm_cursor_idx"] = 0
                 st.session_state["p1_playing"] = False
@@ -313,6 +328,19 @@ if page == "📈 Execution Algorithm Simulator":
             pct_complete = (last["cumulative"] / order_shares) if order_shares > 0 else 0.0
             remaining_shares = max(0.0, order_shares - last["cumulative"])
 
+            # Current effective urgency/benchmark AT this playback position --
+            # the most recent intervention at or before scrub_time overrides
+            # the starting value, so tweaking the inputs mid-session actually
+            # feeds through to the live regime/recommendation re-checks below,
+            # not just the schedule.
+            def _effective_at(field, base_value):
+                applied = [iv for iv in st.session_state["p1_interventions"]
+                          if pd.Timestamp(iv["checkpoint_time"]) <= pd.Timestamp(scrub_time)]
+                return applied[-1].get(field, base_value) if applied else base_value
+
+            current_urgency = _effective_at("urgency", st.session_state["p1_base_urgency"])
+            current_benchmark = _effective_at("benchmark", st.session_state["p1_base_benchmark"])
+
             sv1, sv2, sv3, sv4 = st.columns(4)
             sv1.metric("Filled so far", f"{last['cumulative']:,.0f} sh",
                       delta=f"{pct_complete:.0%} of order", delta_color="off")
@@ -352,13 +380,14 @@ if page == "📈 Execution Algorithm Simulator":
             l_regime = live_regime(data.intraday, data.daily, today_date, view_day)
             l_micro = live_microstructure(
                 data.intraday, today_date, view_day, data.adv_shares, remaining_shares,
-                st.session_state["p1_base_urgency"], data.realized_vol_ann,
+                current_urgency, data.realized_vol_ann,
                 getattr(data, "shares_outstanding", None))
             l_pretrade = live_pretrade_remaining(
-                remaining_shares, data.adv_shares, st.session_state["p1_base_urgency"],
+                remaining_shares, data.adv_shares, current_urgency,
                 data.realized_vol_ann, getattr(data, "shares_outstanding", None))
             l_rec = live_recommendation_check(
-                l_regime, regime, comp, urgency, benchmark_target, memo.primary_algo, memo.secondary_algo)
+                l_regime, regime, comp, current_urgency, current_benchmark,
+                memo.primary_algo, memo.secondary_algo)
 
             lg1, lg2 = st.columns(2)
             with lg1:
@@ -382,13 +411,19 @@ if page == "📈 Execution Algorithm Simulator":
                     st.caption(f"Kyle's λ: {l_micro.kyle_lambda.reason}")
 
             if l_rec.still_on_track:
-                st.success(f"✅ **Still on track** — Agent 5's rule, re-run against the live regime, "
+                st.success(f"✅ **Still on track** — Agent 5's rule, re-run against the live regime "
+                          f"at **{current_urgency}** urgency / **{current_benchmark}** benchmark, "
                           f"still picks **{l_rec.live_primary}**, matching the original recommendation.")
             else:
-                st.warning(f"⚠️ **Reconsider** — Agent 5's rule, re-run against the live regime, now "
+                st.warning(f"⚠️ **Reconsider** — Agent 5's rule, re-run against the live regime "
+                          f"at **{current_urgency}** urgency / **{current_benchmark}** benchmark, now "
                           f"picks **{l_rec.live_primary}** instead of the original **{memo.primary_algo}**.")
             for c in l_rec.changes:
                 st.caption(f"• {c}")
+            if current_urgency != st.session_state["p1_base_urgency"] or current_benchmark != st.session_state["p1_base_benchmark"]:
+                st.caption(f"Currently in effect (via intervention): {current_urgency} urgency, "
+                          f"{current_benchmark} benchmark — started the day on "
+                          f"{st.session_state['p1_base_urgency']} / {st.session_state['p1_base_benchmark']}.")
 
             st.markdown("*Pre-Trade Re-Underwrite — remaining order*")
             lp1, lp2 = st.columns(2)
@@ -429,8 +464,8 @@ if page == "📈 Execution Algorithm Simulator":
             st.caption(tca.note)
 
             # -- Intervene ------------------------------------------------------
-            with st.expander("🔀 Intervene here — switch algo/urgency for the remainder"):
-                iv1, iv2, iv3 = st.columns(3)
+            with st.expander("🔀 Intervene here — switch algo/urgency/benchmark for the remainder"):
+                iv1, iv2, iv3, iv4 = st.columns(4)
                 with iv1:
                     iv_algo = st.selectbox(
                         "New algo", a_names,
@@ -439,8 +474,14 @@ if page == "📈 Execution Algorithm Simulator":
                 with iv2:
                     iv_urg = st.selectbox(
                         "New urgency", ["Low", "Medium", "High"],
-                        index=["Low", "Medium", "High"].index(urgency), key="lm_iv_urgency")
+                        index=["Low", "Medium", "High"].index(current_urgency), key="lm_iv_urgency")
                 with iv3:
+                    iv_bench = st.selectbox(
+                        "New benchmark target", ["Arrival", "VWAP", "Close", "Open"],
+                        index=["Arrival", "VWAP", "Close", "Open"].index(current_benchmark)
+                        if current_benchmark in ["Arrival", "VWAP", "Close", "Open"] else 0,
+                        key="lm_iv_benchmark")
+                with iv4:
                     st.markdown("")
                     st.markdown("")
                     add_iv = st.button("➕ Add intervention here", key="lm_add_iv",
@@ -452,7 +493,8 @@ if page == "📈 Execution Algorithm Simulator":
                                   "move to a different bar first.")
                     else:
                         st.session_state["p1_interventions"].append(
-                            {"checkpoint_time": scrub_time, "algo": iv_algo, "urgency": iv_urg})
+                            {"checkpoint_time": scrub_time, "algo": iv_algo, "urgency": iv_urg,
+                             "benchmark": iv_bench})
                         st.session_state["p1_playing"] = False
                         st.rerun()
 
@@ -460,7 +502,8 @@ if page == "📈 Execution Algorithm Simulator":
                 st.markdown("**Interventions applied (in order):**")
                 for i, iv in enumerate(st.session_state["p1_interventions"]):
                     st.caption(f"{i + 1}. @ {pd.Timestamp(iv['checkpoint_time']).strftime('%H:%M')} "
-                              f"→ switch to **{iv['algo']}** ({iv['urgency']})")
+                              f"→ switch to **{iv['algo']}** ({iv['urgency']}, "
+                              f"{iv.get('benchmark', st.session_state['p1_base_benchmark'])} benchmark)")
                 ub1, ub2 = st.columns(2)
                 with ub1:
                     if st.button("↩️ Undo last intervention", key="lm_undo", use_container_width=True):
