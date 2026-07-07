@@ -67,6 +67,7 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass, field
 from agents.agent1_market_data import MarketData, MARKET_INFO
+from agents.order_ticket import constrain_fills, windowed_curve, excluded_algos
 
 
 # Market impact coefficient (empirical, typical range 0.2-0.5 across the
@@ -150,6 +151,8 @@ class SimulationResult:
     urgency: str
     arrival_price: float
     algos: dict = field(default_factory=dict)   # name -> AlgoResult
+    excluded: dict = field(default_factory=dict)    # name -> reason (order-ticket exclusions)
+    constraint_notes: list = field(default_factory=list)  # active order-ticket constraints
 
 
 # -- Helpers ----------------------------------------------------------------
@@ -492,7 +495,7 @@ def _sim_stealth(day: pd.DataFrame, order_shares: float, urgency: str, **kw) -> 
 # -- Main entry point ---------------------------------------------------------
 
 def simulate_algos(market_data: MarketData, order_pct_adv: float,
-                   urgency: str, log=None) -> SimulationResult:
+                   urgency: str, log=None, ticket=None) -> SimulationResult:
     """
     Run all eight algorithm simulations and return comparable results.
 
@@ -521,6 +524,26 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
     else:
         schedule_note_vol = f"Same-day realized volume ({n_hist_days} other day(s) available — insufficient history)"
 
+    # -- Order-ticket constraints (institutional order parameters) ----------
+    # Arrival (decision price) and period-end stay FULL-DAY anchors even when
+    # the ticket's window restricts trading to part of the day: slippage vs
+    # the decision price then implicitly measures the delay cost of the
+    # window, which is the institutionally correct IS treatment.
+    ticket_active = ticket is not None and not ticket.is_default()
+    s_bar, e_bar, excl = 0, n - 1, {}
+    if ticket_active:
+        s_bar, e_bar = ticket.window_indices(day.index)
+        excl = excluded_algos(ticket, s_bar, e_bar, n)
+    if ticket_active and (s_bar, e_bar) != (0, n - 1):
+        day_plan = day.iloc[s_bar:e_bar + 1]
+        hist_curve_plan = windowed_curve(hist_curve, s_bar, e_bar)
+        _log(f"  Order ticket: window bars {s_bar}..{e_bar} of {n}")
+    else:
+        day_plan, hist_curve_plan = day, hist_curve
+    if ticket_active:
+        for c in ticket.constraint_summary():
+            _log(f"  Order ticket: {c}")
+
     _log(f"Simulating on {day.index[0].date()} · {n} bars · arrival={arrival_price:.2f}")
     _log(f"  Volume-based schedules (VWAP/MOC/MOO): {schedule_note_vol}")
 
@@ -534,7 +557,7 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
 
     common = dict(order_shares=order_shares, urgency=urgency,
                   adv_shares=market_data.adv_shares, vol_ann=market_data.realized_vol_ann,
-                  hist_curve=hist_curve)
+                  hist_curve=hist_curve_plan)
 
     configs = [
         ("VWAP",    _sim_vwap,              _speed_factor("VWAP", urgency),    schedule_note_vol),
@@ -548,7 +571,21 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
     ]
 
     for name, fn, sf, note in configs:
-        sched = fn(day=day, **common)
+        if name in excl:
+            result.excluded[name] = excl[name]
+            _log(f"  {name}: EXCLUDED — {excl[name]}")
+            continue
+        sched = fn(day=day_plan, **common)
+        if ticket_active:
+            exempt = (frozenset({len(day_plan) - 1}) if name == "MOC"
+                      else frozenset({0}) if name == "MOO" else frozenset())
+            adj = constrain_fills(sched["shares_traded"].to_numpy(dtype=float),
+                                  sched["price"].to_numpy(dtype=float),
+                                  day_plan["Volume"].to_numpy(dtype=float),
+                                  cap_frac=ticket.cap_frac,
+                                  limit_price=ticket.effective_limit,
+                                  exempt=exempt)
+            sched = sched.assign(shares_traded=adj, cumulative=np.cumsum(adj))
         algo_result = _build_result(name, sched, arrival_price,
                                     order_shares, market_data.adv_shares,
                                     market_data.realized_vol_ann, sf,
@@ -559,6 +596,9 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
              f"opp={algo_result.opportunity_cost_bps:+.1f} bps  "
              f"total={algo_result.total_cost_bps:.1f} bps  "
              f"fill={algo_result.completion_pct:.0%}")
+
+    if ticket_active:
+        result.constraint_notes = ticket.constraint_summary()
 
     _log("Agent 3 complete.")
     return result

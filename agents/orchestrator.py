@@ -32,6 +32,7 @@ from agents.context import ExecutionContext
 from agents.agent2_market_regime import assess_regime
 from agents.agent3_algo_simulation import simulate_algos
 from agents.agent4_performance_comparison import compare_performance
+from agents.agent13_venue_router import route_order, bar_volumes_for, DEFAULT_HALF_SPREAD_BPS
 from agents.agent5_recommendation import generate_memo
 from agents.agent6_pretrade_posttrade import build_pretrade_estimate, build_posttrade_tca
 from agents.agent7_earnings_calendar import check_earnings_calendar
@@ -44,7 +45,7 @@ MIN_DAILY_BARS_FOR_SPREAD = 22
 
 
 def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None,
-                 benchmark_target: str = "Arrival") -> ExecutionContext:
+                 benchmark_target: str = "Arrival", ticket=None) -> ExecutionContext:
     def _log(msg):
         if log:
             log(msg)
@@ -55,6 +56,7 @@ def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None,
     )
     ctx.market_data = market_data
     ctx.order_shares = market_data.adv_shares * (order_pct_adv / 100)
+    ctx.order_ticket = ticket
     ctx.record("agent1_market_data", "ran", "supplied by caller (cached fetch)")
 
     # Agent 2 — regime (always; cheap, foundational for Agent 5's rules)
@@ -66,14 +68,14 @@ def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None,
 
     # Agent 3 — single-day simulation (always; the core deliverable)
     try:
-        ctx.sim = simulate_algos(market_data, order_pct_adv, urgency, log=log)
+        ctx.sim = simulate_algos(market_data, order_pct_adv, urgency, log=log, ticket=ticket)
         ctx.record("agent3_algo_simulation", "ran")
     except Exception as e:
         ctx.record("agent3_algo_simulation", "failed", str(e))
 
     # Agent 4 — multi-day comparison (always; Agent 5 depends on it)
     try:
-        ctx.comp = compare_performance(market_data, order_pct_adv, urgency, log=log)
+        ctx.comp = compare_performance(market_data, order_pct_adv, urgency, log=log, ticket=ticket)
         ctx.record("agent4_performance_comparison", "ran")
     except Exception as e:
         ctx.record("agent4_performance_comparison", "failed", str(e))
@@ -83,6 +85,12 @@ def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None,
         try:
             ctx.memo = generate_memo(market_data, ctx.regime, ctx.sim, ctx.comp, urgency, order_pct_adv, log=log,
                                      benchmark_target=benchmark_target)
+            if ticket is not None and not ticket.is_default():
+                ctx.memo.risk_flags.extend("🎫 Order ticket constraint — " + c
+                                           for c in ticket.constraint_summary())
+                if ctx.sim is not None and getattr(ctx.sim, "excluded", None):
+                    ctx.memo.risk_flags.extend(f"🎫 Excluded from consideration — {k}: {v}"
+                                               for k, v in ctx.sim.excluded.items())
             ctx.record("agent5_recommendation", "ran")
         except Exception as e:
             ctx.record("agent5_recommendation", "failed", str(e))
@@ -97,7 +105,7 @@ def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None,
                       f"daily history too short for a spread estimate ({n_daily} bars, need >= {MIN_DAILY_BARS_FOR_SPREAD})")
         else:
             try:
-                ctx.pretrade = build_pretrade_estimate(market_data, ctx.comp, ctx.order_shares, order_pct_adv, urgency)
+                ctx.pretrade = build_pretrade_estimate(market_data, ctx.comp, ctx.order_shares, order_pct_adv, urgency, ticket=ticket)
                 ctx.record("agent6_pretrade", "ran")
             except Exception as e:
                 ctx.record("agent6_pretrade", "failed", str(e))
@@ -131,6 +139,30 @@ def run_pipeline(market_data, order_pct_adv: float, urgency: str, log=None,
         ctx.record("agent9_microstructure", "ran")
     except Exception as e:
         ctx.record("agent9_microstructure", "failed", str(e))
+
+    # Agent 13 — venue selection & smart-order-routing simulation (routes the
+    # recommended algo's schedule across the market's venue set; needs sim +
+    # memo, uses Agent 6's spread estimate when available)
+    if ctx.sim is not None and ctx.memo is not None and ctx.memo.primary_algo in ctx.sim.algos:
+        try:
+            _hs = (ctx.pretrade.half_spread_bps
+                   if ctx.pretrade is not None and ctx.pretrade.half_spread_bps
+                   else DEFAULT_HALF_SPREAD_BPS)
+            _sched = ctx.sim.algos[ctx.memo.primary_algo].schedule
+            ctx.routing = route_order(
+                _sched, bar_volumes_for(_sched, market_data.intraday),
+                market_data.market,
+                policy=getattr(ticket, "sor_policy", "Cost-optimized") if ticket else "Cost-optimized",
+                half_spread_bps=_hs,
+                allow_dark=getattr(ticket, "allow_dark", True) if ticket else True,
+                excluded=getattr(ticket, "excluded_venues", None) if ticket else None)
+            ctx.record("agent13_venue_router", "ran")
+        except Exception as e:
+            ctx.routing = None
+            ctx.record("agent13_venue_router", "failed", str(e))
+    else:
+        ctx.routing = None
+        ctx.record("agent13_venue_router", "skipped", "missing sim/memo output")
 
     # Agent 8 — critic (runs last; reviews whatever combination of the above is available)
     try:

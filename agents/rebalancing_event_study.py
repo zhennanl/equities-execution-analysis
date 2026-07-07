@@ -62,6 +62,9 @@ INDEX_PROXIES = {
     "FTSE Bursa Malaysia KLCI": "^KLSE",
     # Vietnam (no direct yfinance proxy; use US-listed ETF as rough benchmark)
     "VanEck Vietnam ETF (VNM)": "VNM",
+    # UK
+    "FTSE 100":                 "^FTSE",
+    "FTSE 250":                 "^FTMC",
     # US benchmarks (for US-listed stocks)
     "S&P 500":                  "^GSPC",
     "NASDAQ 100":               "^NDX",

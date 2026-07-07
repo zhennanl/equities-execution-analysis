@@ -213,11 +213,15 @@ class PreTradeEstimate:
 
 def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComparison,
                             order_shares: float, order_pct_adv: float,
-                            urgency: str) -> PreTradeEstimate:
+                            urgency: str, ticket=None) -> PreTradeEstimate:
     sp  = estimate_spread_corwin_schultz(market_data.daily)
     cap = capacity_table(order_shares, market_data.adv_shares)
 
     rate = _URGENCY_RATE[urgency]
+    # Order-ticket participation cap binds the capacity assumption when it is
+    # tighter than the urgency-implied rate.
+    if ticket is not None and getattr(ticket, "cap_frac", None):
+        rate = min(rate, ticket.cap_frac)
     days_chosen = (order_shares / (market_data.adv_shares * rate)) if market_data.adv_shares > 0 else float("inf")
 
     n_days = len(comparison.daily_costs)

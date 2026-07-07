@@ -19,6 +19,17 @@ from agents.agent11_live_snapshot   import (
 )
 from agents.orchestrator            import run_pipeline
 from agents.rebalancing_event_study import run_event_study, build_execution_insights, INDEX_PROXIES
+from agents.agent12_index_calendar  import (
+    PROVIDERS as A12_PROVIDERS, fetch_all as a12_fetch_all,
+    load_cache as a12_load_cache, save_cache as a12_save_cache,
+    upcoming_reviews as a12_upcoming_reviews, suggest_yahoo_ticker,
+)
+from agents.order_ticket import OrderTicket, check_order
+from agents.agent14_rebalance_strategist import analyze_strategies
+from agents.agent13_venue_router import (
+    route_order, compare_policies, bar_volumes_for, venues_for,
+    MARKET_VENUES, ROUTING_POLICIES, DEFAULT_HALF_SPREAD_BPS,
+)
 
 st.set_page_config(page_title="Execution Analytics Platform",
                    page_icon="📊", layout="wide",
@@ -105,6 +116,7 @@ if page == "📈 Execution Algorithm Simulator":
             "Indonesia (IDX)":  "BBCA",
             "Malaysia (KLSE)":  "1155",
             "Vietnam (HOSE)":   "VCB",
+            "UK (LSE)":         "AZN",
         }
         sfx = MARKET_INFO[market]["suffix"]
         ticker_input = st.text_input(f"Ticker (excl. '{sfx}')", value=ex.get(market, ""))
@@ -120,10 +132,127 @@ if page == "📈 Execution Algorithm Simulator":
                  "higher-priority urgency/volatility rule overrides it."
         )
 
+    # ── Institutional Order Ticket — constraints that BIND the simulation ──
+    with st.expander("🎫 Order Ticket — institutional constraints (optional)"):
+        tk_tab, vn_tab, fix_tab = st.tabs(["Constraints", "🛣 Venues & routing", "📨 FIX 4.4 view"])
+        with tk_tab:
+            st.caption(
+                "The parameters a buy-side EMS actually attaches to an algo order. "
+                "Defaults reproduce an unconstrained order. Active constraints bind "
+                "the simulated fills — no fills through a limit, per-bar participation "
+                "throttling with carry-forward — and residual unfilled shares are "
+                "priced as Perold opportunity cost. Constraints currently apply to the "
+                "static pipeline; live-session enforcement is the next build."
+            )
+            o1, o2, o3 = st.columns(3)
+            with o1:
+                tk_type = st.selectbox("Order type", ["Market", "Limit"], key="tk_type")
+                tk_limit = st.number_input(
+                    "Limit price", min_value=0.0, value=0.0, step=0.01, format="%.2f",
+                    disabled=(tk_type != "Limit"), key="tk_limit",
+                    help="Buy limit: no fills in bars priced above this level; blocked "
+                         "shares roll forward to later eligible bars.")
+            with o2:
+                _mi = MARKET_INFO[market]
+                _open_t  = datetime.datetime.strptime(_mi["open"],  "%H:%M").time()
+                _close_t = datetime.datetime.strptime(_mi["close"], "%H:%M").time()
+                # Reset window defaults when the market (and thus its session
+                # hours) changes — otherwise the previous market's open/close
+                # linger in the widgets and read as a custom window.
+                if st.session_state.get("tk_market") != market:
+                    st.session_state.pop("tk_start", None)
+                    st.session_state.pop("tk_end", None)
+                    st.session_state["tk_market"] = market
+                tk_start = st.time_input("Execution window start", value=_open_t, key="tk_start",
+                                         help="FIX Tag 168 EffectiveTime")
+                tk_end   = st.time_input("Execution window end", value=_close_t, key="tk_end",
+                                         help="FIX Tag 126 ExpireTime")
+            with o3:
+                tk_cap_on = st.checkbox("Apply max participation cap", key="tk_cap_on",
+                                        help="FIX Tag 849 ParticipationRate — hard ceiling on the "
+                                             "share of each bar's volume this order may consume.")
+                tk_cap = st.slider("Cap (% of bar volume)", 1, 50, 15,
+                                   disabled=not tk_cap_on, key="tk_cap")
+                tk_auction = st.checkbox("Allow auction participation (MOC/MOO)", value=True,
+                                         key="tk_auction")
+                tk_must = st.checkbox("Must-complete order", key="tk_must",
+                                      help="Unfilled residual is a client-constraint violation, "
+                                           "not just an opportunity cost.")
+
+        with vn_tab:
+            _venue_names = [v.name for v in MARKET_VENUES.get(market, [])]
+            if len(_venue_names) <= 1:
+                st.info(f"**{market} is a single-venue market** — all flow executes on the "
+                        "primary exchange; there is no routing choice to make. (This is the "
+                        "institutional reality in this market, not a simulator limitation.)")
+            st.caption("Routing preferences feed Agent 13's smart-order-routing simulation — a "
+                       "statistical venue-allocation model (see Strategy & Venue Selection in the "
+                       "results). They allocate fills across venues; they don't change the algo's "
+                       "fill schedule.")
+            v1c, v2c = st.columns(2)
+            with v1c:
+                tk_sor = st.selectbox("SOR policy", list(ROUTING_POLICIES), key="tk_sor")
+                tk_dark = st.checkbox("Allow dark/midpoint venues", value=True, key="tk_dark",
+                                      disabled=len(_venue_names) <= 1)
+            with v2c:
+                tk_excl_venues = st.multiselect(
+                    "Exclude venues", [v for v in _venue_names][1:], key="tk_excl_venues",
+                    help="Venue exclusion lists are a standard client instruction (e.g. 'no "
+                         "inverted venues', 'no broker dark pools').")
+
+    ticket = OrderTicket(
+        order_type=st.session_state.get("tk_type", "Market"),
+        limit_price=(float(st.session_state.get("tk_limit", 0.0))
+                     if st.session_state.get("tk_type") == "Limit"
+                     and st.session_state.get("tk_limit", 0.0) > 0 else None),
+        start_time=(st.session_state.get("tk_start")
+                    if st.session_state.get("tk_start") not in (None, _open_t) else None)
+                   if "tk_start" in st.session_state else None,
+        end_time=(st.session_state.get("tk_end")
+                  if st.session_state.get("tk_end") not in (None, _close_t) else None)
+                 if "tk_end" in st.session_state else None,
+        max_participation_pct=(float(st.session_state.get("tk_cap", 15))
+                               if st.session_state.get("tk_cap_on") else None),
+        must_complete=bool(st.session_state.get("tk_must", False)),
+        allow_auction=bool(st.session_state.get("tk_auction", True)),
+        sor_policy=st.session_state.get("tk_sor", "Cost-optimized"),
+        allow_dark=bool(st.session_state.get("tk_dark", True)),
+        excluded_venues=list(st.session_state.get("tk_excl_venues", [])),
+    )
+    _active_constraints = ticket.constraint_summary()
+    if _active_constraints:
+        st.markdown("🎫 **Active order-ticket constraints:** " + " · ".join(_active_constraints))
+
+    with fix_tab:
+        st.caption("The ticket as (a subset of) the FIX 4.4 tags an EMS would put on the "
+                   "wire to a broker algo — order quantity resolves against ADV at route time.")
+        _fix_rows = ticket.to_fix_fields(ticker_input or "—", 0)
+        for _r in _fix_rows:
+            if _r["Tag"] == 38:
+                _r["Value"] = f"{order_pct_adv}% of ADV (resolved at route time)"
+        st.dataframe(pd.DataFrame(_fix_rows), use_container_width=True, hide_index=True)
+
     run = st.button("▶ Run Agent Pipeline", type="primary", use_container_width=True)
     st.markdown("---")
 
     if run:
+        # -- Pre-trade compliance (OMS-style checks BEFORE anything routes) --
+        _findings = check_order(ticket, ticker_input, order_pct_adv)
+        for _f in [f for f in _findings if f.severity == "WARN"]:
+            st.warning(f"⚠️ **{_f.rule}:** {_f.message}")
+        _blocks = [f for f in _findings if f.severity == "BLOCK"]
+        if _blocks:
+            for _f in _blocks:
+                st.error(f"⛔ **{_f.rule}:** {_f.message}")
+            if not st.session_state.get("tk_override"):
+                st.checkbox("Supervisor override — acknowledge findings and proceed (logged)",
+                            key="tk_override")
+                st.caption("Check the override box, then click **Run Agent Pipeline** again — "
+                           "mirroring a real OMS override workflow, the block stands until a "
+                           "supervisor acknowledgement is on record.")
+                st.stop()
+            st.info("Supervisor override acknowledged — proceeding despite blocking findings.")
+
         # -- Fetch (still owns its own cache — the orchestrator wraps
         # everything downstream of the fetch, not the fetch itself, so
         # re-running the pipeline for a different order size/urgency on the
@@ -139,11 +268,16 @@ if page == "📈 Execution Algorithm Simulator":
             st.error(f"❌ {e}"); st.stop()
         msg.success("✅ Market data loaded — cached 5 min.")
 
+        for _f in check_order(ticket, ticker_input, order_pct_adv,
+                              last_price=data.current_price):
+            if _f.rule == "Limit-price sanity":
+                st.warning(f"⚠️ **{_f.rule}:** {_f.message}")
+
         # -- Orchestrator: runs Agents 2-8, conditionally skipping/degrading
         # at runtime rather than a fixed unconditional sequence; see
         # agents/orchestrator.py and agents/context.py ----------------------
         with st.spinner("Running agent pipeline…"):
-            ctx = run_pipeline(data, order_pct_adv, urgency, benchmark_target=benchmark_target)
+            ctx = run_pipeline(data, order_pct_adv, urgency, benchmark_target=benchmark_target, ticket=ticket)
 
         # Persist to session_state so results (and the Mid-Session Adjustment
         # widgets below) survive later reruns triggered by *other* widgets --
@@ -206,6 +340,9 @@ if page == "📈 Execution Algorithm Simulator":
 
         # ── LIVE TRADING SESSION (interactive simulation) ─────────────────────
         st.markdown("### 🔴 Live Trading Session — Interactive Simulation")
+        if getattr(sim, "constraint_notes", None):
+            st.caption("🎫 Note: order-ticket constraints currently bind the static pipeline "
+                       "(above/below) only — live-session enforcement is the next build.")
         st.caption(
             "Press **Play** and watch the session unfold bar-by-bar, exactly as a trader would "
             "experience it on a broker execution-management-system (EMS) blotter — every panel "
@@ -544,48 +681,15 @@ if page == "📈 Execution Algorithm Simulator":
         else:
             st.info("ℹ️ Not enough bars in this session to demo the live trading session.")
 
+        # ══ STAGE 1 — PRE-TRADE ANALYTICS ════════════════════════════════════
         st.markdown("---")
-        # ── AGENT 5 — RECOMMENDATION ──────────────────────────────────────────
-        st.markdown("### Agent 5 — Recommendation")
-        pri_col = _AC.get(memo.primary_algo, "#6b7280")
-        sec_col = _AC.get(memo.secondary_algo, "#6b7280")
-        ra, rb = st.columns(2)
-        ra.markdown(f"**Primary**")
-        ra.markdown(_badge(memo.primary_algo, pri_col) +
-                    f"&nbsp;&nbsp;**{comp.summary.loc[memo.primary_algo,'Mean (bps)']:.1f} bps avg**",
-                    unsafe_allow_html=True)
-        rb.markdown(f"**Secondary / Fallback**")
-        rb.markdown(_badge(memo.secondary_algo, sec_col) +
-                    f"&nbsp;&nbsp;{comp.summary.loc[memo.secondary_algo,'Mean (bps)']:.1f} bps avg",
-                    unsafe_allow_html=True)
-        st.markdown("")
-        for flag in memo.risk_flags:
-            if "No material" in flag:
-                st.success(f"✅ {flag}")
-            else:
-                st.warning(f"⚠️ {flag}")
-        with st.expander("📄 Full Recommendation Memo"):
-            st.markdown(memo.memo_text)
-
-        # ── AGENT 8 — CRITIC REVIEW (independent second opinion) ─────────────
-        st.markdown("")
-        if critic is not None:
-            if critic.approved:
-                st.success("✅ **Critic Review:** No material issues found — recommendation approved as-is.")
-            else:
-                st.warning("⚠️ **Critic Review:** flagged concerns worth confirming before executing.")
-            for f in critic.findings:
-                if f.message.startswith("No material"):
-                    continue
-                (st.warning if f.severity == "override" else st.caption)(
-                    f"{'⚠️ ' if f.severity == 'override' else '• '}{f.message}"
-                )
-        st.caption("Independent second pass over Agent 5's pick (Agent 8) — checks fill-qualification, "
-                  "earnings-date risk, and spread-reliability/size interaction. Doesn't silently change "
-                  "the recommendation; it flags concerns for the analyst to confirm.")
+        st.markdown("## 🧭 Stage 1 — Pre-Trade Analytics")
+        st.caption("What the desk knows **before** choosing how to trade: liquidity and data "
+                   "quality (Agent 1), expected cost/capacity/spread (Agent 6 + Agent 9 "
+                   "cross-check), event risk (Agent 7), microstructure toxicity (Agent 9), and "
+                   "the market-regime read (Agent 2).")
 
         # ── AGENT 1 OUTPUT ────────────────────────────────────────────────────
-        st.markdown("---")
         st.markdown("### Agent 1 — Market Data")
         k1,k2,k3,k4 = st.columns(4)
         k1.metric("Ticker", data.ticker)
@@ -768,6 +872,124 @@ if page == "📈 Execution Algorithm Simulator":
                               "headline label above); |z| >= 1.96 ≈ 95% significance under the "
                               "random-walk null.")
 
+        # ══ STAGE 2 — STRATEGY & VENUE SELECTION ═════════════════════════════
+        st.markdown("---")
+        st.markdown("## 🎯 Stage 2 — Strategy & Venue Selection")
+        st.caption("The trader's decision layer: Agent 5's rule-based strategy pick (with Agent 8's "
+                   "independent critic review), then venue selection and smart-order-routing "
+                   "simulation (Agent 13). Override the strategy or routing policy below — the "
+                   "routing view recomputes without re-running the pipeline.")
+        st.markdown("---")
+        # ── AGENT 5 — RECOMMENDATION ──────────────────────────────────────────
+        st.markdown("### Agent 5 — Recommendation")
+        pri_col = _AC.get(memo.primary_algo, "#6b7280")
+        sec_col = _AC.get(memo.secondary_algo, "#6b7280")
+        ra, rb = st.columns(2)
+        ra.markdown(f"**Primary**")
+        ra.markdown(_badge(memo.primary_algo, pri_col) +
+                    f"&nbsp;&nbsp;**{comp.summary.loc[memo.primary_algo,'Mean (bps)']:.1f} bps avg**",
+                    unsafe_allow_html=True)
+        rb.markdown(f"**Secondary / Fallback**")
+        rb.markdown(_badge(memo.secondary_algo, sec_col) +
+                    f"&nbsp;&nbsp;{comp.summary.loc[memo.secondary_algo,'Mean (bps)']:.1f} bps avg",
+                    unsafe_allow_html=True)
+        st.markdown("")
+        for flag in memo.risk_flags:
+            if "No material" in flag:
+                st.success(f"✅ {flag}")
+            else:
+                st.warning(f"⚠️ {flag}")
+        with st.expander("📄 Full Recommendation Memo"):
+            st.markdown(memo.memo_text)
+
+        # ── AGENT 8 — CRITIC REVIEW (independent second opinion) ─────────────
+        st.markdown("")
+        if critic is not None:
+            if critic.approved:
+                st.success("✅ **Critic Review:** No material issues found — recommendation approved as-is.")
+            else:
+                st.warning("⚠️ **Critic Review:** flagged concerns worth confirming before executing.")
+            for f in critic.findings:
+                if f.message.startswith("No material"):
+                    continue
+                (st.warning if f.severity == "override" else st.caption)(
+                    f"{'⚠️ ' if f.severity == 'override' else '• '}{f.message}"
+                )
+        st.caption("Independent second pass over Agent 5's pick (Agent 8) — checks fill-qualification, "
+                  "earnings-date risk, and spread-reliability/size interaction. Doesn't silently change "
+                  "the recommendation; it flags concerns for the analyst to confirm.")
+
+
+        # ── AGENT 13 — VENUE SELECTION & SOR SIMULATION ───────────────────────
+        st.markdown("")
+        st.markdown("#### 🛣 Venue Selection & Smart Order Routing (Agent 13)")
+        st.caption("**Statistical simulation** — a stylized venue set per market (fees, addressable "
+                   "volume, fill probability, spread capture, adverse selection) with slices "
+                   "allocated by marginal expected cost: the objective of a real SOR without the "
+                   "microsecond mechanics. Queue position, latency, and true dark-liquidity "
+                   "discovery are NOT modeled (see INSTITUTIONAL_GAP_REGISTER.md).")
+
+        _hs_used = (pretrade.half_spread_bps
+                    if pretrade is not None and pretrade.half_spread_bps
+                    else DEFAULT_HALF_SPREAD_BPS)
+        vr1, vr2, vr3 = st.columns(3)
+        with vr1:
+            rt_algo = st.selectbox("Strategy to route", list(sim.algos.keys()),
+                                   index=list(sim.algos.keys()).index(memo.primary_algo)
+                                         if memo.primary_algo in sim.algos else 0,
+                                   key="rt_algo",
+                                   help="Defaults to Agent 5's pick — override to see how routing "
+                                        "changes with the schedule shape.")
+        with vr2:
+            rt_policy = st.selectbox("Routing policy", list(ROUTING_POLICIES),
+                                     index=list(ROUTING_POLICIES).index(
+                                         st.session_state.get("tk_sor", "Cost-optimized")),
+                                     key="rt_policy")
+        with vr3:
+            rt_dark = st.checkbox("Allow dark/midpoint", value=st.session_state.get("tk_dark", True),
+                                  key="rt_dark")
+
+        _rt_sched = sim.algos[rt_algo].schedule
+        _rt = route_order(_rt_sched, bar_volumes_for(_rt_sched, data.intraday), data.market,
+                          policy=rt_policy, half_spread_bps=_hs_used, allow_dark=rt_dark,
+                          excluded=list(st.session_state.get("tk_excl_venues", [])))
+        for _n in _rt.notes:
+            st.info(f"ℹ️ {_n}")
+
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Blended routing cost", f"{_rt.blended_cost_bps:.2f} bps",
+                  help="Share-weighted expected venue cost: spread paid + fees + adverse "
+                       "selection. Additive to (not part of) the algo's slippage/impact numbers.")
+        m2.metric("Routed shares", f"{_rt.routed_shares:,.0f}")
+        _dk = _rt.venue_summary.loc[_rt.venue_summary["Type"] == "dark", "% of order"].sum() \
+              if len(_rt.venue_summary) else 0.0
+        m3.metric("Dark/midpoint share", f"{_dk:.1f}%")
+
+        st.dataframe(_rt.venue_summary, use_container_width=True, hide_index=True)
+
+        if len(_rt.fills_by_venue.columns) > 1:
+            _fv = _rt.fills_by_venue
+            fig_rt = go.Figure()
+            for _vn in _fv.columns:
+                fig_rt.add_trace(go.Bar(x=_fv.index, y=_fv[_vn], name=_vn))
+            fig_rt.update_layout(barmode="stack", height=280,
+                                 margin=dict(l=10, r=10, t=30, b=10),
+                                 title="Child-order allocation by venue over the session",
+                                 legend=dict(orientation="h", y=-0.25))
+            st.plotly_chart(fig_rt, use_container_width=True)
+
+        with st.expander("⚖️ Why this policy? — cost under each routing policy"):
+            _cp = compare_policies(_rt_sched, bar_volumes_for(_rt_sched, data.intraday),
+                                   data.market, half_spread_bps=_hs_used,
+                                   allow_dark=rt_dark,
+                                   excluded=list(st.session_state.get("tk_excl_venues", [])))
+            st.dataframe(_cp, use_container_width=True, hide_index=True)
+            st.caption(f"Half-spread input: {_hs_used:.2f} bps"
+                       + (" (capped at 15 bps for routing — see note above)" if _hs_used > 15 else "")
+                       + ". Venue parameters are stylized constants calibrated to public "
+                       "fee schedules and market-share statistics — right order of magnitude, "
+                       "not a live feed.")
+
         # ── AGENT 3 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
         st.markdown("### Agent 3 — Algorithm Simulation")
@@ -807,6 +1029,12 @@ if page == "📈 Execution Algorithm Simulator":
                 st.caption(f"**{name}** — {r.schedule_note}")
 
         with st.expander("📅 Execution Schedules — Shares per Bar"):
+            if getattr(sim, "excluded", None):
+                st.info("🎫 Excluded by order ticket: "
+                        + " · ".join(f"**{k}** — {v}" for k, v in sim.excluded.items()))
+            if getattr(sim, "constraint_notes", None):
+                st.caption("Order-ticket constraints bound these fills: "
+                           + "; ".join(sim.constraint_notes))
             tabs3 = st.tabs(list(sim.algos.keys()))
             for tab,(name,r) in zip(tabs3,sim.algos.items()):
                 with tab:
@@ -1056,17 +1284,129 @@ elif page == "🔄 Index Rebalancing Analysis":
         "and abnormal volume over a user-specified window around the effective rebalancing date."
     )
 
+    # ── Agent 12 — Rebalance Calendar Monitor (auto-fetched index changes) ───
+    # Defaults for the manual inputs below (setdefault → the "Use selected
+    # event" button can overwrite them programmatically without widget-state
+    # conflicts).
+    st.session_state.setdefault("rebal_ticker", "2330")
+    st.session_state.setdefault("rebal_date", datetime.date.today())
+    st.session_state.setdefault("rebal_ann_date", datetime.date(2024, 8, 16))
+
+    st.markdown("### 📅 Latest Index Changes — Agent 12 (Rebalance Calendar Monitor)")
+    st.caption(
+        "Fetches real constituent adds/deletes from the three major providers' public "
+        "announcement pages — **MSCI** (structured announcement feed, fully parsed), "
+        "**FTSE Russell** (LSEG press releases at URLs constructed from the review calendar), "
+        "**S&P DJI** (PR Newswire releases, summary table parsed). Pick an event to "
+        "auto-fill the event-study inputs below instead of typing them manually."
+    )
+    with st.expander("📡 Fetch / pick a real index change", expanded=False):
+        a12_tab_ch, a12_tab_cal = st.tabs(["📋 Latest changes", "🗓 Review calendar"])
+
+        with a12_tab_ch:
+            f1, f2 = st.columns([3, 1])
+            with f1:
+                a12_sel = st.multiselect("Providers", list(A12_PROVIDERS),
+                                         default=list(A12_PROVIDERS), key="a12_providers")
+            with f2:
+                st.markdown("")
+                a12_refresh = st.button("🔄 Refresh now", use_container_width=True,
+                                        help="On-demand fetch of the providers' public "
+                                             "announcement pages (a handful of requests).")
+
+            a12_cache = st.session_state.get("a12_cache")
+            if a12_cache is None:
+                a12_disk = a12_load_cache()
+                if a12_disk:
+                    a12_cache = a12_disk
+                    st.session_state["a12_cache"] = a12_cache
+            if a12_refresh:
+                with st.spinner("Fetching announcements from providers…"):
+                    a12_evs, a12_errs = a12_fetch_all(tuple(a12_sel) or A12_PROVIDERS)
+                if a12_evs:
+                    a12_save_cache(a12_evs, a12_errs)
+                a12_cache = {
+                    "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+                    "events": a12_evs, "errors": a12_errs,
+                }
+                st.session_state["a12_cache"] = a12_cache
+                for a12_p, a12_msg in a12_errs.items():
+                    st.warning(f"⚠️ {a12_p}: {a12_msg}")
+
+            if a12_cache and a12_cache["events"]:
+                st.caption(f"Data as of **{a12_cache['fetched_at']}** (UTC). These are public "
+                           "provider pages meant for manual reading — refresh on demand; "
+                           "don't turn this into a high-frequency poller.")
+                a12_evs = [e for e in a12_cache["events"]
+                           if e.provider in (a12_sel or list(A12_PROVIDERS))]
+                a12_df = pd.DataFrame([{
+                    "Provider": e.provider, "Index": e.index_name, "Action": e.action,
+                    "Security": e.security_name, "Ticker": e.ticker or "—",
+                    "Market": e.market or "—", "Effective": e.effective_date or "—",
+                    "Announced": e.announced_date or "—", "Event": e.event_type,
+                    "Note": e.notes,
+                } for e in a12_evs])
+                st.dataframe(a12_df, use_container_width=True, height=240)
+
+                a12_runnable = [e for e in a12_evs if e.market and e.effective_date]
+                if a12_runnable:
+                    a12_labels = [f"{e.provider} · {e.index_name} · {e.action} · "
+                                  f"{e.security_name} · eff {e.effective_date}"
+                                  for e in a12_runnable]
+                    a12_pick = st.selectbox("Event to load into the inputs below",
+                                            a12_labels, key="a12_pick")
+                    if st.button("⤵️ Use selected event"):
+                        a12_ev = a12_runnable[a12_labels.index(a12_pick)]
+                        a12_tkr = a12_ev.ticker
+                        if not a12_tkr:
+                            with st.spinner(f"Looking up Yahoo ticker for {a12_ev.security_name}…"):
+                                a12_tkr = suggest_yahoo_ticker(a12_ev.security_name, a12_ev.market)
+                        a12_sfx = MARKET_INFO.get(a12_ev.market, {}).get("suffix", "")
+                        if a12_sfx and a12_tkr.endswith(a12_sfx):
+                            a12_tkr = a12_tkr[:-len(a12_sfx)]
+                        st.session_state["rebal_mkt"] = a12_ev.market
+                        st.session_state["rebal_date"] = datetime.date.fromisoformat(a12_ev.effective_date)
+                        if a12_ev.index_name in INDEX_PROXIES:
+                            st.session_state["rebal_index"] = a12_ev.index_name
+                        if a12_ev.announced_date:
+                            st.session_state["rebal_ann_know"] = True
+                            st.session_state["rebal_ann_date"] = datetime.date.fromisoformat(a12_ev.announced_date)
+                        if a12_tkr:
+                            st.session_state["rebal_ticker"] = a12_tkr
+                            st.success(f"Loaded **{a12_ev.security_name}** → ticker "
+                                       f"`{a12_tkr}`, market *{a12_ev.market}*, effective "
+                                       f"{a12_ev.effective_date}. Review the inputs below, "
+                                       "then run the event study.")
+                        else:
+                            st.warning(f"Loaded market/date for **{a12_ev.security_name}**, but "
+                                       "couldn't auto-resolve a Yahoo ticker — please type the "
+                                       "ticker manually below.")
+                else:
+                    st.info("No fetched event has both a supported market and an effective "
+                            "date — enter the inputs manually below.")
+            else:
+                st.info("No index-change data yet — click **🔄 Refresh now** to fetch the "
+                        "latest announcements (or let the scheduled refresh job populate "
+                        "the cache).")
+
+        with a12_tab_cal:
+            st.caption("Approximate next review/rebalance dates per provider, from their "
+                       "published cadence rules (exact dates can shift — always confirm "
+                       "against the provider notice).")
+            st.dataframe(pd.DataFrame(a12_upcoming_reviews()),
+                         use_container_width=True, hide_index=True)
+
+
     st.markdown("### Inputs")
     i1,i2,i3 = st.columns(3)
     with i1:
-        index_choice = st.selectbox("Index", list(INDEX_PROXIES.keys()))
+        index_choice = st.selectbox("Index", list(INDEX_PROXIES.keys()), key="rebal_index")
         market_added = st.selectbox("Market", list(MARKET_INFO.keys()), key="rebal_mkt")
     with i2:
-        rebal_date   = st.date_input("Rebalancing Effective Date",
-                                     value=datetime.date.today())
+        rebal_date   = st.date_input("Rebalancing Effective Date", key="rebal_date")
         event_window = st.slider("Event Window (±days)", 5, 20, 10)
     with i3:
-        ticker_added = st.text_input("Added Constituent Ticker", value="2330",
+        ticker_added = st.text_input("Added Constituent Ticker", key="rebal_ticker",
                                      placeholder="e.g. 2330 for TSMC")
         st.markdown("")
         st.markdown("")
@@ -1082,9 +1422,9 @@ elif page == "🔄 Index Rebalancing Analysis":
                                       "(tracking-error constrained). Cost-Minimizing = no such "
                                       "constraint; free to trade opportunistically.")
         with e2:
-            know_announcement = st.checkbox("I know the announcement date")
+            know_announcement = st.checkbox("I know the announcement date", key="rebal_ann_know")
             announcement_date = st.date_input(
-                "Announcement Date", value=datetime.date(2024, 8, 16),
+                "Announcement Date", key="rebal_ann_date",
                 disabled=not know_announcement
             ) if know_announcement else None
         with e3:
@@ -1125,6 +1465,12 @@ elif page == "🔄 Index Rebalancing Analysis":
             except Exception as e:
                 insights = None
                 st.warning(f"⚠️ Execution-cost insights could not be computed: {e}")
+
+        # Persist so the Best-Execution Strategy section below survives
+        # widget-triggered reruns (same pattern as Page 1's pipeline results).
+        st.session_state["p2_es"] = es
+        st.session_state["p2_insights"] = insights
+        st.session_state["p2_objective"] = objective
 
         st.success(f"✅ Event study complete — {es.ticker} · {es.index_name} · T = {es.T.date()}")
         st.markdown(f"**Market model:** α = {es.alpha:.5f}, β = {es.beta:.3f}")
@@ -1285,3 +1631,120 @@ elif page == "🔄 Index Rebalancing Analysis":
             st.markdown(rec.rationale)
             for note in rec.notes:
                 st.caption(f"• {note}")
+
+
+    # ── AGENT 14 — BEST-EXECUTION STRATEGY (renders after a study has run;
+    #    persists across reruns so its widgets are interactive) ─────────────
+    if "p2_es" in st.session_state:
+        es14 = st.session_state["p2_es"]
+        st.markdown("---")
+        st.markdown("## 🎯 Best-Execution Strategy — Agent 14 (Rebalance Strategist)")
+        st.caption(
+            "Simulates the four literature-anchored rebalance execution strategies on this "
+            "event's **actual** price/volume path and scores the trade-off institutional "
+            "clients care about: implementation cost vs the pre-announcement decision price "
+            "**versus** tracking difference vs the effective-day closing print. Evidence base "
+            "and strategy anchors: `docs/INDEX_REBALANCE_RESEARCH.md` (Harris-Gurel 1986; "
+            "Madhavan 2003; Petajisto 2011; Greenwood-Sammon 2025)."
+        )
+
+        _w = int(es14.rel_days[-1])
+        a141, a142, a143, a144 = st.columns(4)
+        with a141:
+            side14 = st.selectbox("Side", ["Buy (addition)", "Sell (deletion)"], key="p2_side14")
+        with a142:
+            size14 = st.number_input("Order size (% of ADV)", min_value=0.5, max_value=500.0,
+                                     value=5.0, step=0.5, key="p2_size14",
+                                     help="Tip: the flow-to-trade estimate above (index weight "
+                                          "change × tracked AUM) is the institutional way to "
+                                          "size this.")
+        with a143:
+            prefrac14 = st.slider("S2 pre-position fraction", 0.1, 0.9, 0.5, 0.1, key="p2_prefrac14")
+        with a144:
+            postfrac14 = st.slider("S3 post-effective fraction", 0.1, 0.9, 0.5, 0.1, key="p2_postfrac14")
+
+        with st.expander("⚙️ Event-timing & model parameters"):
+            e141, e142, e143 = st.columns(3)
+            with e141:
+                _ann_default = -5
+                try:
+                    if st.session_state.get("rebal_ann_know") and st.session_state.get("rebal_ann_date"):
+                        _ann_ts = pd.Timestamp(st.session_state["rebal_ann_date"])
+                        _diffs = abs(pd.to_datetime(es14.event_dates) - _ann_ts)
+                        _ann_default = int(es14.rel_days[int(_diffs.argmin())])
+                except Exception:
+                    pass
+                _ann_default = int(max(min(_ann_default, -1), int(es14.rel_days[0])))
+                ann14 = st.slider("Announcement day (relative to T)", int(es14.rel_days[0]), -1,
+                                  _ann_default, key="p2_ann14",
+                                  help="Defaults to the announcement date entered above when "
+                                       "provided (e.g. from Agent 12), else T-5 "
+                                       "(Greenwood-Sammon mean A→E gap).")
+            with e142:
+                post14 = st.slider("Post-effective horizon (trading days)", 1, _w,
+                                   min(10, _w), key="p2_post14")
+            with e143:
+                auc14 = st.slider("Closing-auction share of T-day volume", 0.05, 0.30, 0.10,
+                                  0.01, key="p2_auc14",
+                                  help="Auction capacity assumption — measured against the "
+                                       "observed effective-day volume, which already includes "
+                                       "the rebalance surge.")
+
+        try:
+            ana14 = analyze_strategies(
+                es14, side="Buy" if side14.startswith("Buy") else "Sell",
+                order_pct_adv=float(size14), ann_rel_day=int(ann14),
+                pre_frac=float(prefrac14), post_frac=float(postfrac14),
+                post_days=int(post14), auction_normal_share=float(auc14))
+        except Exception as e14:
+            st.error(f"❌ Strategy analysis failed: {e14}")
+            ana14 = None
+
+        if ana14 is not None:
+            k141, k142, k143, k144 = st.columns(4)
+            k141.metric("Decision price (A close)", f"{ana14.decision_price:,.2f}")
+            k142.metric("Effective close (T)", f"{ana14.effective_close:,.2f}")
+            k143.metric("Order", f"{ana14.order_shares:,.0f} sh · {ana14.order_pct_adv:.1f}% ADV")
+            k144.metric(f"Realized move T→T+{ana14.params['post_days']}",
+                        f"{ana14.realized_post_reversal_bps:+,.0f} bps",
+                        help="Abnormal (market-model) move after the effective date — the "
+                             "reversal S3 is designed to capture, measured on this event.")
+
+            st.dataframe(ana14.frontier, use_container_width=True, hide_index=True)
+
+            fig14 = go.Figure()
+            for s14 in ana14.strategies:
+                fig14.add_trace(go.Scatter(
+                    x=[s14.abs_tracking_bps], y=[s14.cost_vs_decision_bps],
+                    mode="markers+text", text=[s14.name.split()[0]],
+                    textposition="top center", marker=dict(size=14),
+                    name=s14.name))
+            fig14.update_layout(
+                height=340, margin=dict(l=10, r=10, t=40, b=10),
+                title="The client trade-off: cost vs tracking (lower-left dominates)",
+                xaxis_title="|Tracking difference| vs effective close (bps)",
+                yaxis_title="Implementation cost vs decision price (bps)",
+                showlegend=False)
+            st.plotly_chart(fig14, use_container_width=True)
+
+            _obj14 = st.session_state.get("p2_objective", "Cost-Minimizing")
+            if _obj14 == "Index Tracker":
+                _best14 = min(ana14.strategies, key=lambda s: (s.abs_tracking_bps, s.cost_vs_decision_bps))
+            else:
+                _best14 = min(ana14.strategies, key=lambda s: (s.cost_vs_decision_bps, s.abs_tracking_bps))
+            st.success(f"**Recommended for a {_obj14} mandate: {_best14.name}** — "
+                       f"cost {_best14.cost_vs_decision_bps:+.1f} bps vs decision, "
+                       f"tracking {_best14.tracking_diff_bps:+.1f} bps vs the print, "
+                       f"{_best14.auction_pct:.0f}% of the order in the closing auction.")
+            st.markdown(ana14.rationale)
+
+            for s14 in ana14.strategies:
+                with st.expander(f"📋 {s14.name} — schedule & fills"):
+                    st.caption(s14.description)
+                    st.dataframe(s14.schedule, use_container_width=True, hide_index=True)
+                    for n14 in s14.notes:
+                        st.warning(f"⚠️ {n14}")
+
+            with st.expander("⚠️ Model caveats (read before showing a client)"):
+                for c14 in ana14.caveats:
+                    st.markdown(f"- {c14}")

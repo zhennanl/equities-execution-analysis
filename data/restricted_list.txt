@@ -1,0 +1,6 @@
+# Firm restricted / watch list (demo).
+# One base ticker per line (exchange suffix excluded); '#' starts a comment.
+# Stand-in for the OMS-enforced restricted list every real desk checks
+# pre-route — e.g. names under advisory engagement or trading restriction.
+GME     # demo entry: meme-stock trading restriction scenario
+AMC     # demo entry

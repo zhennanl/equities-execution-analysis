@@ -24,6 +24,7 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass, field
 from agents.agent1_market_data import MarketData, MARKET_INFO
+from agents.order_ticket import constrain_fills, windowed_curve, excluded_algos
 from agents.agent3_algo_simulation import (
     IMPACT_ETA, SPEED_FACTORS, POV_RATES, IS_KAPPA_T,
     LIQ_BASE_RATE, LIQ_TILT_K, LIQ_ROLL_BARS, STEALTH_CAP,
@@ -68,7 +69,8 @@ def _build_valid_days(market_data: MarketData) -> list:
 
 
 def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
-                 adv_shares: float, vol_ann: float, hist_curve=None) -> dict:
+                 adv_shares: float, vol_ann: float, hist_curve=None,
+                 ticket=None) -> dict:
     """
     Simulate all 8 algos on a single day's bar data.
     Returns {algo_name: (slippage_bps, market_impact_bps, opportunity_cost_bps,
@@ -94,9 +96,30 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
 
     closes  = day["Close"].values
     volumes = day["Volume"].values
+    # Full-day anchors (decision price / period end) even under a ticket
+    # window — slippage vs decision price then includes the window's delay
+    # cost (institutionally correct IS treatment).
     arrival = float(day["Open"].iloc[0]) if "Open" in day.columns else float(closes[0])
     period_end = float(closes[-1])
     sigma_d = vol_ann / np.sqrt(252)
+
+    ticket_active = ticket is not None and not ticket.is_default()
+    if ticket_active:
+        s_bar, e_bar = ticket.window_indices(day.index)
+        if (s_bar, e_bar) != (0, n - 1):
+            if hist_curve is not None and len(hist_curve) == n:
+                hist_curve = windowed_curve(hist_curve, s_bar, e_bar)
+            closes  = closes[s_bar:e_bar + 1]
+            volumes = volumes[s_bar:e_bar + 1]
+            n = len(closes)
+
+    def _constrain(shares, exempt=frozenset()):
+        if not ticket_active:
+            return shares
+        return constrain_fills(shares, closes, volumes,
+                               cap_frac=ticket.cap_frac,
+                               limit_price=ticket.effective_limit,
+                               exempt=exempt)
 
     def _cost(shares, sf):
         filled = shares.sum()
@@ -117,11 +140,11 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
     else:
         tv = volumes.sum()
         vwap_w = volumes / tv * order_shares if tv > 0 else np.full(n, order_shares / n)
-    vwap_res = _cost(vwap_w, SPEED_FACTORS["VWAP"])
+    vwap_res = _cost(_constrain(vwap_w), SPEED_FACTORS["VWAP"])
 
     # TWAP
     twap_w = np.full(n, order_shares / n)
-    twap_res = _cost(twap_w, SPEED_FACTORS["TWAP"])
+    twap_res = _cost(_constrain(twap_w), SPEED_FACTORS["TWAP"])
 
     # POV
     rate = POV_RATES[urgency]
@@ -132,11 +155,11 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         traded = min(rem, volumes[i] * rate)
         pov_w[i] = traded
         rem -= traded
-    pov_res = _cost(pov_w, SPEED_FACTORS["POV"])
+    pov_res = _cost(_constrain(pov_w), SPEED_FACTORS["POV"])
 
     # IS -- Almgren-Chriss trajectory (replaces the old ad hoc exponential decay)
     is_w = _ac_trajectory_weights(n, IS_KAPPA_T[urgency]) * order_shares
-    is_res = _cost(is_w, SPEED_FACTORS["IS"][urgency])
+    is_res = _cost(_constrain(is_w), SPEED_FACTORS["IS"][urgency])
 
     # MOC -- concentrate into the closing window, historical shape when available
     w_close = max(1, int(round(n * MOC_WINDOW_PCT)))
@@ -149,7 +172,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         close_vol = volumes[-w_close:]
         tv_c = close_vol.sum()
         moc_w[-w_close:] = (close_vol / tv_c * order_shares) if tv_c > 0 else (order_shares / w_close)
-    moc_res = _cost(moc_w, SPEED_FACTORS["MOC"])
+    moc_res = _cost(_constrain(moc_w, exempt=frozenset({n - 1})), SPEED_FACTORS["MOC"])
 
     # MOO -- concentrate into the opening window, historical shape when available
     w_open = max(1, int(round(n * MOO_WINDOW_PCT)))
@@ -162,7 +185,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         open_vol = volumes[:w_open]
         tv_o = open_vol.sum()
         moo_w[:w_open] = (open_vol / tv_o * order_shares) if tv_o > 0 else (order_shares / w_open)
-    moo_res = _cost(moo_w, SPEED_FACTORS["MOO"])
+    moo_res = _cost(_constrain(moo_w, exempt=frozenset({0})), SPEED_FACTORS["MOO"])
 
     # Liquidity-Seeking -- participation tilted by short-term price favorability
     base_rate = LIQ_BASE_RATE[urgency]
@@ -181,7 +204,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         traded = min(remaining, volumes[i] * base_rate * mult)
         liq_w[i] = traded
         remaining -= traded
-    liq_res = _cost(liq_w, SPEED_FACTORS["LIQ"][urgency])
+    liq_res = _cost(_constrain(liq_w), SPEED_FACTORS["LIQ"][urgency])
 
     # Stealth -- capped, randomized, near-equal participation (iceberg-style)
     cap_rate = STEALTH_CAP[urgency]
@@ -201,7 +224,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         stealth_w[i] = traded
         carry = max(0.0, want - traded)
         remaining -= traded
-    stealth_res = _cost(stealth_w, SPEED_FACTORS["STEALTH"][urgency])
+    stealth_res = _cost(_constrain(stealth_w), SPEED_FACTORS["STEALTH"][urgency])
 
     return {
         "VWAP": vwap_res, "TWAP": twap_res, "POV": pov_res, "IS": is_res,
@@ -210,7 +233,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
 
 
 def compare_performance(market_data: MarketData, order_pct_adv: float,
-                        urgency: str, log=None) -> PerformanceComparison:
+                        urgency: str, log=None, ticket=None) -> PerformanceComparison:
     def _log(msg):
         if log: log(msg)
 
@@ -227,11 +250,21 @@ def compare_performance(market_data: MarketData, order_pct_adv: float,
     # -- Pre-compute each valid day + its leave-one-out historical curve ------
     valid_days = _build_valid_days(market_data)
 
+    # Order-ticket exclusions (auction gating / execution window) apply
+    # uniformly across all days, so filter the algo set once up front.
+    if ticket is not None and not ticket.is_default() and valid_days:
+        _d0, _day0, _hc0 = valid_days[0]
+        _s0, _e0 = ticket.window_indices(_day0.index)
+        _excl = excluded_algos(ticket, _s0, _e0, len(_day0))
+        if _excl:
+            algos = [a2 for a2 in algos if a2 not in _excl]
+            win_counts = {a2: 0 for a2 in algos}
+
     # -- Multi-day loop at the requested order size ---------------------------
     # Tuple layout from _sim_day_all: (slip, mi, opp, total, fill)
     fill_rows = []
     for d, day, hist_curve in valid_days:
-        res = _sim_day_all(day, order_shares, urgency, adv_shares, vol_ann, hist_curve=hist_curve)
+        res = _sim_day_all(day, order_shares, urgency, adv_shares, vol_ann, hist_curve=hist_curve, ticket=ticket)
         if res is None:
             continue
         cost_row   = {"date": d.date(), **{a: res[a][3] for a in algos}}
@@ -284,7 +317,7 @@ def compare_performance(market_data: MarketData, order_pct_adv: float,
         q = adv_shares * (pct / 100)
         per_algo_costs = {a: [] for a in algos}
         for d, day, hist_curve in valid_days:
-            res = _sim_day_all(day, q, urgency, adv_shares, vol_ann, hist_curve=hist_curve)
+            res = _sim_day_all(day, q, urgency, adv_shares, vol_ann, hist_curve=hist_curve, ticket=ticket)
             if res is None:
                 continue
             for a in algos:

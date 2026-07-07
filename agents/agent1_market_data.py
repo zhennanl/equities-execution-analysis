@@ -46,6 +46,8 @@ MARKET_INFO = {
     "Indonesia (IDX)":      {"suffix": ".JK", "open": "09:00", "close": "16:15", "bars": 67},
     "Malaysia (KLSE)":      {"suffix": ".KL", "open": "09:00", "close": "17:00", "bars": 71},
     "Vietnam (HOSE)":       {"suffix": ".VN", "open": "09:15", "close": "14:45", "bars": 46},
+    # ── Europe ────────────────────────────────────────────────────────────
+    "UK (LSE)":             {"suffix": ".L",  "open": "08:00", "close": "16:30", "bars": 102},
 }
 
 @dataclass
