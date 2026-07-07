@@ -201,287 +201,9 @@ if page == "📈 Execution Algorithm Simulator":
         st.markdown("---")
         order_shares = ctx.order_shares
 
-        # ── AGENT 5 — RECOMMENDATION (pinned top) ────────────────────────────
-        st.markdown("### Agent 5 — Recommendation")
-        pri_col = _AC.get(memo.primary_algo, "#6b7280")
-        sec_col = _AC.get(memo.secondary_algo, "#6b7280")
-        ra, rb = st.columns(2)
-        ra.markdown(f"**Primary**")
-        ra.markdown(_badge(memo.primary_algo, pri_col) +
-                    f"&nbsp;&nbsp;**{comp.summary.loc[memo.primary_algo,'Mean (bps)']:.1f} bps avg**",
-                    unsafe_allow_html=True)
-        rb.markdown(f"**Secondary / Fallback**")
-        rb.markdown(_badge(memo.secondary_algo, sec_col) +
-                    f"&nbsp;&nbsp;{comp.summary.loc[memo.secondary_algo,'Mean (bps)']:.1f} bps avg",
-                    unsafe_allow_html=True)
-        st.markdown("")
-        for flag in memo.risk_flags:
-            if "No material" in flag:
-                st.success(f"✅ {flag}")
-            else:
-                st.warning(f"⚠️ {flag}")
-        with st.expander("📄 Full Recommendation Memo"):
-            st.markdown(memo.memo_text)
-
-        # ── AGENT 8 — CRITIC REVIEW (independent second opinion) ─────────────
-        st.markdown("")
-        if critic is not None:
-            if critic.approved:
-                st.success("✅ **Critic Review:** No material issues found — recommendation approved as-is.")
-            else:
-                st.warning("⚠️ **Critic Review:** flagged concerns worth confirming before executing.")
-            for f in critic.findings:
-                if f.message.startswith("No material"):
-                    continue
-                (st.warning if f.severity == "override" else st.caption)(
-                    f"{'⚠️ ' if f.severity == 'override' else '• '}{f.message}"
-                )
-        st.caption("Independent second pass over Agent 5's pick (Agent 8) — checks fill-qualification, "
-                  "earnings-date risk, and spread-reliability/size interaction. Doesn't silently change "
-                  "the recommendation; it flags concerns for the analyst to confirm.")
-
-        # ── AGENT 1 OUTPUT ────────────────────────────────────────────────────
-        st.markdown("---")
-        st.markdown("### Agent 1 — Market Data")
-        k1,k2,k3,k4 = st.columns(4)
-        k1.metric("Ticker", data.ticker)
-        k2.metric("Price", f"${data.current_price:,.2f}")
-        k3.metric("ADV (shares)", f"{data.adv_shares:,.0f}")
-        k4.metric("Realised Vol", f"{data.realized_vol_ann:.1%}")
-        k5,k6,k7,k8 = st.columns(4)
-        k5.metric("Order (shares)", f"{order_shares:,.0f}")
-        k6.metric("Order (% ADV)", f"{order_pct_adv}%")
-        k7.metric("Notional", f"${order_shares*data.current_price/1e6:.2f}M")
-        k8.metric("Urgency", urgency)
-
-        with st.expander("📊 Volume Profile & Price Chart"):
-            vp = data.vol_profile
-            fv = go.Figure(go.Bar(x=vp["time"], y=vp["volume_pct"]*100, marker_color="#1f77b4"))
-            fv.update_layout(xaxis_title="Time",yaxis_title="% Daily Vol",height=240,
-                             margin=dict(l=40,r=20,t=10,b=50),plot_bgcolor="white",
-                             yaxis=dict(gridcolor="#eee"),showlegend=False)
-            n = len(vp)
-            fv.update_xaxes(tickvals=vp["time"].iloc[::max(1,n//12)].tolist(), tickangle=-45)
-            st.plotly_chart(fv, use_container_width=True)
-
-            ld = data.intraday[data.intraday.index.date == data.intraday.index.date[-1]]
-            fp = go.Figure(go.Scatter(x=ld.index,y=ld["Close"],mode="lines",
-                                      line=dict(color="#2ca02c",width=1.8)))
-            fp.update_layout(xaxis_title="Time",yaxis_title="Price",height=200,
-                             margin=dict(l=40,r=20,t=10,b=30),plot_bgcolor="white",
-                             yaxis=dict(gridcolor="#eee"),showlegend=False)
-            st.plotly_chart(fp, use_container_width=True)
-
-        # ── PRE-TRADE ANALYTICS ───────────────────────────────────────────────
-        st.markdown("---")
-        st.markdown("### Pre-Trade Analytics")
-        st.caption("What this order should cost, and whether the market can absorb it — "
-                   "computed before committing to an algorithm, using the full historical dataset. "
-                   "See **Live Trading Session** below for how this re-underwrites as the day plays out.")
-        if pretrade is not None:
-            pc1, pc2 = st.columns(2)
-            with pc1:
-                st.markdown("**Estimated Spread Cost**")
-                if pretrade.spread_bps is not None:
-                    sc1, sc2 = st.columns(2)
-                    sc1.metric("Quoted spread (median)", f"{pretrade.spread_bps:.1f} bps")
-                    sc2.metric("Est. one-way crossing cost", f"{pretrade.half_spread_bps:.1f} bps")
-                    st.caption(f"Corwin-Schultz high-low estimator, {pretrade.spread_n_obs} recent "
-                              f"daily observations (mean {pretrade.spread_mean_bps:.1f} bps).")
-                    if pretrade.spread_reliability != "Normal":
-                        st.warning(f"⚠️ {pretrade.spread_reliability}")
-                else:
-                    st.info(f"ℹ️ {pretrade.spread_note}")
-
-            with pc2:
-                st.markdown("**Capacity — Days to Complete**")
-                st.dataframe(pretrade.capacity, use_container_width=True)
-                st.caption(f"At {urgency} urgency's participation rate, this order needs "
-                          f"~{pretrade.days_at_chosen_urgency:.2f} trading days to complete.")
-
-            st.markdown("")
-            st.markdown("**Expected Cost Range by Algorithm (bps)**")
-            st.caption(f"Method: {pretrade.cost_range_method}. Percentile bands are used over Mean ± Std "
-                      "when enough simulated days are available, since impact-cost distributions are "
-                      "known to be fat-tailed (Almgren et al. 2005) rather than symmetric-Gaussian.")
-            st.dataframe(pretrade.expected_cost_range.style.format({
-                "Low (bps)": "{:+.1f}", "Expected (bps)": "{:+.1f}", "High (bps)": "{:+.1f}",
-                "Avg Fill": "{:.1%}",
-            }), use_container_width=True)
-
-            if pretrade.almgren.available:
-                st.markdown("")
-                st.markdown("**Almgren et al. (2005) Calibrated Impact Cross-Check**")
-                am1, am2, am3 = st.columns(3)
-                am1.metric("Permanent impact", f"{pretrade.almgren.permanent_impact_bps:.1f} bps")
-                am2.metric("Temporary impact", f"{pretrade.almgren.temporary_impact_bps:.1f} bps")
-                am3.metric("Total expected impact", f"{pretrade.almgren.realized_impact_bps:.1f} bps")
-                st.caption(pretrade.almgren.note)
-
-            for note in pretrade.notes:
-                if "Spread estimate reliability" in note or "Almgren et al." in note:
-                    continue   # already shown inline above
-                st.caption(f"• {note}")
-        else:
-            st.info("ℹ️ Pre-trade estimate not available for this ticker — see Orchestration detail above.")
-
-        st.markdown("")
-        st.markdown("**Earnings Calendar Check** (Agent 7)")
-        if earnings is not None and earnings.available:
-            ne1, ne2 = st.columns(2)
-            ne1.metric("Next earnings", str(earnings.next_earnings_date.date()))
-            ne2.metric("Trading days until", earnings.trading_days_until,
-                      delta="near-term" if earnings.is_near_term else "outside near-term window",
-                      delta_color="inverse" if earnings.is_near_term else "off")
-            (st.warning if earnings.is_near_term else st.caption)(earnings.risk_note)
-        else:
-            st.caption(f"ℹ️ {earnings.reason if earnings is not None else 'Earnings check unavailable.'}")
-
-        # ── AGENT 9 — MARKET MICROSTRUCTURE & ORDER-FLOW TOXICITY ────────────
-        st.markdown("")
-        st.markdown("**Market Microstructure & Liquidity** (Agent 9)")
-        st.caption("Decision-time snapshot, pooled across the full fetch window — see **Live Trading "
-                  "Session** below for the same readout recomputed bar-by-bar as the session plays.")
-        micro = ctx.microstructure
-        if micro is not None:
-            mc1, mc2 = st.columns(2)
-            with mc1:
-                st.markdown("*Kyle's Lambda (price impact per unit order flow)*")
-                kl = micro.kyle_lambda
-                if kl.available:
-                    st.metric("λ (bps per 1% ADV net flow, next-bar)", f"{kl.lambda_bps_per_pct_adv:+.2f}",
-                             delta=f"t={kl.t_stat:.1f}, R²={kl.r_squared:.1%}, n={kl.n_obs}", delta_color="off")
-                    st.caption(kl.note)
-                else:
-                    st.info(f"ℹ️ {kl.reason}")
-            with mc2:
-                st.markdown("*VPIN (order-flow toxicity, time-bar approximation)*")
-                vp = micro.vpin
-                if vp.available:
-                    vpin_color = {"Low": "#22c55e", "Normal": "#3b82f6",
-                                 "Elevated": "#f97316", "High": "#ef4444"}.get(vp.label, "#6b7280")
-                    st.markdown(_badge(f"{vp.label} ({vp.vpin_score:.2f})", vpin_color), unsafe_allow_html=True)
-                    st.caption(f"{vp.note} ({vp.window_bars}-bar trailing window.)")
-                else:
-                    st.info(f"ℹ️ {vp.reason}")
-            st.caption("Kyle's lambda and VPIN are estimated from Bulk Volume Classification (Easley, "
-                      "Lopez de Prado & O'Hara 2012) applied to 5-min OHLCV bars — a time-bar "
-                      "approximation, not canonical tick-data microstructure, since no free order-book "
-                      "or trade-level feed is available across these markets. See Agent 9's module "
-                      "docstring for the full methodology and caveats.")
-        else:
-            st.info("ℹ️ Microstructure assessment not available — see Orchestration detail above.")
-
-        # ── AGENT 2 OUTPUT ────────────────────────────────────────────────────
-        st.markdown("---")
-        st.markdown("### Agent 2 — Market Regime")
-        st.caption("Decision-time snapshot (full simulation day) — see **Live Trading Session** below "
-                  "for how this classification evolves as only part of the day has actually happened.")
-        st.markdown(f"**{regime.summary}**"); st.markdown("")
-        r1,r2,r3 = st.columns(3)
-
-        vc = _VC.get(regime.vol_label,"#6b7280")
-        with r1:
-            st.markdown("**Intraday Range**")
-            st.markdown(_badge(regime.vol_label, vc), unsafe_allow_html=True); st.markdown("")
-            pct=(regime.vol_ratio-1)*100
-            st.metric("vs 20d median",f"{regime.vol_ratio:.2f}×",delta=f"{pct:+.0f}%",
-                      delta_color="inverse" if regime.vol_label=="Tight" else "normal")
-            caps={"Tight":"Compressed range — muted impact.","Normal":"In line with history.",
-                  "Trending":"Wide range — elevated impact.","Extremely Trending":"Extreme range — consider deferring."}
-            st.caption(caps.get(regime.vol_label,""))
-
-        vpc={"U-Shaped":"#3b82f6","Uniform":"#22c55e","Midday-Heavy":"#f97316"}.get(regime.volume_label,"#6b7280")
-        with r2:
-            st.markdown("**Volume Pattern**")
-            st.markdown(_badge(regime.volume_label, vpc), unsafe_allow_html=True); st.markdown("")
-            st.metric("U-shape score",f"{regime.u_shape_score:.2f}×",delta="open/close vs midday",delta_color="off")
-            vcaps={"U-Shaped":"Heavy open/close — VWAP aligns with flow.",
-                   "Uniform":"Even distribution — TWAP minimises timing risk.",
-                   "Midday-Heavy":"Unusual pattern — review liquidity timing."}
-            st.caption(vcaps.get(regime.volume_label,""))
-
-        tc=_TC.get(regime.trend_label,"#6b7280")
-        with r3:
-            st.markdown("**Price Trend (Variance Ratio Test)**")
-            st.markdown(_badge(regime.trend_label, tc), unsafe_allow_html=True); st.markdown("")
-            if regime.vr_available:
-                st.metric(f"VR(q={regime.vr_q})", f"{regime.vr_ratio:.2f}",
-                         delta=f"z*={regime.vr_zstat:+.2f} ({'significant' if regime.vr_significant else 'not significant'})",
-                         delta_color="off")
-            else:
-                st.metric("VR test", "insufficient bars", delta_color="off")
-            tcaps={"Trending":"VR(q)>1, significant — positive serial correlation; IS may front-load beneficially.",
-                   "Mean-Reverting":"VR(q)<1, significant — negative serial correlation; patient algos favoured.",
-                   "Neutral":"VR(q) not significantly different from 1 (random walk) at this horizon."}
-            st.caption(tcaps.get(regime.trend_label,""))
-            st.caption(f"Supporting stat — lag-1 autocorr: {regime.autocorr:+.3f}")
-            if regime.vr_detail:
-                with st.expander("Variance ratio detail (Lo-MacKinlay 1988)"):
-                    vr_df = pd.DataFrame(regime.vr_detail)
-                    st.dataframe(vr_df, use_container_width=True, hide_index=True)
-                    st.caption("z_robust is the heteroskedasticity-robust statistic (used for the "
-                              "headline label above); |z| >= 1.96 ≈ 95% significance under the "
-                              "random-walk null.")
-
-        # ── AGENT 3 OUTPUT ────────────────────────────────────────────────────
-        st.markdown("---")
-        st.markdown("### Agent 3 — Algorithm Simulation")
-        st.markdown(f"Simulated **{order_pct_adv}% ADV** buy order "
-                    f"({order_shares:,.0f} shares · ${order_shares*data.current_price/1e6:.2f}M)  "
-                    f"| Arrival price: **${sim.arrival_price:.2f}**")
-
-        tbl = [{
-            "Algorithm": n,
-            "Avg Exec Price": f"${r.avg_exec_price:.2f}",
-            "Slippage (bps)": f"{r.slippage_bps:+.1f}",
-            "Mkt Impact (bps)": f"{r.market_impact_bps:.1f}",
-            "Opp. Cost (bps)": f"{r.opportunity_cost_bps:+.1f}",
-            "Total Cost (bps)": f"{r.total_cost_bps:.1f}",
-            "Fill Rate": f"{r.completion_pct:.0%}",
-        } for n, r in sim.algos.items()]
-        df3 = pd.DataFrame(tbl).set_index("Algorithm")
-        best3 = min(sim.algos, key=lambda k: sim.algos[k].total_cost_bps)
-        st.dataframe(df3.style.apply(
-            lambda row: ["background-color:#dcfce7;"]*len(row) if row.name==best3 else [""]*len(row), axis=1
-        ), use_container_width=True)
-        st.caption("Opp. Cost = Perold (1988) opportunity cost on any unfilled shares, priced against "
-                   "the simulation day's period-end close vs. arrival — already included in Total Cost.")
-
         a_names = list(sim.algos.keys())
-        fc = go.Figure()
-        fc.add_trace(go.Bar(name="Slippage",x=a_names,y=[sim.algos[a].slippage_bps for a in a_names],marker_color="#60a5fa"))
-        fc.add_trace(go.Bar(name="Mkt Impact",x=a_names,y=[sim.algos[a].market_impact_bps for a in a_names],marker_color="#f87171"))
-        fc.add_trace(go.Bar(name="Opp. Cost",x=a_names,y=[sim.algos[a].opportunity_cost_bps for a in a_names],marker_color="#fbbf24"))
-        fc.update_layout(barmode="stack",yaxis_title="Cost (bps)",height=260,
-                         margin=dict(l=40,r=20,t=10,b=30),plot_bgcolor="white",
-                         yaxis=dict(gridcolor="#eee"),
-                         legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1))
-        st.plotly_chart(fc, use_container_width=True)
-
-        with st.expander("🕰️ Schedule Data Source (look-ahead-bias check)"):
-            for name, r in sim.algos.items():
-                st.caption(f"**{name}** — {r.schedule_note}")
-
-        with st.expander("📅 Execution Schedules — Shares per Bar"):
-            tabs3 = st.tabs(list(sim.algos.keys()))
-            for tab,(name,r) in zip(tabs3,sim.algos.items()):
-                with tab:
-                    sc=r.schedule
-                    fs=go.Figure()
-                    fs.add_trace(go.Bar(x=sc["time"],y=sc["shares_traded"],
-                                        name="Shares/bar",marker_color=_AC[name]))
-                    fs.add_trace(go.Scatter(x=sc["time"],y=sc["cumulative"],
-                                            name="Cumulative",yaxis="y2",
-                                            line=dict(color="#6b7280",width=1.5,dash="dot")))
-                    fs.update_layout(height=240,margin=dict(l=40,r=60,t=10,b=30),
-                                     plot_bgcolor="white",yaxis=dict(gridcolor="#eee"),
-                                     yaxis2=dict(overlaying="y",side="right",showgrid=False),
-                                     legend=dict(orientation="h",yanchor="bottom",y=1.02))
-                    st.plotly_chart(fs, use_container_width=True)
 
         # ── LIVE TRADING SESSION (time-lapse) ─────────────────────────────────
-        st.markdown("---")
         st.markdown("### 🔴 Live Trading Session — Time-Lapse Playback")
         st.caption(
             "Press **Play** and watch the session unfold bar-by-bar, exactly as a trader would "
@@ -778,6 +500,285 @@ if page == "📈 Execution Algorithm Simulator":
                 st.rerun()
         else:
             st.info("ℹ️ Not enough bars in this session to demo the live trading session.")
+
+        st.markdown("---")
+        # ── AGENT 5 — RECOMMENDATION ──────────────────────────────────────────
+        st.markdown("### Agent 5 — Recommendation")
+        pri_col = _AC.get(memo.primary_algo, "#6b7280")
+        sec_col = _AC.get(memo.secondary_algo, "#6b7280")
+        ra, rb = st.columns(2)
+        ra.markdown(f"**Primary**")
+        ra.markdown(_badge(memo.primary_algo, pri_col) +
+                    f"&nbsp;&nbsp;**{comp.summary.loc[memo.primary_algo,'Mean (bps)']:.1f} bps avg**",
+                    unsafe_allow_html=True)
+        rb.markdown(f"**Secondary / Fallback**")
+        rb.markdown(_badge(memo.secondary_algo, sec_col) +
+                    f"&nbsp;&nbsp;{comp.summary.loc[memo.secondary_algo,'Mean (bps)']:.1f} bps avg",
+                    unsafe_allow_html=True)
+        st.markdown("")
+        for flag in memo.risk_flags:
+            if "No material" in flag:
+                st.success(f"✅ {flag}")
+            else:
+                st.warning(f"⚠️ {flag}")
+        with st.expander("📄 Full Recommendation Memo"):
+            st.markdown(memo.memo_text)
+
+        # ── AGENT 8 — CRITIC REVIEW (independent second opinion) ─────────────
+        st.markdown("")
+        if critic is not None:
+            if critic.approved:
+                st.success("✅ **Critic Review:** No material issues found — recommendation approved as-is.")
+            else:
+                st.warning("⚠️ **Critic Review:** flagged concerns worth confirming before executing.")
+            for f in critic.findings:
+                if f.message.startswith("No material"):
+                    continue
+                (st.warning if f.severity == "override" else st.caption)(
+                    f"{'⚠️ ' if f.severity == 'override' else '• '}{f.message}"
+                )
+        st.caption("Independent second pass over Agent 5's pick (Agent 8) — checks fill-qualification, "
+                  "earnings-date risk, and spread-reliability/size interaction. Doesn't silently change "
+                  "the recommendation; it flags concerns for the analyst to confirm.")
+
+        # ── AGENT 1 OUTPUT ────────────────────────────────────────────────────
+        st.markdown("---")
+        st.markdown("### Agent 1 — Market Data")
+        k1,k2,k3,k4 = st.columns(4)
+        k1.metric("Ticker", data.ticker)
+        k2.metric("Price", f"${data.current_price:,.2f}")
+        k3.metric("ADV (shares)", f"{data.adv_shares:,.0f}")
+        k4.metric("Realised Vol", f"{data.realized_vol_ann:.1%}")
+        k5,k6,k7,k8 = st.columns(4)
+        k5.metric("Order (shares)", f"{order_shares:,.0f}")
+        k6.metric("Order (% ADV)", f"{order_pct_adv}%")
+        k7.metric("Notional", f"${order_shares*data.current_price/1e6:.2f}M")
+        k8.metric("Urgency", urgency)
+
+        with st.expander("📊 Volume Profile & Price Chart"):
+            vp = data.vol_profile
+            fv = go.Figure(go.Bar(x=vp["time"], y=vp["volume_pct"]*100, marker_color="#1f77b4"))
+            fv.update_layout(xaxis_title="Time",yaxis_title="% Daily Vol",height=240,
+                             margin=dict(l=40,r=20,t=10,b=50),plot_bgcolor="white",
+                             yaxis=dict(gridcolor="#eee"),showlegend=False)
+            n = len(vp)
+            fv.update_xaxes(tickvals=vp["time"].iloc[::max(1,n//12)].tolist(), tickangle=-45)
+            st.plotly_chart(fv, use_container_width=True)
+
+            ld = data.intraday[data.intraday.index.date == data.intraday.index.date[-1]]
+            fp = go.Figure(go.Scatter(x=ld.index,y=ld["Close"],mode="lines",
+                                      line=dict(color="#2ca02c",width=1.8)))
+            fp.update_layout(xaxis_title="Time",yaxis_title="Price",height=200,
+                             margin=dict(l=40,r=20,t=10,b=30),plot_bgcolor="white",
+                             yaxis=dict(gridcolor="#eee"),showlegend=False)
+            st.plotly_chart(fp, use_container_width=True)
+
+        # ── PRE-TRADE ANALYTICS ───────────────────────────────────────────────
+        st.markdown("---")
+        st.markdown("### Pre-Trade Analytics")
+        st.caption("What this order should cost, and whether the market can absorb it — "
+                   "computed before committing to an algorithm, using the full historical dataset. "
+                   "See **Live Trading Session** below for how this re-underwrites as the day plays out.")
+        if pretrade is not None:
+            pc1, pc2 = st.columns(2)
+            with pc1:
+                st.markdown("**Estimated Spread Cost**")
+                if pretrade.spread_bps is not None:
+                    sc1, sc2 = st.columns(2)
+                    sc1.metric("Quoted spread (median)", f"{pretrade.spread_bps:.1f} bps")
+                    sc2.metric("Est. one-way crossing cost", f"{pretrade.half_spread_bps:.1f} bps")
+                    st.caption(f"Corwin-Schultz high-low estimator, {pretrade.spread_n_obs} recent "
+                              f"daily observations (mean {pretrade.spread_mean_bps:.1f} bps).")
+                    if pretrade.spread_reliability != "Normal":
+                        st.warning(f"⚠️ {pretrade.spread_reliability}")
+                else:
+                    st.info(f"ℹ️ {pretrade.spread_note}")
+
+            with pc2:
+                st.markdown("**Capacity — Days to Complete**")
+                st.dataframe(pretrade.capacity, use_container_width=True)
+                st.caption(f"At {urgency} urgency's participation rate, this order needs "
+                          f"~{pretrade.days_at_chosen_urgency:.2f} trading days to complete.")
+
+            st.markdown("")
+            st.markdown("**Expected Cost Range by Algorithm (bps)**")
+            st.caption(f"Method: {pretrade.cost_range_method}. Percentile bands are used over Mean ± Std "
+                      "when enough simulated days are available, since impact-cost distributions are "
+                      "known to be fat-tailed (Almgren et al. 2005) rather than symmetric-Gaussian.")
+            st.dataframe(pretrade.expected_cost_range.style.format({
+                "Low (bps)": "{:+.1f}", "Expected (bps)": "{:+.1f}", "High (bps)": "{:+.1f}",
+                "Avg Fill": "{:.1%}",
+            }), use_container_width=True)
+
+            if pretrade.almgren.available:
+                st.markdown("")
+                st.markdown("**Almgren et al. (2005) Calibrated Impact Cross-Check**")
+                am1, am2, am3 = st.columns(3)
+                am1.metric("Permanent impact", f"{pretrade.almgren.permanent_impact_bps:.1f} bps")
+                am2.metric("Temporary impact", f"{pretrade.almgren.temporary_impact_bps:.1f} bps")
+                am3.metric("Total expected impact", f"{pretrade.almgren.realized_impact_bps:.1f} bps")
+                st.caption(pretrade.almgren.note)
+
+            for note in pretrade.notes:
+                if "Spread estimate reliability" in note or "Almgren et al." in note:
+                    continue   # already shown inline above
+                st.caption(f"• {note}")
+        else:
+            st.info("ℹ️ Pre-trade estimate not available for this ticker — see Orchestration detail above.")
+
+        st.markdown("")
+        st.markdown("**Earnings Calendar Check** (Agent 7)")
+        if earnings is not None and earnings.available:
+            ne1, ne2 = st.columns(2)
+            ne1.metric("Next earnings", str(earnings.next_earnings_date.date()))
+            ne2.metric("Trading days until", earnings.trading_days_until,
+                      delta="near-term" if earnings.is_near_term else "outside near-term window",
+                      delta_color="inverse" if earnings.is_near_term else "off")
+            (st.warning if earnings.is_near_term else st.caption)(earnings.risk_note)
+        else:
+            st.caption(f"ℹ️ {earnings.reason if earnings is not None else 'Earnings check unavailable.'}")
+
+        # ── AGENT 9 — MARKET MICROSTRUCTURE & ORDER-FLOW TOXICITY ────────────
+        st.markdown("")
+        st.markdown("**Market Microstructure & Liquidity** (Agent 9)")
+        st.caption("Decision-time snapshot, pooled across the full fetch window — see **Live Trading "
+                  "Session** below for the same readout recomputed bar-by-bar as the session plays.")
+        micro = ctx.microstructure
+        if micro is not None:
+            mc1, mc2 = st.columns(2)
+            with mc1:
+                st.markdown("*Kyle's Lambda (price impact per unit order flow)*")
+                kl = micro.kyle_lambda
+                if kl.available:
+                    st.metric("λ (bps per 1% ADV net flow, next-bar)", f"{kl.lambda_bps_per_pct_adv:+.2f}",
+                             delta=f"t={kl.t_stat:.1f}, R²={kl.r_squared:.1%}, n={kl.n_obs}", delta_color="off")
+                    st.caption(kl.note)
+                else:
+                    st.info(f"ℹ️ {kl.reason}")
+            with mc2:
+                st.markdown("*VPIN (order-flow toxicity, time-bar approximation)*")
+                vp = micro.vpin
+                if vp.available:
+                    vpin_color = {"Low": "#22c55e", "Normal": "#3b82f6",
+                                 "Elevated": "#f97316", "High": "#ef4444"}.get(vp.label, "#6b7280")
+                    st.markdown(_badge(f"{vp.label} ({vp.vpin_score:.2f})", vpin_color), unsafe_allow_html=True)
+                    st.caption(f"{vp.note} ({vp.window_bars}-bar trailing window.)")
+                else:
+                    st.info(f"ℹ️ {vp.reason}")
+            st.caption("Kyle's lambda and VPIN are estimated from Bulk Volume Classification (Easley, "
+                      "Lopez de Prado & O'Hara 2012) applied to 5-min OHLCV bars — a time-bar "
+                      "approximation, not canonical tick-data microstructure, since no free order-book "
+                      "or trade-level feed is available across these markets. See Agent 9's module "
+                      "docstring for the full methodology and caveats.")
+        else:
+            st.info("ℹ️ Microstructure assessment not available — see Orchestration detail above.")
+
+        # ── AGENT 2 OUTPUT ────────────────────────────────────────────────────
+        st.markdown("---")
+        st.markdown("### Agent 2 — Market Regime")
+        st.caption("Decision-time snapshot (full simulation day) — see **Live Trading Session** below "
+                  "for how this classification evolves as only part of the day has actually happened.")
+        st.markdown(f"**{regime.summary}**"); st.markdown("")
+        r1,r2,r3 = st.columns(3)
+
+        vc = _VC.get(regime.vol_label,"#6b7280")
+        with r1:
+            st.markdown("**Intraday Range**")
+            st.markdown(_badge(regime.vol_label, vc), unsafe_allow_html=True); st.markdown("")
+            pct=(regime.vol_ratio-1)*100
+            st.metric("vs 20d median",f"{regime.vol_ratio:.2f}×",delta=f"{pct:+.0f}%",
+                      delta_color="inverse" if regime.vol_label=="Tight" else "normal")
+            caps={"Tight":"Compressed range — muted impact.","Normal":"In line with history.",
+                  "Trending":"Wide range — elevated impact.","Extremely Trending":"Extreme range — consider deferring."}
+            st.caption(caps.get(regime.vol_label,""))
+
+        vpc={"U-Shaped":"#3b82f6","Uniform":"#22c55e","Midday-Heavy":"#f97316"}.get(regime.volume_label,"#6b7280")
+        with r2:
+            st.markdown("**Volume Pattern**")
+            st.markdown(_badge(regime.volume_label, vpc), unsafe_allow_html=True); st.markdown("")
+            st.metric("U-shape score",f"{regime.u_shape_score:.2f}×",delta="open/close vs midday",delta_color="off")
+            vcaps={"U-Shaped":"Heavy open/close — VWAP aligns with flow.",
+                   "Uniform":"Even distribution — TWAP minimises timing risk.",
+                   "Midday-Heavy":"Unusual pattern — review liquidity timing."}
+            st.caption(vcaps.get(regime.volume_label,""))
+
+        tc=_TC.get(regime.trend_label,"#6b7280")
+        with r3:
+            st.markdown("**Price Trend (Variance Ratio Test)**")
+            st.markdown(_badge(regime.trend_label, tc), unsafe_allow_html=True); st.markdown("")
+            if regime.vr_available:
+                st.metric(f"VR(q={regime.vr_q})", f"{regime.vr_ratio:.2f}",
+                         delta=f"z*={regime.vr_zstat:+.2f} ({'significant' if regime.vr_significant else 'not significant'})",
+                         delta_color="off")
+            else:
+                st.metric("VR test", "insufficient bars", delta_color="off")
+            tcaps={"Trending":"VR(q)>1, significant — positive serial correlation; IS may front-load beneficially.",
+                   "Mean-Reverting":"VR(q)<1, significant — negative serial correlation; patient algos favoured.",
+                   "Neutral":"VR(q) not significantly different from 1 (random walk) at this horizon."}
+            st.caption(tcaps.get(regime.trend_label,""))
+            st.caption(f"Supporting stat — lag-1 autocorr: {regime.autocorr:+.3f}")
+            if regime.vr_detail:
+                with st.expander("Variance ratio detail (Lo-MacKinlay 1988)"):
+                    vr_df = pd.DataFrame(regime.vr_detail)
+                    st.dataframe(vr_df, use_container_width=True, hide_index=True)
+                    st.caption("z_robust is the heteroskedasticity-robust statistic (used for the "
+                              "headline label above); |z| >= 1.96 ≈ 95% significance under the "
+                              "random-walk null.")
+
+        # ── AGENT 3 OUTPUT ────────────────────────────────────────────────────
+        st.markdown("---")
+        st.markdown("### Agent 3 — Algorithm Simulation")
+        st.markdown(f"Simulated **{order_pct_adv}% ADV** buy order "
+                    f"({order_shares:,.0f} shares · ${order_shares*data.current_price/1e6:.2f}M)  "
+                    f"| Arrival price: **${sim.arrival_price:.2f}**")
+
+        tbl = [{
+            "Algorithm": n,
+            "Avg Exec Price": f"${r.avg_exec_price:.2f}",
+            "Slippage (bps)": f"{r.slippage_bps:+.1f}",
+            "Mkt Impact (bps)": f"{r.market_impact_bps:.1f}",
+            "Opp. Cost (bps)": f"{r.opportunity_cost_bps:+.1f}",
+            "Total Cost (bps)": f"{r.total_cost_bps:.1f}",
+            "Fill Rate": f"{r.completion_pct:.0%}",
+        } for n, r in sim.algos.items()]
+        df3 = pd.DataFrame(tbl).set_index("Algorithm")
+        best3 = min(sim.algos, key=lambda k: sim.algos[k].total_cost_bps)
+        st.dataframe(df3.style.apply(
+            lambda row: ["background-color:#dcfce7;"]*len(row) if row.name==best3 else [""]*len(row), axis=1
+        ), use_container_width=True)
+        st.caption("Opp. Cost = Perold (1988) opportunity cost on any unfilled shares, priced against "
+                   "the simulation day's period-end close vs. arrival — already included in Total Cost.")
+
+        fc = go.Figure()
+        fc.add_trace(go.Bar(name="Slippage",x=a_names,y=[sim.algos[a].slippage_bps for a in a_names],marker_color="#60a5fa"))
+        fc.add_trace(go.Bar(name="Mkt Impact",x=a_names,y=[sim.algos[a].market_impact_bps for a in a_names],marker_color="#f87171"))
+        fc.add_trace(go.Bar(name="Opp. Cost",x=a_names,y=[sim.algos[a].opportunity_cost_bps for a in a_names],marker_color="#fbbf24"))
+        fc.update_layout(barmode="stack",yaxis_title="Cost (bps)",height=260,
+                         margin=dict(l=40,r=20,t=10,b=30),plot_bgcolor="white",
+                         yaxis=dict(gridcolor="#eee"),
+                         legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1))
+        st.plotly_chart(fc, use_container_width=True)
+
+        with st.expander("🕰️ Schedule Data Source (look-ahead-bias check)"):
+            for name, r in sim.algos.items():
+                st.caption(f"**{name}** — {r.schedule_note}")
+
+        with st.expander("📅 Execution Schedules — Shares per Bar"):
+            tabs3 = st.tabs(list(sim.algos.keys()))
+            for tab,(name,r) in zip(tabs3,sim.algos.items()):
+                with tab:
+                    sc=r.schedule
+                    fs=go.Figure()
+                    fs.add_trace(go.Bar(x=sc["time"],y=sc["shares_traded"],
+                                        name="Shares/bar",marker_color=_AC[name]))
+                    fs.add_trace(go.Scatter(x=sc["time"],y=sc["cumulative"],
+                                            name="Cumulative",yaxis="y2",
+                                            line=dict(color="#6b7280",width=1.5,dash="dot")))
+                    fs.update_layout(height=240,margin=dict(l=40,r=60,t=10,b=30),
+                                     plot_bgcolor="white",yaxis=dict(gridcolor="#eee"),
+                                     yaxis2=dict(overlaying="y",side="right",showgrid=False),
+                                     legend=dict(orientation="h",yanchor="bottom",y=1.02))
+                    st.plotly_chart(fs, use_container_width=True)
 
         # ── AGENT 4 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
