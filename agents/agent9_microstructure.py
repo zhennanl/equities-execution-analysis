@@ -1,6 +1,16 @@
 """
 Agent 9: Market Microstructure & Order-Flow Toxicity
 
+VPIN DISCLOSURE (see docs/EXECUTION_SIMULATOR_RESEARCH.md): VPIN's predictive
+validity is academically contested. Andersen & Bondarenko (2014, J. Financial
+Markets) show its predictive content is largely a mechanical reflection of
+volume and volatility, that it peaked AFTER (not before) the 2010 Flash
+Crash, and that results are sensitive to the trade-classification scheme;
+Easley, Lopez de Prado & O'Hara's rejoinder defends the toxicity->liquidity
+channel. This module therefore treats VPIN as a MONITORING SIGNAL correlated
+with stressed conditions — not a validated predictor — and Agent 8 consumes
+it as a flag for a human, never an automatic action.
+
 Adds three genuinely institutional-grade liquidity diagnostics that this
 platform's free OHLCV-only data feed can actually support:
 

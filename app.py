@@ -15,7 +15,7 @@ from agents.agent3_algo_simulation  import IS_KAPPA_T, simulate_with_interventio
 from agents.agent10_hypothesis_test import run_hypothesis_test, METRIC_MAP, ALTERNATIVES
 from agents.agent11_live_snapshot   import (
     live_regime, live_microstructure, live_pretrade_remaining,
-    live_recommendation_check, live_tca,
+    live_recommendation_check, live_tca, build_live_alerts,
 )
 from agents.orchestrator            import run_pipeline
 from agents.rebalancing_event_study import run_event_study, build_execution_insights, INDEX_PROXIES
@@ -600,6 +600,44 @@ if page == "📈 Execution Algorithm Simulator":
                               f"({tca.cost_percentile.n_obs} historical days).")
             st.caption(tca.note)
 
+            # -- Alert blotter (EMS-style threshold rules over the live metrics) --
+            _al_part = None
+            if len(view) and len(view_day) and float(view_day["Volume"].iloc[-1]) > 0:
+                _al_part = float(view["shares_traded"].iloc[-1]) / float(view_day["Volume"].iloc[-1]) * 100
+            _al_slip = None
+            try:
+                _bt = tca.benchmarks_to_date
+                _match = [ix for ix in _bt.index if current_benchmark.lower() in str(ix).lower()]
+                if _match:
+                    _al_slip = float(_bt.loc[_match[0], "Slippage vs Benchmark (bps)"])
+            except Exception:
+                pass
+            _alerts = build_live_alerts(
+                filled_shares=order_shares - remaining_shares, order_shares=order_shares,
+                elapsed_frac=(cursor_idx + 1) / max(n_opts, 1),
+                algo_name=st.session_state["p1_base_algo"] or "",
+                last_bar_participation_pct=_al_part,
+                cap_pct=ticket.max_participation_pct,
+                limit_price=ticket.effective_limit,
+                current_price=float(view_day["Close"].iloc[-1]) if len(view_day) else None,
+                vpin_label=l_micro.vpin.label if l_micro.vpin.available else None,
+                slip_vs_benchmark_bps=_al_slip, benchmark_name=current_benchmark,
+                reconsider=not l_rec.still_on_track)
+            st.markdown("**🚨 Alert Blotter**")
+            if _alerts:
+                for _al in _alerts:
+                    if _al.severity == "HIGH":
+                        st.error(f"🔴 **{_al.rule}:** {_al.message}")
+                    elif _al.severity == "MEDIUM":
+                        st.warning(f"🟠 **{_al.rule}:** {_al.message}")
+                    else:
+                        st.caption(f"🔵 {_al.rule}: {_al.message}")
+            else:
+                st.caption("🟢 No active alerts — execution within all thresholds.")
+            st.caption("Threshold rules over the live metrics (completion pace, participation "
+                       "cap, limit state, toxicity, benchmark slippage). Alerts inform — "
+                       "nothing auto-acts, same posture as the critic.")
+
             # -- Intervene ------------------------------------------------------
             with st.expander("🔀 Intervene here — switch algo/urgency/benchmark for the remainder"):
                 iv1, iv2, iv3, iv4 = st.columns(4)
@@ -812,6 +850,11 @@ if page == "📈 Execution Algorithm Simulator":
                     st.caption(f"{vp.note} ({vp.window_bars}-bar trailing window.)")
                 else:
                     st.info(f"ℹ️ {vp.reason}")
+            st.caption("**VPIN validity note:** Andersen & Bondarenko (2014) show VPIN's predictive "
+                      "content largely reflects volume/volatility mechanically and that it peaked *after* "
+                      "the 2010 Flash Crash — treat it as a monitoring signal correlated with stress, not "
+                      "a validated predictor (Easley-López de Prado-O'Hara's rejoinder defends the "
+                      "toxicity channel; see docs/EXECUTION_SIMULATOR_RESEARCH.md).")
             st.caption("Kyle's lambda and VPIN are estimated from Bulk Volume Classification (Easley, "
                       "Lopez de Prado & O'Hara 2012) applied to 5-min OHLCV bars — a time-bar "
                       "approximation, not canonical tick-data microstructure, since no free order-book "

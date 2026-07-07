@@ -72,6 +72,15 @@ from agents.order_ticket import constrain_fills, windowed_curve, excluded_algos
 
 # Market impact coefficient (empirical, typical range 0.2-0.5 across the
 # square-root-law literature)
+# Square-root-law prefactor. Empirical calibrations put the prefactor in a
+# ~0.2-0.7 band: Zarinelli et al. (2015, 8M metaorders) find A ~ 0.2 with
+# exponents ~0.52-0.54; a 2026 single-name AAPL study finds 0.34 (bias-
+# corrected) to 0.69 (raw); Bershova & Rakhlin (2013) are consistent. 0.3 is
+# a defensible mid-low choice for liquid names. The per-algo SPEED_FACTORS
+# multiplier below is a practitioner heuristic (no direct literature
+# analogue) — the Almgren et al. (2005) calibrated model reported alongside
+# in Pre-Trade Analytics is the independent cross-check for that model risk.
+# See docs/EXECUTION_SIMULATOR_RESEARCH.md.
 IMPACT_ETA = 0.3
 
 # Speed factors scale market impact per algo (relative to neutral baseline)
@@ -298,6 +307,19 @@ def _build_result(name, schedule_df, arrival_price, order_shares,
     )
 
 
+def _typical_prices(day: pd.DataFrame) -> np.ndarray:
+    """Per-bar fill-price proxy for CONTINUOUS trading: the typical price
+    (H+L+C)/3, not the bar close. An algo slicing inside a 5-minute bar
+    realizes something near the bar's average traded price; close-only fills
+    systematically bias slippage on trending days (the fill "gets" the bar's
+    full move). Auction-style algos (MOC/MOO) keep the closing/opening print
+    — that IS their fill price. Falls back to Close when H/L are missing.
+    """
+    if {"High", "Low", "Close"}.issubset(day.columns):
+        return ((day["High"].values + day["Low"].values + day["Close"].values) / 3.0).astype(float)
+    return day["Close"].values.astype(float)
+
+
 # -- Algorithm schedules ------------------------------------------------------
 
 def _sim_vwap(day: pd.DataFrame, order_shares: float, hist_curve=None, **kw) -> pd.DataFrame:
@@ -313,7 +335,7 @@ def _sim_vwap(day: pd.DataFrame, order_shares: float, hist_curve=None, **kw) -> 
     return pd.DataFrame({
         "time": day.index,
         "shares_traded": shares,
-        "price": day["Close"].values,
+        "price": _typical_prices(day),
         "cumulative": np.cumsum(shares),
     })
 
@@ -324,7 +346,7 @@ def _sim_twap(day: pd.DataFrame, order_shares: float, **kw) -> pd.DataFrame:
     return pd.DataFrame({
         "time": day.index,
         "shares_traded": shares,
-        "price": day["Close"].values,
+        "price": _typical_prices(day),
         "cumulative": np.cumsum(shares),
     })
 
@@ -334,15 +356,16 @@ def _sim_pov(day: pd.DataFrame, order_shares: float, urgency: str, **kw) -> pd.D
     remaining = order_shares
     rows = []
     cumulative = 0.0
-    for ts, bar in day.iterrows():
+    tps = _typical_prices(day)
+    for i_bar, (ts, bar) in enumerate(day.iterrows()):
         if remaining <= 0:
-            rows.append((ts, 0.0, bar["Close"], cumulative))
+            rows.append((ts, 0.0, tps[i_bar], cumulative))
             continue
         tradeable = bar["Volume"] * rate
         traded = min(remaining, tradeable)
         remaining -= traded
         cumulative += traded
-        rows.append((ts, traded, bar["Close"], cumulative))
+        rows.append((ts, traded, tps[i_bar], cumulative))
     return pd.DataFrame(rows, columns=["time", "shares_traded", "price", "cumulative"])
 
 
@@ -353,7 +376,7 @@ def _sim_is(day: pd.DataFrame, order_shares: float, urgency: str, **kw) -> pd.Da
     return pd.DataFrame({
         "time": day.index,
         "shares_traded": shares,
-        "price": day["Close"].values,
+        "price": _typical_prices(day),
         "cumulative": np.cumsum(shares),
     })
 
@@ -408,7 +431,7 @@ def _sim_moo(day: pd.DataFrame, order_shares: float, hist_curve=None, **kw) -> p
     return pd.DataFrame({
         "time": day.index,
         "shares_traded": shares,
-        "price": day["Close"].values,
+        "price": (day["Open"].values if "Open" in day.columns else day["Close"].values),
         "cumulative": np.cumsum(shares),
     })
 
@@ -447,7 +470,7 @@ def _sim_liquidity_seeking(day: pd.DataFrame, order_shares: float, urgency: str,
     return pd.DataFrame({
         "time": day.index,
         "shares_traded": shares,
-        "price": day["Close"].values,
+        "price": _typical_prices(day),
         "cumulative": np.cumsum(shares),
     })
 
@@ -487,7 +510,7 @@ def _sim_stealth(day: pd.DataFrame, order_shares: float, urgency: str, **kw) -> 
     return pd.DataFrame({
         "time": day.index,
         "shares_traded": shares,
-        "price": day["Close"].values,
+        "price": _typical_prices(day),
         "cumulative": np.cumsum(shares),
     })
 
@@ -630,13 +653,14 @@ def _running_benchmark_curves(day: pd.DataFrame):
     real intraday TCA dashboard shows. Returns (vwap_to_date, twap_to_date),
     each a length-n array aligned to `day`'s bar index.
     """
-    closes  = day["Close"].values.astype(float)
+    # typical price per bar — consistent with the continuous-fill convention
+    px = _typical_prices(day)
     volumes = day["Volume"].values.astype(float)
     cum_vol      = np.cumsum(volumes)
-    cum_notional = np.cumsum(closes * volumes)
+    cum_notional = np.cumsum(px * volumes)
     with np.errstate(divide="ignore", invalid="ignore"):
-        vwap_to_date = np.where(cum_vol > 0, cum_notional / cum_vol, closes[0])
-    twap_to_date = np.cumsum(closes) / np.arange(1, len(closes) + 1)
+        vwap_to_date = np.where(cum_vol > 0, cum_notional / cum_vol, px[0])
+    twap_to_date = np.cumsum(px) / np.arange(1, len(px) + 1)
     return vwap_to_date, twap_to_date
 
 

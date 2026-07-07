@@ -281,3 +281,83 @@ def live_tca(view: pd.DataFrame, view_day: pd.DataFrame, legs_meta: list, base_a
         mark_to_market_unfilled_bps=mtm_bps, reversion=reversion,
         decomposition=decomposition, cost_percentile=pctl, note=note,
     )
+
+
+# ── Live alert engine (EMS-blotter-style threshold rules) ───────────────────
+
+ALERT_SLIP_MEDIUM_BPS = 25.0
+ALERT_SLIP_HIGH_BPS = 50.0
+ALERT_BEHIND_PACE_PTS = 10.0     # fill% lags elapsed-time% by more than this
+
+
+@dataclass
+class LiveAlert:
+    severity: str      # "HIGH" | "MEDIUM" | "INFO"
+    rule: str
+    message: str
+
+
+def build_live_alerts(*, filled_shares: float, order_shares: float,
+                      elapsed_frac: float, algo_name: str,
+                      last_bar_participation_pct: Optional[float] = None,
+                      cap_pct: Optional[float] = None,
+                      limit_price: Optional[float] = None,
+                      current_price: Optional[float] = None,
+                      vpin_label: Optional[str] = None,
+                      slip_vs_benchmark_bps: Optional[float] = None,
+                      benchmark_name: str = "Arrival",
+                      reconsider: bool = False) -> list[LiveAlert]:
+    """Threshold rules over the live metrics — the alert blotter a real EMS
+    shows next to a working order. Pure function: everything is passed in,
+    nothing recomputed, so it is trivially unit-testable and can't disagree
+    with the panels above it. Alerts inform the trader; nothing auto-acts
+    (same posture as Agent 8)."""
+    alerts: list[LiveAlert] = []
+    fill_frac = filled_shares / order_shares if order_shares > 0 else 1.0
+
+    # Completion pace — only meaningful for front-participating algos;
+    # back-loaded schedules (IS high-urgency is front-loaded; MOC/MOO are
+    # auction-timed) legitimately lag the clock.
+    if algo_name not in ("MOC", "MOO", "IS") and elapsed_frac > 0.10:
+        gap_pts = (elapsed_frac - fill_frac) * 100
+        if gap_pts > ALERT_BEHIND_PACE_PTS:
+            sev = "HIGH" if gap_pts > 2 * ALERT_BEHIND_PACE_PTS else "MEDIUM"
+            alerts.append(LiveAlert(sev, "Completion pace",
+                f"Filled {fill_frac:.0%} vs {elapsed_frac:.0%} of the session elapsed "
+                f"({gap_pts:.0f} pts behind) — completion risk if volume doesn't improve."))
+
+    if (cap_pct is not None and last_bar_participation_pct is not None
+            and last_bar_participation_pct > cap_pct):
+        alerts.append(LiveAlert("HIGH", "Participation breach",
+            f"Last bar traded {last_bar_participation_pct:.1f}% of bar volume vs the "
+            f"{cap_pct:g}% ticket cap — reduce aggression or widen the horizon."))
+
+    if limit_price is not None and current_price is not None and current_price > limit_price:
+        alerts.append(LiveAlert("MEDIUM", "Limit through market",
+            f"Market ({current_price:.2f}) is trading above the {limit_price:g} buy limit — "
+            "fills are paused; completion risk accumulates while price stays through the limit."))
+
+    if vpin_label == "High":
+        alerts.append(LiveAlert("MEDIUM", "Order-flow toxicity",
+            "Live VPIN is in its High band — contested as a predictor "
+            "(Andersen-Bondarenko 2014), but elevated toxicity regimes coincide with "
+            "wider spreads and thinner books; consider slowing down."))
+    elif vpin_label == "Elevated":
+        alerts.append(LiveAlert("INFO", "Order-flow toxicity",
+            "Live VPIN is Elevated — monitoring signal only."))
+
+    if slip_vs_benchmark_bps is not None:
+        if slip_vs_benchmark_bps > ALERT_SLIP_HIGH_BPS:
+            alerts.append(LiveAlert("HIGH", "Benchmark slippage",
+                f"Execution is {slip_vs_benchmark_bps:+.1f} bps vs {benchmark_name} "
+                f"(> {ALERT_SLIP_HIGH_BPS:g} bps) — intervention review warranted."))
+        elif slip_vs_benchmark_bps > ALERT_SLIP_MEDIUM_BPS:
+            alerts.append(LiveAlert("MEDIUM", "Benchmark slippage",
+                f"Execution is {slip_vs_benchmark_bps:+.1f} bps vs {benchmark_name} "
+                f"(> {ALERT_SLIP_MEDIUM_BPS:g} bps)."))
+
+    if reconsider:
+        alerts.append(LiveAlert("INFO", "Strategy re-check",
+            "Agent 5's rule re-fired against the live regime and would now pick a "
+            "different algo — see the Reconsider panel above."))
+    return alerts

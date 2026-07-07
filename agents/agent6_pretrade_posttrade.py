@@ -51,6 +51,7 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass
 from agents.agent1_market_data import MarketData, MARKET_INFO
+from agents.explicit_costs import get_explicit_costs, explicit_cost_note
 from agents.agent3_algo_simulation import AlgoResult, SimulationResult, _sim_day
 from agents.agent4_performance_comparison import PerformanceComparison
 from agents.agent9_microstructure import almgren_2005_impact, AlmgrenImpactEstimate
@@ -182,6 +183,53 @@ def estimate_spread_corwin_schultz(daily: pd.DataFrame, window: int = 20) -> dic
     }
 
 
+def estimate_spread_abdi_ranaldo(daily: pd.DataFrame, window: int = 20) -> dict:
+    """Abdi & Ranaldo (2017, Review of Financial Studies) close-high-low
+    bid-ask spread estimator — the modern cross-check to Corwin-Schultz.
+
+    For each pair of consecutive days (t, t+1), with eta_t = (ln H_t + ln L_t)/2
+    (the day's mid-range) and c_t = ln C_t:
+
+        s2_t   = 4 * (c_t - eta_t) * (c_t - eta_{t+1})
+        spread = sqrt(max(s2_t, 0))
+
+    Uses more of the daily bar than the high-low estimator and is independent
+    of the trade direction of closing prices; comparisons find it generally
+    more accurate across liquidity regimes (CS has lower small-sample
+    variance). Same conventions as the CS function: negative per-pair
+    estimates floored at zero, median of the window's per-pair estimates as
+    the headline, mean returned for comparison.
+    """
+    need = {"High", "Low", "Close"}
+    if not need.issubset(daily.columns):
+        return {"spread_bps": None, "half_spread_bps": None, "n_obs": 0,
+                "spread_mean_bps": None, "note": "Daily High/Low/Close unavailable."}
+    d = daily.tail(window + 2)
+    n = len(d)
+    if n < window // 2 + 2:
+        return {"spread_bps": None, "half_spread_bps": None, "n_obs": 0,
+                "spread_mean_bps": None,
+                "note": f"Need >= {window // 2 + 2} daily bars; have {n}."}
+    hi = np.log(d["High"].astype(float).values)
+    lo = np.log(d["Low"].astype(float).values)
+    c = np.log(d["Close"].astype(float).values)
+    eta = (hi + lo) / 2.0
+    ests = []
+    for t in range(n - 1):
+        if not (np.isfinite(eta[t]) and np.isfinite(eta[t + 1]) and np.isfinite(c[t])):
+            continue
+        s2 = 4.0 * (c[t] - eta[t]) * (c[t] - eta[t + 1])
+        ests.append(np.sqrt(max(s2, 0.0)))
+    if not ests:
+        return {"spread_bps": None, "half_spread_bps": None, "n_obs": 0,
+                "spread_mean_bps": None, "note": "No valid day-pairs."}
+    med = float(np.median(ests))
+    return {"spread_bps": round(med * 10_000, 2),
+            "half_spread_bps": round(med * 10_000 / 2, 2),
+            "spread_mean_bps": round(float(np.mean(ests)) * 10_000, 2),
+            "n_obs": len(ests), "note": ""}
+
+
 def capacity_table(order_shares: float, adv_shares: float,
                    rates=(0.05, 0.10, 0.15, 0.20, 0.25)) -> pd.DataFrame:
     """Days required to complete the order at each participation rate."""
@@ -209,12 +257,16 @@ class PreTradeEstimate:
     days_at_chosen_urgency: float
     almgren: AlmgrenImpactEstimate       # Almgren et al. (2005) calibrated cross-check (Agent 9)
     notes: list
+    spread_ar_bps: float = None          # Abdi-Ranaldo (2017) cross-check estimate
+    explicit_cost_bps: float = None      # commissions + fees + taxes (buy side)
+    spread_blend_note: str = ""          # how the two estimators were combined
 
 
 def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComparison,
                             order_shares: float, order_pct_adv: float,
                             urgency: str, ticket=None) -> PreTradeEstimate:
     sp  = estimate_spread_corwin_schultz(market_data.daily)
+    ar  = estimate_spread_abdi_ranaldo(market_data.daily)
     cap = capacity_table(order_shares, market_data.adv_shares)
 
     rate = _URGENCY_RATE[urgency]
@@ -288,10 +340,38 @@ def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComp
             f"in the simulation above — see Agent 9). {almgren.note}"
         )
 
+    # ── Explicit costs (commissions/fees/taxes — deterministic, pre-known) ─
+    _exp = get_explicit_costs(market_data.market)
+    notes.append("💰 " + explicit_cost_note(market_data.market, "Buy"))
+
+    # ── Estimator blend: Corwin-Schultz x Abdi-Ranaldo ────────────────────
+    # Two independent daily-bar estimators; the blended half-spread (simple
+    # average when both resolve) is what downstream consumers (Agent 13
+    # routing) receive. Disagreement is itself information: > 2x apart
+    # downgrades the reliability read (see docs/EXECUTION_SIMULATOR_RESEARCH.md).
+    blended_half = sp["half_spread_bps"]
+    blend_note = "Corwin-Schultz only (Abdi-Ranaldo unavailable)."
+    if ar["half_spread_bps"] is not None and sp["half_spread_bps"] is not None:
+        blended_half = round((sp["half_spread_bps"] + ar["half_spread_bps"]) / 2.0, 2)
+        ratio = (max(sp["spread_bps"], ar["spread_bps"]) /
+                 max(min(sp["spread_bps"], ar["spread_bps"]), 0.01))
+        agree = "agree within 2x" if ratio <= 2.0 else f"DISAGREE ({ratio:.1f}x apart)"
+        blend_note = (f"Corwin-Schultz {sp['spread_bps']:.1f} bps vs Abdi-Ranaldo (2017) "
+                      f"{ar['spread_bps']:.1f} bps — estimators {agree}; blended half-spread "
+                      f"{blended_half:.1f} bps feeds venue routing.")
+        notes.append(f"Spread cross-check: {blend_note}")
+        if ratio > 2.0:
+            notes.append("⚠️ Spread estimators disagree by more than 2x — treat the level as "
+                         "order-of-magnitude only (both are daily-bar approximations; the "
+                         "routing input remains capped).")
+    elif ar["half_spread_bps"] is None and sp["half_spread_bps"] is not None:
+        notes.append("Spread cross-check: Abdi-Ranaldo estimator unavailable "
+                     f"({ar['note']}) — Corwin-Schultz stands alone.")
+
     return PreTradeEstimate(
         spread_bps=sp["spread_bps"],
         spread_mean_bps=sp["spread_mean_bps"],
-        half_spread_bps=sp["half_spread_bps"],
+        half_spread_bps=blended_half,
         spread_n_obs=sp["n_obs"],
         spread_reliability=sp["reliability"],
         spread_note=sp["note"],
@@ -301,6 +381,9 @@ def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComp
         days_at_chosen_urgency=round(days_chosen, 2),
         almgren=almgren,
         notes=notes,
+        spread_ar_bps=ar["spread_bps"],
+        explicit_cost_bps=_exp.total_bps("Buy"),
+        spread_blend_note=blend_note,
     )
 
 
@@ -310,7 +393,11 @@ def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComp
 
 def _full_day_vwap(day: pd.DataFrame) -> float:
     vol = day["Volume"].values
-    px  = day["Close"].values
+    # typical price per bar — consistent with the continuous-fill convention
+    if {"High", "Low", "Close"}.issubset(day.columns):
+        px = (day["High"].values + day["Low"].values + day["Close"].values) / 3.0
+    else:
+        px = day["Close"].values
     tv  = vol.sum()
     return float((px * vol).sum() / tv) if tv > 0 else float(px.mean())
 

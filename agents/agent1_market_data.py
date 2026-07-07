@@ -59,9 +59,42 @@ class MarketData:
     adv_shares: float
     adv_usd: float
     current_price: float
-    realized_vol_ann: float
+    realized_vol_ann: float            # Yang-Zhang (2000) OHLC estimator, annualized (fallback: intraday RV)
     vol_profile: pd.DataFrame
     shares_outstanding: float = None   # best-effort; None if unavailable (see fetch_market_data)
+    rv_intraday_ann: float = None      # legacy 5-min realized vol, kept for comparison/debugging
+    vol_note: str = ""                 # which estimator produced realized_vol_ann
+
+def yang_zhang_vol_ann(daily: pd.DataFrame, window: int = 60) -> float:
+    """Yang & Zhang (2000) OHLC volatility, annualized.
+
+    Minimum-variance unbiased estimator using overnight (close->open),
+    open->close, and Rogers-Satchell range components; drift-independent and
+    overnight-jump aware. ~8x more statistically efficient than
+    close-to-close on the same daily bars (a 5-day YZ window has roughly the
+    precision of a 70-day close-to-close window), which matters here because
+    sigma feeds every impact estimate in the app. Returns NaN when OHLC is
+    unavailable or the window is too short.
+    """
+    need = {"Open", "High", "Low", "Close"}
+    if not need.issubset(daily.columns) or len(daily) < 5:
+        return float("nan")
+    d = daily.tail(window + 1)
+    o, h, l, c = [np.log(d[k].astype(float)) for k in ("Open", "High", "Low", "Close")]
+    prev_c = c.shift(1)
+    on = (o - prev_c).dropna()                    # overnight
+    oc = (c - o).loc[on.index]                    # open-to-close
+    rs = ((h - c) * (h - o) + (l - c) * (l - o)).loc[on.index]   # Rogers-Satchell
+    n = len(on)
+    if n < 4:
+        return float("nan")
+    var_on = float(((on - on.mean()) ** 2).sum() / (n - 1))
+    var_oc = float(((oc - oc.mean()) ** 2).sum() / (n - 1))
+    var_rs = float(rs.sum() / n)
+    k = 0.34 / (1.34 + (n + 1) / (n - 1))
+    var_yz = var_on + k * var_oc + (1 - k) * var_rs
+    return float(np.sqrt(max(var_yz, 0.0) * 252))
+
 
 def _raise_friendly(exc, ticker):
     msg = str(exc)
@@ -125,8 +158,17 @@ def fetch_market_data(ticker_base, market, log=None):
     # Realized volatility (annualized)
     intraday["returns"] = intraday["Close"].pct_change()
     bars_per_day = MARKET_INFO[market]["bars"]
-    realized_vol_ann = float(intraday["returns"].std() * np.sqrt(bars_per_day * 252))
-    _log(f"Realized vol (annualized): {realized_vol_ann:.1%}")
+    rv_intraday_ann = float(intraday["returns"].std() * np.sqrt(bars_per_day * 252))
+    yz_ann = yang_zhang_vol_ann(daily)
+    if np.isfinite(yz_ann) and yz_ann > 0:
+        realized_vol_ann = yz_ann
+        vol_note = ("Yang-Zhang (2000) OHLC estimator, 60d window — drift-independent, "
+                    "overnight-jump aware; ~8x more efficient than close-to-close.")
+    else:
+        realized_vol_ann = rv_intraday_ann
+        vol_note = "Fallback: 5-min intraday realized vol (daily OHLC unavailable/too short)."
+    _log(f"Realized vol (annualized): {realized_vol_ann:.1%} [Yang-Zhang]"
+         f" | intraday-RV comparison: {rv_intraday_ann:.1%}")
 
     # Intraday volume profile
     intraday["time_str"] = intraday.index.strftime("%H:%M")
@@ -166,6 +208,8 @@ def fetch_market_data(ticker_base, market, log=None):
         adv_usd=adv_usd,
         current_price=current_price,
         realized_vol_ann=realized_vol_ann,
+        rv_intraday_ann=rv_intraday_ann,
+        vol_note=vol_note,
         vol_profile=vol_profile,
         shares_outstanding=shares_outstanding,
     )

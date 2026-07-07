@@ -96,6 +96,13 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
 
     closes  = day["Close"].values
     volumes = day["Volume"].values
+    # Continuous fills price at the bar's typical price (H+L+C)/3 — see
+    # agent3._typical_prices; MOC keeps the closing print, MOO the open.
+    if {"High", "Low"}.issubset(day.columns):
+        typicals = (day["High"].values + day["Low"].values + closes) / 3.0
+    else:
+        typicals = closes
+    opens = day["Open"].values if "Open" in day.columns else closes
     # Full-day anchors (decision price / period end) even under a ticket
     # window — slippage vs decision price then includes the window's delay
     # cost (institutionally correct IS treatment).
@@ -110,6 +117,8 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
             if hist_curve is not None and len(hist_curve) == n:
                 hist_curve = windowed_curve(hist_curve, s_bar, e_bar)
             closes  = closes[s_bar:e_bar + 1]
+            typicals = typicals[s_bar:e_bar + 1]
+            opens   = opens[s_bar:e_bar + 1]
             volumes = volumes[s_bar:e_bar + 1]
             n = len(closes)
 
@@ -121,12 +130,13 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
                                limit_price=ticket.effective_limit,
                                exempt=exempt)
 
-    def _cost(shares, sf):
+    def _cost(shares, sf, px=None):
+        px = typicals if px is None else px
         filled = shares.sum()
         fill_frac = 1.0 if order_shares <= 0 else min(1.0, filled / order_shares)
         if filled <= 0:
             return 0.0, 0.0, 0.0, 0.0, round(fill_frac, 4)
-        avg_px   = (shares * closes).sum() / filled
+        avg_px   = (shares * px).sum() / filled
         slip     = (avg_px - arrival) / arrival * 10_000
         mi       = IMPACT_ETA * sigma_d * np.sqrt(order_shares / adv_shares) * sf * 10_000
         unfilled = max(0.0, order_shares - filled)
@@ -172,7 +182,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         close_vol = volumes[-w_close:]
         tv_c = close_vol.sum()
         moc_w[-w_close:] = (close_vol / tv_c * order_shares) if tv_c > 0 else (order_shares / w_close)
-    moc_res = _cost(_constrain(moc_w, exempt=frozenset({n - 1})), SPEED_FACTORS["MOC"])
+    moc_res = _cost(_constrain(moc_w, exempt=frozenset({n - 1})), SPEED_FACTORS["MOC"], px=closes)
 
     # MOO -- concentrate into the opening window, historical shape when available
     w_open = max(1, int(round(n * MOO_WINDOW_PCT)))
@@ -185,7 +195,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         open_vol = volumes[:w_open]
         tv_o = open_vol.sum()
         moo_w[:w_open] = (open_vol / tv_o * order_shares) if tv_o > 0 else (order_shares / w_open)
-    moo_res = _cost(_constrain(moo_w, exempt=frozenset({0})), SPEED_FACTORS["MOO"])
+    moo_res = _cost(_constrain(moo_w, exempt=frozenset({0})), SPEED_FACTORS["MOO"], px=opens)
 
     # Liquidity-Seeking -- participation tilted by short-term price favorability
     base_rate = LIQ_BASE_RATE[urgency]
