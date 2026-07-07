@@ -7,12 +7,16 @@ Page 2: Index Rebalancing Analysis     — event study (CAR + abnormal volume)
 import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
-import sys, os, datetime
+import sys, os, datetime, time
 
 sys.path.insert(0, os.path.dirname(__file__))
 from agents.agent1_market_data      import fetch_market_data, MarketData, MARKET_INFO
 from agents.agent3_algo_simulation  import IS_KAPPA_T, simulate_with_interventions
 from agents.agent10_hypothesis_test import run_hypothesis_test, METRIC_MAP, ALTERNATIVES
+from agents.agent11_live_snapshot   import (
+    live_regime, live_microstructure, live_pretrade_remaining,
+    live_recommendation_check, live_tca,
+)
 from agents.orchestrator            import run_pipeline
 from agents.rebalancing_event_study import run_event_study, build_execution_insights, INDEX_PROXIES
 
@@ -161,6 +165,11 @@ if page == "📈 Execution Algorithm Simulator":
         st.session_state["p1_base_algo"] = ctx.memo.primary_algo if ctx.memo is not None else None
         st.session_state["p1_base_urgency"] = urgency
         st.session_state.pop("p1_ht_result", None)
+        # Time-lapse transport state -- fresh run always restarts playback
+        # from the first bar, paused, at Normal speed.
+        st.session_state["lm_cursor_idx"] = 0
+        st.session_state["p1_playing"] = False
+        st.session_state["p1_speed"] = "Normal"
 
     if "p1_ctx" in st.session_state:
         ctx = st.session_state["p1_ctx"]
@@ -267,7 +276,8 @@ if page == "📈 Execution Algorithm Simulator":
         st.markdown("---")
         st.markdown("### Pre-Trade Analytics")
         st.caption("What this order should cost, and whether the market can absorb it — "
-                   "computed before committing to an algorithm.")
+                   "computed before committing to an algorithm, using the full historical dataset. "
+                   "See **Live Trading Session** below for how this re-underwrites as the day plays out.")
         if pretrade is not None:
             pc1, pc2 = st.columns(2)
             with pc1:
@@ -330,6 +340,8 @@ if page == "📈 Execution Algorithm Simulator":
         # ── AGENT 9 — MARKET MICROSTRUCTURE & ORDER-FLOW TOXICITY ────────────
         st.markdown("")
         st.markdown("**Market Microstructure & Liquidity** (Agent 9)")
+        st.caption("Decision-time snapshot, pooled across the full fetch window — see **Live Trading "
+                  "Session** below for the same readout recomputed bar-by-bar as the session plays.")
         micro = ctx.microstructure
         if micro is not None:
             mc1, mc2 = st.columns(2)
@@ -363,6 +375,8 @@ if page == "📈 Execution Algorithm Simulator":
         # ── AGENT 2 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
         st.markdown("### Agent 2 — Market Regime")
+        st.caption("Decision-time snapshot (full simulation day) — see **Live Trading Session** below "
+                  "for how this classification evolves as only part of the day has actually happened.")
         st.markdown(f"**{regime.summary}**"); st.markdown("")
         r1,r2,r3 = st.columns(3)
 
@@ -466,18 +480,25 @@ if page == "📈 Execution Algorithm Simulator":
                                      legend=dict(orientation="h",yanchor="bottom",y=1.02))
                     st.plotly_chart(fs, use_container_width=True)
 
-        # ── LIVE EXECUTION MONITOR & MID-SESSION ADJUSTMENT ──────────────────
+        # ── LIVE TRADING SESSION (time-lapse) ─────────────────────────────────
         st.markdown("---")
-        st.markdown("### Live Execution Monitor — Evolving Cost vs. Benchmark")
+        st.markdown("### 🔴 Live Trading Session — Time-Lapse Playback")
         st.caption(
-            "Real buy-side desks watch fills and slippage-vs-benchmark intraday on a "
-            "GSET/REDIPlus-style blotter, and intervene — possibly more than once — if "
-            "the algo is behaving suboptimally. This replays that: scrub the slider forward "
-            "to watch the (already-computed) execution unfold bar-by-bar, see how the running "
-            "average execution price is tracking Arrival and interval-VWAP-to-date, and add an "
-            "intervention at any point to re-plan the remainder under a new algo/urgency. "
-            "Backtest-style — the same historical bars are replayed, not a live feed."
+            "Press **Play** and watch the session unfold bar-by-bar, exactly as a trader would "
+            "experience it on a broker execution-management-system (EMS) blotter — every panel "
+            "below (Market Regime, Microstructure, Pre-Trade re-underwrite, the recommendation "
+            "check, and TCA) recomputes using ONLY the bars observed so far, not the full "
+            "(already-known) day the sections above use. Pause at any point to tweak the algo/"
+            "urgency for the rest of the session. Backtest-style — the same historical bars are "
+            "replayed on a timer, not a live feed."
         )
+
+        if "lm_cursor_idx" not in st.session_state:
+            st.session_state["lm_cursor_idx"] = 0
+        if "p1_playing" not in st.session_state:
+            st.session_state["p1_playing"] = False
+        if "p1_speed" not in st.session_state:
+            st.session_state["p1_speed"] = "Normal"
 
         live = simulate_with_interventions(
             data, order_shares, st.session_state["p1_base_algo"], st.session_state["p1_base_urgency"],
@@ -485,8 +506,25 @@ if page == "📈 Execution Algorithm Simulator":
         )
         full_schedule = live["schedule"]
         scrub_options = list(full_schedule["time"])[1:]   # exclude the very first bar -- nothing filled yet
+        n_opts = len(scrub_options)
 
-        if len(scrub_options) >= 1:
+        if n_opts >= 1:
+            st.session_state["lm_cursor_idx"] = min(st.session_state["lm_cursor_idx"], n_opts - 1)
+
+            # -- Autoplay advance happens HERE, before the slider widget below
+            # is instantiated this run -- Streamlit forbids writing to
+            # st.session_state[key] AFTER a widget with that key has already
+            # been created in the same script pass. Sleeping first paces the
+            # time-lapse; the slider (and everything below it) then renders
+            # using the just-advanced position.
+            if st.session_state["p1_playing"]:
+                if st.session_state["lm_cursor_idx"] >= n_opts - 1:
+                    st.session_state["p1_playing"] = False
+                else:
+                    delay = {"Slow": 1.2, "Normal": 0.6, "Fast": 0.2}[st.session_state["p1_speed"]]
+                    time.sleep(delay)
+                    st.session_state["lm_cursor_idx"] += 1
+
             lm1, lm2 = st.columns(2)
             with lm1:
                 base_algo_choice = st.selectbox(
@@ -507,20 +545,54 @@ if page == "📈 Execution Algorithm Simulator":
                 st.session_state["p1_base_algo"] = base_algo_choice
                 st.session_state["p1_base_urgency"] = base_urgency_choice
                 st.session_state["p1_interventions"] = []
+                st.session_state["lm_cursor_idx"] = 0
+                st.session_state["p1_playing"] = False
                 st.rerun()
 
-            scrub_time = st.select_slider(
-                "▶ Playback — viewing execution as of:", options=scrub_options,
-                value=scrub_options[len(scrub_options) // 2],
-                format_func=lambda t: pd.Timestamp(t).strftime("%H:%M"),
-                key="lm_scrub")
+            # -- Transport controls ------------------------------------------
+            t1, t2, t3, t4 = st.columns([1.1, 1.1, 1.1, 2])
+            with t1:
+                at_end = st.session_state["lm_cursor_idx"] >= n_opts - 1
+                play_label = "⏸ Pause" if st.session_state["p1_playing"] else ("↻ Replay" if at_end else "▶ Play")
+                if st.button(play_label, key="lm_play_pause", use_container_width=True):
+                    if st.session_state["p1_playing"]:
+                        st.session_state["p1_playing"] = False
+                    else:
+                        if at_end:
+                            st.session_state["lm_cursor_idx"] = 0
+                        st.session_state["p1_playing"] = True
+                    st.rerun()
+            with t2:
+                if st.button("⏮ Reset", key="lm_reset_cursor", use_container_width=True):
+                    st.session_state["lm_cursor_idx"] = 0
+                    st.session_state["p1_playing"] = False
+                    st.rerun()
+            with t3:
+                if st.button("⏭ Step", key="lm_step", use_container_width=True,
+                            disabled=st.session_state["p1_playing"]):
+                    st.session_state["lm_cursor_idx"] = min(st.session_state["lm_cursor_idx"] + 1, n_opts - 1)
+                    st.rerun()
+            with t4:
+                speed = st.select_slider("Speed", options=["Slow", "Normal", "Fast"],
+                                         value=st.session_state["p1_speed"], key="lm_speed_slider")
+                st.session_state["p1_speed"] = speed
+
+            cursor_idx = st.slider("Playback position (bar index)", 0, n_opts - 1, key="lm_cursor_idx")
+            scrub_time = scrub_options[cursor_idx]
+            is_final = cursor_idx == n_opts - 1
+            st.caption(f"Viewing execution as of **{pd.Timestamp(scrub_time).strftime('%H:%M')}** "
+                      f"— bar {cursor_idx + 1}/{n_opts}" + (" — session complete" if is_final else ""))
 
             view = full_schedule[full_schedule["time"] <= pd.Timestamp(scrub_time)]
+            day_full = live["day"]
+            view_day = day_full[day_full.index <= pd.Timestamp(scrub_time)]
+            today_date = day_full.index[0].normalize()
             last = view.iloc[-1]
             pct_complete = (last["cumulative"] / order_shares) if order_shares > 0 else 0.0
+            remaining_shares = max(0.0, order_shares - last["cumulative"])
 
             sv1, sv2, sv3, sv4 = st.columns(4)
-            sv1.metric("Filled as of scrub", f"{last['cumulative']:,.0f} sh",
+            sv1.metric("Filled so far", f"{last['cumulative']:,.0f} sh",
                       delta=f"{pct_complete:.0%} of order", delta_color="off")
             sv2.metric("Avg exec price so far", f"${last['cum_avg_price']:.2f}")
             sv3.metric("Slippage vs Arrival", f"{last['running_slip_vs_arrival_bps']:+.1f} bps",
@@ -548,12 +620,93 @@ if page == "📈 Execution Algorithm Simulator":
                              legend=dict(orientation="h", yanchor="bottom", y=1.02))
             st.plotly_chart(fev, use_container_width=True)
             st.caption(
-                "Positive = paid more than that benchmark so far (buy order). If a line is "
-                "trending up as you scrub forward, the algo is losing ground to that benchmark — "
-                "exactly the situation a trader would use to decide whether to intervene below. "
-                "Red dashed lines mark interventions already applied."
+                "Positive = paid more than that benchmark so far (buy order). Red dashed lines "
+                "mark interventions already applied."
             )
 
+            # -- Live Agent Readouts ------------------------------------------
+            st.markdown("")
+            st.markdown("**Live Agent Readouts — synced to the playback position above**")
+            l_regime = live_regime(data.intraday, data.daily, today_date, view_day)
+            l_micro = live_microstructure(
+                data.intraday, today_date, view_day, data.adv_shares, remaining_shares,
+                st.session_state["p1_base_urgency"], data.realized_vol_ann,
+                getattr(data, "shares_outstanding", None))
+            l_pretrade = live_pretrade_remaining(
+                remaining_shares, data.adv_shares, st.session_state["p1_base_urgency"],
+                data.realized_vol_ann, getattr(data, "shares_outstanding", None))
+            l_rec = live_recommendation_check(
+                l_regime, regime, comp, urgency, benchmark_target, memo.primary_algo, memo.secondary_algo)
+
+            lg1, lg2 = st.columns(2)
+            with lg1:
+                st.markdown("*Market Regime (live)*")
+                st.markdown(
+                    _badge(l_regime.vol_label, _VC.get(l_regime.vol_label, "#6b7280")) + "&nbsp;" +
+                    _badge(l_regime.volume_label, "#6b7280") + "&nbsp;" +
+                    _badge(l_regime.trend_label, _TC.get(l_regime.trend_label, "#6b7280")),
+                    unsafe_allow_html=True)
+                st.caption(f"At decision time: {regime.vol_label} · {regime.volume_label} · {regime.trend_label}")
+            with lg2:
+                st.markdown("*Microstructure (live)*")
+                if l_micro.vpin.available:
+                    st.caption(f"VPIN: **{l_micro.vpin.label}** ({l_micro.vpin.vpin_score:.2f}) — {l_micro.vpin.note}")
+                else:
+                    st.caption(f"VPIN: {l_micro.vpin.reason}")
+                if l_micro.kyle_lambda.available:
+                    st.caption(f"Kyle's λ: {l_micro.kyle_lambda.lambda_bps_per_pct_adv:+.2f} bps/1%ADV "
+                              f"(t={l_micro.kyle_lambda.t_stat:.1f}, n={l_micro.kyle_lambda.n_obs})")
+                else:
+                    st.caption(f"Kyle's λ: {l_micro.kyle_lambda.reason}")
+
+            if l_rec.still_on_track:
+                st.success(f"✅ **Still on track** — Agent 5's rule, re-run against the live regime, "
+                          f"still picks **{l_rec.live_primary}**, matching the original recommendation.")
+            else:
+                st.warning(f"⚠️ **Reconsider** — Agent 5's rule, re-run against the live regime, now "
+                          f"picks **{l_rec.live_primary}** instead of the original **{memo.primary_algo}**.")
+            for c in l_rec.changes:
+                st.caption(f"• {c}")
+
+            st.markdown("*Pre-Trade Re-Underwrite — remaining order*")
+            lp1, lp2 = st.columns(2)
+            lp1.metric("Shares remaining", f"{remaining_shares:,.0f}")
+            if l_pretrade.almgren.available:
+                lp2.metric("Est. impact on remainder (Almgren 2005)",
+                          f"{l_pretrade.almgren.realized_impact_bps:.1f} bps")
+            else:
+                lp2.metric("Est. impact on remainder", "N/A")
+            with st.expander("Capacity table for the remaining order"):
+                st.dataframe(l_pretrade.capacity, use_container_width=True)
+            st.caption(l_pretrade.note)
+
+            st.markdown(f"**Live TCA{' — Session Complete' if is_final else ' (to date)'}**")
+            tca_hist = comp if is_final else None
+            tca_algo_hist = st.session_state["p1_base_algo"] if is_final else None
+            tca = live_tca(
+                view, view_day, live["legs"], st.session_state["p1_base_algo"],
+                st.session_state["p1_base_urgency"], live["arrival_price"], order_shares,
+                data.adv_shares, data.realized_vol_ann, is_final,
+                comparison=tca_hist, algo_name_for_history=tca_algo_hist)
+            st.dataframe(tca.benchmarks_to_date.style.format({
+                "Benchmark Price": "${:.4f}", "Slippage vs Benchmark (bps)": "{:+.2f}",
+            }), use_container_width=True)
+            ltc1, ltc2 = st.columns(2)
+            ltc1.metric("Mark-to-market cost of unfilled remainder",
+                       f"{tca.mark_to_market_unfilled_bps:+.1f} bps",
+                       help="Unfilled shares marked at the current price vs. arrival — what you're "
+                            "on the hook for if trading stopped right now (Perold 1988 style).")
+            if is_final and tca.reversion is not None:
+                ltc2.metric("Impact reversion",
+                          f"{tca.reversion.reversion_bps:+.1f} bps" if tca.reversion.available else "N/A")
+                if tca.decomposition is not None and tca.decomposition.available:
+                    st.caption(tca.decomposition.note)
+                if tca.cost_percentile is not None and tca.cost_percentile.available:
+                    st.caption(f"Cost percentile vs. history: {tca.cost_percentile.percentile:.0f}th "
+                              f"({tca.cost_percentile.n_obs} historical days).")
+            st.caption(tca.note)
+
+            # -- Intervene ------------------------------------------------------
             with st.expander("🔀 Intervene here — switch algo/urgency for the remainder"):
                 iv1, iv2, iv3 = st.columns(3)
                 with iv1:
@@ -568,16 +721,17 @@ if page == "📈 Execution Algorithm Simulator":
                 with iv3:
                     st.markdown("")
                     st.markdown("")
-                    add_iv = st.button("➕ Add intervention at scrub time", key="lm_add_iv",
+                    add_iv = st.button("➕ Add intervention here", key="lm_add_iv",
                                        use_container_width=True)
                 if add_iv:
                     existing = [pd.Timestamp(iv["checkpoint_time"]) for iv in st.session_state["p1_interventions"]]
                     if pd.Timestamp(scrub_time) in existing:
                         st.warning("⚠️ An intervention already exists at this exact bar — "
-                                  "move the slider to a different bar first.")
+                                  "move to a different bar first.")
                     else:
                         st.session_state["p1_interventions"].append(
                             {"checkpoint_time": scrub_time, "algo": iv_algo, "urgency": iv_urg})
+                        st.session_state["p1_playing"] = False
                         st.rerun()
 
             if st.session_state["p1_interventions"]:
@@ -589,10 +743,12 @@ if page == "📈 Execution Algorithm Simulator":
                 with ub1:
                     if st.button("↩️ Undo last intervention", key="lm_undo", use_container_width=True):
                         st.session_state["p1_interventions"].pop()
+                        st.session_state["p1_playing"] = False
                         st.rerun()
                 with ub2:
                     if st.button("🔄 Reset to no interventions", key="lm_reset", use_container_width=True):
                         st.session_state["p1_interventions"] = []
+                        st.session_state["p1_playing"] = False
                         st.rerun()
 
             st.markdown("")
@@ -610,8 +766,18 @@ if page == "📈 Execution Algorithm Simulator":
             fo4.metric(f"vs. staying on {baseline_algo} all day", f"{delta_bps:+.1f} bps",
                       delta="worse" if delta_bps > 0 else "better", delta_color="inverse")
             st.caption(blended.schedule_note)
+
+            # -- Autoplay: trigger the next frame ------------------------------
+            # The actual sleep-then-advance happened at the top of this block
+            # (before the slider widget was instantiated -- Streamlit forbids
+            # mutating st.session_state[key] after that key's widget has
+            # already been created in the same script pass). All that's left
+            # here is to kick off the next rerun so the just-advanced position
+            # actually renders.
+            if st.session_state["p1_playing"]:
+                st.rerun()
         else:
-            st.info("ℹ️ Not enough bars in this session to demo the live execution monitor.")
+            st.info("ℹ️ Not enough bars in this session to demo the live trading session.")
 
         # ── AGENT 4 OUTPUT ────────────────────────────────────────────────────
         st.markdown("---")
