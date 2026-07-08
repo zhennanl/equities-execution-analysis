@@ -21,8 +21,11 @@ checks an OMS runs *before* anything is routed:
                     order unless a supervisor override is acknowledged
                     (mirroring a real OMS override workflow).
 
-Side is fixed to Buy for now — adding Sell flips slippage/impact signs across
-the entire analytics stack and is tracked in INSTITUTIONAL_GAP_REGISTER.md.
+Side is Buy or Sell. Signed costs (slippage / opportunity / tracking) carry
+``side_sign(side)`` so a favorable move is a gain for the side held; market
+impact is always positive-adverse. The limit gate in ``constrain_fills`` is
+side-aware. A default ``OrderTicket()`` is a Buy and reproduces the pre-Sell
+numbers exactly.
 """
 
 from __future__ import annotations
@@ -34,6 +37,17 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
+
+# ── Side convention ───────────────────────────────────────────────────────
+
+def side_sign(side: str) -> float:
+    """+1 for a Buy, -1 for a Sell. The single source of truth for sign across
+    the analytics stack: signed costs (slippage / opportunity / tracking) are
+    ``side_sign(side) * raw``, so a favorable move is negative (a gain) for the
+    side actually held. Market impact is always positive-adverse and does NOT
+    use this sign."""
+    return 1.0 if str(side).strip().lower() != 'sell' else -1.0
+
 
 # ── Compliance rule parameters ────────────────────────────────────────────
 FAT_FINGER_BLOCK_PCT_ADV = 25.0   # order > 25% ADV: blocked pending override
@@ -51,7 +65,7 @@ RESTRICTED_LIST_PATH = Path(__file__).resolve().parent.parent / "data" / "restri
 class OrderTicket:
     """Institutional algo-order parameters. All-defaults == the app's
     original unconstrained behavior (backward compatible)."""
-    side: str = "Buy"                                # fixed for now
+    side: str = "Buy"                                # "Buy" | "Sell"
     order_type: str = "Market"                       # "Market" | "Limit"
     limit_price: Optional[float] = None              # required if Limit
     start_time: Optional[dt.time] = None             # None = session open
@@ -64,6 +78,7 @@ class OrderTicket:
     sor_policy: str = "Cost-optimized"               # see agent13 ROUTING_POLICIES
     allow_dark: bool = True                          # eligible for dark/midpoint venues
     excluded_venues: list = field(default_factory=list)
+    locate_confirmed: bool = True                    # short-sale locate (Sell only); False => compliance BLOCK
 
     # ── derived helpers ───────────────────────────────────────────────────
     @property
@@ -123,7 +138,7 @@ class OrderTicket:
         what an EMS would actually put on the wire to a broker algo."""
         rows = [
             {"Tag": 55,  "Field": "Symbol",          "Value": ticker},
-            {"Tag": 54,  "Field": "Side",            "Value": "1 (Buy)"},
+            {"Tag": 54,  "Field": "Side",            "Value": "2 (Sell)" if self.side == "Sell" else "1 (Buy)"},
             {"Tag": 38,  "Field": "OrderQty",        "Value": f"{order_shares:,.0f}"},
             {"Tag": 40,  "Field": "OrdType",         "Value": "2 (Limit)" if self.order_type == "Limit" else "1 (Market)"},
             {"Tag": 59,  "Field": "TimeInForce",     "Value": "0 (Day)"},
@@ -158,7 +173,8 @@ class OrderTicket:
 def constrain_fills(planned: np.ndarray, prices: np.ndarray, volumes: np.ndarray,
                     cap_frac: Optional[float] = None,
                     limit_price: Optional[float] = None,
-                    exempt: frozenset = frozenset()) -> np.ndarray:
+                    exempt: frozenset = frozenset(),
+                    side: str = "Buy") -> np.ndarray:
     """Apply participation cap + limit-price gating to a planned per-bar
     schedule, carrying blocked shares forward to later eligible bars.
 
@@ -172,12 +188,15 @@ def constrain_fills(planned: np.ndarray, prices: np.ndarray, volumes: np.ndarray
     n = len(planned)
     out = np.zeros(n)
     carry = 0.0
+    is_sell = side_sign(side) < 0
     for i in range(n):
         want = planned[i] + carry
         if want <= 0:
             continue
         allowed = want
-        if limit_price is not None and prices[i] > limit_price:   # Buy side
+        through_limit = (limit_price is not None and
+                         (prices[i] < limit_price if is_sell else prices[i] > limit_price))
+        if through_limit:
             allowed = 0.0
         elif cap_frac is not None and i not in exempt:
             allowed = min(allowed, cap_frac * max(volumes[i], 0.0))
@@ -277,6 +296,12 @@ def check_order(ticket: OrderTicket, ticker_base: str, order_pct_adv: float,
         findings.append(ComplianceFinding(
             "BLOCK", "Order validity",
             "Execution window end time is not after its start time."))
+
+    if ticket.side == "Sell" and not ticket.locate_confirmed:
+        findings.append(ComplianceFinding(
+            "BLOCK", "Short-sale locate",
+            "Sell order without a confirmed borrow/locate — a short sale cannot be "
+            "routed until locate is arranged (Reg SHO-style pre-borrow check)."))
 
     if ticket.must_complete and ticket.effective_limit is not None:
         findings.append(ComplianceFinding(

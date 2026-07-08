@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass, field
 from agents.agent1_market_data import MarketData, MARKET_INFO
-from agents.order_ticket import constrain_fills, windowed_curve, excluded_algos
+from agents.order_ticket import constrain_fills, windowed_curve, excluded_algos, side_sign
 from agents.agent3_algo_simulation import (
     IMPACT_ETA, SPEED_FACTORS, POV_RATES, IS_KAPPA_T,
     LIQ_BASE_RATE, LIQ_TILT_K, LIQ_ROLL_BARS, STEALTH_CAP,
@@ -110,6 +110,8 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
     period_end = float(closes[-1])
     sigma_d = vol_ann / np.sqrt(252)
 
+    side = ticket.side if ticket is not None else "Buy"
+    sgn = side_sign(side)
     ticket_active = ticket is not None and not ticket.is_default()
     if ticket_active:
         s_bar, e_bar = ticket.window_indices(day.index)
@@ -128,7 +130,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         return constrain_fills(shares, closes, volumes,
                                cap_frac=ticket.cap_frac,
                                limit_price=ticket.effective_limit,
-                               exempt=exempt)
+                               exempt=exempt, side=side)
 
     def _cost(shares, sf, px=None):
         px = typicals if px is None else px
@@ -137,10 +139,10 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         if filled <= 0:
             return 0.0, 0.0, 0.0, 0.0, round(fill_frac, 4)
         avg_px   = (shares * px).sum() / filled
-        slip     = (avg_px - arrival) / arrival * 10_000
+        slip     = sgn * (avg_px - arrival) / arrival * 10_000
         mi       = IMPACT_ETA * sigma_d * np.sqrt(order_shares / adv_shares) * sf * 10_000
         unfilled = max(0.0, order_shares - filled)
-        opp      = ((unfilled / order_shares) * (period_end - arrival) / arrival * 10_000
+        opp      = (sgn * (unfilled / order_shares) * (period_end - arrival) / arrival * 10_000
                     if order_shares > 0 else 0.0)
         return round(slip, 2), round(mi, 2), round(opp, 2), round(slip + mi + opp, 2), round(fill_frac, 4)
 
@@ -209,7 +211,7 @@ def _sim_day_all(day: pd.DataFrame, order_shares: float, urgency: str,
         mean = window.mean()
         std = window.std()
         std = std if std > 1e-9 else 1e-9
-        z = (mean - closes[i]) / std
+        z = sgn * (mean - closes[i]) / std
         mult = float(np.clip(1 + LIQ_TILT_K * z, 0.2, 2.5))
         traded = min(remaining, volumes[i] * base_rate * mult)
         liq_w[i] = traded

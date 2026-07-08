@@ -141,17 +141,25 @@ if page == "📈 Execution Algorithm Simulator":
                 "Defaults reproduce an unconstrained order. Active constraints bind "
                 "the simulated fills — no fills through a limit, per-bar participation "
                 "throttling with carry-forward — and residual unfilled shares are "
-                "priced as Perold opportunity cost. Constraints currently apply to the "
-                "static pipeline; live-session enforcement is the next build."
+                "priced as Perold opportunity cost. The participation cap and side-aware "
+                "limit gate bind both the static pipeline and the live trading session."
             )
             o1, o2, o3 = st.columns(3)
             with o1:
+                tk_side = st.selectbox("Side", ["Buy", "Sell"], key="tk_side",
+                                       help="FIX Tag 54. Slippage/opportunity/tracking flip "
+                                            "sign for a Sell; market impact stays adverse.")
                 tk_type = st.selectbox("Order type", ["Market", "Limit"], key="tk_type")
                 tk_limit = st.number_input(
                     "Limit price", min_value=0.0, value=0.0, step=0.01, format="%.2f",
                     disabled=(tk_type != "Limit"), key="tk_limit",
-                    help="Buy limit: no fills in bars priced above this level; blocked "
-                         "shares roll forward to later eligible bars.")
+                    help="Side-aware limit gate: a Buy fills only in bars priced at/below the "
+                         "limit, a Sell only at/above it; blocked shares roll forward.")
+                tk_locate = st.checkbox(
+                    "Short-sale locate confirmed", value=True, key="tk_locate",
+                    disabled=(st.session_state.get("tk_side", "Buy") != "Sell"),
+                    help="Reg SHO-style pre-borrow. A Sell without a confirmed locate is "
+                         "blocked in pre-trade compliance.")
             with o2:
                 _mi = MARKET_INFO[market]
                 _open_t  = datetime.datetime.strptime(_mi["open"],  "%H:%M").time()
@@ -201,6 +209,7 @@ if page == "📈 Execution Algorithm Simulator":
                          "inverted venues', 'no broker dark pools').")
 
     ticket = OrderTicket(
+        side=st.session_state.get("tk_side", "Buy"),
         order_type=st.session_state.get("tk_type", "Market"),
         limit_price=(float(st.session_state.get("tk_limit", 0.0))
                      if st.session_state.get("tk_type") == "Limit"
@@ -218,6 +227,7 @@ if page == "📈 Execution Algorithm Simulator":
         sor_policy=st.session_state.get("tk_sor", "Cost-optimized"),
         allow_dark=bool(st.session_state.get("tk_dark", True)),
         excluded_venues=list(st.session_state.get("tk_excl_venues", [])),
+        locate_confirmed=bool(st.session_state.get("tk_locate", True)),
     )
     _active_constraints = ticket.constraint_summary()
     if _active_constraints:
@@ -341,8 +351,9 @@ if page == "📈 Execution Algorithm Simulator":
         # ── LIVE TRADING SESSION (interactive simulation) ─────────────────────
         st.markdown("### 🔴 Live Trading Session — Interactive Simulation")
         if getattr(sim, "constraint_notes", None):
-            st.caption("🎫 Note: order-ticket constraints currently bind the static pipeline "
-                       "(above/below) only — live-session enforcement is the next build.")
+            st.caption("🎫 Note: order-ticket participation-cap and limit constraints bind this "
+                       "live session too (same fill kernel as the static pipeline); auction "
+                       "prints are exempt from the continuous-trading cap.")
         st.caption(
             "Press **Play** and watch the session unfold bar-by-bar, exactly as a trader would "
             "experience it on a broker execution-management-system (EMS) blotter — every panel "
@@ -363,7 +374,7 @@ if page == "📈 Execution Algorithm Simulator":
 
         live = simulate_with_interventions(
             data, order_shares, st.session_state["p1_base_algo"], st.session_state["p1_base_urgency"],
-            st.session_state["p1_interventions"],
+            st.session_state["p1_interventions"], side=ticket.side, ticket=ticket,
         )
         full_schedule = live["schedule"]
         scrub_options = list(full_schedule["time"])[1:]   # exclude the very first bar -- nothing filled yet
@@ -581,7 +592,7 @@ if page == "📈 Execution Algorithm Simulator":
                 view, view_day, live["legs"], st.session_state["p1_base_algo"],
                 st.session_state["p1_base_urgency"], live["arrival_price"], order_shares,
                 data.adv_shares, data.realized_vol_ann, is_final,
-                comparison=tca_hist, algo_name_for_history=tca_algo_hist)
+                comparison=tca_hist, algo_name_for_history=tca_algo_hist, side=ticket.side)
             st.dataframe(tca.benchmarks_to_date.style.format({
                 "Benchmark Price": "${:.4f}", "Slippage vs Benchmark (bps)": "{:+.2f}",
             }), use_container_width=True)
@@ -1245,6 +1256,73 @@ if page == "📈 Execution Algorithm Simulator":
 
         # ── POST-TRADE TCA ────────────────────────────────────────────────────
         st.markdown("---")
+        # ── Cost Model — TCA Regression (fitted transaction cost model) ───────
+        st.markdown("### 📐 Cost Model — TCA Regression (fitted transaction cost model)")
+        st.caption(
+            "Estimates the execution cost curve by OLS instead of *assuming* the "
+            "square-root-law prefactor: cost (bps) ~ sqrt(size %ADV) + volatility + "
+            "participation + spread + duration, fit across a grid of order sizes × "
+            "all 8 algos × every available day (a backtest that calibrates the cost "
+            "model). Heteroskedasticity-robust (White HC1) standard errors by default; "
+            "the fitted model doubles as a conditional expected-cost benchmark. Cost "
+            "here is simulated — the identical regression fits a real client-fill "
+            "panel unchanged.")
+        cmc1, cmc2 = st.columns(2)
+        with cmc1:
+            cm_metric = st.selectbox("Cost metric (dependent variable)",
+                                     ["total", "slippage", "impact", "opportunity"], key="cm_metric")
+        with cmc2:
+            cm_cov = st.selectbox("Standard errors", ["HC1", "HAC", "classical"], key="cm_cov",
+                                  help="HC1 = White heteroskedasticity-robust; HAC = Newey-West "
+                                       "(also robust to autocorrelation); classical = homoskedastic.")
+        if st.button("▶ Fit Cost Model", key="cm_run", use_container_width=True):
+            from agents.cost_panel import build_cost_panel
+            from agents.cost_model import fit_cost_model, ab_test_with_controls, diagnostics
+            with st.spinner("Assembling cost panel and fitting the regression…"):
+                _pan = build_cost_panel(data, side=ticket.side,
+                                        cost_metric=st.session_state["cm_metric"])
+                _ft = fit_cost_model(_pan, cov=st.session_state["cm_cov"])
+                st.session_state["p1_cm"] = {
+                    "panel": _pan, "fit": _ft, "diag": diagnostics(_ft),
+                    "ab": ab_test_with_controls(_pan, cost_col="cost_bps"),
+                }
+        if "p1_cm" in st.session_state:
+            _cm = st.session_state["p1_cm"]; _ft = _cm["fit"]; _pan = _cm["panel"]; _d = _cm["diag"]
+            st.markdown(f"**Fitted cost curve** — n={_ft.n} simulated executions, "
+                        f"R²={_ft.r2:.3f}, adj R²={_ft.adj_r2:.3f}, "
+                        f"F p-value={_ft.f_pvalue:.2e}, SE type: {_ft.cov_type}.")
+            st.dataframe(_ft.summary_frame(), use_container_width=True)
+            st.caption(
+                f"Residual diagnostics — Durbin-Watson {_d['durbin_watson']:.2f} "
+                f"(≈2 = no autocorrelation); Breusch-Pagan p={_d['breusch_pagan']['p_value']:.3f} "
+                + ("(heteroskedastic → robust SEs matter)" if _d['breusch_pagan']['heteroskedastic']
+                   else "(homoskedastic)")
+                + f"; Jarque-Bera p={_d['jarque_bera']['p_value']:.3f} "
+                + ("(residuals non-normal)" if not _d['jarque_bera']['normal'] else "(residuals ≈ normal)")
+                + ". The sqrt(size %ADV) coefficient is the empirically-estimated square-root "
+                  "impact prefactor — the calibration this platform otherwise fixes at η=0.3.")
+            _pred = _ft.fitted
+            _fig_cm = go.Figure()
+            _fig_cm.add_trace(go.Scatter(x=_pan["cost_bps"], y=_pred, mode="markers",
+                                         marker=dict(size=5, opacity=0.5), name="executions"))
+            _lo = float(min(_pan["cost_bps"].min(), _pred.min()))
+            _hi = float(max(_pan["cost_bps"].max(), _pred.max()))
+            _fig_cm.add_trace(go.Scatter(x=[_lo, _hi], y=[_lo, _hi], mode="lines",
+                                         line=dict(dash="dash"), name="perfect fit"))
+            _fig_cm.update_layout(height=340, xaxis_title="Realized cost (bps)",
+                                  yaxis_title="Model-predicted cost (bps)",
+                                  margin=dict(l=10, r=10, t=30, b=10))
+            st.plotly_chart(_fig_cm, use_container_width=True)
+            st.markdown("**A/B test with controls** — incremental cost of each algo vs the "
+                        "baseline, holding size / volatility / participation / spread fixed:")
+            _ab = _cm["ab"]
+            if len(_ab.table):
+                st.dataframe(_ab.table, use_container_width=True)
+            st.caption(_ab.note + " On a balanced backtest grid the controlled and naive "
+                       "numbers coincide; on unbalanced real client flow they diverge, and "
+                       "the controlled coefficient is the correct, defensible one.")
+
+        st.markdown("---")
         st.markdown("### Post-Trade TCA")
         st.caption(f"How the {memo.primary_algo} fill actually did, benchmarked against the standard "
                    "TCA reference set — computed after execution.")
@@ -1313,6 +1391,96 @@ if page == "📈 Execution Algorithm Simulator":
                       "evidence only. I uses the day's closing price as the 'settled' reference point "
                       "(the paper's convention is ~30 min post-execution); K nets out half of I per "
                       "the model's own bookkeeping (see agent6's module docstring).")
+
+        # ── Microstructure & Client Analytics (research-grounded) ─────────────
+        st.markdown("---")
+        st.markdown("### 📊 Microstructure & Client Analytics")
+        st.caption("Research-grounded add-ons (see docs/MICROSTRUCTURE_RESEARCH_IMPROVEMENTS.md): the "
+                   "EDGE effective-spread estimator (Ardia-Guidotti-Kroencke, JFE 2024) alongside "
+                   "Corwin-Schultz and Abdi-Ranaldo; Amihud (2002) illiquidity; intraday volume "
+                   "seasonality; Asia-specific price-limit and closing-auction checks; and a "
+                   "client-ready one-pager.")
+        from agents.microstructure_analytics import (estimate_spread_edge, amihud_illiquidity,
+                                                      intraday_seasonality)
+        from agents.asian_markets import price_limit_flag, closing_auction_concentration
+        from agents.client_analytics import benchmark_scorecard, client_report
+
+        _edge = estimate_spread_edge(data.daily)
+        _amihud = amihud_illiquidity(data.daily)
+        _season = intraday_seasonality(data.intraday)
+        _auction = closing_auction_concentration(data.intraday)
+        _plimit = price_limit_flag(market, ticket.effective_limit, data.current_price, side=ticket.side)
+
+        _msc1, _msc2 = st.columns(2)
+        with _msc1:
+            st.markdown("**Effective-spread cross-check (bps)**")
+            st.dataframe(pd.DataFrame([
+                {"Estimator": "Corwin-Schultz (2012)", "Spread (bps)": getattr(pretrade, "spread_bps", None)},
+                {"Estimator": "Abdi-Ranaldo (2017)", "Spread (bps)": getattr(pretrade, "spread_ar_bps", None)},
+                {"Estimator": "EDGE (2024)", "Spread (bps)": _edge.get("spread_bps")},
+            ]), use_container_width=True, hide_index=True)
+            if _amihud.get("impact_bps_per_1m") is not None:
+                st.caption(f"Amihud (2002) illiquidity ≈ **{_amihud['impact_bps_per_1m']:.2f} bps** "
+                           "price move per $1M traded.")
+        with _msc2:
+            st.markdown("**Intraday & auction structure**")
+            if _season.get("buckets"):
+                st.write({"Volume share (%)": _season["buckets"],
+                          "U-shape ratio": _season.get("u_shape_ratio")})
+            if _auction.get("close_share_pct") is not None:
+                st.caption(f"Closing-window volume ≈ **{_auction['close_share_pct']:.0f}%** of the day"
+                           + (" — high concentration; sourcing size in the close can cut continuous-session "
+                              "impact (relevant for Asian closing auctions)." if _auction.get("concentrated") else "."))
+
+        if _plimit.get("severity") in ("BLOCK", "WARN", "INFO") and _plimit.get("message"):
+            _sev = _plimit["severity"]
+            (st.error if _sev == "BLOCK" else st.warning if _sev == "WARN" else st.info)(
+                f"🏛 Price limit ({market}): {_plimit['message']}")
+
+        _primary = getattr(memo, "primary_algo", None) or (list(sim.algos)[0] if sim.algos else None)
+        _algo = sim.algos.get(_primary) if _primary else None
+        if _algo is not None:
+            _bench = {}
+            try:
+                _bt = posttrade.benchmarks.table
+                for _b in _bt.index:
+                    _bench[_b] = float(_bt.loc[_b, "Slippage vs Benchmark (bps)"])
+            except Exception:
+                _bench = {"Arrival": _algo.slippage_bps}
+            _hist = None
+            try:
+                if _primary in comp.daily_costs.columns:
+                    _hist = comp.daily_costs[_primary].dropna().tolist()
+            except Exception:
+                _hist = None
+            _model_exp = None
+            if "p1_cm" in st.session_state:
+                try:
+                    from agents.cost_model import add_const
+                    _ft = st.session_state["p1_cm"]["fit"]
+                    _row = {"sqrt_size_pct_adv": np.sqrt(order_pct_adv), "vol_ann": data.realized_vol_ann,
+                            "participation": order_pct_adv, "spread_bps": (getattr(pretrade, "spread_bps", 0.0) or 0.0),
+                            "duration_frac": 1.0}
+                    _xcols = [nm for nm in _ft.names if nm != "const"]
+                    _model_exp = float(_ft.predict(add_const(np.array([[_row.get(nm, 0.0) for nm in _xcols]])))[0])
+                except Exception:
+                    _model_exp = None
+            _sc = benchmark_scorecard(_algo.total_cost_bps, _bench,
+                                      model_expected_bps=_model_exp, hist_total_costs=_hist)
+            st.markdown(f"**Client benchmark scorecard** — {_sc['headline']}")
+            st.dataframe(_sc["table"], use_container_width=True, hide_index=True)
+            _report = client_report({
+                "ticker": ticker_input, "market": market, "side": ticket.side,
+                "order_pct_adv": order_pct_adv, "algo": _primary, "urgency": urgency,
+                "realized_cost_bps": _algo.total_cost_bps, "benchmarks": _bench,
+                "spreads": {"Corwin-Schultz": getattr(pretrade, "spread_bps", None),
+                            "EDGE": _edge.get("spread_bps")},
+                "amihud_impact_bps_per_1m": _amihud.get("impact_bps_per_1m"),
+                "auction": _auction, "scorecard": _sc, "price_limit": _plimit,
+                "recommendation": getattr(memo, "rationale", "") or "See the staged analytics above.",
+            })
+            st.download_button("⬇ Download client one-pager (Markdown)", _report,
+                               file_name=f"execution_review_{ticker_input}.md", key="cr_dl")
 
 
 # ══════════════════════════════════════════════════════════════════════════════

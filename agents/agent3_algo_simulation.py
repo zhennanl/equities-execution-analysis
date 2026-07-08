@@ -67,7 +67,7 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass, field
 from agents.agent1_market_data import MarketData, MARKET_INFO
-from agents.order_ticket import constrain_fills, windowed_curve, excluded_algos
+from agents.order_ticket import constrain_fills, windowed_curve, excluded_algos, side_sign
 
 
 # Market impact coefficient (empirical, typical range 0.2-0.5 across the
@@ -159,6 +159,7 @@ class SimulationResult:
     order_pct_adv: float
     urgency: str
     arrival_price: float
+    side: str = "Buy"
     algos: dict = field(default_factory=dict)   # name -> AlgoResult
     excluded: dict = field(default_factory=dict)    # name -> reason (order-ticket exclusions)
     constraint_notes: list = field(default_factory=list)  # active order-ticket constraints
@@ -270,14 +271,15 @@ def ac_efficient_frontier(n_bars: int, kappa_T_grid=(0.1, 0.3, 0.6, 1.0, 1.5, 2.
 
 def _build_result(name, schedule_df, arrival_price, order_shares,
                   adv_shares, vol_ann, speed_factor, period_end_price,
-                  schedule_note=""):
+                  schedule_note="", side="Buy"):
     filled = schedule_df["shares_traded"].sum()
     if filled == 0:
         avg_px = arrival_price
     else:
         avg_px = (schedule_df["shares_traded"] * schedule_df["price"]).sum() / filled
 
-    slippage_bps    = (avg_px - arrival_price) / arrival_price * 10_000
+    sgn             = side_sign(side)
+    slippage_bps    = sgn * (avg_px - arrival_price) / arrival_price * 10_000
     sigma_daily     = vol_ann / np.sqrt(252)
     mi_bps          = IMPACT_ETA * sigma_daily * np.sqrt(order_shares / adv_shares) * speed_factor * 10_000
     completion_pct  = min(filled / order_shares, 1.0) if order_shares > 0 else 1.0
@@ -286,7 +288,7 @@ def _build_result(name, schedule_df, arrival_price, order_shares,
     # Perold (1988) opportunity cost: unfilled shares are marked against the
     # period-end price relative to arrival.
     opp_cost_bps = (
-        (unfilled_shares / order_shares) * (period_end_price - arrival_price) / arrival_price * 10_000
+        sgn * (unfilled_shares / order_shares) * (period_end_price - arrival_price) / arrival_price * 10_000
         if order_shares > 0 else 0.0
     )
 
@@ -449,6 +451,7 @@ def _sim_liquidity_seeking(day: pd.DataFrame, order_shares: float, urgency: str,
     closes  = day["Close"].values
     volumes = day["Volume"].values
     base_rate = LIQ_BASE_RATE[urgency]
+    sgn = side_sign(kw.get("side", "Buy"))
 
     remaining = order_shares
     shares = np.zeros(n)
@@ -460,7 +463,7 @@ def _sim_liquidity_seeking(day: pd.DataFrame, order_shares: float, urgency: str,
         mean = window.mean()
         std = window.std()
         std = std if std > 1e-9 else 1e-9
-        z = (mean - closes[i]) / std       # >0 => price dipped below recent mean => favorable to buy
+        z = sgn * (mean - closes[i]) / std  # >0 => favorable to the side held (dip for buy / rise for sell)
         mult = float(np.clip(1 + LIQ_TILT_K * z, 0.2, 2.5))
         tradeable = volumes[i] * base_rate * mult
         traded = min(remaining, tradeable)
@@ -553,6 +556,7 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
     # the decision price then implicitly measures the delay cost of the
     # window, which is the institutionally correct IS treatment.
     ticket_active = ticket is not None and not ticket.is_default()
+    side = ticket.side if ticket is not None else "Buy"
     s_bar, e_bar, excl = 0, n - 1, {}
     if ticket_active:
         s_bar, e_bar = ticket.window_indices(day.index)
@@ -576,11 +580,12 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
         order_pct_adv=order_pct_adv,
         urgency=urgency,
         arrival_price=arrival_price,
+        side=side,
     )
 
     common = dict(order_shares=order_shares, urgency=urgency,
                   adv_shares=market_data.adv_shares, vol_ann=market_data.realized_vol_ann,
-                  hist_curve=hist_curve_plan)
+                  hist_curve=hist_curve_plan, side=side)
 
     configs = [
         ("VWAP",    _sim_vwap,              _speed_factor("VWAP", urgency),    schedule_note_vol),
@@ -607,12 +612,12 @@ def simulate_algos(market_data: MarketData, order_pct_adv: float,
                                   day_plan["Volume"].to_numpy(dtype=float),
                                   cap_frac=ticket.cap_frac,
                                   limit_price=ticket.effective_limit,
-                                  exempt=exempt)
+                                  exempt=exempt, side=side)
             sched = sched.assign(shares_traded=adj, cumulative=np.cumsum(adj))
         algo_result = _build_result(name, sched, arrival_price,
                                     order_shares, market_data.adv_shares,
                                     market_data.realized_vol_ann, sf,
-                                    period_end_price, schedule_note=note)
+                                    period_end_price, schedule_note=note, side=side)
         result.algos[name] = algo_result
         _log(f"  {name}: slip={algo_result.slippage_bps:+.1f} bps  "
              f"MI={algo_result.market_impact_bps:.1f} bps  "
@@ -665,7 +670,7 @@ def _running_benchmark_curves(day: pd.DataFrame):
 
 
 def _attach_running_metrics(combined: pd.DataFrame, day: pd.DataFrame,
-                            arrival_price: float) -> pd.DataFrame:
+                            arrival_price: float, side: str = "Buy") -> pd.DataFrame:
     """
     Adds, per bar of the combined (possibly multi-leg) schedule: the
     cumulative fill-weighted execution price so far, and running slippage
@@ -681,18 +686,20 @@ def _attach_running_metrics(combined: pd.DataFrame, day: pd.DataFrame,
     cum_notional = (out["shares_traded"] * out["price"]).cumsum()
     with np.errstate(divide="ignore", invalid="ignore"):
         cum_avg_price = np.where(cum_shares > 0, cum_notional / cum_shares, arrival_price)
+    sgn = side_sign(side)
     out["cum_avg_price"] = cum_avg_price
     out["running_slip_vs_arrival_bps"] = np.where(
-        cum_shares > 0, (cum_avg_price - arrival_price) / arrival_price * 10_000, 0.0)
+        cum_shares > 0, sgn * (cum_avg_price - arrival_price) / arrival_price * 10_000, 0.0)
     out["running_slip_vs_vwap_bps"] = np.where(
         (cum_shares > 0) & (out["vwap_to_date"] > 0),
-        (cum_avg_price - out["vwap_to_date"]) / out["vwap_to_date"] * 10_000, 0.0)
+        sgn * (cum_avg_price - out["vwap_to_date"]) / out["vwap_to_date"] * 10_000, 0.0)
     return out
 
 
 def simulate_with_interventions(market_data: MarketData, order_shares: float,
                                 base_algo: str, base_urgency: str,
-                                interventions: list, log=None) -> dict:
+                                interventions: list, log=None, side: str = "Buy",
+                                ticket=None) -> dict:
     """
     Models a buy-side trader monitoring execution intraday (as on a GSET-style
     blotter) and intervening -- possibly more than once -- the way a real desk
@@ -763,7 +770,20 @@ def simulate_with_interventions(market_data: MarketData, order_shares: float,
             hist_seg = sliced / tot if tot > 0 else None
 
         fn = _ALGO_FUNCS[algo]
-        seg_sched = fn(day=seg_day, order_shares=remaining_shares, urgency=urg, hist_curve=hist_seg)
+        seg_sched = fn(day=seg_day, order_shares=remaining_shares, urgency=urg, hist_curve=hist_seg, side=side)
+        # Order-ticket constraints bind the live session too (same kernel as the
+        # static pipeline): participation cap + side-aware limit gate, with the
+        # leg's auction print exempt from the continuous-trading cap.
+        if ticket is not None and not ticket.is_default():
+            exempt = (frozenset({len(seg_day) - 1}) if algo == "MOC"
+                      else frozenset({0}) if algo == "MOO" else frozenset())
+            adj = constrain_fills(seg_sched["shares_traded"].to_numpy(dtype=float),
+                                  seg_sched["price"].to_numpy(dtype=float),
+                                  seg_day["Volume"].to_numpy(dtype=float),
+                                  cap_frac=ticket.cap_frac,
+                                  limit_price=ticket.effective_limit,
+                                  exempt=exempt, side=side)
+            seg_sched = seg_sched.assign(shares_traded=adj, cumulative=np.cumsum(adj))
         seg_filled = float(seg_sched["shares_traded"].sum())
         remaining_shares = max(0.0, remaining_shares - seg_filled)
         sf_weighted_sum += seg_filled * _speed_factor(algo, urg)
@@ -790,9 +810,9 @@ def simulate_with_interventions(market_data: MarketData, order_shares: float,
 
     blended = _build_result(label, combined, arrival_price, order_shares,
                             market_data.adv_shares, market_data.realized_vol_ann,
-                            sf_blend, period_end_price, schedule_note=note)
+                            sf_blend, period_end_price, schedule_note=note, side=side)
 
-    combined = _attach_running_metrics(combined, day, arrival_price)
+    combined = _attach_running_metrics(combined, day, arrival_price, side=side)
 
     _log(f"Interventions ({len(ivs)}): filled {total_filled:,.0f}/{order_shares:,.0f} sh; "
          f"blended total cost {blended.total_cost_bps:.1f} bps")

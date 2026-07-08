@@ -29,6 +29,7 @@ in the app carry no regression risk from this file.
 """
 
 import numpy as np
+from agents.order_ticket import side_sign
 import pandas as pd
 from dataclasses import dataclass, field
 from typing import Optional
@@ -198,7 +199,7 @@ def live_recommendation_check(live_reg: RegimeAssessment, original_regime: Regim
 # once cutoff reaches the last bar of the day)
 # ══════════════════════════════════════════════════════════════════════════
 
-def _benchmarks_to_date(live_algo: AlgoResult, view_day: pd.DataFrame, is_final: bool) -> pd.DataFrame:
+def _benchmarks_to_date(live_algo: AlgoResult, view_day: pd.DataFrame, is_final: bool, side: str = "Buy") -> pd.DataFrame:
     vol = view_day["Volume"].values
     px = view_day["Close"].values
     tv = vol.sum()
@@ -213,7 +214,7 @@ def _benchmarks_to_date(live_algo: AlgoResult, view_day: pd.DataFrame, is_final:
     rows = []
     for name, bench in [("Arrival (Open)", live_algo.arrival_price), (label_vwap, vwap_to_date),
                         (label_twap, twap_to_date), (label_last, last_price)]:
-        slip = (live_algo.avg_exec_price - bench) / bench * 10_000 if bench > 0 else 0.0
+        slip = side_sign(side) * (live_algo.avg_exec_price - bench) / bench * 10_000 if bench > 0 else 0.0
         rows.append({"Benchmark": name, "Benchmark Price": round(bench, 4),
                     "Slippage vs Benchmark (bps)": round(slip, 2)})
     return pd.DataFrame(rows).set_index("Benchmark")
@@ -247,7 +248,8 @@ def _speed_factor_asof(legs_meta: list, view: pd.DataFrame, base_algo: str, base
 
 def live_tca(view: pd.DataFrame, view_day: pd.DataFrame, legs_meta: list, base_algo: str, base_urgency: str,
             arrival_price: float, order_shares: float, adv_shares: float, vol_ann: float,
-            is_final: bool, comparison=None, algo_name_for_history: Optional[str] = None) -> LiveTCA:
+            is_final: bool, comparison=None, algo_name_for_history: Optional[str] = None,
+            side: str = "Buy") -> LiveTCA:
     sf_asof = _speed_factor_asof(legs_meta, view, base_algo, base_urgency)
     current_price = float(view_day["Close"].iloc[-1])
 
@@ -256,9 +258,10 @@ def live_tca(view: pd.DataFrame, view_day: pd.DataFrame, legs_meta: list, base_a
         arrival_price=arrival_price, order_shares=order_shares, adv_shares=adv_shares,
         vol_ann=vol_ann, speed_factor=sf_asof, period_end_price=current_price,
         schedule_note="Live snapshot, marked to the current bar's price" if not is_final else "Final, full-day",
+        side=side,
     )
 
-    bench = _benchmarks_to_date(live_algo, view_day, is_final)
+    bench = _benchmarks_to_date(live_algo, view_day, is_final, side=side)
 
     # Mark-to-market opportunity cost of the unfilled remainder, using the
     # CURRENT price as the mark (already baked into live_algo.opportunity_cost_bps
@@ -271,8 +274,8 @@ def live_tca(view: pd.DataFrame, view_day: pd.DataFrame, legs_meta: list, base_a
     note = ("Reversion, impact decomposition, and a historical cost percentile all need the "
            "completed day's closing price -- available once the session finishes playing.")
     if is_final and comparison is not None and algo_name_for_history is not None:
-        reversion = compute_impact_reversion(live_algo, view_day)
-        decomposition = compute_impact_decomposition(live_algo, view_day)
+        reversion = compute_impact_reversion(live_algo, view_day, side=side)
+        decomposition = compute_impact_decomposition(live_algo, view_day, side=side)
         pctl = compute_cost_percentile(comparison, algo_name_for_history, live_algo.total_cost_bps)
         note = "Session complete -- these now reflect the full realized day, same methodology as Agent 6."
 

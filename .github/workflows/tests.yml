@@ -1,0 +1,29 @@
+name: tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  offline-suite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run offline test suite
+        # The `live` marker hits the yfinance network API and is excluded in CI;
+        # run it locally with `pytest -m live`.
+        run: pytest -m "not live"

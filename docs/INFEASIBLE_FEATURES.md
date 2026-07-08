@@ -78,8 +78,8 @@ production with real orders.
 
 | Feature | Reasoning |
 |---|---|
-| **Sell-side orders** | Feasible but touches ~25+ sign-sensitive arithmetic/language sites across Agents 3/4/6/10/11 and the UI. A half-migrated sign convention produces *subtly wrong* TCA — worse than a clearly-labelled buy-only tool. Scheduled as a dedicated, test-first migration. (Agent 14 on Page 2 already supports both sides — it was built side-aware from scratch.) |
-| **Live-session ticket binding** | The intervention re-planner is the most delicate code in the app; constraints currently bind the static pipeline (Agents 3-6) with an in-app note. Next build. |
+| **Sell-side orders** | ENGINE MIGRATED 2026-07-08 (B2, test-first). Single `side_sign` convention in `order_ticket.py`; signed slippage/opportunity/tracking with a side-aware limit gate across Agents 3/4/6/11 (Agent 10 consumes the already-signed series; Agent 14 was built side-aware). Market impact stays positive-adverse. Guarded by a Buy/Sell mirror-property test (Sell on path P ≡ Buy on 2·P0−P) over all 8 algos + the Agent-4 fast path, plus a short-locate compliance BLOCK. **User-facing as of 2026-07-08:** the order ticket now has a Buy/Sell selector + short-locate checkbox; sign-sensitive wording remains buy-centric in a few captions (cosmetic). |
+| **Live-session ticket binding** | ✅ SHIPPED 2026-07-08 (B3). The participation cap + side-aware limit gate now bind the live intervention re-planner via the same `constrain_fills` kernel (auction prints exempt from the continuous cap), verified by a single-leg-live == static-pipeline property test. Execution-window binding inside the live playback is the one remaining refinement. |
 | **Multi-day parent orders** | Needs an order-state model across days + overnight gap handling (ties into Agent 7). Register I-10. |
 | **Futures overlay for rebalance transitions** | Needs futures data/roll logic; declared out of Agent 14's scope. |
 | **Basket-level rebalance execution** | Cross-name crowding interactions need basket data; Agent 14 is single-name with a disclosure. |
@@ -95,7 +95,9 @@ production with real orders.
   because those change trader behavior, which a simulator can teach.
 - **Clearing/settlement (T+1 affirmation, fails, locates inventory)**:
   post-trade operations requiring counterparties. The short-locate *check*
-  will ship with sell-side support as a flag.
+  shipped 2026-07-08 as a pre-trade compliance flag (`locate_confirmed` on the
+  ticket; a Sell without a confirmed locate is a BLOCK) — the engine side of
+  the sell-side migration.
 
 ---
 

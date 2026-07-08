@@ -52,6 +52,7 @@ import pandas as pd
 from dataclasses import dataclass
 from agents.agent1_market_data import MarketData, MARKET_INFO
 from agents.explicit_costs import get_explicit_costs, explicit_cost_note
+from agents.order_ticket import side_sign
 from agents.agent3_algo_simulation import AlgoResult, SimulationResult, _sim_day
 from agents.agent4_performance_comparison import PerformanceComparison
 from agents.agent9_microstructure import almgren_2005_impact, AlmgrenImpactEstimate
@@ -265,6 +266,7 @@ class PreTradeEstimate:
 def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComparison,
                             order_shares: float, order_pct_adv: float,
                             urgency: str, ticket=None) -> PreTradeEstimate:
+    side = ticket.side if ticket is not None else "Buy"
     sp  = estimate_spread_corwin_schultz(market_data.daily)
     ar  = estimate_spread_abdi_ranaldo(market_data.daily)
     cap = capacity_table(order_shares, market_data.adv_shares)
@@ -342,7 +344,7 @@ def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComp
 
     # ── Explicit costs (commissions/fees/taxes — deterministic, pre-known) ─
     _exp = get_explicit_costs(market_data.market)
-    notes.append("💰 " + explicit_cost_note(market_data.market, "Buy"))
+    notes.append("💰 " + explicit_cost_note(market_data.market, side))
 
     # ── Estimator blend: Corwin-Schultz x Abdi-Ranaldo ────────────────────
     # Two independent daily-bar estimators; the blended half-spread (simple
@@ -382,7 +384,7 @@ def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComp
         almgren=almgren,
         notes=notes,
         spread_ar_bps=ar["spread_bps"],
-        explicit_cost_bps=_exp.total_bps("Buy"),
+        explicit_cost_bps=_exp.total_bps(side),
         spread_blend_note=blend_note,
     )
 
@@ -407,7 +409,7 @@ class BenchmarkComparison:
     table: pd.DataFrame   # index=benchmark name, cols=Benchmark Price, Slippage vs Benchmark (bps)
 
 
-def compute_benchmark_comparison(algo: AlgoResult, day: pd.DataFrame) -> BenchmarkComparison:
+def compute_benchmark_comparison(algo: AlgoResult, day: pd.DataFrame, side: str = "Buy") -> BenchmarkComparison:
     """
     Benchmarks the algo's realized average execution price against the four
     standard TCA reference points: Arrival (session open), full-day VWAP,
@@ -425,9 +427,10 @@ def compute_benchmark_comparison(algo: AlgoResult, day: pd.DataFrame) -> Benchma
     twap    = float(day["Close"].mean())
 
     rows = []
+    sgn = side_sign(side)
     for name, bench in [("Arrival (Open)", arrival), ("Full-Day VWAP", vwap),
                         ("Full-Day TWAP", twap), ("Close", close)]:
-        slip = (avg_px - bench) / bench * 10_000 if bench > 0 else 0.0
+        slip = sgn * (avg_px - bench) / bench * 10_000 if bench > 0 else 0.0
         rows.append({
             "Benchmark": name,
             "Benchmark Price": round(bench, 4),
@@ -446,7 +449,7 @@ class ImpactReversion:
     interpretation: str
 
 
-def compute_impact_reversion(algo: AlgoResult, day: pd.DataFrame) -> ImpactReversion:
+def compute_impact_reversion(algo: AlgoResult, day: pd.DataFrame, side: str = "Buy") -> ImpactReversion:
     """
     Rough post-trade impact-decay check: compares price at the algo's last
     fill to the day's closing price. For a buy order, price falling back
@@ -475,7 +478,8 @@ def compute_impact_reversion(algo: AlgoResult, day: pd.DataFrame) -> ImpactRever
 
     price_at_last_fill = float(sched["price"].iloc[last_fill_pos])
     price_at_day_end   = float(day["Close"].iloc[-1])
-    reversion_bps = (price_at_day_end - price_at_last_fill) / price_at_last_fill * 10_000
+    # signed so negative = favorable reversion (temporary impact) for either side
+    reversion_bps = side_sign(side) * (price_at_day_end - price_at_last_fill) / price_at_last_fill * 10_000
 
     if reversion_bps < -5:
         interp = ("Price gave back ground after our last fill — consistent with at least "
@@ -500,7 +504,7 @@ class ImpactDecomposition:
     note: str
 
 
-def compute_impact_decomposition(algo: AlgoResult, day: pd.DataFrame) -> ImpactDecomposition:
+def compute_impact_decomposition(algo: AlgoResult, day: pd.DataFrame, side: str = "Buy") -> ImpactDecomposition:
     """
     Almgren et al. (2005) permanent/realized/temporary impact decomposition
     (see agent9_microstructure's module docstring for the full model),
@@ -536,8 +540,8 @@ def compute_impact_decomposition(algo: AlgoResult, day: pd.DataFrame) -> ImpactD
 
     s0 = algo.arrival_price
     spost = float(day["Close"].iloc[-1])
-    j_bps = algo.slippage_bps                              # (Sbar - S0)/S0 * 10000, already computed
-    i_bps = (spost - s0) / s0 * 10_000 if s0 > 0 else 0.0
+    j_bps = algo.slippage_bps                              # already side-signed by Agent 3
+    i_bps = side_sign(side) * (spost - s0) / s0 * 10_000 if s0 > 0 else 0.0
     k_bps = j_bps - i_bps / 2
 
     note = (
@@ -598,10 +602,11 @@ def build_posttrade_tca(market_data: MarketData, sim: SimulationResult,
     day = _sim_day(market_data.intraday, bars_expected)   # same day Agent 3 simulated on
 
     algo   = sim.algos[algo_name]
-    bench  = compute_benchmark_comparison(algo, day)
-    rev    = compute_impact_reversion(algo, day)
+    _side  = getattr(sim, "side", "Buy")
+    bench  = compute_benchmark_comparison(algo, day, side=_side)
+    rev    = compute_impact_reversion(algo, day, side=_side)
     pctl   = compute_cost_percentile(comparison, algo_name, algo.total_cost_bps)
-    decomp = compute_impact_decomposition(algo, day)
+    decomp = compute_impact_decomposition(algo, day, side=_side)
 
     notes = []
     if pctl.available:

@@ -7,7 +7,7 @@ with free data, and (d) which are deliberately out of scope because they require
 institutional access — kept here so the boundary is explicit and demonstrably
 understood, not overlooked.*
 
-*Last updated: 2026-07-07*
+*Last updated: 2026-07-08*
 
 ---
 
@@ -67,6 +67,9 @@ How a parent order actually flows through a bank's electronic trading stack:
 | Venue selection & SOR (statistical simulation) + venue TCA | Agent 13 (`agent13_venue_router.py`) — stage 2 of the pre-trade workflow |
 | Index-event execution analytics | Module 2 + Agent 12 (rebalance calendar/changes) |
 | Rebalance best-execution strategy simulation (cost vs tracking-error frontier, S1-S4) | Agent 14 (`agent14_rebalance_strategist.py`) + `docs/INDEX_REBALANCE_RESEARCH.md` |
+| **Research-grounded microstructure & client analytics**: EDGE effective-spread estimator (Ardia-Guidotti-Kroencke, JFE 2024) as a 3rd cross-check; Amihud (2002) illiquidity; intraday volume seasonality (U-shape); ACF + Ljung-Box time-series tests; Asia price-limit bands (China/Korea/Taiwan/Vietnam/Thailand/Indonesia) with pre-trade flag; closing-auction concentration; client benchmark scorecard + client-ready one-pager | `agents/microstructure_analytics.py`, `agents/asian_markets.py`, `agents/client_analytics.py` + Page-1 "Microstructure & Client Analytics" — shipped 2026-07-08 (see `docs/MICROSTRUCTURE_RESEARCH_IMPROVEMENTS.md`) |
+| **Fitted transaction cost model** (regression TCA): OLS cost curve `cost~sqrt(size%ADV)+vol+participation+spread+duration` with White HC1 / Newey-West HAC robust SEs, F-test, Durbin-Watson / Breusch-Pagan / Jarque-Bera diagnostics, predicted-vs-realized benchmark, and **A/B-with-controls** (strategy dummy net of confounders) | `agents/cost_model.py` + `agents/cost_panel.py` + Page-1 "Cost Model — TCA Regression" — shipped 2026-07-08 (directly serves the GSET consultant role; see `docs/GSET_ROLE_AUTOMATION_ANALYSIS.md`) |
+| Regression test suite + CI over the analytics kernels (pins the hand-verified anchors: cap→fill, limit→opp cost, wick convention, S1-S4 costs, YZ/CS/AR estimators, routing, explicit costs, alerts) | `tests/` (offline pytest, 64 tests + recorded AAPL integration fixture) + `.github/workflows/tests.yml` — shipped 2026-07-08 |
 
 ---
 
@@ -74,7 +77,7 @@ How a parent order actually flows through a bank's electronic trading stack:
 
 | # | Feature | Institutional analog | How we'd simulate it |
 |---|---|---|---|
-| I-1 ✅ *(shipped 2026-07-07: limit/window/cap/auction-gating/must-complete; iceberg display qty deferred to venue layer; static pipeline only — live-session binding is next)* | **Institutional order ticket**: limit price, start/end time window, max participation cap, min-fill / must-complete constraint, MOC/MOO auction participation flags, display quantity (iceberg), would-price | FIX strategy parameters on every algo order | Extend order inputs + Agent 3 schedule logic; constraints bind the simulated fills (e.g. no fills through limit; participation cap throttles POV) |
+| I-1 ✅ *(shipped 2026-07-07: limit/window/cap/auction-gating/must-complete; iceberg display qty deferred to venue layer. Live-session cap+limit binding shipped 2026-07-08 (B3); side-aware Buy/Sell shipped 2026-07-08 (B2))* | **Institutional order ticket**: limit price, start/end time window, max participation cap, min-fill / must-complete constraint, MOC/MOO auction participation flags, display quantity (iceberg), would-price | FIX strategy parameters on every algo order | Extend order inputs + Agent 3 schedule logic; constraints bind the simulated fills (e.g. no fills through limit; participation cap throttles POV) |
 | I-2 ✅ *(shipped 2026-07-07: Agent 13 — per-market venue sets, 4 routing policies, deterministic expected-fill model, spread input capped at 15 bps with disclosure)* | **Simulated venue & SOR layer**: stylized venue set (primary exchange, 2 ECN/MTF-like lit venues, 1 dark pool, closing auction) with per-venue spread/fee/fill-probability/adverse-selection parameters; child orders allocated by a simple SOR policy | Smart order router + venue network | Parameterize venues from literature (fee tiers, dark midpoint fills, markout profiles); allocate each 5-min slice's shares across venues; report venue-level fills |
 | I-3 ✅ *(shipped 2026-07-07: per-venue shares, spread cost, fees, adverse selection, price improvement, net cost + policy comparison)* | **Venue-level TCA**: fill rate, effective spread capture, price improvement, post-fill markouts by venue | Venue analysis page of any TCA suite | Direct extension of I-2's simulated fills |
 | I-4 ✅ *(shipped 2026-07-08: EMS-style alert blotter in the live session — completion pace, participation breach, limit state, toxicity, benchmark slippage; pure-function rules, unit-tested)* | **Alerting engine** on the live monitor: behind-schedule, participation-breach, limit-breach, toxicity-spike, reversion alerts with severity levels | EMS alert blotter | Threshold rules over the existing live metrics (Agent 11 outputs); UI badge/log with acknowledge |
@@ -118,16 +121,10 @@ Listed so the boundary is explicit — each entry notes what access it would tak
 **Scope**
 - **Futures overlay for rebalance transitions** (gain index exposure via futures while legging into stock, per transition-management practice) — needs futures data/rolls; declared out of scope for Agent 14.
 - **Basket-level rebalance execution** (whole add/delete basket with cross-name crowding interactions) — Agent 14 is single-name; the basket/crowding disclosure note in Module 2 covers the caveat.
-- **Sell-side orders (and shorts)** — deferred from the order-ticket build: flipping slippage/impact signs correctly across every agent is a dedicated, test-heavy change (tracked as the next candidate after live-session constraint binding).
+- **Sell-side orders** — ✅ *shipped 2026-07-08 (B2): `side_sign` convention in `order_ticket.py`, signed slippage/opportunity/tracking and a side-aware limit gate across Agents 3/4/6/11, plus a short-locate compliance BLOCK; verified by a Buy/Sell mirror-property test (a Sell on path P equals a Buy on 2·P0−P) across all 8 algos and the Agent-4 fast path. Agent 14 was already side-aware. The UI now carries a Buy/Sell selector + short-locate checkbox (FIX Tag 54), and constraints bind both the static pipeline and the live session. Window-in-live-session binding is the only remaining refinement.*
 - **Multi-asset support** (futures hedging overlays, options, FX legs for cross-border settlement).
 - **Entitlements/permissioning, client onboarding, SLAs** — platform plumbing.
 
 ---
 
-## 5. How to talk about this boundary (one-liner)
-
-> "Everything P&L-relevant that can be computed from public data is computed
-> honestly; everything that requires institutional access is simulated with a
-> clearly-labelled statistical model or explicitly declared out of scope in
-> this register — the line between the two is a design artifact, not an
-> accident."
+## 5. How to talk about this bounda

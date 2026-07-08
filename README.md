@@ -1,5 +1,7 @@
 # Execution Analytics Platform
 
+[![tests](https://github.com/zhennanl/equities-execution-analysis/actions/workflows/tests.yml/badge.svg)](https://github.com/zhennanl/equities-execution-analysis/actions/workflows/tests.yml)
+
 An agentic equity execution-analysis platform built with Python and Streamlit. Two modules: a pre/intra/post-trade execution algorithm simulator, and an index-rebalancing event study with execution-cost extensions. Runs entirely on free Yahoo Finance data (`yfinance`) — no API key, no paid feed.
 
 ## Module 1 — Execution Algorithm Simulator
@@ -23,7 +25,7 @@ Given a ticker and an order (size as % of ADV, urgency, benchmark target), a pip
 | 9 — Market Microstructure | Kyle's Lambda (price impact per unit signed order flow) and VPIN (order-flow toxicity), both estimated via Bulk Volume Classification on 5-min bars since no tick/order-book feed is free at this granularity |
 | 13 — Venue Router | Smart-order-routing **simulation**: per-market stylized venue sets (fragmented US/UK/JP/AU vs single-venue TW/KR/CN-A/IN...), slices allocated by marginal expected cost (spread capture + fees + adverse selection), deterministic expected dark fills with same-bar lit sweep, venue-level TCA, and a policy comparison (Cost-optimized / Lit-only / Dark-preferred / Primary-only) |
 
-**Institutional order ticket + pre-trade compliance:** orders carry the parameters a buy-side EMS actually attaches to an algo order — order type with **limit price** (no simulated fills through the limit; blocked shares roll forward), an **execution time window** (FIX 168/126; algos re-plan within the window, and slippage vs. the full-day decision price then implicitly measures the window's delay cost), a **max participation cap** (FIX 849; per-bar throttle with carry-forward, auction prints exempt), **auction participation gating** (disallowing MOC/MOO excludes them from simulation and recommendation), and a **must-complete flag**. Residual unfilled shares are priced as Perold opportunity cost, so constraints change results, not just labels; all-defaults exactly reproduces the unconstrained behavior. Before anything "routes", OMS-style **pre-trade compliance checks** run — firm restricted list (`data/restricted_list.txt`), fat-finger size limits (>25% ADV blocks pending a supervisor-override acknowledgement, >10% warns), and limit-price sanity vs. the last price — and the ticket is also rendered as its **FIX 4.4 tag set** for authenticity. Constraints currently bind the static pipeline (Agents 3-6); live-session enforcement is the next build. See `INSTITUTIONAL_GAP_REGISTER.md` for the full institutional-feature roadmap and the deliberately-out-of-scope list.
+**Institutional order ticket + pre-trade compliance:** orders carry the parameters a buy-side EMS actually attaches to an algo order — order type with **limit price** (no simulated fills through the limit; blocked shares roll forward), an **execution time window** (FIX 168/126; algos re-plan within the window, and slippage vs. the full-day decision price then implicitly measures the window's delay cost), a **max participation cap** (FIX 849; per-bar throttle with carry-forward, auction prints exempt), **auction participation gating** (disallowing MOC/MOO excludes them from simulation and recommendation), and a **must-complete flag**. Residual unfilled shares are priced as Perold opportunity cost, so constraints change results, not just labels; all-defaults exactly reproduces the unconstrained behavior. Before anything "routes", OMS-style **pre-trade compliance checks** run — firm restricted list (`data/restricted_list.txt`), fat-finger size limits (>25% ADV blocks pending a supervisor-override acknowledgement, >10% warns), and limit-price sanity vs. the last price — and the ticket is also rendered as its **FIX 4.4 tag set** for authenticity. The participation cap and side-aware limit gate bind both the static pipeline and the live trading session. The analytics **engine is side-aware (Buy/Sell)** — a single `side_sign` convention signs slippage/opportunity/tracking, the limit gate is side-aware, and a short-locate check blocks an unlocated sell — all verified by a Buy/Sell mirror-property test (a Sell on price path P reproduces a Buy on 2·P0−P) across every algo; the user-facing side selector is not yet wired, so the app currently operates buy-only. See `INSTITUTIONAL_GAP_REGISTER.md` for the full institutional-feature roadmap and the deliberately-out-of-scope list.
 
 **Staged pre-trade workflow (institutional order of operations):** results are organized the way a desk actually works an order — **Stage 1 — Pre-Trade Analytics** (liquidity/data quality, expected cost & capacity, spread estimate, event risk, microstructure toxicity, market regime) comes *before* **Stage 2 — Strategy & Venue Selection** (Agent 5's rule-based pick with Agent 8's independent critic review, then Agent 13's venue/SOR simulation, where the trader can override the strategy and routing policy interactively without re-running the pipeline). Venue routing is honestly scoped: what IS simulatable at 5-min granularity (venue cost model, expected dark fills, market-structure differences across the 15 supported markets) is simulated with stylized literature-calibrated parameters; what is NOT (queue position, latency, real fill probabilities, dark-liquidity discovery, internalization) is declared in `INSTITUTIONAL_GAP_REGISTER.md` rather than faked.
 
@@ -36,6 +38,8 @@ Given a ticker and an order (size as % of ADV, urgency, benchmark target), a pip
 The starting **algo, urgency, and benchmark target** are all editable inputs at the top of the section (defaulting to Agent 5's recommendation and the client's stated inputs), and changing any of them resets the session to bar zero. At any point the user can also add a mid-session intervention — switch algo, urgency, *and* benchmark target for the remainder — and stack multiple across the session (e.g. VWAP → POV → IS, Arrival → VWAP), each one re-planning only the shares still unfilled over the remaining bars; the live regime, Agent 5 re-check, and pre-trade re-underwrite all react to whichever urgency/benchmark is currently in effect, not just the day's starting values. Interventions auto-pause playback so the effect can be reviewed before resuming, can be undone individually or reset entirely, and the final blended outcome is shown against the "stayed on the original plan all day" baseline. Backtest-style — the same historical bars are replayed on a timer, not a live feed.
 
 **Hypothesis Testing on execution parameters:** lets a user define two configurations (algo / urgency / order size) and click a button to get a formal statistical verdict on whether one significantly beats the other on a chosen metric (Total Cost, Slippage, Market Impact, Opportunity Cost, or Fill Rate). Since this platform can't route live orders through two algos at once, it uses the practical analog quant desks use: a **paired backtest** — replaying the exact same historical days under both configurations so market-condition noise is held constant and only the configuration differs. Reports a paired t-test, a Wilcoxon signed-rank robustness check, a 5,000-resample bootstrap confidence interval on the mean difference, and Cohen's d, plus a histogram of daily paired differences and disclosed caveats (small-sample warnings, fast-path vs. re-simulated data provenance). When a tested configuration exactly matches the current pipeline's settings it reuses Agent 4's already-computed daily data instead of re-simulating.
+
+**Cost Model — TCA Regression (fitted transaction cost model):** rather than *assuming* the square-root-law impact prefactor (eta=0.3 elsewhere), this section **estimates** the execution cost curve by OLS from a panel assembled across a grid of order sizes x all 8 algos x every available day: `cost_bps ~ sqrt(size %ADV) + volatility + participation + spread + duration`. It reports the coefficient table with **heteroskedasticity-robust (White HC1)** or **HAC (Newey-West)** standard errors, t-stats, an F-test, R^2/adjusted-R^2, and residual diagnostics (Durbin-Watson, Breusch-Pagan, Jarque-Bera); the fitted model doubles as a *conditional* expected-cost benchmark (predicted-vs-realized plot). It also runs an **A/B test with controls** - a regression with a strategy dummy plus condition controls, so the incremental cost of one algo vs. another is measured net of confounders (size, volatility, spread), the apples-to-apples number a raw mean difference cannot give. Implemented in `agents/cost_model.py` + `agents/cost_panel.py` with numpy/scipy only (every SE is auditable). Cost here is simulated; the identical regression fits a real client-fill panel unchanged.
 
 **Supported markets (15):** US, UK (LSE), Taiwan (TWSE), Hong Kong (HKEX), Japan (TSE), Korea (KRX), Singapore (SGX), China-A (Shanghai & Shenzhen), India (NSE), Australia (ASX), Thailand (SET), Indonesia (IDX), Malaysia (KLSE), Vietnam (HOSE).
 
@@ -65,6 +69,8 @@ Where the provider doesn't publish a ticker (MSCI, FTSE), a best-effort Yahoo sy
 
 **Fill-price convention:** continuous-trading fills print at each bar's *typical price* ((H+L+C)/3) rather than the bar close — an algo slicing inside a 5-minute bar realizes something near the bar's average, and close-only fills systematically bias slippage on trending days. Auction-style algos keep their prints (MOC at the close, MOO at the open), and the interval VWAP/TWAP benchmarks use the same convention for consistency. **Explicit costs** (commissions, exchange/regulatory fees, stamp/transaction taxes — side-aware: UK stamp hits buys at 50 bps, Taiwan's 30 bps transaction tax hits sells) are reported separately from implicit costs per TCA convention (`agents/explicit_costs.py`). The live session includes an EMS-style **alert blotter** (completion pace, participation-cap breach, limit-through-market, toxicity, benchmark-slippage thresholds — alerts inform, nothing auto-acts). For what the platform deliberately does *not* attempt and why, see `docs/INFEASIBLE_FEATURES.md`.
 
+**Microstructure & client analytics (research-grounded):** an additional Page-1 section adds the **EDGE** effective-spread estimator (Ardia-Guidotti-Kroencke, *JFE* 2024) alongside Corwin-Schultz and Abdi-Ranaldo, **Amihud (2002)** illiquidity, intraday volume **seasonality**, ACF/Ljung-Box **time-series** tests, **Asia-specific price-limit** bands (China/Korea/Taiwan/Vietnam/Thailand/Indonesia) with a pre-trade flag, **closing-auction concentration**, a **client benchmark scorecard**, and a downloadable **client one-pager**. Literature and rationale: `docs/MICROSTRUCTURE_RESEARCH_IMPROVEMENTS.md`.
+
 ## Design notes
 
 - **Data is disclosed, not idealized.** A sidebar panel ("Data Sources & Limitations") and inline captions throughout the app state exactly what's measured vs. approximated — e.g. Kyle's Lambda/VPIN are bar-level approximations of tick-level concepts, MOC/MOO are volume-curve approximations of real auction mechanics, since no free order-book or trade-print feed exists at intraday granularity across these 14 markets.
@@ -77,6 +83,28 @@ Where the provider doesn't publish a ticker (MSCI, FTSE), a best-effort Yahoo sy
 pip install -r requirements.txt
 streamlit run app.py
 ```
+
+## Testing
+
+The analytics kernels are covered by an offline, deterministic test suite (no
+network) that pins the hand-verified regression anchors — the participation-cap
+fill kernel (20% ADV / 5% cap → 25% fill), the limit-gate opportunity cost
+(385 bps), the typical-price wick convention (10 bps TWAP slippage, 0 for
+MOC/MOO), side-aware rebalance strategy costs (S1/S2/S3 = 1000/750/725 bps),
+the Yang-Zhang / Corwin-Schultz / Abdi-Ranaldo estimators, the regression cost model
+(OLS coefficient recovery, HC1/HAC robust SEs, DW/BP/JB diagnostics, A/B-with-controls
+debiasing), venue routing,
+explicit costs, and the live-alert engine, plus an integration pass over a
+recorded AAPL fixture and the default-ticket-equals-legacy invariant.
+
+```bash
+pip install -r requirements-dev.txt
+pytest -m "not live"     # offline suite (runs in CI)
+pytest -m live           # optional: hits the live yfinance API
+```
+
+CI runs the offline suite on every push/PR via
+`.github/workflows/tests.yml`.
 
 ## Tech stack
 
@@ -92,18 +120,4 @@ app.py                              # Streamlit UI — Page 1 (simulator) + Page
 agents/
   agent1_market_data.py             # Market data fetch, ADV, realized vol, volume profile
   agent2_market_regime.py           # Volatility / volume / trend regime classification
-  agent3_algo_simulation.py         # 8-algorithm single-day simulation + chained live-execution interventions
-  agent4_performance_comparison.py  # Multi-day comparison, sensitivity grid, AC frontier
-  agent5_recommendation.py          # Rule-based recommendation memo
-  agent6_pretrade_posttrade.py      # Pre-trade estimate + post-trade TCA
-  agent7_earnings_calendar.py       # Earnings-date gap-risk flag
-  agent8_critic.py                  # Independent recommendation review
-  agent9_microstructure.py          # Kyle's Lambda, VPIN, Almgren impact cross-check
-  agent10_hypothesis_test.py        # Paired-backtest hypothesis testing (t-test/Wilcoxon/bootstrap)
-  agent11_live_snapshot.py          # Point-in-time re-run of Agents 2/5/6/9 for the Live Trading Session
-  rebalancing_event_study.py        # CAR/abnormal-volume event study + execution insights
-  orchestrator.py                   # Runs Agents 2-9, conditional skip/fail handling
-  context.py                        # Shared ExecutionContext ("blackboard") state
-PROJECT_CONTEXT.md                  # Full design philosophy, methodology, and sourcing notes
-requirements.txt
-```
+  agent3_algo_simulation.py         # 8-algorithm single-day simulation + chained live-execu

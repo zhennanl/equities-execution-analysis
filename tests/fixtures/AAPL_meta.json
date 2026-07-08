@@ -1,0 +1,11 @@
+{
+  "ticker": "AAPL",
+  "market": "US",
+  "adv_shares": 54300142.9,
+  "adv_usd": 17037755241.173813,
+  "current_price": 313.7699890136719,
+  "realized_vol_ann": 0.2626876517147494,
+  "shares_outstanding": 14687356000,
+  "rv_intraday_ann": 0.24537596739025772,
+  "vol_note": "Yang-Zhang (2000) OHLC estimator, 60d window \u2014 drift-independent, overnight-jump aware; ~8x more efficient than close-to-close."
+}
