@@ -1,5 +1,5 @@
 # Live App:
-# https://equities-execution-analysis.streamlit.app/
+https://equities-execution-analysis.streamlit.app/
 
 # Execution Analytics Platform
 
