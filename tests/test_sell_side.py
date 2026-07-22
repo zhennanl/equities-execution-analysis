@@ -126,4 +126,3 @@ def test_agent6_benchmark_slippage_flips_sign_by_side():
     col = "Slippage vs Benchmark (bps)"
     for bench in buy_tbl.index:
         assert sell_tbl.loc[bench, col] == pytest.approx(-buy_tbl.loc[bench, col], abs=1e-6), bench
-loc[bench, col] == pytest.approx(-buy_tbl.loc[bench, col], abs=1e-6), bench

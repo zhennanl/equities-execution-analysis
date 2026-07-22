@@ -133,3 +133,28 @@ reversal captured/foregone over T+1…T+m.
 - [CME — Russell Reconstitution impact](https://www.cmegroup.com/openmarkets/equity-index/2025/How-Does-the-Russell-Reconstitution-Impact-Equity-Markets.html) · [LSEG 2026 recon key facts](https://www.lseg.com/en/insights/ftse-russell/more-key-facts-ahead-of-the-2026-russell-us-indexes-reconstitution)
 - [MSCI Standard Index reconstitutions — price effect & investor awareness (JEF 2019)](https://www.sciencedirect.com/science/article/abs/pii/S0927539819300027)
 - [China A-shares MSCI inclusion — market internationalization evidence](https://www.sciencedirect.com/science/article/abs/pii/S0275531923001150)
+
+
+## 8. Rulebook-based reconstitution prediction (session 6j)
+
+`agents/reconstitution.py` applies the public structure of the provider
+methodologies to a candidate universe (cap / free float / ADV / ATVR):
+
+- **MSCI GIMI approximation:** GMSR = full cap at 85% cumulative free-float
+  coverage of the sorted eligible universe; Global Minimum Size Range
+  0.5x-1.15x GMSR (buffers keep incumbents / gate newcomers); configurable
+  stricter QIR add multiple (default 1.8x — verify current book); free-float
+  >= 15% and ATVR liquidity screens.
+- **FTSE-style rank buffer:** add at rank <= 90, delete at rank >= 111
+  (scaled per index size), reserves pair to hold index size — the published
+  FTSE UK ground-rule structure.
+- **Flow estimate:** weight x tracked-AUM input / ADV -> days-to-trade.
+  AUM is the desk's input, not a claim.
+
+NOT modeled (disclosed in every output): country-level minimum-size
+interplay, FIF granularity/foreign room, nationality & fast-entry rules,
+multiple lines, corporate-event windows, provider discretion.
+
+Sources: [MSCI GIMI methodology](https://www.msci.com/indexes/documents/methodology/1_MSCI_Global_Investable_Market_Indexes_Methodology_20240812.pdf) ·
+[FTSE UK Index Series ground rules](https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-uk-index-series-ground-rules.pdf) ·
+[FTSE GEIS ground rules](https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf)

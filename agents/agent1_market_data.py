@@ -149,6 +149,34 @@ def fetch_market_data(ticker_base, market, log=None):
     daily = daily[["Open", "High", "Low", "Close", "Volume"]].copy()
     _log(f"Daily: {len(daily)} trading days")
 
+    # Shares outstanding -- best-effort only (see note in assemble step).
+    shares_outstanding = None
+    try:
+        info = stock.info
+        shares_outstanding = info.get("sharesOutstanding")
+        if shares_outstanding:
+            _log(f"Shares outstanding: {shares_outstanding:,.0f}")
+    except Exception as e:
+        _log(f"Shares outstanding unavailable (non-blocking): {e}")
+
+    return assemble_market_data(ticker, market, intraday, daily,
+                                shares_outstanding=shares_outstanding, log=log)
+
+
+def assemble_market_data(ticker, market, intraday, daily,
+                         shares_outstanding=None, log=None, source=""):
+    """Derive everything downstream of the raw frames (ADV, Yang-Zhang vol,
+    intraday volume profile) and assemble the MarketData contract.
+
+    Extracted from fetch_market_data (session 6f) so ANY market-data source
+    — yfinance, kdb+/q, a future feed — only has to deliver two normalized
+    OHLCV frames (intraday bars with a DatetimeIndex; daily bars) and gets
+    the identical downstream object. The pipeline never knows the source.
+    """
+    def _log(msg):
+        if log:
+            log(msg)
+
     # ADV
     adv_shares = float(daily["Volume"].mean())
     current_price = float(daily["Close"].iloc[-1])
@@ -167,6 +195,8 @@ def fetch_market_data(ticker_base, market, log=None):
     else:
         realized_vol_ann = rv_intraday_ann
         vol_note = "Fallback: 5-min intraday realized vol (daily OHLC unavailable/too short)."
+    if source:
+        vol_note += f" [source: {source}]"
     _log(f"Realized vol (annualized): {realized_vol_ann:.1%} [Yang-Zhang]"
          f" | intraday-RV comparison: {rv_intraday_ann:.1%}")
 
@@ -180,23 +210,6 @@ def fetch_market_data(ticker_base, market, log=None):
     )
     vol_profile["volume_pct"] = vol_profile["avg_volume"] / vol_profile["avg_volume"].sum()
     _log(f"Volume profile: {len(vol_profile)} time buckets")
-
-    # Shares outstanding -- best-effort only. Used by Agent 9's Almgren et al.
-    # (2005) turnover liquidity factor; NOT required for anything else in the
-    # pipeline, so failure here must never block the fetch. `.info` is a
-    # heavier/slower call than `.history()` and more prone to rate-limiting,
-    # so this is wrapped in its own try/except and simply left as None (Agent
-    # 9 already handles None by omitting the liquidity factor) rather than
-    # retried or raised.
-    shares_outstanding = None
-    try:
-        info = stock.info
-        shares_outstanding = info.get("sharesOutstanding")
-        if shares_outstanding:
-            _log(f"Shares outstanding: {shares_outstanding:,.0f}")
-    except Exception as e:
-        _log(f"Shares outstanding unavailable (non-blocking): {e}")
-
     _log("Agent 1 complete.")
 
     return MarketData(

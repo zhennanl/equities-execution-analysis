@@ -97,6 +97,98 @@ class EventStudyResult:
     price_at_T: float                # raw (non-indexed) close price at T
     est_sigma_daily: float           # daily return std-dev over the estimation window
     est_avg_volume: float            # mean daily volume over the estimation window (ADV proxy)
+    ar_tstat: np.ndarray = None      # per-day AR t-stats (Brown-Warner single-firm, forecast-error corrected)
+    car_sigma: np.ndarray = None     # cumulative CAR standard error per event day
+    liquidity_shift: "LiquidityShift" = None   # pre vs post-event beta/spread/illiquidity
+
+
+def event_inference(AR: np.ndarray, resid: np.ndarray,
+                    index_ret_est: np.ndarray, index_ret_ev: np.ndarray):
+    """Single-firm event-study inference (Brown-Warner 1985 / Patell-style
+    forecast-error correction, one firm so no cross-sectional aggregation):
+
+      var(AR_t) = s^2 * ( 1 + 1/L + (Rm_t - Rm_bar)^2 / SSRm )
+
+    where s^2 is the estimation-window residual variance (ddof=2), L the
+    estimation length, Rm_bar / SSRm the estimation-window market-return mean
+    and centered sum of squares. CAR sigma is the sqrt of the running sum of
+    var(AR_t) (residuals assumed serially uncorrelated — the market model's
+    own assumption). Returns (ar_tstat, car_sigma), both event-window arrays.
+    Event-induced variance (BMP critique) makes these ANTI-conservative on
+    the event days themselves — display bands, don't hard-test."""
+    L = len(resid)
+    if L < 10:
+        return None, None
+    s2 = float(np.sum(resid ** 2) / (L - 2))
+    rm_bar = float(np.mean(index_ret_est))
+    ssrm = float(np.sum((index_ret_est - rm_bar) ** 2))
+    if s2 <= 0 or ssrm <= 0:
+        return None, None
+    var_t = s2 * (1.0 + 1.0 / L + (index_ret_ev - rm_bar) ** 2 / ssrm)
+    ar_t = AR / np.sqrt(var_t)
+    car_sigma = np.sqrt(np.cumsum(var_t))
+    return ar_t, car_sigma
+
+
+@dataclass
+class LiquidityShift:
+    """Pre vs post-event liquidity & systematic-risk shift (research memo
+    stream H: Hegde-McDermott 2003 liquidity; Barberis-Shleifer-Wurgler 2005
+    comovement). Pre = estimation window; post = T+1 onward (needs >= 8 days)."""
+    available: bool
+    reason: str = ""
+    beta_pre: float = None
+    beta_post: float = None
+    edge_pre_bps: float = None
+    edge_post_bps: float = None
+    amihud_pre: float = None          # bps impact per $1M notional
+    amihud_post: float = None
+    n_post_days: int = 0
+    note: str = ""
+
+
+def compute_liquidity_shift(stock_raw: pd.DataFrame, combined: pd.DataFrame,
+                            est_start: int, est_end: int, T_idx: int,
+                            alpha: float, beta: float) -> LiquidityShift:
+    """stock_raw: raw daily OHLCV (naive dates); combined: aligned stock/index
+    closes used by the study; windows are combined-frame positions."""
+    from agents.microstructure_analytics import estimate_spread_edge, amihud_illiquidity
+    post = combined.iloc[T_idx + 1:]
+    n_post = len(post)
+    if n_post < 8:
+        return LiquidityShift(False, f"Only {n_post} post-event days (need >= 8) — rerun later.")
+    sr = post["stock"].pct_change().dropna()
+    ir = post["index"].pct_change().dropna()
+    both = pd.concat([sr, ir], axis=1).dropna()
+    if len(both) < 6:
+        return LiquidityShift(False, "Too few overlapping post-event returns.")
+    X = np.column_stack([np.ones(len(both)), both["index"].values])
+    beta_post = float(np.linalg.lstsq(X, both["stock"].values, rcond=None)[0][1])
+
+    est_dates = combined.index[est_start:est_end]
+    post_dates = post.index
+    pre_ohlc = stock_raw.loc[stock_raw.index.isin(est_dates)]
+    post_ohlc = stock_raw.loc[stock_raw.index.isin(post_dates)]
+
+    e_pre = estimate_spread_edge(pre_ohlc)
+    e_post = estimate_spread_edge(post_ohlc)
+    a_pre = amihud_illiquidity(pre_ohlc)
+    a_post = amihud_illiquidity(post_ohlc)
+
+    bits = [f"beta {beta:.2f} -> {beta_post:.2f} ({n_post} post days)"]
+    if e_pre.get("spread_bps") and e_post.get("spread_bps"):
+        bits.append(f"EDGE spread {e_pre['spread_bps']:.1f} -> {e_post['spread_bps']:.1f} bps")
+    if a_pre.get("impact_bps_per_1m") is not None and a_post.get("impact_bps_per_1m") is not None:
+        bits.append(f"Amihud {a_pre['impact_bps_per_1m']:.2f} -> {a_post['impact_bps_per_1m']:.2f} bps/$1M")
+    note = ("Post-event window is short and overlaps the reversal — read as an early "
+            "indication, not a settled regime. Practical uses: update hedge ratios off "
+            "the post beta; falling spread/illiquidity makes post-effective completion "
+            "cheaper than pre-event estimates assumed. " + " · ".join(bits))
+    return LiquidityShift(
+        available=True, beta_pre=round(float(beta), 3), beta_post=round(beta_post, 3),
+        edge_pre_bps=e_pre.get("spread_bps"), edge_post_bps=e_post.get("spread_bps"),
+        amihud_pre=a_pre.get("impact_bps_per_1m"), amihud_post=a_post.get("impact_bps_per_1m"),
+        n_post_days=n_post, note=note)
 
 
 def run_event_study(ticker_base: str, market: str, rebal_date,
@@ -180,10 +272,22 @@ def run_event_study(ticker_base: str, market: str, rebal_date,
     alpha, beta = coeffs
     _log(f"Market model: alpha={alpha:.5f}, beta={beta:.3f}")
 
-    # Abnormal returns in event window
-    stock_ret_ev = event["stock"].pct_change().fillna(0)
-    index_ret_ev = event["index"].pct_change().fillna(0)
+    # Abnormal returns in event window. Returns are computed with one extra
+    # leading trading day so the first event-window day gets a REAL return --
+    # a bare pct_change().fillna(0) would set day-1 returns to zero and inject
+    # a spurious AR of -alpha (which then shifts the entire CAR curve).
+    ext_start = max(0, ev_start - 1)
+    event_ext = combined.iloc[ext_start:ev_end]
+    stock_ret_ev = event_ext["stock"].pct_change()
+    index_ret_ev = event_ext["index"].pct_change()
+    if ext_start < ev_start:            # drop the leading helper day
+        stock_ret_ev = stock_ret_ev.iloc[1:]
+        index_ret_ev = index_ret_ev.iloc[1:]
+    stock_ret_ev = stock_ret_ev.fillna(0)
+    index_ret_ev = index_ret_ev.fillna(0)
     AR  = stock_ret_ev.values - (alpha + beta * index_ret_ev.values)
+    if ext_start == ev_start:           # no earlier data: neutralize day 1
+        AR[0] = 0.0
     CAR = np.cumsum(AR)
 
     # Relative day index (T = 0)
@@ -202,6 +306,17 @@ def run_event_study(ticker_base: str, market: str, rebal_date,
     T_price   = float(ev_price.reindex([T_trading]).iloc[0]) if T_trading in ev_price.index else float(ev_price.iloc[0])
     norm_price = (ev_price / T_price * 100).values if T_price > 0 else np.full(len(event), 100.0)
 
+    # Inference: estimation-window residuals -> AR t-stats + CAR sigma bands
+    resid = common_est["stock"].values - (alpha + beta * common_est["index"].values)
+    ar_tstat, car_sigma = event_inference(AR, resid,
+                                          common_est["index"].values,
+                                          index_ret_ev.values)
+
+    _close_for_shift = stock_raw.copy()
+    _close_for_shift.index = pd.to_datetime([d.date() for d in _close_for_shift.index])
+    liq_shift = compute_liquidity_shift(_close_for_shift, combined,
+                                        est_start, est_end, T_idx, alpha, beta)
+
     # Summary table at key days
     key_days = [-event_window, -5, -1, 0, 1, 5, event_window]
     key_days = sorted(set(d for d in key_days if ev_start - T_idx <= d <= ev_end - T_idx - 1))
@@ -212,6 +327,8 @@ def run_event_study(ticker_base: str, market: str, rebal_date,
             summary_rows.append({
                 "Day": f"T{d:+d}",
                 "CAR (%)": round(CAR[pos] * 100, 2),
+                "CAR t": round(float(CAR[pos] / car_sigma[pos]), 2)
+                          if car_sigma is not None and car_sigma[pos] > 0 else None,
                 "Ab. Volume (x)": round(float(ab_vol[pos]), 2) if pos < len(ab_vol) else None,
                 "Price (idx)": round(float(norm_price[pos]), 1) if pos < len(norm_price) else None,
             })
@@ -236,6 +353,9 @@ def run_event_study(ticker_base: str, market: str, rebal_date,
         price_at_T=float(T_price),
         est_sigma_daily=float(stock_ret_est.std()),
         est_avg_volume=float(avg_vol),
+        ar_tstat=ar_tstat,
+        car_sigma=car_sigma,
+        liquidity_shift=liq_shift,
     )
 
 

@@ -1,0 +1,13 @@
+flowchart TD
+    subgraph P2L["Page 2 — shipped"]
+        R1["Every completed<br/>event study"] --> EL[("event_library.json<br/>runup · reversal · drift ·<br/>implied η · Add/Delete")]
+        EL --> O1["Playbook thresholds<br/>(source + n displayed)"]
+        EL --> O2["Expected-move η band"]
+        EL --> O3["'This event vs library'<br/>context line"]
+    end
+    subgraph P1L["Page 1 — proposed (assessment P-C)"]
+        R2["Every pipeline run"] -.-> RL[("run library<br/>conditions · algo ·<br/>predicted vs realized")]
+        RL -.-> O4["Cost-model refits"]
+        RL -.-> O5["Algo-wheel league table (I-7)"]
+        RL -.-> O6["Persistent percentiles"]
+    end

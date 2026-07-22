@@ -364,3 +364,84 @@ def build_live_alerts(*, filled_shares: float, order_shares: float,
             "Agent 5's rule re-fired against the live regime and would now pick a "
             "different algo — see the Reconsider panel above."))
     return alerts
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# B4 — Live volume run-rate re-forecast (assessment P-D; shipped 2026-07-08)
+# ──────────────────────────────────────────────────────────────────────────
+
+@dataclass
+class LiveVolumeForecast:
+    available: bool
+    reason: str = ""
+    run_rate: float = None            # realized-so-far / curve-expected-so-far (1.0 = on plan)
+    projected_day_volume: float = None
+    projected_vs_adv: float = None    # projected day volume / ADV
+    completion_feasible: bool = None  # remaining order fits in projected remaining capacity
+    projected_finish_time: str = ""   # bar timestamp when POV-at-rate would finish
+    note: str = ""
+
+
+def live_volume_forecast(full_intraday: pd.DataFrame, today_date,
+                         view_day: pd.DataFrame, day_full: pd.DataFrame,
+                         adv_shares: float, remaining_shares: float,
+                         participation_rate: float = 0.15) -> LiveVolumeForecast:
+    """DVWAP-style re-forecast: blend the historical intraday volume curve with
+    volume realized so far to (a) measure the run-rate vs expectation, (b)
+    gross up to a projected full-day volume, and (c) project when a POV-style
+    schedule at `participation_rate` would complete the remaining shares.
+    Pure function — testable offline; the UI decides what to do with it."""
+    from agents.agent3_algo_simulation import _historical_volume_weights
+    n_full = len(day_full)
+    k = len(view_day)
+    if n_full == 0 or k == 0:
+        return LiveVolumeForecast(False, "No bars to forecast from.")
+    weights, _note = _historical_volume_weights(full_intraday, today_date, n_full)
+    if weights is None or len(weights) != n_full or float(np.sum(weights)) <= 0:
+        return LiveVolumeForecast(False, "No historical volume curve available "
+                                         "(insufficient prior days in the fetch window).")
+    w = np.asarray(weights, dtype=float)
+    w = w / w.sum()
+    cum_w = float(np.sum(w[:k]))
+    if cum_w <= 0:
+        return LiveVolumeForecast(False, "Curve has no mass in the elapsed window.")
+    realized = float(view_day["Volume"].sum())
+    expected_so_far = float(adv_shares) * cum_w
+    run_rate = realized / expected_so_far if expected_so_far > 0 else None
+    projected_day = realized / cum_w
+    remaining_capacity = participation_rate * projected_day * float(np.sum(w[k:]))
+    feasible = remaining_shares <= remaining_capacity
+
+    finish_time = ""
+    if remaining_shares > 0 and projected_day > 0:
+        need = remaining_shares
+        for i in range(k, n_full):
+            need -= participation_rate * projected_day * w[i]
+            if need <= 0:
+                finish_time = str(day_full.index[i].time())
+                break
+        if need > 0:
+            finish_time = "not by the close at this participation"
+    elif remaining_shares <= 0:
+        finish_time = "complete"
+
+    if run_rate is None:
+        pace = ""
+    elif run_rate >= 1.25:
+        pace = ("Volume running well ABOVE plan — liquidity is better than the curve "
+                "assumed; participation targets fill faster and auction capacity "
+                "estimates should be revised UP.")
+    elif run_rate <= 0.8:
+        pace = ("Volume running BELOW plan — completing at the planned participation "
+                "takes longer than scheduled; consider raising participation, extending "
+                "the window, or shifting size to the close.")
+    else:
+        pace = "Volume tracking the historical curve."
+    return LiveVolumeForecast(
+        available=True,
+        run_rate=round(run_rate, 2) if run_rate is not None else None,
+        projected_day_volume=round(projected_day, 0),
+        projected_vs_adv=round(projected_day / adv_shares, 2) if adv_shares else None,
+        completion_feasible=bool(feasible),
+        projected_finish_time=finish_time,
+        note=pace)

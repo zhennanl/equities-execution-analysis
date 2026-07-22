@@ -64,3 +64,29 @@ def test_all_scheduled_shares_are_routed():
     sched, vols = _us_schedule(), _bar_volumes()
     r = route_order(sched, vols, "US", policy="Cost-optimized", half_spread_bps=2.0)
     assert r.routed_shares == pytest.approx(sched["shares_traded"].sum(), rel=1e-6)
+
+
+# ---------------------------------------------------------------- Shield
+
+def test_shield_routes_all_shares_and_uses_more_dark():
+    sched, vols = _us_schedule(), _bar_volumes()
+    cmp = compare_policies(sched, vols, "US", half_spread_bps=2.0)
+    row = {r["Policy"]: r for _, r in cmp.iterrows()}
+    assert "Shield (dark-patient)" in row
+    # carry-forward re-pings dark, so the dark share must exceed the
+    # same-bar-sweep Cost-optimized policy
+    assert row["Shield (dark-patient)"]["% dark"] > row["Cost-optimized"]["% dark"]
+    r = route_order(sched, vols, "US", policy="Shield (dark-patient)",
+                    half_spread_bps=2.0)
+    assert r.routed_shares == pytest.approx(sched["shares_traded"].sum(), rel=1e-6)
+    assert any("Shield" in n for n in r.notes)
+
+
+def test_shield_saves_cost_vs_cost_optimized_on_wide_spread():
+    # More midpoint fills = less spread crossed; on a wide-spread tape the
+    # blended cost must not exceed Cost-optimized.
+    sched, vols = _us_schedule(), _bar_volumes()
+    cmp = compare_policies(sched, vols, "US", half_spread_bps=10.0)
+    row = {r["Policy"]: r for _, r in cmp.iterrows()}
+    assert (row["Shield (dark-patient)"]["Blended routing cost (bps)"]
+            <= row["Cost-optimized"]["Blended routing cost (bps)"])

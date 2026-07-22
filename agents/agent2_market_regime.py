@@ -118,12 +118,16 @@ def _classify_volume(intraday: pd.DataFrame):
 
 
 def _classify_trend_legacy_autocorr(rets: pd.Series) -> float:
-    """Lag-1 autocorrelation -- retained as a simple supporting statistic
-    alongside the variance ratio test below (see _variance_ratio_test)."""
-    if len(rets) < 10:
+    """Lag-1 autocorrelation, reported as a supporting stat next to the formal
+    variance-ratio test. Guarded (2026-07-08): a zero-variance return window
+    made pandas' nancorr emit a divide RuntimeWarning and propagate NaN — now
+    silenced at the numpy level and mapped to 0.0 (no detectable persistence),
+    which is the correct reading of a flat window."""
+    if len(rets) < 10 or float(rets.std()) == 0.0:   # original 10-obs floor kept
         return 0.0
-    ac = float(rets.autocorr(lag=1))
-    return 0.0 if np.isnan(ac) else round(ac, 4)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        ac = rets.autocorr(lag=1)
+    return round(float(ac), 4) if np.isfinite(ac) else 0.0
 
 
 def _variance_ratio(rets: np.ndarray, q: int) -> dict:

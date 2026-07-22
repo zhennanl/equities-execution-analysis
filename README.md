@@ -5,7 +5,7 @@ https://equities-execution-analysis.streamlit.app/
 
 [![tests](https://github.com/zhennanl/equities-execution-analysis/actions/workflows/tests.yml/badge.svg)](https://github.com/zhennanl/equities-execution-analysis/actions/workflows/tests.yml)
 
-An agentic equity execution-analysis platform built with Python and Streamlit. Two modules: a pre/intra/post-trade execution algorithm simulator, and an index-rebalancing event study with execution-cost extensions. Runs entirely on free Yahoo Finance data (`yfinance`) — no API key, no paid feed.
+An agentic equity execution-analysis platform built with Python and Streamlit. Three modules: a pre/intra/post-trade execution algorithm simulator, an index-rebalancing event study with execution-cost extensions and a trader workflow layer, and an Asia program-trading desk (session board, market regulations, program blotter, settlement/recon). Runs entirely on free Yahoo Finance data (`yfinance`) — no API key, no paid feed.
 
 ## Module 1 — Execution Algorithm Simulator
 
@@ -98,7 +98,13 @@ the Yang-Zhang / Corwin-Schultz / Abdi-Ranaldo estimators, the regression cost m
 (OLS coefficient recovery, HC1/HAC robust SEs, DW/BP/JB diagnostics, A/B-with-controls
 debiasing), venue routing,
 explicit costs, and the live-alert engine, plus an integration pass over a
-recorded AAPL fixture and the default-ticket-equals-legacy invariant.
+recorded AAPL fixture and the default-ticket-equals-legacy invariant. Later
+additions keep the same discipline: Perold IS attribution (reconciliation
+±0.1 bp across all algos and both sides), the algo wheel's Friedman/Nemenyi
+math, event-study inference anchors, markout/Roll estimators, the trader-view
+packaging (cards, playbooks, basket ranking, libraries), the program-desk
+session/lot/short/settlement logic, and live window-binding parity — 178
+offline tests as of 2026-07-08.
 
 ```bash
 pip install -r requirements-dev.txt
@@ -119,8 +125,40 @@ CI runs the offline suite on every push/PR via
 ## Repository structure
 
 ```
-app.py                              # Streamlit UI — Page 1 (simulator) + Page 2 (rebalancing)
+app.py                              # Thin dispatcher — config + sidebar + page routing (B8 refactor)
+views/
+  common.py                         # Shared imports & UI helpers for all pages
+  page1_simulator.py                # Page 1 — Execution Algorithm Simulator
+  page2_rebalancing.py              # Page 2 — Index Rebalancing Analysis
+  page3_program.py                  # Page 3 — Program Trading Desk (Asia)
 agents/
   agent1_market_data.py             # Market data fetch, ADV, realized vol, volume profile
-  agent2_market_regime.py           # Volatility / volume / trend regime classification
-  agent3_algo_simulation.py         # 8-algorithm single-day simulation + chained live-execu
+  agent2_market_regime.py           # Volatility / volume / trend regime (variance-ratio test)
+  agent3_algo_simulation.py         # 8-algo simulation + live session with interventions
+  agent4_performance_comparison.py  # Cross-day comparison, size grid, AC frontier
+  agent5_recommendation.py          # Rule-based recommendation memo
+  agent6_pretrade_posttrade.py      # Pre-trade estimates + post-trade TCA incl. Perold IS attribution
+  agent7_earnings_calendar.py       # Event risk (earnings in horizon)
+  agent8_critic.py                  # Independent review — flags, never overrides
+  agent9_microstructure.py          # Kyle's lambda, VPIN (BVC), Almgren-2005 cross-check
+  agent10_hypothesis_test.py        # Paired A/B backtest (t / Wilcoxon / bootstrap)
+  agent11_live_snapshot.py          # Live readouts, alert blotter, volume re-forecast (B4)
+  agent12_index_calendar.py         # Index provider announcements + review calendar
+  agent13_venue_router.py           # Stylized venue/SOR simulation + venue TCA
+  agent14_rebalance_strategist.py   # S1-S4 rebalance strategies, cost-vs-tracking frontier
+  algo_wheel.py                     # N-arm league table (Friedman + Nemenyi CD)
+  asian_markets.py                  # Price-limit bands, closing-auction concentration
+  client_analytics.py               # Benchmark scorecard + client one-pager
+  context.py / orchestrator.py      # ExecutionContext blackboard + pipeline orchestration
+  cost_model.py / cost_panel.py     # Fitted TCA regression (robust SEs) + panel assembly
+  desk_pack.py                      # Pre-trade desk verdict/report + run library (predicted vs realized)
+  explicit_costs.py                 # Side-aware per-market commissions/fees/taxes
+  microstructure_analytics.py       # EDGE / Roll spreads, Amihud, seasonality, markout curve
+  order_ticket.py                   # FIX-style ticket, constraints kernel, side_sign
+  program_trading.py                # Session board, market regs, settlement, program blotter, recon
+  rebalancing_event_study.py        # Event study + inference + execution-cost insights
+  trader_view.py                    # Verdict/card/playbook/basket, event library, best-ex records
+tests/                              # Offline deterministic suite (293 tests) + recorded AAPL fixture
+docs/                               # Research base, registers, design docs, diagrams, user manuals
+data/                               # Caches + derived libraries (derived JSONs are .gitignored)
+```

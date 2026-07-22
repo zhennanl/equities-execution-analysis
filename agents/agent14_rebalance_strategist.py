@@ -151,6 +151,7 @@ def analyze_strategies(es, side: str = "Buy",
         rows, notes = [], []
         tot_px_sh = 0.0
         tot_impact = 0.0
+        track_num = 0.0   # bps-x-shares; auction fills contribute 0 by construction
         max_part = 0.0
         for i, q in sorted(day_alloc.items()):
             if q <= 0:
@@ -161,6 +162,7 @@ def analyze_strategies(es, side: str = "Buy",
             max_part = max(max_part, part)
             tot_px_sh += px * q
             tot_impact += imp * q
+            track_num += _signed_cost_bps(px, T_close, side) * q
             rows.append({"Rel day": int(rel[i]), "Date": dates[i].date(),
                          "Shares": round(q, 0), "Venue": "Continuous",
                          "Fill price": round(px, 4), "Impact (bps)": round(imp, 1),
@@ -183,7 +185,7 @@ def analyze_strategies(es, side: str = "Buy",
         avg_px = tot_px_sh / filled if filled > 0 else T_close
         avg_imp = tot_impact / filled if filled > 0 else 0.0
         cost = _signed_cost_bps(avg_px, decision_px, side)
-        track = _signed_cost_bps(avg_px, T_close, side)
+        track = track_num / filled if filled > 0 else 0.0
         return StrategyOutcome(
             name=name, description=description,
             avg_exec_price=round(avg_px, 4),
@@ -279,6 +281,7 @@ def analyze_strategies(es, side: str = "Buy",
         "forecast; see docs/INDEX_REBALANCE_RESEARCH.md for the cross-sectional "
         "evidence (and its post-2010 compression).",
         "Pre/post slices are equal-weighted (causal); no realized-volume hindsight.",
+        "Auction fills transact AT the closing print by definition (your own auction impact moves the print itself), so the auction portion carries zero tracking difference by construction; its impact still appears in cost vs the decision price.",
     ]
 
     return RebalanceStrategyAnalysis(

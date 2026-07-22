@@ -92,3 +92,19 @@ and vendor data.
 - Amihud (2002), *J. Financial Markets* 5:31–56. https://www.cis.upenn.edu/~mkearns/finread/amihud.pdf
 - Closing auctions / Asia: AEA 2021 "Who Trades at the Close?"; Global Trading "Volumes Shifting Toward the Close"; HKEX CAS design (ScienceDirect S1386418121000732).
 - China market microstructure / circuit breakers: APJFS 2019; Shanghai Stock Exchange trading mechanism rulebook.
+
+
+---
+
+## Update 2026-07-08 (evening session): EDGE folded into the pre-trade blend
+
+EDGE now participates in `agent6.build_pretrade_estimate`'s spread blend —
+the blended half-spread that feeds Agent 13 routing is the **median of
+Corwin-Schultz, Abdi-Ranaldo, and EDGE** (whichever resolve; median is robust
+to one estimator degenerating on a sample). Previously EDGE was display-only
+in the Microstructure section. **This shifts displayed pre-trade spread
+numbers** relative to earlier sessions — the CS×AR simple average became a
+three-way median. Disagreement handling unchanged (>2x spread across
+estimators downgrades reliability). Roll (1984) was also added as a 4th
+DISPLAY cross-check (not in the blend: undefined on trending samples by
+construction, so it would drop in and out of a median blend).

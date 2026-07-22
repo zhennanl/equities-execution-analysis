@@ -346,26 +346,40 @@ def build_pretrade_estimate(market_data: MarketData, comparison: PerformanceComp
     _exp = get_explicit_costs(market_data.market)
     notes.append("💰 " + explicit_cost_note(market_data.market, side))
 
-    # ── Estimator blend: Corwin-Schultz x Abdi-Ranaldo ────────────────────
-    # Two independent daily-bar estimators; the blended half-spread (simple
-    # average when both resolve) is what downstream consumers (Agent 13
-    # routing) receive. Disagreement is itself information: > 2x apart
-    # downgrades the reliability read (see docs/EXECUTION_SIMULATOR_RESEARCH.md).
+    # ── Estimator blend: Corwin-Schultz x Abdi-Ranaldo x EDGE ─────────────
+    # Three independent daily-bar estimators; the blended half-spread is the
+    # MEDIAN of whichever resolve (robust to one estimator degenerating on a
+    # given sample) and is what downstream consumers (Agent 13 routing)
+    # receive. EDGE (Ardia-Guidotti-Kroencke JFE 2024) folded into the blend
+    # 2026-07-08 — previously display-only in the Microstructure section;
+    # this SHIFTS displayed pre-trade spread numbers (documented in
+    # docs/MICROSTRUCTURE_RESEARCH_IMPROVEMENTS.md and the session summary).
+    # Disagreement is itself information: > 2x spread between the highest and
+    # lowest resolving estimator downgrades the reliability read.
+    from agents.microstructure_analytics import estimate_spread_edge
+    eg = estimate_spread_edge(market_data.daily)
+    _halves = {"Corwin-Schultz": sp["half_spread_bps"],
+               "Abdi-Ranaldo": ar["half_spread_bps"],
+               "EDGE": eg["half_spread_bps"]}
+    _live = {k: v for k, v in _halves.items() if v is not None}
     blended_half = sp["half_spread_bps"]
-    blend_note = "Corwin-Schultz only (Abdi-Ranaldo unavailable)."
-    if ar["half_spread_bps"] is not None and sp["half_spread_bps"] is not None:
-        blended_half = round((sp["half_spread_bps"] + ar["half_spread_bps"]) / 2.0, 2)
-        ratio = (max(sp["spread_bps"], ar["spread_bps"]) /
-                 max(min(sp["spread_bps"], ar["spread_bps"]), 0.01))
+    blend_note = "Corwin-Schultz only (other estimators unavailable)."
+    if len(_live) >= 2:
+        blended_half = round(float(np.median(list(_live.values()))), 2)
+        _fulls = [2 * v for v in _live.values()]
+        ratio = max(_fulls) / max(min(_fulls), 0.01)
         agree = "agree within 2x" if ratio <= 2.0 else f"DISAGREE ({ratio:.1f}x apart)"
-        blend_note = (f"Corwin-Schultz {sp['spread_bps']:.1f} bps vs Abdi-Ranaldo (2017) "
-                      f"{ar['spread_bps']:.1f} bps — estimators {agree}; blended half-spread "
-                      f"{blended_half:.1f} bps feeds venue routing.")
+        blend_note = (", ".join(f"{k} {2 * v:.1f} bps" for k, v in _live.items())
+                      + f" — {len(_live)} estimators {agree}; blended (median) half-spread "
+                        f"{blended_half:.1f} bps feeds venue routing.")
         notes.append(f"Spread cross-check: {blend_note}")
         if ratio > 2.0:
             notes.append("⚠️ Spread estimators disagree by more than 2x — treat the level as "
-                         "order-of-magnitude only (both are daily-bar approximations; the "
+                         "order-of-magnitude only (all are daily-bar approximations; the "
                          "routing input remains capped).")
+    elif len(_live) == 1:
+        blended_half = list(_live.values())[0]
+        blend_note = f"{list(_live.keys())[0]} only (other estimators unavailable)."
     elif ar["half_spread_bps"] is None and sp["half_spread_bps"] is not None:
         notes.append("Spread cross-check: Abdi-Ranaldo estimator unavailable "
                      f"({ar['note']}) — Corwin-Schultz stands alone.")
@@ -583,6 +597,94 @@ def compute_cost_percentile(comparison: PerformanceComparison, algo_name: str,
 
 
 @dataclass
+class ISAttribution:
+    """Canonical Perold implementation-shortfall attribution (gap register I-5).
+
+    All components are bps of ORDER notional at the decision price D, signed
+    positive = cost for the order's side:
+      delay        = filled_frac x (P_first_fill - D) / D      (market moved before we traded)
+      trading      = filled_frac x (avg_px - P_first_fill) / D (paid while trading)
+      opportunity  = unfilled_frac x (P_end - D) / D           (never-filled shares)
+      explicit     = per-market commissions/fees/taxes x filled_frac
+    total_is = delay + trading + opportunity + explicit, and reconciles to the
+    direct share-weighted shortfall within 0.1 bp BY CONSTRUCTION (exact
+    algebraic identity; reconciliation_bps is asserted in tests).
+
+    Convention notes (why this can differ from the dashboard 'Total Cost'):
+    the headline total reports slippage UNWEIGHTED by fill fraction plus a
+    MODELED sqrt-law impact overlay; this attribution decomposes the REALIZED
+    shortfall share-weighted, so on partial fills the two intentionally
+    differ, and the modeled impact appears only as a memo (the simulator's
+    fills do not embed it)."""
+    available: bool
+    reason: str = ""
+    decision_price: float = None
+    first_fill_price: float = None
+    delay_bps: float = None
+    trading_bps: float = None
+    opportunity_bps: float = None
+    explicit_bps: float = None
+    total_is_bps: float = None
+    reconciliation_bps: float = None     # |components - direct| (< 0.1 by identity)
+    filled_frac: float = None
+    modeled_impact_memo_bps: float = None
+    note: str = ""
+
+
+def build_is_attribution(algo: AlgoResult, day: pd.DataFrame, side: str,
+                         market: str, order_shares: float) -> ISAttribution:
+    sgn = side_sign(side)
+    D = float(algo.arrival_price)
+    if D <= 0 or order_shares <= 0:
+        return ISAttribution(False, "Missing decision price or order size.")
+
+    sched = algo.schedule
+    filled = float(sched["shares_traded"].sum()) if sched is not None and len(sched) else 0.0
+    filled_frac = min(filled / order_shares, 1.0)
+    unfilled_frac = max(0.0, 1.0 - filled_frac)
+    P_end = float(day["Close"].iloc[-1])
+
+    if filled > 0:
+        first_i = int(np.argmax(sched["shares_traded"].values > 0))
+        P_first = float(sched["price"].iloc[first_i])
+        avg_px = float(algo.avg_exec_price)
+        delay = sgn * filled_frac * (P_first - D) / D * 10_000
+        trading = sgn * filled_frac * (avg_px - P_first) / D * 10_000
+    else:
+        P_first, avg_px = None, D
+        delay, trading = 0.0, 0.0
+
+    opportunity = sgn * unfilled_frac * (P_end - D) / D * 10_000
+    explicit = get_explicit_costs(market).total_bps(side) * filled_frac
+    total = delay + trading + opportunity + explicit
+
+    direct = (sgn * filled_frac * (avg_px - D) / D * 10_000
+              + sgn * unfilled_frac * (P_end - D) / D * 10_000
+              + explicit)
+    recon = abs(total - direct)
+
+    note = (f"Filled {filled_frac:.0%} of the order. Delay+trading decompose the "
+            f"shortfall on FILLED shares (split at the first fill's bar price); "
+            f"opportunity marks unfilled shares at the day close vs decision; "
+            f"explicit costs are the {market} schedule scaled by fill fraction. "
+            f"Reconciles to the share-weighted shortfall within "
+            f"{recon:.4f} bp. The modeled sqrt-law impact "
+            f"({algo.market_impact_bps:+.1f} bps) is a memo item, not a component "
+            f"— simulated fills do not embed it.")
+
+    return ISAttribution(
+        available=True,
+        decision_price=round(D, 4),
+        first_fill_price=round(P_first, 4) if P_first is not None else None,
+        delay_bps=round(delay, 2), trading_bps=round(trading, 2),
+        opportunity_bps=round(opportunity, 2), explicit_bps=round(explicit, 2),
+        total_is_bps=round(total, 2), reconciliation_bps=round(recon, 6),
+        filled_frac=round(filled_frac, 4),
+        modeled_impact_memo_bps=algo.market_impact_bps,
+        note=note)
+
+
+@dataclass
 class PostTradeTCA:
     algo_name: str
     benchmarks: BenchmarkComparison
@@ -590,6 +692,7 @@ class PostTradeTCA:
     cost_percentile: CostPercentile
     impact_decomposition: ImpactDecomposition
     notes: list
+    is_attribution: ISAttribution = None     # added 2026-07-08 (I-5); default keeps old callers valid
 
 
 def build_posttrade_tca(market_data: MarketData, sim: SimulationResult,
@@ -622,5 +725,11 @@ def build_posttrade_tca(market_data: MarketData, sim: SimulationResult,
     if decomp.available:
         notes.append(decomp.note)
 
+    isa = build_is_attribution(algo, day, _side, market_data.market,
+                               float(sim.order_shares))
+    if isa.available:
+        notes.append(isa.note)
+
     return PostTradeTCA(algo_name=algo_name, benchmarks=bench, reversion=rev,
-                        cost_percentile=pctl, impact_decomposition=decomp, notes=notes)
+                        cost_percentile=pctl, impact_decomposition=decomp, notes=notes,
+                        is_attribution=isa)

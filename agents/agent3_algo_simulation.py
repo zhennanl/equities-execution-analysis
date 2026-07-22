@@ -109,6 +109,13 @@ LIQ_ROLL_BARS = 6       # rolling window (bars) used to gauge "favorable" price
 
 # Stealth: hard participation cap per bar + randomized child-order sizing
 STEALTH_CAP   = {"Low": 0.03, "Medium": 0.05, "High": 0.08}
+POV_OUTSIZE_CAP = 3.0   # Participate-style outsized-print filter: cap each bar's
+                        # participation base at this multiple of the trailing-median
+                        # bar volume, so one block print doesn't yank the follower
+POV_MED_BARS   = 12     # trailing window (bars) for that median (causal)
+LIQ_SHIELD_K   = 0.8    # Liquidity-Shield-style capture/quality balance: as the
+                        # order falls behind pro-rata pace, participation
+                        # selectivity relaxes (quality early, capture late)
 
 # MOC / MOO: fraction of the session's bars treated as the "closing"/"opening" window
 MOC_WINDOW_PCT = 0.15
@@ -354,16 +361,28 @@ def _sim_twap(day: pd.DataFrame, order_shares: float, **kw) -> pd.DataFrame:
 
 
 def _sim_pov(day: pd.DataFrame, order_shares: float, urgency: str, **kw) -> pd.DataFrame:
+    """POV with a Participate-style outsized-print filter (GSET's public
+    description: participation-based algos track composite volume "while
+    ignoring outsized prints"): each bar's participation base is capped at
+    POV_OUTSIZE_CAP x the trailing-median bar volume, so a single block
+    crossing the tape doesn't drag the follower into chasing liquidity that
+    was never accessible. Causal: the median uses prior bars only."""
     rate = POV_RATES[urgency]
     remaining = order_shares
     rows = []
     cumulative = 0.0
     tps = _typical_prices(day)
+    vols = day["Volume"].to_numpy(dtype=float)
     for i_bar, (ts, bar) in enumerate(day.iterrows()):
         if remaining <= 0:
             rows.append((ts, 0.0, tps[i_bar], cumulative))
             continue
-        tradeable = bar["Volume"] * rate
+        base_vol = float(bar["Volume"])
+        if i_bar >= 3:                      # need a few bars of history to filter
+            med = float(np.median(vols[max(0, i_bar - POV_MED_BARS):i_bar]))
+            if med > 0:
+                base_vol = min(base_vol, POV_OUTSIZE_CAP * med)
+        tradeable = base_vol * rate
         traded = min(remaining, tradeable)
         remaining -= traded
         cumulative += traded
@@ -464,7 +483,15 @@ def _sim_liquidity_seeking(day: pd.DataFrame, order_shares: float, urgency: str,
         std = window.std()
         std = std if std > 1e-9 else 1e-9
         z = sgn * (mean - closes[i]) / std  # >0 => favorable to the side held (dip for buy / rise for sell)
-        mult = float(np.clip(1 + LIQ_TILT_K * z, 0.2, 2.5))
+        # Liquidity-Shield-style balance (per GSET's public Sonar Dark X
+        # description: "balancing the liquidity quality and capture objectives
+        # throughout the life of the order"): early and on-pace, be selective
+        # on price; as the order falls behind pro-rata pace, relax selectivity
+        # so completion risk doesn't compound. Side-symmetric and causal.
+        elapsed_frac = (i + 1) / n
+        filled_frac = (order_shares - remaining) / order_shares if order_shares > 0 else 1.0
+        behind = max(0.0, elapsed_frac - filled_frac)
+        mult = float(np.clip(1 + LIQ_TILT_K * z + LIQ_SHIELD_K * behind, 0.2, 2.5))
         tradeable = volumes[i] * base_rate * mult
         traded = min(remaining, tradeable)
         shares[i] = traded
@@ -744,6 +771,18 @@ def simulate_with_interventions(market_data: MarketData, order_shares: float,
 
     hist_curve_full, _ = _historical_volume_weights(market_data.intraday, sim_date, n)
 
+    # Ticket execution WINDOW binds the live session too (parity with the
+    # static pipeline): every leg's bars are intersected with the window.
+    # If the window ends before the close, an "MOC" leg prints at the last
+    # in-window bar — the static path excludes MOC in that case via
+    # excluded_algos(); here the trader chose the leg, so we fill at the
+    # window boundary rather than silently trading outside the ticket.
+    w_s, w_e = 0, n - 1
+    if ticket is not None and not ticket.is_default():
+        w_s, w_e = ticket.window_indices(day.index)
+    window_ok = np.zeros(n, dtype=bool)
+    window_ok[w_s:w_e + 1] = True
+
     ivs = sorted(interventions, key=lambda x: pd.Timestamp(x["checkpoint_time"]))
     boundaries = ([day.index[0] - pd.Timedelta(seconds=1)]
                  + [pd.Timestamp(iv["checkpoint_time"]) for iv in ivs]
@@ -756,7 +795,9 @@ def simulate_with_interventions(market_data: MarketData, order_shares: float,
 
     for i, (algo, urg) in enumerate(leg_configs):
         seg_start, seg_end = boundaries[i], boundaries[i + 1]
-        seg_day = day[(day.index > seg_start) & (day.index <= seg_end)]
+        seg_mask = (np.asarray((day.index > seg_start) & (day.index <= seg_end))
+                    & window_ok)
+        seg_day = day[seg_mask]
         if len(seg_day) == 0 or remaining_shares <= 0:
             legs_meta.append({"start_time": seg_start, "end_time": seg_end, "algo": algo,
                               "urgency": urg, "filled_shares": 0.0})
@@ -764,8 +805,7 @@ def simulate_with_interventions(market_data: MarketData, order_shares: float,
 
         hist_seg = None
         if hist_curve_full is not None:
-            mask = np.asarray((day.index > seg_start) & (day.index <= seg_end))
-            sliced = hist_curve_full[mask]
+            sliced = hist_curve_full[seg_mask]
             tot = sliced.sum()
             hist_seg = sliced / tot if tot > 0 else None
 

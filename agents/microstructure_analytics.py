@@ -197,3 +197,107 @@ def ljung_box(x, lags: int = 10) -> dict:
     p = float(_stats.chi2.sf(q, lags))
     return {"lb_stat": round(float(q), 3), "p_value": round(p, 4), "lags": lags,
             "autocorrelated": bool(p < 0.05), "note": ""}
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Roll (1984) implied spread — 4th spread cross-check (added 2026-07-08)
+# ──────────────────────────────────────────────────────────────────────────
+
+def roll_spread(daily: pd.DataFrame) -> dict:
+    """Roll (1984): bid-ask bounce makes successive price CHANGES negatively
+    autocorrelated; the implied effective spread is 2*sqrt(-cov(dP_t, dP_{t-1})).
+    Returned in bps of the mean close, same dict shape as the other estimators.
+    When the serial covariance is positive (trending/informed flow dominates
+    the bounce) the estimator is undefined — reported as unavailable rather
+    than clamped, which is itself diagnostic."""
+    if "Close" not in daily.columns or len(daily) < 10:
+        return {"spread_bps": None, "half_spread_bps": None, "n_obs": 0,
+                "note": "Need >= 10 closes for Roll."}
+    px = daily["Close"].astype(float).values
+    dp = np.diff(px)
+    if len(dp) < 5:
+        return {"spread_bps": None, "half_spread_bps": None, "n_obs": len(px),
+                "note": "Too few price changes."}
+    cov = float(np.cov(dp[1:], dp[:-1])[0, 1])
+    # eps guard: a pure trend gives cov ~ -1e-29 (numerical zero) — that is
+    # "no bounce detectable", not a zero-spread reading.
+    if cov >= -1e-10:
+        return {"spread_bps": None, "half_spread_bps": None, "n_obs": len(px),
+                "note": "Serial covariance of price changes is non-negative — "
+                        "bounce swamped by trend/information; Roll undefined "
+                        "(common on trending samples, itself informative)."}
+    spread = 2.0 * np.sqrt(-cov)
+    mid = float(np.mean(px))
+    bps = spread / mid * 10_000
+    return {"spread_bps": round(bps, 2), "half_spread_bps": round(bps / 2, 2),
+            "n_obs": len(px), "note": "Roll (1984) serial-covariance estimator."}
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# Post-fill markout curve — fill quality / adverse selection (added 2026-07-08)
+# ──────────────────────────────────────────────────────────────────────────
+
+MARKOUT_HORIZONS_BARS = (1, 2, 3, 6, 12)     # x 5-min bars = 5/10/15/30/60 min
+
+
+def compute_markout_curve(schedule: pd.DataFrame, day: pd.DataFrame, side: str,
+                          horizons: tuple = MARKOUT_HORIZONS_BARS) -> dict:
+    """Share-weighted post-fill markouts: for every child slice, the signed
+    move from its fill price to the bar close h bars later,
+        markout_h = sign(side) * (P_{i+h} - fill_i) / fill_i * 1e4,
+    averaged across slices weighted by shares. Positive = price kept moving
+    AGAINST the order after fills (impact persists / order behind the market);
+    negative = temporary impact reverted after fills. The standard TCA fill-
+    quality curve, computed on 5-minute bars (bar close as the mid proxy —
+    disclosed; tick-level markouts need tick data).
+
+    Returns {"available", "curve": DataFrame[horizon_min, markout_bps, n_slices],
+             "note"}."""
+    from agents.order_ticket import side_sign
+    if schedule is None or len(schedule) == 0 or "shares_traded" not in schedule:
+        return {"available": False, "reason": "No schedule.", "curve": None, "note": ""}
+    fills = schedule[schedule["shares_traded"] > 0]
+    if len(fills) == 0:
+        return {"available": False, "reason": "No filled slices.", "curve": None, "note": ""}
+
+    closes = day["Close"].astype(float).values
+    n = len(closes)
+    # map each fill to its BAR position via the schedule's 'time' column —
+    # sparse schedules (LIQ/STEALTH auction-window algos) don't have
+    # one-row-per-bar, so positional indexing would misalign.
+    bar_pos = {t: i for i, t in enumerate(day.index)}
+    sgn = side_sign(side)
+
+    rows = []
+    for h in horizons:
+        num, den, cnt = 0.0, 0.0, 0
+        for _, r in fills.iterrows():
+            i = bar_pos.get(r["time"])
+            if i is None or i + h >= n:
+                continue
+            mo = sgn * (closes[i + h] - float(r["price"])) / float(r["price"]) * 10_000
+            q = float(r["shares_traded"])
+            num += mo * q
+            den += q
+            cnt += 1
+        if den > 0:
+            rows.append({"horizon_min": h * 5, "markout_bps": round(num / den, 2),
+                         "n_slices": cnt})
+    if not rows:
+        return {"available": False,
+                "reason": "No slice has enough post-fill bars (fills too close to the close).",
+                "curve": None, "note": ""}
+    curve = pd.DataFrame(rows)
+    last = curve.iloc[-1]["markout_bps"]
+    first = curve.iloc[0]["markout_bps"]
+    if last > max(first, 0):
+        note = ("Rising markouts: the price kept moving against the order after fills — "
+                "impact looks persistent / the order was behind the market; slowing down "
+                "would not have obviously helped.")
+    elif last < min(first, 0):
+        note = ("Falling/negative markouts: post-fill reversion — part of the paid impact "
+                "was temporary liquidity concession; a slower schedule or more passive "
+                "tactics could have recaptured some of it.")
+    else:
+        note = "Flat markouts: little post-fill drift either way at these horizons."
+    return {"available": True, "reason": "", "curve": curve, "note": note}

@@ -116,3 +116,43 @@ def test_auction_disabled_excludes_moc_moo():
                          ticket=OrderTicket(allow_auction=False))
     assert "MOC" in sim.excluded and "MOO" in sim.excluded
     assert "MOC" not in sim.algos and "MOO" not in sim.algos
+
+
+# ── GSET-documented traits adopted 2026-07-09 ─────────────────────────────
+
+def test_pov_ignores_outsized_prints():
+    """Participate trait: a single block print must not yank the follower.
+    Same day, one bar's volume spiked 50x — POV's take in that bar should be
+    capped at the filter multiple of trailing-median volume, not 50x."""
+    import numpy as np, pandas as pd
+    from agents.agent3_algo_simulation import _sim_pov, POV_RATES, POV_OUTSIZE_CAP
+    idx = pd.date_range("2026-06-04 09:30", periods=30, freq="5min")
+    vol = np.full(30, 10_000.0); vol[15] = 500_000.0          # block print
+    day = pd.DataFrame({"Open": 100.0, "High": 100.1, "Low": 99.9,
+                        "Close": 100.0, "Volume": vol}, index=idx)
+    sched = _sim_pov(day, order_shares=10_000_000.0, urgency="Medium")
+    take = sched["shares_traded"].iloc[15]
+    rate = POV_RATES["Medium"]
+    assert take <= POV_OUTSIZE_CAP * 10_000.0 * rate + 1e-6   # capped
+    assert take < 500_000.0 * rate * 0.2                      # nowhere near naive
+
+
+def test_liq_shield_relaxes_when_behind_schedule():
+    """Liquidity-Shield trait: on a persistently adverse tape (price always
+    unfavorable to a buy), the shield must relax selectivity as the order
+    falls behind — completing strictly more than a shield-less clone."""
+    import numpy as np, pandas as pd
+    from agents.agent3_algo_simulation import _sim_liquidity_seeking, LIQ_TILT_K
+    idx = pd.date_range("2026-06-04 09:30", periods=60, freq="5min")
+    px = 100 + 0.05 * np.arange(60)                            # relentless rise = never a dip
+    day = pd.DataFrame({"Open": px, "High": px + 0.05, "Low": px - 0.05,
+                        "Close": px, "Volume": 20_000.0}, index=idx)
+    sched = _sim_liquidity_seeking(day, order_shares=200_000.0, urgency="Medium", side="Buy")
+    filled = sched["shares_traded"].sum()
+    # shield-less floor comparator: mult pinned at the 0.2 floor all day
+    floor_fill = 60 * 20_000.0 * 0.12 * 0.2
+    assert filled > floor_fill * 1.15          # shield lifted participation
+    # and participation grows over the day as 'behind' accumulates
+    first_half = sched["shares_traded"].iloc[:30].mean()
+    second_half = sched["shares_traded"].iloc[30:].mean()
+    assert second_half > first_half

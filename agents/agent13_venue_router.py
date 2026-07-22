@@ -52,7 +52,11 @@ DEFAULT_HALF_SPREAD_BPS = 2.5
 # Routing inputs are capped here, with a disclosed note on the result.
 ROUTING_SPREAD_CAP_BPS = 15.0
 
-ROUTING_POLICIES = ("Cost-optimized", "Lit-only", "Dark-preferred", "Primary-only")
+ROUTING_POLICIES = ("Cost-optimized", "Lit-only", "Dark-preferred", "Primary-only",
+                    "Shield (dark-patient)")
+SHIELD_PATIENT_FRAC = 0.5   # first half of the schedule: dark-only, residual
+                            # carries forward instead of sweeping lit — the
+                            # Sonar-Dark-X-style quality-then-capture balance
 
 
 @dataclass
@@ -170,6 +174,11 @@ def route_order(schedule: pd.DataFrame, bar_volumes: np.ndarray, market: str,
         notes.append(f"Half-spread input exceeded {ROUTING_SPREAD_CAP_BPS:g} bps and was capped "
                      "for routing realism — Corwin-Schultz overshoots at daily frequency for "
                      "liquid names; see the Pre-Trade spread reliability note.")
+    if policy == "Shield (dark-patient)":
+        notes.append(f"Shield: for the first {SHIELD_PATIENT_FRAC:.0%} of the schedule, "
+                     "residual after dark pings CARRIES FORWARD instead of sweeping lit — "
+                     "less spread paid and less display early, completion weighted later "
+                     "(the Sonar-Dark-X-style quality-then-capture balance, in expectation).")
     if len(MARKET_VENUES.get(market, [])) <= 1:
         notes.append(f"{market} is a single-venue market — no routing choice exists; "
                      "100% executes on the primary exchange.")
@@ -183,22 +192,34 @@ def route_order(schedule: pd.DataFrame, bar_volumes: np.ndarray, market: str,
     vols = np.asarray(bar_volumes, dtype=float)[:n]
     fills = {v.name: np.zeros(n) for v in vs}
 
+    shield = policy == "Shield (dark-patient)" and bool(dark)
+    patient_end = int(SHIELD_PATIENT_FRAC * n)
+    carry = 0.0
     for i in range(n):
-        want = shares[i]
+        want = shares[i] + (carry if shield else 0.0)
+        if shield:
+            carry = 0.0
         if want <= 0:
             continue
         bar_vol = max(vols[i], 0.0)
 
         # 1) dark first (midpoint saves the half-spread) unless policy says otherwise
-        if dark and policy in ("Cost-optimized", "Dark-preferred"):
+        if dark and policy in ("Cost-optimized", "Dark-preferred", "Shield (dark-patient)"):
             for v in dark:
                 cap = v.volume_share * bar_vol
-                alloc = min(want, cap if policy == "Cost-optimized" else want)
+                alloc = min(want, want if policy == "Dark-preferred" else cap)
                 filled = alloc * v.fill_prob          # expected fill
                 fills[v.name][i] += filled
                 want -= filled
                 if want <= 1e-9:
                     break
+
+        # Shield's patience window: the dark residual CARRIES to the next bar
+        # instead of sweeping lit — no spread crossed, no display, at the cost
+        # of completion pushed later (the quality-vs-capture trade, explicit).
+        if shield and i < patient_end and i < n - 1:
+            carry = want
+            continue
 
         # 2) residual sweeps lit venues in marginal-cost order, capped by
         #    each venue's addressable share of the bar

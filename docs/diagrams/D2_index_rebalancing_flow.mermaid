@@ -1,0 +1,19 @@
+flowchart TD
+    A12["📅 Agent 12 — Calendar Monitor<br/>MSCI feed · FTSE releases · S&P DJI ·<br/>review calendar + JSON cache"] -- "⤵️ Use selected event<br/>(prefills ticker/market/dates/side)" --> IN["Inputs<br/>index proxy · market · effective date T ·<br/>±window · ticker"]
+    OPT["Optional inputs<br/>objective · announcement date ·<br/>weight Δ% · tracked AUM ·<br/>float mcap · short-interest Δ"] --> IN
+    IN --> ES["Event Study (run_event_study)<br/>market model α,β on T−70..T−11 ·<br/>CAR · abnormal volume · indexed price"]
+
+    ES --> V["🎯 Verdict banner (F1)<br/>side·size·strategy·cost·tracking ·<br/>auction RAG 🟢🟡🔴"]
+    ES --> LIB[("Event Library (F5)<br/>data/event_library.json<br/>runup · reversal · drift · η · side")]
+
+    ES --> INS["Execution-Cost Insights<br/>auction concentration · reversal class ·<br/>drift decomposition · flow-to-trade ·<br/>η calibration · 🆕 crowding score ·<br/>🆕 expected-move bands"]
+    LIB -. "medians (n≥3) → thresholds & η band" .-> INS
+    INS --> REC{"Objective?"}
+    REC -- "Index Tracker" --> MOC["MOC — trade the print"]
+    REC -- "Cost-Minimizing" --> CMIN["STEALTH / LIQ / IS<br/>by reversal & drift rules"]
+
+    ES --> A14["Agent 14 — Strategy Simulator<br/>S1 Tracker · S2 Pre-position ·<br/>S3 Post-effective · S4 Announcement<br/>cost-vs-tracking frontier"]
+    A14 --> TP["🧾 Trader Pack (F2/F3)<br/>trade card .txt · schedules .csv ·<br/>conditional playbook (triggers)"]
+    LIB -. "thresholds" .-> TP
+
+    BK["📦 Basket mode (F4)<br/>program CSV → per-name studies →<br/>severity-ranked exception blotter"] --> ES
