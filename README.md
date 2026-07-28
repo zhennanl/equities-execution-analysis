@@ -5,7 +5,17 @@ https://equities-execution-analysis.streamlit.app/
 
 [![tests](https://github.com/zhennanl/equities-execution-analysis/actions/workflows/tests.yml/badge.svg)](https://github.com/zhennanl/equities-execution-analysis/actions/workflows/tests.yml)
 
-An agentic equity execution-analysis platform built with Python and Streamlit. Three modules: a pre/intra/post-trade execution algorithm simulator, an index-rebalancing event study with execution-cost extensions and a trader workflow layer, and an Asia program-trading desk (session board, market regulations, program blotter, settlement/recon). Runs entirely on free Yahoo Finance data (`yfinance`) — no API key, no paid feed.
+An agentic equity execution-analysis platform built with Python and Streamlit, developed as a working model of an Asia program-trading (PT) desk. **Five pages:**
+
+- **🚀 Guided Demo** — one basket walked through the full nine-stage PT trade cycle (blind RFQ profile → file staging → pre-open pack → execution cockpit → EOD client draft → settlement/recon → quarterly review) in five minutes.
+- **📈 Execution Algorithm Simulator** — 8 algos on real intraday data, agent pipeline, pre/post-trade TCA with Perold IS attribution, counterfactual impact propagator, flow-forecast layers (all DM-gated), SOR simulation, market-structure fingerprint.
+- **🔄 Index Rebalancing Analysis** — event study with single-firm inference, S1–S4 strategy frontier, crowding, MSCI/FTSE rulebook reconstitution screener, positioning check, AI rebalance-interest monitor (gated).
+- **🧺 Program Trading Desk** — Asia session board, regulations, program blotter, PT dealer cockpit (limit proximity / auction cutoffs / attention queue), eleven desk automations (pre-open pack, transition alerts, EOD drafts, recon classifier, crossing detector, holiday-aware settlement…).
+- **📋 Quarterly Client Review** — difficulty-adjusted, CI-gated performance packs (the broker-wheel defense).
+
+**Data sources:** free Yahoo Finance by default (no API key), plus pluggable **kdb+/q** (server-side `xbar` bar aggregation over IPC) and **historical tick files** (LOBSTER / Binance / generic CSV) behind one source-agnostic `MarketData` contract. Basket-level risk decomposition (beta / tracking error / hedgeable split) closes the loop between execution cost and the agency-vs-principal decision.
+
+**House rules:** every learned model ships only if it beats a naive baseline under a Diebold-Mariano gate; every rule table carries a version hash; every check writes an audit record as a by-product; every limitation is disclosed in-app. Simulated fills on historical bars — this is an analytics platform, not a broker.
 
 ## Module 1 — Execution Algorithm Simulator
 

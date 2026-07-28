@@ -50,6 +50,13 @@ def rules_version() -> str:
                           "reg": {k: {kk: str(vv) for kk, vv in v.items()}
                                   for k, v in MARKET_REG.items()}},
                          sort_keys=True, default=str)
+    try:                       # pin the live registry state when present
+        from agents.reg_watch import REGISTRY_PATH, load_registry, \
+            registry_version
+        if REGISTRY_PATH.exists():
+            payload += registry_version(load_registry(REGISTRY_PATH))
+    except Exception:
+        pass
     return hashlib.sha256(payload.encode()).hexdigest()[:12]
 
 # ── daily price-limit bands (static; per-stock tiers approximated) ─────────
@@ -112,12 +119,32 @@ AUCTION_CUTOFFS: dict[str, dict] = {
 }
 
 
+# ── registry-aware rule lookup (Reg-Watch single source of truth) ─────────
+
+def _rule(category: str, market: str, static_table: dict):
+    """Prefer the Reg-Watch registry (versioned, human-approved) when it
+    exists; fall back to this module's static tables otherwise. Lazy
+    import breaks the reg_watch->pt_dealer seed-time cycle."""
+    try:
+        from agents.reg_watch import REGISTRY_PATH, current_value, \
+            load_registry
+        if REGISTRY_PATH.exists():
+            v = current_value(load_registry(REGISTRY_PATH), category,
+                              market)
+            if v is not None:
+                return v
+    except Exception:
+        pass                     # registry unavailable -> static tables
+    return static_table.get(market)
+
+
 # ── limit proximity ────────────────────────────────────────────────────────
 
 def limit_proximity(market: str, prev_close: float, last_price: float) -> dict:
     """How much of today's daily band has this name used, and toward which
     side? Levels: none / WATCH (>=60%) / ALERT (>=80%) / LOCKED (>=99.5%)."""
-    lb = LIMIT_BANDS.get(market, dict(band=None, note="Unknown market."))
+    lb = _rule("limit_band", market, LIMIT_BANDS) \
+        or dict(band=None, note="Unknown market.")
     if not lb["band"] or prev_close <= 0:
         return dict(level="n/a", used_frac=np.nan, side="", band_pct=None,
                     note=lb["note"])
@@ -146,7 +173,7 @@ def auction_countdown(markets, now_utc: _dt.datetime = None) -> pd.DataFrame:
     now_utc = now_utc or _dt.datetime.now(_dt.timezone.utc).replace(tzinfo=None)
     rows = []
     for m in sorted(set(markets)):
-        ac = AUCTION_CUTOFFS.get(m)
+        ac = _rule("auction_cutoff", m, AUCTION_CUTOFFS)
         reg = MARKET_REG.get(m, {})
         if not ac:
             continue

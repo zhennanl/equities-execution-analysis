@@ -38,7 +38,7 @@ PRICE_LIMIT_PCT: dict[str, float | None] = {
     "Hong Kong (HKEX)": None,      # no continuous limit (CAS has a ±ref band)
     "Australia (ASX)":  None,
     "Singapore (SGX)":  None,
-    "Malaysia (KLSE)":  None,
+    "Malaysia (KLSE)":  30.0,     # static ±30% (8g correction)
 }
 
 # closing-window = last this fraction of the session's bars (the MOC/auction zone)

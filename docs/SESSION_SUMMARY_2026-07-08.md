@@ -1348,3 +1348,412 @@ Backup: ~/backups/agent3_pre_gset_traits.py.
   (guaranteed VWAP, partial risk on tail, agency incentive, capital on
   residuals), empirical clustering around benchmark-critical dates,
   interview one-liner. Docs only; suite unchanged (293 passed).
+
+
+## Session 6t (2026-07-22) — application-strength sprint (all 6 suggestions)
+
+- `agents/basket_risk.py` (the quant gap): risk_decomposition (signed-
+  notional basket returns vs hedge index -> beta, ann. TE, hedgeable R2
+  split, hedge notional, leave-one-out TE contributors), blind_profile
+  (masked RFQ artifact — tested to contain NO tickers), agency_quote_sketch
+  (framework, 'commission is commercial'), aggregate_basket_costs
+  (weighted bps + contribution Pareto), demo_panel with planted
+  tracker/idio/negative-beta structure (recovered in tests).
+- `views/page0_tour.py`: Guided Demo landing page — one basket through
+  the 9-stage cycle using live demo pieces (RFQ profile+quote, messy-file
+  normalization, pre-open pack, attention queue, EOD draft, CNY
+  settlement push, QBR adjusted ranking w/ rank movers), house-rules
+  closer. Registered FIRST in app.py (5 pages).
+- `scripts/run_case_study.py`: real-event runner (SMCI/TSLA S&P examples
+  documented) -> event study + library record + optional case-study doc;
+  offline parser smoke test; network runs are local-only by design.
+- README refreshed: 3-modules paragraph -> 5-page overview + data sources
+  + house rules (deploy link + CI badge already existed — user had
+  already deployed; DEPLOYMENT.md now documents redeploy checklist, cloud
+  rate-limit reality, Page-0-works-offline guarantee).
+- Tests: test_basket_risk.py (8) + case-study parser smoke (1).
+  Suite: **302 passed, 1 live deselected.** AppTest: all 5 pages render
+  clean.
+
+
+## Session 6u (2026-07-22) — MSCI Japan Aug-2026 screener example
+
+- Research (web-verified): MSCI Aug-2026 QIR announces Aug 12 / effective
+  Sep 1 — ahead of FTSE Sep semi-annual (eff Sep 21) -> MSCI selected.
+  Largest Asia MSCI tracker: EWJ $21.2B (> EWT 10.7 > INDA 6.9 > MCHI 6.0).
+- Example run of predict_msci on approximate MSCI-Japan universe:
+  RUN-1 LESSON: top-35-only universe inflated the GMSR proxy to $55B and
+  false-flagged solid members — GMSR needs the FULL universe; fixed by
+  modeling a 350-name mid/small tail -> GMSR proxy $5.7B (matches
+  published interim zone), Kioxia predicted add at 2.81x GMSR (clears
+  even the 1.8x QIR hurdle), fallen incumbents correctly retained above
+  the 0.5x floor, flow $56M/0.3 ADV-days on the EWJ lower bound.
+- docs/case_studies/MSCI_Japan_Aug2026_screener.md (with disclosures:
+  approx caps, unverified membership assumptions esp. Kioxia, modeled
+  tail) + scripts/run_msci_japan_screener.py (live yfinance version,
+  local). Suite unchanged (302 passed).
+
+
+## Session 6v (2026-07-22) — Taiwan May-2026 SAIR backtest + engine upgrade
+
+- Truth set researched (MSCI PR + press; disambiguated Feb QIR HongJing
+  story from May SAIR): Taiwan May-2026 = add MPI Corp (6223); delete
+  AsiaCement/Catcher/ChinaAirlines/Compal/FarEasternNC/THSR/Teco (all
+  migrated Standard->SmallCap); Winbond/NanyaTech watched-not-added.
+- Backtest on pre-announcement approximate universe (37 members + 3
+  candidates/controls + 300-name tail): ADDS 1/1 (MPI at 1.74x GMSR),
+  controls clean; DELETIONS 0/7 — all seven at $4.6-6.5B, far above the
+  $2.7B global floor. Diagnosis: SAIR deletions are COUNTRY size-segment
+  migrations — the engine's documented omission, now measured.
+- Fix implemented: MSCIRules.country_coverage/country_buffer — members
+  below country FF-coverage cutoff flagged as segment-migration
+  deletions (default off; backup ~/backups/reconstitution_pre_6v.py).
+  Re-run: 7/7 deletions, zero named false flags. Circularity caveat
+  documented (validates mechanism, not noisy-data ranking).
+- Tests: +2 (migration rule isolated via non-member tail so global floor
+  is silent; defaults-off behavior preserved). Suite: **304 passed,
+  1 live deselected.**
+- docs/case_studies/MSCI_Taiwan_May2026_backtest.md — full scorecard,
+  caveats, desk workflow, interview one-liner.
+
+
+## Session 6w (2026-07-22) — backtest caveat fixed (measured, not argued)
+
+- `robustness_check` added to agents/reconstitution.py: Monte-Carlo cap/
+  float perturbation -> distribution of add/delete precision & recall.
+  May backtest: deletion RECALL robust (mean 0.94, p10 0.86 even at ±30%
+  cap error); zero-false-flag PRECISION partly reconstruction luck
+  (0.66 mean at ±30%) — claim refined accordingly.
+- Out-of-sample: same untuned parameters on Feb-2026 QIR -> adds 1/1
+  (HongJing), deletions 4/4; 7 of 9 'false flags' were the names MSCI
+  deleted in MAY — the rule was early, not wrong. Buffer calibration
+  table: 2% buffer = 4/4 Feb + 7/7 early + zero false flags; buffer
+  demonstrated as the precision-vs-early-warning knob.
+- Fixes 3 (real as-of caps via local script) and 4 (pre-register the
+  Aug-12 prediction in a timestamped git commit, grade after) documented
+  as protocol in the case study.
+- Tests: +1 (robustness_check structure + clear-cut stability).
+  Suite: **305 passed, 1 live deselected.**
+
+
+## Session 6x (2026-07-22) — FTSE Taiwan 50 June-2026 backtest
+
+- Index selection verified: FTSE TWSE Taiwan 50 is the largest non-Japan
+  Asia FTSE index by tracking AUM (0050 alone NT$2.11T ~ US$70B). Truth
+  set: June-2026 review adds BizLink/GUC/NanYaPCB/ZhenDing, deletes
+  Compermed/ChinaSteel/FormosaPlastics/Hotai; published reserve list
+  Compeq/Innolux/Kinsus/WinWay/WTMicro.
+- robustness_check generalized (predict_fn injectable) for FTSE engine.
+- Round 1 failed usefully: thin/mis-marked universe -> 5 false adds;
+  diagnosis incl. MPI being TPEx-listed = INELIGIBLE (listing-venue
+  screen = new documented omission). Round 2 (corrected membership):
+  adds 4/4 zero false+, pairing holds size 50 exactly, watchlist scored
+  Compeq on the PUBLISHED reserve list (fully non-circular hit);
+  deletes 2/4 — cap-estimate failures in the crowded $6-10B rank zone.
+- Monte Carlo: add recall 0.96/precision 0.89 at sigma=10%; delete
+  recall ~0.5 — COMPARATIVE FINDING: rank-buffer deletion boundaries are
+  structurally noise-fragile vs MSCI coverage cutoffs (0.94 at 30%) —
+  ship the add list as signal, the delete list as a watch zone.
+- docs/case_studies/FTSE_Taiwan50_Jun2026_backtest.md incl. 3-backtest
+  scoreboard (adds 9/9 across providers). Suite: **305 passed, 1 live
+  deselected** (robustness generalization covered by existing tests).
+
+
+## Session 6y (2026-07-22) — FTSE failure fixed generically
+
+- New `agents/universe_builder.py`: UniverseSpec + validate_universe
+  pre-flight (membership count vs index size, LISTING_ELIGIBILITY
+  suffix screens for 10 markets, duplicates, float/cap sanity, boundary
+  DENSITY check for rank ladders); explicit issues, never silent.
+  Meta-test replays the actual round-1 Taiwan universe and catches all
+  three original errors (49-count, TPEx MPI, thin delete boundary).
+- FTSERules.allowed_suffixes: ineligible candidates excluded inside
+  predict_ftse (second layer for MPI-type errors, all markets).
+- Boundary-confidence tags in predict_ftse: margin_pct + HIGH/LOW-watch
+  per predicted add/delete (10% threshold). June rerun: 4/4 actual adds
+  HIGH (17-78% margins), all deletion calls LOW — the Monte-Carlo
+  fragility finding now surfaces per-name in the product.
+- Tests: tests/test_universe_builder.py (6, incl. the meta-test) after
+  2 test-design fixes (empty-frame access; boundary that produced no
+  adds). Suite: **311 passed, 1 live deselected.**
+- Case-study addendum in FTSE_Taiwan50_Jun2026_backtest.md.
+
+
+## Session 6z (2026-07-22) — index-event flow simulation + optimal strategy
+
+- New `agents/index_flow.py`: simulate_index_flow (before/after weights
+  for ALL names — adds, deletes, AND continuing-member reweights;
+  self-financing verified as arithmetic identity; ADV-day bucketing
+  MOC/WORK+MOC/MULTI-DAY) + recommend_execution (tracking-tolerance-
+  constrained argmin over the agent14 S1-S4 frontier on a calibrated
+  pressure-reversal path; per-name, not blanket).
+- Taiwan 50 June-2026 run ($70B AUM lower bound): turnover $2.95B (4.2%
+  of AUM), self-financing gap 0.00%, reweights = 27% of turnover incl.
+  TSMC -$440M (2nd-largest flow of the event, 0.08 ADV-days -> MOC).
+  Optimal: adds -> S3 post-effective (S2 infeasible at 91% participation,
+  S4 breaches tracking tol); deletes -> S1 100% MOC at -258 bps (riding
+  the pressure); MADHAVAN ASYMMETRY emerged from the frontier unprompted
+  (tested). Feasibility flag: participation column caught infeasible S2.
+- Framework-improvement synthesis (from the two backtests) in the case
+  study: done list (country rule, validator, eligibility, confidence
+  tags, robustness) + 6-item roadmap (as-of pipeline, review-type
+  awareness, multi-cycle buffer calibration, reserve-list output,
+  confidence-weighted flows, Aug-12 pre-registration).
+- Tests: tests/test_index_flow.py (6) — self-financing, delete/add flow
+  identities, dilution/top-up directions, bucketing, buy-sell asymmetry.
+  Suite: **317 passed, 1 live deselected.**
+- docs/case_studies/Taiwan50_flow_simulation.md.
+
+
+## Session 7a (2026-07-22) — dual-provider backtests: MSCI Korea + FTSE China A50
+
+- Catalog survey: MSCI Asia (country Standard/IMI/SmallCap + regional
+  composites, GIMI coverage mechanism) vs FTSE Asia (GEIS slices + the
+  tradable co-brands: TW50, China A50/China 50, STI, KLCI, SET, Vietnam;
+  rank-buffer mechanism). Engine mapping documented.
+- Engine upgrade first: MSCIRules.min_ffcap_frac_of_add (GIMI's ~50%-of-
+  cutoff FREE-FLOAT requirement) — big-cap/low-float names blocked with
+  explicit 'blocked add' watch entries (+1 test).
+- MSCI Korea May SAIR (truth: 0 adds; 3 deletes Hanjin KAL/HD Hyundai
+  Marine/SK Biopharm; Rainbow Robotics tipped-not-added): deletions
+  **3/3 zero false flags with the Taiwan-calibrated 2% buffer untouched**
+  — coverage deletion logic now 14/14 across three events/two markets.
+  Rainbow = kept false positive (passed full-cap AND FF rule at assumed
+  0.20 float): diagnosis = candidate FIF/ATVR data quality binds add
+  precision; not tuned away (curve-fitting refusal documented).
+- FTSE China A50 June quarterly (official LSEG truth set: 5 in AI-hw /
+  5 out consumer-banks): adds **5/5 zero false+ all HIGH confidence
+  (30-63% margins)** on FF-cap rank basis; deletions 3/5 with all calls
+  self-labeled LOW — Taiwan-50 rank-fragility finding replicated
+  out-of-market.
+- Five-backtest scoreboard: 11/11 actual adds captured, coverage deletes
+  14/14, rank deletes ~50-60% self-labeled. Suite: **319 passed, 1 live
+  deselected.** docs/case_studies/DUAL_PROVIDER_backtests_Korea_ChinaA50.md.
+
+
+## Session 7b (2026-07-22) — scorecard improvements + exhaustive coverage map
+
+- Improvements from the 5-review scorecard: NOW shipped — (1)
+  FTSERules.assumed_cap_sigma + `p_survives_noise` per predicted add/
+  delete (normal approx: margin/sigma -> survival probability; the
+  Monte-Carlo fragility finding as a per-name number; delete page now
+  probabilistic); (2) `reserve_list` output in predict_ftse (top-5
+  eligible non-members below add boundary — we emit what FTSE
+  publishes). Roadmap confirmed: float/ATVR data quality binds add
+  precision (Rainbow); calibration harness; calendar-driven review-type.
+  Tests +2. Suite: **320 passed, 1 live deselected.**
+- Coverage map (verified): MSCI 23 DM + 24 EM + ~31 FM/related +
+  standalone ~ 80 markets; FTSE 4 tiers (~25 DM / 10 AE / ~13 SE / ~24
+  frontier, ~70+ GEIS markets) + tradable co-brands.
+- KEY FIND: FTSE promotes VIETNAM frontier->Secondary Emerging effective
+  Sep 21 2026 (list Aug 21) — largest scheduled Asia index event of
+  H2-2026, one-off reclassification flow into a band/foreign-room
+  constrained market the platform already models. Flagged as the event
+  to bring a view on for a July-2026 PT interview.
+
+
+## Session 7c (2026-07-22) — REAL event-flow study + execution grading
+
+- NETWORK LIVE in sandbox -> real study, not framework-only. New
+  `agents/event_flow_study.py`: summarize_event (T-mult, pre-positioning
+  excess ADV-days, CAR drift, T-return, reversal frac), aggregate_study,
+  grade_strategies (realized S1-S4 on actual paths, eta=0, regret vs
+  ex-ante rule), close_auction_share, refined_rule + regrade. Chunked
+  cached fetcher scripts/fetch_event_flow.py -> data/event_flow_study.json
+  (gitignored) — 21/21 real event-names across MSCI TW/KR May SAIR + FTSE
+  TW50/A50 June reviews + real 5-min close-bar shares for 3 TW names.
+- FINDINGS (real): MSCI Standard deletions = the crowded prints (median
+  T-mult 16x, THSR 38x; ~5 ADV-days pre-realized; -4.3% drift into T ->
+  close near trough, names bounced after); FTSE deletions milder (5.5x);
+  additions tiny prints (1.4x). Execution grading: 6z flat rule WRONG
+  twice — MSCI dels should NOT dump the trough close (S3 best 6/8;
+  deletion-reversal asymmetry rediscovered), momentum-tape adds should
+  front-load (S4 best 6/7; GigaDevice S3 regret 2,773 bps; regime-
+  conditional, disclosed).
+- refined_rule(side, provider, drift): median regret 355 -> 0 bps
+  IN-SAMPLE (MSCI sells 382->0/75% hit; FTSE buys 754->0/57%);
+  frozen-rule validation scheduled for the Aug/Sep 2026 cycle.
+- Tests: tests/test_event_flow_study.py (5, offline synthetic paths).
+  Suite: **325 passed, 1 live deselected.**
+- docs/case_studies/EVENT_FLOW_STUDY_2026Q2.md (metrics table, grading,
+  the 5 trading guides, honest boundaries incl. one-quarter momentum
+  regime and eta=0 semantics).
+
+
+## Session 7d (2026-07-22) — positioning trajectories A->T (real data)
+
+- New in event_flow_study: positioning_trajectory (daily excess-volume
+  build A->T, build_frac curve, t_day_share, half_build_rel, FRONT/
+  STEADY/BACK shape) + aggregate_trajectories (median build curve on
+  normalized A->T clock). Fetcher extended with 'traj' mode (argv fix);
+  20/20 real trajectories cached.
+- FINDINGS: MSCI deletions = volume BACK-LOADED (78% of excess volume ON
+  T; SKBio 99%, Compermed 100%) while price FRONT-LOADED (-4.3% drift) —
+  arb moves price early on thin volume, trackers print at T into the
+  trough, bounce follows: the S3-beats-S1 result now has its mechanism
+  measured from two angles. A50 additions FRONT-LOADED everything
+  (half-done 9-11 days early, T-day share 0-23%) — no print to wait for.
+  TW50 intermediate. Drift-without-volume divergence flagged as the
+  ex-ante tell; shape classifier promoted to standing live diagnostic
+  for the next review window.
+- Tests +2 (planted front/back shapes, aggregation). Suite: **327
+  passed, 1 live deselected.** EVENT_FLOW_STUDY_2026Q2.md addendum.
+
+
+## Session 7e (2026-07-22) — WHO limitation solved: TWSE investor-type data
+
+- New `agents/investor_flow.py`: TWSE T86 daily per-stock institutional
+  flow fetcher/parser (foreign / investment-trust / dealer nets),
+  attribute_window, handoff_metrics (T-day tracker-vs-foreign opposition
+  + arb pre-positioning flags). scripts/fetch_investor_flow.py cached 22
+  trading days across May+June windows (1 call/day, all stocks;
+  gitignored cache). Tests (4, canned payloads).
+- FINDINGS: FTSE TW50 Jun-18 handoff confirmed **8/8 names** — trusts
+  (0050 complex) traded index direction on T, foreigners the other side
+  every time (ZhenDing +19.7M vs -18.1M; ChinaSteel -286M vs +320M);
+  foreigners pre-SHORT deletions then cover into the tracker print.
+  TSMC reweight trim VALIDATED: 6z simulation said -$440M; real data:
+  trusts -7.27M sh (~$580M) on exactly Jun 18 — right order/day/
+  direction/investor type. MSCI May-29: foreign category nets out
+  internally (trackers sell vs arbs cover) -> within-category limit
+  stated; fix = daily SBL overlay (same pattern, next layer). Compal
+  anomaly flagged (foreign buying absorbed the deletion).
+- Suite: **331 passed, 1 live deselected.** EVENT_FLOW_STUDY addendum 7e.
+
+
+## Session 7f (2026-07-22) — investor-flow attribution: multi-market
+
+- investor_flow.py -> registry (INVESTOR_FLOW_COVERAGE, 10 markets w/
+  honest status) + 2 new fetchers: TPEx institutional daily (parse_tpex)
+  and Korea per-stock foreign/institution via Naver mirror of KRX data
+  (parse_naver_frgn; desk-feed disclosure). Tests +2 (canned payloads).
+- Korea MSCI deletions (full window): 2/3 show POSITIVE foreign nets on
+  the deletion print — within-foreign netting signature REPLICATES
+  cross-market (property of MSCI events, not Taiwan data); SKBiopharm
+  the clean tracker-sell (both categories selling the 99% back-loaded
+  print).
+- MPI (TPEx) finally attributed: MSCI-add effective day trust +26,014 vs
+  foreign -26,033 — near share-for-share handoff, same signature as all
+  8 TW50 names; Jun-1 trust -243k post-inclusion flagged.
+- Caches: data/investor_flow_kr_tpex.json (gitignored). Timeout lessons:
+  chunked one-name-per-call fetches; Naver needs 4 pages to reach the
+  May window. Suite: **333 passed, 1 live deselected.**
+
+## Session 7g (2026-07-22)
+- Ideation: public data for event positioning beyond investor-type flows, mapped by phase (pre-announcement / A→T / T / T+) → docs/EVENT_POSITIONING_DATA_BY_PHASE.md
+- Priority queue set: (1) SBL/short-balance daily fetcher (one dataset, three phases; resolves within-foreign netting), (2) TWSE indicative-auction feed into cockpit, (3) ETF units + premium/discount, (4) TDCC weekly shareholding distribution, (5) block-trade tape
+- No code this session — ideation only, per question phrasing
+
+## Session 7h (2026-07-22)
+- Implemented the event-data priority queue: agents/event_data.py (TWT93U margin+SBL short balances, BFIAUU block tape, TDCC weekly distribution, indicative-auction parser, EVENT_DATA_COVERAGE registry) + 7 canned-payload tests
+- scripts/fetch_event_data.py: 44 trading days (Apr 27-Jun 30) x 18 names cached to data/event_data_cache.json (gitignored) + TDCC latest week
+- Graded on MSCI May SAIR + FTSE TW50 June: pre-ann short build = crowding gauge not truth signal (TaiwanCem false-flag control also +52%; MSCI deletes flat -> front-run was long-seller-driven); A->T SBL splits within-foreign flow (THSR: shorts ~15-20% of foreign selling) -> 7e limitation CLOSED; post-T unwind 9/9 deletes (-12% to -84%) incl. THSR T+2 settlement signature; 0050 paired blocks NT$50B = free ETF-creation proxy
+- docs/case_studies/EVENT_DATA_USEFULNESS_2026Q2.md; suite 340 passed, 1 live deselected
+
+## Session 7i (2026-07-22)
+- Converted 7h findings into machinery: crowding_overlay (STREET-ONLY cell catches the round-2 ChinaSteel miss ex ante, +85% build), drift_composition (MSCI deletes LONG_SELLER_LED 0.00-0.19 arb-short frac), completion_clock (T+2 settlement guard; ChinaSteel still UNWINDING 0.64 vs Formosa done), crowding-adjusted frontier (Buy pick flips S3->S2 under HIGH; Sell S1 edge collapses -259->-64 bps), etf_creation_proxy, forward-archive mode for Aug-12 QIR
+- Hook: index_flow.recommend_execution(crowding=...) + _event_path(reversal_frac=...); all picks frontier-derived, no hand overrides
+- 8 new tests; addendum in EVENT_DATA_USEFULNESS_2026Q2.md
+
+## Session 7j (2026-07-28)
+- Project review vs two goals + detailed plan: docs/PROJECT_REVIEW_AND_PLAN_2026-07-28.md (W1 packaging, W2 run-of-day + golden basket, W3 Aug-12 pre-registration bundle, W4 live grading loop, W5 AI-on-the-desk memo + hardening); no code this session
+
+## Session 7k (2026-07-28)
+- Completed AI_ON_THE_PT_DESK.md: all 8 JD bullets — workflow, tools-we-can-create tables (built vs NEW), realistic institutional-benefit verdicts + ranked summary table; W5.13 deliverable done
+
+## Session 7l (2026-07-28)
+- Built Reg-Watch (JD bullet 5): agents/reg_watch.py — versioned rules registry (single source of truth; pt_dealer limit/auction/pre-flight now read from it, registry hash folded into rules_version/audit packs), multilingual keyword triage (zh/ja/ko/en) + LLM hook slot, human-gated propose/approve/reject with log, daily digest; views/page5_regwatch.py + app registration; scripts/fetch_reg_notices.py
+- Live feeds: TWSE(479)/JPX(90)/NSE(139) notices; TPEx/HKEX/KRX/SGX/SET honest PROTOCOL; first digest caught NSE Closing Auction Session introduction + JPX limit broadenings
+- 11 new tests incl. end-to-end approved-change-propagates-to-pt_dealer; suite 358 passed; docs/REG_WATCH_DESIGN.md
+
+## Session 7m (2026-07-28)
+- Reg-Watch v2 per user design review: proactive pipeline fetch->seen-diff->cluster_stories (708 notices->109 stories; dept-prefix normalization merges 6 NSE CAS circulars)->score_story (category x scope + drumbeat + basket-relevance +3, mock x0.6; explainable reasons)->flash_brief only when FLASH/NOTABLE arrives; watch mode with seen-ID baseline (758); IMPACT_NOTES per category in trading language; page renders stories w/ drill-down + basket box
+- 4th live feed: SGX circulars API (Referer header); TPEx/HKEX/KRX/SET/Bursa/IDX/HOSE remain PROTOCOL (anti-bot, not availability); 6 new tests; suite 364
+
+## Session 7n (2026-07-28)
+- Started docs/INDEX_REBALANCE_TRADE_LIFECYCLE.md (living reference w/ mermaid flowcharts + project mapping per step): Step 1 order placement (broker selection -> terms -> transmission -> acknowledgment), Step 2 announcement->T window (basket prep/access, per-name liquidity risk, strategy+discretion via crowding, cross-client netting+capacity, window monitoring/amendments, client cadence, T-1 checklist)
+
+## Session 7o (2026-07-28)
+- Built pre-mandate pitch pack (lifecycle Step-1/Phase-0 analytics): agents/pitch_pack.py — expected_t_multiples (point-in-time gated), crowding_table (as_of-trimmed), risk_flags, track_record-with-misses, build/render + validate_pack self-grading loop; 6 tests
+- Real example: scripts/build_pitch_pack_tw50.py -> PITCH_PACK_TW50_Jun2026.md (as-of Jun 1, validated: 6/8 changes called, 4/4 HIGH correct, misses named; crowding table showed ChinaSteel +74.5% HIGH pre-ann); PITCH_PACK_DESIGN.md w/ 6 ranked institutional AI enhancements (LLM renders, never ranks)
+- Suite green
+
+## Session 7p (2026-07-28)
+- Exported reference note docs/BROKER_SELECTION_AND_PT_TRADE_TYPES.md (broker-selection factors ranked + PT desk full trade-type book ranked)
+
+## Session 7q (2026-07-28)
+- Aug-2026 QIR pre-run (scripts/run_qir_aug2026.py, chunked yfinance cache): live boundary universes TW(28)/KR(13)/JP(19) + modeled tails; QIR 1.8x hurdle -> TW adds 3443/3665/8046/4958 (2.4-3.5x GMSR), del 9910; KR no adds (Rainbow below hurdle again), del cand 011170; JP cands 285A(data-flag)/3659/4755; explicit NO-CALL for 8 markets without validated universes
+- Positioning overlay: BizLink +116%/GUC +67% short build (consensus) vs NanYaPCB -26%/ZhenDing -37% (unpriced for MSCI leg); KEEP list extended (9910/3231/2379/6669); pre-registration draft docs/case_studies/QIR_AUG2026_PRERUN.md with declared grading criteria; finalize+commit before Aug 12
+
+## Session 7r (2026-07-28)
+- Completed INDEX_REBALANCE_TRADE_LIFECYCLE.md: Step 3 T-day (pre-open sweep, exception monitoring, lunch re-forecast checkpoint, close-sequence cascade w/ indicative-auction read as the days one real-time decision, post-close flash) + Step 4 post-trade (recap, TCA w/ predicted-vs-realized, settlement, completion leg via SBL clock, learning loop) — both w/ flowcharts + project mappings; closing note: the 4-step compounding loop is the agency business model
+
+## Session 7s (2026-07-28)
+- Explained NO-CALL rationale (validator standard: membership/boundary/eligibility/caps; iShares country-ETF holdings CSVs = fastest coverage route, ~1 session/market, China 2-3)
+- Reference file docs/LARGEST_MSCI_FTSE_INDICES.md (provider-ranked approx caps + flow-weighted desk reading; figures labeled approximate w/ factsheet sources)
+
+## Session 7t (2026-07-28)
+- Revised LARGEST_MSCI_FTSE_INDICES.md to Asia-only + Asia-containing composites w/ AUM-stacking note + composite prediction mechanics (MSCI country-level inheritance vs FTSE regional size-banding)
+- 8-market Aug QIR: market-level skew screen from 6m country-ETF returns (Indonesia -28%/China -15% deletion-skewed; TH/SG add-skewed; falsifiable, LOW-tagged, added to prerun doc) + scripts/ingest_holdings.py (iShares CSV -> validated membership + deletion watch zone; manual 10-min download converts NO-CALLs)
+
+## Session 7u (2026-07-28)
+- Compiled docs/RECENT_ASIA_REVIEW_RESULTS.md: MSCI May SAIR (TW 1 add/7 dels incl. measured 16-38x T-multiples + handoff; KR 0/3) + FTSE June (TW50 4/4 AI cohort + A50 5/5) with our grading per review and the cross-review picture (provider asymmetry, add-reliable/rank-delete-fragile, June cohort = Aug MSCI story)
+
+## Session 7v (2026-07-28)
+- User challenge caught v1 incompleteness: parsed MSCI May26 official PDF in full -> complete per-market scan ALL Asia (China 22/24, Japan 3/14, India 5/4, MY 0/6, ID 0/6, HK 0/1, PH 0/1, AU 1/0, SG/TH explicitly NONE); FTSE June: STI no changes (reserve refresh), KLCI 1 change per LSEG (preview-article 3-name list flagged as speculation), FTSE SET honestly UNVERIFIED
+- RECENT_ASIA_REVIEW_RESULTS.md v2: Asia totals 32 adds/66 dels (deletion skew = prior support for Aug screen); coverage priority China+Japan; None-rows-matter lesson; raw PDF text cached
+
+## Session 7w (2026-07-28)
+- May-list cross-check caught stale membership in our OWN Aug draft: 9910 Feng Tay was deleted in Feb QIR -> DELETE call invalidated, universe+cache corrected, rerun (TW: 4 adds, no deletes); membership cross-check now mandatory finalization step
+- Addendum 7w: per-name rationale + probability estimates (HIGH adds ~85%/call Laplace-shrunk from 11/12; Lotte Chem ~75%; JP candidates -> conditional WATCH pending membership verification); portfolio expectation ~4.1/5
+
+## Session 7y (2026-07-28)
+- Built agents/review_engine.py: unified 8-layer pipeline (screen -> ledger reconciliation w/ Feng Tay BLOCK gate -> rationale+Laplace probabilities w/ unverified 0.75 discount (empty alias map != verified) -> stacked-AUM flow ranges (5-9% passive-ownership heuristic) + ADV buckets -> crowding from short archive -> measured T-multiples (absent classes stated) -> risk flags -> track record) + render; 6 tests
+- Live run scripts/run_full_review_aug2026.py -> AUG2026_QIR_FULL_PACK.md: TW 4 adds verified w/ crowding split (exp 3.35/4), KR 1 delete unverified 0.6, JP 3 adds unverified-discounted 0.64 each; 8 NO-CALLs; suite 380 passed
+
+## Session 7z (2026-07-28)
+- TRUE PIT replication of May-2026 TW SAIR (Apr-30 caps via historical prices, official-list grading): deletions 7/7 at PIT (4 false flags from thinner ladder); adds 0/1 — MPI ticker-mapping error (6187 vs 6223) AND the big catch: 3443/3665/8046/4958 false-flagged -> they were ALREADY MSCI members -> Aug pack Taiwan ADD calls WITHDRAWN (STALE_NONMEMBER class; correction in AUG2026_QIR_FULL_PACK); membership BASELINE (fund holdings) now mandatory pre-registration input; PIT harness repeatable (scripts/pit_may2026_taiwan.py)
+
+## Session 8a (2026-07-28)
+- Crowding refined stock-vs-flow: review_engine live read now measures drawdown-from-peak and tags EXITING (>=15% off a real peak) — early-exit signature; test added; suite green
+
+## Session 8b (2026-07-28)
+- ALL-ASIA PIT May-2026 replication (scripts/pit_may2026_asia.py, 113 tickers/8 markets, Apr-30 caps, official-list grading), iterated 3x: (1) generic tails 34%, (2) tail scaling — MY/ID regressed, reverted+disclosed, (3) real ATVR (activated dormant liquidity screen) + China expansion + Taiwan w/ corrected MPI ticker -> MAJORITY: 54/98 = 55% of ALL actual Asia changes, adds 17/17 zero false+, dels 37/56, 2 delete false-flags kept (incl. Lotte Chem = our live Aug candidate, boundary-consistent)
+- Remaining 19 misses mechanism-classified: coverage-boundary depth (~11, fix = holdings baselines), FIF cuts (~4, structural limit), corporate-action (Toyota Industries, Reg-Watch radar job), CN universe (3); PIT_MAY2026_ALL_ASIA.md
+
+## Session 8c (2026-07-28)
+- Iterations 4-5 on all-Asia PIT: count-anchored universes (public constituent counts) 55->65%; A-share 20% inclusion factor on member ranking only (first attempt broke adds 8->4, corrected+recorded) -> FINAL 67/98 = 68% of ALL Asia changes, 92% of covered; adds 17/17 zero fp; dels 50/56, 11 boundary false-flags (delete precision 82%/recall 89%); remaining 6 misses fully classified (FIF 3, dual-line 2, CA 1); upgrades flow into Aug live engine
+
+## Session 8d (2026-07-28)
+- Iterations 6-8: CA rule (Toyota tender, public pre-review) -> 68/73 = 69% of ALL 98; CN composition tail no-change; buffer sweep 1-4% FLAT (null result, no tune exists, kept 2%); FIF trio confirmed structural w/ numbers (floats 0.204/0.254/0.294 above any defensible screen; AMMN misses 0.20 line by 0.0035 — line not moved); CN pair reclassified FIXABLE (yfinance assigns whole-company cap to H-line; HKEX per-line shares = queued fetcher); iteration terminated at the correct point — remaining gains are data, not rules
+
+## Session 8e (2026-07-28)
+- Flowed PIT-graded methods into review_engine (member_count anchoring, a_share_tail_mix, recent_deletions/recent_additions churn buffers — the buffers caught 18 spurious re-add/re-delete flags incl. Nestle MY re-add and CN May-adds re-delete); scripts/run_full_review_asia.py -> AUG2026_QIR_ASIA_PACK.md: 8 markets, ZERO calls under May-graded config w/ reading guide (post-SAIR QIR quiet + April-vintage scope caveat + Lotte downgraded to WATCH superseding prior pack); suite 381
+
+## Session 8f (2026-07-28)
+- docs/AI_INTEGRATED_WORKFLOW.md: (1) comprehensive framework description — deterministic 8-layer core + AI's three actual roles (analyst/iteration loop, extractor human-gated, renderer) + invariants + graded state + why the 69% ceiling is a DATA ceiling not method ceiling; (2) CLSA gap-close map — six measured limits x institutional resource x residual (vendor FIF/constituent files kill limits 1-3+6; real-time feeds = NEW capability class; desk flow/execution history/provider relationship = net-new signal, compliance-scoped); (3) target workflow — daily loop (nightly regenerate -> diff -> flash-brief-only-on-change; dealer touchpoint 5 min) + event loop T-60 -> T+5 (positioning/announcement auto-grade/inclusion-window crowding/T-day live auction reads vs expected flow/learning loop) + client surface (RAG over graded corpus, scenario turnaround, calibration-as-product) + division-of-labor table; linked from INDEX_REVIEW_ENGINE_SUMMARY.md
+
+## Session 8g (2026-07-28)
+- MULTI-MARKET CROWDING: probed 10+ regional endpoints honestly — LIVE: SFC HK weekly aggregated short positions CSV (per-stock shares, covers HK + MSCI China H-lines), JPX daily Short_Positions.xls (disclosed >=0.5% summed per stock — floor not census, deltas valid), TPEx margin/balance JSON (fills the .TWO gap, e.g. 6223); PROTOCOL: KRX (login-gated), Bursa (403), SSE/SZSE (TLS-blocked); STRUCTURAL: India (no per-stock short product), Indonesia (shorting restricted)
+- event_data.py: parse_sfc_short_csv (zero-pad join to 0177.HK-style codes)/fetch_hk_short_positions, parse_jpx_short_xls/fetch_jpx_short_positions (xlrd), parse_tpex_margin/fetch_tpex_short_balance, merge_into_short_cache (one normalized TWT93U schema for every market), CROWDING_SOURCES registry; scripts/fetch_crowding_asia.py (incremental, 45s-chunk-safe; archives: HK 8 wks x 1232 names, JP 6 days x 627, TPEx 4 days x 812)
+- review_engine: crowding read refactored into reusable crowding_reads() — window label now actual obs count (no fake "30d" on weekly data); flows layer confirmed already market-agnostic (cap x float x passive-ownership per row, all markets)
+- run_full_review_asia.py: per-market caches (TW=TWSE+TPEx merged, JP, HK, CN=SFC H-lines) + crowding-demo appendix on boundary names -> pack regenerated: live reads incl. TaiwanCement HIGH +53% (cutline resident being shorted), Galaxy 0027 HIGH +84%, 9995.HK HIGH +45%, JP/TW EXITING tags; honest no-data lines for KR/MY/IN/ID
+- +6 tests (SFC zero-pad, TPEx col-14, merge/series roundtrip, registry completeness, weekly-cadence label); suite 387
+
+## Session 8h (2026-07-28)
+- LIFECYCLE STEP 2 implementation — agreed with user that 2.2+2.3 are the AI-implementable workstreams (2.1/2.6 desk-ops, 2.4 needs multi-client order data, 2.5's surveillance half already runs); gap analysis: pieces existed (T-multiples, bands, buckets, frontier) but NO assembled per-name sheet, NO computed borrow status, NO start-date calc, NO explicit discretion function
+- agents/event_window.py: liquidity_risk_sheet (2.2: ADV-days, measured T-multiple, auction-footprint % vs ~30% close share, LOCK/WATCH band risk, borrow, halt proxy, bucket); sbl_utilization (TWT93U col-12 semantics = REMAINING quota -> honest proxy bal/(bal+quota); first cut bal/quota gave 6597% — caught and fixed); start_schedule (2.3a: eff - ceil(ADV-days/cap) bdays, LATE START escalation flag); discretion_decision (2.3b rule matrix: crowded delete WORK AHEAD/uncrowded WAIT/crowded add NO pre-position/uncrowded add PRE-POSITION in envelope/EXITING flips to uncrowded logic/no envelope = MOC ONLY — every decision emits best-ex rationale citing the crowding read)
+- parse_twt93u extended w/ sbl_quota; asian_markets Malaysia band corrected None->30% static; scripts/run_event_window_demo.py -> EVENT_WINDOW_PLAN_DEMO_AUG2026.md (live crowding + live TWT93U borrow: 1101/2207/2002 TIGHT 97-98% of implied SBL capacity, consistent w/ their crowding reads; demo quantities labeled hypothetical)
+- lifecycle doc Step-2 mapping table updated; +5 tests (sheet flags/footprint, capacity proxy, start dates + LATE, full discretion matrix, render e2e w/ evidence count); suite 392
+- AI_INTEGRATED_WORKFLOW.md extended w/ Step-2 counterpart (Parts 4-6): current framework (2.2 sheet/2.3a schedule/2.3b discretion matrix + feeders + demo cross-validation borrow-vs-crowding + 5 honest limits), 6-row CLSA gap-close map (SBL feeds, CA amendment files, OMS aggregate book for 2.4, execution history calibrates frontier, real-time crowding, actual client mandates), and the target window workflow (announcement-day auto-generation w/ dealer as reviewer, daily DIFF-not-report loop w/ discretion-flip alerts, continuous netting pass, T-1 checklist as verification run; dealer approves every discretion decision — rationale pre-written, judgment theirs)
+
+## Session 8i (2026-07-28)
+- STEP-3 T-DAY DESIGN (docs/STEP3_TDAY_DESIGN.md) after live data probes: KEY FINDING — TW close-auction volume DERIVABLE free (daily vol − Σ intraday 5m bars; verified 2330.TW Jul-24: 24.8% auction share) + HK CAS print = last 5m bar (verified 0027.HK); yfinance 5m depth 60 days COVERS June TW50/May-MSCI event days; TWSE OpenAPI free/keyless probed (MI_5MINS = 5-second market-wide order-flow accumulation); upgrade paths researched: J-Quants minute/tick = ¥5,500/mo add-on (free tier 12-wk delayed), EODHD Asian 5m/1m to Oct-2020 varies
+- AI-leverage principle: T-day AI adds ZERO new judgment — compresses reaction time on pre-made decisions (3.1 machine overnight sweep, 3.2 dollar-at-risk exception engine + mechanized lunch checkpoint, 3.3 countdown + indicative-vs-expected framed recommendation, 3.4 auto flash); simulation suite designed w/ build order: auction-share study (data verified) -> T-day replay simulator (counterfactual: what would each discretion choice have cost on May names) -> violence curve + lunch backtest -> run-sheet + indicative archiver (proprietary asset from free feed, start Aug 11) -> limit-lock model
+- AI_INTEGRATED_WORKFLOW.md Parts 7-9 (Step 3): current framework (zero-new-judgment principle, verified auction layer, exception machinery, designed-vs-built honesty w/ PROTOCOL cockpit line), 6-row gap-close (real-time feeds, full auction/imbalance feeds + tick warehouse for violence curve, OMS fill state, desk execution history for priors, push amendments, live cash/FX), cascade workflow hour-by-hour (dealer takes exactly two reserved decisions: lunch resize + close sizing within envelope)
+- STEP-4 EXECUTION INSIGHTS (agents/execution_insights.py): tca_vs_estimate (signed cost bps, realized vs pre-trade estimate reconciliation, WITHIN/BETTER/WORSE, qty-weighted portfolio delta), discretion_counterfactual (worked choices graded vs realized drift; WAIT/MOC-ONLY graded as road-not-taken at 30%), reversal_grade (HIGH/LOW falsifiable implications only — NO-DATA excluded from hit rate, bug caught: no-data names were auto-AGREEing), update_priors (event joins library, before/after medians), render_debrief
+- Demo on REAL May TW deletions (scripts/run_execution_insights_may2026.py -> EXECUTION_INSIGHTS_DEMO_MAY2026.md): pre-announcement crowding reads (archive truncated to May 12) -> all WAIT; counterfactual honestly mixed — 3/7 WAIT right (2324 avoided -682bps), 4/7 working would have helped (+29..+213bps); reversal implications 5/5 on graded names; fills/estimates labeled hypothetical; +5 tests, suite 397
+
+## Session 8j (2026-07-28)
+- UI: NEW PAGE views/page6_lifecycle.py "Rebalance Trade Lifecycle" — 4 tabs = the 4 lifecycle steps, all interactive, logic stays in agents/: Tab1 Win-the-trade (track_record table + CROWDING_SOURCES grid + live positioning read on typed tickers), Tab2 Window planner (editable basket w/ envelope column -> live 2.2 sheet + 2.3 schedule + discretion expanders w/ rationale; live crowding + live TWT93U borrow, graceful degradation), Tab3 T-day cascade (AUCTION_CUTOFFS run-sheet + interactive indicative-vs-expected calculator + live auction-share derivation on any ticker), Tab4 Post-trade (editable fills/decisions/reversal tables prefilled w/ real May paths -> TCA/counterfactual/reversal grades + priors + downloadable client debrief)
+- agents/event_window.indicative_read added (THIN <0.6x -> retreat-or-flag / IN LINE / RICH >1.3x -> size up; deterministic, dealer decides); registered in app.py sidebar+dispatch; +2 tests (indicative rule matrix, page import smoke); suite 399

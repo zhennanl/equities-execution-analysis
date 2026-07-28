@@ -1,0 +1,306 @@
+"""Unified index-review engine (session 7y) — the complete pipeline,
+one call: predictions -> factual reconciliation -> rationale &
+probabilities -> stacked-AUM flows -> crowding -> measured event
+history -> risk flags -> graded track record -> client-ready markdown.
+
+Composes engines built and graded across sessions 6v-7x:
+
+    layer 1  screen           reconstitution.predict_msci (QIR/SAIR)
+    layer 2  reconcile        reconstitution.parse_msci_public_list /
+                              reconcile_membership — the Feng Tay gate:
+                              a call touching a STALE name is BLOCKED,
+                              not silently fixed
+    layer 3  rationale        reconstitution.explain_call + Laplace-
+                              shrunk probabilities from the graded record
+    layer 4  flows            stacked-AUM heuristic (passive ownership
+                              rate x free-float cap) + ADV-day buckets
+    layer 5  crowding         event_data.crowding_score on the short
+                              ledger archive
+    layer 6  history          pitch_pack.expected_t_multiples (measured
+                              2026 events; absent classes say so)
+    layer 7  risk flags       pitch_pack.risk_flags
+    layer 8  track record     pitch_pack.track_record (misses included)
+
+Design rules unchanged: point-in-time inputs, NO-CALL where the
+universe is unvalidated, deterministic scoring, every number checkable.
+"""
+from __future__ import annotations
+
+import numpy as np
+import pandas as pd
+
+# Laplace-shrunk per-call probabilities from the graded record
+# (5 reviews, 26 committed calls — see QIR_AUG2026_PRERUN addendum 7w)
+PROB = {"ADD_HIGH": 0.85, "ADD_MED": 0.80, "DELETE_VERIFIED": 0.80,
+        "DELETE_UNVERIFIED": 0.60}
+
+# Passive ownership rate of MSCI-linked trackers as % of FREE-FLOAT cap
+# for EM Asia names — v1 heuristic (range disclosed), to be validated
+# against the Sep-1 realized prints. Literature + our May measurements
+# put MSCI-linked passive holdings at mid-to-high single digits of float.
+PASSIVE_OWN_RATE = (0.05, 0.09)
+
+
+def screen_market(universe: pd.DataFrame, review: str = "QIR",
+                  tail_seed: int = 11, tail_n: int = 400,
+                  tail_hi: float = 8e9,
+                  member_count: int | None = None,
+                  a_share_tail_mix: bool = False) -> dict:
+    """Layer 1: rules engine on real boundary names + modeled tail.
+
+    PIT-May-validated upgrades (case study PIT_MAY2026_ALL_ASIA):
+    - member_count: COUNT-ANCHORED universe — total members pinned to
+      the provider's published constituent count (public factsheet
+      input), placing the coverage boundary where the index's real
+      size puts it. Took the May replication 55%->65%.
+    - a_share_tail_mix: China only — tail floats alternate 0.7 (H) and
+      0.14 (A x 20% inclusion factor, documented MSCI methodology).
+    Universe columns: ticker, full_mktcap_usd, free_float_frac,
+    adv_usd, atvr, member. (A-share members' ff should arrive already
+    factor-adjusted; candidates' ff raw — factor sets weight, not
+    eligibility.)"""
+    from agents.reconstitution import MSCIRules, predict_msci
+    rng = np.random.default_rng(tail_seed)
+    caps = np.sort(np.exp(rng.uniform(np.log(0.3e9), np.log(tail_hi),
+                                      tail_n)))[::-1]
+    if member_count is not None:
+        n_tail_mem = max(member_count - int(universe["member"].sum()),
+                         0)
+        mem_flag = lambda i, c: int(i < n_tail_mem)
+    else:
+        mem_flag = lambda i, c: int(c > 2.5e9)
+    tf = (lambda i: 0.14 if (a_share_tail_mix and i % 2 == 0)
+          else 0.7)
+    tail = pd.DataFrame([dict(ticker=f"TAIL{i:03d}",
+                              full_mktcap_usd=float(c),
+                              free_float_frac=tf(i),
+                              adv_usd=float(c) * 0.004, atvr=1.0,
+                              member=mem_flag(i, c))
+                         for i, c in enumerate(caps)])
+    u = pd.concat([universe, tail], ignore_index=True)
+    members = set(u.loc[u["member"] == 1, "ticker"])
+    r = predict_msci(u.drop(columns="member"), members,
+                     MSCIRules(review=review))
+    named = lambda d: (d[~d["ticker"].str.startswith("TAIL")]
+                       if len(d) else d)
+    return {"gmsr": r["gmsr_usd"], "add_thr": r["add_threshold_usd"],
+            "adds": named(r["adds"]), "deletes": named(r["deletes"]),
+            "watch": named(r["watchlist"])}
+
+
+def reconcile_layer(universe: pd.DataFrame, aliases: dict,
+                    ledgers: list[dict], country: str) -> list[dict]:
+    """Layer 2: the Feng Tay gate."""
+    from agents.reconstitution import reconcile_membership
+    members = {aliases[t]: bool(m) for t, m in
+               zip(universe["ticker"], universe["member"])
+               if t in aliases}
+    return reconcile_membership(members, ledgers, country)
+
+
+def build_calls(screen: dict, universe: pd.DataFrame,
+                violations: list[dict], aliases: dict,
+                crowding_map: dict[str, str] | None = None,
+                membership_verified: bool = False) -> pd.DataFrame:
+    """Layers 3+4: per-name call rows with rationale, probability, and
+    stacked-AUM flow estimate. Calls touching a ledger violation are
+    BLOCKED (kind -> 'BLOCKED', probability 0, reason attached)."""
+    from agents.reconstitution import explain_call
+    bad_names = {v["name"].upper(): v for v in violations}
+    ffm = dict(zip(universe["ticker"], universe["free_float_frac"]))
+    rows = []
+    for kind, df in (("ADD", screen["adds"]),
+                     ("DELETE", screen["deletes"])):
+        for _, r in df.iterrows():
+            t = r["ticker"]
+            cap = r["full_mktcap_usd"]
+            ratio = cap / screen["gmsr"]
+            alias = aliases.get(t, t).upper()
+            blocked = alias in bad_names
+            crowd = (crowding_map or {}).get(t.split(".")[0])
+            exp = explain_call(kind, t, cap, screen["gmsr"],
+                               screen["add_thr"] if kind == "ADD"
+                               else 0.5 * screen["gmsr"],
+                               float_frac=ffm.get(t),
+                               membership_verified=membership_verified
+                               and not blocked,
+                               crowding=crowd)
+            if blocked:
+                p = 0.0
+                exp["membership_verified"] = ("BLOCKED: " +
+                                              bad_names[alias]["fix"])
+            elif kind == "ADD":
+                p = (PROB["ADD_HIGH"] if ratio >= 2.5
+                     else PROB["ADD_MED"])
+                if not membership_verified:
+                    p = round(p * 0.75, 2)     # unverified discount
+            else:
+                p = (PROB["DELETE_VERIFIED"] if membership_verified
+                     else PROB["DELETE_UNVERIFIED"])
+            kind_out = "BLOCKED" if blocked else kind
+            ff = ffm.get(t, 0.7)
+            lo = cap * ff * PASSIVE_OWN_RATE[0]
+            hi = cap * ff * PASSIVE_OWN_RATE[1]
+            adv = float(universe.loc[universe["ticker"] == t,
+                                     "adv_usd"].iloc[0])
+            adv_days = (lo + hi) / 2 / adv if adv else np.nan
+            rows.append({
+                "call": kind_out, "ticker": t,
+                "cap_usd_b": round(cap / 1e9, 1),
+                "x_gmsr": round(ratio, 2),
+                "p_correct": p,
+                "flow_usd_m": f"{lo/1e6:.0f}-{hi/1e6:.0f}",
+                "adv_days": round(adv_days, 1),
+                "bucket": ("MOC" if adv_days < 1 else
+                           "WORK+MOC" if adv_days < 3 else "MULTI-DAY"),
+                "crowding": crowd or "no data",
+                "rationale": exp["mechanism"],
+                "verified": exp["membership_verified"]})
+    return pd.DataFrame(rows)
+
+
+def crowding_reads(short_cache: dict | None,
+                   tickers: list[str]) -> dict[str, str]:
+    """Layer-5 crowding read for any market whose cache uses the
+    normalized {short: {date: {code: [bal, x]}}} schema (TWSE native;
+    JPX/SFC/TPEx via event_data.merge_into_short_cache). Positioning
+    NOW over the last <=30 observations, PLUS the stock-vs-flow
+    refinement — crowding that was built and then EXITED early is not
+    crowding anymore: drawdown-from-peak >=15% off a real peak tags
+    EXITING. Window label reports actual observation count (daily for
+    TW/JP, weekly for HK — units cancel in %-change)."""
+    if not short_cache:
+        return {}
+    from agents.event_data import short_balance_series
+    out = {}
+    for t in tickers:
+        base = t.split(".")[0]
+        s = short_balance_series(short_cache, base)
+        if s.empty or len(s) < 3:
+            continue
+        w = s.iloc[-min(len(s), 30):]
+        b = w["total_short"].iloc[0]
+        now = w["total_short"].iloc[-1]
+        peak = w["total_short"].max()
+        pct = 100 * (now - b) / b if b else np.nan
+        band = ("HIGH" if pct >= 25 else
+                "MED" if pct >= 5 else "LOW")
+        off_peak = 100 * (peak - now) / peak if peak else 0
+        tag = (f"; EXITING (-{off_peak:.0f}% off peak)"
+               if off_peak >= 15 and peak > b * 1.1 else "")
+        out[base] = f"{band} ({pct:+.0f}%/{len(w)}obs){tag}"
+    return out
+
+
+def run_full_review(market: str, universe: pd.DataFrame, aliases: dict,
+                    ledgers: list[dict], ledger_country: str,
+                    short_cache: dict | None = None,
+                    event_cache: dict | None = None,
+                    review: str = "QIR",
+                    names_risk: pd.DataFrame | None = None,
+                    member_count: int | None = None,
+                    a_share_tail_mix: bool = False,
+                    tail_hi: float = 8e9, tail_n: int = 400,
+                    recent_deletions: set | None = None,
+                    recent_additions: set | None = None) -> dict:
+    """The complete pipeline for one market. recent_deletions: names
+    deleted at the immediately preceding review are EXCLUDED from add
+    candidacy (churn-buffer behavior: an FF/coverage-deleted name does
+    not re-enter next review on unchanged fundamentals — full-cap add
+    screens alone would spuriously re-flag them)."""
+    from agents.pitch_pack import (expected_t_multiples, risk_flags,
+                                   track_record)
+    screen = screen_market(universe, review=review,
+                           member_count=member_count,
+                           a_share_tail_mix=a_share_tail_mix,
+                           tail_hi=tail_hi, tail_n=tail_n)
+    if recent_deletions and len(screen["adds"]):
+        excl = screen["adds"]["ticker"].isin(recent_deletions)
+        if excl.any():
+            screen = {**screen,
+                      "excluded_readds": sorted(
+                          screen["adds"].loc[excl, "ticker"]),
+                      "adds": screen["adds"][~excl]}
+    # symmetric churn buffer: names ADDED at the immediately preceding
+    # review are excluded from deletion candidacy — the provider
+    # admitted them knowing their (factor-adjusted) FF profile; they
+    # do not migrate out one review later on unchanged fundamentals.
+    if recent_additions and len(screen["deletes"]):
+        excl = screen["deletes"]["ticker"].isin(recent_additions)
+        if excl.any():
+            screen = {**screen,
+                      "excluded_redels": sorted(
+                          screen["deletes"].loc[excl, "ticker"]),
+                      "deletes": screen["deletes"][~excl]}
+    violations = reconcile_layer(universe, aliases, ledgers,
+                                 ledger_country)
+    tickers = (list(screen["adds"]["ticker"] if len(screen["adds"])
+                    else []) + list(screen["deletes"]["ticker"]
+                                    if len(screen["deletes"]) else []))
+    crowding_map = crowding_reads(short_cache, tickers)
+    # verification requires ACTUAL ledger coverage: an empty alias map
+    # means nothing was checked — that is NOT verified (Feng Tay rule)
+    calls = build_calls(screen, universe, violations, aliases,
+                        crowding_map,
+                        membership_verified=bool(aliases)
+                        and not violations)
+    history = {}
+    if event_cache:
+        for side in ("Sell", "Buy"):
+            history[f"MSCI {side}"] = expected_t_multiples(
+                event_cache, "MSCI", side)
+    flags = (risk_flags(names_risk) if names_risk is not None
+             else pd.DataFrame())
+    return {"market": market, "review": review,
+            "gmsr_usd": screen["gmsr"],
+            "add_threshold_usd": screen["add_thr"],
+            "calls": calls, "violations": violations,
+            "history": history, "flags": flags,
+            "track_record": track_record(),
+            "expected_hits": round(float(
+                calls.loc[calls["call"] != "BLOCKED",
+                          "p_correct"].sum()), 2) if len(calls) else 0}
+
+
+def render_review_markdown(results: list[dict], event_name: str,
+                           as_of: str, no_call_markets: list[str],
+                           notes: str = "") -> str:
+    L = [f"# {event_name} — Full-Engine Pre-Registration Pack",
+         f"*Generated {as_of} by agents/review_engine.py — all eight "
+         "layers, one pipeline. Point-in-time; NO-CALL where "
+         "unvalidated; blocked calls shown, not hidden.*", ""]
+    for r in results:
+        L.append(f"## {r['market']} ({r['review']}: GMSR "
+                 f"${r['gmsr_usd']/1e9:.1f}B, add ≥ "
+                 f"${r['add_threshold_usd']/1e9:.1f}B)")
+        if r["violations"]:
+            L.append("**Ledger violations (gate fired):** " +
+                     "; ".join(f"{v['name']}: {v['type']}"
+                               for v in r["violations"]))
+        if len(r["calls"]):
+            L.append(r["calls"].to_markdown(index=False))
+            L.append(f"\nExpected correct calls: "
+                     f"**{r['expected_hits']}** of "
+                     f"{len(r['calls'][r['calls']['call'] != 'BLOCKED'])}")
+        else:
+            L.append("No calls.")
+        if r["history"]:
+            L.append("\n**Measured T-day behavior (2026 events):** " +
+                     "; ".join(
+                         f"{k}: median {v['median']}x (n={v['n']})"
+                         if v.get("available") else f"{k}: no measured "
+                         "events — stated, not guessed"
+                         for k, v in r["history"].items()))
+        if len(r["flags"]):
+            for _, f in r["flags"].iterrows():
+                if f["flags"]:
+                    L.append(f"- RISK {f['ticker']}: " +
+                             "; ".join(f["flags"]))
+        L.append("")
+    L += ["## NO-CALL markets", ", ".join(no_call_markets) +
+          " — no validated universe; explicit refusal, not omission.", "",
+          "## Graded track record (misses included)",
+          results[0]["track_record"].to_markdown(index=False), ""]
+    if notes:
+        L += ["## Notes", notes]
+    return "\n".join(L)

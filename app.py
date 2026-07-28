@@ -18,10 +18,13 @@ st.set_page_config(page_title="Execution Analytics Platform",
 st.sidebar.title("Execution Analytics")
 st.sidebar.markdown("---")
 page = st.sidebar.radio("Module", [
+    "🚀 Guided Demo (start here)",
     "📈 Execution Algorithm Simulator",
     "🔄 Index Rebalancing Analysis",
+    "🔁 Rebalance Trade Lifecycle",
     "🧺 Program Trading Desk",
     "📋 Quarterly Client Review",
+    "🛡️ Reg-Watch",
 ])
 
 st.sidebar.markdown("---")
@@ -56,14 +59,21 @@ with st.sidebar.expander("ℹ️ Data Sources & Limitations"):
     )
 
 
-from views import (page1_simulator, page2_rebalancing, page3_program,
-                   page4_quarterly_review)
+from views import (page0_tour, page1_simulator, page2_rebalancing,
+                   page3_program, page4_quarterly_review, page5_regwatch,
+                   page6_lifecycle)
 
-if page == "📈 Execution Algorithm Simulator":
+if page == "🚀 Guided Demo (start here)":
+    page0_tour.render()
+elif page == "📈 Execution Algorithm Simulator":
     page1_simulator.render()
 elif page == "🔄 Index Rebalancing Analysis":
     page2_rebalancing.render()
+elif page == "🔁 Rebalance Trade Lifecycle":
+    page6_lifecycle.render()
 elif page == "🧺 Program Trading Desk":
     page3_program.render()
 elif page == "📋 Quarterly Client Review":
     page4_quarterly_review.render()
+elif page == "🛡️ Reg-Watch":
+    page5_regwatch.render()
