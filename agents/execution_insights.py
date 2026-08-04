@@ -1,6 +1,14 @@
 """Step-4 execution insights — post-trade analytics for index
 rebalance events (session 8i).
 
+RELATIONSHIP (session 9i): this module is the WITH-FILLS path
+(grades actual/simulated executions vs estimates). Its sibling
+agents/post_event.py is the NO-FILLS path — benchmark strips,
+strategy leaderboards, the estimate ledger, reversal tracking, and
+crowding resolution computed from tape alone. On the desk the two
+merge into one debrief: post_event supplies the market anatomy,
+this module grades the fills against it.
+
 Assumes Step-3 dynamics are simulable/measurable (replay simulator +
 auction derivation); extracts the insights that win next quarter's
 mandate (lifecycle 4.2/4.4/4.5):

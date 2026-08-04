@@ -1,0 +1,23 @@
+{
+ "priors": {
+  "Buy": {
+   "median": 7.7,
+   "max": 21.3,
+   "n": 53,
+   "basis": "JP decade name-events, print-verified, daily yfinance"
+  },
+  "Sell": {
+   "median": 10.0,
+   "max": 24.5,
+   "n": 113,
+   "basis": "JP decade name-events, print-verified, daily yfinance"
+  }
+ },
+ "verification": {
+  "n_total": 181,
+  "verified": 166,
+  "print_weak": 6,
+  "no_material": 9
+ },
+ "note": "survivorship: delisted JP names absent from yfinance \u2014 verification covers survivors only, stated"
+}

@@ -1,0 +1,376 @@
+Geneva, May 14, 2024
+
+MSCI GLOBAL STANDARD INDEXES
+
+The following are changes in constituents for the MSCI Global Standard Indexes
+which will take place as of the close of May 31, 2024.
+
+SUMMARY PER COUNTRY and PER REGION:
+
+
+                               Nb of                       Nb of
+                               Securities                  Securities
+Region         Country         Added                       Deleted
+
+Asia Pacific
+               AUSTRALIA       1                           1
+               JAPAN           1                           15
+               HONG KONG       0                           2
+               NEW ZEALAND     0                           1
+               INDONESIA       1                           2
+               PHILIPPINES     0                           1
+               TAIWAN          2                           3
+               KOREA           3                           4
+               THAILAND        0                           3
+               INDIA           13                          3
+               CHINA           10                          56
+               SINGAPORE       0                           5
+
+                               Nb of                       Nb of
+                               Securities                  Securities
+Region         Country         Added                       Deleted
+
+Europe, Middle East and Africa
+             SPAIN             1                           1
+             FRANCE            0                           1
+             GERMANY           1                           0
+             NETHERLANDS       1                           0
+             SWEDEN            1                           0
+             UNITED KINGDOM    0                           4
+             SAUDI ARABIA      1                           0
+             POLAND            0                           1
+             EGYPT             1                           1
+
+                               Nb of                       Nb of
+                               Securities                  Securities
+Region         Country         Added                       Deleted
+
+Americas
+               USA             4                           15
+               BRAZIL          1                           2
+
+
+ASIA PACIFIC
+
+MSCI AUSTRALIA INDEX
+Additions                                Deletions
+PRO MEDICUS                              IDP EDUCATION
+
+
+MSCI JAPAN INDEX
+Additions                                Deletions
+ASICS CORP                               ASAHI INTECC CO
+                                         AZBIL CORP
+                                         GLP J REIT
+                                         HIROSE ELECTRIC CO
+                                         IIDA GROUP HOLDINGS CO
+                                         JAPAN METROPOLITAN FUND
+                                         KDX REALTY INV CORP
+                                         MISUMI GROUP
+                                         ODAKYU ELECTRIC RAILWAY
+                                         SHARP CORP
+                                         SHIMIZU CORP
+                                         SQUARE ENIX HOLDINGS CO
+                                         TOBU RAILWAY CO
+
+Page 1                                MSCI Global Standard Indexes - May 14, 2024   © MSCI 2024, All rights reserved
+                              USS CO
+                              YAMAHA CORP
+
+
+MSCI HONG KONG INDEX
+Additions                     Deletions
+None                          ESR GROUP
+                              HANG LUNG PROPERTIES
+
+
+MSCI NEW ZEALAND INDEX
+Additions                     Deletions
+None                          EBOS GROUP
+
+
+MSCI INDONESIA INDEX
+Additions                     Deletions
+CHANDRA ASRI PACIFIC          SARANA MENARA NUSANTARA
+                              SEMEN INDONESIA
+
+
+MSCI PHILIPPINES INDEX
+Additions                     Deletions
+None                          ABOITIZ EQUITY VENTURES
+
+
+MSCI TAIWAN INDEX
+Additions                     Deletions
+ASIA VITAL COMPONENTS         NAN YA PRINTED CIRCUIT
+FORTUNE ELECTRIC CO           PARADE TECHNOLOGIES
+                              POWERCHIP SEMICONDUCTOR
+
+
+MSCI KOREA INDEX
+Additions                     Deletions
+ALTEOGEN                      HANON SYSTEMS
+ENCHEM                        KAKAOPAY CORP
+HD HYUNDAI ELECTRIC           KANGWON LAND
+                              SAMSUNG SECURITIES CO
+
+
+MSCI THAILAND INDEX
+Additions                     Deletions
+None                          BTS GROUP HOLDINGS
+                              LAND & HOUSES
+                              MUANGTHAI CAPITAL PUBLIC
+
+
+MSCI INDIA INDEX
+Additions                     Deletions
+BOSCH                         BERGER PAINTS INDIA
+CANARA BANK                   INDRAPRASTHA GAS
+INDUS TOWERS                  ONE 97 COMMUNICATIONS
+JINDAL STAINLESS
+JSW ENERGY
+MANKIND PHARMA
+NHPC
+PB FINTECH
+PHOENIX MILLS
+SOLAR INDUSTRIES INDIA
+SUNDARAM FINANCE
+THERMAX
+TORRENT POWER
+
+
+MSCI CHINA INDEX
+Additions                     Deletions
+CITIC PACIFIC A (HK-C)        AIR CHINA H
+CNOOC ENERGY TECH A HK-C      ASIA POTASH INTL A(HK-C)
+HISENSE HOME A (HK-C)         ASR MICROELEC A (HK-C)
+HISENSE HOME APPL GRP H       BEIJING DABEINO A (HK-C)
+JCHX MINING MGMT A(HK-C)      CANMAX TECH A (HK-C)
+MMG                           CECEP SOLAR ENER A(HK-C)
+NANJING IRON A(HK-C)          CHENGXIN LITHIUM A(HK-C)
+PINGDINGSHAN TI A (HK-C)      CHINA CINDA ASSET MGMT H
+
+Page 2                     MSCI Global Standard Indexes - May 14, 2024   © MSCI 2024, All rights reserved
+TIAN DI SCIENCE A (HK-C)            CHINA MEDICAL SYSTEM
+ZHEJIANG WANFENG A(HK-C)            CHINA OVERSEAS PPTY HLDG
+                                    CHONGQING TAIJI A (HK-C)
+                                    COSCO SHIPPING PORTS
+                                    COUNTRY GARDEN HLDGS
+                                    COUNTRY GARDEN SVCS
+                                    DONGFENG MOTOR GROUP H
+                                    EAST BUY HOLDING
+                                    FANGDA CARBON A (HK-C)
+                                    FUJIAN SUNNER A (HK-C)
+                                    FUTURE LAND HLD A (HK-C)
+                                    GIANT NETWORK A (HK-C)
+                                    GREENLAND HLDGS A (HK-C)
+                                    HANGZHOU BINJIA A (HK-C)
+                                    HANGZHOU CHANG A (HK-C)
+                                    HOYMILES POWER A (HK-C)
+                                    IRAY TECHNOLOGY A (HK-C)
+                                    JIANGSU GOODWE A(HK-C)
+                                    JIANGXI SPECIAL A (HK-C)
+                                    JIUGUI LIQUOR A (HK-C)
+                                    KEDA INDL GRP A (HK-C)
+                                    KINGBOARD HOLDINGS (CN)
+                                    MEINIAN ONEHEALT A(HK-C)
+                                    MING YANG SMART A (HK-C)
+                                    NANJING KING A (HK-C)
+                                    OFFCN EDUCATION A (HK-C)
+                                    PERFECT WORLD A (HK-C)
+                                    QI AN XIN TECH A (HK-C)
+                                    RISEN ENERGY A (HK-C)
+                                    SANY HEAVY EQUIPMENT INT
+                                    SHANGHAI BAIRUN A (HK-C)
+                                    SHANGHAI FOSUN PHARMA H
+                                    SHANGHAI JUNSHI A (HK-C)
+                                    SHENZHEN KAIFA A (HK-C)
+                                    SHENZHEN OVERSEA A(HK-C)
+                                    SHENZHEN SC NEW A (HK-C)
+                                    SHENZHEN SED A (HK-C)
+                                    SKSHU PAINT A (HK-C)
+                                    TIANJIN 712 COMM A(HK-C)
+                                    TIANMA MICROELE A (HK-C)
+                                    TOPCHOICE MED A (HK-C)
+                                    TSINGHUA TONGFA A (HK-C)
+                                    VERISILICON MIC A (HK-C)
+                                    YANGZHOU YANGJIE A(HK-C)
+                                    YONGHUI SUPERST A (HK-C)
+                                    YUEXIU PROPERTY CO
+                                    ZAI LAB
+                                    ZHONGAN ONLINE P&C H
+
+
+MSCI SINGAPORE INDEX
+Additions                           Deletions
+None                                CITY DEVELOPMENTS
+                                    JARDINE CYCLE & CARRIAGE
+                                    MAPLETREE LOGISTICS
+                                    MAPLETREE PAN ASIA COMM
+                                    SEATRIUM
+
+
+EUROPE, MIDDLE EAST AND AFRICA
+
+MSCI SPAIN INDEX
+Additions                           Deletions
+BANCO SABADELL                      ENAGAS
+
+
+MSCI FRANCE INDEX
+Additions                           Deletions
+None                                WORLDLINE
+
+
+MSCI GERMANY INDEX
+Additions                           Deletions
+CTS EVENTIM                         None
+
+
+Page 3                           MSCI Global Standard Indexes - May 14, 2024   © MSCI 2024, All rights reserved
+MSCI NETHERLANDS INDEX
+Additions                      Deletions
+INPOST                         None
+
+
+MSCI SWEDEN INDEX
+Additions                      Deletions
+TRELLEBORG B                   None
+
+
+MSCI UNITED KINGDOM INDEX
+Additions                      Deletions
+None                           ABRDN
+                               CRH
+                               OCADO GROUP
+                               ST JAMES'S PLACE
+
+
+MSCI SAUDI ARABIA INDEX
+Additions                      Deletions
+SAL SAUDI LOGISTICS SVCS       None
+
+
+MSCI POLAND INDEX
+Additions                      Deletions
+None                           PEPCO GROUP(PL)
+
+
+MSCI EGYPT INDEX
+Additions                      Deletions
+TMG HOLDING                    EFG HOLDING
+
+
+AMERICAS
+
+MSCI USA INDEX
+Additions                      Deletions
+CRH (US)                       BILL HOLDINGS
+EMCOR GROUP                    BORGWARNER
+MICROSTRATEGY                  DARLING INGREDIENTS
+PURE STORAGE                   DROPBOX A
+                               FMC CORP
+                               GLOBE LIFE
+                               HASBRO
+                               JAZZ PHARMACEUTICALS
+                               LEAR CORP
+                               LIBERTY BROADBAND C
+                               LIBERTY GLOBAL C
+                               LIBERTY SIRIUSXM C
+                               ROBERT HALF
+                               SIRIUS XM HOLDINGS
+                               VAIL RESORTS
+
+
+MSCI BRAZIL INDEX
+Additions                      Deletions
+BRF ON                         BK SANTANDER BRASIL UNIT
+                               MAGAZINE LUIZA ON
+
+
+
+
+Page 4                      MSCI Global Standard Indexes - May 14, 2024   © MSCI 2024, All rights reserved
+Notice and Disclaimer
+
+•     This document and all of the information contained in it, including without limitation all text, data, graphs, charts (collectively, the “Information”) is the property of
+      MSCI Inc. or its subsidiaries (collectively, “MSCI”), or MSCI’s licensors, direct or indirect suppliers or any third party involved in making or compiling any Information
+      (collectively, with MSCI, the “Information Providers”) and is provided for informational purposes only. The Information may not be modified, reverse-engineered,
+      reproduced or redisseminated in whole or in part without prior written permission from MSCI.
+
+•     The Information may not be used to create derivative works or to verify or correct other data or information. For example (but without limitation), the Information may
+      not be used to create indexes, databases, risk models, analytics, software, or in connection with the issuing, offering, sponsoring, managing or marketing of any
+      securities, portfolios, financial products or other investment vehicles utilizing or based on, linked to, tracking or otherwise derived from the Information or any other
+      MSCI data, information, products or services.
+
+•     The user of the Information assumes the entire risk of any use it may make or permit to be made of the Information. NONE OF THE INFORMATION PROVIDERS
+      MAKES ANY EXPRESS OR IMPLIED WARRANTIES OR REPRESENTATIONS WITH RESPECT TO THE INFORMATION (OR THE RESULTS TO BE OBTAINED
+      BY THE USE THEREOF), AND TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, EACH INFORMATION PROVIDER EXPRESSLY DISCLAIMS
+      ALL IMPLIED WARRANTIES (INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF ORIGINALITY, ACCURACY, TIMELINESS, NON-
+      INFRINGEMENT, COMPLETENESS, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE) WITH RESPECT TO ANY OF THE INFORMATION.
+
+•     Without limiting any of the foregoing and to the maximum extent permitted by applicable law, in no event shall any Information Provider have any liability regarding
+      any of the Information for any direct, indirect, special, punitive, consequential (including lost profits) or any other damages even if notified of the possibility of such
+      damages. The foregoing shall not exclude or limit any liability that may not by applicable law be excluded or limited, including without limitation (as applicable), any
+      liability for death or personal injury to the extent that such injury results from the negligence or willful default of itself, its servants, agents or sub-contractors.
+
+•     Information containing any historical information, data or analysis should not be taken as an indication or guarantee of any future performance, analysis, forecast or
+      prediction. Past performance does not guarantee future results.
+
+•     The Information should not be relied on and is not a substitute for the skill, judgment and experience of the user, its management, employees, advisors and/or clients
+      when making investment and other business decisions. All Information is impersonal and not tailored to the needs of any person, entity or group of persons.
+
+•     None of the Information constitutes an offer to sell (or a solicitation of an offer to buy), any security, financial product or other investment vehicle or any trading
+      strategy.
+
+•     It is not possible to invest directly in an index. Exposure to an asset class or trading strategy or other category represented by an index is only available through third
+      party investable instruments (if any) based on that index. MSCI does not issue, sponsor, endorse, market, offer, review or otherwise express any opinion regarding
+      any fund, ETF, derivative or other security, investment, financial product or trading strategy that is based on, linked to or seeks to provide an investment return related
+      to the performance of any MSCI index (collectively, “Index Linked Investments”). MSCI makes no assurance that any Index Linked Investments will accurately track
+      index performance or provide positive investment returns. MSCI Inc. is not an investment adviser or fiduciary and MSCI makes no representation regarding the
+      advisability of investing in any Index Linked Investments.
+
+•     Index returns do not represent the results of actual trading of investible assets/securities. MSCI maintains and calculates indexes, but does not manage actual assets.
+      Index returns do not reflect payment of any sales charges or fees an investor may pay to purchase the securities underlying the index or Index Linked Investments.
+      The imposition of these fees and charges would cause the performance of an Index Linked Investment to be different than the MSCI index performance.
+
+•     The Information may contain back tested data. Back-tested performance is not actual performance, but is hypothetical. There are frequently material differences
+      between back tested performance results and actual results subsequently achieved by any investment strategy.
+
+•     Constituents of MSCI equity indexes are listed companies, which are included in or excluded from the indexes according to the application of the relevant index
+      methodologies. Accordingly, constituents in MSCI equity indexes may include MSCI Inc., clients of MSCI or suppliers to MSCI. Inclusion of a security within an MSCI
+      index is not a recommendation by MSCI to buy, sell, or hold such security, nor is it considered to be investment advice.
+
+•     Data and information produced by various affiliates of MSCI Inc., including MSCI ESG Research Inc. and Barra LLC, may be used in calculating certain MSCI
+      indexes. More information can be found in the relevant index methodologies on www.msci.com.
+
+•     MSCI receives compensation in connection with licensing its indexes to third parties. MSCI Inc.’s revenue includes fees based on assets in Index Linked Investments.
+      Information can be found in MSCI Inc.’s company filings on the Investor Relations section of www.msci.com.
+
+•     MSCI ESG Research Inc. is a Registered Investment Adviser under the Investment Advisers Act of 1940 and a subsidiary of MSCI Inc. Except with respect to any
+      applicable products or services from MSCI ESG Research, neither MSCI nor any of its products or services recommends, endorses, approves or otherwise expresses
+      any opinion regarding any issuer, securities, financial products or instruments or trading strategies and MSCI’s products or services are not intended to constitute
+      investment advice or a recommendation to make (or refrain from making) any kind of investment decision and may not be relied on as such. Issuers mentioned or
+      included in any MSCI ESG Research materials may include MSCI Inc., clients of MSCI or suppliers to MSCI, and may also purchase research or other products or
+      services from MSCI ESG Research. MSCI ESG Research materials, including materials utilized in any MSCI ESG Indexes or other products, have not been submitted
+      to, nor received approval from, the United States Securities and Exchange Commission or any other regulatory body.
+
+•     Any use of or access to products, services or information of MSCI requires a license from MSCI. MSCI, Barra, RiskMetrics, IPD, FEA, InvestorForce, and other
+      MSCI brands and product names are the trademarks, service marks, or registered trademarks of MSCI or its subsidiaries in the United States and other jurisdictions.
+      The Global Industry Classification Standard (GICS) was developed by and is the exclusive property of MSCI and Standard & Poor’s. “Global Industry Classification
+      Standard (GICS)” is a service mark of MSCI and Standard & Poor’s.
+
+© 2024 MSCI. All rights reserved.
+
+About MSCI
+
+For more than four decades, MSCI (NYSE: MSCI) has helped global investors build and manage better portfolios. Our research-based tools and
+services provide our clients with deeper insights into drivers of risk and performance, broad asset class coverage and innovative ways to bring
+investment strategies to market. Our offerings include indexes, data, analytical models, regulatory reporting and ESG research. MSCI’s clients include
+95 of the world’s 100 largest money managers, as ranked by P&I. For more information, visit us at www.msci.com.
+
+
+
+
+Page 5                                                    MSCI Global Standard Indexes - May 14, 2024                                  © MSCI 2024, All rights reserved
+

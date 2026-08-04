@@ -1,0 +1,67 @@
+{
+ "n_rows": 86,
+ "violence_v2": {
+  "n": 86,
+  "all": {
+   "a": 38.912,
+   "b": 232.353,
+   "resid_std": 334.022,
+   "r2": 0.033,
+   "n": 86
+  },
+  "FTSE": {
+   "n": 58,
+   "r2": 0.023,
+   "b": 306.8
+  },
+  "MSCI": {
+   "n": 28,
+   "r2": 0.091,
+   "b": 92.5
+  }
+ },
+ "decompose": {
+  "n": {
+   "('FTSE', 'Buy')": 29,
+   "('FTSE', 'Sell')": 29,
+   "('MSCI', 'Buy')": 8,
+   "('MSCI', 'Sell')": 20
+  },
+  "am": {
+   "('FTSE', 'Buy')": -91.0,
+   "('FTSE', 'Sell')": -13.3,
+   "('MSCI', 'Buy')": 44.3,
+   "('MSCI', 'Sell')": 0.0
+  },
+  "pm": {
+   "('FTSE', 'Buy')": 0.0,
+   "('FTSE', 'Sell')": -17.2,
+   "('MSCI', 'Buy')": 12.1,
+   "('MSCI', 'Sell')": 0.0
+  },
+  "auction": {
+   "('FTSE', 'Buy')": -13.9,
+   "('FTSE', 'Sell')": -79.2,
+   "('MSCI', 'Buy')": 0.0,
+   "('MSCI', 'Sell')": 0.0
+  },
+  "abs_gap": {
+   "('FTSE', 'Buy')": 89.2,
+   "('FTSE', 'Sell')": 79.2,
+   "('MSCI', 'Buy')": 29.1,
+   "('MSCI', 'Sell')": 57.0
+  },
+  "share": {
+   "('FTSE', 'Buy')": 0.5,
+   "('FTSE', 'Sell')": 0.7,
+   "('MSCI', 'Buy')": 0.1,
+   "('MSCI', 'Sell')": 0.6
+  }
+ },
+ "thin_rich": {
+  "n": 80,
+  "spearman_rho": 0.306,
+  "p_value": 0.0057,
+  "note": "late continuous run-rate vs relative print size; proxy for the indicative read pending the real archive (Aug-31)"
+ }
+}

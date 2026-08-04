@@ -25,61 +25,402 @@ def _crowding_caches():
         return {}
 
 
-def _tab1_win_the_trade():
-    from agents.event_data import CROWDING_SOURCES
-    from agents.pitch_pack import track_record
-    from agents.review_engine import crowding_reads
-    st.subheader("Step 1 — Winning the trade (Phase-0 analytics)")
-    st.caption(
-        "What the sales trader shows the client BEFORE the order "
-        "exists: the graded track record, honest probabilities, and "
-        "the positioning overlay nobody else sends.")
+def _truncated_tw_cache(upto: str) -> dict:
+    """TW short archive truncated for the PIT replay — nothing after
+    the announcement date enters the crowding read."""
+    try:
+        c = json.loads((DATA / "event_data_cache.json").read_text())
+        return {"short": {d: v for d, v in c.get("short", {}).items()
+                          if d <= upto}}
+    except Exception:
+        return {}
 
-    st.markdown("**The graded track record (misses included)**")
-    st.dataframe(track_record(), use_container_width=True,
-                 hide_index=True)
 
-    st.markdown("**Crowding coverage — the honest grid**")
-    st.dataframe(pd.DataFrame(CROWDING_SOURCES).T.reset_index()
-                 .rename(columns={"index": "market"}),
-                 use_container_width=True, hide_index=True)
-
-    st.markdown("**Live positioning read** — type tickers "
-                "(TW/JP/HK/CN-H codes), get the crowding color the "
-                "pitch quotes")
-    tickers = st.text_input(
-        "Tickers (comma-separated)", "1101.TW, 0027.HK, 9995.HK",
-        key="t1_tickers")
-    if st.button("Read positioning", key="t1_go"):
-        names = [t.strip() for t in tickers.split(",") if t.strip()]
+def _run_event_engine(event, markets):
+    """Run the full review engine for the selected event's markets
+    from cached universes. Returns (results, boundary, crowding).
+    engine=='pit' freezes every input at pre-announcement vintage:
+    Apr-30 caps, PRE-May membership, Feb-only ledgers (the May list
+    is the answer key), crowding truncated at the announcement."""
+    from agents.pre_event_marketing import boundary_watch
+    from agents.reconstitution import parse_msci_public_list
+    from agents.review_engine import crowding_reads, run_full_review
+    from scripts.pit_may2026_asia import ACTUAL
+    from scripts.run_full_review_asia import (COUNT, PRE_COUNT, RANGE,
+                                              pit_screen, pit_universe,
+                                              post_may_universe)
+    from scripts.run_qir_aug2026 import TW_ALIASES
+    pit = event["engine"] == "pit"
+    ledger_files = ("feb26",) if pit else ("feb26", "may26")
+    ledgers = [parse_msci_public_list(
+        (DATA / f"msci_{p}_public_list.txt").read_text())
+        for p in ledger_files]
+    try:
+        event_cache = json.loads(
+            (DATA / "event_flow_study.json").read_text())
+    except Exception:
+        event_cache = None
+    if pit:
+        caches = {"Taiwan": _truncated_tw_cache(
+            event["ann"].replace("-", ""))}
+    else:
         caches = _crowding_caches()
-        rows = []
-        for mkt, cache in caches.items():
-            for base, label in crowding_reads(cache, names).items():
-                rows.append({"ticker": base, "market": mkt,
-                             "crowding": label})
-        if rows:
-            st.dataframe(pd.DataFrame(rows).drop_duplicates("ticker"),
-                         use_container_width=True, hide_index=True)
-            st.caption(
-                "HIGH build into the event = consensus/priced; LOW "
-                "or EXITING = the move is still unpriced — that "
-                "distinction is the pitch's rarest line.")
+    LEDGER_COUNTRY = {"Taiwan": "TAIWAN", "Japan": "JAPAN",
+                      "Korea": "KOREA", "China": "CHINA",
+                      "India": "INDIA", "Malaysia": "MALAYSIA",
+                      "Indonesia": "INDONESIA",
+                      "HongKong": "HONG KONG"}
+    results, boundary, crowding = [], {}, {}
+    for mkt in markets:
+        u = pit_universe(mkt) if pit else post_may_universe(mkt)
+        hi, n = RANGE[mkt]
+        r = run_full_review(
+            mkt, u, TW_ALIASES if mkt == "Taiwan" else {},
+            ledgers, LEDGER_COUNTRY[mkt],
+            short_cache=caches.get(mkt), event_cache=event_cache,
+            review=event["review"],
+            member_count=(PRE_COUNT if pit else COUNT)[mkt],
+            a_share_tail_mix=(mkt == "China"), tail_hi=hi, tail_n=n,
+            recent_deletions=(set() if pit
+                              else set(ACTUAL[mkt]["dels"])),
+            recent_additions=(set() if pit
+                              else set(ACTUAL[mkt]["adds"])),
+            screen=(pit_screen(mkt, u) if pit else None))
+        results.append(r)
+        b = boundary_watch(u, r["gmsr_usd"], r["add_threshold_usd"])
+        boundary[mkt] = b
+        crowding.update(crowding_reads(
+            caches.get(mkt), list(b["ticker"])))
+    return results, boundary, crowding
+
+
+def _funnel_expander():
+    """Session 9i: the screening funnel — universe -> conditions ->
+    candidates, from data/funnel_tw.json (scripts/funnel_demo.py).
+    Shows the validated May-26 replay next to the Aug-26 prediction."""
+    import json
+    from pathlib import Path
+    p = Path("data/funnel_tw.json")
+    if not p.exists():
+        return
+    with st.expander("🔻 Screening funnel — how ~500 names become "
+                     "the call sheet (Taiwan)"):
+        blob = json.loads(p.read_text())
+        which = st.radio("Run", ["prediction", "validation"],
+                         horizontal=True, key="funnel_which",
+                         format_func=lambda k:
+                         blob[k]["event"])
+        stages = blob[which]["stages"]
+        import plotly.graph_objects as go
+        fig = go.Figure(go.Funnel(
+            y=[s["stage"] for s in stages],
+            x=[max(s["n"], 0) for s in stages],
+            textinfo="value",
+            marker={"color": ["#4C78A8"] * (len(stages) - 1)
+                    + ["#E45756"]}))
+        fig.update_layout(height=380,
+                          margin=dict(l=10, r=10, t=10, b=10))
+        st.plotly_chart(fig, use_container_width=True)
+        st.dataframe(
+            [{"stage": s["stage"], "n": s["n"], "rule": s["rule"],
+              "detail": s["detail"]} for s in stages],
+            use_container_width=True, hide_index=True)
+        if which == "validation" and "grade" in blob[which]:
+            g = blob[which]["grade"]
+            st.markdown(
+                f"**Graded vs the official May-26 key:** deletions "
+                f"hit {len(g['dels_hit'])}/7, add hit "
+                f"{len(g['adds_hit'])}/1; false deletes "
+                f"{g['false_dels']} — the known cutline residents "
+                "(the hazard class, ~2/3 convert at a later SAIR); "
+                "nothing ungradable in this run.")
         else:
-            st.warning("No archive data for these tickers (see the "
-                       "coverage grid; KR/MY/IN/ID have no live "
-                       "public source).")
+            st.caption(
+                "Zero calls at the OBSERVABLE margin. The blind band "
+                "below the 16-name floor is DECLARED (decade says ~2 "
+                "TW Aug-QIR changes typically live there) — see "
+                "TAIWAN_MARKET_ANALYSIS §6c.")
+
+
+def _tday_cards_expander():
+    """Session 9i: T-day forecast cards for shortlist names —
+    every metric carries its formula/source/basis (METHOD table)."""
+    import json
+    from pathlib import Path
+    p = Path("data/tday_cards_aug26.json")
+    if not p.exists():
+        return
+    with st.expander("🃏 T-day forecast cards — Aug-2026 TW "
+                     "shortlist (transparent methodology)"):
+        blob = json.loads(p.read_text())
+        from agents.tday_cards import METHOD
+        with st.popover("METHOD — how every number is calculated"):
+            for m, d in METHOD.items():
+                st.markdown(f"**{m}** — {d['rule']}  \n"
+                            f"*source: {d['source']} | basis: "
+                            f"{d['basis']}*")
+        for c in blob["cards"]:
+            if "note" in c:
+                st.info(f"{c['side']} {c['ticker']} "
+                        f"p={c['p_convert']}: {c['note']}")
+                continue
+            head = (f"**{c['side']} {c['ticker']}** — "
+                    f"p={c['p_convert']:.3f} | flow if converts "
+                    f"${c['flow_if_converts_usd_m'][0]}-"
+                    f"{c['flow_if_converts_usd_m'][1]}M | "
+                    f"{c['bucket']}")
+            with st.container(border=True):
+                st.markdown(head)
+                cols = st.columns(3)
+                pm = c.get("print_multiple", {})
+                cols[0].metric("Print multiple (med)",
+                               f"{pm.get('median', '—')}x"
+                               if pm.get("median") else "no prior")
+                fp = c.get("auction_footprint_pct", "—")
+                cols[1].metric("Auction footprint", f"{fp}%")
+                cols[2].metric("Gap band",
+                               c.get("gap_band_bps", {}).get(
+                                   "band", "—"))
+                st.caption(f"Crowding: {c['crowding']} · "
+                           f"Playbook: {c['playbook']}")
+
+
+def _tab1_win_the_trade():
+    from agents.pre_event_marketing import (EVENTS, days_to,
+                                            render_marketing_md)
+    st.subheader("Step 1 — Winning the trade")
+    st.caption(
+        "Pick the event the client is asking about; the engine runs "
+        "and generates the pre-event marketing pack — the call "
+        "sheet, the boundary watch, the positioning overlay, and "
+        "the client note to send.")
+    # session 9i: the freshness guarantee — every live UI visit
+    # checks (TTL-guarded) that the short cache is at the most
+    # recent published day, auto-refreshing if not. Never silent.
+    try:
+        from agents.data_freshness import (ensure_fresh_shorts,
+                                           freshness_line)
+        fr = ensure_fresh_shorts()
+        (st.warning if fr["status"] == "DEGRADED" else st.caption)(
+            freshness_line(fr))
+        if fr["fetched_days"]:
+            st.caption("Note: pre-generated artifacts (cards/packs) "
+                       "may predate this refresh — regenerate via "
+                       "scripts/pre_announcement_demo.py for "
+                       "current reads.")
+    except Exception as e:                             # noqa: BLE001
+        st.warning(f"Freshness check unavailable ({e}) — reads may "
+                   "be stale.")
+    _funnel_expander()
+    _tday_cards_expander()
+
+    event_name = st.selectbox("Index rebalance event",
+                              list(EVENTS.keys()), key="t1_event")
+    event = EVENTS[event_name]
+    c1, c2, c3, c4 = st.columns(4)
+    dta = days_to(event["ann"])
+    c1.metric("Announcement", event["ann"],
+              f"T-{dta}" if dta >= 0 else "announced")
+    c2.metric("Effective close", event["eff"])
+    c3.metric("Provider / review",
+              f"{event['provider']} {event['review']}")
+    c4.metric("Engine", event["engine"].upper())
+    st.caption(event["note"])
+
+    if event["engine"] == "reference":
+        st.info(
+            "**Reference mode (honesty line).** No validated live "
+            "rank universe for this event yet — we show the graded "
+            "reference, not a fabricated list. June-2026 TW50 "
+            "record: adds 4/4 at the 40/61 rank buffers; deletion "
+            "side shipped as a watch zone (rank-boundary calls are "
+            "~50-60% by construction — cutline mechanics, stated). "
+            "See docs/case_studies/PITCH_PACK_TW50_Jun2026.md.")
+        return
+    if event["engine"] == "pit":
+        st.warning(
+            "**Point-in-time replay.** Inputs frozen BEFORE the "
+            "May-12 announcement: Apr-30 caps (historical prices), "
+            "pre-May membership, ledgers through Feb only, crowding "
+            "archive truncated at the announcement. The official "
+            "outcome exists but does NOT enter the run — generate "
+            "the prediction first, then open the self-grade at the "
+            "bottom.")
+
+    markets = st.multiselect("Markets in scope", event["markets"],
+                             default=event["markets"], key="t1_mkts")
+    if st.button("Run the engine → generate pre-event pack",
+                 type="primary", key="t1_go"):
+        with st.spinner("Screening universes, reconciling ledgers, "
+                        "reading positioning..."):
+            try:
+                results, boundary, crowding = _run_event_engine(
+                    event, markets)
+            except Exception as e:
+                st.error(f"Engine run failed: {e} — cached universe "
+                         "files required (data/pit_may26_asia_cache"
+                         ".json + MSCI public lists).")
+                return
+        st.session_state["t1_pack"] = (results, boundary, crowding,
+                                       event_name)
+
+    if st.session_state.get("t1_pack") and \
+            st.session_state["t1_pack"][3] == event_name:
+        results, boundary, crowding, _ = st.session_state["t1_pack"]
+        n_calls = sum(len(r["calls"][r["calls"]["call"] != "BLOCKED"])
+                      if len(r["calls"]) else 0 for r in results)
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Markets screened", len(results))
+        m2.metric("Live calls", n_calls)
+        m3.metric("Ledger violations",
+                  sum(len(r["violations"]) for r in results))
+        if n_calls == 0:
+            st.success(
+                "**Zero calls — and that IS the pitch.** Post-SAIR "
+                "QIRs are structurally quiet (66 deletions cleared "
+                "in May); telling the client 'nothing breaches, "
+                "here is who sits near the line' beats a fabricated "
+                "list. The boundary watch below is the conversation.")
+
+        st.markdown("### The call sheet")
+        for r in results:
+            calls = r["calls"]
+            live = (calls[calls["call"] != "BLOCKED"]
+                    if len(calls) else calls)
+            b = boundary.get(r["market"])
+            label = (f"{r['market']} — {len(live)} calls, "
+                     f"{int(b['at_risk'].sum()) if b is not None else 0} "
+                     "boundary names at watch")
+            with st.expander(label, expanded=len(live) > 0):
+                st.caption(f"GMSR ${r['gmsr_usd'] / 1e9:.1f}B · add "
+                           f"hurdle ${r['add_threshold_usd'] / 1e9:.1f}B")
+                if len(live):
+                    st.dataframe(live, use_container_width=True,
+                                 hide_index=True)
+                else:
+                    st.write("No calls at current caps.")
+                if b is not None and len(b):
+                    bb = b.copy()
+                    bb["crowding"] = [
+                        crowding.get(str(t).split(".")[0], "no data")
+                        for t in bb["ticker"]]
+                    st.markdown("**Boundary watch** (who moves this "
+                                "note before announcement)")
+                    st.dataframe(bb, use_container_width=True,
+                                 hide_index=True)
+
+        st.markdown("### What T-day looks like (measured)")
+        hist = results[0]["history"] if results else {}
+        hc1, hc2, hc3 = st.columns(3)
+        sell = hist.get("MSCI Sell", {})
+        if isinstance(sell, dict) and sell.get("available"):
+            hc1.metric("T-day volume (deletes)",
+                       f"{sell['median']:.0f}x ADV",
+                       f"max {sell['max']:.0f}x, n={sell['n']}")
+        hc2.metric("Front-run drift", "−4.3%", "MSCI deletes, measured")
+        hc3.metric("Reversal by T+5", "~50%", "completion leg planned")
+
+        st.markdown("### How every number is produced")
+        from agents.pre_event_marketing import METHODOLOGY
+        mcols = {"prediction": "🎯 Predictions (the rules engine)",
+                 "crowding": "📊 Crowding color",
+                 "flows": "💧 Expected flows",
+                 "probabilities": "🎲 The probabilities"}
+        for k, label in mcols.items():
+            with st.expander(label):
+                st.write(METHODOLOGY[k])
+
+        st.markdown("### Why believe this")
+        st.dataframe(results[0]["track_record"],
+                     use_container_width=True, hide_index=True)
+
+        if event["engine"] == "pit":
+            with st.expander("🔓 Reveal the official outcome — "
+                             "self-grade this prediction",
+                             expanded=False):
+                from agents.pre_event_marketing import \
+                    grade_predictions
+                from scripts.pit_may2026_asia import ACTUAL
+                g = grade_predictions(results, ACTUAL)
+                st.dataframe(g, use_container_width=True,
+                             hide_index=True)
+                st.caption(
+                    "Same grading discipline as every case study: "
+                    "hits, misses, AND false flags shown. Deletion "
+                    "false-flags cluster at the cutline (boundary "
+                    "survivors ~45-60% each — the watch-zone "
+                    "product exists for exactly this). Known named "
+                    "misses: 6201.T Toyota Industries (buyout "
+                    "deletion — cap unfetchable post-delisting; the "
+                    "corporate-action radar's job, rule exists), "
+                    "Indonesia FIF cuts (structural — provider "
+                    "discretion invisible to public float data). "
+                    "The full graded arc (34%→69% across 8 "
+                    "iterations) is docs/case_studies/"
+                    "PIT_MAY2026_ALL_ASIA.md.")
+
+        md = render_marketing_md(
+            event_name, EVENTS[event_name], results, boundary,
+            crowding, pd.Timestamp.today().strftime("%Y-%m-%d"))
+        st.download_button(
+            "📄 Download the client note (.md)", md,
+            file_name=f"pre_event_note_{event_name.split(' ')[0]}"
+                      f"_{EVENTS[event_name]['ann']}.md",
+            key="t1_dl")
+        st.caption(
+            "The note enforces the honesty rules in the artifact "
+            "itself: probabilities on every call, watch zones "
+            "labeled, NO-CALL where unvalidated, misses in the "
+            "record — the differentiation IS the honesty.")
+
+
+_MKT_FROM_SUFFIX = {".TW": "Taiwan (TWSE)", ".TWO": "Taiwan (TWSE)",
+                    ".HK": "Hong Kong (HKEX)", ".T": "Japan (TSE)",
+                    ".KS": "Korea (KRX)", ".SS": "China-A Shanghai",
+                    ".SZ": "China-A Shenzhen"}
+
+
+def _seed_basket_from_pack(pack) -> pd.DataFrame | None:
+    """The Step-1 → Step-2 handoff: at-risk boundary names + live
+    calls become the draft basket (client typically trades exactly
+    these). Quantities default to 1 ADV-day — the trader overwrites
+    with the client's real sizes."""
+    results, boundary, _, _ = pack
+    rows = []
+    for r in results:
+        calls = r["calls"]
+        live = calls[calls["call"] != "BLOCKED"] if len(calls) else calls
+        for _, c in live.iterrows():
+            rows.append((c["ticker"],
+                         "Buy" if c["call"] == "ADD" else "Sell"))
+        b = boundary.get(r["market"])
+        if b is not None and len(b):
+            for _, w in b[b["at_risk"]].iterrows():
+                rows.append((w["ticker"],
+                             "Sell" if w["side"] == "member"
+                             else "Buy"))
+    if not rows:
+        return None
+    out = []
+    for t, side in rows:
+        mkt = next((m for s, m in _MKT_FROM_SUFFIX.items()
+                    if str(t).endswith(s)), "Taiwan (TWSE)")
+        out.append([t, mkt, side, 1_000_000, 1_000_000, 30.0])
+    df = pd.DataFrame(out, columns=["ticker", "market", "side",
+                                    "qty_shares", "adv_shares",
+                                    "envelope_pct"])
+    return df.drop_duplicates("ticker")
 
 
 def _tab2_window():
-    from agents.event_window import build_window_plan
+    from agents.event_window import (build_window_plan,
+                                     render_window_plan)
     from agents.review_engine import crowding_reads
-    st.subheader("Step 2 — Announcement → T: the window planner")
+    st.subheader("Step 2 — The order is live: plan the window")
     st.caption(
-        "Edit the basket, set the client's terms, generate the "
-        "2.2 liquidity/risk sheet + 2.3 start schedule + documented "
-        "discretion decisions. Live crowding + live TWT93U borrow "
-        "where available.")
+        "The client awarded the trade and the basket arrived. Set "
+        "THEIR terms, generate the plan, scan the exceptions, send "
+        "the strategy memo.")
 
     default = pd.DataFrame([
         ["1101.TW", "Taiwan (TWSE)", "Sell", 2_500_000, 18_000_000, 30.0],
@@ -88,24 +429,38 @@ def _tab2_window():
         ["0027.HK", "Hong Kong (HKEX)", "Sell", 9_000_000, 21_000_000, 0.0],
     ], columns=["ticker", "market", "side", "qty_shares",
                 "adv_shares", "envelope_pct"])
-    basket = st.data_editor(default, num_rows="dynamic",
-                            use_container_width=True, key="t2_basket")
+    if st.session_state.get("t1_pack"):
+        if st.button("⬅️ Seed basket from the Step-1 pack "
+                     "(calls + at-risk boundary names)", key="t2_seed"):
+            seeded = _seed_basket_from_pack(
+                st.session_state["t1_pack"])
+            if seeded is not None:
+                st.session_state["t2_seeded"] = seeded
+            else:
+                st.info("Step-1 pack has no calls or at-risk names "
+                        "to seed — edit the basket directly.")
+    basket = st.data_editor(
+        st.session_state.get("t2_seeded", default),
+        num_rows="dynamic", use_container_width=True, key="t2_basket")
+
+    st.markdown("**The client's terms** (this is their mandate, "
+                "not ours)")
     c1, c2, c3, c4 = st.columns(4)
     eff = c1.text_input("Effective date", "2026-09-01", key="t2_eff")
     cap = c2.slider("Participation cap", 0.05, 0.5, 0.25, 0.05,
                     key="t2_cap")
-    tmed = c3.number_input("T-multiple (median, measured)", value=16.0,
-                           key="t2_tmed")
+    tmed = c3.number_input("T-multiple (median, measured)",
+                           value=16.0, key="t2_tmed")
     tmax = c4.number_input("T-multiple (max)", value=38.0,
                            key="t2_tmax")
-    if st.button("Generate window plan", key="t2_go"):
+
+    if st.button("Generate window plan", type="primary", key="t2_go"):
         b = basket.dropna(subset=["ticker"])
         envelopes = dict(zip(b["ticker"], b["envelope_pct"]))
         caches = _crowding_caches()
         crowding = {}
         for cache in caches.values():
-            crowding.update(crowding_reads(cache,
-                                           list(b["ticker"])))
+            crowding.update(crowding_reads(cache, list(b["ticker"])))
         sbl = None
         try:
             from agents.event_data import fetch_twse_short_balance
@@ -128,18 +483,190 @@ def _tab2_window():
                "adv_shares"]], eff, tmed, tmax,
             crowding_map=crowding, envelopes=envelopes,
             sbl_util=sbl, participation_cap=cap)
-        st.markdown("**2.2 Liquidity & risk per name**")
-        st.dataframe(plan["sheet"], use_container_width=True,
-                     hide_index=True)
-        st.markdown("**2.3a Start schedule**")
-        st.dataframe(plan["schedule"], use_container_width=True,
-                     hide_index=True)
-        st.markdown("**2.3b Discretion decisions (best-ex rationale "
-                    "attached)**")
-        for _, r in plan["decisions"].iterrows():
-            with st.expander(f"{r['ticker']} ({r['side']}): "
-                             f"{r['decision']}"):
-                st.write(r["rationale"])
+        st.session_state["t2_plan"] = {"plan": plan, "basket": b,
+                                       "eff": eff}
+
+    stored = st.session_state.get("t2_plan")
+    if not stored:
+        return
+    plan, b = stored["plan"], stored["basket"]
+    sheet, sched = plan["sheet"], plan["schedule"]
+
+    # ------ the exception row: what the trader scans FIRST
+    late = int(sched["status"].str.contains("LATE START").sum())
+    tight = int(sheet["borrow"].str.startswith("TIGHT").sum())
+    big = int((sheet["auction_footprint_pct"] > 30).sum())
+    multi = int((sheet["bucket"] == "MULTI-DAY").sum())
+    e1, e2, e3, e4 = st.columns(4)
+    e1.metric("MULTI-DAY names", multi)
+    e2.metric("LATE starts", late,
+              "escalate now" if late else "on time",
+              delta_color="inverse" if late else "off")
+    e3.metric("Auction footprint >30%", big,
+              "client conversation" if big else "clean",
+              delta_color="inverse" if big else "off")
+    e4.metric("Borrow TIGHT", tight,
+              "pre-arrange locates" if tight else "ok",
+              delta_color="inverse" if tight else "off")
+
+    st.markdown("**2.2 Liquidity & risk per name**")
+    st.dataframe(sheet, use_container_width=True, hide_index=True)
+    st.markdown("**2.3a Start schedule**")
+    st.dataframe(sched, use_container_width=True, hide_index=True)
+    st.markdown("**2.3b Discretion decisions** (approve before "
+                "anything trades — the rationale is pre-written, "
+                "the judgment is yours)")
+    for _, r in plan["decisions"].iterrows():
+        with st.expander(f"{r['ticker']} ({r['side']}): "
+                         f"{r['decision']}"):
+            st.write(r["rationale"])
+
+    md = render_window_plan(
+        plan, "Strategy memo — index rebalance basket",
+        pd.Timestamp.today().strftime("%Y-%m-%d"),
+        notes="Sent per our acknowledgment; discretion decisions "
+              "carry their best-ex rationale; daily progress notes "
+              "follow for multi-day names.")
+    st.download_button("📄 Download client strategy memo (.md)", md,
+                       file_name="strategy_memo.md", key="t2_dl")
+    st.caption("Plan stored — Step 3 reads it for the T-day watch "
+               "list; Step 4 grades it.")
+
+
+def _tab5_time_machine():
+    """Go back to any keyed review, stand on any day inside its
+    window, and see the Step-2 state with ONLY data <= that day.
+    Logic: agents/time_machine.py (structural PIT gate)."""
+    from agents.time_machine import (asof_panel, asof_step2,
+                                     ensure_window, event_panel,
+                                     list_events)
+    st.subheader("🕰️ Step-2 Time Machine — any review, any day, "
+                 "no peeking")
+    st.caption(
+        "Pick a keyed review (all TW50 quarters 2016-2026 + the "
+        "2026 MSCI events), fetch its official window data if "
+        "needed, then scrub the as-of day: every table and chart "
+        "is built from data ≤ that day — the future is never "
+        "loaded, not merely hidden. Formulas: "
+        "WINDOW_STUDY_2021_2026.md §0.")
+    ev = list_events()
+    ev_disp = ev[ev["n_changes"] > 0]
+    label = st.selectbox(
+        "Review event", ev_disp.apply(
+            lambda r: f"{r['event']}  ({r['n_changes']} changes, "
+                      f"window cached {r['days_cached']})",
+            axis=1), key="tm_event")
+    event = label.split("  (")[0]
+    row = ev_disp[ev_disp["event"] == event].iloc[0]
+    have, need = (int(x) for x in row["days_cached"].split("/"))
+    if have < need:
+        st.info(f"Window data: {have}/{need} sessions cached. "
+                "Fetching pulls official TWSE files "
+                "(quotes/shorts/foreign) for this window.")
+        if st.button("⬇️ Fetch official window data (~30-90s)",
+                     key="tm_fetch"):
+            with st.spinner("Backfilling from TWSE official "
+                            "endpoints (threaded)..."):
+                ensure_window(event)
+            st.rerun()
+        return
+    if st.session_state.get("tm_cache_key") != event:
+        st.session_state["tm_panel"] = event_panel(event)
+        st.session_state["tm_cache_key"] = event
+    panel = st.session_state["tm_panel"]
+    if not len(panel):
+        st.warning("No names computable for this window (data gaps "
+                    "at vintage — stated, not padded).")
+        return
+    days = sorted(panel["date"].unique())
+    asof = st.select_slider(
+        "As-of day (announcement is day 0, after the close)",
+        options=days, value=days[min(2, len(days) - 1)],
+        key="tm_asof")
+    p = asof_panel(panel, asof)
+
+    st.markdown(f"**Step-2 decision state as of {asof} "
+                f"(day {int(p['k'].max())} of {len(days)})**")
+    s2 = asof_step2(panel, asof)
+    st.dataframe(
+        s2[["code", "side", "fav_drift_bps", "t_mult_today",
+            "short_build", "A3_gate", "crowding_decision"]],
+        use_container_width=True, hide_index=True)
+    with st.expander("Decision rationales (best-ex evidence)"):
+        for _, r in s2.iterrows():
+            st.write(f"**{r['code']}** ({r['side']}): "
+                     f"{r['rationale']}")
+
+    import plotly.graph_objects as go
+    METRICS = {"Drift WITH the flow (bps)": "fav_drift_bps",
+               "Volume multiple vs baseline": "t_mult",
+               "Short-interest change since ann (%)":
+                   "short_chg_pct",
+               "Cumulative foreign net (x ADV)":
+                   "foreign_cum_x_adv"}
+    mlabel = st.selectbox("Metric evolution (up to the as-of day "
+                          "only)", list(METRICS), key="tm_metric")
+    col = METRICS[mlabel]
+    fig = go.Figure()
+    for code, g in p.groupby("code"):
+        g = g.sort_values("date")
+        fig.add_trace(go.Scatter(
+            x=g["date"], y=g[col],
+            name=f"{code} ({g['side'].iloc[0]})",
+            mode="lines+markers", marker=dict(size=4)))
+    fig.update_layout(height=400,
+                      margin=dict(l=10, r=10, t=30, b=10),
+                      yaxis_title=mlabel,
+                      title=f"{mlabel} — through {asof}")
+    st.plotly_chart(fig, use_container_width=True)
+    st.caption(
+        "What you CANNOT know yet on this day: the remaining "
+        "window's drift, the print, and the official outcome — "
+        "the chart ends at your as-of day because the data does. "
+        "Scrub forward to watch the information arrive.")
+
+
+def _playbook_expander():
+    """Session 9i: the T-day situations playbook — midday
+    observables -> measured outcomes, per cell."""
+    import json
+    from pathlib import Path
+    p = Path("data/tday_playbook.json")
+    if not p.exists():
+        return
+    with st.expander("📖 Situations playbook — 'you are here at "
+                     "noon → history says' (96 T-days, 24 events)"):
+        blob = json.loads(p.read_text())
+        c1, c2, c3 = st.columns(3)
+        side = c1.selectbox("Side", ["Sell", "Buy"], key="pb_side")
+        tape = c2.selectbox("Tape by noon",
+                            ["WITH-flow", "AGAINST-flow"],
+                            key="pb_tape")
+        vol = c3.selectbox("AM volume", ["HEAVY", "NORMAL"],
+                           key="pb_vol")
+        cell = next((c for c in blob["cells"]
+                     if c["side"] == side and c["am_tape"] == tape
+                     and c["am_vol"] == vol), None)
+        if not cell:
+            st.info("No cell found.")
+        elif cell["label"] == "DATA-THIN":
+            st.warning(f"DATA-THIN cell (n={cell['n']}, "
+                       f"{cell['n_events']} events) — no "
+                       "recommendation by rule.")
+        else:
+            m = st.columns(4)
+            m[0].metric("PM drift (med)", f"{cell['pm_fav']:+.0f} bp")
+            m[1].metric("Print gap (med)",
+                        f"{cell['gap_fav']:+.0f} bp")
+            m[2].metric("P(print favorable)",
+                        f"{cell['p_gap_fav']:.0%}")
+            m[3].metric("T+1 reversal (med)",
+                        f"{cell['t1_rev']:+.0f} bp")
+            st.caption(f"n={cell['n']} name-days across "
+                       f"{cell['n_events']} events | realized "
+                       f"auction share med {cell['share']}. Full "
+                       "reactions: docs/case_studies/"
+                       "TDAY_PLAYBOOK.md")
 
 
 def _tab3_tday():
@@ -147,17 +674,75 @@ def _tab3_tday():
     from agents.pt_dealer import AUCTION_CUTOFFS
     st.subheader("Step 3 — T-day: the cascade cockpit")
     st.caption(
-        "The run-sheet, and the day's ONE real-time decision — the "
-        "indicative-vs-expected read — as an interactive calculator. "
-        "Live feeds are PROTOCOL; the logic is the desk logic.")
+        "The day is the disciplined execution of Step 2's plan. "
+        "Morning check → lunch checkpoint → the close read per "
+        "market. Live feeds are PROTOCOL; the logic is the desk "
+        "logic.")
+    _playbook_expander()
 
-    st.markdown("**The Asia cascade run-sheet (close cutoffs, "
-                "local time)**")
+    stored = st.session_state.get("t2_plan")
+
+    # ------ 3.1 morning check: the watch list from the plan
+    st.markdown("### 3.1 Morning check")
+    if stored:
+        sheet = stored["plan"]["sheet"]
+        sched = stored["plan"]["schedule"]
+        watch = sheet[
+            sheet["limit_risk"].str.contains("LOCK")
+            | sheet["borrow"].str.startswith("TIGHT")
+            | (sheet["auction_footprint_pct"] > 30)].copy()
+        late = sched[sched["status"].str.contains("LATE START")]
+        w1, w2 = st.columns(2)
+        w1.metric("Names on the watch list", len(watch),
+                  "contingency notes attached" if len(watch)
+                  else "clean")
+        w2.metric("Working legs due today",
+                  int((sched["status"].str.contains("start")).sum()))
+        if len(watch):
+            st.dataframe(
+                watch[["ticker", "side", "bucket", "limit_risk",
+                       "borrow", "auction_footprint_pct"]],
+                use_container_width=True, hide_index=True)
+        if len(late):
+            st.error("LATE-START names — escalate before the open: "
+                     + ", ".join(late["ticker"]))
+        mkts = sorted(stored["basket"]["market"].unique())
+    else:
+        st.info("No Step-2 plan stored — generate one in the "
+                "previous tab and the watch list appears here. "
+                "Showing the full cascade meanwhile.")
+        mkts = list(AUCTION_CUTOFFS)
+
+    st.markdown("**The run-sheet (your basket's markets, close "
+                "cutoffs local time)**")
     rs = (pd.DataFrame(AUCTION_CUTOFFS).T.reset_index()
           .rename(columns={"index": "market"}))
-    st.dataframe(rs, use_container_width=True, hide_index=True)
+    st.dataframe(rs[rs["market"].isin(mkts)],
+                 use_container_width=True, hide_index=True)
 
-    st.markdown("**Indicative-auction read (TW 13:25–13:30 style)**")
+    # ------ 3.2 the lunch checkpoint
+    st.markdown("### 3.2 Lunch checkpoint — is the tape confirming "
+                "the T-multiple?")
+    l1, l2, l3 = st.columns(3)
+    lexp = l1.number_input("Expected T-multiple (plan)", value=16.0,
+                           key="t3_lexp")
+    lobs = l2.number_input("Volume run-rate so far (x same-time "
+                           "normal)", value=8.0, key="t3_lobs")
+    lenv = l3.slider("Envelope remaining % (lunch)", 0, 50, 30,
+                     key="t3_lenv")
+    lr = indicative_read(lexp, lobs, "Sell", lenv)
+    ltone = (st.error if "THIN" in lr["read"] else
+             st.success if "RICH" in lr["read"] else st.info)
+    ltone(f"**Run-rate {lr['read'].replace('x expected', 'x pace')}**"
+          f" → resize the auction orders NOW, not at the cutoff: "
+          f"{lr['action']}")
+    st.caption("Rule from the design doc: if the tape says 8x, not "
+               "16x, auction sizing changes at lunch — the proposal "
+               "shows its arithmetic, the dealer decides.")
+
+    # ------ 3.3 the close sequence read
+    st.markdown("### 3.3 The close read (TW 13:25–13:30 indicative "
+                "style) — the day's ONE real-time decision")
     c1, c2, c3, c4 = st.columns(4)
     exp = c1.number_input("Expected T-multiple", value=16.0,
                           key="t3_exp")
@@ -169,33 +754,70 @@ def _tab3_tday():
     tone = (st.error if "THIN" in r["read"] else
             st.success if "RICH" in r["read"] else st.info)
     tone(f"**{r['read']}** → {r['action']}")
-    st.caption(f"Why: {r['rationale']} (ratio {r.get('ratio', '-')}). "
-               "The dealer takes the decision; this frames it.")
+    st.caption(f"Why: {r['rationale']} (ratio {r.get('ratio', '-')}).")
 
-    st.markdown("**Auction-share derivation (the free-data trick)**")
-    tk = st.text_input("Ticker (TW derives daily−Σbars; HK/JP read "
-                       "the last bar)", "2330.TW", key="t3_tk")
-    if st.button("Derive auction share", key="t3_go"):
-        try:
-            import yfinance as yf
-            h5 = yf.Ticker(tk).history(period="5d", interval="5m")
-            hd = yf.Ticker(tk).history(period="5d", interval="1d")
-            day = h5[h5.index.date == h5.index.date[-1]]
-            dv = float(hd["Volume"].iloc[-1])
-            bars = float(day["Volume"].sum())
-            if tk.endswith(".TW") or tk.endswith(".TWO"):
-                share = max(dv - bars, 0) / dv if dv else float("nan")
-                how = "derived: (daily − Σ intraday bars) / daily"
-            else:
-                share = (float(day["Volume"].iloc[-1]) / dv
-                         if dv else float("nan"))
-                how = "read: last bar / daily"
-            st.metric(f"Close-auction share — {tk} (latest session)",
-                      f"{share:.1%}")
-            st.caption(f"{how}; daily {dv:,.0f} vs bars {bars:,.0f}. "
-                       "Odd-lot noise included — stated, small.")
-        except Exception as e:
-            st.warning(f"Fetch failed: {e}")
+    with st.expander("Auction-share derivation (the free-data "
+                     "trick) — check any ticker"):
+        tk = st.text_input("Ticker (TW derives daily−Σbars; HK/JP "
+                           "read the last bar)", "2330.TW",
+                           key="t3_tk")
+        if st.button("Derive auction share", key="t3_go"):
+            try:
+                import yfinance as yf
+                h5 = yf.Ticker(tk).history(period="5d", interval="5m")
+                hd = yf.Ticker(tk).history(period="5d", interval="1d")
+                day = h5[h5.index.date == h5.index.date[-1]]
+                dv = float(hd["Volume"].iloc[-1])
+                bars = float(day["Volume"].sum())
+                if tk.endswith(".TW") or tk.endswith(".TWO"):
+                    share = (max(dv - bars, 0) / dv if dv
+                             else float("nan"))
+                    how = "derived: (daily − Σ intraday bars) / daily"
+                else:
+                    share = (float(day["Volume"].iloc[-1]) / dv
+                             if dv else float("nan"))
+                    how = "read: last bar / daily"
+                st.metric(f"Close-auction share — {tk} (latest "
+                          "session)", f"{share:.1%}")
+                st.caption(f"{how}; daily {dv:,.0f} vs bars "
+                           f"{bars:,.0f}. Odd-lot noise included — "
+                           "stated, small.")
+            except Exception as e:
+                st.warning(f"Fetch failed: {e}")
+
+
+def _post_event_expander():
+    """Session 9i: the NO-FILLS post-event pack (benchmark strips,
+    strategy leaderboard, estimate ledger, reversal paths)."""
+    import json
+    from pathlib import Path
+    p = Path("data/post_event_may26.json")
+    if not p.exists():
+        return
+    with st.expander("🌙 Post-event pack (no fills needed) — "
+                     "May-2026 demo: strips, leaderboard, estimate "
+                     "ledger, reversal paths"):
+        d = json.loads(p.read_text())
+        rows = [r for r in d["names"] if "note" not in r]
+        st.dataframe(
+            [{"name": f"{r['side']} {r['code']}",
+              "close": r["official_close"],
+              "day VWAP": r["day_vwap_exact"],
+              "gap bp": r["gap_bps"],
+              "auction share": r["auction_share"],
+              "winner": r["strategies"]["winner"],
+              "gap in band": r["grades"].get("gap_in_band"),
+              "T-mult": r["grades"].get("t_mult_realized"),
+              "T+3 reversal bp": (r["reversal_T1_T5"][2]
+                                  if r.get("reversal_T1_T5")
+                                  and len(r["reversal_T1_T5"]) > 2
+                                  else None)}
+             for r in rows], use_container_width=True,
+            hide_index=True)
+        st.caption("The client self-grades fills against the strip; "
+                   "our estimates are graded in the 'gap in band' "
+                   "column — misses shown (1402). Full pack: "
+                   "docs/case_studies/POST_EVENT_PACK_MAY2026.md")
 
 
 def _tab4_posttrade():
@@ -206,12 +828,32 @@ def _tab4_posttrade():
                                            update_priors)
     st.subheader("Step 4 — Post-trade: prove it, grade it, feed it "
                  "back")
+    _post_event_expander()
     st.caption(
-        "Enter fills and realized paths (prefilled with the REAL "
-        "May-2026 TW deletion paths); get the TCA-vs-estimate "
-        "reconciliation, the discretion counterfactual, the reversal "
-        "grade, and the prior shift — then download the client "
-        "debrief.")
+        "Enter the fills and realized paths; get the "
+        "TCA-vs-estimate reconciliation, the discretion "
+        "counterfactual, the reversal grade — then download the "
+        "client debrief. This document is next quarter's pitch.")
+
+    stored = st.session_state.get("t2_plan")
+    if stored and st.button("⬅️ Seed from the Step-2 plan (tickers, "
+                            "sides, decisions)", key="t4_seed"):
+        b = stored["basket"]
+        st.session_state["t4_fills_seed"] = pd.DataFrame({
+            "ticker": b["ticker"], "side": b["side"],
+            "qty_shares": b["qty_shares"],
+            "avg_px": 100.0, "close_px": 100.0,
+            "est_cost_bps": 12.0})
+        dec = stored["plan"]["decisions"]
+        st.session_state["t4_cf_seed"] = pd.DataFrame({
+            "ticker": dec["ticker"], "side": dec["side"],
+            "decision": dec["decision"],
+            "worked_frac": [0.3 if str(d).startswith(("WORK",
+                                                      "PRE-POS"))
+                            else 0.0 for d in dec["decision"]],
+            "pre_close_drift_bps": 0.0})
+        st.caption("Seeded — overwrite prices/drifts with the "
+                   "realized numbers.")
 
     st.markdown("**Fills (TCA vs pre-trade estimate)**")
     tca_default = pd.DataFrame([
@@ -219,8 +861,9 @@ def _tab4_posttrade():
         ["1102.TW", "Sell", 1_000_000, 33.42, 33.45, 12.0],
     ], columns=["ticker", "side", "qty_shares", "avg_px", "close_px",
                 "est_cost_bps"])
-    fills = st.data_editor(tca_default, num_rows="dynamic",
-                           use_container_width=True, key="t4_fills")
+    fills = st.data_editor(
+        st.session_state.get("t4_fills_seed", tca_default),
+        num_rows="dynamic", use_container_width=True, key="t4_fills")
 
     st.markdown("**Discretion outcomes (choice vs realized drift)**")
     cf_default = pd.DataFrame([
@@ -229,8 +872,9 @@ def _tab4_posttrade():
         ["1101.TW", "Sell", "WORK AHEAD 30%", 0.3, -150.0],
     ], columns=["ticker", "side", "decision", "worked_frac",
                 "pre_close_drift_bps"])
-    cf_in = st.data_editor(cf_default, num_rows="dynamic",
-                           use_container_width=True, key="t4_cf")
+    cf_in = st.data_editor(
+        st.session_state.get("t4_cf_seed", cf_default),
+        num_rows="dynamic", use_container_width=True, key="t4_cf")
 
     st.markdown("**Reversal vs the crowding read**")
     rev_default = pd.DataFrame([
@@ -241,10 +885,26 @@ def _tab4_posttrade():
     rev_in = st.data_editor(rev_default, num_rows="dynamic",
                             use_container_width=True, key="t4_rev")
 
-    if st.button("Grade the event", key="t4_go"):
+    if st.button("Grade the event", type="primary", key="t4_go"):
         tca = tca_vs_estimate(fills.dropna(subset=["ticker"]))
         cf = discretion_counterfactual(cf_in.dropna(subset=["ticker"]))
         rev = reversal_grade(rev_in.dropna(subset=["ticker"]))
+        # ------ the headline row: what the client hears first
+        g1, g2, g3, g4 = st.columns(4)
+        g1.metric("Realized (qty-wtd)",
+                  f"{tca.attrs.get('portfolio_realized_bps', 0)} bps")
+        delta = tca.attrs.get("portfolio_vs_estimate_bps", 0)
+        g2.metric("vs our estimate", f"{delta:+.1f} bps",
+                  "kept our word" if abs(delta) <= 6 else
+                  ("beat it" if delta < 0 else "explain it"),
+                  delta_color="inverse")
+        ok = int((cf["verdict"] == "CORRECT").sum())
+        graded = int(cf["verdict"].isin(["CORRECT",
+                                         "INCORRECT"]).sum())
+        g3.metric("Discretion calls right",
+                  f"{ok}/{graded}" if graded else "n/a")
+        g4.metric("Crowding implications",
+                  rev.attrs.get("hit_rate", "n/a"))
         st.markdown("**4.2 TCA vs estimate**")
         st.dataframe(tca, use_container_width=True, hide_index=True)
         st.caption(f"Portfolio realized "
@@ -286,9 +946,10 @@ def render():
         "Phase-0 analytics win it, the window plans it, T-day "
         "executes it, post-trade proves it. Backend: the graded "
         "4-step framework (docs/INDEX_REBALANCE_TRADE_LIFECYCLE.md).")
-    t1, t2, t3, t4 = st.tabs([
+    t1, t2, t3, t4, t5 = st.tabs([
         "1️⃣ Win the trade", "2️⃣ The window (ann → T)",
-        "3️⃣ T-day cascade", "4️⃣ Post-trade & learning"])
+        "3️⃣ T-day cascade", "4️⃣ Post-trade & learning",
+        "🕰️ Time Machine"])
     with t1:
         _tab1_win_the_trade()
     with t2:
@@ -297,3 +958,5 @@ def render():
         _tab3_tday()
     with t4:
         _tab4_posttrade()
+    with t5:
+        _tab5_time_machine()

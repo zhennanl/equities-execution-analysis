@@ -1,0 +1,105 @@
+{
+ "n_name_days": 1083,
+ "n_events": 24,
+ "H9": {
+  "verdict": "ADOPT",
+  "n_events": 22,
+  "mean_bps": 168.9,
+  "winrate": 1.0,
+  "loo_stable": true,
+  "effect_share": 0.169
+ },
+ "H10": {
+  "verdict": "NULL-PIN",
+  "n_events": 24,
+  "mean_bps": -6.2,
+  "winrate": 0.54,
+  "loo_stable": true
+ },
+ "desc": {
+  "n": {
+   "('FTSE', 'Buy', 'early')": 78,
+   "('FTSE', 'Buy', 'late')": 104,
+   "('FTSE', 'Buy', 'mid')": 71,
+   "('FTSE', 'Sell', 'early')": 78,
+   "('FTSE', 'Sell', 'late')": 104,
+   "('FTSE', 'Sell', 'mid')": 72,
+   "('MSCI', 'Buy', 'early')": 48,
+   "('MSCI', 'Buy', 'late')": 64,
+   "('MSCI', 'Buy', 'mid')": 115,
+   "('MSCI', 'Sell', 'early')": 84,
+   "('MSCI', 'Sell', 'late')": 104,
+   "('MSCI', 'Sell', 'mid')": 161
+  },
+  "auc_share": {
+   "('FTSE', 'Buy', 'early')": 0.06,
+   "('FTSE', 'Buy', 'late')": 0.079,
+   "('FTSE', 'Buy', 'mid')": 0.071,
+   "('FTSE', 'Sell', 'early')": 0.083,
+   "('FTSE', 'Sell', 'late')": 0.125,
+   "('FTSE', 'Sell', 'mid')": 0.088,
+   "('MSCI', 'Buy', 'early')": 0.075,
+   "('MSCI', 'Buy', 'late')": 0.075,
+   "('MSCI', 'Buy', 'mid')": 0.065,
+   "('MSCI', 'Sell', 'early')": 0.085,
+   "('MSCI', 'Sell', 'late')": 0.103,
+   "('MSCI', 'Sell', 'mid')": 0.1
+  },
+  "pm_vol": {
+   "('FTSE', 'Buy', 'early')": 0.094,
+   "('FTSE', 'Buy', 'late')": 0.096,
+   "('FTSE', 'Buy', 'mid')": 0.097,
+   "('FTSE', 'Sell', 'early')": 0.103,
+   "('FTSE', 'Sell', 'late')": 0.122,
+   "('FTSE', 'Sell', 'mid')": 0.116,
+   "('MSCI', 'Buy', 'early')": 0.097,
+   "('MSCI', 'Buy', 'late')": 0.101,
+   "('MSCI', 'Buy', 'mid')": 0.094,
+   "('MSCI', 'Sell', 'early')": 0.11,
+   "('MSCI', 'Sell', 'late')": 0.121,
+   "('MSCI', 'Sell', 'mid')": 0.124
+  },
+  "am_fav": {
+   "('FTSE', 'Buy', 'early')": 17.045,
+   "('FTSE', 'Buy', 'late')": -5.459,
+   "('FTSE', 'Buy', 'mid')": -17.036,
+   "('FTSE', 'Sell', 'early')": -24.262,
+   "('FTSE', 'Sell', 'late')": 0.0,
+   "('FTSE', 'Sell', 'mid')": 0.0,
+   "('MSCI', 'Buy', 'early')": -32.549,
+   "('MSCI', 'Buy', 'late')": -32.627,
+   "('MSCI', 'Buy', 'mid')": 31.447,
+   "('MSCI', 'Sell', 'early')": 0.0,
+   "('MSCI', 'Sell', 'late')": 0.0,
+   "('MSCI', 'Sell', 'mid')": 45.045
+  },
+  "pm_fav": {
+   "('FTSE', 'Buy', 'early')": 11.628,
+   "('FTSE', 'Buy', 'late')": 0.0,
+   "('FTSE', 'Buy', 'mid')": -12.723,
+   "('FTSE', 'Sell', 'early')": 0.0,
+   "('FTSE', 'Sell', 'late')": 0.0,
+   "('FTSE', 'Sell', 'mid')": 0.0,
+   "('MSCI', 'Buy', 'early')": 0.0,
+   "('MSCI', 'Buy', 'late')": -6.468,
+   "('MSCI', 'Buy', 'mid')": 0.0,
+   "('MSCI', 'Sell', 'early')": 0.0,
+   "('MSCI', 'Sell', 'late')": 0.0,
+   "('MSCI', 'Sell', 'mid')": 0.0
+  },
+  "vol_x": {
+   "('FTSE', 'Buy', 'early')": 0.932,
+   "('FTSE', 'Buy', 'late')": 1.064,
+   "('FTSE', 'Buy', 'mid')": 0.874,
+   "('FTSE', 'Sell', 'early')": 1.071,
+   "('FTSE', 'Sell', 'late')": 1.155,
+   "('FTSE', 'Sell', 'mid')": 0.935,
+   "('MSCI', 'Buy', 'early')": 0.924,
+   "('MSCI', 'Buy', 'late')": 1.642,
+   "('MSCI', 'Buy', 'mid')": 1.08,
+   "('MSCI', 'Sell', 'early')": 1.418,
+   "('MSCI', 'Sell', 'late')": 2.871,
+   "('MSCI', 'Sell', 'mid')": 1.452
+  }
+ }
+}

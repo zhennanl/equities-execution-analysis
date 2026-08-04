@@ -1,0 +1,321 @@
+{
+ "event": "MSCI Aug-2026 QIR Taiwan",
+ "cards": [
+  {
+   "ticker": "2324.TW",
+   "side": "ADD",
+   "p_convert": 0.061,
+   "p_how": "non-member 0.56x the add bar (needs +78%); P(any add at a TAIWAN QIR) = 46% decade-measured, x visible share 40%, x proximity weight 33%; CAUTION recent deletion \u2014 decade re-add-within-4 rate here is 0%",
+   "cap_usd_b": 4.85,
+   "free_float": 0.95,
+   "flow_if_converts_usd_m": [
+    229,
+    413
+   ],
+   "flow_how": "cap $4.8B x ff 0.95 x 5%-9% of float",
+   "flow_p_weighted_usd_m": 19.6,
+   "adv_usd_m": 102.2,
+   "adv_days": [
+    2.2,
+    4.0
+   ],
+   "bucket": "MULTI-DAY",
+   "print_multiple": {
+    "available": false,
+    "how": "NO MEASURED MSCI Buy TW events \u2014 stated, not borrowed. (FTSE-class Buy prints measured ~5x are a CROSS-CLASS reference only.)"
+   },
+   "gap_band_bps": {
+    "band": "|gap| 123 +/- 82",
+    "n": 17,
+    "sign_rule": "direction NOT predicted (null pinned); the crowd's exit sets the print direction (6919/2344 exhibits)"
+   },
+   "limit_context": "baseline 3.0% of tape touches limit-up daily (2.0% locks); print days ~5.5%; print-day locks historically FAVOR the obligated side",
+   "crowding": "LOW (-70%/30obs)",
+   "playbook": "PRE-POSITION up to 20% within envelope \u2014 uncrowded add (unpriced): the close will jump; the envelope exists to capture part of that move; evidence: crowding read 'LOW (-70%/30obs)' [illustrative 20% envelope]; class cost (TW MSCI adds (measured, 2025 events)): window-VWAP -280 bps vs close (n=7); NOTE MSCI-add WAIT rule is a demoted hypothesis (decade: adds grind up; Aug-2026 arbitrates)"
+  },
+  {
+   "ticker": "1504.TW",
+   "side": "ADD",
+   "p_convert": 0.049,
+   "p_how": "non-member 0.53x the add bar (needs +88%); P(any add at a TAIWAN QIR) = 46% decade-measured, x visible share 40%, x proximity weight 27%; CAUTION recent deletion \u2014 decade re-add-within-4 rate here is 0%",
+   "cap_usd_b": 4.59,
+   "free_float": 0.66,
+   "flow_if_converts_usd_m": [
+    150,
+    271
+   ],
+   "flow_how": "cap $4.6B x ff 0.66 x 5%-9% of float",
+   "flow_p_weighted_usd_m": 10.3,
+   "adv_usd_m": 49.5,
+   "adv_days": [
+    3.0,
+    5.5
+   ],
+   "bucket": "MULTI-DAY",
+   "print_multiple": {
+    "available": false,
+    "how": "NO MEASURED MSCI Buy TW events \u2014 stated, not borrowed. (FTSE-class Buy prints measured ~5x are a CROSS-CLASS reference only.)"
+   },
+   "gap_band_bps": {
+    "band": "|gap| 123 +/- 82",
+    "n": 17,
+    "sign_rule": "direction NOT predicted (null pinned); the crowd's exit sets the print direction (6919/2344 exhibits)"
+   },
+   "limit_context": "baseline 3.0% of tape touches limit-up daily (2.0% locks); print days ~5.5%; print-day locks historically FAVOR the obligated side",
+   "crowding": "MED (+6%/8obs)",
+   "playbook": "PRE-POSITION up to 10% (half envelope) \u2014 partial positioning seen: capture part of the jump, capped; evidence: crowding read 'MED (+6%/8obs)' [illustrative 20% envelope]; class cost (TW MSCI adds (measured, 2025 events)): window-VWAP -280 bps vs close (n=7); NOTE MSCI-add WAIT rule is a demoted hypothesis (decade: adds grind up; Aug-2026 arbitrates)"
+  },
+  {
+   "ticker": "2633.TW",
+   "side": "ADD",
+   "p_convert": 0.036,
+   "p_how": "non-member 0.50x the add bar (needs +102%); P(any add at a TAIWAN QIR) = 46% decade-measured, x visible share 40%, x proximity weight 20%; CAUTION recent deletion \u2014 decade re-add-within-4 rate here is 0%",
+   "cap_usd_b": 4.27,
+   "free_float": 0.37,
+   "flow_if_converts_usd_m": [
+    78,
+    141
+   ],
+   "flow_how": "cap $4.3B x ff 0.37 x 5%-9% of float",
+   "flow_p_weighted_usd_m": 3.9,
+   "adv_usd_m": 10.3,
+   "adv_days": [
+    7.6,
+    13.7
+   ],
+   "bucket": "MULTI-DAY",
+   "print_multiple": {
+    "available": false,
+    "how": "NO MEASURED MSCI Buy TW events \u2014 stated, not borrowed. (FTSE-class Buy prints measured ~5x are a CROSS-CLASS reference only.)"
+   },
+   "gap_band_bps": {
+    "band": "|gap| 123 +/- 82",
+    "n": 17,
+    "sign_rule": "direction NOT predicted (null pinned); the crowd's exit sets the print direction (6919/2344 exhibits)"
+   },
+   "limit_context": "baseline 3.0% of tape touches limit-up daily (2.0% locks); print days ~5.5%; print-day locks historically FAVOR the obligated side",
+   "crowding": "LOW (-72%/30obs)",
+   "playbook": "PRE-POSITION up to 20% within envelope \u2014 uncrowded add (unpriced): the close will jump; the envelope exists to capture part of that move; evidence: crowding read 'LOW (-72%/30obs)' [illustrative 20% envelope]; class cost (TW MSCI adds (measured, 2025 events)): window-VWAP -280 bps vs close (n=7); NOTE MSCI-add WAIT rule is a demoted hypothesis (decade: adds grind up; Aug-2026 arbitrates)"
+  },
+  {
+   "ticker": "1402.TW",
+   "side": "ADD",
+   "p_convert": 0.036,
+   "p_how": "non-member 0.50x the add bar (needs +102%); P(any add at a TAIWAN QIR) = 46% decade-measured, x visible share 40%, x proximity weight 20%; CAUTION recent deletion \u2014 decade re-add-within-4 rate here is 0%",
+   "cap_usd_b": 4.26,
+   "free_float": 0.7,
+   "flow_if_converts_usd_m": [
+    149,
+    269
+   ],
+   "flow_how": "cap $4.3B x ff 0.70 x 5%-9% of float",
+   "flow_p_weighted_usd_m": 7.5,
+   "adv_usd_m": 32.5,
+   "adv_days": [
+    4.6,
+    8.3
+   ],
+   "bucket": "MULTI-DAY",
+   "print_multiple": {
+    "available": false,
+    "how": "NO MEASURED MSCI Buy TW events \u2014 stated, not borrowed. (FTSE-class Buy prints measured ~5x are a CROSS-CLASS reference only.)"
+   },
+   "gap_band_bps": {
+    "band": "|gap| 123 +/- 82",
+    "n": 17,
+    "sign_rule": "direction NOT predicted (null pinned); the crowd's exit sets the print direction (6919/2344 exhibits)"
+   },
+   "limit_context": "baseline 3.0% of tape touches limit-up daily (2.0% locks); print days ~5.5%; print-day locks historically FAVOR the obligated side",
+   "crowding": "LOW (-17%/8obs)",
+   "playbook": "PRE-POSITION up to 20% within envelope \u2014 uncrowded add (unpriced): the close will jump; the envelope exists to capture part of that move; evidence: crowding read 'LOW (-17%/8obs)' [illustrative 20% envelope]; class cost (TW MSCI adds (measured, 2025 events)): window-VWAP -280 bps vs close (n=7); NOTE MSCI-add WAIT rule is a demoted hypothesis (decade: adds grind up; Aug-2026 arbitrates)"
+  },
+  {
+   "ticker": "BELOW-FLOOR (unobservable)",
+   "side": "ADD",
+   "p_convert": 0.273,
+   "note": "blind-band mass: 13/21 of 2025-26 TW changes sat below the 16-name floor (Nov-25 re-grade vs May-26 grade) \u2014 no per-name card is computable for the unobservable band; this row exists so the probability mass stays visible."
+  },
+  {
+   "ticker": "1101.TW",
+   "side": "DELETE",
+   "p_convert": 0.149,
+   "p_how": "member 2.19x the del floor (needs +119%); P(any delete at a TAIWAN QIR) = 50% decade-measured, x visible share 40%, x proximity weight 75%",
+   "cap_usd_b": 5.25,
+   "free_float": 0.86,
+   "flow_if_converts_usd_m": [
+    226,
+    407
+   ],
+   "flow_how": "cap $5.2B x ff 0.86 x 5%-9% of float",
+   "flow_p_weighted_usd_m": 47.1,
+   "adv_usd_m": 23.1,
+   "adv_days": [
+    9.8,
+    17.6
+   ],
+   "bucket": "MULTI-DAY",
+   "print_multiple": {
+    "median": 16.0,
+    "max": 38.1,
+    "n": 8,
+    "how": "measured MSCI Sell events 2026"
+   },
+   "expected_t_volume_usd_m": 369,
+   "auction_share_prior_pct": {
+    "lo": null,
+    "hi": null,
+    "med": 60.0,
+    "n": 20,
+    "basis": "DIRECT IB auction bars, class MSCI/Sell"
+   },
+   "auction_footprint_pct": 142.9,
+   "footprint_how": "mid flow $316M / (ADV x 16.0x x 60.0% auction share; DIRECT IB auction bars, class MSCI/Sell n=20)",
+   "gap_band_bps": {
+    "band": "|gap| 123 +/- 82",
+    "n": 17,
+    "sign_rule": "direction NOT predicted (null pinned); the crowd's exit sets the print direction (6919/2344 exhibits)"
+   },
+   "limit_context": "baseline 3.0% of tape touches limit-up daily (2.0% locks); print days ~5.5%; print-day locks historically FAVOR the obligated side",
+   "crowding": "HIGH (+32%/30obs)",
+   "playbook": "WORK AHEAD up to 20% of order pre-close \u2014 crowded delete: street pre-sold, pressure part-spent, covering bounce enlarged \u2014 working ahead beats donating the close to the covering crowd; evidence: crowding read 'HIGH (+32%/30obs)' [illustrative 20% envelope]; class cost (TW MSCI deletes): window-VWAP +48 bps vs close (n=20)"
+  },
+  {
+   "ticker": "2207.TW",
+   "side": "DELETE",
+   "p_convert": 0.022,
+   "p_how": "member 3.55x the del floor (needs +255%); P(any delete at a TAIWAN QIR) = 50% decade-measured, x visible share 40%, x proximity weight 11%",
+   "cap_usd_b": 8.5,
+   "free_float": 0.51,
+   "flow_if_converts_usd_m": [
+    215,
+    388
+   ],
+   "flow_how": "cap $8.5B x ff 0.51 x 5%-9% of float",
+   "flow_p_weighted_usd_m": 6.6,
+   "adv_usd_m": 12.2,
+   "adv_days": [
+    17.7,
+    31.8
+   ],
+   "bucket": "MULTI-DAY",
+   "print_multiple": {
+    "median": 16.0,
+    "max": 38.1,
+    "n": 8,
+    "how": "measured MSCI Sell events 2026"
+   },
+   "expected_t_volume_usd_m": 195,
+   "auction_share_prior_pct": {
+    "lo": null,
+    "hi": null,
+    "med": 60.0,
+    "n": 20,
+    "basis": "DIRECT IB auction bars, class MSCI/Sell"
+   },
+   "auction_footprint_pct": 257.8,
+   "footprint_how": "mid flow $301M / (ADV x 16.0x x 60.0% auction share; DIRECT IB auction bars, class MSCI/Sell n=20)",
+   "gap_band_bps": {
+    "band": "|gap| 123 +/- 82",
+    "n": 17,
+    "sign_rule": "direction NOT predicted (null pinned); the crowd's exit sets the print direction (6919/2344 exhibits)"
+   },
+   "limit_context": "baseline 3.0% of tape touches limit-up daily (2.0% locks); print days ~5.5%; print-day locks historically FAVOR the obligated side",
+   "crowding": "LOW (-41%/30obs)",
+   "playbook": "WAIT \u2014 MOC the full order \u2014 uncrowded/unknown delete: pressure arrives at the print; pre-trading a clean close adds impact and tracking for nothing; evidence: crowding read 'LOW (-41%/30obs)' [illustrative 20% envelope]; class cost (TW MSCI deletes): window-VWAP +48 bps vs close (n=20)"
+  },
+  {
+   "ticker": "2002.TW",
+   "side": "DELETE",
+   "p_convert": 0.019,
+   "p_how": "member 3.68x the del floor (needs +268%); P(any delete at a TAIWAN QIR) = 50% decade-measured, x visible share 40%, x proximity weight 9%",
+   "cap_usd_b": 8.79,
+   "free_float": 0.73,
+   "flow_if_converts_usd_m": [
+    319,
+    574
+   ],
+   "flow_how": "cap $8.8B x ff 0.73 x 5%-9% of float",
+   "flow_p_weighted_usd_m": 8.5,
+   "adv_usd_m": 36.6,
+   "adv_days": [
+    8.7,
+    15.7
+   ],
+   "bucket": "MULTI-DAY",
+   "print_multiple": {
+    "median": 16.0,
+    "max": 38.1,
+    "n": 8,
+    "how": "measured MSCI Sell events 2026"
+   },
+   "expected_t_volume_usd_m": 586,
+   "auction_share_prior_pct": {
+    "lo": null,
+    "hi": null,
+    "med": 60.0,
+    "n": 20,
+    "basis": "DIRECT IB auction bars, class MSCI/Sell"
+   },
+   "auction_footprint_pct": 127.0,
+   "footprint_how": "mid flow $446M / (ADV x 16.0x x 60.0% auction share; DIRECT IB auction bars, class MSCI/Sell n=20)",
+   "gap_band_bps": {
+    "band": "|gap| 123 +/- 82",
+    "n": 17,
+    "sign_rule": "direction NOT predicted (null pinned); the crowd's exit sets the print direction (6919/2344 exhibits)"
+   },
+   "limit_context": "baseline 3.0% of tape touches limit-up daily (2.0% locks); print days ~5.5%; print-day locks historically FAVOR the obligated side",
+   "crowding": "LOW (-33%/30obs); EXITING (-42% off peak)",
+   "playbook": "WAIT \u2014 MOC the full order \u2014 uncrowded/unknown delete: pressure arrives at the print; pre-trading a clean close adds impact and tracking for nothing; evidence: crowding read 'LOW (-33%/30obs); EXITING (-42% off peak)' [illustrative 20% envelope]; class cost (TW MSCI deletes): window-VWAP +48 bps vs close (n=20)"
+  },
+  {
+   "ticker": "1326.TW",
+   "side": "DELETE",
+   "p_convert": 0.01,
+   "p_how": "member 4.33x the del floor (needs +333%); P(any delete at a TAIWAN QIR) = 50% decade-measured, x visible share 40%, x proximity weight 5%",
+   "cap_usd_b": 10.36,
+   "free_float": 0.56,
+   "flow_if_converts_usd_m": [
+    289,
+    520
+   ],
+   "flow_how": "cap $10.4B x ff 0.56 x 5%-9% of float",
+   "flow_p_weighted_usd_m": 4.0,
+   "adv_usd_m": 88.7,
+   "adv_days": [
+    3.3,
+    5.9
+   ],
+   "bucket": "MULTI-DAY",
+   "print_multiple": {
+    "median": 16.0,
+    "max": 38.1,
+    "n": 8,
+    "how": "measured MSCI Sell events 2026"
+   },
+   "expected_t_volume_usd_m": 1419,
+   "auction_share_prior_pct": {
+    "lo": null,
+    "hi": null,
+    "med": 60.0,
+    "n": 20,
+    "basis": "DIRECT IB auction bars, class MSCI/Sell"
+   },
+   "auction_footprint_pct": 47.5,
+   "footprint_how": "mid flow $404M / (ADV x 16.0x x 60.0% auction share; DIRECT IB auction bars, class MSCI/Sell n=20)",
+   "gap_band_bps": {
+    "band": "|gap| 123 +/- 82",
+    "n": 17,
+    "sign_rule": "direction NOT predicted (null pinned); the crowd's exit sets the print direction (6919/2344 exhibits)"
+   },
+   "limit_context": "baseline 3.0% of tape touches limit-up daily (2.0% locks); print days ~5.5%; print-day locks historically FAVOR the obligated side",
+   "crowding": "LOW (-41%/30obs)",
+   "playbook": "WAIT \u2014 MOC the full order \u2014 uncrowded/unknown delete: pressure arrives at the print; pre-trading a clean close adds impact and tracking for nothing; evidence: crowding read 'LOW (-41%/30obs)' [illustrative 20% envelope]; class cost (TW MSCI deletes): window-VWAP +48 bps vs close (n=20)"
+  },
+  {
+   "ticker": "BELOW-FLOOR (unobservable)",
+   "side": "DELETE",
+   "p_convert": 0.3,
+   "note": "blind-band mass: 13/21 of 2025-26 TW changes sat below the 16-name floor (Nov-25 re-grade vs May-26 grade) \u2014 no per-name card is computable for the unobservable band; this row exists so the probability mass stays visible."
+  }
+ ]
+}

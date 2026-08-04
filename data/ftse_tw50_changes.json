@@ -1,0 +1,1673 @@
+{
+ "2016-11": {
+  "ann_date": "2016/11/25",
+  "effective": null,
+  "adds": [],
+  "dels": [],
+  "reserve": [],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/30"
+ },
+ "2016-12": {
+  "ann_date": "2016/12/02",
+  "effective": null,
+  "adds": [],
+  "dels": [],
+  "reserve": [
+   {
+    "code": "8464",
+    "name": "億豐"
+   },
+   {
+    "code": "2356",
+    "name": "英業達"
+   },
+   {
+    "code": "9910",
+    "name": "豐泰"
+   },
+   {
+    "code": "2377",
+    "name": "微星"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/31"
+ },
+ "2017-03": {
+  "ann_date": "2017/03/03",
+  "effective": null,
+  "adds": [],
+  "dels": [],
+  "reserve": [
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   },
+   {
+    "code": "8464",
+    "name": "億豐"
+   },
+   {
+    "code": "9910",
+    "name": "豐泰"
+   },
+   {
+    "code": "3532",
+    "name": "台勝科"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/45"
+ },
+ "2017-06": {
+  "ann_date": "2017/06/02",
+  "effective": null,
+  "adds": [
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   }
+  ],
+  "dels": [
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "5871",
+    "name": "中租-KY"
+   },
+   {
+    "code": "8464",
+    "name": "億豐"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "2356",
+    "name": "英業達"
+   },
+   {
+    "code": "2227",
+    "name": "裕日車"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/56"
+ },
+ "2017-09": {
+  "ann_date": "2017/09/01",
+  "effective": "2017-09-18",
+  "adds": [],
+  "dels": [],
+  "reserve": [
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "6456",
+    "name": "GIS-KY"
+   },
+   {
+    "code": "9910",
+    "name": "豐泰"
+   },
+   {
+    "code": "8464",
+    "name": "億豐"
+   },
+   {
+    "code": "5871",
+    "name": "中租-KY"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/68"
+ },
+ "2017-12": {
+  "ann_date": "2017/12/01",
+  "effective": "2017-12-18",
+  "adds": [],
+  "dels": [],
+  "reserve": [
+   {
+    "code": "2344",
+    "name": "華邦電"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "2327",
+    "name": "國巨"
+   },
+   {
+    "code": "5871",
+    "name": "中租-KY"
+   },
+   {
+    "code": "2337",
+    "name": "旺宏"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/72"
+ },
+ "2018-03": {
+  "ann_date": "2018/03/02",
+  "effective": "2018-03-19",
+  "adds": [
+   {
+    "code": "5871",
+    "name": "中租-KY"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2207",
+    "name": "和泰車"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "2327",
+    "name": "國巨"
+   },
+   {
+    "code": "2049",
+    "name": "上銀"
+   },
+   {
+    "code": "3532",
+    "name": "台勝科"
+   },
+   {
+    "code": "1590",
+    "name": "亞德客-KY"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/77"
+ },
+ "2018-04": {
+  "ann_date": "2018/04/13",
+  "effective": null,
+  "adds": [],
+  "dels": [],
+  "reserve": [],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/85"
+ },
+ "2018-06": {
+  "ann_date": "2018/06/01",
+  "effective": "2018-06-18",
+  "adds": [
+   {
+    "code": "2492",
+    "name": "華新科"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2324",
+    "name": "仁寶"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2049",
+    "name": "上銀"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "3532",
+    "name": "台勝科"
+   },
+   {
+    "code": "2377",
+    "name": "微星"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/91"
+ },
+ "2018-09": {
+  "ann_date": "2018/09/07",
+  "effective": "2018-09-24",
+  "adds": [],
+  "dels": [],
+  "reserve": [
+   {
+    "code": "9910",
+    "name": "豐泰"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "2356",
+    "name": "英業達"
+   },
+   {
+    "code": "3034",
+    "name": "聯詠"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/96"
+ },
+ "2018-12": {
+  "ann_date": "2018/12/07",
+  "effective": "2018-12-21",
+  "adds": [
+   {
+    "code": "5876",
+    "name": "上海商銀"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2492",
+    "name": "華新科"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "9910",
+    "name": "豐泰"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "2371",
+    "name": "大同"
+   },
+   {
+    "code": "2492",
+    "name": "華新科"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/101"
+ },
+ "2019-02": {
+  "ann_date": "2019/02/27",
+  "effective": "2019-03-15",
+  "adds": [
+   {
+    "code": "2207",
+    "name": "和泰車"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2354",
+    "name": "鴻準"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "9910",
+    "name": "豐泰"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "3034",
+    "name": "聯詠"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "2492",
+    "name": "華新科"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/110"
+ },
+ "2019-06": {
+  "ann_date": "2019/06/06",
+  "effective": "2019-06-21",
+  "adds": [
+   {
+    "code": "9910",
+    "name": "豐泰"
+   }
+  ],
+  "dels": [
+   {
+    "code": "3481",
+    "name": "群創"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "3034",
+    "name": "聯詠"
+   },
+   {
+    "code": "2379",
+    "name": "瑞昱"
+   },
+   {
+    "code": "2354",
+    "name": "鴻準"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/120"
+ },
+ "2019-09": {
+  "ann_date": "2019/09/06",
+  "effective": "2019-09-20",
+  "adds": [
+   {
+    "code": "2888",
+    "name": "新光金"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2409",
+    "name": "友達"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2379",
+    "name": "瑞昱"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "3034",
+    "name": "聯詠"
+   },
+   {
+    "code": "4958",
+    "name": "臻鼎-KY"
+   },
+   {
+    "code": "2354",
+    "name": "鴻準"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/126"
+ },
+ "2019-12": {
+  "ann_date": "2019/12/06",
+  "effective": "2019-12-20",
+  "adds": [],
+  "dels": [],
+  "reserve": [
+   {
+    "code": "3034",
+    "name": "聯詠"
+   },
+   {
+    "code": "4958",
+    "name": "臻鼎-KY"
+   },
+   {
+    "code": "2379",
+    "name": "瑞昱"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/132"
+ },
+ "2020-03": {
+  "ann_date": "2020/03/06",
+  "effective": "2020-03-20",
+  "adds": [],
+  "dels": [],
+  "reserve": [
+   {
+    "code": "6669",
+    "name": "緯穎"
+   },
+   {
+    "code": "3034",
+    "name": "聯詠"
+   },
+   {
+    "code": "2379",
+    "name": "瑞昱"
+   },
+   {
+    "code": "2492",
+    "name": "華新科"
+   },
+   {
+    "code": "4958",
+    "name": "-KY"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/141"
+ },
+ "2020-06": {
+  "ann_date": "2020/06/05",
+  "effective": "2020-06-19",
+  "adds": [
+   {
+    "code": "6669",
+    "name": "緯穎"
+   }
+  ],
+  "dels": [
+   {
+    "code": "9904",
+    "name": "寶成"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "6415",
+    "name": "矽力-KY"
+   },
+   {
+    "code": "2345",
+    "name": "智邦"
+   },
+   {
+    "code": "2379",
+    "name": "瑞昱"
+   },
+   {
+    "code": "3034",
+    "name": "聯詠"
+   },
+   {
+    "code": "4958",
+    "name": "臻鼎-KY"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/149"
+ },
+ "2020-09": {
+  "ann_date": "2020/09/04",
+  "effective": "2020-09-18",
+  "adds": [
+   {
+    "code": "2379",
+    "name": "瑞昱"
+   },
+   {
+    "code": "6415",
+    "name": "矽力-KY"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "2823",
+    "name": "中壽"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "3034",
+    "name": "聯詠"
+   },
+   {
+    "code": "2345",
+    "name": "智邦"
+   },
+   {
+    "code": "1590",
+    "name": "亞德客-KY"
+   },
+   {
+    "code": "3037",
+    "name": "欣興"
+   },
+   {
+    "code": "2377",
+    "name": "微星"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/169"
+ },
+ "2020-12": {
+  "ann_date": "2020/12/04",
+  "effective": "2020-12-18",
+  "adds": [
+   {
+    "code": "3034",
+    "name": "聯詠"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2301",
+    "name": "光寶科"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "1590",
+    "name": "亞德客-KY"
+   },
+   {
+    "code": "2345",
+    "name": "智邦"
+   },
+   {
+    "code": "3037",
+    "name": "欣興"
+   },
+   {
+    "code": "2301",
+    "name": "光寶科"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/171"
+ },
+ "2021-03": {
+  "ann_date": "2021/03/05",
+  "effective": "2021-03-19",
+  "adds": [
+   {
+    "code": "1590",
+    "name": "亞德客-KY"
+   },
+   {
+    "code": "8046",
+    "name": "南電"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2883",
+    "name": "開發金"
+   },
+   {
+    "code": "2890",
+    "name": "永豐金"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2603",
+    "name": "長榮"
+   },
+   {
+    "code": "2409",
+    "name": "友達"
+   },
+   {
+    "code": "3481",
+    "name": "群創"
+   },
+   {
+    "code": "2345",
+    "name": "智邦"
+   },
+   {
+    "code": "2301",
+    "name": "光寶科"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/178"
+ },
+ "2021-06": {
+  "ann_date": "2021/06/04",
+  "effective": "2021-06-18",
+  "adds": [
+   {
+    "code": "2603",
+    "name": "長榮"
+   },
+   {
+    "code": "2615",
+    "name": "萬海"
+   },
+   {
+    "code": "2609",
+    "name": "陽明"
+   },
+   {
+    "code": "2409",
+    "name": "友達"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   },
+   {
+    "code": "2105",
+    "name": "正新"
+   },
+   {
+    "code": "2474",
+    "name": "可成"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "3481",
+    "name": "群創"
+   },
+   {
+    "code": "2883",
+    "name": "開發金"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "2345",
+    "name": "智邦"
+   },
+   {
+    "code": "8454",
+    "name": "富邦媒"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/181"
+ },
+ "2021-09": {
+  "ann_date": "2021/09/03",
+  "effective": "2021-09-17",
+  "adds": [
+   {
+    "code": "8454",
+    "name": "富邦媒"
+   }
+  ],
+  "dels": [
+   {
+    "code": "1102",
+    "name": "亞泥"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "3037",
+    "name": "欣興"
+   },
+   {
+    "code": "2883",
+    "name": "開發金"
+   },
+   {
+    "code": "3481",
+    "name": "群創"
+   },
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/191"
+ },
+ "2021-12": {
+  "ann_date": "2021/12/03",
+  "effective": "2021-12-17",
+  "adds": [
+   {
+    "code": "3037",
+    "name": "欣興"
+   }
+  ],
+  "dels": [
+   {
+    "code": "1402",
+    "name": "遠東新"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2883",
+    "name": "開發金"
+   },
+   {
+    "code": "3481",
+    "name": "群創"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   },
+   {
+    "code": "1476",
+    "name": "儒鴻"
+   },
+   {
+    "code": "2890",
+    "name": "永豐金"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/198"
+ },
+ "2022-03": {
+  "ann_date": "2022/03/04",
+  "effective": "2022-03-18",
+  "adds": [
+   {
+    "code": "2883",
+    "name": "開發金"
+   }
+  ],
+  "dels": [
+   {
+    "code": "4938",
+    "name": "和碩"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "3481",
+    "name": "群創"
+   },
+   {
+    "code": "4938",
+    "name": "和碩"
+   },
+   {
+    "code": "6770",
+    "name": "力積電"
+   },
+   {
+    "code": "2890",
+    "name": "永豐金"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/203"
+ },
+ "2022-06": {
+  "ann_date": "2022/06/02",
+  "effective": "2022-06-17",
+  "adds": [
+   {
+    "code": "6770",
+    "name": "力積電"
+   }
+  ],
+  "dels": [
+   {
+    "code": "8454",
+    "name": "富邦媒"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2618",
+    "name": "長榮航"
+   },
+   {
+    "code": "1402",
+    "name": "遠東新"
+   },
+   {
+    "code": "4938",
+    "name": "和碩"
+   },
+   {
+    "code": "2890",
+    "name": "永豐金"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/211"
+ },
+ "2022-09": {
+  "ann_date": "2022/09/02",
+  "effective": "2022-09-16",
+  "adds": [
+   {
+    "code": "2890",
+    "name": "永豐金"
+   }
+  ],
+  "dels": [
+   {
+    "code": "6770",
+    "name": "力積電"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2618",
+    "name": "長榮航"
+   },
+   {
+    "code": "1402",
+    "name": "遠東新"
+   },
+   {
+    "code": "8454",
+    "name": "富邦媒"
+   },
+   {
+    "code": "4938",
+    "name": "和碩"
+   },
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/221"
+ },
+ "2022-12": {
+  "ann_date": "2022/12/02",
+  "effective": "2022-12-16",
+  "adds": [
+   {
+    "code": "1402",
+    "name": "遠東新"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2409",
+    "name": "友達"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2301",
+    "name": "光寶科"
+   },
+   {
+    "code": "4938",
+    "name": "和碩"
+   },
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   },
+   {
+    "code": "1605",
+    "name": "華新"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/227"
+ },
+ "2023-03": {
+  "ann_date": "2023/03/03",
+  "effective": "2023-03-17",
+  "adds": [
+   {
+    "code": "1605",
+    "name": "華新"
+   }
+  ],
+  "dels": [
+   {
+    "code": "8046",
+    "name": "南電"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2618",
+    "name": "長榮航"
+   },
+   {
+    "code": "2301",
+    "name": "光寶科"
+   },
+   {
+    "code": "8454",
+    "name": "富邦媒"
+   },
+   {
+    "code": "4938",
+    "name": "和碩"
+   },
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/234"
+ },
+ "2023-06": {
+  "ann_date": "2023/06/03",
+  "effective": "2023-06-16",
+  "adds": [
+   {
+    "code": "4938",
+    "name": "和碩"
+   }
+  ],
+  "dels": [
+   {
+    "code": "6415",
+    "name": "矽力*-KY"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "3443",
+    "name": "創意"
+   },
+   {
+    "code": "2301",
+    "name": "光寶科"
+   },
+   {
+    "code": "8046",
+    "name": "南電"
+   },
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/247"
+ },
+ "2023-09": {
+  "ann_date": "2023/09/01",
+  "effective": "2023-09-15",
+  "adds": [
+   {
+    "code": "2345",
+    "name": "智邦"
+   },
+   {
+    "code": "2301",
+    "name": "光寶科"
+   },
+   {
+    "code": "3231",
+    "name": "緯創"
+   },
+   {
+    "code": "6669",
+    "name": "緯穎"
+   }
+  ],
+  "dels": [
+   {
+    "code": "1402",
+    "name": "遠東新"
+   },
+   {
+    "code": "1605",
+    "name": "華新"
+   },
+   {
+    "code": "2615",
+    "name": "萬海"
+   },
+   {
+    "code": "2609",
+    "name": "陽明"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2618",
+    "name": "長榮航"
+   },
+   {
+    "code": "2376",
+    "name": "技嘉"
+   },
+   {
+    "code": "3443",
+    "name": "創意"
+   },
+   {
+    "code": "2356",
+    "name": "英業達"
+   },
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/263"
+ },
+ "2023-12": {
+  "ann_date": "2023/12/01",
+  "effective": "2023-12-15",
+  "adds": [],
+  "dels": [],
+  "reserve": [
+   {
+    "code": "3661",
+    "name": "世芯-KY"
+   },
+   {
+    "code": "2618",
+    "name": "長榮航"
+   },
+   {
+    "code": "1402",
+    "name": "遠東新"
+   },
+   {
+    "code": "3443",
+    "name": "創意"
+   },
+   {
+    "code": "2633",
+    "name": "台灣高鐵"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/276"
+ },
+ "2024-03": {
+  "ann_date": "2024/03/01",
+  "effective": "2024-03-15",
+  "adds": [
+   {
+    "code": "3661",
+    "name": "世芯-KY"
+   }
+  ],
+  "dels": [
+   {
+    "code": "9910",
+    "name": "豐泰"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "3017",
+    "name": "奇鋐"
+   },
+   {
+    "code": "2383",
+    "name": "台光電"
+   },
+   {
+    "code": "2376",
+    "name": "技嘉"
+   },
+   {
+    "code": "3443",
+    "name": "創意"
+   },
+   {
+    "code": "2356",
+    "name": "英業達"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/294"
+ },
+ "2024-06": {
+  "ann_date": "2024/06/07",
+  "effective": "2024-06-21",
+  "adds": [
+   {
+    "code": "3017",
+    "name": "奇鋐"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2801",
+    "name": "彰銀"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2376",
+    "name": "技嘉"
+   },
+   {
+    "code": "3443",
+    "name": "創意"
+   },
+   {
+    "code": "2356",
+    "name": "英業達"
+   },
+   {
+    "code": "2615",
+    "name": "萬海"
+   },
+   {
+    "code": "2609",
+    "name": "陽明"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/303"
+ },
+ "2024-09": {
+  "ann_date": "2024/09/06",
+  "effective": "2024-09-20",
+  "adds": [
+   {
+    "code": "6446",
+    "name": "藥華藥"
+   }
+  ],
+  "dels": [
+   {
+    "code": "2408",
+    "name": "南亞科"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2801",
+    "name": "彰銀"
+   },
+   {
+    "code": "1402",
+    "name": "遠東新"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "2615",
+    "name": "萬海"
+   },
+   {
+    "code": "2609",
+    "name": "陽明"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/320"
+ },
+ "2024-12": {
+  "ann_date": "2024/12/06",
+  "effective": "2024-12-20",
+  "adds": [
+   {
+    "code": "2609",
+    "name": "陽明"
+   }
+  ],
+  "dels": [
+   {
+    "code": "1590",
+    "name": "亞德客-KY"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2801",
+    "name": "彰銀"
+   },
+   {
+    "code": "2618",
+    "name": "長榮航"
+   },
+   {
+    "code": "3653",
+    "name": "健策"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   },
+   {
+    "code": "2615",
+    "name": "萬海"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/337"
+ },
+ "2025-03": {
+  "ann_date": "2025/03/07",
+  "effective": "2025-03-21",
+  "adds": [
+   {
+    "code": "2615",
+    "name": "萬海"
+   }
+  ],
+  "dels": [
+   {
+    "code": "1326",
+    "name": "台化"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2801",
+    "name": "彰銀"
+   },
+   {
+    "code": "2383",
+    "name": "台光電"
+   },
+   {
+    "code": "2618",
+    "name": "長榮航"
+   },
+   {
+    "code": "3533",
+    "name": "嘉澤"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/350"
+ },
+ "2025-06": {
+  "ann_date": "2025/06/06",
+  "effective": "2025-06-20",
+  "adds": [
+   {
+    "code": "2383",
+    "name": "台光電"
+   }
+  ],
+  "dels": [
+   {
+    "code": "3037",
+    "name": "欣興"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "1590",
+    "name": "亞德客-KY"
+   },
+   {
+    "code": "2801",
+    "name": "彰銀"
+   },
+   {
+    "code": "2618",
+    "name": "長榮航"
+   },
+   {
+    "code": "2059",
+    "name": "川湖"
+   },
+   {
+    "code": "2888",
+    "name": "新光金"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/362"
+ },
+ "2025-09": {
+  "ann_date": "2025/09/05",
+  "effective": "2025-09-19",
+  "adds": [
+   {
+    "code": "6919",
+    "name": "康霈*"
+   },
+   {
+    "code": "2059",
+    "name": "川湖"
+   }
+  ],
+  "dels": [
+   {
+    "code": "6446",
+    "name": "藥華藥"
+   },
+   {
+    "code": "1101",
+    "name": "台泥"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2801",
+    "name": "彰銀"
+   },
+   {
+    "code": "2360",
+    "name": "致茂"
+   },
+   {
+    "code": "2368",
+    "name": "金像電"
+   },
+   {
+    "code": "3653",
+    "name": "健策"
+   },
+   {
+    "code": "3037",
+    "name": "欣興"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/382"
+ },
+ "2025-12": {
+  "ann_date": "2025/12/05",
+  "effective": "2025-12-19",
+  "adds": [
+   {
+    "code": "3665",
+    "name": "貿聯-KY"
+   },
+   {
+    "code": "2360",
+    "name": "致茂"
+   },
+   {
+    "code": "3653",
+    "name": "健策"
+   },
+   {
+    "code": "2408",
+    "name": "南亞科"
+   }
+  ],
+  "dels": [
+   {
+    "code": "5871",
+    "name": "中租-KY"
+   },
+   {
+    "code": "4938",
+    "name": "和碩"
+   },
+   {
+    "code": "5876",
+    "name": "上海商銀"
+   },
+   {
+    "code": "2609",
+    "name": "明"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "3443",
+    "name": "創意"
+   },
+   {
+    "code": "2368",
+    "name": "金像電"
+   },
+   {
+    "code": "2449",
+    "name": "京元電子"
+   },
+   {
+    "code": "3037",
+    "name": "欣興"
+   },
+   {
+    "code": "2344",
+    "name": "華邦電"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/391"
+ },
+ "2026-03": {
+  "ann_date": "2026/03/06",
+  "effective": "2026-03-20",
+  "adds": [
+   {
+    "code": "2368",
+    "name": "金像電"
+   },
+   {
+    "code": "7769",
+    "name": "鴻勁"
+   },
+   {
+    "code": "2449",
+    "name": "京元電子"
+   },
+   {
+    "code": "3037",
+    "name": "欣興"
+   },
+   {
+    "code": "2344",
+    "name": "華邦電"
+   }
+  ],
+  "dels": [
+   {
+    "code": "3665",
+    "name": "貿聯-KY"
+   },
+   {
+    "code": "3034",
+    "name": "聯詠"
+   },
+   {
+    "code": "2912",
+    "name": "統一超"
+   },
+   {
+    "code": "2379",
+    "name": "瑞昱"
+   },
+   {
+    "code": "2615",
+    "name": "萬海"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "1519",
+    "name": "華城"
+   },
+   {
+    "code": "3443",
+    "name": "創意"
+   },
+   {
+    "code": "8046",
+    "name": "南電"
+   },
+   {
+    "code": "6446",
+    "name": "藥華藥"
+   },
+   {
+    "code": "6770",
+    "name": "力積電"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/405"
+ },
+ "2026-06": {
+  "ann_date": "2026/06/05",
+  "effective": "2026-06-18",
+  "adds": [
+   {
+    "code": "3665",
+    "name": "貿聯-KY"
+   },
+   {
+    "code": "3443",
+    "name": "創意"
+   },
+   {
+    "code": "8046",
+    "name": "南電"
+   },
+   {
+    "code": "4958",
+    "name": "臻鼎-KY"
+   }
+  ],
+  "dels": [
+   {
+    "code": "6919",
+    "name": "康霈*"
+   },
+   {
+    "code": "2002",
+    "name": "中鋼"
+   },
+   {
+    "code": "1301",
+    "name": "台塑"
+   },
+   {
+    "code": "2207",
+    "name": "和泰車"
+   }
+  ],
+  "reserve": [
+   {
+    "code": "2313",
+    "name": "華通"
+   },
+   {
+    "code": "3481",
+    "name": "群創"
+   },
+   {
+    "code": "3189",
+    "name": "景碩"
+   },
+   {
+    "code": "6515",
+    "name": "穎崴"
+   },
+   {
+    "code": "3036",
+    "name": "文曄"
+   }
+  ],
+  "unchanged": false,
+  "source": "https://www.taiwanindex.com.tw/news/424"
+ },
+ "2015-03": {
+  "status": "NOT FOUND — pre-TIP era; path: TWSE-era announcements / 證交資料月刊 (manual)"
+ },
+ "2015-06": {
+  "status": "NOT FOUND — pre-TIP era; path: TWSE-era announcements / 證交資料月刊 (manual)"
+ },
+ "2015-09": {
+  "status": "NOT FOUND — pre-TIP era; path: TWSE-era announcements / 證交資料月刊 (manual)"
+ },
+ "2015-12": {
+  "status": "NOT FOUND — pre-TIP era; path: TWSE-era announcements / 證交資料月刊 (manual)"
+ },
+ "2016-03": {
+  "status": "NOT FOUND — pre-TIP era; path: TWSE-era announcements / 證交資料月刊 (manual)"
+ },
+ "2016-06": {
+  "status": "NOT FOUND — pre-TIP era; path: TWSE-era announcements / 證交資料月刊 (manual)"
+ },
+ "2016-09": {
+  "status": "NOT FOUND — pre-TIP era; path: TWSE-era announcements / 證交資料月刊 (manual)"
+ }
+}

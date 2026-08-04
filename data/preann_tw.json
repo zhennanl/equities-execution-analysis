@@ -1,0 +1,36 @@
+{
+ "may": {
+  "grade": {
+   "adds_hit": [
+    "6223.TWO"
+   ],
+   "adds_missed_visible": [],
+   "dels_hit": [
+    "1102.TW",
+    "1402.TW",
+    "1504.TW",
+    "2324.TW",
+    "2474.TW",
+    "2610.TW",
+    "2633.TW"
+   ],
+   "dels_missed_visible": [],
+   "false_adds": [],
+   "false_dels": [
+    "1101.TW",
+    "1326.TW",
+    "2207.TW"
+   ],
+   "ungradable_below_floor": [],
+   "brier": 0.212,
+   "n_scored": 11
+  },
+  "n_candidates": 11,
+  "crowd_alerts": 0
+ },
+ "aug": {
+  "n_candidates": 10,
+  "crowd_alerts": 2,
+  "crowd_asof": "20260803"
+ }
+}

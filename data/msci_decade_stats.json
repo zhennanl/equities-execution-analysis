@@ -1,0 +1,815 @@
+{
+ "n_reviews": 44,
+ "cadence": {
+  "AUSTRALIA": {
+   "total_adds": 27,
+   "total_dels": 43,
+   "sair_del_share": 0.721,
+   "sair_add_share": 0.852,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "p_any_add": 0.182,
+     "p_any_del": 0.318,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      1,
+      1,
+      1,
+      2
+     ],
+     "add_q": [
+      0,
+      1,
+      1,
+      2
+     ],
+     "p_any_add": 0.682,
+     "p_any_del": 0.773,
+     "n_reviews": 22
+    }
+   }
+  },
+  "CHINA": {
+   "total_adds": 578,
+   "total_dels": 430,
+   "sair_del_share": 0.679,
+   "sair_add_share": 0.734,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      2,
+      5,
+      18
+     ],
+     "add_q": [
+      0,
+      5,
+      12,
+      14
+     ],
+     "p_any_add": 0.727,
+     "p_any_del": 0.682,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      4,
+      7,
+      19,
+      28
+     ],
+     "add_q": [
+      5,
+      10,
+      28,
+      50
+     ],
+     "p_any_add": 1.0,
+     "p_any_del": 0.955,
+     "n_reviews": 22
+    }
+   }
+  },
+  "HONG KONG": {
+   "total_adds": 18,
+   "total_dels": 31,
+   "sair_del_share": 0.774,
+   "sair_add_share": 0.778,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "p_any_add": 0.182,
+     "p_any_del": 0.227,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      0,
+      1,
+      2,
+      2
+     ],
+     "add_q": [
+      0,
+      0,
+      1,
+      2
+     ],
+     "p_any_add": 0.409,
+     "p_any_del": 0.545,
+     "n_reviews": 22
+    }
+   }
+  },
+  "INDIA": {
+   "total_adds": 148,
+   "total_dels": 47,
+   "sair_del_share": 0.83,
+   "sair_add_share": 0.77,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "add_q": [
+      0,
+      1,
+      1,
+      4
+     ],
+     "p_any_add": 0.545,
+     "p_any_del": 0.318,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      1,
+      1,
+      2,
+      3
+     ],
+     "add_q": [
+      3,
+      4,
+      6,
+      8
+     ],
+     "p_any_add": 1.0,
+     "p_any_del": 0.818,
+     "n_reviews": 22
+    }
+   }
+  },
+  "INDONESIA": {
+   "total_adds": 26,
+   "total_dels": 38,
+   "sair_del_share": 0.789,
+   "sair_add_share": 0.846,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "p_any_add": 0.136,
+     "p_any_del": 0.273,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      1,
+      1,
+      2,
+      2
+     ],
+     "add_q": [
+      0,
+      1,
+      1,
+      2
+     ],
+     "p_any_add": 0.727,
+     "p_any_del": 0.773,
+     "n_reviews": 22
+    }
+   }
+  },
+  "JAPAN": {
+   "total_adds": 71,
+   "total_dels": 142,
+   "sair_del_share": 0.782,
+   "sair_add_share": 0.803,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      2,
+      4
+     ],
+     "add_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "p_any_add": 0.455,
+     "p_any_del": 0.364,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      1,
+      3,
+      7,
+      9
+     ],
+     "add_q": [
+      1,
+      2,
+      4,
+      5
+     ],
+     "p_any_add": 0.818,
+     "p_any_del": 0.955,
+     "n_reviews": 22
+    }
+   }
+  },
+  "KOREA": {
+   "total_adds": 80,
+   "total_dels": 102,
+   "sair_del_share": 0.676,
+   "sair_add_share": 0.7,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "add_q": [
+      0,
+      0,
+      2,
+      3
+     ],
+     "p_any_add": 0.5,
+     "p_any_del": 0.545,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      1,
+      3,
+      4,
+      6
+     ],
+     "add_q": [
+      1,
+      2,
+      3,
+      4
+     ],
+     "p_any_add": 1.0,
+     "p_any_del": 0.864,
+     "n_reviews": 22
+    }
+   }
+  },
+  "MALAYSIA": {
+   "total_adds": 19,
+   "total_dels": 35,
+   "sair_del_share": 0.714,
+   "sair_add_share": 0.632,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "p_any_add": 0.227,
+     "p_any_del": 0.318,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      0,
+      1,
+      2,
+      2
+     ],
+     "add_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "p_any_add": 0.318,
+     "p_any_del": 0.636,
+     "n_reviews": 22
+    }
+   }
+  },
+  "NEW ZEALAND": {
+   "total_adds": 6,
+   "total_dels": 8,
+   "sair_del_share": 0.875,
+   "sair_add_share": 0.667,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "p_any_add": 0.091,
+     "p_any_del": 0.045,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      1
+     ],
+     "p_any_add": 0.182,
+     "p_any_del": 0.318,
+     "n_reviews": 22
+    }
+   }
+  },
+  "PHILIPPINES": {
+   "total_adds": 8,
+   "total_dels": 16,
+   "sair_del_share": 0.75,
+   "sair_add_share": 1.0,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "p_any_add": 0.0,
+     "p_any_del": 0.091,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "add_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "p_any_add": 0.318,
+     "p_any_del": 0.318,
+     "n_reviews": 22
+    }
+   }
+  },
+  "SINGAPORE": {
+   "total_adds": 9,
+   "total_dels": 20,
+   "sair_del_share": 0.9,
+   "sair_add_share": 0.778,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "p_any_add": 0.091,
+     "p_any_del": 0.091,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      0,
+      0,
+      1,
+      2
+     ],
+     "add_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "p_any_add": 0.318,
+     "p_any_del": 0.364,
+     "n_reviews": 22
+    }
+   }
+  },
+  "TAIWAN": {
+   "total_adds": 56,
+   "total_dels": 67,
+   "sair_del_share": 0.791,
+   "sair_add_share": 0.786,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "add_q": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "p_any_add": 0.455,
+     "p_any_del": 0.5,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      1,
+      1,
+      3,
+      6
+     ],
+     "add_q": [
+      1,
+      2,
+      2,
+      3
+     ],
+     "p_any_add": 0.909,
+     "p_any_del": 0.864,
+     "n_reviews": 22
+    }
+   }
+  },
+  "THAILAND": {
+   "total_adds": 26,
+   "total_dels": 37,
+   "sair_del_share": 0.622,
+   "sair_add_share": 0.885,
+   "counts": {
+    "QIR": {
+     "del_q": [
+      0,
+      0,
+      0,
+      2
+     ],
+     "add_q": [
+      0,
+      0,
+      0,
+      0
+     ],
+     "p_any_add": 0.136,
+     "p_any_del": 0.273,
+     "n_reviews": 22
+    },
+    "SAIR": {
+     "del_q": [
+      0,
+      1,
+      2,
+      2
+     ],
+     "add_q": [
+      0,
+      0,
+      2,
+      2
+     ],
+     "p_any_add": 0.5,
+     "p_any_del": 0.591,
+     "n_reviews": 22
+    }
+   }
+  }
+ },
+ "churn": {
+  "TAIWAN": {
+   "adds_observed": 46,
+   "dels_observed": 56,
+   "add_deleted_within_4": 0.043,
+   "del_readded_within_4": 0.0
+  },
+  "CHINA": {
+   "adds_observed": 524,
+   "dels_observed": 366,
+   "add_deleted_within_4": 0.082,
+   "del_readded_within_4": 0.038
+  },
+  "JAPAN": {
+   "adds_observed": 62,
+   "dels_observed": 128,
+   "add_deleted_within_4": 0.065,
+   "del_readded_within_4": 0.0
+  },
+  "HONG KONG": {
+   "adds_observed": 18,
+   "dels_observed": 31,
+   "add_deleted_within_4": 0.167,
+   "del_readded_within_4": 0.0
+  },
+  "KOREA": {
+   "adds_observed": 73,
+   "dels_observed": 85,
+   "add_deleted_within_4": 0.055,
+   "del_readded_within_4": 0.024
+  },
+  "INDIA": {
+   "adds_observed": 137,
+   "dels_observed": 42,
+   "add_deleted_within_4": 0.022,
+   "del_readded_within_4": 0.095
+  },
+  "MALAYSIA": {
+   "adds_observed": 19,
+   "dels_observed": 30,
+   "add_deleted_within_4": 0.105,
+   "del_readded_within_4": 0.0
+  },
+  "INDONESIA": {
+   "adds_observed": 22,
+   "dels_observed": 32,
+   "add_deleted_within_4": 0.136,
+   "del_readded_within_4": 0.0
+  },
+  "THAILAND": {
+   "adds_observed": 26,
+   "dels_observed": 30,
+   "add_deleted_within_4": 0.077,
+   "del_readded_within_4": 0.0
+  },
+  "PHILIPPINES": {
+   "adds_observed": 8,
+   "dels_observed": 14,
+   "add_deleted_within_4": 0.25,
+   "del_readded_within_4": 0.0
+  },
+  "SINGAPORE": {
+   "adds_observed": 9,
+   "dels_observed": 19,
+   "add_deleted_within_4": 0.0,
+   "del_readded_within_4": 0.0
+  },
+  "AUSTRALIA": {
+   "adds_observed": 24,
+   "dels_observed": 32,
+   "add_deleted_within_4": 0.0,
+   "del_readded_within_4": 0.0
+  },
+  "NEW ZEALAND": {
+   "adds_observed": 5,
+   "dels_observed": 7,
+   "add_deleted_within_4": 0.0,
+   "del_readded_within_4": 0.0
+  }
+ },
+ "waves": {
+  "AUSTRALIA": [
+   {
+    "season": "May20",
+    "n_del": 8
+   },
+   {
+    "season": "Feb25",
+    "n_del": 6
+   },
+   {
+    "season": "May21",
+    "n_del": 3
+   }
+  ],
+  "CHINA": [
+   {
+    "season": "Nov20",
+    "n_del": 49
+   },
+   {
+    "season": "May20",
+    "n_del": 45
+   },
+   {
+    "season": "Feb24",
+    "n_del": 37
+   }
+  ],
+  "HONG KONG": [
+   {
+    "season": "Nov19",
+    "n_del": 4
+   },
+   {
+    "season": "Nov20",
+    "n_del": 4
+   },
+   {
+    "season": "Feb24",
+    "n_del": 3
+   }
+  ],
+  "INDIA": [
+   {
+    "season": "May18",
+    "n_del": 5
+   },
+   {
+    "season": "Nov19",
+    "n_del": 4
+   },
+   {
+    "season": "May20",
+    "n_del": 4
+   }
+  ],
+  "INDONESIA": [
+   {
+    "season": "May20",
+    "n_del": 6
+   },
+   {
+    "season": "Nov17",
+    "n_del": 3
+   },
+   {
+    "season": "Nov22",
+    "n_del": 3
+   }
+  ],
+  "JAPAN": [
+   {
+    "season": "Nov20",
+    "n_del": 21
+   },
+   {
+    "season": "May24",
+    "n_del": 13
+   },
+   {
+    "season": "Nov23",
+    "n_del": 10
+   }
+  ],
+  "KOREA": [
+   {
+    "season": "Feb25",
+    "n_del": 11
+   },
+   {
+    "season": "Nov22",
+    "n_del": 10
+   },
+   {
+    "season": "May21",
+    "n_del": 7
+   }
+  ],
+  "MALAYSIA": [
+   {
+    "season": "Nov18",
+    "n_del": 4
+   },
+   {
+    "season": "Nov19",
+    "n_del": 3
+   },
+   {
+    "season": "Aug25",
+    "n_del": 3
+   }
+  ],
+  "NEW ZEALAND": [
+   {
+    "season": "Nov17",
+    "n_del": 1
+   },
+   {
+    "season": "May18",
+    "n_del": 1
+   },
+   {
+    "season": "May20",
+    "n_del": 1
+   }
+  ],
+  "PHILIPPINES": [
+   {
+    "season": "May21",
+    "n_del": 3
+   },
+   {
+    "season": "Nov22",
+    "n_del": 3
+   },
+   {
+    "season": "Nov19",
+    "n_del": 2
+   }
+  ],
+  "SINGAPORE": [
+   {
+    "season": "May24",
+    "n_del": 5
+   },
+   {
+    "season": "May20",
+    "n_del": 4
+   },
+   {
+    "season": "Nov16",
+    "n_del": 2
+   }
+  ],
+  "TAIWAN": [
+   {
+    "season": "Nov15",
+    "n_del": 9
+   },
+   {
+    "season": "May15",
+    "n_del": 7
+   },
+   {
+    "season": "Nov25",
+    "n_del": 7
+   }
+  ],
+  "THAILAND": [
+   {
+    "season": "Aug24",
+    "n_del": 4
+   },
+   {
+    "season": "Nov23",
+    "n_del": 3
+   },
+   {
+    "season": "Feb24",
+    "n_del": 3
+   }
+  ]
+ }
+}

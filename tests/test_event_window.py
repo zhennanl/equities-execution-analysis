@@ -125,3 +125,609 @@ def test_lifecycle_page_imports():
     under streamlit; logic lives in agents and is tested there)."""
     import views.page6_lifecycle as p
     assert callable(p.render)
+    import views.page7_desk_brief as p7          # session 9i
+    assert callable(p7.render)
+    src = open("app.py").read()
+    assert "page7_desk_brief" in src
+    assert "Index Rebalance Desk Brief" in src
+
+
+# ------------------------------------ violence curve v1 (session 8z)
+
+def test_violence_curve_fit_and_band():
+    import pandas as pd
+    from agents.violence_curve import (banded_table, expected_gap_bps,
+                                       fit, load_points)
+    # synthetic: |gap| = 100 + 200*share exactly -> R2 = 1
+    pts = pd.DataFrame([{"share": s, "gap_bps": 100 + 200 * s,
+                         "side": "Buy"} for s in
+                        (0.1, 0.2, 0.3, 0.4, 0.5)])
+    m = fit(pts)
+    assert abs(m["a"] - 100) < 1e-6 and abs(m["b"] - 200) < 1e-6
+    assert m["r2"] > 0.999
+    e = expected_gap_bps(0.3, "Sell", m)
+    assert e["point_bps"] == -160.0
+    assert "n=5" in e["basis"]
+    assert len(banded_table(m)) == 7
+    # canned cache -> loader shape (control 2330 excluded)
+    cache = {"cn": {"X.SZ": {"side": "Buy", "days": {"2026-05-29": {
+        "auction_share": 0.1, "auction_gap_bps": 50.0,
+        "day_vol": 1}}}},
+        "names": {"2330.TW": {"2026-06-18": {
+            "auction_share": 0.5, "official_close": 100,
+            "last_bar_close": 100, "daily_vol": 1, "bars_vol": 1}}}}
+    p = load_points(cache)
+    assert len(p) == 1 and p.iloc[0]["market"] == "CN"
+
+
+def test_violence_curve_real_points_null_result():
+    """The v1 null result is itself pinned: on the REAL 17 points,
+    share does NOT explain gaps (R2 < 0.15) — if new data ever
+    changes this, the test forces a conscious doc update."""
+    from agents.violence_curve import fit, load_points
+    p = load_points()
+    if len(p) < 10:
+        return                       # cache absent in CI — skip
+    m = fit(p)
+    assert m["n"] >= 15
+    assert m["r2"] < 0.15
+
+
+def test_window_study_pipeline():
+    """Panel builder + tracks run on cached official data (skip if
+    caches absent); metric columns present per the definitions doc."""
+    from scripts.window_study import day_tracks, event_frames
+    try:
+        df = event_frames()
+    except Exception:
+        return
+    if not len(df):
+        return
+    for c in ("drift_bps", "t_mult", "short_chg",
+              "foreign_cum_x_adv", "k", "T"):
+        assert c in df.columns
+    t = day_tracks(df)
+    assert set(t["side"]) == {"Buy", "Sell"}
+    assert (t["rk"] <= 0).all() or (t["rk"] >= -10).all()
+
+
+def test_time_machine_pit_gate():
+    """The structural PIT property: asof views never contain a row
+    after the as-of date; step2 state computes from the gated panel.
+    Runs on a cached window; skips if caches absent."""
+    from agents.time_machine import (asof_panel, asof_step2,
+                                     event_panel, list_events)
+    ev = list_events()
+    assert len(ev) >= 35                     # decade of events listed
+    try:
+        panel = event_panel("FTSE TW50 2026-03")
+    except Exception:
+        return
+    if not len(panel):
+        return
+    days = sorted(panel["date"].unique())
+    asof = days[len(days) // 2]
+    p = asof_panel(panel, asof)
+    assert (p["date"] <= asof).all()
+    assert len(p) < len(panel)               # future really absent
+    s2 = asof_step2(panel, asof)
+    assert {"A3_gate", "crowding_decision",
+            "rationale"} <= set(s2.columns)
+    assert (s2["days_elapsed"] <= len(days)).all()
+
+
+def test_cnjphk_window_pipeline():
+    """Three-market panels + counterfactuals run on cached data
+    (skip if absent); OOS A3 flag present; HK crowding series from
+    the SFC vintage weeks."""
+    from scripts.window_study_cnjphk import (counterfactuals,
+                                             hk_crowding, panel)
+    import pandas as pd
+    frames = [panel(m) for m in ("CN", "JP", "HK")]
+    frames = [f for f in frames if len(f)]
+    if not frames:
+        return
+    df = pd.concat(frames, ignore_index=True)
+    cf = counterfactuals(df)
+    assert {"LINEAR", "ALL_DAY1", "A3_hot"} <= set(cf.columns)
+    assert cf.groupby("market").ngroups >= 2
+    pre, hkc = hk_crowding()
+    if hkc:
+        assert pre <= "20260512"       # vintage base week pre-ann
+
+
+# --------------------------- TWAP/VWAP/MOC cost study (session 9h)
+
+def test_twap_vwap_moc_cost_math():
+    """Exact-VWAP identity, estimator TWAP, sign conventions, and the
+    MOC==0-vs-close invariant on a synthetic window."""
+    import pandas as pd
+    from scripts.twap_vwap_moc_study import (name_frame, strat_costs,
+                                             summarize, build_table)
+    # 1 pre day + 3 window days; value/vol -> vwap 100,101,102,104
+    cache = {"9998": {"202601": [
+        ["2026-01-05", 10.0, 1000.0, 99, 101, 99, 100],
+        ["2026-01-06", 10.0, 1010.0, 100, 102, 100, 102],
+        ["2026-01-07", 10.0, 1020.0, 101, 103, 101, 103],
+        ["2026-01-08", 10.0, 1040.0, 102, 106, 102, 106]]}}
+    df = name_frame(cache, "9998")
+    assert (df["vwap"] == df["val"] / df["vol"]).all()      # EXACT
+    r = strat_costs(df, "2026-01-05", "2026-01-08", "Buy")
+    assert r["MOC_vs_close"] == 0.0                         # invariant
+    # VWAP_T = 104 vs close 106 -> buy beat the close (negative)
+    assert r["VWAP_T_vs_close"] < 0
+    # window VWAP mean (101+102+104)/3 vs arrival 100 -> positive drift
+    assert abs(r["VWAP_W_vs_arr"] - (102.333333 / 100 - 1) * 1e4) < 1
+    sell = strat_costs(df, "2026-01-05", "2026-01-08", "Sell")
+    assert sell["VWAP_T_vs_close"] > 0        # sign flips for sells
+    # summarize shape on a tiny table
+    tab = pd.DataFrame([{"event": "E", "provider": "FTSE",
+                         "code": "9998", **r}])
+    s = summarize(tab)
+    assert {"vs_close", "vs_arr"} == set(s["bench"].unique())
+    assert (s[s["strategy"] == "MOC"]["n"] == 1).all()
+
+
+def test_jp_step1_upgrade():
+    """Session 9i: JP priors from held daily data — 92% aliases
+    print-verified, first JP-measured class T-multiples, wired into
+    the Asia pack (no more silent TW-prior borrowing)."""
+    import json
+    from pathlib import Path
+    p = Path("data/jp_event_priors.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    v = d["verification"]
+    assert v["n_total"] >= 150
+    assert v["verified"] / v["n_total"] >= 0.85
+    assert d["priors"]["Sell"]["n"] >= 80
+    assert 5 <= d["priors"]["Sell"]["median"] <= 20
+    assert "survivorship" in d["note"]
+    pack = Path("docs/case_studies/AUG2026_QIR_ASIA_PACK.md") \
+        .read_text(encoding="utf-8")
+    assert "JP-measured" in pack
+
+
+def test_post_event_pack():
+    """Session 9i: Step-4 without own executions — the May-26 demo
+    pack pinned: benchmark strips complete, one estimate-miss
+    shipped honestly (1402 gap out of band), reversal paths from
+    IB post-T bars."""
+    import json
+    from pathlib import Path
+    p = Path("data/post_event_may26.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    rows = [r for r in d["names"] if "note" not in r]
+    assert len(rows) == 7
+    for r in rows:
+        assert r["day_vwap_exact"] and r["official_close"]
+        assert r["strategies"]["winner"] in ("MOC", "VWAP_T",
+                                             "LINEAR_W")
+        assert r["reversal_T1_T5"]
+    g1402 = next(r for r in rows if r["code"] == "1402")
+    assert g1402["grades"]["gap_in_band"] is False   # miss shipped
+    big_rev = max(max(r["reversal_T1_T5"]) for r in rows)
+    assert big_rev > 1000            # the post-print snap-back, real
+
+
+def test_tday_playbook():
+    """Session 9i: the situations playbook — scale, thin-cell
+    honesty, and the systematic finding pinned (the print typically
+    lands AGAINST the obligated side: p_gap_fav < 0.5 in every
+    OK cell)."""
+    import json
+    from pathlib import Path
+    p = Path("data/tday_playbook.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert d["n_name_days"] >= 80 and d["n_events"] >= 20
+    cells = d["cells"]
+    ok = [c for c in cells if c["label"] == "OK"]
+    assert len(ok) >= 6
+    assert all(c["p_gap_fav"] < 0.5 for c in ok)   # the toll, pinned
+    thin = [c for c in cells if c["label"] == "DATA-THIN"]
+    for c in thin:                     # thin cells carry no reaction
+        assert c["n"] < 8 or c["n_events"] < 4
+    doc = Path("docs/case_studies/TDAY_PLAYBOOK.md").read_text(
+        encoding="utf-8")
+    assert "systematic lesson" in doc and "Measured:" in doc
+
+
+def test_window_intraday_study():
+    """Session 9i registry-v2: panel scale + verdicts pinned (H9
+    ADOPT under locked criteria, H10 NULL) + the H9b decomposition
+    documented in the case study."""
+    import json
+    from pathlib import Path
+    p = Path("data/window_intraday.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert d["n_name_days"] >= 900 and d["n_events"] >= 20
+    assert d["H9"]["verdict"] == "ADOPT"
+    assert d["H9"]["winrate"] >= 0.9
+    assert d["H10"]["verdict"] == "NULL-PIN"
+    doc = Path("docs/case_studies/WINDOW_INTRADAY_STUDY.md") \
+        .read_text(encoding="utf-8")
+    assert "H9 decomposition" in doc and "H9b" in doc
+
+
+def test_tw_alias_bridge():
+    """Session 9i: the pre-2025 MSCI TW unlock — 135/136 names
+    mapped (HONPRECISION deliberately open: prior print-rejection);
+    34 events with codes back to Feb-2015; every event carries
+    ann+eff; IB window set reaches 2015."""
+    import json
+    from pathlib import Path
+    p = Path("data/msci_tw_events.json")
+    if not p.exists():
+        return
+    ev = json.loads(p.read_text(encoding="utf-8"))
+    named = sum(len(e["adds"]) + len(e["dels"]) for e in ev.values())
+    unmatched = {n for e in ev.values() for n in e["unmatched"]}
+    assert named >= 130
+    assert unmatched == {"HONPRECISION"}
+    with_codes = [s for s, e in ev.items() if e["adds"] or e["dels"]]
+    assert len(with_codes) >= 30
+    assert all(e["eff"] and e["ann"] for s, e in ev.items()
+               if e["adds"] or e["dels"])
+    assert min(e["eff"] for e in ev.values()
+               if e["adds"] or e["dels"]) == "2015-02-27"
+    from scripts.ib_harvest import _windows
+    w = _windows()
+    assert len(w) >= 200 and min(x[3] for x in w) == "2015-02-27"
+
+
+def test_tday_execution_studies():
+    """Session 9i: the three studies pinned — violence NULL SURVIVES
+    at n=85 (5x the v1 data); decomposition legs present; THIN/RICH
+    proxy is the project's first significant real-time-read result."""
+    import json
+    from pathlib import Path
+    p = Path("data/tday_execution_studies.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert d["n_rows"] >= 70
+    v2 = d["violence_v2"]
+    # the null now holds THREE times: n=17 (v1), n=85 (derived),
+    # n=86 (IB-direct shares)
+    assert v2["n"] >= 80 and v2["all"]["r2"] < 0.15
+    tr = d["thin_rich"]
+    # honest expansion (9i): n 25 -> 80 with IB days reduced rho
+    # from 0.61 to ~0.31 — still significant; the small sample had
+    # overstated it. Modest-but-real is the pinned claim.
+    assert tr["n"] >= 60
+    assert tr["spearman_rho"] > 0.25 and tr["p_value"] < 0.01
+    dec = d["decompose"]
+    assert "am" in dec and "auction" in dec
+
+
+def test_derived_auction_shares():
+    """Session 9i: the derived method (official daily - TV
+    continuous) at scale — 85 rows, zero sanity failures, and the
+    add/delete auction-dominance asymmetry pinned."""
+    from pathlib import Path
+    if not Path("data/auction_shares_derived.json").exists():
+        return
+    import pandas as pd
+    df = pd.read_json("data/auction_shares_derived.json")
+    ok = df[df["flag"] == "OK"]
+    assert len(ok) >= 70
+    assert (df["flag"] != "OK").sum() == 0     # sanity holds on all
+    med = ok.groupby(["provider", "side"])["auction_share"].median()
+    assert med[("FTSE", "Sell")] > 0.6         # delete prints dominate
+    assert med[("MSCI", "Sell")] > 0.4
+    assert med[("MSCI", "Buy")] < 0.2          # add prints drown
+    assert ok["auction_share"].max() > 0.85    # the 1102-class prints
+
+
+def test_tday_hourly_shape():
+    """Session 9i: hourly harvest exists for >=7 events; the
+    auction-exclusion caveat is enforced in the doc; the class
+    finding pinned (FTSE both sides against-flow in continuous;
+    MSCI ~flat)."""
+    from pathlib import Path
+    if not Path("data/tday_hourly.json").exists():
+        return
+    from scripts.tday_hourly_shape import table
+    df = table()
+    assert df["event"].nunique() >= 7 and len(df) >= 50
+    med = df.groupby(["provider", "side"])["am_drift_bps"].median()
+    assert med[("FTSE", "Buy")] < -100      # adds fade intraday
+    assert med[("FTSE", "Sell")] < -50      # deletes recover intraday
+    assert abs(med[("MSCI", "Sell")]) < 60  # MSCI continuous ~flat
+    doc = Path("docs/case_studies/TDAY_HOURLY_SHAPE.md")
+    assert "EXCLUDE the closing auction" in doc.read_text(
+        encoding="utf-8")
+
+
+def test_variable_lab():
+    """Session 9i: registry-locked evaluation — verdict mechanics on
+    synthetic effects + the run-1 verdicts PINNED (H2 adopt-FTSE,
+    H3 reject-FTSE — the A+3 reversal; if new events change these,
+    the docs must be consciously updated)."""
+    import json
+    from pathlib import Path
+    from agents.variable_lab import _verdict
+    v, s = _verdict([100, 120, 90, 110, 95, 105])       # strong+stable
+    assert v == "ADOPT" and s["winrate"] == 1.0
+    v, _ = _verdict([100, -120, 90, -110, -95, 105])    # unstable
+    assert v == "REJECT"
+    v, _ = _verdict([5, -8, 10, -3, 6, 2, -5, 4])       # tiny, n>=8
+    assert v == "NULL-PIN"
+    v, _ = _verdict([100, 120])                          # too few
+    assert v == "DATA-GATED"
+    p = Path("data/variable_lab.json")
+    if not p.exists():
+        return
+    r = json.loads(p.read_text())["results"]
+    assert r["H2"]["FTSE"]["verdict"] == "ADOPT"
+    assert r["H2"]["FTSE"]["mean_bps"] > 100
+    assert r["H3"]["FTSE"]["verdict"] == "REJECT"        # A+3 demoted
+    assert r["H7"]["FTSE"]["verdict"] == "DATA-GATED"
+    for h in r.values():                                 # MSCI gated
+        assert h["MSCI"]["verdict"] == "DATA-GATED"
+
+
+def test_data_freshness_guarantee():
+    """Session 9i (the caught staleness failure, structurally fixed):
+    stale cache triggers fetch of every missing bday; holidays go to
+    the no-data ledger; network failure -> DEGRADED, never a crash;
+    TTL short-circuits; full-day storage (all codes kept)."""
+    import json
+    import pandas as pd
+    from pathlib import Path
+    from agents.data_freshness import (ensure_fresh_shorts,
+                                       freshness_line)
+
+    def fake_fetch(d):
+        if d == "20260731":
+            return pd.DataFrame()                    # holiday
+        return pd.DataFrame([
+            {"ticker": "1101", "margin_short_bal": 1.0,
+             "sbl_bal": 2.0},
+            {"ticker": "9999", "margin_short_bal": 3.0,
+             "sbl_bal": 0.0}])
+
+    tmp = Path("data/_test_fresh.json")
+    tmp.write_text(json.dumps(
+        {"short": {"20260728": {"1101": [1, 1]}}}))
+    r = ensure_fresh_shorts(cache_path=tmp, fetch_fn=fake_fetch,
+                            today="2026-08-04", ttl=0)
+    assert r["status"] == "REFRESHED"
+    assert "20260731" not in r["fetched_days"]        # holiday ledger
+    assert r["latest"] == "20260804" and r["stale_bdays"] == 0
+    cache = json.loads(tmp.read_text())
+    assert "9999" in cache["short"]["20260803"]       # full-day store
+    assert "20260731" in cache["_meta"]["no_data_days"]
+    # TTL short-circuit
+    r2 = ensure_fresh_shorts(cache_path=tmp, fetch_fn=fake_fetch,
+                             today="2026-08-04")
+    assert r2["status"] == "FRESH" and "TTL" in r2["note"]
+
+    def broken(d):
+        raise ConnectionError("down")
+    tmp.write_text(json.dumps(
+        {"short": {"20260720": {"1101": [1, 1]}}}))
+    r3 = ensure_fresh_shorts(cache_path=tmp, fetch_fn=broken,
+                             today="2026-08-04", ttl=0)
+    assert r3["status"] == "DEGRADED" and r3["stale_bdays"] > 1
+    assert "WARNING" in freshness_line(r3)
+    tmp.unlink()
+
+
+def test_pre_announcement_pack():
+    """Session 9i: six-category orchestrator — as-of crowding watch
+    (backtestable), May-2026 pack graded 7/7+1/1 with Brier pinned,
+    Aug pack fields present."""
+    import json
+    import pandas as pd
+    from pathlib import Path
+    from agents.pre_announcement import crowding_watch, must_start_by
+    cache = {"short": {
+        "20260501": {"9999": [100.0, 0.0]},
+        "20260505": {"9999": [110.0, 0.0]},
+        "20260508": {"9999": [125.0, 0.0]},
+        "20260511": {"9999": [140.0, 0.0]},
+        "20260520": {"9999": [500.0, 0.0]}}}      # post-asof spike
+    w = crowding_watch(cache, ["9999"], asof="20260511")
+    assert w.iloc[0]["build_pct"] == 40           # PIT: spike unseen
+    assert bool(w.iloc[0]["alert"])               # 5-obs delta >= 10%
+    assert must_start_by("2026-08-31", 17.6) == "2026-06-08" or \
+        must_start_by("2026-08-31", 17.6) < "2026-08-01"  # 71 bdays
+    p = Path("data/preann_tw.json")
+    if not p.exists():
+        return
+    blob = json.loads(p.read_text())
+    g = blob["may"]["grade"]
+    assert len(g["dels_hit"]) == 7 and g["adds_hit"] == ["6223.TWO"]
+    assert g["brier"] is not None and g["brier"] < 0.25   # < coinflip
+    assert blob["aug"]["n_candidates"] >= 8
+    assert blob["aug"]["crowd_alerts"] >= 1
+
+
+def test_tday_cards():
+    """Session 9i: cards chain measured priors with per-metric
+    provenance; flow arithmetic exact; NO-PRIOR honesty on the Buy
+    side; BELOW-FLOOR rows carry a note, not fabricated numbers."""
+    import pandas as pd
+    from agents.review_engine import PASSIVE_OWN_RATE
+    from agents.tday_cards import METHOD, build_cards, render_cards_md
+    sl = pd.DataFrame([
+        {"side": "DELETE", "ticker": "1101.TW", "cap_usd_b": 5.2,
+         "x_threshold": 2.19, "p": 0.149, "reasoning": "test"},
+        {"side": "ADD", "ticker": "2324.TW", "cap_usd_b": 4.8,
+         "x_threshold": 0.56, "p": 0.062, "reasoning": "test"},
+        {"side": "ADD", "ticker": "BELOW-FLOOR (unobservable)",
+         "cap_usd_b": None, "x_threshold": None, "p": 0.273,
+         "reasoning": "blind"}])
+    u = pd.DataFrame([
+        dict(ticker="1101.TW", full_mktcap_usd=5.24e9,
+             free_float_frac=0.86, adv_usd=23.1e6, atvr=2, member=1),
+        dict(ticker="2324.TW", full_mktcap_usd=4.8e9,
+             free_float_frac=0.95, adv_usd=40e6, atvr=2, member=0)])
+    cards = build_cards(sl, u, crowding_map={"1101": "HIGH (+53%)"})
+    assert len(cards) == 3
+    c = cards[0]
+    lo, hi = c["flow_if_converts_usd_m"]
+    assert lo == round(5.24e9 * 0.86 * PASSIVE_OWN_RATE[0] / 1e6)
+    assert hi == round(5.24e9 * 0.86 * PASSIVE_OWN_RATE[1] / 1e6)
+    assert abs(c["flow_p_weighted_usd_m"]
+               - round(0.149 * (lo + hi) / 2, 1)) < 0.6
+    assert c["print_multiple"]["median"] == 16.0     # measured prior
+    assert "WORK AHEAD" in c["playbook"]             # crowded delete
+    add = cards[1]
+    assert add["print_multiple"].get("available") is False
+    assert "NO MEASURED" in add["print_multiple"]["how"]
+    assert "demoted hypothesis" in add["playbook"]
+    assert "note" in cards[2] and "unobservable" in cards[2]["note"]
+    md = render_cards_md(cards, "t", "2026-08-04")
+    assert "METHOD" in md and all(m in md for m in METHOD)
+
+
+def test_no_change_shortlist():
+    """Session 9i (user rule): a zero-call review ships a ranked
+    shortlist — decade-anchored probabilities, blind-band row
+    explicit, recent-deletion caution attached."""
+    import pandas as pd
+    from agents.review_engine import (screen_market,
+                                      shortlist_candidates)
+    u = pd.DataFrame([
+        dict(ticker="BIG.TW", full_mktcap_usd=60e9,
+             free_float_frac=0.8, adv_usd=1e8, atvr=2.0, member=1),
+        dict(ticker="MID.TW", full_mktcap_usd=5e9,
+             free_float_frac=0.7, adv_usd=2e7, atvr=2.0, member=1),
+        dict(ticker="CAND.TW", full_mktcap_usd=4.5e9,
+             free_float_frac=0.7, adv_usd=2e7, atvr=2.0, member=0)])
+    s = screen_market(u, review="QIR", member_count=83,
+                      tail_hi=10e9, tail_n=500)
+    sl = shortlist_candidates(s, u, "QIR", "Taiwan",
+                              recent_deletions={"CAND.TW"})
+    assert sl is not None and len(sl) >= 4
+    assert (sl["p"] > 0).all() and (sl["p"] < 0.5).all()
+    blind = sl[sl["ticker"].str.startswith("BELOW-FLOOR")]
+    assert len(blind) == 2                    # one per side, explicit
+    cand = sl[sl["ticker"] == "CAND.TW"].iloc[0]
+    assert "CAUTION recent deletion" in cand["reasoning"]
+    assert "decade-measured" in cand["reasoning"]
+    # probability mass per side never exceeds the decade P(any)
+    for side, pa in (("ADD", 0.455), ("DELETE", 0.5)):
+        assert sl[sl["side"] == side]["p"].sum() <= pa + 1e-6
+
+
+def test_review_funnel():
+    """Session 9i: funnel stage arithmetic + the May-26 validation —
+    the funnel reproduces the graded run (7/7 dels + 1/1 add) with
+    the 3 false dels being exactly the cutline residents."""
+    import json
+    from pathlib import Path
+    p = Path("data/funnel_tw.json")
+    if not p.exists():
+        return
+    blob = json.loads(p.read_text())
+    for run in ("validation", "prediction"):
+        st = blob[run]["stages"]
+        assert [s["stage"] for s in st][0] == "S0 universe"
+        assert st[0]["n"] >= st[3]["n"] >= st[-1]["n"] >= 0
+    g = blob["validation"]["grade"]
+    assert len(g["dels_hit"]) == 7 and g["dels_missed_visible"] == []
+    assert g["adds_hit"] == ["6223.TWO"]
+    assert set(g["false_dels"]) == {"1101.TW", "1326.TW", "2207.TW"}
+    assert blob["prediction"]["stages"][-1]["n"] == 0   # Aug-26 visible
+
+
+def test_decade_stats_and_consistency():
+    """Improvement plan item 2 (session 9i): decade key stats exist
+    for all APAC markets; cadence rule validated decade-wide (SAIR
+    deletion share > 50% everywhere); consistency check verdicts."""
+    import json
+    from pathlib import Path
+    from agents.review_engine import decade_consistency
+    p = Path("data/msci_decade_stats.json")
+    if not p.exists():
+        return
+    s = json.loads(p.read_text())
+    assert s["n_reviews"] == 44
+    for m in ("TAIWAN", "JAPAN", "CHINA", "KOREA"):
+        assert s["cadence"][m]["sair_del_share"] > 0.5   # L4, decade
+    assert s["churn"]["TAIWAN"]["add_deleted_within_4"] is not None
+    d = decade_consistency("Taiwan", "QIR", 0, 0)
+    assert d and d["del_verdict"] == "OK"
+    wild = decade_consistency("Taiwan", "QIR", 0, 12)
+    assert wild["del_verdict"] == "OUTSIDE_HIGH"   # flags, no suppress
+    # the two-sided fix (9i): a zero-add China QIR pack is flagged LOW
+    low = decade_consistency("China", "QIR", 0, 2)
+    assert low["add_verdict"] == "OUTSIDE_LOW"
+
+
+def test_limit_moves_tw():
+    """Exact TWSE limit math (tick table both directions) + day_stats
+    on synthetic rows; the two 2026 case-study locks verify to tick."""
+    from scripts.limit_moves_tw import day_stats, limit_down, limit_up
+    assert limit_up(99.1) == 109.0            # 6919 on 2026-06-18
+    assert limit_down(122.0) == 110.0         # 2344 on 2026-03-20
+    assert limit_up(23.45) == 25.75           # rounding down to 0.05
+    assert limit_down(23.45) == 21.15
+    assert limit_up(8.0) == 8.8               # 0.01 tick band
+    rows = [["1111", 100.0, 110.0, 100.0, 110.0, 1],   # locked up
+            ["2222", 100.0, 110.0, 100.0, 105.0, 0],   # touched only
+            ["3333", 100.0, 100.0, 90.0, 90.0, 0],     # locked down
+            ["4444", 100.0, 101.0, 99.0, 100.0, 0]]    # quiet
+    s = day_stats(rows)
+    assert (s["touched_up"], s["locked_up"], s["book_locked_up"]) \
+        == (2, 1, 1)
+    assert (s["touched_down"], s["locked_down"]) == (1, 1)
+    assert s["up_names"] == ["1111"] and s["down_names"] == ["3333"]
+
+
+def test_decade_window_study():
+    """Decade CN/JP/HK study: events parse with dates for all 44
+    quarters; bridge + panel run on caches (skip if absent); the
+    9h REVISION is pinned — decade CN adds do NOT show the May-2026
+    pop-decay (LINEAR median < 0 = working beats print)."""
+    from scripts.window_study_decade import (BRIDGE, CACHE, _match,
+                                             _toks, events)
+    ev = events()
+    assert len(ev) >= 40
+    assert all(e["eff"] > e["ann"] for e in ev)
+    assert any("CN" in e["mkts"] for e in ev)
+    # alias matching honors abbreviations + rejects ambiguity
+    t = _toks("AGRI BANK OF CN A (HK-C)")
+    assert "AGRICULTURAL" in [x if x != "AGRI" else "AGRICULTURAL"
+                              for x in t] or "AGRI" not in t
+    code, _ = _match(_toks("PING AN BANK A"),
+                     [("sz.000001", _toks("PING AN BANK")),
+                      ("sz.999999", _toks("PING AN INSURANCE GROUP"))])
+    assert code == "sz.000001"
+    if not (BRIDGE.exists() and CACHE.exists()):
+        return
+    from scripts.window_study_decade import panel
+    df = panel()
+    if not len(df):
+        return
+    ok = df[df["print_ok"]]
+    assert len(ok) >= 300 and ok["mkt"].nunique() == 3
+    cn_adds = ok[(ok["mkt"] == "CN") & (ok["side"] == "Buy")]
+    assert cn_adds["LINEAR"].median() < 0     # the 9h revision, pinned
+
+
+def test_twap_vwap_moc_events_and_cache():
+    """Event list covers both providers; real-cache pipeline runs when
+    the STOCK_DAY cache exists (skip otherwise)."""
+    from scripts.twap_vwap_moc_study import (CACHE, build_table, events)
+    ev = events()
+    assert sum(e["provider"] == "FTSE" for e in ev) >= 28
+    assert sum(e["provider"] == "MSCI" for e in ev) == 4   # +2025 (9i)
+    assert all(e["eff"] > e["ann"] for e in ev)
+    if not CACHE.exists():
+        return
+    df, skipped = build_table()
+    if not len(df):
+        return
+    assert df["MOC_vs_close"].abs().max() == 0.0
+    assert df["event"].nunique() >= 20

@@ -30,9 +30,17 @@ RANGE = {"Japan": (20e9, 900), "China": (15e9, 1100),
          "Malaysia": (6e9, 300), "Indonesia": (6e9, 300)}
 
 
+def cap_refresh():
+    """Session 9i: Apr-30 -> current price ratios per ticker
+    (scripts/refresh_aug_caps.py). Empty dict = no refresh file."""
+    p = Path("data/aug26_cap_refresh.json")
+    return json.loads(p.read_text()) if p.exists() else {}
+
+
 def post_may_universe(mkt):
     cache = json.loads(
         Path("data/pit_may26_asia_cache.json").read_text())
+    ratios = cap_refresh()
     act = ACTUAL[mkt]
     rows = []
     for t, mem_pre in UNIVERSES[mkt]:
@@ -46,6 +54,41 @@ def post_may_universe(mkt):
         if t in act["adds"]:
             mem = 1
         capfx = 1.0 if t == "YMM" else FX[mkt]
+        # session 9i: current-price refresh (PIT replay path below
+        # deliberately does NOT get this — it must stay April-frozen)
+        cap = c["cap_pit"] / capfx * ratios.get(t, 1.0)
+        ff = min(c.get("ff", 0.7), 1.0)
+        if mkt == "China" and mem == 1 and (t.endswith(".SS") or
+                                            t.endswith(".SZ")):
+            ff *= 0.2                     # inclusion factor (members)
+        adv = (c.get("adv_loc") / capfx if c.get("adv_loc")
+               else cap * 0.004)
+        atvr = min((adv * 250 / (cap * ff)) if cap * ff else 1.0, 5.0)
+        rows.append(dict(ticker=t, full_mktcap_usd=cap,
+                         free_float_frac=ff, adv_usd=adv, atvr=atvr,
+                         member=mem))
+    return pd.DataFrame(rows)
+
+
+# PRE-May constituent counts (published factsheets, knowable at the
+# time) — the PIT replay's count anchors.
+PRE_COUNT = {"Taiwan": 83, "Japan": 200, "China": 580, "India": 155,
+             "Korea": 90, "HongKong": 30, "Malaysia": 32,
+             "Indonesia": 20}
+
+
+def pit_universe(mkt):
+    """POINT-IN-TIME vintage for the May-2026 replay: Apr-30 caps
+    (historical prices) and PRE-May membership. No information from
+    after the announcement enters this frame."""
+    cache = json.loads(
+        Path("data/pit_may26_asia_cache.json").read_text())
+    rows = []
+    for t, mem in UNIVERSES[mkt]:
+        c = cache.get(t, {})
+        if "cap_pit" not in c:
+            continue
+        capfx = 1.0 if t == "YMM" else FX[mkt]
         cap = c["cap_pit"] / capfx
         ff = min(c.get("ff", 0.7), 1.0)
         if mkt == "China" and mem == 1 and (t.endswith(".SS") or
@@ -58,6 +101,72 @@ def post_may_universe(mkt):
                          free_float_frac=ff, adv_usd=adv, atvr=atvr,
                          member=mem))
     return pd.DataFrame(rows)
+
+
+# PIT harness tail ranges (lo, hi, n) — copied from the graded
+# report() configuration.
+PIT_RANGE = {"Japan": (0.5e9, 20e9, 900), "China": (0.3e9, 15e9, 1100),
+             "India": (0.3e9, 12e9, 700), "Korea": (0.3e9, 10e9, 500),
+             "Taiwan": (0.3e9, 10e9, 500),
+             "HongKong": (0.5e9, 12e9, 400),
+             "Malaysia": (0.2e9, 6e9, 300),
+             "Indonesia": (0.2e9, 6e9, 300)}
+
+
+def pit_screen(mkt, u, buffer=0.02, review="SAIR"):
+    """The EXACT graded May-replication screen (69% of all 98):
+    count-anchored synthetic tails + predict_msci with the country-
+    segment MIGRATION deletion rule + the corporate-action rule.
+    Returns a screen dict consumable by review_engine.build_calls."""
+    import numpy as np
+    from agents.reconstitution import MSCIRules, predict_msci
+    from scripts.pit_may2026_asia import CA_DELETIONS
+    lo, hi, n = PIT_RANGE.get(mkt, (0.3e9, 8e9, 400))
+    rng = np.random.default_rng(11)
+    caps = np.sort(np.exp(rng.uniform(np.log(lo), np.log(hi),
+                                      n)))[::-1]
+    n_tail_mem = max(PRE_COUNT.get(mkt, 60) - int(u["member"].sum()),
+                     0)
+
+    def tail_ff(i):
+        return 0.14 if (mkt == "China" and i % 2 == 0) else 0.7
+    tail = pd.DataFrame([dict(ticker=f"TAIL{i:03d}",
+                              full_mktcap_usd=float(c),
+                              free_float_frac=tail_ff(i),
+                              adv_usd=float(c) * 0.004, atvr=1.0,
+                              member=int(i < n_tail_mem))
+                         for i, c in enumerate(caps)])
+    full = pd.concat([u, tail], ignore_index=True)
+    members = set(full.loc[full["member"] == 1, "ticker"])
+    # Backtest iteration-4 rule (session 8u): the deep country-
+    # coverage MIGRATION sweep is SAIR business; QIRs execute only
+    # extreme breaches (0.5x floor + screens). Applying migration at
+    # QIR vintages over-flagged 10 deletions at Aug-2025 that MSCI
+    # did not make. Documented MSCI cadence, not a tuned knob.
+    r = predict_msci(full.drop(columns="member"), members,
+                     MSCIRules(review=review,
+                               country_coverage=(0.85 if review ==
+                                                 "SAIR" else None),
+                               country_buffer=buffer))
+
+    def named(d):
+        return (d[~d["ticker"].astype(str).str.startswith("TAIL")]
+                if len(d) else d)
+    adds, dels = named(r["adds"]), named(r["deletes"])
+    # corporate-action rule: announced takeover pre-review -> delete
+    for t, why in CA_DELETIONS.get(mkt, {}).items():
+        if t in set(u["ticker"]) and (not len(dels)
+                                      or t not in set(dels["ticker"])):
+            cap = float(u.loc[u["ticker"] == t,
+                              "full_mktcap_usd"].iloc[0])
+            dels = pd.concat([dels, pd.DataFrame(
+                [{"ticker": t, "full_mktcap_usd": cap,
+                  "reason": f"corporate action: {why}"}])],
+                ignore_index=True)
+    return {"adds": adds, "deletes": dels, "gmsr": r["gmsr_usd"],
+            "add_thr": r["add_threshold_usd"],
+            "watch": named(r["watchlist"]),
+            "assembled": full}     # session 9i: funnel decomposition
 
 
 def merge_short_caches(*caches):
@@ -153,14 +262,38 @@ def main():
             tail_hi=hi, tail_n=n,
             recent_deletions=set(ACTUAL[mkt]["dels"]),
             recent_additions=set(ACTUAL[mkt]["adds"]))
+        # session 9i: JAPAN uses its OWN measured T-multiple priors
+        # (jp_event_priors.json, 166 print-verified name-events) —
+        # previously every market's history line showed TW's cache
+        # (an honesty gap, closed)
+        if mkt == "Japan":
+            jp = Path("data/jp_event_priors.json")
+            if jp.exists():
+                pri = json.loads(jp.read_text())["priors"]
+                r["history"] = {
+                    f"MSCI {side} (JP-measured)": {
+                        "available": True, "median": p["median"],
+                        "max": p["max"], "n": p["n"]}
+                    for side, p in pri.items()}
         r["universe_df"] = u
         results.append(r)
 
     notes = (
-        "Configuration = the May-replication-graded setup (69% of all "
-        "98 actual May changes at PIT; adds 17/17 zero false "
-        "positives). Caps are APRIL vintage from the PIT cache — "
-        "MANDATORY refresh at Aug-11 finalization along with the "
+        "SESSION 9i ITERATION: caps REPRICED TO CURRENT (Apr-30 -> "
+        "now ratios, 125/125 names, scripts/refresh_aug_caps.py; "
+        "dispersion p10 0.75 / p90 1.18) — this surfaced the Korea "
+        "sub-floor delete. DISCLOSED LIMIT the decade check now "
+        "exposes: China reads OUTSIDE_LOW on adds (0 called vs "
+        "decade QIR median ~12) because the 125-name cached universe "
+        "cannot SEE the mid-cap risers and new listings that "
+        "historically supply China QIR adds — a UNIVERSE-BREADTH "
+        "gap (improvement plan item 4), not a quiet market. Treat "
+        "the China add side as NO-CALL-below-the-floor, not as "
+        "'no changes expected'. "
+        "Configuration otherwise = the May-replication-graded setup "
+        "(69% of all 98 actual May changes at PIT; adds 17/17 zero "
+        "false positives). Original caps were APRIL vintage — "
+        "final refresh still MANDATORY at Aug-11 along with the "
         "membership cross-check. Deletion calls are a probability-"
         "ranked watch zone (May-measured: delete precision 82% / "
         "recall 89%; cutline residents ~45-60%). Crowding now "

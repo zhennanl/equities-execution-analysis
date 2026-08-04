@@ -1,0 +1,182 @@
+{
+ "n_events_panel": 16,
+ "n_name_events": 83,
+ "results": {
+  "H1": {
+   "variable": "h1_cum_excess",
+   "target": "tgt_remaining_k5",
+   "note": "HIGH completion -> LESS remaining drift (negative effect)",
+   "FTSE": {
+    "verdict": "REJECT",
+    "n_events": 13,
+    "mean_bps": 31.0,
+    "winrate": 0.54,
+    "loo_stable": false,
+    "events_skipped": 0
+   },
+   "MSCI": {
+    "verdict": "DATA-GATED",
+    "n_events": 3,
+    "events_skipped": 0
+   },
+   "POOLED": {
+    "verdict": "REJECT",
+    "n_events": 16,
+    "mean_bps": -116.1,
+    "winrate": 0.5,
+    "loo_stable": false,
+    "events_skipped": 0
+   }
+  },
+  "H2": {
+   "variable": "h2_short_build",
+   "target": "tgt_remaining_rk3",
+   "note": "HIGH build -> LESS favorable remaining drift for deletes",
+   "FTSE": {
+    "verdict": "ADOPT",
+    "n_events": 6,
+    "mean_bps": 148.8,
+    "winrate": 0.67,
+    "loo_stable": true,
+    "events_skipped": 7
+   },
+   "MSCI": {
+    "verdict": "DATA-GATED",
+    "n_events": 3,
+    "events_skipped": 0
+   },
+   "POOLED": {
+    "verdict": "ADOPT",
+    "n_events": 9,
+    "mean_bps": 171.0,
+    "winrate": 0.67,
+    "loo_stable": true,
+    "events_skipped": 7
+   }
+  },
+  "H3": {
+   "variable": "h3_a3_mom",
+   "target": "tgt_remaining_k3",
+   "note": "momentum persists IN-CLASS (positive effect, FTSE); expected to fail on MSCI",
+   "FTSE": {
+    "verdict": "REJECT",
+    "n_events": 13,
+    "mean_bps": -72.9,
+    "winrate": 0.38,
+    "loo_stable": false,
+    "events_skipped": 0
+   },
+   "MSCI": {
+    "verdict": "DATA-GATED",
+    "n_events": 3,
+    "events_skipped": 0
+   },
+   "POOLED": {
+    "verdict": "NULL-PIN",
+    "n_events": 16,
+    "mean_bps": 22.3,
+    "winrate": 0.62,
+    "loo_stable": false,
+    "events_skipped": 0
+   }
+  },
+  "H4": {
+   "variable": "h4_foreign_cum",
+   "target": "tgt_remaining_k5",
+   "note": "HIGH foreign coverage -> LESS remaining drift",
+   "FTSE": {
+    "verdict": "REJECT",
+    "n_events": 13,
+    "mean_bps": 106.5,
+    "winrate": 0.54,
+    "loo_stable": true,
+    "events_skipped": 0
+   },
+   "MSCI": {
+    "verdict": "DATA-GATED",
+    "n_events": 3,
+    "events_skipped": 0
+   },
+   "POOLED": {
+    "verdict": "REJECT",
+    "n_events": 16,
+    "mean_bps": 97.0,
+    "winrate": 0.5,
+    "loo_stable": false,
+    "events_skipped": 0
+   }
+  },
+  "H5": {
+   "variable": "h5_cohort_lag",
+   "target": "tgt_remaining_k5",
+   "note": "LAGGARDS (low) -> MORE remaining drift (negative effect)",
+   "FTSE": {
+    "verdict": "ADOPT",
+    "n_events": 6,
+    "mean_bps": 209.6,
+    "winrate": 0.67,
+    "loo_stable": true,
+    "events_skipped": 7
+   },
+   "MSCI": {
+    "verdict": "DATA-GATED",
+    "n_events": 3,
+    "events_skipped": 0
+   },
+   "POOLED": {
+    "verdict": "REJECT",
+    "n_events": 9,
+    "mean_bps": -215.1,
+    "winrate": 0.44,
+    "loo_stable": false,
+    "events_skipped": 7
+   }
+  },
+  "H6": {
+   "variable": "h6_early_tmult",
+   "target": "tgt_print_tmult",
+   "note": "HIGH early volume -> SMALLER print multiple",
+   "FTSE": {
+    "verdict": "NULL-PIN",
+    "n_events": 13,
+    "mean_bps": 1.9,
+    "winrate": 0.69,
+    "loo_stable": true,
+    "events_skipped": 0
+   },
+   "MSCI": {
+    "verdict": "DATA-GATED",
+    "n_events": 3,
+    "events_skipped": 0
+   },
+   "POOLED": {
+    "verdict": "NULL-PIN",
+    "n_events": 16,
+    "mean_bps": 2.5,
+    "winrate": 0.75,
+    "loo_stable": true,
+    "events_skipped": 0
+   }
+  },
+  "H7": {
+   "variable": "h7_exiting",
+   "target": "tgt_remaining_rk3",
+   "note": "EXITING flips the crowding effect",
+   "FTSE": {
+    "verdict": "DATA-GATED",
+    "n_events": 0,
+    "events_skipped": 13
+   },
+   "MSCI": {
+    "verdict": "DATA-GATED",
+    "n_events": 0,
+    "events_skipped": 3
+   },
+   "POOLED": {
+    "verdict": "DATA-GATED",
+    "n_events": 0,
+    "events_skipped": 16
+   }
+  }
+ }
+}

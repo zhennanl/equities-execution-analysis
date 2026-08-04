@@ -1,0 +1,509 @@
+{
+ "Feb15": {
+  "ann": "2015-02-11",
+  "eff": "2015-02-27",
+  "adds": {
+   "2615": "WAN HAI LINES"
+  },
+  "dels": {
+   "2103": "TSRC CORP"
+  },
+  "unmatched": []
+ },
+ "May15": {
+  "ann": "2015-05-12",
+  "eff": "2015-05-29",
+  "adds": {
+   "5264": "CASETEK HOLDINGS",
+   "9910": "FENG TAY ENTERPRISE CO"
+  },
+  "dels": {
+   "2362": "CLEVO COMPANY",
+   "2903": "FAR EAST DEPT STORES",
+   "5522": "FARGLORY LAND DEV",
+   "2707": "FORMOSA INTL HOTELS",
+   "1789": "SCINOPHARM TAIWAN",
+   "3037": "UNIMICRON TECHNOLOGY",
+   "1605": "WALSIN LIHWA CORP"
+  },
+  "unmatched": []
+ },
+ "Nov15": {
+  "ann": "2015-11-12",
+  "eff": "2015-11-30",
+  "adds": {
+   "4174": "OBI PHARMA"
+  },
+  "dels": {
+   "2204": "CHINA MOTOR CORP",
+   "9933": "CTCI CORP",
+   "2448": "EPISTAR CORP",
+   "3189": "KINSUS INTERCONNECT TECH",
+   "1802": "TAIWAN GLASS INDL CORP",
+   "3673": "TPK HOLDING CO",
+   "2606": "U-MING MARINE TRANSPORT",
+   "2615": "WAN HAI LINES",
+   "2609": "YANG MING MARINE TRANSP"
+  },
+  "unmatched": []
+ },
+ "May16": {
+  "ann": "2016-05-12",
+  "eff": "2016-05-31",
+  "adds": {
+   "2408": "NANYA TECHNOLOGY",
+   "8464": "NIEN MADE ENTERPRISE CO",
+   "4147": "TAIMED BIOLOGICS"
+  },
+  "dels": {
+   "6176": "RADIANT OPTO-ELECTRONICS"
+  },
+  "unmatched": []
+ },
+ "Nov16": {
+  "ann": "2016-11-14",
+  "eff": "2016-11-30",
+  "adds": {
+   "2377": "MICRO-STAR INTERNATIONAL"
+  },
+  "dels": {
+   "6121": "SIMPLO TECHNOLOGY CO"
+  },
+  "unmatched": []
+ },
+ "May17": {
+  "ann": "2017-05-15",
+  "eff": "2017-05-31",
+  "adds": {
+   "4551": "GLOBALWAFERS",
+   "2633": "TAIWAN HIGH SPEED RAIL"
+  },
+  "dels": {
+   "5264": "CASETEK HOLDINGS"
+  },
+  "unmatched": []
+ },
+ "Aug17": {
+  "ann": "2017-08-10",
+  "eff": "2017-08-31",
+  "adds": {
+   "6456": "GENERAL INTERFACE SOLN"
+  },
+  "dels": {
+   "4174": "OBI PHARMA"
+  },
+  "unmatched": []
+ },
+ "Nov17": {
+  "ann": "2017-11-13",
+  "eff": "2017-11-30",
+  "adds": {
+   "1590": "AIRTAC INTERNATIONAL",
+   "2337": "MACRONIX INTERNATIONAL",
+   "3105": "WIN SEMICONDUCTORS",
+   "2344": "WINBOND ELECTRONICS CORP",
+   "2327": "YAGEO CORP"
+  },
+  "dels": {
+   "9914": "MERIDA INDUSTRY CO",
+   "1722": "TAIWAN FERTILIZER CO",
+   "2451": "TRANSCEND INFORMATION",
+   "2201": "YULON MOTOR CO"
+  },
+  "unmatched": []
+ },
+ "May18": {
+  "ann": "2018-05-14",
+  "eff": "2018-05-31",
+  "adds": {
+   "2492": "WALSIN TECHNOLOGY CORP"
+  },
+  "dels": {
+   "3682": "ASIA PACIFIC TELECOM CO"
+  },
+  "unmatched": []
+ },
+ "Nov18": {
+  "ann": "2018-11-13",
+  "eff": "2018-11-30",
+  "adds": {
+   "2371": "TATUNG"
+  },
+  "dels": {
+   "6456": "GENERAL INTERFACE SOLN",
+   "2498": "HTC CORP",
+   "2337": "MACRONIX INTERNATIONAL",
+   "1504": "TECO ELECTRIC & MACH"
+  },
+  "unmatched": []
+ },
+ "Feb19": {
+  "ann": "2019-02-11",
+  "eff": "2019-02-28",
+  "adds": {
+   "5876": "SHANGHAI COMM & SAV BANK"
+  },
+  "dels": {},
+  "unmatched": []
+ },
+ "Nov19": {
+  "ann": "2019-11-07",
+  "eff": "2019-11-26",
+  "adds": {
+   "2345": "ACCTON TECHNOLOGY CORP",
+   "6669": "WIWYNN CORPORATION"
+  },
+  "dels": {
+   "4147": "TAIMED BIOLOGICS"
+  },
+  "unmatched": []
+ },
+ "May20": {
+  "ann": "2020-05-12",
+  "eff": "2020-05-29",
+  "adds": {
+   "6415": "SILERGY CORP"
+  },
+  "dels": {
+   "2915": "RUENTEX INDUSTRIES"
+  },
+  "unmatched": []
+ },
+ "Aug20": {
+  "ann": "2020-08-12",
+  "eff": "2020-08-31",
+  "adds": {
+   "5269": "ASMEDIA TECHNOLOGY"
+  },
+  "dels": {
+   "2610": "CHINA AIRLINES",
+   "2371": "TATUNG"
+  },
+  "unmatched": []
+ },
+ "Nov20": {
+  "ann": "2020-11-10",
+  "eff": "2020-11-30",
+  "adds": {
+   "4743": "ONENESS BIOTECH",
+   "3037": "UNIMICRON TECHNOLOGY"
+  },
+  "dels": {
+   "2618": "EVA AIRWAYS CORP",
+   "1434": "FORMOSA TAFFETA CO"
+  },
+  "unmatched": []
+ },
+ "Feb21": {
+  "ann": "2021-02-09",
+  "eff": "2021-02-26",
+  "adds": {
+   "8046": "NAN YA PRINTED CIRCUIT"
+  },
+  "dels": {
+   "1227": "STANDARD FOODS CORP"
+  },
+  "unmatched": []
+ },
+ "May21": {
+  "ann": "2021-05-11",
+  "eff": "2021-05-27",
+  "adds": {
+   "2609": "YANG MING MARINE TRANSP"
+  },
+  "dels": {
+   "2385": "CHICONY ELECTRONICS CO",
+   "2542": "HIGHWEALTH CONSTRUCTION"
+  },
+  "unmatched": []
+ },
+ "Aug21": {
+  "ann": "2021-08-11",
+  "eff": "2021-08-31",
+  "adds": {
+   "8454": "MOMO.COM"
+  },
+  "dels": {
+   "2834": "TAIWAN BUSINESS BANK"
+  },
+  "unmatched": []
+ },
+ "Nov21": {
+  "ann": "2021-11-11",
+  "eff": "2021-11-30",
+  "adds": {
+   "3529": "EMEMORY TECHNOLOGY",
+   "4966": "PARADE TECHNOLOGIES",
+   "6409": "VOLTRONIC POWER TECH"
+  },
+  "dels": {
+   "8299": "PHISON ELECTRONICS CORP",
+   "3296": "POWERTECH TECHNOLOGY",
+   "2492": "WALSIN TECHNOLOGY CORP"
+  },
+  "unmatched": []
+ },
+ "Feb22": {
+  "ann": "2022-02-09",
+  "eff": "2022-02-28",
+  "adds": {
+   "8069": "E INK HOLDINGS"
+  },
+  "dels": {
+   "3231": "WISTRON CORP"
+  },
+  "unmatched": []
+ },
+ "May22": {
+  "ann": "2022-05-12",
+  "eff": "2022-05-31",
+  "adds": {
+   "2610": "CHINA AIRLINES",
+   "2618": "EVA AIRWAYS CORP",
+   "6770": "POWERCHIP SEMICONDUCTOR",
+   "1605": "WALSIN LIHWA CORP"
+  },
+  "dels": {
+   "2354": "FOXCONN TECHNOLOGY CO",
+   "2049": "HIWIN TECHNOLOGIES CORP",
+   "4743": "ONENESS BIOTECH"
+  },
+  "unmatched": []
+ },
+ "Nov22": {
+  "ann": "2022-11-10",
+  "eff": "2022-11-30",
+  "adds": {
+   "6446": "PHARMAESSENTIA",
+   "2834": "TAIWAN BUSINESS BANK"
+  },
+  "dels": {
+   "5269": "ASMEDIA TECHNOLOGY"
+  },
+  "unmatched": []
+ },
+ "May23": {
+  "ann": "2023-05-11",
+  "eff": "2023-05-31",
+  "adds": {
+   "3443": "GLOBAL UNICHIP CORP",
+   "3231": "WISTRON CORP"
+  },
+  "dels": {},
+  "unmatched": [],
+  "print_verified": {
+   "3443": 0.635,
+   "3231": 0.649
+  }
+ },
+ "Aug23": {
+  "ann": "2023-08-10",
+  "eff": "2023-08-31",
+  "adds": {
+   "2376": "GIGABYTE TECHNOLOGY CO"
+  },
+  "dels": {
+   "3105": "WIN SEMICONDUCTORS"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "2376": 0.502
+  }
+ },
+ "Nov23": {
+  "ann": "2023-11-14",
+  "eff": "2023-11-30",
+  "adds": {
+   "3661": "ALCHIP TECHNOLOGIES"
+  },
+  "dels": {
+   "9921": "GIANT MANUFACTURING CO."
+  },
+  "unmatched": [],
+  "print_verified": {
+   "3661": 0.664,
+   "9921": 0.832
+  }
+ },
+ "Feb24": {
+  "ann": "2024-02-12",
+  "eff": "2024-02-29",
+  "adds": {},
+  "dels": {
+   "8454": "MOMO.COM"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "8454": 0.793
+  }
+ },
+ "May24": {
+  "ann": "2024-05-14",
+  "eff": "2024-05-31",
+  "adds": {
+   "3017": "ASIA VITAL COMPONENTS",
+   "1519": "FORTUNE ELECTRIC CO"
+  },
+  "dels": {
+   "8046": "NAN YA PRINTED CIRCUIT",
+   "4966": "PARADE TECHNOLOGIES",
+   "6770": "POWERCHIP SEMICONDUCTOR"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "3017": 0.591,
+   "1519": 0.64,
+   "8046": 0.802,
+   "6770": 0.847
+  }
+ },
+ "Aug24": {
+  "ann": "2024-08-12",
+  "eff": "2024-08-30",
+  "adds": {},
+  "dels": {
+   "6505": "FORMOSA PETROCHEMICAL CO"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "6505": 0.914
+  }
+ },
+ "Nov24": {
+  "ann": "2024-11-06",
+  "eff": "2024-11-29",
+  "adds": {
+   "3293": "INTL GAMES SYSTEM C",
+   "3653": "JENTECH PRECISION INDL"
+  },
+  "dels": {
+   "2344": "WINBOND ELECTRONICS CORP"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "3653": 0.171,
+   "2344": 0.14
+  },
+  "print_weak_note": "3653/2344 shares 0.17/0.14 — NOT alias rejections: high-ADV tape swallows the flow (CN-materiality mechanism); aliases retained, flagged"
+ },
+ "Feb25": {
+  "ann": "2025-02-11",
+  "eff": "2025-02-28",
+  "adds": {
+   "2383": "ELITE MATERIAL CO",
+   "3533": "LOTES CO"
+  },
+  "dels": {
+   "2408": "NANYA TECHNOLOGY",
+   "1605": "WALSIN LIHWA CORP"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "2383": 0.67,
+   "3533": 0.788,
+   "2408": 0.583,
+   "1605": 0.806
+  }
+ },
+ "Aug25": {
+  "ann": "2025-08-07",
+  "eff": "2025-08-26",
+  "adds": {
+   "6919": "CALIWAY BIOPHARMA",
+   "2059": "KING SLIDE WORKS CO"
+  },
+  "dels": {
+   "9904": "POU CHEN CORP",
+   "9945": "RUENTEX DEVELOPMENT CO"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "6919": 0.688,
+   "2059": 0.878,
+   "9904": 0.839,
+   "9945": 0.858
+  }
+ },
+ "Nov25": {
+  "ann": "2025-11-05",
+  "eff": "2025-11-24",
+  "adds": {
+   "5274": "ASPEED TECHNOLOGY",
+   "3665": "BIZLINK HOLDING",
+   "2360": "CHROMA ATE",
+   "2368": "GOLD CIRCUIT ELECTRONICS",
+   "2449": "KING YUAN ELECTRONICS CO",
+   "1504": "TECO ELECTRIC & MACH"
+  },
+  "dels": {
+   "2353": "ACER",
+   "2409": "AUO CORP",
+   "2377": "MICRO-STAR INTERNATIONAL",
+   "6415": "SILERGY CORP",
+   "2347": "SYNNEX TECHNOLOGY INTL",
+   "6409": "VOLTRONIC POWER TECH",
+   "3702": "WPG HOLDINGS CO"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "3665": 0.72,
+   "2360": 0.823,
+   "2368": 0.585,
+   "2449": 0.746,
+   "1504": 0.801,
+   "2353": 0.931,
+   "2409": 0.883,
+   "2377": 0.79,
+   "6415": 0.841,
+   "2347": 0.906,
+   "6409": 0.878,
+   "3702": 0.757
+  }
+ },
+ "Feb26": {
+  "ann": "2026-02-10",
+  "eff": "2026-02-26",
+  "adds": {},
+  "dels": {
+   "2105": "CHENG SHIN RUBBER IND",
+   "1476": "ECLAT TEXTILE COMPANY",
+   "9910": "FENG TAY ENTERPRISE CO",
+   "8464": "NIEN MADE ENTERPRISE CO"
+  },
+  "unmatched": [
+   "HONPRECISION"
+  ],
+  "print_verified": {
+   "2105": 0.742,
+   "1476": 0.878,
+   "9910": 0.886,
+   "8464": 0.823
+  }
+ },
+ "May26": {
+  "ann": "2026-05-12",
+  "eff": "2026-05-29",
+  "adds": {
+   "6223": "MPI CORP"
+  },
+  "dels": {
+   "1102": "ASIA CEMENT CORP",
+   "2474": "CATCHER TECH CO",
+   "2610": "CHINA AIRLINES",
+   "2324": "COMPAL ELECTRONICS",
+   "1402": "FAR EASTERN NEW CENTURY",
+   "2633": "TAIWAN HIGH SPEED RAIL",
+   "1504": "TECO ELECTRIC & MACH"
+  },
+  "unmatched": [],
+  "print_verified": {
+   "1102": 0.914,
+   "2474": 0.738,
+   "2610": 0.783,
+   "2324": 0.489,
+   "1402": 0.786,
+   "2633": 0.895,
+   "1504": 0.676
+  }
+ }
+}

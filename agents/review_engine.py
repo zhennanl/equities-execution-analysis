@@ -40,6 +40,158 @@ PROB = {"ADD_HIGH": 0.85, "ADD_MED": 0.80, "DELETE_VERIFIED": 0.80,
 # put MSCI-linked passive holdings at mid-to-high single digits of float.
 PASSIVE_OWN_RATE = (0.05, 0.09)
 
+# ------------------------------------------------------------------
+# Decade priors (session 9i): measured on all 44 MSCI quarters
+# 2015-2025 from official STPublicLists (scripts/msci_key_stats.py).
+# Used as (a) per-market cadence context in packs and (b) an
+# EXPECTED-COUNT consistency check: a pack whose call counts sit far
+# outside the decade distribution for that review type gets flagged
+# for review — a check against over/under-calling, never a tuner.
+_DECADE_PATH = "data/msci_decade_stats.json"
+_LEDGER_NAME = {"Taiwan": "TAIWAN", "China": "CHINA",
+                "Japan": "JAPAN", "HongKong": "HONG KONG",
+                "Korea": "KOREA", "India": "INDIA",
+                "Malaysia": "MALAYSIA", "Indonesia": "INDONESIA",
+                "Thailand": "THAILAND", "Philippines": "PHILIPPINES",
+                "Singapore": "SINGAPORE", "Australia": "AUSTRALIA"}
+
+
+def load_decade_stats():
+    import json
+    from pathlib import Path
+    p = Path(__file__).resolve().parents[1] / _DECADE_PATH
+    return json.loads(p.read_text()) if p.exists() else None
+
+
+def decade_consistency(market: str, review: str,
+                       n_adds: int, n_dels: int) -> dict | None:
+    """Score a pack's call counts against the decade distribution for
+    this market x review type. Verdicts: OK (<= q75), ELEVATED
+    (q75-q90), OUTSIDE (> q90) — OUTSIDE is a review flag, not an
+    auto-suppression."""
+    stats = load_decade_stats()
+    led = _LEDGER_NAME.get(market)
+    if not stats or not led or led not in stats["cadence"]:
+        return None
+    c = stats["cadence"][led]
+    qs = c["counts"].get(review)
+    if not qs:
+        return None
+
+    def verdict(n, q):
+        # two-sided (session 9i fix): a zero-call pack in a market
+        # whose decade MEDIAN is well above zero is as suspect as an
+        # over-calling one. q = [q25, q50, q75, q90].
+        if n > q[3]:
+            return "OUTSIDE_HIGH"
+        if n > q[2]:
+            return "ELEVATED"
+        if q[1] >= 3 and n < max(1, q[0] // 2):
+            return "OUTSIDE_LOW"     # calling far below decade norm
+        return "OK"
+    ch = stats.get("churn", {}).get(led, {})
+    return {"review": review,
+            "del_q75_q90": (qs["del_q"][2], qs["del_q"][3]),
+            "add_q75_q90": (qs["add_q"][2], qs["add_q"][3]),
+            "del_verdict": verdict(n_dels, qs["del_q"]),
+            "add_verdict": verdict(n_adds, qs["add_q"]),
+            "sair_del_share": c["sair_del_share"],
+            "add_deleted_within_4": ch.get("add_deleted_within_4"),
+            "del_readded_within_4": ch.get("del_readded_within_4"),
+            "basis": f"{qs['n_reviews']} {review}s 2015-2025"}
+
+
+# Share of a market's review changes that historically originate
+# BELOW the named-universe floor (measured on the official re-grades:
+# TW Nov-25 13/13 below floor vs May-26 8/8 visible -> ~0.6 for the
+# current 16-name breadth). Explicit, stated, revisable as breadth
+# grows — the shortlist allocates this probability mass to a declared
+# BELOW-FLOOR row instead of overstating visible candidates.
+BLIND_SHARE = {"Taiwan": (0.6, "13/21 of 2025-26 TW changes sat "
+                                "below the 16-name floor (Nov-25 "
+                                "re-grade vs May-26 grade)")}
+
+
+def shortlist_candidates(screen: dict, universe: pd.DataFrame,
+                         review: str, market: str, k: int = 4,
+                         recent_deletions: set | None = None
+                         ) -> pd.DataFrame | None:
+    """Session 9i (user rule): a no-change prediction still ships a
+    ranked SHORTLIST — nearest candidates each side with an assigned
+    probability and reasoning — so Steps 2-4 have names to analyze.
+
+    Probability construction (every factor measured, none tuned):
+      P(any change this review)  = decade base rate, market x type
+      x visible share            = 1 - BLIND_SHARE (breadth-honest)
+      x proximity weight         = softmax of cap/threshold among
+                                   the k nearest visible candidates
+    The BELOW-FLOOR row carries the blind mass explicitly."""
+    import numpy as np
+    stats = load_decade_stats()
+    led = _LEDGER_NAME.get(market)
+    if not stats or not led:
+        return None
+    qs = stats["cadence"].get(led, {}).get("counts", {}).get(review)
+    if not qs:
+        return None
+    blind, blind_basis = BLIND_SHARE.get(market, (0.5, "default 0.5 "
+                                                  "(unmeasured)"))
+    u = screen["assembled"]
+    real = u[~u["ticker"].astype(str).str.startswith("TAIL")]
+    gmsr, add_thr = screen["gmsr"], screen["add_thr"]
+    rows = []
+    for side, pool, thr, p_any in (
+            ("ADD", real[real["member"] == 0], add_thr,
+             qs["p_any_add"]),
+            ("DELETE", real[real["member"] == 1], 0.5 * gmsr,
+             qs["p_any_del"])):
+        if not len(pool):
+            continue
+        pool = pool.copy()
+        pool["x_thr"] = pool["full_mktcap_usd"] / thr
+        near = (pool.nlargest(k, "x_thr") if side == "ADD"
+                else pool.nsmallest(k, "x_thr"))
+        # proximity softmax: distance of log(x_thr) from 0
+        d = -abs(np.log(near["x_thr"].clip(lower=1e-6)))
+        w = np.exp(d / 0.25)
+        w = w / w.sum()
+        readd = stats.get("churn", {}).get(led, {}) \
+            .get("del_readded_within_4")
+        for (_, r), wi in zip(near.iterrows(), w):
+            gap = ((1 / r["x_thr"] - 1) if side == "ADD"
+                   else (r["x_thr"] - 1))
+            caution = ""
+            if side == "ADD" and recent_deletions \
+                    and r["ticker"] in recent_deletions \
+                    and readd is not None:
+                caution = (f"; CAUTION recent deletion — decade "
+                           f"re-add-within-4 rate here is "
+                           f"{readd:.0%}")
+            rows.append({
+                "side": side, "ticker": r["ticker"],
+                "cap_usd_b": round(r["full_mktcap_usd"] / 1e9, 1),
+                "x_threshold": round(r["x_thr"], 2),
+                "p": round(p_any * (1 - blind) * wi, 3),
+                "reasoning": (
+                    f"{'non-member' if side == 'ADD' else 'member'} "
+                    f"{r['x_thr']:.2f}x the "
+                    f"{'add bar' if side == 'ADD' else 'del floor'} "
+                    f"(needs {gap:+.0%}); P(any {side.lower()} at a "
+                    f"{led} {review}) = {p_any:.0%} decade-measured, "
+                    f"x visible share {1 - blind:.0%}, x proximity "
+                    f"weight {wi:.0%}" + caution)})
+        rows.append({
+            "side": side, "ticker": "BELOW-FLOOR (unobservable)",
+            "cap_usd_b": None, "x_threshold": None,
+            "p": round(p_any * blind, 3),
+            "reasoning": f"blind-band mass: {blind_basis}"})
+    df = pd.DataFrame(rows)
+    # drop negligible visible rows (p < 0.005) — a 0.000-probability
+    # line is noise, not honesty; blind-band rows always stay
+    return df[(df["p"] >= 0.005)
+              | df["ticker"].str.startswith("BELOW-FLOOR")
+              ].reset_index(drop=True)
+
 
 def screen_market(universe: pd.DataFrame, review: str = "QIR",
                   tail_seed: int = 11, tail_n: int = 400,
@@ -85,7 +237,8 @@ def screen_market(universe: pd.DataFrame, review: str = "QIR",
                        if len(d) else d)
     return {"gmsr": r["gmsr_usd"], "add_thr": r["add_threshold_usd"],
             "adds": named(r["adds"]), "deletes": named(r["deletes"]),
-            "watch": named(r["watchlist"])}
+            "watch": named(r["watchlist"]),
+            "assembled": u}       # session 9i: funnel decomposition
 
 
 def reconcile_layer(universe: pd.DataFrame, aliases: dict,
@@ -137,6 +290,21 @@ def build_calls(screen: dict, universe: pd.DataFrame,
             else:
                 p = (PROB["DELETE_VERIFIED"] if membership_verified
                      else PROB["DELETE_UNVERIFIED"])
+                # session 9i (TW ex-post drivers): where ret_3m is
+                # supplied, deletion hazard is velocity-tagged —
+                # DECLINE names convert fastest; STALE names are the
+                # coverage-arithmetic class (no price signal exists;
+                # ~45% of 2025-26 TW deletions were STALE, so the
+                # ladder, not momentum, remains the primary signal)
+                if "ret_3m" in universe.columns:
+                    r3s = universe.set_index("ticker")["ret_3m"]
+                    r3 = r3s.get(t)
+                    if r3 is not None and not pd.isna(r3):
+                        tag = ("DECLINE" if r3 < -15 else
+                               "DRIFT" if r3 < -3 else "STALE")
+                        exp["mechanism"] += (
+                            f"; hazard velocity {tag} "
+                            f"(ret_3m {r3:+.0f}%)")
             kind_out = "BLOCKED" if blocked else kind
             ff = ffm.get(t, 0.7)
             lo = cap * ff * PASSIVE_OWN_RATE[0]
@@ -202,7 +370,8 @@ def run_full_review(market: str, universe: pd.DataFrame, aliases: dict,
                     a_share_tail_mix: bool = False,
                     tail_hi: float = 8e9, tail_n: int = 400,
                     recent_deletions: set | None = None,
-                    recent_additions: set | None = None) -> dict:
+                    recent_additions: set | None = None,
+                    screen: dict | None = None) -> dict:
     """The complete pipeline for one market. recent_deletions: names
     deleted at the immediately preceding review are EXCLUDED from add
     candidacy (churn-buffer behavior: an FF/coverage-deleted name does
@@ -210,10 +379,16 @@ def run_full_review(market: str, universe: pd.DataFrame, aliases: dict,
     screens alone would spuriously re-flag them)."""
     from agents.pitch_pack import (expected_t_multiples, risk_flags,
                                    track_record)
-    screen = screen_market(universe, review=review,
-                           member_count=member_count,
-                           a_share_tail_mix=a_share_tail_mix,
-                           tail_hi=tail_hi, tail_n=tail_n)
+    # screen override (session 8m): a caller may supply a precomputed
+    # screen — e.g. the PIT harness's predict_msci screen with the
+    # country-segment MIGRATION deletion rule and CA rule, the exact
+    # configuration the May replication graded at 69%. screen_market's
+    # 0.5x-floor-only deletes are the live-QIR default.
+    if screen is None:
+        screen = screen_market(universe, review=review,
+                               member_count=member_count,
+                               a_share_tail_mix=a_share_tail_mix,
+                               tail_hi=tail_hi, tail_n=tail_n)
     if recent_deletions and len(screen["adds"]):
         excl = screen["adds"]["ticker"].isin(recent_deletions)
         if excl.any():
@@ -251,11 +426,21 @@ def run_full_review(market: str, universe: pd.DataFrame, aliases: dict,
                 event_cache, "MSCI", side)
     flags = (risk_flags(names_risk) if names_risk is not None
              else pd.DataFrame())
+    live = calls[calls["call"] != "BLOCKED"] if len(calls) \
+        else pd.DataFrame(columns=["call"])
+    n_a = int((live["call"] == "ADD").sum()) if len(live) else 0
+    n_d = int(live["call"].isin(["DELETE", "DELETE_WATCH"]).sum()) \
+        if len(live) else 0
+    short = (shortlist_candidates(screen, universe, review, market,
+                                  recent_deletions=recent_deletions)
+             if (n_a + n_d) == 0 and "assembled" in screen else None)
     return {"market": market, "review": review,
             "gmsr_usd": screen["gmsr"],
             "add_threshold_usd": screen["add_thr"],
             "calls": calls, "violations": violations,
             "history": history, "flags": flags,
+            "shortlist": short,
+            "decade": decade_consistency(market, review, n_a, n_d),
             "track_record": track_record(),
             "expected_hits": round(float(
                 calls.loc[calls["call"] != "BLOCKED",
@@ -284,6 +469,24 @@ def render_review_markdown(results: list[dict], event_name: str,
                      f"{len(r['calls'][r['calls']['call'] != 'BLOCKED'])}")
         else:
             L.append("No calls.")
+        if r.get("shortlist") is not None and len(r["shortlist"]):
+            L.append("\n**No-change review — the SHORTLIST (nearest "
+                     "candidates, decade-anchored probabilities; "
+                     "Steps 2-4 run on these names):**\n")
+            L.append(r["shortlist"].to_markdown(index=False))
+        if r.get("decade"):
+            d = r["decade"]
+            L.append(f"\n**Decade prior ({d['basis']}):** "
+                     f"{d['review']} deletions q75/q90 = "
+                     f"{d['del_q75_q90'][0]}/{d['del_q75_q90'][1]} "
+                     f"(this pack: {d['del_verdict']}), adds "
+                     f"{d['add_q75_q90'][0]}/{d['add_q75_q90'][1]} "
+                     f"({d['add_verdict']}); "
+                     f"{(d['sair_del_share'] or 0)*100:.0f}% of this "
+                     "market's decade deletions occurred at SAIRs; "
+                     "churn: add→del4 "
+                     f"{d['add_deleted_within_4']}, del→re-add4 "
+                     f"{d['del_readded_within_4']}")
         if r["history"]:
             L.append("\n**Measured T-day behavior (2026 events):** " +
                      "; ".join(

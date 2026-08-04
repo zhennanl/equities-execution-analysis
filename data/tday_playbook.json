@@ -1,0 +1,110 @@
+{
+ "n_name_days": 96,
+ "n_events": 24,
+ "cells": [
+  {
+   "side": "Buy",
+   "am_tape": "AGAINST-flow",
+   "am_vol": "HEAVY",
+   "n": 10,
+   "n_events": 9,
+   "pm_fav": 0.47,
+   "gap_fav": -14.7,
+   "p_gap_fav": 0.1,
+   "share": 0.43,
+   "t1_rev": -10.91,
+   "label": "OK"
+  },
+  {
+   "side": "Buy",
+   "am_tape": "AGAINST-flow",
+   "am_vol": "NORMAL",
+   "n": 17,
+   "n_events": 11,
+   "pm_fav": 0.0,
+   "gap_fav": -56.88,
+   "p_gap_fav": 0.24,
+   "share": 0.61,
+   "t1_rev": 254.87,
+   "label": "OK"
+  },
+  {
+   "side": "Buy",
+   "am_tape": "WITH-flow",
+   "am_vol": "HEAVY",
+   "n": 4,
+   "n_events": 4,
+   "pm_fav": -30.17,
+   "gap_fav": 34.89,
+   "p_gap_fav": 0.75,
+   "share": 0.45,
+   "t1_rev": 174.93,
+   "label": "DATA-THIN"
+  },
+  {
+   "side": "Buy",
+   "am_tape": "WITH-flow",
+   "am_vol": "NORMAL",
+   "n": 11,
+   "n_events": 8,
+   "pm_fav": -34.07,
+   "gap_fav": 0.0,
+   "p_gap_fav": 0.18,
+   "share": 0.27,
+   "t1_rev": 79.01,
+   "label": "OK"
+  },
+  {
+   "side": "Sell",
+   "am_tape": "AGAINST-flow",
+   "am_vol": "HEAVY",
+   "n": 19,
+   "n_events": 10,
+   "pm_fav": 0.0,
+   "gap_fav": -44.25,
+   "p_gap_fav": 0.11,
+   "share": 0.74,
+   "t1_rev": -14.68,
+   "label": "OK"
+  },
+  {
+   "side": "Sell",
+   "am_tape": "AGAINST-flow",
+   "am_vol": "NORMAL",
+   "n": 12,
+   "n_events": 8,
+   "pm_fav": -22.73,
+   "gap_fav": -54.72,
+   "p_gap_fav": 0.08,
+   "share": 0.71,
+   "t1_rev": -107.93,
+   "label": "OK"
+  },
+  {
+   "side": "Sell",
+   "am_tape": "WITH-flow",
+   "am_vol": "HEAVY",
+   "n": 13,
+   "n_events": 9,
+   "pm_fav": 0.0,
+   "gap_fav": 0.0,
+   "p_gap_fav": 0.38,
+   "share": 0.76,
+   "t1_rev": -85.29,
+   "label": "OK"
+  },
+  {
+   "side": "Sell",
+   "am_tape": "WITH-flow",
+   "am_vol": "NORMAL",
+   "n": 10,
+   "n_events": 7,
+   "pm_fav": -5.14,
+   "gap_fav": -31.25,
+   "p_gap_fav": 0.1,
+   "share": 0.6,
+   "t1_rev": 9.17,
+   "label": "OK"
+  }
+ ]
+}
