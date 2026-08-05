@@ -1,5 +1,46 @@
 # Session Summary — 2026-07-08
 
+## Session 9i continued-43 (2026-08-05) — PIT TIME-TRAVEL: any-date index reconstruction (TW)
+- agents/pit_constituents.py: members_asof(date) = EWT anchor
+  reverse-rolled through reviews by EFFECTIVE date (changes bind at
+  eff close; resolved-state line names the last review) + interval
+  logic for delisted names; ladder_asof(date) = full member list
+  RANKED BY CAP as-of (vintage caps) + PIT GMSR walk + candidates
+  (dels = buffer band w/ class labels incl. hard-floor breach;
+  adds = dual hurdle + 0.15 float floor); stale-price guard (>45d)
+  keeps delisted names out of later frames (the Inotera-at-2019
+  trap, caught in validation)
+- VINTAGE HARVEST EXTENDED to all current members: 110 -> 150
+  names x (shares+prices) 2015-2026 — never-changed members now
+  priced at any historical date; **May-01 frame resolves the
+  pre-May index EXACTLY: 83 members = the factsheet number**
+- Validation: May-01 dels candidates led by the 7 official
+  deletions; Nov-01 holds all 7; 2019 frame renders (92 members,
+  GMSR $2.06B); flagged 4551 excluded
+- UI: "Test with historical data (PIT)" toggle inside the
+  constituent viewer (TW) — date picker -> resolved-state banner ->
+  full ranked list -> "Next step — the candidates" two-column
+  (delete/add) w/ breadth note; st.cache_data 1h; sandbox
+  screenshot verified. +1 pinned test; suite 442 green
+
+## Session 9i continued-42 (2026-08-05) — CONSTITUENT VIEWER (market selector + cached list)
+- UI (page6 Tab 1): "Current MSCI constituents by market" expander
+  — selectbox over 10 APAC markets -> full Standard member list
+  (ticker, company name, confidence tier CONFIRMED/LIKELY) from the
+  apac_members.json cache; per-market source line (fund + as-of +
+  composite cross-check); IMI-variant markets show the composite
+  subset as Standard w/ note
+- REFRESH POLICY implemented event-driven, per user spec: the
+  members sentinel (daily 12-fund diff) now REWRITES the canonical
+  cache whenever provider changes reach the tracking funds (review
+  implementations + mid-quarter corporate events both trigger);
+  cache-refresh failures surface as sentinel ALERTs; nothing
+  refreshes on a timer for its own sake
+- Verified live in sandbox: Taiwan 79 members / 77 confirmed by 2+
+  funds, names rendered (1101 Taiwan Cement ... 2330 TSMC);
+  +1 pinned test (data contract: names coverage >90%, TW anchors,
+  IMI restriction); suite 441 green
+
 ## Session 9i continued-41 (2026-08-05) — UI PROPOSAL: the lifecycle site
 - docs/UI_PROPOSAL_LIFECYCLE_SITE.md. Thesis: THE TIMELINE IS THE
   INTERFACE — traders think in where-are-we-in-the-event; site

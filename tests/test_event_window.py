@@ -289,6 +289,58 @@ def test_tw_vintage_cache():
     assert len(c["px|3474"]) > 100
 
 
+def test_pit_time_travel():
+    """Session 9i c-43: any-date PIT reconstruction — May-01 frame
+    resolves the pre-May index EXACTLY (83 members, the factsheet
+    number), all 7 May deletions lead the delete candidates, MPI in
+    the adds; Nov-01 frame holds all 7 Nov deletions; stale-price
+    guard keeps delisted names out of old frames."""
+    from agents.pit_constituents import ladder_asof
+    L = ladder_asof("2026-05-01")
+    assert "Feb26 review" in L["resolved"]
+    assert L["n_members"] == 83
+    dels = [r["code"] for r in L["delete_candidates"]]
+    for c in ("1102", "2474", "2610", "2324", "1402", "1504",
+              "2633"):
+        assert c in dels
+    assert dels.index("2610") < 8          # deepest lead the list
+    assert "6223" in [r["code"] for r in L["add_candidates"]]
+    assert "4551" not in dels              # flagged name excluded
+    L2 = ladder_asof("2025-11-01")
+    d2 = [r["code"] for r in L2["delete_candidates"]]
+    for c in ("6415", "2353", "2409", "2377", "2347", "3702",
+              "6409"):
+        assert c in d2
+    # stale guard: Inotera (delisted 2016) absent from a 2019 frame
+    L3 = ladder_asof("2019-06-01")
+    all3 = [r["code"] for r in L3["ladder"]]
+    assert "3474" not in all3
+
+
+def test_constituent_viewer_data():
+    """Session 9i c-42: the market-selector viewer's data contract —
+    every market has standard_members with names; TW anchors known
+    (2330 TSMC present, count in range); IMI markets restricted."""
+    import json
+    from pathlib import Path
+    p = Path("data/apac_members.json")
+    if not p.exists():
+        return
+    mkts = json.loads(p.read_text())["markets"]
+    for mkt, m in mkts.items():
+        if "error" in m:
+            continue
+        std = m["standard_members"]
+        assert len(std) > 5, mkt
+        named = sum(1 for t in std
+                    if (m.get("names") or {}).get(t))
+        assert named / len(std) > 0.9, mkt
+    tw = mkts["Taiwan"]
+    assert "2330" in tw["standard_members"]
+    assert "TAIWAN SEMICONDUCTOR" in tw["names"]["2330"].upper()
+    assert len(mkts["Indonesia"]["standard_members"]) < 20
+
+
 def test_step34_build():
     """Session 9i c-40: STEP34 build items 1-6 — playbook strategy
     with T+1 leg, archetype grading, cockpit cards, TCA drafts,

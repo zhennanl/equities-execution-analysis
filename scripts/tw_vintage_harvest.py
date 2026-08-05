@@ -81,6 +81,12 @@ def harvest_names():
     # review key — the M&A channel; Inotera/Micron Dec-2016 is the
     # canonical case and the survivorship test anchor)
     names.update({"3474"})
+    # c-43: ALL current members (EWT anchor) — completes the
+    # historical member ladder for PIT time-travel (never-changed
+    # members were previously unpriced at past dates)
+    ewt = ROOT / "data" / "ewt_members.json"
+    if ewt.exists():
+        names.update(json.loads(ewt.read_text())["codes"])
     return sorted(n for n in names if n and n[0].isdigit())
 
 

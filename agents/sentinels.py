@@ -98,6 +98,7 @@ def s_members(state):
                 new = sorted(set(names) - set(prev[mkt]))
                 if gone or new:
                     deltas.append(f"{mkt}: +{new} -{gone}")
+                    state["_members_cache_dirty"] = True
                     # mid-quarter exits are corporate-event flags
                     if gone and not _near_effective():
                         alerts.append(
@@ -106,6 +107,14 @@ def s_members(state):
                             "candidate (check M&A/suspension)")
             time.sleep(0.8)
         state["members"] = cur
+        # provider updated -> refresh the canonical constituent
+        # cache (apac_members.json) so the UI list is never stale
+        if state.pop("_members_cache_dirty", False):
+            try:
+                m.main()
+                deltas.append("constituent cache refreshed")
+            except Exception as ex:            # noqa: BLE001
+                alerts.append(f"cache refresh FAILED: {ex}")
         if alerts:
             return _r("members", "ALERT", "; ".join(alerts),
                       {"deltas": deltas})

@@ -377,6 +377,116 @@ def _sentinel_strip():
             "downstream. Full guide: docs/SENTINELS_GUIDE.md")
 
 
+@st.cache_data(ttl=3600, show_spinner="Reconstructing the index "
+               "as of that date (PIT)...")
+def _pit_ladder(date: str):
+    from agents.pit_constituents import ladder_asof
+    return ladder_asof(date)
+
+
+def _constituents_expander():
+    """C-42: market selector -> the FULL current MSCI country
+    Standard membership, from the cached 3-source pipeline
+    (data/apac_members.json). Cache refresh is EVENT-DRIVEN: the
+    members sentinel diffs 12 funds daily and rewrites the cache
+    whenever the provider's changes reach the tracking funds."""
+    import json
+    from pathlib import Path
+    p = Path("data/apac_members.json")
+    if not p.exists():
+        return
+    blob = json.loads(p.read_text())
+    mkts = blob["markets"]
+    with st.expander("🌏 Current MSCI constituents by market "
+                     "(cached, sentinel-refreshed)", expanded=False):
+        c1, c2 = st.columns([1, 3])
+        with c1:
+            mkt = st.selectbox("Market", sorted(mkts),
+                               index=sorted(mkts).index("Taiwan"),
+                               key="const_mkt")
+        m = mkts[mkt]
+        if "error" in m:
+            st.warning(f"{mkt}: harvest error — {m['error']}")
+            return
+        std = set(m.get("standard_members", []))
+        conf = set(m.get("confirmed_both", []))
+        rows = []
+        for t in sorted(std):
+            rows.append({
+                "ticker": t,
+                "company": (m.get("names") or {}).get(t, ""),
+                "confidence": ("CONFIRMED (both funds)"
+                               if t in conf else
+                               "LIKELY (one fund)")})
+        with c2:
+            st.metric(f"MSCI {mkt} Standard — members",
+                      len(rows),
+                      f"{len(conf & std)} confirmed by 2+ funds")
+        st.dataframe(rows, use_container_width=True,
+                     hide_index=True, height=380)
+        # ── c-43: PIT time-travel (Taiwan first — vintage caps +
+        # print-verified change history are TW-complete) ──
+        if mkt == "Taiwan":
+            st.markdown("---")
+            hist = st.toggle("🕰️ Test with historical data — "
+                             "reconstruct the index at ANY date "
+                             "(PIT)", key="const_hist")
+            if hist:
+                import datetime as _dt
+                d = st.date_input(
+                    "As-of date", value=_dt.date(2026, 5, 1),
+                    min_value=_dt.date(2016, 1, 1),
+                    max_value=_dt.date.today(), key="const_date")
+                L = _pit_ladder(str(d))
+                st.success(f"Resolved: {L['resolved']} — "
+                           f"**{L['n_members']} members** "
+                           f"(unpriced: "
+                           f"{len(L['unpriced_members'])})")
+                st.markdown("**Full constituent list, ranked by "
+                            "market cap as of that date:**")
+                st.dataframe(
+                    [r for r in L["ladder"] if r["member"]],
+                    use_container_width=True, hide_index=True,
+                    height=350)
+                st.markdown(
+                    f"**Next step — the candidates** (PIT GMSR "
+                    f"walk: **${L['gmsr_usd_b']}B**):")
+                c1, c2 = st.columns(2)
+                with c1:
+                    st.markdown("**DELETE candidates** (members "
+                                "inside the buffer band):")
+                    st.dataframe(L["delete_candidates"],
+                                 use_container_width=True,
+                                 hide_index=True)
+                with c2:
+                    st.markdown("**ADD candidates** (non-members "
+                                "near/over the bar, dual hurdle):")
+                    st.dataframe(L["add_candidates"],
+                                 use_container_width=True,
+                                 hide_index=True)
+                st.caption(L["breadth_note"] + " Validated: this "
+                           "frame reproduces May-26 (7/7 deletes "
+                           "led the candidate list) and Nov-25 "
+                           "(7/7) against official keys.")
+                return
+        imi = "IMI" in m.get("anchor_variant", "")
+        st.caption(
+            f"Source: {m['fund']} holdings (as of {m['asof']}) "
+            f"cross-checked vs {m['composite']} subset (as of "
+            f"{m['composite_asof']})"
+            + ("; NOTE: this market's single-country fund tracks "
+               "the IMI variant, so the Standard list here is the "
+               "composite subset — the fund's extra names are "
+               "Small Cap" if imi else "")
+            + ". **Refresh policy:** the cache updates "
+            "automatically when the members sentinel (daily) "
+            "detects the provider's changes reaching the tracking "
+            "funds — review implementations and mid-quarter "
+            "corporate events both trigger it; nothing refreshes "
+            "on a timer for its own sake. Methodology: "
+            "docs/CONSTITUENT_PIPELINE_FRAMEWORK.md")
+
+
 def _provenance_expander():
     """Session 9i continued-27: data provenance — who produces each
     input, how it is computed, when it was last updated. Directly
@@ -476,6 +586,7 @@ def _tab1_win_the_trade():
         st.warning(f"Freshness check unavailable ({e}) — reads may "
                    "be stale.")
     _sentinel_strip()
+    _constituents_expander()
     _provenance_expander()
     _workbench_expander()
     _funnel_expander()
