@@ -1,0 +1,88 @@
+{
+ "event_tag": "may26",
+ "generated": "2026-08-05T13:46:49",
+ "sentinel_overall": "OK",
+ "t_day": "2026-05-29",
+ "cards": [
+  {
+   "code": "1102",
+   "side": "del",
+   "scenario": "BUILDING",
+   "flow_completion": 0.39,
+   "foreign_consistent": true,
+   "expected_print_x_adv": 16.0,
+   "playbook_split": "30% window / 70% MOC / 0% T+1",
+   "advice": "Normal accumulation pace. Standard MOC participation; monitor the daily build for regime change."
+  },
+  {
+   "code": "2474",
+   "side": "del",
+   "scenario": "OVERCROWDED",
+   "flow_completion": 1.7,
+   "foreign_consistent": true,
+   "expected_print_x_adv": 16.0,
+   "playbook_split": "0% window / 40% MOC / 60% T+1",
+   "advice": "Pre-positioned inventory EXCEEDS passive demand (the Apple-2024 case): the print can land AGAINST the obligated side with next-day reversal. Cap MOC exposure, split pre-close/T+1, consider fading the print."
+  },
+  {
+   "code": "2610",
+   "side": "del",
+   "scenario": "UNDERSUPPLIED",
+   "flow_completion": 0.17,
+   "foreign_consistent": true,
+   "expected_print_x_adv": 16.0,
+   "playbook_split": "60% window / 40% MOC / 0% T+1",
+   "advice": "Thin close coming \u2014 your flow WILL move the print. Start accumulating early in the window, spread across days + the close; demanding size at T pays a large toll."
+  },
+  {
+   "code": "2324",
+   "side": "del",
+   "scenario": "OVERCROWDED",
+   "flow_completion": 2.04,
+   "foreign_consistent": false,
+   "expected_print_x_adv": 16.0,
+   "playbook_split": "0% window / 40% MOC / 60% T+1",
+   "advice": "Pre-positioned inventory EXCEEDS passive demand (the Apple-2024 case): the print can land AGAINST the obligated side with next-day reversal. Cap MOC exposure, split pre-close/T+1, consider fading the print."
+  },
+  {
+   "code": "1402",
+   "side": "del",
+   "scenario": "OVERCROWDED",
+   "flow_completion": 1.65,
+   "foreign_consistent": true,
+   "expected_print_x_adv": 16.0,
+   "playbook_split": "0% window / 40% MOC / 60% T+1",
+   "advice": "Pre-positioned inventory EXCEEDS passive demand (the Apple-2024 case): the print can land AGAINST the obligated side with next-day reversal. Cap MOC exposure, split pre-close/T+1, consider fading the print."
+  },
+  {
+   "code": "2633",
+   "side": "del",
+   "scenario": "WELL-SUPPLIED",
+   "flow_completion": 0.91,
+   "foreign_consistent": true,
+   "expected_print_x_adv": 16.0,
+   "playbook_split": "0% window / 100% MOC / 0% T+1",
+   "advice": "Arb inventory near passive demand \u2014 lean on the close, minimal pre-hedging needed; the print should clear near fair."
+  },
+  {
+   "code": "1504",
+   "side": "del",
+   "scenario": "BUILDING",
+   "flow_completion": 0.49,
+   "foreign_consistent": true,
+   "expected_print_x_adv": 16.0,
+   "playbook_split": "30% window / 70% MOC / 0% T+1",
+   "advice": "Normal accumulation pace. Standard MOC participation; monitor the daily build for regime change."
+  },
+  {
+   "code": "6223",
+   "side": "add",
+   "scenario": "BUILDING",
+   "flow_completion": 0.31,
+   "foreign_consistent": true,
+   "expected_print_x_adv": 8.0,
+   "playbook_split": "30% window / 70% MOC / 0% T+1",
+   "advice": "Normal accumulation pace. Standard MOC participation; monitor the daily build for regime change."
+  }
+ ]
+}

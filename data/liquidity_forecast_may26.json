@@ -1,0 +1,160 @@
+{
+ "event": "MSCI May-2026 SAIR TW",
+ "ann": "2026-05-12",
+ "eff": "2026-05-29",
+ "asof_PIT": "2026-05-28",
+ "names": [
+  {
+   "code": "1102",
+   "side": "del",
+   "asof": "2026-05-28",
+   "baseline_adv_sh": 9097614,
+   "expected_flow_x_adv": 16.0,
+   "flow_completion": 0.39,
+   "foreign_pp_since_ann": -1.78,
+   "foreign_leg_x_expflow": 0.43,
+   "foreign_direction_consistent": true,
+   "sbl_build_x_expflow": 0.06,
+   "retail_short_x_expflow": 0.0,
+   "scenario": "BUILDING",
+   "advice": "Normal accumulation pace. Standard MOC participation; monitor the daily build for regime change.",
+   "REALIZED_posthoc": {
+    "t_mult": 21.7,
+    "t3_move_pct": 0.6
+   }
+  },
+  {
+   "code": "2474",
+   "side": "del",
+   "asof": "2026-05-28",
+   "baseline_adv_sh": 2680237,
+   "expected_flow_x_adv": 16.0,
+   "flow_completion": 1.7,
+   "foreign_pp_since_ann": -2.56,
+   "foreign_leg_x_expflow": 0.34,
+   "foreign_direction_consistent": true,
+   "sbl_build_x_expflow": -0.01,
+   "retail_short_x_expflow": -0.002,
+   "scenario": "OVERCROWDED",
+   "advice": "Pre-positioned inventory EXCEEDS passive demand (the Apple-2024 case): the print can land AGAINST the obligated side with next-day reversal. Cap MOC exposure, split pre-close/T+1, consider fading the print.",
+   "REALIZED_posthoc": {
+    "t_mult": 24.8,
+    "t3_move_pct": 26.3
+   }
+  },
+  {
+   "code": "2610",
+   "side": "del",
+   "asof": "2026-05-28",
+   "baseline_adv_sh": 29787732,
+   "expected_flow_x_adv": 16.0,
+   "flow_completion": 0.17,
+   "foreign_pp_since_ann": -0.08,
+   "foreign_leg_x_expflow": 0.01,
+   "foreign_direction_consistent": true,
+   "sbl_build_x_expflow": -0.0,
+   "retail_short_x_expflow": -0.0,
+   "scenario": "UNDERSUPPLIED",
+   "advice": "Thin close coming \u2014 your flow WILL move the print. Start accumulating early in the window, spread across days + the close; demanding size at T pays a large toll.",
+   "REALIZED_posthoc": {
+    "t_mult": 9.9,
+    "t3_move_pct": 4.5
+   }
+  },
+  {
+   "code": "2324",
+   "side": "del",
+   "asof": "2026-05-28",
+   "baseline_adv_sh": 35064890,
+   "expected_flow_x_adv": 16.0,
+   "flow_completion": 2.04,
+   "foreign_pp_since_ann": 2.85,
+   "foreign_leg_x_expflow": 0.22,
+   "foreign_direction_consistent": false,
+   "sbl_build_x_expflow": -0.0,
+   "retail_short_x_expflow": 0.001,
+   "scenario": "OVERCROWDED",
+   "advice": "Pre-positioned inventory EXCEEDS passive demand (the Apple-2024 case): the print can land AGAINST the obligated side with next-day reversal. Cap MOC exposure, split pre-close/T+1, consider fading the print.",
+   "REALIZED_posthoc": {
+    "t_mult": 19.9,
+    "t3_move_pct": 28.2
+   }
+  },
+  {
+   "code": "1402",
+   "side": "del",
+   "asof": "2026-05-28",
+   "baseline_adv_sh": 14474414,
+   "expected_flow_x_adv": 16.0,
+   "flow_completion": 1.65,
+   "foreign_pp_since_ann": -0.93,
+   "foreign_leg_x_expflow": 0.21,
+   "foreign_direction_consistent": true,
+   "sbl_build_x_expflow": null,
+   "retail_short_x_expflow": 0.0,
+   "scenario": "OVERCROWDED",
+   "advice": "Pre-positioned inventory EXCEEDS passive demand (the Apple-2024 case): the print can land AGAINST the obligated side with next-day reversal. Cap MOC exposure, split pre-close/T+1, consider fading the print.",
+   "REALIZED_posthoc": {
+    "t_mult": 22.8,
+    "t3_move_pct": 6.4
+   }
+  },
+  {
+   "code": "2633",
+   "side": "del",
+   "asof": "2026-05-28",
+   "baseline_adv_sh": 5290450,
+   "expected_flow_x_adv": 16.0,
+   "flow_completion": 0.91,
+   "foreign_pp_since_ann": -1.14,
+   "foreign_leg_x_expflow": 0.76,
+   "foreign_direction_consistent": true,
+   "sbl_build_x_expflow": 0.14,
+   "retail_short_x_expflow": 0.0,
+   "scenario": "WELL-SUPPLIED",
+   "advice": "Arb inventory near passive demand \u2014 lean on the close, minimal pre-hedging needed; the print should clear near fair.",
+   "REALIZED_posthoc": {
+    "t_mult": 41.7,
+    "t3_move_pct": 3.6
+   }
+  },
+  {
+   "code": "1504",
+   "side": "del",
+   "asof": "2026-05-28",
+   "baseline_adv_sh": 9586513,
+   "expected_flow_x_adv": 16.0,
+   "flow_completion": 0.49,
+   "foreign_pp_since_ann": -0.19,
+   "foreign_leg_x_expflow": 0.03,
+   "foreign_direction_consistent": true,
+   "sbl_build_x_expflow": null,
+   "retail_short_x_expflow": -0.0,
+   "scenario": "BUILDING",
+   "advice": "Normal accumulation pace. Standard MOC participation; monitor the daily build for regime change.",
+   "REALIZED_posthoc": {
+    "t_mult": 18.4,
+    "t3_move_pct": 10.7
+   }
+  },
+  {
+   "code": "6223",
+   "side": "add",
+   "asof": "2026-05-28",
+   "baseline_adv_sh": 1316819,
+   "expected_flow_x_adv": 8.0,
+   "flow_completion": 0.31,
+   "foreign_pp_since_ann": 0.42,
+   "foreign_leg_x_expflow": 0.04,
+   "foreign_direction_consistent": true,
+   "sbl_build_x_expflow": null,
+   "retail_short_x_expflow": -0.0,
+   "scenario": "BUILDING",
+   "advice": "Normal accumulation pace. Standard MOC participation; monitor the daily build for regime change.",
+   "REALIZED_posthoc": {
+    "t_mult": 5.9,
+    "t3_move_pct": -1.0
+   }
+  }
+ ]
+}

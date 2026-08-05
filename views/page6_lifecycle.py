@@ -94,6 +94,139 @@ def _run_event_engine(event, markets):
     return results, boundary, crowding
 
 
+def _workbench_expander():
+    """Session 9i c-29: Step-1 universe-assembly workbench — the
+    CLEAR NUMBERS behind every name: local cap -> FX -> refresh ->
+    USD cap, free-float estimate, float-adjusted cap, and the
+    decision bucket each number produces."""
+    import json
+    from pathlib import Path
+    p = Path("data/universe_workbench_tw.json")
+    if not p.exists():
+        return
+    with st.expander("🧮 Step 1 workbench — every number behind the "
+                     "universe (Taiwan)"):
+        pit = Path("data/universe_workbench_tw_may26pit.json")
+        run = st.radio(
+            "Frame", ["live", "pit"], horizontal=True,
+            key="wb_run", format_func=lambda k:
+            ("Aug-2026 QIR (live)" if k == "live" else
+             "May-2026 SAIR — PIT validation (data frozen at "
+             "Apr-30, graded vs the official result)"))
+        if run == "pit" and pit.exists():
+            _workbench_pit(json.loads(pit.read_text()))
+            return
+        b = json.loads(p.read_text())
+        thr = b["thresholds"]
+        st.markdown(
+            f"**The arithmetic, name by name** (as-of {b['asof']}): "
+            "cap in TWD (price × shares, Apr-30) ÷ FX "
+            f"{b['fx_twd_usd']} × current-price ratio → USD cap. "
+            "The **coverage walk uses float-adjusted cap** "
+            "(ff × cap) to set the GMSR; the **hurdles use full "
+            "cap** — thresholds below.")
+        c1, c2, c3 = st.columns(3)
+        c1.metric("GMSR (our estimate)", f"${thr['gmsr_usd_b']}B",
+                  "85% coverage walk")
+        c2.metric("Add bar (QIR 1.8×)", f"${thr['add_bar_usd_b']}B",
+                  "full cap must exceed")
+        c3.metric("Deletion floor (0.5×)", f"${thr['floor_usd_b']}B",
+                  "members below = candidates")
+        import plotly.graph_objects as go
+        rows = b["rows"]
+        fig = go.Figure()
+        for memflag, name, color in ((True, "member", "#4C78A8"),
+                                     (False, "non-member",
+                                      "#E45756")):
+            sub = [r for r in rows if r["member"] == memflag]
+            fig.add_trace(go.Scatter(
+                x=[r["cap_usd_b_now"] for r in sub],
+                y=[r["ticker"] for r in sub],
+                mode="markers+text", name=name,
+                text=[f" {r['cap_usd_b_now']}B" for r in sub],
+                textposition="middle right",
+                marker=dict(size=11, color=color)))
+        for v, lbl, dash in ((thr["floor_usd_b"], "floor 0.5×",
+                              "dot"),
+                             (thr["gmsr_usd_b"], "GMSR", "dash"),
+                             (thr["add_bar_usd_b"], "add bar 1.8×",
+                              "dot")):
+            fig.add_vline(x=v, line_dash=dash, line_color="#888",
+                          annotation_text=lbl,
+                          annotation_position="top")
+        import math
+        xmax = max(r["cap_usd_b_now"] for r in rows)
+        fig.update_xaxes(type="log",
+                         range=[math.log10(1.5),
+                                math.log10(xmax * 4)],
+                         title="full market cap, USD B (log)")
+        fig.update_layout(height=430,
+                          margin=dict(l=10, r=10, t=30, b=10))
+        st.plotly_chart(fig, use_container_width=True)
+        st.dataframe(rows, use_container_width=True,
+                     hide_index=True)
+        st.caption(
+            "Decision logic: members are judged against the floor "
+            "(full cap < 0.5× GMSR → DELETE candidate; within 15% → "
+            "watch), non-members against the add bar (≥ 1× → ADD "
+            "candidate). Free float never decides candidacy "
+            "directly — it shapes the GMSR through the coverage "
+            "walk and sets index weight. Every input's source: the "
+            "Data provenance panel above. Formulas: "
+            + "; ".join(f"{k} = {v}"
+                        for k, v in b["formulas"].items()))
+
+
+def _workbench_pit(b):
+    """May-2026 PIT validation frame (c-32): the engine test the
+    user asked for — 'pretend it is one day before the announcement'
+    — with the tentative add shortlist derived explicitly and then
+    graded against what MSCI actually did."""
+    thr = b["thresholds"]
+    st.markdown(
+        f"**Frame: {b['asof']}** — every number below was computable "
+        "one day before the May-2026 announcement. "
+        f"**{b['members']} of {b['n_names']}** named stocks were "
+        "members at that date, reconstructed from the free public "
+        "record (iShares EWT holdings anchor, reverse-rolled "
+        "through official reviews — no licensed data).")
+    c1, c2, c3 = st.columns(3)
+    c1.metric("GMSR (PIT walk)", f"${thr['gmsr_usd_b']}B")
+    c2.metric("Add bar (SAIR 1.15×)", f"${thr['add_bar_usd_b']}B")
+    c3.metric("Deletion floor (0.5×)", f"${thr['floor_usd_b']}B")
+    st.markdown("**How the tentative ADD shortlist is derived — "
+                "every step:**")
+    for step in b["derivation"]:
+        st.caption(step)
+    st.markdown("**Tentative adds (PIT) — graded vs the official "
+                "May-26 result:**")
+    st.dataframe(b["tentative_adds"], use_container_width=True,
+                 hide_index=True)
+    hits = sum(1 for r in b["tentative_adds"]
+               if "ADDED" in r["official"])
+    st.warning(
+        f"Honest read: {hits} of {len(b['tentative_adds'])} "
+        "names above the full-cap bar were actually added (6223 "
+        "MPI — which this frame ranks clearly). The rest are "
+        "mostly EX-members deleted years ago for float/liquidity "
+        "reasons that persist — full-cap proximity alone has poor "
+        "precision, and the binding discriminators (MSCI's real "
+        "floats, FIF, foreign room) are exactly our stated #1 "
+        "data gap. This is why the engine layers float screens, "
+        "churn history, and probabilities on top of the raw "
+        "ladder — the raw ladder alone would mislead you.")
+    st.markdown("**Full PIT universe (all named stocks, Apr-30 "
+                "numbers):**")
+    st.dataframe(b["rows"], use_container_width=True,
+                 hide_index=True)
+    st.caption(
+        "Columns worth reading: foreign_12m_pp (foreign-ownership "
+        "change over the prior year — decade EDA: +5.5pp median "
+        "into adds, −4.1pp into deletes) and cap_12m_chg_pct (the "
+        "glide path: deleted names median −22%). ff_estimated=True "
+        "rows carry our default float — the labeled uncertainty.")
+
+
 def _funnel_expander():
     """Session 9i: the screening funnel — universe -> conditions ->
     candidates, from data/funnel_tw.json (scripts/funnel_demo.py).
@@ -106,6 +239,12 @@ def _funnel_expander():
     with st.expander("🔻 Screening funnel — how ~500 names become "
                      "the call sheet (Taiwan)"):
         blob = json.loads(p.read_text())
+        st.caption(
+            "Starts at **engine Step 1 — universe acquisition**: "
+            "caps from price × shares (yfinance, FX→USD), free-float "
+            "estimated, membership rolled forward from official "
+            "results, count anchored to MSCI's published constituent "
+            "count. Every later stage applies one published rule.")
         which = st.radio("Run", ["prediction", "validation"],
                          horizontal=True, key="funnel_which",
                          format_func=lambda k:
@@ -125,6 +264,28 @@ def _funnel_expander():
             [{"stage": s["stage"], "n": s["n"], "rule": s["rule"],
               "detail": s["detail"]} for s in stages],
             use_container_width=True, hide_index=True)
+        # session 9i cont-28: the shortlist AT each stage — every
+        # real name's journey with the deciding rule, plus the
+        # selection method per stage cited to the GIMI book.
+        if blob[which].get("journeys"):
+            st.markdown("**Name journeys — the shortlist at every "
+                        "stage** (members shown vs the hard 0.5× "
+                        "floor, non-members vs the add bar):")
+            st.dataframe(blob[which]["journeys"],
+                         use_container_width=True, hide_index=True)
+            if which == "validation":
+                st.caption(
+                    "Why delete candidates sit ABOVE the hard floor "
+                    "here: May is a SAIR, where the migration sweep "
+                    "(GIMI §3.1.5.1 buffers) removes Standard names "
+                    "at a higher effective bar than the absolute "
+                    "0.5×-GMSR floor — decade-validated: 62–90% of "
+                    "deletions happen at SAIRs this way.")
+        if blob.get("methods"):
+            with st.popover("📖 Selection method per stage — GIMI "
+                            "May-2026 citations"):
+                for k, v in blob["methods"].items():
+                    st.markdown(f"**{k}** — {v}")
         if which == "validation" and "grade" in blob[which]:
             g = blob[which]["grade"]
             st.markdown(
@@ -185,6 +346,109 @@ def _tday_cards_expander():
                            f"Playbook: {c['playbook']}")
 
 
+def _sentinel_strip():
+    """C-38: Layer-0 sentinel report — six watchers, one line each.
+    The trader reads deltas, not data sources."""
+    import json
+    from pathlib import Path
+    p = Path("data/sentinel_report.json")
+    if not p.exists():
+        st.caption("Sentinels not yet run — `python -m "
+                   "agents.sentinels` (daily). See "
+                   "docs/SENTINELS_GUIDE.md")
+        return
+    rep = json.loads(p.read_text())
+    icon = {"OK": "🟢", "CHANGED": "🟡", "ALERT": "🔴",
+            "DEGRADED": "⚫"}
+    head = (f"{icon.get(rep['overall'], '❓')} Sentinels: "
+            f"**{rep['overall']}** (as of {rep['generated'][:16]})")
+    with st.expander(head,
+                     expanded=rep["overall"] in ("ALERT",
+                                                 "DEGRADED")):
+        for r in rep["results"]:
+            st.markdown(f"{icon.get(r['status'], '❓')} "
+                        f"`{r['sentinel']:<9s}` {r['delta']}")
+        st.caption(
+            "Six automated watchers: shorts freshness, fund "
+            "membership (corporate-event detector), ladder pool "
+            "moves, calendar deadlines, FX drift, artifact "
+            "staleness. Statuses: 🟢 nothing to do · 🟡 noted, "
+            "no action · 🔴 look today · ⚫ data broken, distrust "
+            "downstream. Full guide: docs/SENTINELS_GUIDE.md")
+
+
+def _provenance_expander():
+    """Session 9i continued-27: data provenance — who produces each
+    input, how it is computed, when it was last updated. Directly
+    answers 'is this from MSCI or calculated by us?' in the UI."""
+    import datetime as dt
+    from pathlib import Path
+
+    def _age(p):
+        f = Path(p)
+        if not f.exists():
+            return "missing", None
+        m = dt.datetime.fromtimestamp(f.stat().st_mtime)
+        return m.strftime("%Y-%m-%d %H:%M"), \
+            (dt.datetime.now() - m).days
+
+    caps_ts, caps_age = _age("data/aug26_cap_refresh.json")
+    pit_ts, _ = _age("data/pit_may26_asia_cache.json")
+    with st.expander("🔎 Data provenance — what MSCI publishes vs "
+                     "what we compute"):
+        st.markdown(
+            "**MSCI publishes the rules, not the answers.** Nothing "
+            "below arrives from MSCI pre-announcement except the "
+            "methodology book and the factsheet constituent count — "
+            "everything else is computed by this platform from "
+            "public market data, with its refresh time shown.")
+        st.dataframe([
+            {"input": "Boundary name list (16 TW names)",
+             "produced by": "US — curated from our own cap ranking "
+                            "near the GMSR boundary",
+             "how": "members nearest the 0.5× deletion floor + "
+                    "non-members nearest the add bar",
+             "last updated": "membership rolled forward from "
+                             "official May-26 results"},
+            {"input": "Market caps",
+             "produced by": "US — computed, not vendor-fed",
+             "how": "price × shares outstanding (yfinance), "
+                    "TWD→USD; Apr-30 base × current-price ratio",
+             "last updated": f"ratios refreshed {caps_ts}"},
+            {"input": "Free-float estimates",
+             "produced by": "US — estimated (MSCI's own floats are "
+                            "licensed, a stated source of misses)",
+             "how": "holder filings via yfinance, capped at 1.0",
+             "last updated": f"base cache {pit_ts}"},
+            {"input": "GMSR / add bar / deletion floor",
+             "produced by": "US — re-derived every run",
+             "how": "85% coverage walk over the assembled universe "
+                    "(MSCI's published arithmetic)",
+             "last updated": "computed live from the caps above"},
+            {"input": "Constituent count anchor (83)",
+             "produced by": "MSCI — public factsheet",
+             "how": "pins the modeled tail so the coverage walk "
+                    "lands where the real index size puts it",
+             "last updated": "May-2026 review"},
+            {"input": "Short interest / borrow",
+             "produced by": "TWSE — official, free",
+             "how": "auto-refreshed on every visit (TTL 4h), "
+                    "no-data days ledgered",
+             "last updated": "see freshness line above"},
+        ], use_container_width=True, hide_index=True)
+        if caps_age is not None and caps_age >= 3:
+            st.warning(
+                f"Cap-refresh ratios are {caps_age} days old — run "
+                "`python scripts/refresh_aug_caps.py` for "
+                "current-price caps. (The Aug-11 protocol refreshes "
+                "them same-morning before the pack finalizes.)")
+        st.caption(
+            "Honesty note: MSCI's official GMSR, float estimates, "
+            "and price-cutoff date are not public pre-announcement. "
+            "Ours are labeled estimates; every graded miss has been "
+            "traced to one of these gaps, never to the rules.")
+
+
 def _tab1_win_the_trade():
     from agents.pre_event_marketing import (EVENTS, days_to,
                                             render_marketing_md)
@@ -211,6 +475,9 @@ def _tab1_win_the_trade():
     except Exception as e:                             # noqa: BLE001
         st.warning(f"Freshness check unavailable ({e}) — reads may "
                    "be stale.")
+    _sentinel_strip()
+    _provenance_expander()
+    _workbench_expander()
     _funnel_expander()
     _tday_cards_expander()
 

@@ -268,6 +268,256 @@ def test_twap_vwap_moc_cost_math():
     assert (s[s["strategy"] == "MOC"]["n"] == 1).all()
 
 
+def test_tw_vintage_cache():
+    """Session 9i c-30: the PIT-vintage unlock — historical shares
+    (incl. delisted names) cached from FinMind; TSMC mid-2015 share
+    count anchors the series against the known value."""
+    import json
+    from pathlib import Path
+    p = Path("data/tw_vintage_cache.json")
+    if not p.exists():
+        return
+    c = json.loads(p.read_text())
+    sh = [k for k in c if k.startswith("sh|")]
+    assert len(sh) >= 100
+    t = c["sh|2330"]
+    first = [r for r in t if r["date"] <= "2015-06-05"][-1]
+    assert abs(first["NumberOfSharesIssued"] - 25.93e9) / 25.93e9 \
+        < 0.01
+    # survivorship: delisted Inotera present with prices
+    assert "sh|3474" in c and "px|3474" in c
+    assert len(c["px|3474"]) > 100
+
+
+def test_step34_build():
+    """Session 9i c-40: STEP34 build items 1-6 — playbook strategy
+    with T+1 leg, archetype grading, cockpit cards, TCA drafts,
+    orchestrator arrival gate. May-26 anchor: OVERCROWDED names'
+    playbook split beat all-MOC by >400bps via the defer leg."""
+    import json
+    from pathlib import Path
+    from agents.post_event import (ARCHETYPES, PLAYBOOK_SPLITS,
+                                   archetype_grading)
+    assert PLAYBOOK_SPLITS["OVERCROWDED"][2] >= 0.5   # T+1 defer
+    p = Path("data/post_event_may26.json")
+    if p.exists():
+        d = json.loads(p.read_text())
+        rows = {r["code"]: r for r in d["names"]}
+        for c in ("2324", "2474"):
+            s = rows[c]["strategies"]
+            assert rows[c]["step2_scenario"] == "OVERCROWDED"
+            assert s["PLAYBOOK"] < -400        # beat MOC big
+            assert s["T1_CLOSE"] < -900
+        a = rows["2324"]["archetypes"]
+        assert set(a) <= set(ARCHETYPES)
+        assert a["EM_TRACKER"]["advised"] == "MOC"   # no discretion
+        assert a["ACTIVE_FLEX"]["regret_bps"] >= 0
+    # unit: archetype grading math + HF sign flip
+    g = archetype_grading({"MOC": 0.0, "VWAP_T": 10.0,
+                           "LINEAR_W": -50.0, "T1_CLOSE": -100.0,
+                           "PLAYBOOK": -60.0}, "OVERCROWDED")
+    assert g["ACTIVE_FLEX"]["advised"] == "PLAYBOOK"
+    assert g["ACTIVE_FLEX"]["best_hindsight"] == "T1_CLOSE"
+    assert g["ACTIVE_FLEX"]["regret_bps"] == 40.0
+    assert g["HF_PROVIDER"]["best_cost_bps"] == -100.0 or \
+        g["HF_PROVIDER"]["best_hindsight"] == "LINEAR_W"
+    ck = Path("data/cockpit_may26.json")
+    if ck.exists():
+        c = json.loads(ck.read_text())
+        assert len(c["cards"]) == 8
+        assert all("advice" in x for x in c["cards"])
+    tca = Path("docs/case_studies/TCA_LETTERS_MAY2026_TW.md")
+    if tca.exists():
+        t = tca.read_text(encoding="utf-8")
+        assert "SIMULATED" in t and "EM_TRACKER" in t
+
+
+def test_sentinels():
+    """Session 9i c-38: L0 sentinel system — offline-safe checks:
+    fast sentinels run without network; report schema valid;
+    artifact-staleness logic fires on a synthetic stale pair."""
+    import datetime as dt
+    import json
+    import os
+    import time
+    from pathlib import Path
+    from agents import sentinels as S
+    r = S.s_calendar({})
+    assert r["status"] in ("OK", "ALERT")
+    assert "announcement" in r["delta"]
+    r = S.s_artifacts({})
+    assert r["status"] in ("OK", "ALERT")
+    rep = Path("data/sentinel_report.json")
+    if rep.exists():
+        d = json.loads(rep.read_text())
+        assert d["overall"] in ("OK", "CHANGED", "ALERT",
+                                "DEGRADED")
+        names = {x["sentinel"] for x in d["results"]}
+        assert {"shorts", "members", "ladder", "calendar", "fx",
+                "artifacts"} <= names
+    # synthetic staleness: touch a dep newer than its artifact
+    art = Path("data/funnel_tw.json")
+    dep = Path("data/ewt_members.json")
+    if art.exists() and dep.exists():
+        old = dep.stat().st_mtime
+        os.utime(dep, (time.time() + 120, time.time() + 120))
+        try:
+            r = S.s_artifacts({})
+            assert r["status"] == "ALERT" and "funnel" in r["delta"]
+        finally:
+            os.utime(dep, (old, old))
+
+
+def test_liquidity_forecast_may26():
+    """Session 9i c-36: Step-2 liquidity-supply model — May-26 PIT
+    frame: the two OVERCROWDED calls (2474/2324) were the two
+    monster reversals; 2324 cross-checks the post-event pack."""
+    import json
+    from pathlib import Path
+    p = Path("data/liquidity_forecast_may26.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert d["asof_PIT"] < d["eff"]              # PIT frame
+    n = {r["code"]: r for r in d["names"]}
+    assert len(n) == 8
+    for c in ("2474", "2324"):
+        assert n[c]["scenario"] == "OVERCROWDED"
+        assert n[c]["flow_completion"] >= 1.2
+        assert n[c]["REALIZED_posthoc"]["t3_move_pct"] > 20
+    assert n["2324"]["foreign_direction_consistent"] is False
+    assert n["2610"]["scenario"] == "UNDERSUPPLIED"
+    assert n["2610"]["REALIZED_posthoc"]["t_mult"] < 12
+    calm = [r for r in d["names"]
+            if r["scenario"] in ("BUILDING", "WELL-SUPPLIED")]
+    assert all(abs(r["REALIZED_posthoc"]["t3_move_pct"]) < 12
+               for r in calm)
+
+
+def test_ladder_shadow_and_foreign_room():
+    """Session 9i c-35: shadow ladder output sane (full breadth,
+    inclusive pool) + the new §3.1.2.6 foreign-room screen blocks
+    adds only when the column says room < 15%."""
+    import json
+    from pathlib import Path
+    import pandas as pd
+    from agents.reconstitution import MSCIRules, predict_msci
+    p = Path("data/ladder_aug26_tw.json")
+    if p.exists():
+        d = json.loads(p.read_text())
+        assert d["n_members_priced"] >= 70
+        pool = {r["code"] for r in d["delete_pool"]}
+        assert {"6919", "1101"} <= pool
+        assert 5.0 <= d["gmsr_usd_b"] <= 8.0
+        assert "GMSR CAVEAT" in d["note"]
+    # foreign-room unit test: identical universes, room flips call
+    def uni(room):
+        return pd.DataFrame({
+            "ticker": ["M0", "M1", "M2", "A"],
+            "full_mktcap_usd": [40e9, 30e9, 20e9, 25e9],
+            "free_float_frac": 0.8, "adv_usd": 1e8, "atvr": 1.0,
+            "foreign_room_frac": [0.5, 0.5, 0.5, room]})
+    mem = {"M0", "M1", "M2"}
+    r_ok = predict_msci(uni(0.5), mem, MSCIRules(review="SAIR"))
+    r_no = predict_msci(uni(0.05), mem, MSCIRules(review="SAIR"))
+    assert "A" in set(r_ok["adds"]["ticker"])
+    assert "A" not in set(r_no["adds"].get("ticker", []))
+    assert any(w["side"] == "blocked add" and "foreign room"
+               in w["distance"] for _, w in
+               r_no["watchlist"].iterrows())
+
+
+def test_apac_members_pipeline():
+    """Session 9i c-34: APAC constituent pipeline — anchor+composite
+    agreement per market (ranges, not exact counts — reviews move
+    them); IMI-variant markets use the composite as Standard."""
+    import json
+    from pathlib import Path
+    p = Path("data/apac_members.json")
+    if not p.exists():
+        return
+    m = json.loads(p.read_text())["markets"]
+    assert len(m) == 10
+    for mkt in ("Japan", "Australia", "HongKong", "India",
+                "Malaysia"):
+        assert m[mkt]["anchor_only"] == [] \
+            and m[mkt]["composite_only"] == []
+    assert 60 <= len(m["Taiwan"]["confirmed_both"]) <= 95
+    assert 500 <= len(m["China"]["confirmed_both"]) <= 650
+    for mkt, hi in (("Indonesia", 25), ("Philippines", 20)):
+        assert "IMI" in m[mkt]["anchor_variant"]
+        assert len(m[mkt]["standard_members"]) <= hi
+
+
+def test_delete_pool_validation():
+    """Session 9i c-33: THE BREADTH FIX — EWT-anchored ladder +
+    vintage caps put ALL official deletions at the ladder bottom
+    for both validation events, incl. Nov-25 (the historical 0/7)."""
+    import json
+    from pathlib import Path
+    p = Path("data/delete_pool_validation.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    for season in ("May26", "Nov25"):
+        s = d[season]
+        assert s["dels_in_ladder"] == s["dels_official"] == 7
+        assert max(s["deleted_ladder_ranks_bottom"]) <= 7
+    # May-26: perfect separation — deletions are EXACTLY the bottom 7
+    assert d["May26"]["deleted_ladder_ranks_bottom"] == list(range(7))
+
+
+def test_pit_workbench_may26():
+    """Session 9i c-32: May-26 PIT frame — EWT-anchored membership
+    reverse-rolled to Apr-30; MPI (6223) on the tentative add list
+    and graded ADDED; May-26 deleted names correctly members at
+    Apr-30; giants correctly members (the anchor-lookup bug class)."""
+    import json
+    from pathlib import Path
+    p = Path("data/universe_workbench_tw_may26pit.json")
+    if not p.exists():
+        return
+    b = json.loads(p.read_text())
+    tent = {r["code"]: r for r in b["tentative_adds"]}
+    assert "6223" in tent and "ADDED" in tent["6223"]["official"]
+    rows = {r["code"]: r for r in b["rows"]}
+    for c in ("2330", "2454", "2317"):          # giants = members
+        assert rows[c]["member_apr30"]
+    for c in ("1102", "2474", "2610"):          # May-26 dels were
+        assert rows[c]["member_apr30"]          # members at Apr-30
+    assert not rows["6223"]["member_apr30"]     # MPI not yet in
+    assert b["members"] >= 40
+    assert any("EWT" in s for s in b["derivation"])
+
+
+def test_universe_workbench():
+    """Session 9i c-29: Step-1 workbench numbers — per-name cap/ff
+    arithmetic consistent, thresholds coherent (add bar = 1.8x GMSR,
+    floor = 0.5x), buckets follow the stated decision logic."""
+    import json
+    from pathlib import Path
+    p = Path("data/universe_workbench_tw.json")
+    if not p.exists():
+        return
+    b = json.loads(p.read_text())
+    t = b["thresholds"]
+    assert abs(t["add_bar_usd_b"] / t["gmsr_usd_b"] - 1.8) < 0.01
+    assert abs(t["floor_usd_b"] / t["gmsr_usd_b"] - 0.5) < 0.01
+    assert len(b["rows"]) >= 15
+    for r in b["rows"]:
+        assert 0 < r["free_float_est"] <= 1.0
+        assert abs(r["float_adj_cap_usd_b"]
+                   - r["cap_usd_b_now"] * r["free_float_est"]) \
+            < 0.02 + 0.001 * r["cap_usd_b_now"]
+        thr = t["floor_usd_b"] if r["member"] else t["add_bar_usd_b"]
+        assert abs(r["vs_threshold"] - r["cap_usd_b_now"] / thr) \
+            < 0.02 + 0.005 * r["vs_threshold"]
+        if r["member"] and r["vs_threshold"] < 1:
+            assert "DELETE" in r["decision_bucket"]
+        if not r["member"] and r["vs_threshold"] >= 1:
+            assert "ADD" in r["decision_bucket"]
+
+
 def test_jp_step1_upgrade():
     """Session 9i: JP priors from held daily data — 92% aliases
     print-verified, first JP-measured class T-multiples, wired into
@@ -304,8 +554,9 @@ def test_post_event_pack():
     assert len(rows) == 7
     for r in rows:
         assert r["day_vwap_exact"] and r["official_close"]
-        assert r["strategies"]["winner"] in ("MOC", "VWAP_T",
-                                             "LINEAR_W")
+        # c-40: strategy set grew (T+1 defer leg + playbook split)
+        assert r["strategies"]["winner"] in (
+            "MOC", "VWAP_T", "LINEAR_W", "T1_CLOSE", "PLAYBOOK")
         assert r["reversal_T1_T5"]
     g1402 = next(r for r in rows if r["code"] == "1402")
     assert g1402["grades"]["gap_in_band"] is False   # miss shipped
@@ -632,8 +883,20 @@ def test_review_funnel():
     blob = json.loads(p.read_text())
     for run in ("validation", "prediction"):
         st = blob[run]["stages"]
-        assert [s["stage"] for s in st][0] == "S0 universe"
-        assert st[0]["n"] >= st[3]["n"] >= st[-1]["n"] >= 0
+        names = [s["stage"] for s in st]
+        # funnel now STARTS at engine Step 1 (universe acquisition)
+        assert names[0] == "S0 acquisition"
+        assert names[1] == "S0 universe"
+        assert st[1]["n"] >= st[4]["n"] >= st[-1]["n"] >= 0
+    # session 9i cont-28: name journeys — shortlist at every stage
+    j = {r["ticker"]: r for r in blob["validation"]["journeys"]}
+    assert j["6223.TWO"]["official"] == "ADDED — HIT"
+    assert j["1102.TW"]["official"] == "DELETED — HIT"
+    assert "cutline" in j["1101.TW"]["official"]
+    assert sum("false call" in r.get("official", "")
+               for r in j.values()) == 3
+    assert "S0 acquisition" in blob["methods"]
+    assert "3.1.5.1" in blob["methods"]["S4 churn-buffered"]
     g = blob["validation"]["grade"]
     assert len(g["dels_hit"]) == 7 and g["dels_missed_visible"] == []
     assert g["adds_hit"] == ["6223.TWO"]

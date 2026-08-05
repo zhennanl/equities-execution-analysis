@@ -1,0 +1,211 @@
+{
+ "asof": "2026-08-05",
+ "market": "Taiwan",
+ "fx_twd_usd": 32.5,
+ "review": "Aug-2026 QIR",
+ "thresholds": {
+  "gmsr_usd_b": 4.78,
+  "add_bar_usd_b": 8.61,
+  "floor_usd_b": 2.39
+ },
+ "formulas": {
+  "cap_usd": "cap_TWD(Apr-30, price x shares via yfinance) / 32.5 FX x current-price ratio",
+  "free_float": "estimated from holder filings (yfinance), capped at 1.0 \u2014 MSCI's own floats are licensed; stated miss source",
+  "coverage_walk": "uses FLOAT-ADJUSTED cap (ff x cap) to find 85% coverage -> GMSR",
+  "hurdles": "use FULL cap: add >= 1.8x GMSR (QIR) / 1.15x (SAIR); deletion floor 0.5x GMSR"
+ },
+ "rows": [
+  {
+   "ticker": "2330.TW",
+   "member": true,
+   "cap_twd_b_apr30": 55218.3,
+   "price_ratio_since_apr": 1.087,
+   "cap_usd_b_now": 1846.33,
+   "free_float_est": 0.912,
+   "float_adj_cap_usd_b": 1683.98,
+   "adv_usd_m": 2318.0,
+   "vs_threshold": 771.86,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "2454.TW",
+   "member": true,
+   "cap_twd_b_apr30": 4141.1,
+   "price_ratio_since_apr": 1.481,
+   "cap_usd_b_now": 188.68,
+   "free_float_est": 0.879,
+   "float_adj_cap_usd_b": 165.9,
+   "adv_usd_m": 1088.8,
+   "vs_threshold": 78.88,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "2308.TW",
+   "member": true,
+   "cap_twd_b_apr30": 5594.4,
+   "price_ratio_since_apr": 0.748,
+   "cap_usd_b_now": 128.81,
+   "free_float_est": 0.604,
+   "float_adj_cap_usd_b": 77.83,
+   "adv_usd_m": 521.6,
+   "vs_threshold": 53.85,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "2317.TW",
+   "member": true,
+   "cap_twd_b_apr30": 2984.5,
+   "price_ratio_since_apr": 1.139,
+   "cap_usd_b_now": 104.6,
+   "free_float_est": 0.861,
+   "float_adj_cap_usd_b": 90.03,
+   "adv_usd_m": 551.2,
+   "vs_threshold": 43.73,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "6223.TWO",
+   "member": true,
+   "cap_twd_b_apr30": 480.9,
+   "price_ratio_since_apr": 1.198,
+   "cap_usd_b_now": 17.73,
+   "free_float_est": 0.862,
+   "float_adj_cap_usd_b": 15.29,
+   "adv_usd_m": 179.2,
+   "vs_threshold": 7.41,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "1326.TW",
+   "member": true,
+   "cap_twd_b_apr30": 302.4,
+   "price_ratio_since_apr": 1.113,
+   "cap_usd_b_now": 10.36,
+   "free_float_est": 0.557,
+   "float_adj_cap_usd_b": 5.77,
+   "adv_usd_m": 88.7,
+   "vs_threshold": 4.33,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "2002.TW",
+   "member": true,
+   "cap_twd_b_apr30": 284.3,
+   "price_ratio_since_apr": 1.005,
+   "cap_usd_b_now": 8.79,
+   "free_float_est": 0.725,
+   "float_adj_cap_usd_b": 6.38,
+   "adv_usd_m": 36.6,
+   "vs_threshold": 3.68,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "2207.TW",
+   "member": true,
+   "cap_twd_b_apr30": 254.6,
+   "price_ratio_since_apr": 1.085,
+   "cap_usd_b_now": 8.5,
+   "free_float_est": 0.507,
+   "float_adj_cap_usd_b": 4.31,
+   "adv_usd_m": 12.2,
+   "vs_threshold": 3.55,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "1101.TW",
+   "member": true,
+   "cap_twd_b_apr30": 177.5,
+   "price_ratio_since_apr": 0.961,
+   "cap_usd_b_now": 5.25,
+   "free_float_est": 0.861,
+   "float_adj_cap_usd_b": 4.52,
+   "adv_usd_m": 23.1,
+   "vs_threshold": 2.19,
+   "decision_bucket": "member \u2014 safe"
+  },
+  {
+   "ticker": "2324.TW",
+   "member": false,
+   "cap_twd_b_apr30": 123.5,
+   "price_ratio_since_apr": 1.276,
+   "cap_usd_b_now": 4.85,
+   "free_float_est": 0.947,
+   "float_adj_cap_usd_b": 4.59,
+   "adv_usd_m": 102.2,
+   "vs_threshold": 0.56,
+   "decision_bucket": "non-member \u2014 not close"
+  },
+  {
+   "ticker": "1504.TW",
+   "member": false,
+   "cap_twd_b_apr30": 142.3,
+   "price_ratio_since_apr": 1.048,
+   "cap_usd_b_now": 4.59,
+   "free_float_est": 0.655,
+   "float_adj_cap_usd_b": 3.01,
+   "adv_usd_m": 49.5,
+   "vs_threshold": 0.53,
+   "decision_bucket": "non-member \u2014 not close"
+  },
+  {
+   "ticker": "2633.TW",
+   "member": false,
+   "cap_twd_b_apr30": 142.7,
+   "price_ratio_since_apr": 0.972,
+   "cap_usd_b_now": 4.27,
+   "free_float_est": 0.366,
+   "float_adj_cap_usd_b": 1.56,
+   "adv_usd_m": 10.3,
+   "vs_threshold": 0.5,
+   "decision_bucket": "non-member \u2014 not close"
+  },
+  {
+   "ticker": "1402.TW",
+   "member": false,
+   "cap_twd_b_apr30": 131.4,
+   "price_ratio_since_apr": 1.054,
+   "cap_usd_b_now": 4.26,
+   "free_float_est": 0.7,
+   "float_adj_cap_usd_b": 2.98,
+   "adv_usd_m": 32.5,
+   "vs_threshold": 0.5,
+   "decision_bucket": "non-member \u2014 not close"
+  },
+  {
+   "ticker": "2610.TW",
+   "member": false,
+   "cap_twd_b_apr30": 104.7,
+   "price_ratio_since_apr": 1.254,
+   "cap_usd_b_now": 4.04,
+   "free_float_est": 0.599,
+   "float_adj_cap_usd_b": 2.42,
+   "adv_usd_m": 35.6,
+   "vs_threshold": 0.47,
+   "decision_bucket": "non-member \u2014 not close"
+  },
+  {
+   "ticker": "1102.TW",
+   "member": false,
+   "cap_twd_b_apr30": 116.1,
+   "price_ratio_since_apr": 0.924,
+   "cap_usd_b_now": 3.3,
+   "free_float_est": 0.769,
+   "float_adj_cap_usd_b": 2.54,
+   "adv_usd_m": 19.2,
+   "vs_threshold": 0.38,
+   "decision_bucket": "non-member \u2014 not close"
+  },
+  {
+   "ticker": "2474.TW",
+   "member": false,
+   "cap_twd_b_apr30": 108.7,
+   "price_ratio_since_apr": 0.866,
+   "cap_usd_b_now": 2.9,
+   "free_float_est": 0.795,
+   "float_adj_cap_usd_b": 2.3,
+   "adv_usd_m": 48.8,
+   "vs_threshold": 0.34,
+   "decision_bucket": "non-member \u2014 not close"
+  }
+ ]
+}

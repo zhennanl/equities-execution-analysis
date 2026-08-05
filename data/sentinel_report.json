@@ -1,0 +1,48 @@
+{
+ "generated": "2026-08-05T12:37:03",
+ "overall": "OK",
+ "results": [
+  {
+   "sentinel": "shorts",
+   "status": "OK",
+   "delta": "DATA FRESHNESS [OK]: shorts latest 20260803 vs expected 20260805 (2 bdays stale). cache already current (or expected day not yet published \u2014 tolerance 1 bday)",
+   "details": {},
+   "ts": "2026-08-05T12:37:03"
+  },
+  {
+   "sentinel": "members",
+   "status": "OK",
+   "delta": "10 markets, no membership drift (cached, ttl 4h)",
+   "details": {},
+   "ts": "2026-08-05T12:36:36"
+  },
+  {
+   "sentinel": "ladder",
+   "status": "OK",
+   "delta": "pool stable (17 names) (cached, ttl 4h)",
+   "details": {},
+   "ts": "2026-08-05T12:36:56"
+  },
+  {
+   "sentinel": "calendar",
+   "status": "OK",
+   "delta": "T-6 to announcement (Aug-11, Asia reads Aug-12); T-26 to effective (Aug-31)",
+   "details": {},
+   "ts": "2026-08-05T12:37:03"
+  },
+  {
+   "sentinel": "fx",
+   "status": "OK",
+   "delta": "TWD 32.52 vs pinned 32.5 (+0.1% drift)",
+   "details": {},
+   "ts": "2026-08-05T12:37:03"
+  },
+  {
+   "sentinel": "artifacts",
+   "status": "OK",
+   "delta": "4 artifacts current vs sources",
+   "details": {},
+   "ts": "2026-08-05T12:37:03"
+  }
+ ]
+}

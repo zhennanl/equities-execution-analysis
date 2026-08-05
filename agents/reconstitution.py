@@ -42,6 +42,12 @@ class MSCIRules:
     qir_add_multiple: float = 1.80    # stricter size hurdle for QIR adds (verify book)
     min_float: float = 0.15           # minimum free float (FIF proxy)
     min_atvr: float = 0.15            # liquidity screen (EM level; DM 0.20)
+    # GIMI §3.1.2.6 (May-2026 book p.40): NEW securities under a
+    # Foreign Ownership Limit need foreign room >= 15%; existing
+    # constituents exempt. Only applied when the universe carries a
+    # "foreign_room_frac" column (session 9i c-35 — data now free
+    # via FinMind for TW).
+    min_foreign_room: float = 0.15
     review: str = "SAIR"              # "SAIR" | "QIR"
     # Country size-segment migration (May-2026 Taiwan backtest lesson:
     # SAIR deletions are usually Standard->SmallCap MIGRATIONS at the
@@ -110,8 +116,18 @@ def predict_msci(universe: pd.DataFrame, members: set,
     for _, r in u.iterrows():
         cap = float(r["full_mktcap_usd"])
         ffcap = cap * float(r["free_float_frac"])
+        froom = r.get("foreign_room_frac")
         if not r["is_member"]:
             if (r["eligible"] and cap >= add_thr
+                    and froom is not None and not pd.isna(froom)
+                    and froom < rules.min_foreign_room):
+                watch.append({"ticker": r["ticker"],
+                              "side": "blocked add",
+                              "distance": f"foreign room {froom:.0%} "
+                              f"< {rules.min_foreign_room:.0%} "
+                              "(GIMI §3.1.2.6) — size qualifies, "
+                              "FOL room does not"})
+            elif (r["eligible"] and cap >= add_thr
                     and ffcap < rules.min_ffcap_frac_of_add * add_thr):
                 watch.append({"ticker": r["ticker"], "side": "blocked add",
                               "distance": f"FF cap {ffcap:,.0f} < "

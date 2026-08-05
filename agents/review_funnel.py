@@ -6,6 +6,7 @@ calls, with every elimination tied to its rule (the same L0-L4
 logic as the engine — this file only OBSERVES, it never re-decides).
 
 Stages:
+  S0 acquisition     engine Step 1 — how the named universe is built
   S0 universe        real named stocks + count-anchored tail
   S1 eligibility     float >= 0.15 AND ATVR floor (L1)
   S2 GMSR ladder     85% coverage walk -> GMSR + thresholds (L2-L3)
@@ -47,7 +48,19 @@ def funnel_stages(screen: dict, calls: pd.DataFrame,
         live = calls[calls["call"] != "BLOCKED"]
     else:
         blocked = live = calls
+    n_real_mem = int(real["is_member"].sum())
     stages = [
+        {"stage": "S0 acquisition", "n": n_real,
+         "rule": "engine Step 1 — named universe from public data: "
+                 "cap = price x shares (yfinance, FX to USD), "
+                 "free-float estimated from holder filings, ADV 60d; "
+                 "membership rolled forward from official review "
+                 "results (never assumed)",
+         "detail": f"{n_real} named boundary stocks ({n_real_mem} "
+                   f"members near the deletion floor, "
+                   f"{n_real - n_real_mem} candidates near the add "
+                   "bar); market body below the boundary is modeled, "
+                   "not fetched — see next stage"},
         {"stage": "S0 universe", "n": len(u),
          "rule": "count-anchored: real named stocks + synthetic tail "
                  "pinned to the published constituent count (L0)",
@@ -95,6 +108,119 @@ def funnel_stages(screen: dict, calls: pd.DataFrame,
     for s in stages:
         s["n"] = int(s["n"])
     return stages
+
+
+# GIMI May-2026 book citations per funnel stage (user request:
+# selection method shown with the rule's source, not just our label)
+STAGE_METHOD = {
+    "S0 acquisition":
+        "OURS. The book reviews the full equity universe (GIMI "
+        "§3.1.1); changes only occur at the size boundary, so we "
+        "curate the names nearest it from our own cap ranking and "
+        "model the rest as a count-anchored tail. Caps = price x "
+        "shares (yfinance, FX to USD) as of the frame date.",
+    "S0 universe":
+        "OURS + MSCI factsheet. Total member count pinned to the "
+        "published constituent count so the coverage walk (GIMI "
+        "§2.3.5) lands where the real index size puts it.",
+    "S1 eligible":
+        "GIMI §2.2 / §3.1.2: investability screens — free float "
+        ">= 0.15 and ATVR liquidity floor. Existing constituents "
+        "get 2/3-of-threshold retention grace (§3.1.2.4, §3.1.6.2).",
+    "S2 thresholds":
+        "GIMI §2.3.2 (p.24): walk the cap ladder to 85% free-float "
+        "coverage -> GMSR reference; Range = 0.5x to 1.15x. QIR add "
+        "bar 1.8x, SAIR 1.15x; deletion floor 0.5x.",
+    "S3 candidates":
+        "GIMI §3.1.4-3.1.5: non-members above the add bar become "
+        "ADD candidates; members below the floor DELETE candidates; "
+        "the +-15% band is the watch zone (hazard class, ~2/3 "
+        "convert - our decade measurement, not the book's).",
+    "S4 churn-buffered":
+        "GIMI §3.1.5.1 (p.44): buffer zones control migration and "
+        "index turnover — the prior review's changes are excluded "
+        "from opposite-side candidacy.",
+    "S5 verified":
+        "OURS (Feng Tay gate): no call ships on unverified "
+        "membership. The book assumes MSCI knows its own index; a "
+        "predictor must prove it does.",
+    "FINAL calls":
+        "OURS: Laplace-shrunk probabilities from the graded record "
+        "(L8) — the book has no probabilities; this layer is why a "
+        "call says p=0.6 instead of pretending certainty.",
+}
+
+
+def name_journeys(screen: dict, calls: pd.DataFrame, review: str,
+                  official: dict | None = None) -> list[dict]:
+    """Per-name, stage-by-stage journey for every REAL stock in the
+    universe — the shortlist AT each funnel step, with the rule that
+    decided it. `official` = {"adds": set, "dels": set} grades the
+    validation run's rows."""
+    from agents.reconstitution import MSCIRules, _screens
+    u = screen["assembled"]
+    real = u[~u["ticker"].astype(str).str.startswith("TAIL")].copy()
+    rules = MSCIRules(review=review)
+    real["eligible"] = _screens(real, rules.min_float,
+                                rules.min_atvr)
+    gmsr, add_thr = screen["gmsr"], screen["add_thr"]
+    floor = 0.5 * gmsr
+    grab = lambda k: (set(screen[k]["ticker"])
+                      if len(screen.get(k, [])) else set())
+    adds, dels, watch = grab("adds"), grab("deletes"), grab("watch")
+    buffered = set(screen.get("excluded_readds", [])) \
+        | set(screen.get("excluded_redels", []))
+    callmap = ({r["ticker"]: r for _, r in calls.iterrows()}
+               if len(calls) else {})
+    rows = []
+    for _, r in real.sort_values("full_mktcap_usd",
+                                 ascending=False).iterrows():
+        t = str(r["ticker"])
+        mem = bool(r.get("member", r.get("is_member", 0)))
+        cap = float(r["full_mktcap_usd"])
+        thr = floor if mem else add_thr
+        if not r["eligible"]:
+            s3 = "OUT at S1 — fails float/liquidity screen"
+        elif t in buffered:
+            s3 = "OUT at S4 — churn buffer (changed last review)"
+        elif t in adds:
+            s3 = "ADD candidate (above the add bar)"
+        elif t in dels:
+            s3 = ("DELETE candidate — below the effective deletion "
+                  "bar (SAIR migration sweep sits ABOVE the hard "
+                  "0.5x floor; GIMI §3.1.5.1)" if review == "SAIR"
+                  else "DELETE candidate (below the 0.5x floor)")
+        elif t in watch:
+            s3 = "WATCH — within ±15% of its threshold"
+        else:
+            s3 = ("SAFE — comfortably above the floor" if mem else
+                  "NOT CLOSE — below the add bar")
+        c = callmap.get(t)
+        final = (f"{c['call']} (p={c['p_correct']})"
+                 if c is not None else "no call")
+        row = {"ticker": t,
+               "role": "member" if mem else "non-member",
+               "cap_usd_b": round(cap / 1e9, 2),
+               "threshold": ("hard 0.5x floor" if mem else "add bar")
+               + f" ${thr/1e9:.1f}B",
+               "x_threshold": round(cap / thr, 2),
+               "status": s3, "final": final}
+        if official:
+            if t in official["dels"]:
+                row["official"] = "DELETED" + (
+                    " — HIT" if c is not None
+                    and c["call"] == "DELETE" else " — MISSED")
+            elif t in official["adds"]:
+                row["official"] = "ADDED" + (
+                    " — HIT" if c is not None
+                    and c["call"] == "ADD" else " — MISSED")
+            elif c is not None and c["call"] != "BLOCKED":
+                row["official"] = ("RETAINED — false call "
+                                   "(cutline resident)")
+            else:
+                row["official"] = "unchanged — correct"
+        rows.append(row)
+    return rows
 
 
 def validate_against_key(stages_final: pd.DataFrame,

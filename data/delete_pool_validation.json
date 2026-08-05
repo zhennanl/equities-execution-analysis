@@ -1,0 +1,178 @@
+{
+ "May26": {
+  "asof": "2026-05-01",
+  "n_members": 45,
+  "dels_official": 7,
+  "dels_in_ladder": 7,
+  "deleted_ladder_ranks_bottom": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "gmsr_used_usd_b": 4.64,
+  "bottom": [
+   {
+    "code": "2610",
+    "cap_usd_b": 3.37,
+    "deleted": true
+   },
+   {
+    "code": "2474",
+    "cap_usd_b": 3.61,
+    "deleted": true
+   },
+   {
+    "code": "1102",
+    "cap_usd_b": 3.82,
+    "deleted": true
+   },
+   {
+    "code": "2324",
+    "cap_usd_b": 3.93,
+    "deleted": true
+   },
+   {
+    "code": "1402",
+    "cap_usd_b": 4.24,
+    "deleted": true
+   },
+   {
+    "code": "1504",
+    "cap_usd_b": 4.56,
+    "deleted": true
+   },
+   {
+    "code": "2633",
+    "cap_usd_b": 4.59,
+    "deleted": true
+   },
+   {
+    "code": "8069",
+    "cap_usd_b": 4.88,
+    "deleted": false
+   },
+   {
+    "code": "2834",
+    "cap_usd_b": 4.89,
+    "deleted": false
+   },
+   {
+    "code": "6919",
+    "cap_usd_b": 4.98,
+    "deleted": false
+   },
+   {
+    "code": "2609",
+    "cap_usd_b": 5.28,
+    "deleted": false
+   },
+   {
+    "code": "2618",
+    "cap_usd_b": 5.57,
+    "deleted": false
+   },
+   {
+    "code": "2376",
+    "cap_usd_b": 5.63,
+    "deleted": false
+   },
+   {
+    "code": "1101",
+    "cap_usd_b": 5.67,
+    "deleted": false
+   }
+  ]
+ },
+ "Nov25": {
+  "asof": "2025-11-01",
+  "n_members": 51,
+  "dels_official": 7,
+  "dels_in_ladder": 7,
+  "deleted_ladder_ranks_bottom": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   7
+  ],
+  "gmsr_used_usd_b": null,
+  "bottom": [
+   {
+    "code": "6415",
+    "cap_usd_b": 2.66,
+    "deleted": true
+   },
+   {
+    "code": "2353",
+    "cap_usd_b": 2.82,
+    "deleted": true
+   },
+   {
+    "code": "2409",
+    "cap_usd_b": 2.82,
+    "deleted": true
+   },
+   {
+    "code": "2377",
+    "cap_usd_b": 2.85,
+    "deleted": true
+   },
+   {
+    "code": "2347",
+    "cap_usd_b": 2.92,
+    "deleted": true
+   },
+   {
+    "code": "3702",
+    "cap_usd_b": 3.12,
+    "deleted": true
+   },
+   {
+    "code": "2105",
+    "cap_usd_b": 3.18,
+    "deleted": false
+   },
+   {
+    "code": "6409",
+    "cap_usd_b": 3.27,
+    "deleted": true
+   },
+   {
+    "code": "8464",
+    "cap_usd_b": 3.34,
+    "deleted": false
+   },
+   {
+    "code": "1476",
+    "cap_usd_b": 3.47,
+    "deleted": false
+   },
+   {
+    "code": "9910",
+    "cap_usd_b": 3.71,
+    "deleted": false
+   },
+   {
+    "code": "2610",
+    "cap_usd_b": 3.74,
+    "deleted": false
+   },
+   {
+    "code": "2474",
+    "cap_usd_b": 3.81,
+    "deleted": false
+   },
+   {
+    "code": "1102",
+    "cap_usd_b": 3.96,
+    "deleted": false
+   }
+  ]
+ }
+}

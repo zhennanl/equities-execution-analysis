@@ -71,11 +71,36 @@ def benchmark_strip(code: str, t_day: str) -> dict | None:
             "t_volume": d[1]}
 
 
+def _next_close_vintage(code, t_day):
+    p = ROOT / "data" / "tw_vintage_cache.json"
+    if not p.exists():
+        return None
+    c = json.loads(p.read_text()).get(f"px|{code}")
+    if not c:
+        return None
+    post = [r for r in c if r["date"] > t_day]
+    return post[0]["close"] if post else None
+
+
+# c-40 (STEP34 §1.3): scenario-conditional playbook splits —
+# Step-2's advice column made executable. Weights: (window-linear,
+# MOC, T+1-close). SIMULATED per the three honesty rules.
+PLAYBOOK_SPLITS = {
+    "UNDERSUPPLIED":  (0.6, 0.4, 0.0),   # start early, spread
+    "BUILDING":       (0.3, 0.7, 0.0),   # standard MOC lean
+    "WELL-SUPPLIED":  (0.0, 1.0, 0.0),   # lean on the close
+    "OVERCROWDED":    (0.0, 0.4, 0.6),   # cap MOC, defer to T+1
+}
+
+
 def strategy_leaderboard(code: str, side: str, ann: str,
-                         t_day: str) -> dict | None:
-    """Cost vs the close for MOC / T-day VWAP / window-linear,
-    favorable-signed (negative beats the close). Daily official data
-    (exact VWAPs)."""
+                         t_day: str,
+                         scenario: str | None = None) -> dict | None:
+    """Cost vs the close for MOC / T-day VWAP / window-linear /
+    PLAYBOOK (scenario-conditional split incl. a T+1 leg),
+    favorable-signed (negative beats the close). Daily official
+    data (exact VWAPs). All legs SIMULATED on the real tape —
+    rankings/spreads are the graded object, not absolutes."""
     days = _stock_day(code)
     win = [r for r in days if ann < r[0] <= t_day]
     t = next((r for r in win if r[0] == t_day), None)
@@ -89,8 +114,79 @@ def strategy_leaderboard(code: str, side: str, ann: str,
            "VWAP_T": round(sgn * (vwap_t / ct - 1) * 1e4, 1)
            if vwap_t else None,
            "LINEAR_W": round(sgn * (lin / ct - 1) * 1e4, 1)}
-    out["winner"] = min((k for k, v in out.items()
-                         if v is not None), key=lambda k: out[k])
+    # T+1-close leg (the OVERCROWDED defer/fade leg); falls back to
+    # the vintage cache when stock_day ends at T
+    post = [r for r in days if r[0] > t_day]
+    t1_px = post[0][6] if post else _next_close_vintage(code, t_day)
+    t1_cost = (round(sgn * (t1_px / ct - 1) * 1e4, 1)
+               if t1_px else None)
+    out["T1_CLOSE"] = t1_cost
+    if scenario in PLAYBOOK_SPLITS:
+        w_lin, w_moc, w_t1 = PLAYBOOK_SPLITS[scenario]
+        legs = [(w_lin, out["LINEAR_W"]), (w_moc, 0.0),
+                (w_t1, t1_cost)]
+        if all(v is not None for w, v in legs if w > 0):
+            out["PLAYBOOK"] = round(
+                sum(w * v for w, v in legs if w > 0), 1)
+            out["playbook_split"] = (f"{scenario}: "
+                                     f"{w_lin:.0%}window/"
+                                     f"{w_moc:.0%}MOC/{w_t1:.0%}T+1")
+    out["winner"] = min(
+        (k for k in ("MOC", "VWAP_T", "LINEAR_W", "T1_CLOSE",
+                     "PLAYBOOK")
+         if out.get(k) is not None), key=lambda k: out[k])
+    return out
+
+
+# c-40 (STEP34 §1.4): the synthetic client panel — archetypes with
+# real constraint structures; we grade what we WOULD HAVE TOLD each.
+ARCHETYPES = {
+    "EM_TRACKER":  {"allowed": ["MOC"],
+                    "note": "MOC-obliged, zero discretion — the "
+                            "benchmark IS the close"},
+    "IMI_TRACKER": {"allowed": ["MOC", "VWAP_T"],
+                    "note": "IMI membership math differs; may work "
+                            "the T-day tape"},
+    "ACTIVE_FLEX": {"allowed": ["MOC", "VWAP_T", "LINEAR_W",
+                                "T1_CLOSE", "PLAYBOOK"],
+                    "note": "benchmarked active; +/-1 day "
+                            "discretion"},
+    "HF_PROVIDER": {"allowed": ["LINEAR_W", "T1_CLOSE"],
+                    "reverse": True,
+                    "note": "liquidity provider: accumulates the "
+                            "window AGAINST the flow, unwinds at "
+                            "the print"},
+}
+
+
+def archetype_grading(strats: dict, scenario: str | None) -> dict:
+    """Per archetype: what we'd have advised (best allowed strategy
+    under the scenario), its realized cost, and the regret vs the
+    best allowed in hindsight. HF_PROVIDER is sign-flipped (they
+    take the other side)."""
+    out = {}
+    for name, spec in ARCHETYPES.items():
+        vals = {k: strats.get(k) for k in spec["allowed"]
+                if strats.get(k) is not None}
+        if not vals:
+            continue
+        flip = -1.0 if spec.get("reverse") else 1.0
+        vals = {k: round(flip * v, 1) for k, v in vals.items()}
+        # advice: PLAYBOOK when allowed and scenario known,
+        # else the archetype's structural default (first allowed)
+        advised = ("PLAYBOOK" if "PLAYBOOK" in vals
+                   and scenario else spec["allowed"][0])
+        if advised not in vals:
+            advised = spec["allowed"][0]
+        best = min(vals, key=lambda k: vals[k])
+        out[name] = {"advised": advised,
+                     "advised_cost_bps": vals.get(advised),
+                     "best_hindsight": best,
+                     "best_cost_bps": vals[best],
+                     "regret_bps": round(vals[advised] - vals[best],
+                                         1)
+                     if advised in vals else None,
+                     "note": spec["note"]}
     return out
 
 
@@ -174,10 +270,22 @@ def crowding_resolution(code: str, t_day: str) -> str:
             f"({chg:+.0f}% through/after the print)")
 
 
+def _scenarios_for(event_tag: str) -> dict:
+    """Step-2 scenarios per code, if a liquidity forecast exists
+    for this event (c-40: closes the 2->3->4 loop)."""
+    p = ROOT / "data" / f"liquidity_forecast_{event_tag}.json"
+    if not p.exists():
+        return {}
+    d = json.loads(p.read_text())
+    return {r["code"]: r["scenario"] for r in d.get("names", [])}
+
+
 def build_pack(event: str, provider: str, ann: str, t_day: str,
-               names: dict[str, str]) -> dict:
+               names: dict[str, str],
+               event_tag: str = "may26") -> dict:
     from scripts.tday_execution_studies import _ib_day, _load_ib
     ib = _load_ib()
+    scen = _scenarios_for(event_tag)
     rows = []
     for code, side in names.items():
         strip = benchmark_strip(code, t_day)
@@ -190,15 +298,49 @@ def build_pack(event: str, provider: str, ann: str, t_day: str,
         days = _stock_day(code)
         pre = [r[1] for r in days if r[0] <= ann][-10:]
         base = float(np.median(pre)) if pre else None
+        sc = scen.get(code)
+        strats = strategy_leaderboard(code, side, ann, t_day,
+                                      scenario=sc)
         rows.append({
             "code": code, "side": side, **strip,
-            "strategies": strategy_leaderboard(code, side, ann,
-                                               t_day),
+            "step2_scenario": sc,
+            "strategies": strats,
+            "archetypes": archetype_grading(strats, sc)
+            if strats else None,
             "grades": self_grade(strip, side, provider, base),
             "reversal_T1_T5": reversal_path(code, side, t_day),
             "crowding": crowding_resolution(code, t_day)})
     return {"event": event, "provider": provider, "ann": ann,
             "t_day": t_day, "names": rows}
+
+
+def render_tca_letters(pack: dict) -> str:
+    """c-40 (STEP34 build item 6): per-archetype TCA letter DRAFTS
+    from graded artifacts. SIMULATED basis stated in every letter;
+    drafts require analyst sign-off before any client sees them."""
+    L = [f"# TCA Letter Drafts — {pack['event']} (SIMULATED basis)",
+         "*Auto-drafted from the graded post-event pack. Every "
+         "figure is a synthetic execution on the real tape "
+         "(participation-capped, measured-toll adders) — rankings "
+         "and spreads are the reliable objects, not absolutes. "
+         "DRAFT: requires analyst sign-off.*\n"]
+    for aname, spec in ARCHETYPES.items():
+        L.append(f"## To: {aname} clients\n")
+        L.append(f"*Your constraint set: {spec['note']}.*\n")
+        for r in pack["names"]:
+            a = (r.get("archetypes") or {}).get(aname)
+            if not a:
+                continue
+            line = (f"- **{r['side']} {r['code']}** "
+                    f"(scenario {r.get('step2_scenario', 'n/a')}): "
+                    f"advised **{a['advised']}** -> "
+                    f"{a['advised_cost_bps']:+.1f} bps vs close; "
+                    f"best-in-hindsight {a['best_hindsight']} "
+                    f"({a['best_cost_bps']:+.1f}); regret "
+                    f"{a['regret_bps']:+.1f} bps")
+            L.append(line)
+        L.append("")
+    return "\n".join(L)
 
 
 def render_pack(pack: dict) -> str:

@@ -1,1 +1,519 @@
-{"event": "MSCI 2026-05 SAIR TW", "provider": "MSCI", "ann": "2026-05-12", "t_day": "2026-05-29", "names": [{"code": "1102", "side": "Sell", "t_day": "2026-05-29", "official_close": 34.0, "day_vwap_exact": 33.94, "cont_vwap_5m": 33.37, "twap_est": 33.3, "last_cont": 33.45, "gap_bps": 164.4, "auction_share": 0.914, "t_volume": 205245004.0, "strategies": {"MOC": 0.0, "VWAP_T": 16.7, "LINEAR_W": -71.5, "winner": "LINEAR_W"}, "grades": {"gap_in_band": true, "gap_band_quoted": "|gap| <= 205 bps", "share_prior_med": 0.6, "share_realized": 0.914, "share_surprise": 0.314, "t_mult_realized": 27.2}, "reversal_T1_T5": [-58.8, -58.8, 58.8, 102.9, 117.6], "crowding": "shorts 161,221,395 at T-1 -> 45,689,250 (-72% through/after the print)"}, {"code": "1402", "side": "Sell", "t_day": "2026-05-29", "official_close": 25.65, "day_vwap_exact": 25.5, "cont_vwap_5m": 24.97, "twap_est": 25.15, "last_cont": 24.95, "gap_bps": 280.6, "auction_share": 0.786, "t_volume": 330333051.0, "strategies": {"MOC": 0.0, "VWAP_T": 56.8, "LINEAR_W": -190.0, "winner": "LINEAR_W"}, "grades": {"gap_in_band": false, "gap_band_quoted": "|gap| <= 205 bps", "share_prior_med": 0.6, "share_realized": 0.786, "share_surprise": 0.186, "t_mult_realized": 31.2}, "reversal_T1_T5": [-233.9, 233.9, 643.3, 740.7, 740.7], "crowding": "one-sided short path only"}, {"code": "1504", "side": "Sell", "t_day": "2026-05-29", "official_close": 75.0, "day_vwap_exact": 75.15, "cont_vwap_5m": 75.67, "twap_est": 74.62, "last_cont": 75.9, "gap_bps": -118.6, "auction_share": 0.676, "t_volume": 176360584.0, "strategies": {"MOC": 0.0, "VWAP_T": -20.2, "LINEAR_W": 463.6, "winner": "VWAP_T"}, "grades": {"gap_in_band": true, "gap_band_quoted": "|gap| <= 205 bps", "share_prior_med": 0.6, "share_realized": 0.676, "share_surprise": 0.076, "t_mult_realized": 8.3}, "reversal_T1_T5": [493.3, 66.7, 1066.7, 1600.0, 453.3], "crowding": "one-sided short path only"}, {"code": "2324", "side": "Sell", "t_day": "2026-05-29", "official_close": 36.7, "day_vwap_exact": 36.58, "cont_vwap_5m": 36.39, "twap_est": 35.95, "last_cont": 36.35, "gap_bps": 96.3, "auction_share": 0.489, "t_volume": 709500533.0, "strategies": {"MOC": 0.0, "VWAP_T": 33.0, "LINEAR_W": 1443.2, "winner": "MOC"}, "grades": {"gap_in_band": true, "gap_band_quoted": "|gap| <= 205 bps", "share_prior_med": 0.6, "share_realized": 0.489, "share_surprise": -0.111, "t_mult_realized": 16.1}, "reversal_T1_T5": [994.6, 2084.5, 2820.2, 1539.5, 1280.7], "crowding": "shorts 439,113,551 at T-1 -> 113,526,714 (-74% through/after the print)"}, {"code": "2474", "side": "Sell", "t_day": "2026-05-29", "official_close": 203.5, "day_vwap_exact": 202.36, "cont_vwap_5m": 199.33, "twap_est": 198.12, "last_cont": 203.5, "gap_bps": 0.0, "auction_share": 0.738, "t_volume": 61961352.0, "strategies": {"MOC": 0.0, "VWAP_T": 55.8, "LINEAR_W": 582.0, "winner": "MOC"}, "grades": {"gap_in_band": true, "gap_band_quoted": "|gap| <= 205 bps", "share_prior_med": 0.6, "share_realized": 0.738, "share_surprise": 0.138, "t_mult_realized": 12.3}, "reversal_T1_T5": [982.8, 2063.9, 2629.0, 1891.9, 1326.8], "crowding": "shorts 50,707,506 at T-1 -> 30,523,771 (-40% through/after the print)"}, {"code": "2610", "side": "Sell", "t_day": "2026-05-29", "official_close": 19.1, "day_vwap_exact": 19.08, "cont_vwap_5m": 19.0, "twap_est": 18.99, "last_cont": 19.05, "gap_bps": 26.2, "auction_share": 0.783, "t_volume": 314468608.0, "strategies": {"MOC": 0.0, "VWAP_T": 11.4, "LINEAR_W": 238.2, "winner": "MOC"}, "grades": {"gap_in_band": true, "gap_band_quoted": "|gap| <= 205 bps", "share_prior_med": 0.6, "share_realized": 0.783, "share_surprise": 0.183, "t_mult_realized": 14.7}, "reversal_T1_T5": [235.6, 209.4, 445.0, 418.8, 445.0], "crowding": "shorts 216,472,000 at T-1 -> 27,150,000 (-87% through/after the print)"}, {"code": "2633", "side": "Sell", "t_day": "2026-05-29", "official_close": 24.85, "day_vwap_exact": 24.87, "cont_vwap_5m": 25.02, "twap_est": 25.0, "last_cont": 25.05, "gap_bps": -79.8, "auction_share": 0.895, "t_volume": 222475014.0, "strategies": {"MOC": 0.0, "VWAP_T": -6.5, "LINEAR_W": -293.8, "winner": "LINEAR_W"}, "grades": {"gap_in_band": true, "gap_band_quoted": "|gap| <= 205 bps", "share_prior_med": 0.6, "share_realized": 0.895, "share_surprise": 0.295, "t_mult_realized": 42.8}, "reversal_T1_T5": [100.6, 181.1, 362.2, 281.7, 261.6], "crowding": "shorts 120,200,873 at T-1 -> 32,271,873 (-73% through/after the print)"}]}
+{
+ "event": "MSCI 2026-05 SAIR TW",
+ "provider": "MSCI",
+ "ann": "2026-05-12",
+ "t_day": "2026-05-29",
+ "names": [
+  {
+   "code": "1102",
+   "side": "Sell",
+   "t_day": "2026-05-29",
+   "official_close": 34.0,
+   "day_vwap_exact": 33.94,
+   "cont_vwap_5m": 33.37,
+   "twap_est": 33.3,
+   "last_cont": 33.45,
+   "gap_bps": 164.4,
+   "auction_share": 0.914,
+   "t_volume": 205245004.0,
+   "step2_scenario": "BUILDING",
+   "strategies": {
+    "MOC": 0.0,
+    "VWAP_T": 16.7,
+    "LINEAR_W": -71.5,
+    "T1_CLOSE": 58.8,
+    "PLAYBOOK": -21.4,
+    "playbook_split": "BUILDING: 30%window/70%MOC/0%T+1",
+    "winner": "LINEAR_W"
+   },
+   "archetypes": {
+    "EM_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "MOC-obliged, zero discretion \u2014 the benchmark IS the close"
+    },
+    "IMI_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "IMI membership math differs; may work the T-day tape"
+    },
+    "ACTIVE_FLEX": {
+     "advised": "PLAYBOOK",
+     "advised_cost_bps": -21.4,
+     "best_hindsight": "LINEAR_W",
+     "best_cost_bps": -71.5,
+     "regret_bps": 50.1,
+     "note": "benchmarked active; +/-1 day discretion"
+    },
+    "HF_PROVIDER": {
+     "advised": "LINEAR_W",
+     "advised_cost_bps": 71.5,
+     "best_hindsight": "T1_CLOSE",
+     "best_cost_bps": -58.8,
+     "regret_bps": 130.3,
+     "note": "liquidity provider: accumulates the window AGAINST the flow, unwinds at the print"
+    }
+   },
+   "grades": {
+    "gap_in_band": true,
+    "gap_band_quoted": "|gap| <= 205 bps",
+    "share_prior_med": 0.6,
+    "share_realized": 0.914,
+    "share_surprise": 0.314,
+    "t_mult_realized": 27.2
+   },
+   "reversal_T1_T5": [
+    -58.8,
+    -58.8,
+    58.8,
+    102.9,
+    117.6
+   ],
+   "crowding": "shorts 161,221,395 at T-1 -> 45,689,250 (-72% through/after the print)"
+  },
+  {
+   "code": "1402",
+   "side": "Sell",
+   "t_day": "2026-05-29",
+   "official_close": 25.65,
+   "day_vwap_exact": 25.5,
+   "cont_vwap_5m": 24.97,
+   "twap_est": 25.15,
+   "last_cont": 24.95,
+   "gap_bps": 280.6,
+   "auction_share": 0.786,
+   "t_volume": 330333051.0,
+   "step2_scenario": "OVERCROWDED",
+   "strategies": {
+    "MOC": 0.0,
+    "VWAP_T": 56.8,
+    "LINEAR_W": -190.0,
+    "T1_CLOSE": 233.9,
+    "PLAYBOOK": 140.3,
+    "playbook_split": "OVERCROWDED: 0%window/40%MOC/60%T+1",
+    "winner": "LINEAR_W"
+   },
+   "archetypes": {
+    "EM_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "MOC-obliged, zero discretion \u2014 the benchmark IS the close"
+    },
+    "IMI_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "IMI membership math differs; may work the T-day tape"
+    },
+    "ACTIVE_FLEX": {
+     "advised": "PLAYBOOK",
+     "advised_cost_bps": 140.3,
+     "best_hindsight": "LINEAR_W",
+     "best_cost_bps": -190.0,
+     "regret_bps": 330.3,
+     "note": "benchmarked active; +/-1 day discretion"
+    },
+    "HF_PROVIDER": {
+     "advised": "LINEAR_W",
+     "advised_cost_bps": 190.0,
+     "best_hindsight": "T1_CLOSE",
+     "best_cost_bps": -233.9,
+     "regret_bps": 423.9,
+     "note": "liquidity provider: accumulates the window AGAINST the flow, unwinds at the print"
+    }
+   },
+   "grades": {
+    "gap_in_band": false,
+    "gap_band_quoted": "|gap| <= 205 bps",
+    "share_prior_med": 0.6,
+    "share_realized": 0.786,
+    "share_surprise": 0.186,
+    "t_mult_realized": 31.2
+   },
+   "reversal_T1_T5": [
+    -233.9,
+    233.9,
+    643.3,
+    740.7,
+    740.7
+   ],
+   "crowding": "one-sided short path only"
+  },
+  {
+   "code": "1504",
+   "side": "Sell",
+   "t_day": "2026-05-29",
+   "official_close": 75.0,
+   "day_vwap_exact": 75.15,
+   "cont_vwap_5m": 75.67,
+   "twap_est": 74.62,
+   "last_cont": 75.9,
+   "gap_bps": -118.6,
+   "auction_share": 0.676,
+   "t_volume": 176360584.0,
+   "step2_scenario": "BUILDING",
+   "strategies": {
+    "MOC": 0.0,
+    "VWAP_T": -20.2,
+    "LINEAR_W": 463.6,
+    "T1_CLOSE": -493.3,
+    "PLAYBOOK": 139.1,
+    "playbook_split": "BUILDING: 30%window/70%MOC/0%T+1",
+    "winner": "T1_CLOSE"
+   },
+   "archetypes": {
+    "EM_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "MOC-obliged, zero discretion \u2014 the benchmark IS the close"
+    },
+    "IMI_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "VWAP_T",
+     "best_cost_bps": -20.2,
+     "regret_bps": 20.2,
+     "note": "IMI membership math differs; may work the T-day tape"
+    },
+    "ACTIVE_FLEX": {
+     "advised": "PLAYBOOK",
+     "advised_cost_bps": 139.1,
+     "best_hindsight": "T1_CLOSE",
+     "best_cost_bps": -493.3,
+     "regret_bps": 632.4,
+     "note": "benchmarked active; +/-1 day discretion"
+    },
+    "HF_PROVIDER": {
+     "advised": "LINEAR_W",
+     "advised_cost_bps": -463.6,
+     "best_hindsight": "LINEAR_W",
+     "best_cost_bps": -463.6,
+     "regret_bps": 0.0,
+     "note": "liquidity provider: accumulates the window AGAINST the flow, unwinds at the print"
+    }
+   },
+   "grades": {
+    "gap_in_band": true,
+    "gap_band_quoted": "|gap| <= 205 bps",
+    "share_prior_med": 0.6,
+    "share_realized": 0.676,
+    "share_surprise": 0.076,
+    "t_mult_realized": 8.3
+   },
+   "reversal_T1_T5": [
+    493.3,
+    66.7,
+    1066.7,
+    1600.0,
+    453.3
+   ],
+   "crowding": "one-sided short path only"
+  },
+  {
+   "code": "2324",
+   "side": "Sell",
+   "t_day": "2026-05-29",
+   "official_close": 36.7,
+   "day_vwap_exact": 36.58,
+   "cont_vwap_5m": 36.39,
+   "twap_est": 35.95,
+   "last_cont": 36.35,
+   "gap_bps": 96.3,
+   "auction_share": 0.489,
+   "t_volume": 709500533.0,
+   "step2_scenario": "OVERCROWDED",
+   "strategies": {
+    "MOC": 0.0,
+    "VWAP_T": 33.0,
+    "LINEAR_W": 1443.2,
+    "T1_CLOSE": -994.6,
+    "PLAYBOOK": -596.8,
+    "playbook_split": "OVERCROWDED: 0%window/40%MOC/60%T+1",
+    "winner": "T1_CLOSE"
+   },
+   "archetypes": {
+    "EM_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "MOC-obliged, zero discretion \u2014 the benchmark IS the close"
+    },
+    "IMI_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "IMI membership math differs; may work the T-day tape"
+    },
+    "ACTIVE_FLEX": {
+     "advised": "PLAYBOOK",
+     "advised_cost_bps": -596.8,
+     "best_hindsight": "T1_CLOSE",
+     "best_cost_bps": -994.6,
+     "regret_bps": 397.8,
+     "note": "benchmarked active; +/-1 day discretion"
+    },
+    "HF_PROVIDER": {
+     "advised": "LINEAR_W",
+     "advised_cost_bps": -1443.2,
+     "best_hindsight": "LINEAR_W",
+     "best_cost_bps": -1443.2,
+     "regret_bps": 0.0,
+     "note": "liquidity provider: accumulates the window AGAINST the flow, unwinds at the print"
+    }
+   },
+   "grades": {
+    "gap_in_band": true,
+    "gap_band_quoted": "|gap| <= 205 bps",
+    "share_prior_med": 0.6,
+    "share_realized": 0.489,
+    "share_surprise": -0.111,
+    "t_mult_realized": 16.1
+   },
+   "reversal_T1_T5": [
+    994.6,
+    2084.5,
+    2820.2,
+    1539.5,
+    1280.7
+   ],
+   "crowding": "shorts 439,113,551 at T-1 -> 113,526,714 (-74% through/after the print)"
+  },
+  {
+   "code": "2474",
+   "side": "Sell",
+   "t_day": "2026-05-29",
+   "official_close": 203.5,
+   "day_vwap_exact": 202.36,
+   "cont_vwap_5m": 199.33,
+   "twap_est": 198.12,
+   "last_cont": 203.5,
+   "gap_bps": 0.0,
+   "auction_share": 0.738,
+   "t_volume": 61961352.0,
+   "step2_scenario": "OVERCROWDED",
+   "strategies": {
+    "MOC": 0.0,
+    "VWAP_T": 55.8,
+    "LINEAR_W": 582.0,
+    "T1_CLOSE": -982.8,
+    "PLAYBOOK": -589.7,
+    "playbook_split": "OVERCROWDED: 0%window/40%MOC/60%T+1",
+    "winner": "T1_CLOSE"
+   },
+   "archetypes": {
+    "EM_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "MOC-obliged, zero discretion \u2014 the benchmark IS the close"
+    },
+    "IMI_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "IMI membership math differs; may work the T-day tape"
+    },
+    "ACTIVE_FLEX": {
+     "advised": "PLAYBOOK",
+     "advised_cost_bps": -589.7,
+     "best_hindsight": "T1_CLOSE",
+     "best_cost_bps": -982.8,
+     "regret_bps": 393.1,
+     "note": "benchmarked active; +/-1 day discretion"
+    },
+    "HF_PROVIDER": {
+     "advised": "LINEAR_W",
+     "advised_cost_bps": -582.0,
+     "best_hindsight": "LINEAR_W",
+     "best_cost_bps": -582.0,
+     "regret_bps": 0.0,
+     "note": "liquidity provider: accumulates the window AGAINST the flow, unwinds at the print"
+    }
+   },
+   "grades": {
+    "gap_in_band": true,
+    "gap_band_quoted": "|gap| <= 205 bps",
+    "share_prior_med": 0.6,
+    "share_realized": 0.738,
+    "share_surprise": 0.138,
+    "t_mult_realized": 12.3
+   },
+   "reversal_T1_T5": [
+    982.8,
+    2063.9,
+    2629.0,
+    1891.9,
+    1326.8
+   ],
+   "crowding": "shorts 50,707,506 at T-1 -> 30,523,771 (-40% through/after the print)"
+  },
+  {
+   "code": "2610",
+   "side": "Sell",
+   "t_day": "2026-05-29",
+   "official_close": 19.1,
+   "day_vwap_exact": 19.08,
+   "cont_vwap_5m": 19.0,
+   "twap_est": 18.99,
+   "last_cont": 19.05,
+   "gap_bps": 26.2,
+   "auction_share": 0.783,
+   "t_volume": 314468608.0,
+   "step2_scenario": "UNDERSUPPLIED",
+   "strategies": {
+    "MOC": 0.0,
+    "VWAP_T": 11.4,
+    "LINEAR_W": 238.2,
+    "T1_CLOSE": -235.6,
+    "PLAYBOOK": 142.9,
+    "playbook_split": "UNDERSUPPLIED: 60%window/40%MOC/0%T+1",
+    "winner": "T1_CLOSE"
+   },
+   "archetypes": {
+    "EM_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "MOC-obliged, zero discretion \u2014 the benchmark IS the close"
+    },
+    "IMI_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "IMI membership math differs; may work the T-day tape"
+    },
+    "ACTIVE_FLEX": {
+     "advised": "PLAYBOOK",
+     "advised_cost_bps": 142.9,
+     "best_hindsight": "T1_CLOSE",
+     "best_cost_bps": -235.6,
+     "regret_bps": 378.5,
+     "note": "benchmarked active; +/-1 day discretion"
+    },
+    "HF_PROVIDER": {
+     "advised": "LINEAR_W",
+     "advised_cost_bps": -238.2,
+     "best_hindsight": "LINEAR_W",
+     "best_cost_bps": -238.2,
+     "regret_bps": 0.0,
+     "note": "liquidity provider: accumulates the window AGAINST the flow, unwinds at the print"
+    }
+   },
+   "grades": {
+    "gap_in_band": true,
+    "gap_band_quoted": "|gap| <= 205 bps",
+    "share_prior_med": 0.6,
+    "share_realized": 0.783,
+    "share_surprise": 0.183,
+    "t_mult_realized": 14.7
+   },
+   "reversal_T1_T5": [
+    235.6,
+    209.4,
+    445.0,
+    418.8,
+    445.0
+   ],
+   "crowding": "shorts 216,472,000 at T-1 -> 27,150,000 (-87% through/after the print)"
+  },
+  {
+   "code": "2633",
+   "side": "Sell",
+   "t_day": "2026-05-29",
+   "official_close": 24.85,
+   "day_vwap_exact": 24.87,
+   "cont_vwap_5m": 25.02,
+   "twap_est": 25.0,
+   "last_cont": 25.05,
+   "gap_bps": -79.8,
+   "auction_share": 0.895,
+   "t_volume": 222475014.0,
+   "step2_scenario": "WELL-SUPPLIED",
+   "strategies": {
+    "MOC": 0.0,
+    "VWAP_T": -6.5,
+    "LINEAR_W": -293.8,
+    "T1_CLOSE": -100.6,
+    "PLAYBOOK": 0.0,
+    "playbook_split": "WELL-SUPPLIED: 0%window/100%MOC/0%T+1",
+    "winner": "LINEAR_W"
+   },
+   "archetypes": {
+    "EM_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "MOC",
+     "best_cost_bps": 0.0,
+     "regret_bps": 0.0,
+     "note": "MOC-obliged, zero discretion \u2014 the benchmark IS the close"
+    },
+    "IMI_TRACKER": {
+     "advised": "MOC",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "VWAP_T",
+     "best_cost_bps": -6.5,
+     "regret_bps": 6.5,
+     "note": "IMI membership math differs; may work the T-day tape"
+    },
+    "ACTIVE_FLEX": {
+     "advised": "PLAYBOOK",
+     "advised_cost_bps": 0.0,
+     "best_hindsight": "LINEAR_W",
+     "best_cost_bps": -293.8,
+     "regret_bps": 293.8,
+     "note": "benchmarked active; +/-1 day discretion"
+    },
+    "HF_PROVIDER": {
+     "advised": "LINEAR_W",
+     "advised_cost_bps": 293.8,
+     "best_hindsight": "T1_CLOSE",
+     "best_cost_bps": 100.6,
+     "regret_bps": 193.2,
+     "note": "liquidity provider: accumulates the window AGAINST the flow, unwinds at the print"
+    }
+   },
+   "grades": {
+    "gap_in_band": true,
+    "gap_band_quoted": "|gap| <= 205 bps",
+    "share_prior_med": 0.6,
+    "share_realized": 0.895,
+    "share_surprise": 0.295,
+    "t_mult_realized": 42.8
+   },
+   "reversal_T1_T5": [
+    100.6,
+    181.1,
+    362.2,
+    281.7,
+    261.6
+   ],
+   "crowding": "shorts 120,200,873 at T-1 -> 32,271,873 (-73% through/after the print)"
+  }
+ ]
+}

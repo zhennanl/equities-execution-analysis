@@ -1,5 +1,391 @@
 # Session Summary — 2026-07-08
 
+## Session 9i continued-41 (2026-08-05) — UI PROPOSAL: the lifecycle site
+- docs/UI_PROPOSAL_LIFECYCLE_SITE.md. Thesis: THE TIMELINE IS THE
+  INTERFACE — traders think in where-are-we-in-the-event; site
+  spine = event timeline w/ 4 station cards; three questions rule
+  every screen (where are we / what changed / what do I do)
+- Persistent Event Context Bar (event selector LIVE vs REPLAY,
+  phase strip w/ today marker, sentinel light, unconfusable mode
+  badge); Home = timeline + station cards (one headline number +
+  alert count each) + deltas-only brief strip
+- ONE workspace grammar all 4 steps: LEFT names table / CENTER one
+  picture / RIGHT action rail (advice drafts, alerts, provenance,
+  sign buttons) — learn step 1, know all 4. Honesty affordances
+  everywhere: provenance popovers, SIMULATED badges, ~estimates
+  muted, grades inline
+- REPLAY = same workspaces + time travel: date scrubber renders
+  everything AS-OF (PIT enforced structurally), reveal-outcome
+  toggle (default OFF), session library doubles as public track
+  record. Prerequisite: data/sessions/<tag>/ snapshot convention +
+  sessions.json registry
+- All tiles map to existing JSON producers (assembly not new
+  analytics); build order: context bar+home -> Step-2 workspace
+  first (live proving window) -> re-hang 1/3/4 -> replay may26 ->
+  polish. Streamlit-feasible v1; artifact-driven design ports
+
+## Session 9i continued-40 (2026-08-05) — STEP34 BUILD ORDER EXECUTED (items 1-6)
+- post_event.py: PLAYBOOK strategy (scenario-conditional splits w/
+  NEW T+1-close leg; vintage-cache fallback when stock_day ends at
+  T) + ARCHETYPES panel (EM_TRACKER MOC-obliged / IMI_TRACKER /
+  ACTIVE_FLEX / HF_PROVIDER sign-flipped) + archetype_grading
+  (advised vs best-hindsight, regret) + render_tca_letters (drafts,
+  SIMULATED basis stated) — build_pack wires Step-2 scenarios in
+  (closes the 2->3->4 loop)
+- **MAY-26 REGRADE: OVERCROWDED names' playbook split beat all-MOC
+  by ~590bps (2324 -597 / 2474 -590) via the 60% T+1 defer leg —
+  Step-2's crowding calls converted to execution value; 1402 the
+  honest heterogeneity case (OVERCROWDED but no reversal, +140)**
+- agents/cockpit_agent.py: pre-open card assembler from existing
+  artifacts (8 cards may26 rehearsal) + desk-note DRAFT
+- scripts/t1_orchestrator.py: data-arrival gate (refuses partial
+  grading; names what's missing) -> unattended pack + TCA drafts;
+  may26 run [GRADED 7/7]; aug26 slot filled by announcement agent
+- scripts/auction_capture.py: TWSE MIS 5-sec snapshot capture;
+  REHEARSAL PASSED live (2330/1101 parsed) — plumbing validated
+  before the Aug-31 first live capture
+- Pinned: OVERCROWDED playbook <-400bps anchor, archetype math +
+  HF sign-flip unit test, cockpit/TCA artifacts; legacy pack test
+  updated for grown strategy set (intentional). Suite 440 green
+
+## Session 9i continued-39 (2026-08-05) — STEPS 3-4 SIMULATION + AGENTIC DESIGN DOC
+- docs/STEP34_SIMULATION_AGENTIC_DESIGN.md. Simulation w/o client
+  fills: synthetic orders on the REAL tape (24 events, discrete
+  auction bars) under three honesty rules — participation ceilings
+  (~15%/bar), impact adders from MEASURED playbook tolls (not
+  theory), rankings-not-absolutes on identical tape. Exact-vs-
+  modeled table stated. SYNTHETIC CLIENT PANEL replaces client
+  records: archetypes (EM tracker MOC-obliged / IMI tracker /
+  benchmarked active / liquidity-provider HF) — grade what we
+  WOULD HAVE TOLD each client type. Validation anchors: simulation
+  must reproduce measured findings (gap-against-obligated, reversal
+  cells, May-26 OVERCROWDED fade dominance) — tape wins by
+  definition
+- Agentic: Step 3 = calendar-armed cockpit pipeline (pre-open
+  card assembler, 13:00/13:25 updaters, limit-move re-router,
+  5-sec auction capture from Aug-31) + Step 4 = data-arrival-gated
+  unattended post-event pack (leaderboard incl. NEW playbook-guided
+  strategy, archetype advice grading, scenario self-grade,
+  crowding resolution, T+5 reversal tracker) -> TCA letter drafts;
+  lessons may PROPOSE rules, adoption only via lab registry.
+  Efficiency ledger: manual residue = sign-off, self-grade review,
+  lab adoption. Build order 1-6 declared (playbook-guided strategy
+  first — closes the 2->3->4 loop)
+
+## Session 9i continued-38 (2026-08-05) — L0 SENTINEL SYSTEM COMPLETE
+- agents/sentinels.py: six watchers, fetch+diff+one-line contract
+  (never judge, never trade): shorts (wraps freshness guarantee),
+  members (12 funds/10 markets daily diff — mid-quarter exits =
+  corporate-event ALERTS, the Inotera class automated), ladder
+  (pool entries/exits re-priced daily), calendar (T-countdowns +
+  per-card must-start-by, finalization-protocol alarm at T-1),
+  fx (TWD vs pinned 32.5, >2% drift alert), artifacts (mtime DAG:
+  published artifact older than its inputs = regenerate-before-
+  quoting alert). Statuses OK/CHANGED/ALERT/DEGRADED; state diff in
+  sentinel_state.json; report sentinel_report.json; slow watchers
+  TTL 4h; CLI per-sentinel; Windows schtasks line documented
+- FIRST LIVE RUN all green: shorts OK (tolerance), members 10
+  markets baseline, ladder pool stable 17, calendar T-6/T-26, FX
+  32.52 (+0.1%), artifacts 4/4 current
+- UI: sentinel strip atop lifecycle Tab 1 (auto-expands on
+  ALERT/DEGRADED); docs/SENTINELS_GUIDE.md — trader guide (what
+  each watcher is, why care, typical alerts, the analyst reads six
+  lines and thinks only about the red ones; scheduling)
+- +1 pinned test (offline-safe: calendar/artifacts logic, report
+  schema, SYNTHETIC staleness fires the alert); suite 439 green;
+  sandbox screenshot verified
+
+## Session 9i continued-37 (2026-08-05) — STEPS 1-2 REVIEW -> LAYERED AGENTIC WORKFLOW DOC
+- docs/STEP12_AGENTIC_WORKFLOW_REVIEW.md: state inventory (Step 1
+  deep/validated, Step 2 modeled/1-event-graded), efficiency
+  critique (analyst-run, pull-not-push, TW-deep/9-shallow), and the
+  4-layer agent design: L0 data sentinels (scheduled fetch+diff;
+  membership diffs become corporate-event ALERTS) -> L1 signal
+  agents (ladder refresh, Step-2 daily tracker w/ scenario
+  MIGRATIONS as the signal, announcement-day agent for Aug-12) ->
+  L2 synthesis (morning brief deltas-only, client-note drafter
+  keyed to client TYPE per composite math, meeting prep) -> L3
+  surface (Desk Brief tiles pull, alerts push, provenance Q&A,
+  what-if toll tool). HUMAN GATE preserved: agents never ship
+  calls/notes; conviction gate between L2 and clients; agent output
+  graded like analyst output
+- Public-data ceiling stated (everything automatable free; limits:
+  official floats/FIF, price-cutoff date, 5-sec auction history,
+  non-TW SBL, client flow unseen) vs CLSA institutional upgrade
+  ranked: internal flow history #1 (proxies->ground truth,
+  capacity-aware advice, compliance wall stated), licensed floats
+  #2 (kills last data-blocked step), tick backfill, borrow desk,
+  ecosystem. DESIGN POINT: same architecture both worlds — better
+  data makes it sharper, not different
+- Priority: sentinels+scheduling, Step-2 live tracker for the
+  Aug-12->Sep-1 proving window, announcement-day agent REHEARSED
+  pre-Aug-12
+
+## Session 9i continued-36 (2026-08-05) — STEP-2 LIQUIDITY-SUPPLY MODEL (interview lessons 1+2 built)
+- User: predict effective-date liquidity supply from PIT window
+  data. agents/liquidity_forecast.py: crowding_ratio = accumulated
+  pre-positioning / expected passive flow (class prior x baseline
+  ADV); legs = flow completion (volume, primary) + SBL borrow build
+  (TWT93U cache) + foreign-holding delta w/ direction-consistency
+  flag (FinMind) + retail margin shorts; scenario map
+  UNDERSUPPLIED/BUILDING/WELL-SUPPLIED/OVERCROWDED w/ client advice
+  strings — thresholds 0.3/0.7/1.2 DECLARED BEFORE the demo ran
+- **MAY-26 PIT DEMO (frame frozen T-1=May-28): the two OVERCROWDED
+  calls — 2474 (completion 1.70) and 2324 (2.04, and the only
+  wrong-direction foreign flag: foreigners BUYING a delete) — were
+  exactly the two monster reversals (+26.3% / +28.2% T+3). The one
+  UNDERSUPPLIED call (2610) printed the smallest delete multiple
+  (9.9x vs 18-42x). 2324 cross-checks post-event's +2,820bps.**
+  data/liquidity_forecast_may26.json; docs/STEP2_LIQUIDITY_MODEL.md
+  (framing, observables, scenario advice, honesty box: n=8, prior
+  is weakest input 10-42x realized, SBL coverage partial; ML
+  calibration path = decade replay ~150 name-events, registry v4)
+- Aug-2026 live use: run daily from Aug-12 on the actual list —
+  the client note writes itself from the advice column
+- +1 pinned test (OVERCROWDED->reversal linkage, PIT frame check,
+  calm-scenario reversals <12%); suite 438 green
+
+## Session 9i continued-35 (2026-08-05) — MATERIALITY AUDIT CLOSED: foreign-room screen + ladder shadow
+- Book-step audit correction: dual float-cap hurdle (§3.1.2.3) was
+  ALREADY in predict_msci (min_ffcap_frac_of_add "blocked add") —
+  only the workbench view had ignored it. Truly missing: foreign
+  room (§3.1.2.6) + true ladder mechanism (§3.1.4-3.1.5)
+- reconstitution.py: min_foreign_room=0.15 — new adds blocked when
+  universe carries foreign_room_frac < 15% (column optional; zero
+  impact on graded paths — May add MPI had ample room). Unit-tested
+  both directions
+- agents/ladder_engine.py — SHADOW ENGINE (book mechanism): 77
+  confirmed members x current caps (vintage cache + FinMind live
+  top-up w/ resumable cache incl. FOL room per name) -> full-member
+  ladder -> inclusive delete pool <1.15x GMSR ->
+  data/ladder_aug26_tw.json: **first full-breadth Aug-26 TW pool:
+  17 names, bottom 6919 0.76x / 2834 0.84x / 2609 0.84x / 1101
+  0.87x / 3529 0.88x / 5871 0.91x / 3533 0.99x** (vs the 16-name
+  frame that could see only 1101). GMSR CAVEAT stated in-file:
+  members+tail walk w/ default floats -> GMSR $6.5B ABOVE boundary
+  frame's $4.8B — errs INCLUSIVE (safe for pool, wrong for calls,
+  hence shadow); union-universe reconciliation queued
+- Aug-12 grades BOTH engines (legacy locked call + shadow pool);
+  suite 437 green
+
+## Session 9i continued-34 (2026-08-05) — APAC CONSTITUENT PIPELINE (all 10 review markets)
+- TW method generalized: scripts/apac_members_harvest.py ->
+  data/apac_members.json — single-country iShares anchor +
+  composite subset cross-check (EEM for EM / EFA for DM) per market
+- RESULTS (live harvest): **Japan 168/168, Australia 47/47,
+  HK 25/25, India 165/165, Malaysia 21/21 — PERFECT agreement;
+  Korea 77 confirmed (1 anchor-only); Taiwan 77 (known); China 571
+  confirmed of ~576 (5 diffs = CA churn at breadth)**
+- TRAPS hit+solved: wrong product ids serve OTHER funds w/ 200
+  status (name-header validation mandatory; found EWM/EPHE/INDA ids
+  by probe: 239669/239675/239659); gzip responses; EEM Location
+  string is "Korea (South)"; **EIDO/EPHE track IMI variants -> their
+  lists are SUPERSETS; composite subset IS the Standard membership
+  (Indonesia 11, Philippines 10)**
+- docs/CONSTITUENT_PIPELINE_FRAMEWORK.md: full recipe (anchor ->
+  composite -> tiers -> count reconcile -> reverse-roll -> delete
+  pool), source table w/ verified ids+counts, traps, per-market
+  third-fund candidates, validation standard (last-2-reviews 7/7
+  requirement), vintage-cap source queue (J-Quants/KRX/NSE)
+- Pre-announcement answer: iShares CSVs update daily (~1-2d lag);
+  membership only moves at effective dates + corporate events ->
+  full member list per market IS obtainable before any
+  announcement; delete pool = bottom ladder per framework §5
+- +1 pinned test (range-based, review-proof); suite 436 green
+
+## Session 9i continued-33c (2026-08-05) — THIRD FUND UNANIMOUS + COUNT-ANCHOR FIX
+- Yuanta 006203 (INDEPENDENT manager, full-replication, quarterly
+  disclosure via MoneyDJ, Jun-30): 77 names, all mapped via FinMind
+  name registry — **EXACTLY the EEM∩EWT set. Three funds, two
+  managers, unanimous on 77.** EWT-only 1602/2418 = EWT artifacts
+- **FACTSHEET MYSTERY SOLVED: 83(pre-May) − 7 dels + 1 add = 77.**
+  The "sampling gap" never existed — our count anchor was the
+  PRE-May factsheet. Funds hold the full index
+- FIX CASCADED: Aug-26 live paths re-anchored 83→77 (funnel_demo
+  prediction run, universe_workbench); GMSR robust ($4.78B
+  unchanged — 6-member shift barely moves the 85% line), zero-call
+  posture unchanged; May-26 PIT paths KEEP 83 (correct pre-May).
+  tw_membership_sources.json now carries all three funds +
+  3-way consistency string; suite 435 green
+
+## Session 9i continued-33b (2026-08-05) — MULTI-FUND MEMBERSHIP CROSS-CHECK
+- User: why does EWT differ from MSCI, use multiple funds? Reasons
+  documented: sampling license, FOL walls (unbuyable names),
+  snapshot timing/corporate events, line representation, 25/50
+  weights making bottom names likeliest omissions
+- SECOND SOURCE via building blocks: EEM (MSCI EM Standard) Taiwan
+  subset = MSCI TW Standard membership. Result: **EEM 77 names,
+  STRICT SUBSET of EWT's 79** (EWT-only: 1602, 2418); zero
+  EEM-only names -> data/tw_membership_sources.json w/ confidence
+  tiers (CONFIRMED both / LIKELY one / FLAGGED interval-only e.g.
+  4551 — kept in delete pool by design). Caveats stated: both
+  BlackRock (partially independent); 83-count factsheet gap
+  unresolved (sampling vs count-date vs securities-vs-companies);
+  truly independent third source = Yuanta 006203 local ETF (queued)
+
+## Session 9i continued-33 (2026-08-05) — THE BREADTH FIX, PROVEN (delete pool 7/7 + 7/7)
+- User: does the shortlist cover the May-26 key, and how to find the
+  deletion pool w/o a licensed list? scripts/delete_pool_validation
+  .py: pool = EWT anchor reverse-rolled (4551-class flags excluded)
+  + vintage caps + generous 1.15x-GMSR band
+- **MAY-26: deleted names are EXACTLY the bottom 7 of the
+  reconstructed ladder (ranks 0-6), perfect separation — all 7
+  below 1.0x GMSR, every survivor >= 1.05x. The 16-name frame's 3
+  false calls (1101/1326/2207) VANISH in the 110-name frame (better
+  GMSR).** Adds: 1/1 (MPI ranked, 12 float-gap false positives
+  honestly displayed)
+- **NOV-25 (the historical 0/7 breadth failure): 7/7 deletions
+  present, occupying 7 of the bottom 8 slots.** THE binding TW
+  constraint (PREDICTION_ENGINE_REVIEW §5, TAIWAN_MARKET_ANALYSIS
+  §6) is STRUCTURALLY SOLVED by EWT-anchor + FinMind vintage caps
+  — and next-tier names visible in the Nov-25 ladder (2610/2474/
+  1102 survived Nov-25, deleted May-26) show hazard conversion
+  live in the data
+- Pinned test (both events 7/7, May-26 exact bottom-7); suite 435
+  green. NEXT: fold the EWT-ladder universe into the live Aug-26
+  engine run + full 46-review PIT backtest on this frame
+
+## Session 9i continued-32 (2026-08-05) — MAY-26 PIT WORKBENCH + THE CONSTITUENT ANSWER
+- User: pretend it's one day before the May-26 announcement, build
+  the workbench view PIT, incl. ALL constituents + tentative adds
+  w/ explicit derivation. CONSTITUENT ANSWER (the data question):
+  full current membership = iShares EWT holdings CSV (free, daily,
+  public; MSCI TW 25/50 — membership ~= Standard; 79 equity codes
+  cached data/ewt_members.json) REVERSE-ROLLED through official
+  reviews to any vintage; delisted names via change intervals.
+  Fixed the bug this exposed: never-changed members outside the
+  16-name boundary set (6505 etc.) were misclassified non-members
+  under interval-only logic
+- scripts/pit_workbench_may26.py -> universe_workbench_tw_may26pit
+  .json: 110 names at Apr-30 caps (vintage cache), 46 members
+  reconstructed, PIT GMSR $4.64B / SAIR bar $5.34B / floor $2.32B,
+  6-step derivation strings, per-name foreign_12m_pp + cap_12m_chg
+  (the EDA features) + ff_estimated flags + prior_status
+- THE HONEST FINDING (now a UI warning box): 13 non-members cleared
+  0.85x the full-cap bar PIT; only 1 was added (6223 MPI, ranked
+  clearly). The other 12 are mostly ex-members deleted years ago
+  for float/liquidity reasons that persist -> full-cap proximity
+  alone ~8% precision; binding discriminators are floats/FIF (our
+  stated #1 gap). Raw ladder alone would mislead — this is WHY the
+  engine layers screens/churn/probabilities
+- UI: workbench expander got a Frame selector (Aug-26 live /
+  May-26 PIT validation); PIT view shows derivation, graded
+  tentative adds, full universe table; sandbox screenshot verified
+- +1 pinned test (EWT anchor logic: giants members, May-26 dels
+  members at Apr-30, MPI non-member + ADDED-hit, >=40 members);
+  suite 434 green
+
+## Session 9i continued-31 (2026-08-05) — FIRST VINTAGE EDA + REVIEW LINK LIST
+- scripts/vintage_eda.py on the fresh cache (EXPLORATION ONLY — any
+  finding must pass registry v4 before the engine may use it):
+  **GLIDE PATH: deleted names lose median 22% of cap over the 250
+  trading days before announcement (70 windows) vs survivors -3%
+  (120 windows) — deletion is a yearlong glide, not an event.**
+  **SMART MONEY: foreign ownership +5.5pp into adds, -4.1pp into
+  deletes over the same window (54/70 windows) — anticipation IS
+  visible in the daily shareholding tape, and it accelerates ~T-120.**
+  Charts: docs/img/eda_glidepath.png, eda_foreign.png
+- Both series are PIT-available DAILY (FinMind Shareholding) ->
+  prime candidate features for the cutline-retention classifier;
+  H15 (foreign-flow direction) + glide-slope feature registered as
+  v4 candidates, thresholds NOT set here
+- docs/MSCI_REVIEW_LINKS_2015_2026.md: all 46 reviews Feb15-May26,
+  official STPublicList links (app2.msci.com pattern verified vs our
+  archive) + TW change counts + Aug-26 pending line; local mirror
+  noted (data/msci_archive — platform never depends on live links)
+
+## Session 9i continued-30 (2026-08-05) — PIT VINTAGE UNLOCK (the decade backtest data, HARVESTED)
+- User: what data do we need for PIT-graded 2015+ backtests, then
+  get it. docs/PIT_BACKTEST_DATA_PLAN.md: 9-item inventory, each
+  PROBED LIVE before listing
+- THE FIND: FinMind free API TaiwanStockShareholding =
+  NumberOfSharesIssued DAILY from 2015 + foreign holding % + FOL,
+  covering TWSE + TPEx + DELISTED names; TaiwanStockPrice covers
+  delisted prices -> survivorship solved. TDCC dispersion (best
+  float source) paywalled -> v1 float policy: current ff held w/
+  REPORTED ±10% sensitivity band; FLOAT-SENSITIVE reviews excluded
+  from headline accuracy
+- scripts/tw_vintage_harvest.py (probe/fetch/sanity; resumable,
+  atomic, paced, FINMIND_TOKEN optional): **HARVEST COMPLETE IN
+  SANDBOX — 110 names x (shares + prices) 2015-2026, 58MB cache**
+  (109 = full review key + boundary set; +3474 Inotera as the
+  corporate-event-exit anchor, absent from the review key because
+  M&A exits happen MID-QUARTER — live proof of the interview's
+  corporate-events blind channel)
+- Sanity: 100/109 series reach 2015-H1 (rest listed later); TSMC
+  mid-2015 shares 25,930,380,458 matches known value; pinned test
+  added (anchor + survivorship). Suite 433 green
+- NEXT: scripts/pit_backtest_2015.py — rebuild vintages, replay all
+  46 reviews w/ frozen May-26 rules (no per-review tuning), grade
+  vs key -> becomes the training set for cutline-retention
+  classifier + proximity calibration + regime priors (v4)
+
+## Session 9i continued-29 (2026-08-05) — STEP-1 WORKBENCH: every number behind the universe
+- User: visualize step 1 w/ clear numbers (ff, caps, decision).
+  scripts/universe_workbench.py -> data/universe_workbench_tw.json:
+  per-name TWD cap (Apr-30, price x shares) -> FX 32.5 -> current
+  price ratio -> USD cap, free-float est, float-adj cap, ADV,
+  x-threshold, decision bucket; thresholds GMSR $4.78B / add bar
+  $8.61B / floor $2.39B (Aug-2026 QIR config, post-May membership)
+- UI: "Step 1 workbench" expander (page6 Tab 1, above the funnel) —
+  3 threshold metric cards, log-scale boundary ladder chart (members
+  blue vs non-members red, dashed floor/GMSR/add-bar lines), full
+  numbers table, decision-logic caption incl. the ff nuance (float
+  shapes GMSR via coverage walk; hurdles use FULL cap)
+- Fix during build: Streamlit rendered paired $ as LaTeX — amounts
+  moved out of markdown into metric cards; chart x-range pinned
+- +1 pinned test (threshold ratios 1.8x/0.5x exact, ff in (0,1],
+  float-adj arithmetic, bucket logic consistent; proportional
+  rounding tolerances); suite 432 green; sandbox screenshot verified
+
+## Session 9i continued-28 (2026-08-04) — NAME JOURNEYS: the shortlist AT every stage
+- User: show the shortlist per funnel step w/ selection method.
+  agents/review_funnel.py: name_journeys() — every real name's
+  stage-by-stage row (role, cap, x-threshold, status, final call,
+  official outcome for the graded run) + STAGE_METHOD dict citing
+  the GIMI May-2026 book per stage (§2.3.2 GMSR range, §3.1 QIR
+  recipe, §3.1.5.1 buffers, §3.1.2.4/3.1.6.2 retention grace)
+- May-26 validation journeys: 6223.TWO ADDED—HIT at 2.92x add bar;
+  7 deletes HIT; 1101/1326/2207 RETAINED—false calls labeled
+  "cutline resident"; giants (2330 at 771x floor) shown SAFE so the
+  reader sees why they never enter the shortlist
+- HONESTY FIX during build: delete candidates sit 1.5-4.2x ABOVE
+  the hard 0.5x floor in the May run because the SAIR migration
+  sweep (GIMI §3.1.5.1) is the effective bar — status text + UI
+  caption now say so instead of implying a floor breach
+- funnel_tw.json/TW_FUNNEL.md carry journeys + methods; UI renders
+  journeys table + GIMI-citation popover; pinned test extended
+  (journey outcomes + 3 false-call count + citation present);
+  431 green; verified live in sandbox screenshot
+- GIMI locating answer of record: the book has no "shortlist" —
+  closest is §3.1.5.1 buffer zones; our shortlist = buffers +
+  proximity probabilities + churn/hazard/blind-band layers (ours)
+
+## Session 9i continued-27 (2026-08-04) — FUNNEL STARTS AT STEP 1 + SIDEBAR TRIM
+- Funnel now OPENS with "S0 acquisition" (engine Step 1 — how the
+  universe is built): 16 named TW boundary stocks (caps = price x
+  shares via yfinance FX->USD, floats estimated, ADV 60d, membership
+  rolled forward from official results) + count-anchored 500-name
+  modeled tail (83 members, MSCI factsheet). review_funnel.py stage
+  prepended; funnel_tw.json + TW_FUNNEL.md regenerated — May-26
+  validation grade UNCHANGED (7/7 dels + 1/1 add, 3 cutline false
+  dels); UI expander caption explains the acquisition sources
+- app.py: TEMPORARY sidebar trim per user — only "Rebalance Trade
+  Lifecycle" visible; SHOW_ALL_MODULES=True restores everything
+  (Desk Brief hidden too, per instruction; nothing deleted)
+- Pinned funnel test updated for the new leading stage; suite 431 green
+- PROVENANCE EXPANDER added to Tab 1 (user: "is this from MSCI or
+  calculated by us?"): per-input table — boundary list OURS (curated
+  near GMSR), caps OURS (price x shares, refresh timestamp from
+  aug26_cap_refresh.json mtime shown live), floats OURS (estimated,
+  MSCI's licensed — stated miss source), count anchor MSCI factsheet,
+  shorts TWSE auto-refreshed; stale-caps warning at >=3 days.
+  Answer of record: caps are NOT auto-refreshed every run (shorts
+  are); ratio file refreshed 2026-08-04; Aug-11 protocol refreshes
+  same-morning. Verified live in sandbox (streamlit + headless
+  chromium w/ stubbed libXdamage): screenshots confirm trimmed
+  sidebar, provenance table, funnel starting at S0 acquisition
+
 **Mode:** Autopilot (Opus 4.8). **Backlog item completed:** **B1 — Formal test
 suite + CI.** This was the correct first pick: no `tests/` directory existed,
 and B1 is explicitly the protection layer for every later backlog task.

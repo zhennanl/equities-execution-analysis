@@ -1,7 +1,23 @@
 {
+ "methods": {
+  "S0 acquisition": "OURS. The book reviews the full equity universe (GIMI \u00a73.1.1); changes only occur at the size boundary, so we curate the names nearest it from our own cap ranking and model the rest as a count-anchored tail. Caps = price x shares (yfinance, FX to USD) as of the frame date.",
+  "S0 universe": "OURS + MSCI factsheet. Total member count pinned to the published constituent count so the coverage walk (GIMI \u00a72.3.5) lands where the real index size puts it.",
+  "S1 eligible": "GIMI \u00a72.2 / \u00a73.1.2: investability screens \u2014 free float >= 0.15 and ATVR liquidity floor. Existing constituents get 2/3-of-threshold retention grace (\u00a73.1.2.4, \u00a73.1.6.2).",
+  "S2 thresholds": "GIMI \u00a72.3.2 (p.24): walk the cap ladder to 85% free-float coverage -> GMSR reference; Range = 0.5x to 1.15x. QIR add bar 1.8x, SAIR 1.15x; deletion floor 0.5x.",
+  "S3 candidates": "GIMI \u00a73.1.4-3.1.5: non-members above the add bar become ADD candidates; members below the floor DELETE candidates; the +-15% band is the watch zone (hazard class, ~2/3 convert - our decade measurement, not the book's).",
+  "S4 churn-buffered": "GIMI \u00a73.1.5.1 (p.44): buffer zones control migration and index turnover \u2014 the prior review's changes are excluded from opposite-side candidacy.",
+  "S5 verified": "OURS (Feng Tay gate): no call ships on unverified membership. The book assumes MSCI knows its own index; a predictor must prove it does.",
+  "FINAL calls": "OURS: Laplace-shrunk probabilities from the graded record (L8) \u2014 the book has no probabilities; this layer is why a call says p=0.6 instead of pretending certainty."
+ },
  "validation": {
   "event": "MSCI May-2026 SAIR (April PIT universe, graded vs official key)",
   "stages": [
+   {
+    "stage": "S0 acquisition",
+    "n": 16,
+    "rule": "engine Step 1 \u2014 named universe from public data: cap = price x shares (yfinance, FX to USD), free-float estimated from holder filings, ADV 60d; membership rolled forward from official review results (never assumed)",
+    "detail": "16 named boundary stocks (15 members near the deletion floor, 1 candidates near the add bar); market body below the boundary is modeled, not fetched \u2014 see next stage"
+   },
    {
     "stage": "S0 universe",
     "n": 516,
@@ -67,16 +83,184 @@
     "2207.TW"
    ],
    "ungradable_below_floor": []
-  }
+  },
+  "journeys": [
+   {
+    "ticker": "2330.TW",
+    "role": "member",
+    "cap_usd_b": 1699.02,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 771.28,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call",
+    "official": "unchanged \u2014 correct"
+   },
+   {
+    "ticker": "2308.TW",
+    "role": "member",
+    "cap_usd_b": 172.14,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 78.14,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call",
+    "official": "unchanged \u2014 correct"
+   },
+   {
+    "ticker": "2454.TW",
+    "role": "member",
+    "cap_usd_b": 127.42,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 57.84,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call",
+    "official": "unchanged \u2014 correct"
+   },
+   {
+    "ticker": "2317.TW",
+    "role": "member",
+    "cap_usd_b": 91.83,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 41.69,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call",
+    "official": "unchanged \u2014 correct"
+   },
+   {
+    "ticker": "6223.TWO",
+    "role": "non-member",
+    "cap_usd_b": 14.8,
+    "threshold": "add bar $5.1B",
+    "x_threshold": 2.92,
+    "status": "ADD candidate (above the add bar)",
+    "final": "ADD (p=0.64)",
+    "official": "ADDED \u2014 HIT"
+   },
+   {
+    "ticker": "1326.TW",
+    "role": "member",
+    "cap_usd_b": 9.31,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 4.22,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "RETAINED \u2014 false call (cutline resident)"
+   },
+   {
+    "ticker": "2002.TW",
+    "role": "member",
+    "cap_usd_b": 8.75,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 3.97,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call",
+    "official": "unchanged \u2014 correct"
+   },
+   {
+    "ticker": "2207.TW",
+    "role": "member",
+    "cap_usd_b": 7.83,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 3.56,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "RETAINED \u2014 false call (cutline resident)"
+   },
+   {
+    "ticker": "1101.TW",
+    "role": "member",
+    "cap_usd_b": 5.46,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 2.48,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "RETAINED \u2014 false call (cutline resident)"
+   },
+   {
+    "ticker": "2633.TW",
+    "role": "member",
+    "cap_usd_b": 4.39,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 1.99,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "DELETED \u2014 HIT"
+   },
+   {
+    "ticker": "1504.TW",
+    "role": "member",
+    "cap_usd_b": 4.38,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 1.99,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "DELETED \u2014 HIT"
+   },
+   {
+    "ticker": "1402.TW",
+    "role": "member",
+    "cap_usd_b": 4.04,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 1.84,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "DELETED \u2014 HIT"
+   },
+   {
+    "ticker": "2324.TW",
+    "role": "member",
+    "cap_usd_b": 3.8,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 1.72,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "DELETED \u2014 HIT"
+   },
+   {
+    "ticker": "1102.TW",
+    "role": "member",
+    "cap_usd_b": 3.57,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 1.62,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "DELETED \u2014 HIT"
+   },
+   {
+    "ticker": "2474.TW",
+    "role": "member",
+    "cap_usd_b": 3.35,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 1.52,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "DELETED \u2014 HIT"
+   },
+   {
+    "ticker": "2610.TW",
+    "role": "member",
+    "cap_usd_b": 3.22,
+    "threshold": "hard 0.5x floor $2.2B",
+    "x_threshold": 1.46,
+    "status": "DELETE candidate \u2014 below the effective deletion bar (SAIR migration sweep sits ABOVE the hard 0.5x floor; GIMI \u00a73.1.5.1)",
+    "final": "DELETE (p=0.6)",
+    "official": "DELETED \u2014 HIT"
+   }
+  ]
  },
  "prediction": {
   "event": "MSCI Aug-2026 QIR (caps refreshed to current)",
   "stages": [
    {
+    "stage": "S0 acquisition",
+    "n": 16,
+    "rule": "engine Step 1 \u2014 named universe from public data: cap = price x shares (yfinance, FX to USD), free-float estimated from holder filings, ADV 60d; membership rolled forward from official review results (never assumed)",
+    "detail": "16 named boundary stocks (9 members near the deletion floor, 7 candidates near the add bar); market body below the boundary is modeled, not fetched \u2014 see next stage"
+   },
+   {
     "stage": "S0 universe",
     "n": 516,
     "rule": "count-anchored: real named stocks + synthetic tail pinned to the published constituent count (L0)",
-    "detail": "16 real named + 500 tail; 83 members"
+    "detail": "16 real named + 500 tail; 77 members"
    },
    {
     "stage": "S1 eligible",
@@ -113,6 +297,152 @@
     "n": 0,
     "rule": "Laplace-shrunk probabilities from the graded record (L8)",
     "detail": "0 calls at the OBSERVABLE margin \u2014 blind band below the named floor is declared, not denied"
+   }
+  ],
+  "journeys": [
+   {
+    "ticker": "2330.TW",
+    "role": "member",
+    "cap_usd_b": 1846.33,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 771.86,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "2454.TW",
+    "role": "member",
+    "cap_usd_b": 188.68,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 78.88,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "2308.TW",
+    "role": "member",
+    "cap_usd_b": 128.81,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 53.85,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "2317.TW",
+    "role": "member",
+    "cap_usd_b": 104.6,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 43.73,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "6223.TWO",
+    "role": "member",
+    "cap_usd_b": 17.73,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 7.41,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "1326.TW",
+    "role": "member",
+    "cap_usd_b": 10.36,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 4.33,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "2002.TW",
+    "role": "member",
+    "cap_usd_b": 8.79,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 3.68,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "2207.TW",
+    "role": "member",
+    "cap_usd_b": 8.5,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 3.55,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "1101.TW",
+    "role": "member",
+    "cap_usd_b": 5.25,
+    "threshold": "hard 0.5x floor $2.4B",
+    "x_threshold": 2.19,
+    "status": "SAFE \u2014 comfortably above the floor",
+    "final": "no call"
+   },
+   {
+    "ticker": "2324.TW",
+    "role": "non-member",
+    "cap_usd_b": 4.85,
+    "threshold": "add bar $8.6B",
+    "x_threshold": 0.56,
+    "status": "NOT CLOSE \u2014 below the add bar",
+    "final": "no call"
+   },
+   {
+    "ticker": "1504.TW",
+    "role": "non-member",
+    "cap_usd_b": 4.59,
+    "threshold": "add bar $8.6B",
+    "x_threshold": 0.53,
+    "status": "NOT CLOSE \u2014 below the add bar",
+    "final": "no call"
+   },
+   {
+    "ticker": "2633.TW",
+    "role": "non-member",
+    "cap_usd_b": 4.27,
+    "threshold": "add bar $8.6B",
+    "x_threshold": 0.5,
+    "status": "NOT CLOSE \u2014 below the add bar",
+    "final": "no call"
+   },
+   {
+    "ticker": "1402.TW",
+    "role": "non-member",
+    "cap_usd_b": 4.26,
+    "threshold": "add bar $8.6B",
+    "x_threshold": 0.5,
+    "status": "NOT CLOSE \u2014 below the add bar",
+    "final": "no call"
+   },
+   {
+    "ticker": "2610.TW",
+    "role": "non-member",
+    "cap_usd_b": 4.04,
+    "threshold": "add bar $8.6B",
+    "x_threshold": 0.47,
+    "status": "NOT CLOSE \u2014 below the add bar",
+    "final": "no call"
+   },
+   {
+    "ticker": "1102.TW",
+    "role": "non-member",
+    "cap_usd_b": 3.3,
+    "threshold": "add bar $8.6B",
+    "x_threshold": 0.38,
+    "status": "NOT CLOSE \u2014 below the add bar",
+    "final": "no call"
+   },
+   {
+    "ticker": "2474.TW",
+    "role": "non-member",
+    "cap_usd_b": 2.9,
+    "threshold": "add bar $8.6B",
+    "x_threshold": 0.34,
+    "status": "NOT CLOSE \u2014 below the add bar",
+    "final": "no call"
    }
   ]
  }

@@ -1,0 +1,301 @@
+{
+ "market": "Taiwan",
+ "generated": "2026-08-05",
+ "n_members_priced": 77,
+ "coverage": "77/79 members priced",
+ "gmsr_usd_b": 6.47,
+ "pool_cutoff": "< 1.15x GMSR ($7.44B)",
+ "delete_pool": [
+  {
+   "code": "6919",
+   "tier": "CONFIRMED",
+   "cap_usd": 4935128879.384615,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8533,
+   "src": "vintage cache",
+   "x_gmsr": 0.76
+  },
+  {
+   "code": "2834",
+   "tier": "CONFIRMED",
+   "cap_usd": 5442114635.44,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8148000000000001,
+   "src": "vintage cache",
+   "x_gmsr": 0.84
+  },
+  {
+   "code": "2609",
+   "tier": "CONFIRMED",
+   "cap_usd": 5458427597.415384,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.29610000000000003,
+   "src": "vintage cache",
+   "x_gmsr": 0.84
+  },
+  {
+   "code": "1101",
+   "tier": "CONFIRMED",
+   "cap_usd": 5625025117.864615,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8554999999999999,
+   "src": "vintage cache",
+   "x_gmsr": 0.87
+  },
+  {
+   "code": "3529",
+   "tier": "CONFIRMED",
+   "cap_usd": 5687663621.538462,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.33159999999999995,
+   "src": "vintage cache",
+   "x_gmsr": 0.88
+  },
+  {
+   "code": "5871",
+   "tier": "CONFIRMED",
+   "cap_usd": 5871491060.046154,
+   "asof": "2026-08-04",
+   "foreign_room_frac": 0.5465,
+   "src": "FinMind live",
+   "x_gmsr": 0.91
+  },
+  {
+   "code": "3533",
+   "tier": "CONFIRMED",
+   "cap_usd": 6423133901.692307,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.5021,
+   "src": "vintage cache",
+   "x_gmsr": 0.99
+  },
+  {
+   "code": "8069",
+   "tier": "CONFIRMED",
+   "cap_usd": 6713050612.153846,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.5829,
+   "src": "vintage cache",
+   "x_gmsr": 1.04
+  },
+  {
+   "code": "3293",
+   "tier": "CONFIRMED",
+   "cap_usd": 6728554171.076923,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.7563,
+   "src": "vintage cache",
+   "x_gmsr": 1.04
+  },
+  {
+   "code": "5876",
+   "tier": "CONFIRMED",
+   "cap_usd": 6798765006.553846,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.45770000000000005,
+   "src": "vintage cache",
+   "x_gmsr": 1.05
+  },
+  {
+   "code": "1519",
+   "tier": "CONFIRMED",
+   "cap_usd": 6852184462.153846,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8142,
+   "src": "vintage cache",
+   "x_gmsr": 1.06
+  },
+  {
+   "code": "2376",
+   "tier": "CONFIRMED",
+   "cap_usd": 6935926465.815385,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8027,
+   "src": "vintage cache",
+   "x_gmsr": 1.07
+  },
+  {
+   "code": "2912",
+   "tier": "CONFIRMED",
+   "cap_usd": 7085425522.538462,
+   "asof": "2026-08-04",
+   "foreign_room_frac": 0.8623999999999999,
+   "src": "FinMind live",
+   "x_gmsr": 1.1
+  },
+  {
+   "code": "2618",
+   "tier": "CONFIRMED",
+   "cap_usd": 7195053529.399999,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.19410000000000005,
+   "src": "vintage cache",
+   "x_gmsr": 1.11
+  },
+  {
+   "code": "2356",
+   "tier": "CONFIRMED",
+   "cap_usd": 7285333980.184615,
+   "asof": "2026-08-04",
+   "foreign_room_frac": 0.8203999999999999,
+   "src": "FinMind live",
+   "x_gmsr": 1.13
+  },
+  {
+   "code": "4938",
+   "tier": "CONFIRMED",
+   "cap_usd": 7295159960.160001,
+   "asof": "2026-08-04",
+   "foreign_room_frac": 0.6909000000000001,
+   "src": "FinMind live",
+   "x_gmsr": 1.13
+  },
+  {
+   "code": "2615",
+   "tier": "CONFIRMED",
+   "cap_usd": 7313248954.372308,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.05380000000000003,
+   "src": "vintage cache",
+   "x_gmsr": 1.13
+  }
+ ],
+ "note": "SHADOW engine (book-mechanism ladder, validated May-26 exact bottom-7 + Nov-25 7/7); legacy engine remains the locked Aug-26 call. GMSR CAVEAT (stated, not hidden): this walk runs on members + modeled tail with default 0.7 floats and NO real non-member caps, so its GMSR sits ABOVE the boundary frame's ($6.5B vs $4.8B) \u2014 errs INCLUSIVE, widening the pool (the safe direction for a pool; wrong direction for calls, which is why this stays shadow). Reconciliation queued: walk on the union universe with real floats.",
+ "ladder_bottom": [
+  {
+   "code": "6919",
+   "tier": "CONFIRMED",
+   "cap_usd": 4935128879.384615,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8533,
+   "src": "vintage cache",
+   "x_gmsr": 0.76
+  },
+  {
+   "code": "2834",
+   "tier": "CONFIRMED",
+   "cap_usd": 5442114635.44,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8148000000000001,
+   "src": "vintage cache",
+   "x_gmsr": 0.84
+  },
+  {
+   "code": "2609",
+   "tier": "CONFIRMED",
+   "cap_usd": 5458427597.415384,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.29610000000000003,
+   "src": "vintage cache",
+   "x_gmsr": 0.84
+  },
+  {
+   "code": "1101",
+   "tier": "CONFIRMED",
+   "cap_usd": 5625025117.864615,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8554999999999999,
+   "src": "vintage cache",
+   "x_gmsr": 0.87
+  },
+  {
+   "code": "3529",
+   "tier": "CONFIRMED",
+   "cap_usd": 5687663621.538462,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.33159999999999995,
+   "src": "vintage cache",
+   "x_gmsr": 0.88
+  },
+  {
+   "code": "5871",
+   "tier": "CONFIRMED",
+   "cap_usd": 5871491060.046154,
+   "asof": "2026-08-04",
+   "foreign_room_frac": 0.5465,
+   "src": "FinMind live",
+   "x_gmsr": 0.91
+  },
+  {
+   "code": "3533",
+   "tier": "CONFIRMED",
+   "cap_usd": 6423133901.692307,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.5021,
+   "src": "vintage cache",
+   "x_gmsr": 0.99
+  },
+  {
+   "code": "8069",
+   "tier": "CONFIRMED",
+   "cap_usd": 6713050612.153846,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.5829,
+   "src": "vintage cache",
+   "x_gmsr": 1.04
+  },
+  {
+   "code": "3293",
+   "tier": "CONFIRMED",
+   "cap_usd": 6728554171.076923,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.7563,
+   "src": "vintage cache",
+   "x_gmsr": 1.04
+  },
+  {
+   "code": "5876",
+   "tier": "CONFIRMED",
+   "cap_usd": 6798765006.553846,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.45770000000000005,
+   "src": "vintage cache",
+   "x_gmsr": 1.05
+  },
+  {
+   "code": "1519",
+   "tier": "CONFIRMED",
+   "cap_usd": 6852184462.153846,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8142,
+   "src": "vintage cache",
+   "x_gmsr": 1.06
+  },
+  {
+   "code": "2376",
+   "tier": "CONFIRMED",
+   "cap_usd": 6935926465.815385,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.8027,
+   "src": "vintage cache",
+   "x_gmsr": 1.07
+  },
+  {
+   "code": "2912",
+   "tier": "CONFIRMED",
+   "cap_usd": 7085425522.538462,
+   "asof": "2026-08-04",
+   "foreign_room_frac": 0.8623999999999999,
+   "src": "FinMind live",
+   "x_gmsr": 1.1
+  },
+  {
+   "code": "2618",
+   "tier": "CONFIRMED",
+   "cap_usd": 7195053529.399999,
+   "asof": "2026-07-31",
+   "foreign_room_frac": 0.19410000000000005,
+   "src": "vintage cache",
+   "x_gmsr": 1.11
+  },
+  {
+   "code": "2356",
+   "tier": "CONFIRMED",
+   "cap_usd": 7285333980.184615,
+   "asof": "2026-08-04",
+   "foreign_room_frac": 0.8203999999999999,
+   "src": "FinMind live",
+   "x_gmsr": 1.13
+  }
+ ]
+}

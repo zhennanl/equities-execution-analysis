@@ -17,7 +17,12 @@ st.set_page_config(page_title="Execution Analytics Platform",
 
 st.sidebar.title("Execution Analytics")
 st.sidebar.markdown("---")
-page = st.sidebar.radio("Module", [
+# TEMPORARY (2026-08-04, user request): only the Rebalance Trade
+# Lifecycle module is shown while it is being built out. Set
+# SHOW_ALL_MODULES = True to restore the full sidebar — nothing
+# else was removed.
+SHOW_ALL_MODULES = False
+_ALL_PAGES = [
     "⭐ Index Rebalance Desk Brief",
     "🚀 Guided Demo (start here)",
     "📈 Execution Algorithm Simulator",
@@ -26,7 +31,10 @@ page = st.sidebar.radio("Module", [
     "🧺 Program Trading Desk",
     "📋 Quarterly Client Review",
     "🛡️ Reg-Watch",
-])
+]
+_VISIBLE = (_ALL_PAGES if SHOW_ALL_MODULES
+            else ["🔁 Rebalance Trade Lifecycle"])
+page = st.sidebar.radio("Module", _VISIBLE)
 
 st.sidebar.markdown("---")
 with st.sidebar.expander("ℹ️ Data Sources & Limitations"):

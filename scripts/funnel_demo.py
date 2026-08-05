@@ -29,7 +29,8 @@ sys.path.insert(0, str(ROOT))
 import pandas as pd                                    # noqa: E402
 
 from agents.review_engine import build_calls, screen_market  # noqa: E402
-from agents.review_funnel import funnel_stages, validate_against_key  # noqa: E402
+from agents.review_funnel import (STAGE_METHOD, funnel_stages,  # noqa: E402
+                                  name_journeys, validate_against_key)
 
 OUT = ROOT / "data" / "funnel_tw.json"
 DOC = ROOT / "docs" / "case_studies" / "TW_FUNNEL.md"
@@ -74,16 +75,27 @@ def main():
     grade = validate_against_key(c1, MAY26_ADDS, MAY26_DELS, names)
     # ---- 2. prediction: Aug-26 QIR on refreshed caps
     u_aug = post_may_universe("Taiwan")
+    # c-33c: post-May member count = 83 - 7 + 1 = 77, confirmed
+    # UNANIMOUSLY by three funds / two managers (EWT, EEM-TW,
+    # Yuanta 006203 — tw_membership_sources.json). The old 83 was
+    # the PRE-May factsheet.
     s2, c2 = run(u_aug, "QIR",
                  recent_dels=set(ACTUAL["Taiwan"]["dels"]),
-                 recent_adds=set(ACTUAL["Taiwan"]["adds"]))
+                 recent_adds=set(ACTUAL["Taiwan"]["adds"]),
+                 member_count=77)
     f2 = funnel_stages(s2, c2, "QIR")
+    j1 = name_journeys(s1, c1, "SAIR",
+                       official={"adds": MAY26_ADDS,
+                                 "dels": MAY26_DELS})
+    j2 = name_journeys(s2, c2, "QIR")
     payload = {
+        "methods": STAGE_METHOD,
         "validation": {"event": "MSCI May-2026 SAIR (April PIT "
                        "universe, graded vs official key)",
-                       "stages": f1, "grade": grade},
+                       "stages": f1, "grade": grade,
+                       "journeys": j1},
         "prediction": {"event": "MSCI Aug-2026 QIR (caps refreshed "
-                       "to current)", "stages": f2},
+                       "to current)", "stages": f2, "journeys": j2},
     }
     OUT.write_text(json.dumps(payload, indent=1))
     for tag, f in (("VALIDATION May-26", f1), ("PREDICTION Aug-26",
@@ -113,6 +125,17 @@ def main():
             L.append(f"| {st['stage']} | {st['n']} | {st['rule']} "
                      f"| {st['detail']} |")
         L.append("")
+        L.append("### Name journeys (the shortlist at every stage)\n")
+        ks = list(blob["journeys"][0].keys())
+        L.append("| " + " | ".join(ks) + " |")
+        L.append("|" + "---|" * len(ks))
+        for r in blob["journeys"]:
+            L.append("| " + " | ".join(str(r[k]) for k in ks) + " |")
+        L.append("")
+    L.append("## Selection method per stage (GIMI May-2026 book "
+             "citations)\n")
+    for k, v in STAGE_METHOD.items():
+        L.append(f"- **{k}** — {v}")
     g = grade
     L += ["## Validation grade (May-26, vs official key)\n",
           f"- Deletions hit (visible): {g['dels_hit']}",
