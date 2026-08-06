@@ -1,0 +1,740 @@
+{
+ "asof_tdcc": "2026-07-31",
+ "recipe": "float = 1 - max(bracket15_share - foreign_share, 0); bracket15 = TDCC holders >1M shares (strategic + domestic-institutional proxy); foreign assumed float; v1 stated limits: domestic funds/ETFs/insurance in bracket 15 bias float DOWN for mega-caps",
+ "rows": [
+  {
+   "code": "2330",
+   "company": "TAIWAN SEMICONDUCTOR MAN",
+   "b15": 0.846,
+   "foreign": 0.692,
+   "float_tdcc": 0.846,
+   "float_old": 0.912,
+   "cap_usd_b": 1934.95
+  },
+  {
+   "code": "2454",
+   "company": "MEDIATEK",
+   "b15": 0.641,
+   "foreign": 0.551,
+   "float_tdcc": 0.91,
+   "float_old": 0.879,
+   "cap_usd_b": 175.44
+  },
+  {
+   "code": "2308",
+   "company": "DELTA ELECTRONICS",
+   "b15": 0.741,
+   "foreign": 0.623,
+   "float_tdcc": 0.882,
+   "float_old": 0.604,
+   "cap_usd_b": 131.08
+  },
+  {
+   "code": "2317",
+   "company": "HON HAI PRECISION INDUST",
+   "b15": 0.662,
+   "foreign": 0.402,
+   "float_tdcc": 0.74,
+   "float_old": 0.861,
+   "cap_usd_b": 108.13
+  },
+  {
+   "code": "3711",
+   "company": "ASE TECHNOLOGY HOLDING",
+   "b15": 0.813,
+   "foreign": 0.767,
+   "float_tdcc": 0.954,
+   "float_old": 0.7,
+   "cap_usd_b": 76.34
+  },
+  {
+   "code": "2881",
+   "company": "FUBON FINANCIAL HOLDING",
+   "b15": 0.842,
+   "foreign": 0.184,
+   "float_tdcc": 0.342,
+   "float_old": 0.7,
+   "cap_usd_b": 56.03
+  },
+  {
+   "code": "2383",
+   "company": "ELITE MATERIAL",
+   "b15": 0.582,
+   "foreign": 0.431,
+   "float_tdcc": 0.849,
+   "float_old": 0.7,
+   "cap_usd_b": 52.31
+  },
+  {
+   "code": "2303",
+   "company": "UNITED MICRO ELECTRONICS",
+   "b15": 0.723,
+   "foreign": 0.413,
+   "float_tdcc": 0.69,
+   "float_old": 0.7,
+   "cap_usd_b": 46.83
+  },
+  {
+   "code": "2882",
+   "company": "CATHAY FINANCIAL HOLDING",
+   "b15": 0.831,
+   "foreign": 0.231,
+   "float_tdcc": 0.4,
+   "float_old": 0.7,
+   "cap_usd_b": 45.81
+  },
+  {
+   "code": "3037",
+   "company": "UNIMICRON TECHNOLOGY",
+   "b15": 0.669,
+   "foreign": 0.359,
+   "float_tdcc": 0.69,
+   "float_old": 0.7,
+   "cap_usd_b": 39.75
+  },
+  {
+   "code": "2891",
+   "company": "CTBC FINANCIAL HOLDING",
+   "b15": 0.789,
+   "foreign": 0.348,
+   "float_tdcc": 0.558,
+   "float_old": 0.7,
+   "cap_usd_b": 39.29
+  },
+  {
+   "code": "1303",
+   "company": "NAN YA PLASTICS CORP",
+   "b15": 0.838,
+   "foreign": 0.323,
+   "float_tdcc": 0.485,
+   "float_old": 0.7,
+   "cap_usd_b": 38.92
+  },
+  {
+   "code": "2345",
+   "company": "ACCTON TECHNOLOGY",
+   "b15": 0.575,
+   "foreign": 0.576,
+   "float_tdcc": 1.0,
+   "float_old": 0.7,
+   "cap_usd_b": 36.69
+  },
+  {
+   "code": "2382",
+   "company": "QUANTA COMPUTER INC",
+   "b15": 0.804,
+   "foreign": 0.191,
+   "float_tdcc": 0.387,
+   "float_old": 0.7,
+   "cap_usd_b": 34.64
+  },
+  {
+   "code": "7769",
+   "company": "HONPRECISION INC",
+   "b15": 0.575,
+   "foreign": 0.193,
+   "float_tdcc": 0.618,
+   "float_old": 0.7,
+   "cap_usd_b": 34.21
+  },
+  {
+   "code": "2412",
+   "company": "CHUNGHWA TELECOM LTD",
+   "b15": 0.777,
+   "foreign": 0.174,
+   "float_tdcc": 0.397,
+   "float_old": 0.7,
+   "cap_usd_b": 33.3
+  },
+  {
+   "code": "2327",
+   "company": "YAGEO",
+   "b15": 0.666,
+   "foreign": 0.483,
+   "float_tdcc": 0.817,
+   "float_old": 0.7,
+   "cap_usd_b": 32.0
+  },
+  {
+   "code": "6669",
+   "company": "WIWYNN CORPORATION",
+   "b15": 0.531,
+   "foreign": 0.28,
+   "float_tdcc": 0.749,
+   "float_old": 0.7,
+   "cap_usd_b": 30.82
+  },
+  {
+   "code": "3017",
+   "company": "ASIA VITAL COMPONENTS",
+   "b15": 0.523,
+   "foreign": 0.522,
+   "float_tdcc": 0.999,
+   "float_old": 0.7,
+   "cap_usd_b": 28.02
+  },
+  {
+   "code": "2885",
+   "company": "YUANTA FINANCIAL HOLDING",
+   "b15": 0.803,
+   "foreign": 0.269,
+   "float_tdcc": 0.467,
+   "float_old": 0.7,
+   "cap_usd_b": 27.93
+  },
+  {
+   "code": "2887",
+   "company": "TS FINANCIAL HOLDING LTD",
+   "b15": 0.708,
+   "foreign": 0.231,
+   "float_tdcc": 0.523,
+   "float_old": 0.7,
+   "cap_usd_b": 27.51
+  },
+  {
+   "code": "2360",
+   "company": "CHROMA ATE INC",
+   "b15": 0.538,
+   "foreign": 0.578,
+   "float_tdcc": 1.0,
+   "float_old": 0.7,
+   "cap_usd_b": 27.48
+  },
+  {
+   "code": "2886",
+   "company": "MEGA FINANCIAL HOLDING L",
+   "b15": 0.82,
+   "foreign": 0.193,
+   "float_tdcc": 0.373,
+   "float_old": 0.7,
+   "cap_usd_b": 24.24
+  },
+  {
+   "code": "2059",
+   "company": "KING SLIDE WORKS",
+   "b15": 0.56,
+   "foreign": 0.238,
+   "float_tdcc": 0.678,
+   "float_old": 0.7,
+   "cap_usd_b": 23.02
+  },
+  {
+   "code": "2884",
+   "company": "E.SUN FINANCIAL HOLDING",
+   "b15": 0.69,
+   "foreign": 0.32,
+   "float_tdcc": 0.631,
+   "float_old": 0.7,
+   "cap_usd_b": 19.26
+  },
+  {
+   "code": "2880",
+   "company": "HUA NAN FINANCIAL HOLDIN",
+   "b15": 0.796,
+   "foreign": 0.142,
+   "float_tdcc": 0.346,
+   "float_old": 0.7,
+   "cap_usd_b": 18.71
+  },
+  {
+   "code": "2357",
+   "company": "ASUSTEK COMPUTER INC",
+   "b15": 0.628,
+   "foreign": 0.371,
+   "float_tdcc": 0.744,
+   "float_old": 0.7,
+   "cap_usd_b": 18.51
+  },
+  {
+   "code": "2890",
+   "company": "SINOPAC FINANCIAL HOLDIN",
+   "b15": 0.777,
+   "foreign": 0.293,
+   "float_tdcc": 0.516,
+   "float_old": 0.7,
+   "cap_usd_b": 18.12
+  },
+  {
+   "code": "2883",
+   "company": "KGI FINANCIAL HOLDING",
+   "b15": 0.642,
+   "foreign": 0.265,
+   "float_tdcc": 0.622,
+   "float_old": 0.7,
+   "cap_usd_b": 17.61
+  },
+  {
+   "code": "3231",
+   "company": "WISTRON",
+   "b15": 0.621,
+   "foreign": 0.318,
+   "float_tdcc": 0.697,
+   "float_old": 0.7,
+   "cap_usd_b": 17.22
+  },
+  {
+   "code": "5274",
+   "company": "ASPEED TECHNOLOGY",
+   "b15": 0.195,
+   "foreign": 0.529,
+   "float_tdcc": 1.0,
+   "float_old": 0.7,
+   "cap_usd_b": 16.89
+  },
+  {
+   "code": "2892",
+   "company": "FIRST FINANCIAL HOLDING ",
+   "b15": 0.679,
+   "foreign": 0.252,
+   "float_tdcc": 0.572,
+   "float_old": 0.7,
+   "cap_usd_b": 16.26
+  },
+  {
+   "code": "3008",
+   "company": "LARGAN PRECISION LTD",
+   "b15": 0.369,
+   "foreign": 0.287,
+   "float_tdcc": 0.918,
+   "float_old": 0.7,
+   "cap_usd_b": 16.24
+  },
+  {
+   "code": "6223",
+   "company": "MPI CORP",
+   "b15": 0.381,
+   "foreign": 0.285,
+   "float_tdcc": 0.904,
+   "float_old": 0.862,
+   "cap_usd_b": 15.92
+  },
+  {
+   "code": "3443",
+   "company": "GLOBAL UNICHIP",
+   "b15": 0.527,
+   "foreign": 0.257,
+   "float_tdcc": 0.73,
+   "float_old": 0.7,
+   "cap_usd_b": 15.69
+  },
+  {
+   "code": "3653",
+   "company": "JENTECH PRECISION INDUST",
+   "b15": 0.621,
+   "foreign": 0.256,
+   "float_tdcc": 0.635,
+   "float_old": 0.7,
+   "cap_usd_b": 15.55
+  },
+  {
+   "code": "2395",
+   "company": "ADVANTECH",
+   "b15": 0.78,
+   "foreign": 0.351,
+   "float_tdcc": 0.571,
+   "float_old": 0.7,
+   "cap_usd_b": 15.04
+  },
+  {
+   "code": "2301",
+   "company": "LITE ON TECHNOLOGY",
+   "b15": 0.734,
+   "foreign": 0.408,
+   "float_tdcc": 0.674,
+   "float_old": 0.7,
+   "cap_usd_b": 14.89
+  },
+  {
+   "code": "6446",
+   "company": "PHARMAESSENTIA",
+   "b15": 0.436,
+   "foreign": 0.25,
+   "float_tdcc": 0.814,
+   "float_old": 0.7,
+   "cap_usd_b": 13.78
+  },
+  {
+   "code": "4958",
+   "company": "ZHEN DING TECHNOLOGY HOL",
+   "b15": 0.667,
+   "foreign": 0.579,
+   "float_tdcc": 0.912,
+   "float_old": 0.7,
+   "cap_usd_b": 13.62
+  },
+  {
+   "code": "2603",
+   "company": "EVERGREEN MARINE CORP (T",
+   "b15": 0.669,
+   "foreign": 0.216,
+   "float_tdcc": 0.546,
+   "float_old": 0.7,
+   "cap_usd_b": 13.59
+  },
+  {
+   "code": "5880",
+   "company": "TAIWAN COOPERATIVE FINAN",
+   "b15": 0.707,
+   "foreign": 0.171,
+   "float_tdcc": 0.464,
+   "float_old": 0.7,
+   "cap_usd_b": 13.32
+  },
+  {
+   "code": "1216",
+   "company": "UNI-PRESIDENT ENTERPRISE",
+   "b15": 0.863,
+   "foreign": 0.315,
+   "float_tdcc": 0.452,
+   "float_old": 0.7,
+   "cap_usd_b": 12.9
+  },
+  {
+   "code": "3045",
+   "company": "TAIWAN MOBILE",
+   "b15": 0.902,
+   "foreign": 0.165,
+   "float_tdcc": 0.262,
+   "float_old": 0.7,
+   "cap_usd_b": 12.89
+  },
+  {
+   "code": "2368",
+   "company": "GOLD CIRCUIT ELECTRONICS",
+   "b15": 0.715,
+   "foreign": 0.296,
+   "float_tdcc": 0.581,
+   "float_old": 0.7,
+   "cap_usd_b": 12.62
+  },
+  {
+   "code": "3665",
+   "company": "BIZLINK HOLDING INC",
+   "b15": 0.436,
+   "foreign": 0.526,
+   "float_tdcc": 1.0,
+   "float_old": 0.7,
+   "cap_usd_b": 12.61
+  },
+  {
+   "code": "6488",
+   "company": "GLOBALWAFERS LTD",
+   "b15": 0.726,
+   "foreign": 0.298,
+   "float_tdcc": 0.572,
+   "float_old": 0.7,
+   "cap_usd_b": 12.58
+  },
+  {
+   "code": "4904",
+   "company": "FAR EASTONE TELECOMMUNIC",
+   "b15": 0.909,
+   "foreign": 0.193,
+   "float_tdcc": 0.284,
+   "float_old": 0.7,
+   "cap_usd_b": 11.66
+  },
+  {
+   "code": "3481",
+   "company": "INNOLUX CORP",
+   "b15": 0.337,
+   "foreign": 0.221,
+   "float_tdcc": 0.884,
+   "float_old": 0.7,
+   "cap_usd_b": 11.18
+  },
+  {
+   "code": "2379",
+   "company": "REALTEK SEMICONDUCTOR CO",
+   "b15": 0.592,
+   "foreign": 0.45,
+   "float_tdcc": 0.858,
+   "float_old": 0.7,
+   "cap_usd_b": 10.83
+  },
+  {
+   "code": "1301",
+   "company": "FORMOSA PLASTICS CORP",
+   "b15": 0.718,
+   "foreign": 0.335,
+   "float_tdcc": 0.617,
+   "float_old": 0.7,
+   "cap_usd_b": 10.77
+  },
+  {
+   "code": "1326",
+   "company": "FORMOSA CHEMICALS & FIBR",
+   "b15": 0.797,
+   "foreign": 0.376,
+   "float_tdcc": 0.58,
+   "float_old": 0.557,
+   "cap_usd_b": 10.35
+  },
+  {
+   "code": "3034",
+   "company": "NOVATEK MICROELECTRONICS",
+   "b15": 0.589,
+   "foreign": 0.411,
+   "float_tdcc": 0.821,
+   "float_old": 0.7,
+   "cap_usd_b": 9.72
+  },
+  {
+   "code": "2207",
+   "company": "HOTAI MOTOR LTD",
+   "b15": 0.83,
+   "foreign": 0.225,
+   "float_tdcc": 0.395,
+   "float_old": 0.507,
+   "cap_usd_b": 9.57
+  },
+  {
+   "code": "2002",
+   "company": "CHINA STEEL CORP",
+   "b15": 0.488,
+   "foreign": 0.144,
+   "float_tdcc": 0.656,
+   "float_old": 0.725,
+   "cap_usd_b": 9.17
+  },
+  {
+   "code": "2801",
+   "company": "CHANG HWA COMMERCIAL BAN",
+   "b15": 0.742,
+   "foreign": 0.173,
+   "float_tdcc": 0.431,
+   "float_old": 0.7,
+   "cap_usd_b": 9.12
+  },
+  {
+   "code": "5347",
+   "company": "VANGUARD INTERNATIONAL S",
+   "b15": 0.808,
+   "foreign": 0.302,
+   "float_tdcc": 0.494,
+   "float_old": 0.7,
+   "cap_usd_b": 8.76
+  },
+  {
+   "code": "2449",
+   "company": "KING YUAN ELECTRONICS",
+   "b15": 0.555,
+   "foreign": 0.304,
+   "float_tdcc": 0.749,
+   "float_old": 0.7,
+   "cap_usd_b": 8.41
+  },
+  {
+   "code": "1590",
+   "company": "AIRTAC INTERNATIONAL GRO",
+   "b15": 0.523,
+   "foreign": 0.806,
+   "float_tdcc": 1.0,
+   "float_old": 0.7,
+   "cap_usd_b": 8.15
+  },
+  {
+   "code": "3661",
+   "company": "ALCHIP TECHNOLOGIES LTD",
+   "b15": 0.158,
+   "foreign": 0.495,
+   "float_tdcc": 1.0,
+   "float_old": 0.7,
+   "cap_usd_b": 8.12
+  },
+  {
+   "code": "2615",
+   "company": "WAN HAI LINES",
+   "b15": 0.842,
+   "foreign": 0.446,
+   "float_tdcc": 0.604,
+   "float_old": 0.7,
+   "cap_usd_b": 7.31
+  },
+  {
+   "code": "2618",
+   "company": "EVA AIRWAYS",
+   "b15": 0.775,
+   "foreign": 0.306,
+   "float_tdcc": 0.53,
+   "float_old": 0.7,
+   "cap_usd_b": 7.2
+  },
+  {
+   "code": "2912",
+   "company": "PRESIDENT CHAIN STORE CO",
+   "b15": 0.809,
+   "foreign": 0.136,
+   "float_tdcc": 0.327,
+   "float_old": 0.7,
+   "cap_usd_b": 7.17
+  },
+  {
+   "code": "4938",
+   "company": "PEGATRON",
+   "b15": 0.738,
+   "foreign": 0.304,
+   "float_tdcc": 0.566,
+   "float_old": 0.7,
+   "cap_usd_b": 6.97
+  },
+  {
+   "code": "2376",
+   "company": "GIGABYTE TECHNOLOGY LTD",
+   "b15": 0.638,
+   "foreign": 0.197,
+   "float_tdcc": 0.56,
+   "float_old": 0.7,
+   "cap_usd_b": 6.94
+  },
+  {
+   "code": "1519",
+   "company": "FORTUNE ELECTRIC",
+   "b15": 0.653,
+   "foreign": 0.186,
+   "float_tdcc": 0.533,
+   "float_old": 0.7,
+   "cap_usd_b": 6.85
+  },
+  {
+   "code": "2356",
+   "company": "INVENTEC",
+   "b15": 0.698,
+   "foreign": 0.174,
+   "float_tdcc": 0.475,
+   "float_old": 0.7,
+   "cap_usd_b": 6.82
+  },
+  {
+   "code": "5876",
+   "company": "SHANGHAI COMMERCIAL",
+   "b15": 0.827,
+   "foreign": 0.542,
+   "float_tdcc": 0.715,
+   "float_old": 0.7,
+   "cap_usd_b": 6.8
+  },
+  {
+   "code": "3293",
+   "company": "INTERNATIONAL GAMES SYST",
+   "b15": 0.455,
+   "foreign": 0.244,
+   "float_tdcc": 0.789,
+   "float_old": 0.7,
+   "cap_usd_b": 6.73
+  },
+  {
+   "code": "8069",
+   "company": "E INK HOLDINGS",
+   "b15": 0.687,
+   "foreign": 0.417,
+   "float_tdcc": 0.731,
+   "float_old": 0.7,
+   "cap_usd_b": 6.71
+  },
+  {
+   "code": "3533",
+   "company": "LOTES",
+   "b15": 0.451,
+   "foreign": 0.498,
+   "float_tdcc": 1.0,
+   "float_old": 0.7,
+   "cap_usd_b": 6.42
+  },
+  {
+   "code": "5871",
+   "company": "CHAILEASE HOLDING LTD",
+   "b15": 0.652,
+   "foreign": 0.451,
+   "float_tdcc": 0.799,
+   "float_old": 0.7,
+   "cap_usd_b": 5.87
+  },
+  {
+   "code": "3529",
+   "company": "EMEMORY TECHNOLOGY INC",
+   "b15": 0.301,
+   "foreign": 0.668,
+   "float_tdcc": 1.0,
+   "float_old": 0.7,
+   "cap_usd_b": 5.69
+  },
+  {
+   "code": "1101",
+   "company": "TAIWAN CEMENT",
+   "b15": 0.519,
+   "foreign": 0.144,
+   "float_tdcc": 0.625,
+   "float_old": 0.861,
+   "cap_usd_b": 5.63
+  },
+  {
+   "code": "2609",
+   "company": "YANG MING MARINE TRANSPO",
+   "b15": 0.543,
+   "foreign": 0.204,
+   "float_tdcc": 0.66,
+   "float_old": 0.7,
+   "cap_usd_b": 5.46
+  },
+  {
+   "code": "2834",
+   "company": "TAIWAN BUSINESS BANK LTD",
+   "b15": 0.555,
+   "foreign": 0.185,
+   "float_tdcc": 0.63,
+   "float_old": 0.7,
+   "cap_usd_b": 5.44
+  },
+  {
+   "code": "6919",
+   "company": "CALIWAY BIOPHARMACEUTICA",
+   "b15": 0.677,
+   "foreign": 0.147,
+   "float_tdcc": 0.47,
+   "float_old": 0.7,
+   "cap_usd_b": 4.94
+  }
+ ],
+ "grading": {
+  "vs_msci_fifs": {
+   "2330": {
+    "tdcc": 0.846,
+    "msci": 0.955
+   },
+   "2454": {
+    "tdcc": 0.91,
+    "msci": 0.905
+   },
+   "2308": {
+    "tdcc": 0.882,
+    "msci": 0.754
+   },
+   "3711": {
+    "tdcc": 0.954,
+    "msci": 0.75
+   },
+   "2383": {
+    "tdcc": 0.849,
+    "msci": 0.805
+   },
+   "2881": {
+    "tdcc": 0.342,
+    "msci": 0.603
+   },
+   "2891": {
+    "tdcc": 0.558,
+    "msci": 0.855
+   },
+   "2345": {
+    "tdcc": 1.0,
+    "msci": 0.905
+   }
+  },
+  "mean_abs_err_tdcc": 0.143,
+  "mean_abs_err_old": 0.104,
+  "residual67_tdcc_busd": 670.0,
+  "residual67_old_busd": 719.0,
+  "residual67_target_busd": 739.8
+ }
+}

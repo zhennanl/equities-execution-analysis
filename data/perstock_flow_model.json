@@ -1,0 +1,625 @@
+{
+ "n": 77,
+ "lambda_passive_ratio": 0.093,
+ "corr_log": 0.671,
+ "mae_const16": 12.1,
+ "mae_perstock": 7.8,
+ "rows": [
+  {
+   "season": "May15",
+   "code": "2362",
+   "float_days": 594.52,
+   "t_mult": 50.3,
+   "pred_perstock": 55.29,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May15",
+   "code": "2903",
+   "float_days": 372.22,
+   "t_mult": 29.0,
+   "pred_perstock": 34.62,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May15",
+   "code": "5522",
+   "float_days": 326.85,
+   "t_mult": 27.7,
+   "pred_perstock": 30.4,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May15",
+   "code": "2707",
+   "float_days": 857.98,
+   "t_mult": 40.4,
+   "pred_perstock": 79.79,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May15",
+   "code": "1789",
+   "float_days": 500.6,
+   "t_mult": 23.3,
+   "pred_perstock": 46.55,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May15",
+   "code": "3037",
+   "float_days": 203.84,
+   "t_mult": 17.7,
+   "pred_perstock": 18.96,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May15",
+   "code": "1605",
+   "float_days": 382.11,
+   "t_mult": 38.7,
+   "pred_perstock": 35.54,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "2204",
+   "float_days": 634.67,
+   "t_mult": 36.4,
+   "pred_perstock": 59.02,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "9933",
+   "float_days": 370.02,
+   "t_mult": 35.3,
+   "pred_perstock": 34.41,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "2448",
+   "float_days": 51.12,
+   "t_mult": 7.5,
+   "pred_perstock": 4.75,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "3189",
+   "float_days": 95.47,
+   "t_mult": 11.7,
+   "pred_perstock": 8.88,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "1802",
+   "float_days": 1031.59,
+   "t_mult": 45.9,
+   "pred_perstock": 95.94,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "3673",
+   "float_days": 13.06,
+   "t_mult": 1.9,
+   "pred_perstock": 1.21,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "2606",
+   "float_days": 626.73,
+   "t_mult": 49.0,
+   "pred_perstock": 58.28,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "2615",
+   "float_days": 357.54,
+   "t_mult": 15.6,
+   "pred_perstock": 33.25,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov15",
+   "code": "2609",
+   "float_days": 340.33,
+   "t_mult": 19.7,
+   "pred_perstock": 31.65,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May16",
+   "code": "6176",
+   "float_days": 57.08,
+   "t_mult": 9.1,
+   "pred_perstock": 5.31,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov16",
+   "code": "6121",
+   "float_days": 239.12,
+   "t_mult": 27.4,
+   "pred_perstock": 22.24,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May17",
+   "code": "5264",
+   "float_days": 172.14,
+   "t_mult": 14.2,
+   "pred_perstock": 16.01,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Aug17",
+   "code": "4174",
+   "float_days": 127.73,
+   "t_mult": 14.3,
+   "pred_perstock": 11.88,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov17",
+   "code": "9914",
+   "float_days": 371.28,
+   "t_mult": 35.2,
+   "pred_perstock": 34.53,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov17",
+   "code": "1722",
+   "float_days": 455.33,
+   "t_mult": 44.9,
+   "pred_perstock": 42.35,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov17",
+   "code": "2451",
+   "float_days": 489.9,
+   "t_mult": 40.2,
+   "pred_perstock": 45.56,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov17",
+   "code": "2201",
+   "float_days": 718.97,
+   "t_mult": 52.1,
+   "pred_perstock": 66.86,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May18",
+   "code": "3682",
+   "float_days": 904.39,
+   "t_mult": 55.5,
+   "pred_perstock": 84.11,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov18",
+   "code": "6456",
+   "float_days": 32.97,
+   "t_mult": 4.9,
+   "pred_perstock": 3.07,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov18",
+   "code": "2498",
+   "float_days": 96.09,
+   "t_mult": 15.1,
+   "pred_perstock": 8.94,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov18",
+   "code": "2337",
+   "float_days": 50.56,
+   "t_mult": 6.3,
+   "pred_perstock": 4.7,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov18",
+   "code": "1504",
+   "float_days": 402.36,
+   "t_mult": 52.4,
+   "pred_perstock": 37.42,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov19",
+   "code": "4147",
+   "float_days": 256.36,
+   "t_mult": 21.6,
+   "pred_perstock": 23.84,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May20",
+   "code": "2915",
+   "float_days": 223.61,
+   "t_mult": 22.3,
+   "pred_perstock": 20.8,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Aug20",
+   "code": "2610",
+   "float_days": 292.57,
+   "t_mult": 26.5,
+   "pred_perstock": 27.21,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Aug20",
+   "code": "2371",
+   "float_days": 337.05,
+   "t_mult": 1.0,
+   "pred_perstock": 31.35,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov20",
+   "code": "2618",
+   "float_days": 310.94,
+   "t_mult": 23.2,
+   "pred_perstock": 28.92,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov20",
+   "code": "1434",
+   "float_days": 433.62,
+   "t_mult": 29.9,
+   "pred_perstock": 40.33,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb21",
+   "code": "1227",
+   "float_days": 293.72,
+   "t_mult": 24.1,
+   "pred_perstock": 27.32,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May21",
+   "code": "2385",
+   "float_days": 149.06,
+   "t_mult": 22.0,
+   "pred_perstock": 13.86,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May21",
+   "code": "2542",
+   "float_days": 257.67,
+   "t_mult": 21.0,
+   "pred_perstock": 23.96,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Aug21",
+   "code": "2834",
+   "float_days": 432.01,
+   "t_mult": 37.9,
+   "pred_perstock": 40.18,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov21",
+   "code": "8299",
+   "float_days": 93.0,
+   "t_mult": 10.5,
+   "pred_perstock": 8.65,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov21",
+   "code": "3296",
+   "float_days": 190.44,
+   "t_mult": 1.8,
+   "pred_perstock": 17.71,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov21",
+   "code": "2492",
+   "float_days": 128.04,
+   "t_mult": 12.5,
+   "pred_perstock": 11.91,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb22",
+   "code": "3231",
+   "float_days": 336.18,
+   "t_mult": 4.8,
+   "pred_perstock": 31.26,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May22",
+   "code": "2354",
+   "float_days": 357.16,
+   "t_mult": 35.5,
+   "pred_perstock": 33.22,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May22",
+   "code": "2049",
+   "float_days": 158.48,
+   "t_mult": 22.3,
+   "pred_perstock": 14.74,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May22",
+   "code": "4743",
+   "float_days": 143.83,
+   "t_mult": 13.0,
+   "pred_perstock": 13.38,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov22",
+   "code": "5269",
+   "float_days": 67.27,
+   "t_mult": 4.5,
+   "pred_perstock": 6.26,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Aug23",
+   "code": "3105",
+   "float_days": 66.74,
+   "t_mult": 7.8,
+   "pred_perstock": 6.21,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov23",
+   "code": "9921",
+   "float_days": 219.21,
+   "t_mult": 26.2,
+   "pred_perstock": 20.39,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb24",
+   "code": "8454",
+   "float_days": 319.72,
+   "t_mult": 21.8,
+   "pred_perstock": 29.73,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May24",
+   "code": "8046",
+   "float_days": 102.85,
+   "t_mult": 10.2,
+   "pred_perstock": 9.56,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May24",
+   "code": "4966",
+   "float_days": 42.5,
+   "t_mult": 6.1,
+   "pred_perstock": 3.95,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May24",
+   "code": "6770",
+   "float_days": 203.23,
+   "t_mult": 18.9,
+   "pred_perstock": 18.9,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Aug24",
+   "code": "6505",
+   "float_days": 257.67,
+   "t_mult": 27.7,
+   "pred_perstock": 23.96,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov24",
+   "code": "2344",
+   "float_days": 152.61,
+   "t_mult": 1.2,
+   "pred_perstock": 14.19,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb25",
+   "code": "2408",
+   "float_days": 98.19,
+   "t_mult": 5.4,
+   "pred_perstock": 9.13,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb25",
+   "code": "1605",
+   "float_days": 161.96,
+   "t_mult": 3.7,
+   "pred_perstock": 15.06,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Aug25",
+   "code": "9904",
+   "float_days": 139.16,
+   "t_mult": 14.4,
+   "pred_perstock": 12.94,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Aug25",
+   "code": "9945",
+   "float_days": 337.91,
+   "t_mult": 26.8,
+   "pred_perstock": 31.42,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov25",
+   "code": "2353",
+   "float_days": 147.33,
+   "t_mult": 25.5,
+   "pred_perstock": 13.7,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov25",
+   "code": "2409",
+   "float_days": 120.15,
+   "t_mult": 13.7,
+   "pred_perstock": 11.17,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov25",
+   "code": "2377",
+   "float_days": 115.15,
+   "t_mult": 15.8,
+   "pred_perstock": 10.71,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov25",
+   "code": "6415",
+   "float_days": 93.73,
+   "t_mult": 12.7,
+   "pred_perstock": 8.72,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov25",
+   "code": "2347",
+   "float_days": 249.71,
+   "t_mult": 27.8,
+   "pred_perstock": 23.22,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov25",
+   "code": "6409",
+   "float_days": 99.36,
+   "t_mult": 17.6,
+   "pred_perstock": 9.24,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Nov25",
+   "code": "3702",
+   "float_days": 292.11,
+   "t_mult": 44.8,
+   "pred_perstock": 27.17,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb26",
+   "code": "2105",
+   "float_days": 280.98,
+   "t_mult": 26.6,
+   "pred_perstock": 26.13,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb26",
+   "code": "1476",
+   "float_days": 268.64,
+   "t_mult": 25.7,
+   "pred_perstock": 24.98,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb26",
+   "code": "9910",
+   "float_days": 699.53,
+   "t_mult": 47.9,
+   "pred_perstock": 65.06,
+   "pred_const": 16.0
+  },
+  {
+   "season": "Feb26",
+   "code": "8464",
+   "float_days": 297.25,
+   "t_mult": 26.8,
+   "pred_perstock": 27.64,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May26",
+   "code": "1102",
+   "float_days": 272.88,
+   "t_mult": 22.6,
+   "pred_perstock": 25.38,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May26",
+   "code": "2474",
+   "float_days": 146.61,
+   "t_mult": 23.1,
+   "pred_perstock": 13.63,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May26",
+   "code": "2610",
+   "float_days": 143.77,
+   "t_mult": 10.6,
+   "pred_perstock": 13.37,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May26",
+   "code": "2324",
+   "float_days": 87.98,
+   "t_mult": 20.2,
+   "pred_perstock": 8.18,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May26",
+   "code": "1402",
+   "float_days": 258.87,
+   "t_mult": 22.8,
+   "pred_perstock": 24.07,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May26",
+   "code": "2633",
+   "float_days": 744.7,
+   "t_mult": 42.1,
+   "pred_perstock": 69.26,
+   "pred_const": 16.0
+  },
+  {
+   "season": "May26",
+   "code": "1504",
+   "float_days": 173.53,
+   "t_mult": 18.4,
+   "pred_perstock": 16.14,
+   "pred_const": 16.0
+  }
+ ]
+}

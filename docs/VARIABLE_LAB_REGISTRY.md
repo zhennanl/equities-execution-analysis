@@ -107,3 +107,98 @@ FLAGGED: H11b (adds) is reported both with and without them, and
 the without-tranche cell is the primary. H11a (deletes) is barely
 affected (0-1 deletes in those events). Harvest keeps them — the
 windows still serve execution studies.
+
+## Registry v4 (session 9i c-56 — LOCKED before evaluation)
+
+| ID | Variable (PIT at T-1) | Target | Pre-declared direction | ADOPT threshold |
+|---|---|---|---|---|
+| H16 | COMPOUND: window flow-completion >= 1.5x expected AND foreign-flow direction INCONSISTENT with the side | abs(T+1..3 reversal) | compound cell reverses HARD (panel evidence n=2: mean 17.8% vs 4.6% base — registered, NOT adopted) | mean abs rev >= 10% with n_events >= 5, event-clustered, LOO-stable; graded on every future event starting Aug-2026 |
+
+Panel basis: data/liquidity_panel_tw.json (133 name-events, 33
+events, 2015-2026). Declared thresholds 0.3/0.7/1.2 EVALUATED
+(first full-history grade): completion -> t_mult MONOTONE
+(8.3/12.9/19.8/21.1x) = the effective-date volume forecaster;
+mean reversals flat across buckets; event-level corr NEGATIVE
+(-0.43) = well-supplied closes are orderly. Scenario table's
+VOLUME semantics ADOPTED; its reversal semantics REVISED to the
+compound cell (H16).
+
+### v4 addendum (c-65 — registered from the pattern study, LOCKED)
+
+| ID | Variable (PIT at T-1) | Target | Pre-declared direction | ADOPT threshold |
+|---|---|---|---|---|
+| H17 | Foreign net-outflow intensity over the window (deletions) | T+3 favorable bounce | harder foreign selling -> bigger bounce (study: rho -0.200, p 0.21 — REGISTERED not adopted) | abs(rho) >= 0.25 with clustered perm-p <= 0.05, n_events grows past 35; graded from Aug-2026 |
+
+NULL PINNED (c-65): mean effective-day RETURNS are unpredictable
+from daily window features (9 tests null; LOO-event ML 0.52-0.56
+vs 0.66 base). Future return-prediction claims must beat this
+study's clustered bar. Volume prediction (completion -> t_mult)
+re-confirmed rho 0.347 p 0.002.
+
+## Registry v5 (session 9i c-69, 2026-08-05 — LOCKED BEFORE the
+## harvesters finish; NONE of the new datasets has been evaluated)
+
+Written while margin/daytrade/blocks/SBL/T86 histories are still
+downloading. Directions, mechanisms, and thresholds declared NOW
+so the data cannot tune them. Targets reuse the panel's outcome
+set (t_mult, close dislocation, T+1..3 reversal/bounce); all
+variables PIT at T-1 unless noted.
+
+| ID | Dataset | Variable (PIT T-1) | Target | Pre-declared direction & mechanism | ADOPT threshold |
+|---|---|---|---|---|---|
+| H18 | MI_MARGN | Margin-LONG balance / float (deletions) | T-day return + T+1..3 drift | High retail leverage into a delete = weak hands forced out -> worse T-day, more downside follow-through | abs(rho) >= 0.25, clustered perm-p <= 0.05, n >= 35 |
+| H19 | MI_MARGN | Margin-SHORT balance BUILD over window / expected demand (deletions) | completion, squeeze incidence | Retail short build = borrow-supply channel parallel to SBL (CH1 complement) -> higher completion, fewer squeezes | direction holds in both halves of era split + clustered p <= 0.05 |
+| H20 | TWTB4U | Baseline day-trade ratio (60d pre-announcement) | abs(close dislocation), T+1 reversal | High toll-collector capacity (CH3) = deeper intraday provision -> smaller dislocation, smaller reversal | abs(rho) >= 0.25, clustered perm-p <= 0.05 |
+| H21 | TWTB4U | T-day day-trade ratio spike vs baseline | share of print absorbed intraday vs at close | Day-traders recycle inventory intraday -> spike names print relatively less at the close | descriptive first; ADOPT only if quartile contrast >= 10pp with n >= 35 |
+| H22 | BFIAUU | Window block volume / expected passive demand | t_mult, completion | Pre-arranged crossing moves demand off-tape -> lower forced close print, higher measured completion | abs(rho) >= 0.25, clustered perm-p <= 0.05 |
+| H23 | TAIFEX SSF | SSF OI build in window (event names) | completion residual, squeeze incidence | Synthetic pre-positioning (CH3.5) invisible to cash data -> high OI build lowers true squeeze risk | LOG-ONLY: capture-forward n=1 at Aug-2026; no test before n >= 5 events. Declared so the direction is on record |
+| H24 | T86 | Dealer-prop net window flow (signed) / expected demand | completion, T+1..3 reversal | The direct arb footprint: dealer accumulation against the side = positioned for the bounce -> larger reversal when dealers lean in | abs(rho) >= 0.25, clustered perm-p <= 0.05 |
+| H25 | T86 | H16's foreign leg REBUILT from signed daily flow (replacing holding-delta proxy) | abs(T+1..3 reversal) | Same compound direction as H16; signed flow should SHARPEN the cell, not create it — if the effect vanishes under better data, H16 is downgraded, not defended | H16's own threshold, regraded on signed flow |
+| H26 | cross | CROWDING INDEX: standardized sum of SBL balance build + margin-short build + dealer-prop flow + (when n allows) SSF OI build, per expected demand | completion residual from the lambda model | The residual we named "crowding" becomes measured: index should explain >= 20% of residual variance | OOS R^2 >= 0.10 on 2023+ after fitting 2015-2022; else REGISTERED not adopted |
+
+Underpowered-by-design, stated: H23 (n=1 until events accrue);
+H21 needs the 5-min legs (2023+ only, n~30 name-events). SBL fee
+rates: no hypothesis registered — variable does not exist yet
+(registering one would invite fishing once a source appears; the
+original borrow-COST hypothesis enters as H27 only when a fee
+series is in hand, BEFORE evaluating it).
+
+### v5 quick reference (one line per hypothesis)
+
+| ID | Dataset | Claim (direction declared) |
+|---|---|---|
+| H18 | Margin long | Leveraged retail = weak hands -> worse T-day + follow-through on deletes |
+| H19 | Margin short | Retail short build = borrow supply parallel to SBL -> higher completion, fewer squeezes |
+| H20 | Day-trade | High toll-collector capacity -> smaller close dislocation, smaller reversal |
+| H21 | Day-trade | T-day spike shifts print from close into session |
+| H22 | Blocks | Window block volume = demand crossed off-tape -> smaller forced close print |
+| H23 | SSF OI | Synthetic pre-positioning lowers true squeeze risk — LOG-ONLY (n=1 until 5 events) |
+| H24 | T86 dealer-prop | Arb desks leaning against the side -> bigger bounce |
+| H25 | T86 foreign | H16 rebuilt on signed flow — if the effect vanishes under better data, H16 is downgraded |
+| H26 | Composite | Crowding index should explain >= 20% of the lambda-model residual, OOS |
+
+### v5 methods protocol (fixed now — how findings get graded)
+
+1. FAMILY-WISE HONESTY: v5 is one family of 8 tests. Report raw
+   AND Benjamini-Hochberg-adjusted p (q=0.10). A hypothesis
+   ADOPTS only if it passes its own threshold AND survives BH.
+2. INFERENCE: event-clustered block permutation (2,000 draws,
+   the pattern-study machinery) — never naive iid p-values;
+   Spearman primary (monotonic, outlier-robust).
+3. EFFECT SIZE FIRST: every result reported as effect size +
+   bootstrap CI (resampled BY EVENT); p alone never adopts.
+4. TEMPORAL OOS: fit/threshold on 2015-2022, validate 2023-2026;
+   LOO-event where n is small. Aug-2026 is the standing
+   out-of-sample event for everything.
+5. INCREMENTAL VALUE TEST: new variable enters a regression with
+   the controls we already have (ln size, side, float-days, era)
+   — it must improve on the lambda-model residual, not merely
+   correlate with outcomes the old variables already explain.
+6. POWER BEFORE TESTING: n~77 deletions -> 80% power at
+   |rho|~0.31. Hypotheses below power are graded REGISTERED /
+   INDETERMINATE, never "suggestive".
+7. NULLS GET PINNED: any v5 miss is written into this registry
+   and, where mechanical, pinned as a test — the c-65 return-
+   prediction null remains the bar any return claim must beat.
+8. NO POST-HOC PROMOTION: patterns noticed outside this table go
+   into a v6 registry and wait for the NEXT data vintage.

@@ -1,5 +1,950 @@
 # Session Summary — 2026-07-08
 
+## Session 9i continued-86 (2026-08-06) — FULL 13-MARKET APAC COVERAGE + archive completed
+- Past-year review PDFs completed in data/msci_archive
+  (Feb26/May26 STPublicList+QIRPR downloaded; Aug25/Nov25 were
+  already archived). Confirmed from the archive itself: the
+  country table lists only markets WITH changes (Feb-26 shows
+  THAILAND 0/-1 — proving the 10-market May table is not the
+  full region).
+- Full APAC list documented: 13 = 5 DM (AU/HK/JP/NZ/SG) + 8 EM
+  (CN/IN/ID/KR/MY/PH/TW/TH); Frontier APAC excluded by
+  construction from the Standard list.
+- Added NZ/SG/TH to apac_factsheet_capture (slugs probed
+  200/PDF) + market_profiles (tagged; Thailand NVDR structure
+  flagged as a GENUINE DIFFERENCE in float/room semantics).
+  NZ's 5-name factsheet exposed a small-market layout — parser
+  fallback added (stream-order stats block). All 13 parse:
+  NZ n=5 $40B, SG n=16 $399B, TH n=18 $119B.
+- Pinned tests updated INTENTIONALLY (archive 10->13 with
+  NZ/SG/TH expectations; profiles registry auto-covers via
+  set-equality). Suite 466 green.
+
+## Session 9i continued-85 (2026-08-06) — SITE REFOCUSED: single-purpose Aug-26 review page (v1 backed up)
+- Backed up the full v1 website (app.py + all 8 view modules)
+  to backup/website_v1_20260806/; old views left untouched on
+  disk; app.py LEGACY=True restores v1 via runpy.
+- New app.py renders ONLY views/aug26_review.py: countdown
+  metrics (ann 08-12 / eff 08-31 / cutoff $9.44B corridor-
+  clamped / frames 3745 vs 3883 +3.7%); the DECLARED calls
+  (2408 shadow add w/ timestamp + third-frame survival note;
+  add-candidate gate verdicts; delete pool vs the $6.29B
+  buffer floor); the corrected-walk derivation w/ frames +
+  honesty labels expander; positioning monitor (latest SBL
+  standing balances for the delete pool + anticipation-clock
+  calibration line; TPEx None values labeled as the registered
+  gap); per-name liquidity preview (advisory cards M1-M4);
+  grading ledger (everything that grades Aug-12 / Aug-31,
+  misses ship). All numbers load from committed artifacts —
+  nothing computed live.
+- Pinned test_aug26_site; updated test_lifecycle_page_imports
+  (INTENTIONAL: v1 wiring asserted in the backup now). Suite
+  466 green.
+
+## Session 9i continued-84 (2026-08-06) — TPEx COVERAGE GAP FOUND (user verification; Q53-54 recorded)
+- User asked to verify "SBL + foreign data for ALL TW
+  companies" — verification found TWO corrections: (1) caches
+  hold the 150-name watch subset by design (TWSE files
+  themselves cover the full main board); (2) MATERIAL: ~20
+  watch names are TPEx-listed (incl. MSCI members 6488/8069/
+  5274/3105/5347) with NO T86/SBL coverage — TWSE endpoints
+  are main-board only. Anticipation clock + panel silently ran
+  without TPEx legs (4174 OBI dropped).
+- TPEx's own institutional endpoint PROBED LIVE: works, 927
+  rows/day (2026), 557 (2019); 2019+ confirmed, 2015-18 legacy
+  probe + TPEx SBL probe queued. Registered as roadmap item 11
+  with re-run list (clock, panel CH1, EDA).
+- Also this session: Q53 (the four-tier TW float stack
+  recorded) + CV-description verification (tightened wording:
+  quantified error bars, live-graded calls).
+
+## Session 9i continued-83 (2026-08-06) — THE ANTICIPATION CLOCK (first consumer of the decade harvest)
+- Built scripts/anticipation_clock.py: 63-70 deletion curves,
+  33 reviews, SBL borrow vs own base in ADV-days, per-event
+  market controls; declared rule (diff >= 0.25 ADV-days
+  sustained 5d). Outputs data/anticipation_clock.json +
+  reports/anticipation_clock.html (3 charts). Q52's follow-up.
+- FINDINGS: (1) 98% of deletions show detectable excess borrow
+  build — pre-positioning is the base case; (2) ~4.5 ADV-days
+  of control-adjusted build ALREADY AT ANNOUNCEMENT (a third to
+  half of typical forced demand); (3) the ann->eff window adds
+  ~nothing at the median — the deletion game is substantially
+  PRE-announcement (empirical justification for CH1b: standing
+  base, not window build, is the primary supply reading —
+  declared for Aug-11 use); (4) start LEFT-CENSORED at both
+  lookbacks (-60: -42; -120: per-name median -99.5) — builds
+  begin 5+ months out, where index anticipation blends with
+  chronic decliner-shorting. Clean readings = level at ann +
+  window increment, NOT the raw start day.
+- Registered refinements (not built): matched-decline controls,
+  era/QIR-SAIR splits, the add fade-clock. Doc:
+  docs/ANTICIPATION_CLOCK.md. Pinned test_anticipation_clock.
+  Suite 465 green.
+
+## Session 9i continued-82 (2026-08-06) — EVENT EDA MODULE (May-26 SAIR rendered; repeatable)
+- Built scripts/event_eda.py: repeatable per-event EDA from the
+  decade caches -> reports/event_eda_<eff>.html (8 plotly
+  charts + summary table) + .json. Default: MSCI 2026-05 SAIR
+  (ann 05-12, eff 05-29, 7 dels). Playbook:
+  docs/EVENT_EDA_PLAYBOOK.md (7-step procedure, honesty rules,
+  worked reading).
+- May-26 summary reads: forced est (lambda x float) tracks
+  realized T-day volume for most names (1102 18.7* vs 21.1;
+  1402 19.6* vs 23.7; 2633 53.5* vs 41.4); 2324 realized 3x the
+  naive est (the crowding case); print pressure NEGATIVE for
+  5/7 (Q38 pattern name-by-name); T+1 revert 2324 +995 / 2474
+  +983. Default floats starred (* = ex-members not in v2 file).
+- DATA FIX during build: sbl_history END was 2026-04-24 (c-66
+  assumed live cache covers onward — but live tracks only the
+  18-name watch set; 1402/1504 had NO borrow data in the May
+  window). END -> today; harvested the ~74 missing days from
+  the session (now 3,024/3,024, range -> 2026-08-05; 1402
+  212.8M / 1504 106.0M standing borrow now visible). Merge
+  precedence fixed (history wins over the 18-name live subset).
+- Vintage shares key fixed (NumberOfSharesIssued). Pinned
+  test_event_eda (7 names, PIT baseline, channel coverage incl.
+  the two previously-gapped names). Suite 464 green.
+
+## Session 9i continued-81 (2026-08-06) — STEP-2 DATA INVENTORY (Q49-Q51 recorded)
+- Q49: canonical statement of the CURRENT TW procedure
+  (two-frame denominator + corrected walk + corridor-clamped
+  cutoff + frontiers) — supersedes the Q23-era walkthrough.
+- Q50: how institutional desks predict reviews — same public
+  funnel; licensed inputs remove ESTIMATION risk not the
+  fundamental unknowns (price date, GMSR recalc, discretion);
+  their real edges = borderline calibration + flow sight; our
+  implied-FIF layer recovers most of the licensed edge for
+  members; our formalized Step-2/3 machinery exceeds typical
+  preview-note structure.
+- Q51: Step-2 TW data inventory — every v2 channel observable
+  except derivatives history; every v5 hypothesis input landed
+  or pending auction5s. Missing ranked: SBL fees > SSF OI
+  history > QFIIS foreign-holding levels > ETF PCF baskets >
+  broker-branch > odd-lot. QFIIS + PCF added to handoff
+  roadmap (items 7-10) as the sleepers (official, pattern-
+  compatible, convert inference to measurement).
+
+## Session 9i continued-80 (2026-08-06) — ALL-MARKET FLOAT SOURCE SURVEY (Q47)
+- Researched official per-stock float availability across the
+  10 markets; graded table added to GMSR_MULTIMARKET_DESIGN.md.
+  A-grade: India (quarterly promoter/public patterns), Japan
+  (JPX TOPIX FFW). B+: Korea (data.krx). B: China (tradable
+  shares + strategic strip), Taiwan (NO official file — v2
+  method confirmed as best available). B-: PH (POR scraping).
+  C+: ID (bulk file TO_VERIFY). C: HK/AU/MY (vendor only —
+  Layer A/B is the honest ceiling there).
+- Priority consequence: India + Japan rise in the census queue
+  (official floats remove the hardest input); AU/HK/MY
+  confirmed as factsheet-inversion markets. Q47 recorded.
+
+## Session 9i continued-79 (2026-08-06) — CUTOFF WALK CORRECTED (user challenge verified; corridor BINDS in TW)
+- User challenged the old Q23 calculation — three faults found:
+  (1) stale bottom-up denominator $4,197B; rerun with REAL
+  census names (774 pass screens) reproduced +11.4% -> modeled
+  body was NOT the cause; (2) head floats — TSMC v2 float 1.0
+  (gov-stake blind spot) vs implied ~0.87; fixed with top-10
+  FIFs implied IN-FRAME -> gap collapsed to +3.7% (inside ±6%
+  banding); (3) walk bases stated exactly (RANK full cap /
+  ACCUMULATE float / EXPRESS full).
+- NARRATIVE CORRECTION: crossing is rank ~53 at $12.95B FULL
+  cap — ABOVE the EM corridor ceiling $9.44B, robust across
+  default-ff 0.40-0.70 -> in Taiwan the CORRIDOR BINDS: cutoff
+  corridor-clamped ~$9.44B, buffers extend membership (floor
+  $6.29B) -> that's why 77 members exist below the raw
+  crossing. Add hurdle 1.5x9.44 = $14.16B; 2408 SURVIVES
+  ($46.7B) — shadow call now robust across THREE frames.
+  Logged T-5 pre-announcement.
+- scripts/cutoff_walk_v2.py -> data/cutoff_walk_v2.json;
+  APAC factsheet-only recipe standardized (procedure never
+  forks; only concentration structure differs). Q46 recorded.
+  Pinned test_cutoff_walk_v2. Suite 463 green.
+
+## Session 9i continued-78 (2026-08-06) — MULTI-MARKET DENOMINATOR DESIGN (Q45)
+- User: design the per-market free-float total (-> 85% cutoff)
+  for the other markets. docs/GMSR_MULTIMARKET_DESIGN.md.
+  Terminology precision: GMSR is GLOBAL; the market-local need
+  is the 85% coverage cutoff the corridor disciplines.
+- Three layers: A factsheet inversion (done x10, ±6% banding
+  band), B member-based (exists), C full census = mieu engine +
+  per-market ADAPTERS only (universe list / resolver / shares /
+  float source) — screens and walk never fork. Source table per
+  market recorded (KRX day-files, NSE promoter patterns, JPX
+  lists, China tradable-shares shortcut + Connect second stage,
+  HKEX/CCASS, weak MY/ID/PH floats).
+- Priority: KR -> IN -> JP -> CN; AU/HK likely fine on A/B;
+  MY/ID/PH honestly capped at Layer B + bands. Acceptance:
+  |D_C - D_A| <= ~6%; frame-robust verdicts only. Adapter
+  effort ~0.5 day each, harvest 2-6h/market. Recorded as Q45.
+- Also this session: mieu census run verified healthy (1,550/
+  2,146, ZERO ghosts — the fix held); auction5s confirmed still
+  pilot-only (Bill's last queued run).
+
+## Session 9i continued-77 (2026-08-06) — ROADMAP DAY-FILES COMPLETE (margin / daytrade / blocks all 3,024/3,024)
+- Bill ran margin, daytrade, blocks; session verified each and
+  topped up stragglers. Final: all three at 3,024/3,024 days.
+- daytrade: nf=2 anomaly EXPLAINED — 1,501 rows on 12 days are
+  ['code',''] = TWSE zero-activity variant; extract maps to 0
+  (raw storage already correct). TSMC regime story visible:
+  1.0M (2015) -> 18.6M (2021 retail peak) -> 5.7M (2026).
+- margin: nf=15 across the whole decade, zero exceptions; TSMC
+  long bal 23,249 (2015) / 27,964 (2026) lots; short bal 3,493
+  -> 1 (retail TSMC shorts vanished).
+- blocks: 56,170 trade-level rows, all nf=5; 2026-06-05 TSMC
+  prints look like block tape (2.478M @ 2,395 etc.).
+- Remaining Bill queue: auction5s only (~1.7h). Then the
+  missing-data roadmap is fully on disk except capture-forward
+  layers (TAIFEX daily, Aug-31 auction) + open SBL-fee item.
+  v5 (H18-H26) input panel effectively assembled. T86 also
+  completed earlier (3,024/3,024, 2,815 with data).
+
+## Session 9i continued-76 (2026-08-06) — DECADE HARVESTS LANDED + VERIFIED (T86 + SBL)
+- T86 (Bill's run): 3,014/3,023 days, 2,806 trading days with
+  data; era transition clean (nf 15 -> 18, zero None extracts
+  across 357,231 rows); values historically sane (TSMC foreign
+  -32.4M on 2020-03-18 COVID dump); 9 error days never cached —
+  one rerun collects them. Holidays stored-empty correctly.
+- SBL (Bill's run + 3-day top-up from session): COMPLETE
+  2,950/2,950 days, 2,745 with data, 2015-01-05 -> 2026-04-24;
+  0 malformed of 348,327 rows. Cross-validated twice: 2324
+  balance 440,688,551 on 2026-04-24 = the case study's 440M
+  standing borrow (independent source); seamless handoff to the
+  live cache (4/24 hist -> 4/27 live, same magnitudes).
+- UNLOCKED (queued next): decade borrow-panel test (the user's
+  borrow hypothesis at n~77 deletions instead of 7), CH1b
+  standing-base refinement for liquidity v2.1, H16 borrow-leg
+  backfill from signed data, and v5's H19/H24/H25/H26 inputs.
+  Remaining Bill-terminal queue: t86 9-day rerun -> margin ->
+  daytrade -> blocks -> auction5s (sequential, same host).
+
+## Session 9i continued-75 (2026-08-05) — T-DAY DECIDER: early-vs-MOC splits + attention-budgeted alerts (Step 3)
+- User: on T, when to trade early vs leave to MOC; signals +
+  tools; traders are BUSY — few alerts, but raise the major
+  ones. Built agents/tday_decider.py + doc
+  docs/TDAY_DECISION_FRAMEWORK.md.
+- Economics framed once: MOC = zero tracking error by
+  definition; early trading only pays if E[adverse print
+  dislocation] > early impact + TE tolerance. Panel says the
+  print usually FAVORS the forced side (Q38) -> default is MOC;
+  deviation needs a named scenario reason.
+- Split table DECLARED by v2 scenario (graded from Aug-26):
+  SQUEEZE-RISK 0/1/0 (don't pre-trade your own tailwind),
+  COMMITTED 0/1/0, OVERSUPPLIED .2/.8/0 (crack risk, don't
+  hold past T), PARTIAL .3/.7/0, TOLL-DEPENDENT .5/.5/0 (the
+  one adverse cell — early buys real edge). MOC-only mandate
+  forces (0,1,0), scenario ships as advice.
+- Four decision moments (T-1 lock / 09:00 / 13:00 / 13:20;
+  13:25+ monitor-only). Alert contract: AMBER batches to
+  digests; RED = 4 trigger classes only (disl >= p90 281bps
+  from our own panel, limit-band, pace < 0.5x floor, halt),
+  transition-fired (no re-fires), budget 5/day, overflow ->
+  ONE MARKET-MODE banner. Thresholds recompute from
+  auction_expost percentiles as the panel grows.
+- Grading plan: split-table EV vs 100% MOC, RED precision
+  (>1/2 worth-the-interruption), digest sufficiency. Pinned
+  test_tday_decider (mandate gate, split sums, transition
+  dedupe, budget collapse). Suite 462 green.
+
+## Session 9i continued-74 (2026-08-05) — STEP 1-2 STANDARDIZATION REGISTRY (10 markets, tagged, anti-overgeneralization)
+- User: standardize/automate Steps 1-2 across markets without
+  overgeneralizing genuine differences. Built
+  agents/market_profiles.py: UNIVERSAL core (GIMI physics —
+  coverage/corridor/buffers/gates/frame policy + lambda FORM) vs
+  per-market PROFILES with status tags (fitted / UNCALIBRATED /
+  NOT_INTEGRATED / NOT_OBSERVABLE / DOES_NOT_TRANSFER /
+  TO_VERIFY). Honesty contract: blocked/uncalibrated stages
+  produce NO numbers — no silent borrowing of TW's calibration.
+  step1_plan()/step2_plan()/report() generate the per-market
+  capability matrix from one registry.
+- Genuine-differences register (doc): India has NO closing
+  auction (VWAP close — all auction analytics
+  DOES_NOT_TRANSFER); Korea short-ban eras 2020-21 + 2023-25
+  break CH1 history; Japan close moved 15:00->15:30 (2024-11-05)
+  = two-regime close volume; China Connect/state-float/tranche
+  flags; price-limit geometry varies in kind; foreign-room gate
+  active only in TW/KR/CN/IN/PH.
+- Activation path defined: refit lambda -> upgrade float source
+  (India promoter filings = v2-grade, NOT_INTEGRATED) -> wire
+  borrow channel -> clear TO_VERIFYs -> then Step-2 scenarios.
+- Doc: docs/STEP12_STANDARDIZATION.md. Pinned
+  test_market_profiles (registry<->factsheet consistency, TW
+  only fitted lambda, India block, Korea era flags). Suite 461
+  green.
+
+## Session 9i continued-73 (2026-08-05) — COUNTERFACTUAL IMPACT REVISITED + AUCTION LEG REGISTERED (Q40-Q44)
+- Q40-Q42: layer-stack clarified (IB 5m = per-stock around the
+  print 2023+; MI_5MINS = market-wide inside the call 2015+;
+  capture = per-stock inside, Aug-31+) + MI_5MINS interpretation
+  pinned (whole-exchange counters, units verified vs FMTQIK:
+  thousand shares / NT$M; main board only; 13:30 jump = the
+  cross, ~5.9% of day value on the probed day).
+- Q43: user asked how simulation accounts for impact the tape
+  never felt — found his OWN prior work
+  (docs/COUNTERFACTUAL_IMPACT_MODEL.md +
+  agents/impact_propagator.py, 2026-07-09): Level-1 sqrt-law
+  overlay + Level-2 propagator (40% permanent / temp exp-decay),
+  causal, sensitivity-swept, "run a live A/B" when sign flips.
+  NEW cross-link: TCA panel t1_revert_bps = reversion on events
+  with KNOWN forced quantity -> calibration data for the
+  perm/temp split (roadmap item 1 now feasible).
+- Q44: auction fills need their OWN impact term — AUCTION LEG
+  registered in the doc (§3b): call auction = one match, lumpy
+  clearing-price impact, no intraday propagation, temporary
+  component = overnight revert; deciding variable = marginal
+  share of expected cross (effective dates 8-21x ADV -> single
+  desk slice sub-noise below ~5% share; normal days cross ~6%
+  of volume -> leg mandatory); elasticity calibratable from
+  pressure_bps vs forced size (n=80). Docs only; suite 460
+  green.
+
+## Session 9i continued-72 (2026-08-05) — USER CORRECTION VERIFIED: official 5-sec auction data EXISTS (MI_5MINS, 2015+)
+- User pushed back on Q38's "no auction history" claim —
+  verified RIGHT twice: (1) per-stock indicative disclosure
+  started 2015-06-29 (NOT Mar-2020; that was continuous
+  trading) — but that feed is still not publicly archived, so
+  per-stock stays capture-forward; (2) TWSE archives MI_5MINS:
+  official market-wide 5-sec accumulated bid/ask orders +
+  trades, 09:00->13:30 incl. the full call window, back past
+  2015. Probed live both eras: trades freeze 13:25->13:29:55,
+  order arrival keeps printing, 13:30:00 row = the cross.
+- Harvester added: roadmap_harvest.py `auction5s` (stores 13:00
+  ref + 13:20:00-on rows, 122/day; piloted 3 days). 2015 pilot
+  shows accumulated bid volume SHRINKING into the cross =
+  cancellation-era regime marker (era split required in any
+  analysis).
+- Complement: decade-scale auction-window order-arrival anatomy
+  (event-day vs control-day surge/imbalance signatures, last-30s
+  timing, market-wide cross size) = the baseline layer for the
+  Aug-31 per-stock capture and the Optiver-style features.
+- Corrections written INTO the record (AUCTION_EXPOST_TCA.md
+  layer 1 marked CORRECTED c-72 + new layer 1b; Q39 in QA doc).
+  Handoff updated (auction5s joins the sequential TWSE queue,
+  ~1.7h). Pinned test_auction5s_history (freeze + cross
+  monotonicity). Suite 460 green.
+
+## Session 9i continued-71 (2026-08-05) — EX-POST AUCTION TCA STUDY (built from on-disk IB bars)
+- User: what can we do with TW close-auction data ex-post + do
+  we have it back to 2015? Availability answer (3 layers): 5-sec
+  intra-auction path = NO history for anyone (disclosure only
+  since Mar-2020, feed not archived; capture-forward from
+  Aug-31); auction OUTCOME = 2015+ (daily close IS the print);
+  dislocation around the print = 2023+ via IB 5m bars.
+- Built scripts/auction_expost.py -> data/auction_expost.json:
+  80 name-events, 17 events 2023-05->2026-05. Columns:
+  last_cont, auction_px, disl/pressure_bps (flow-oriented),
+  pm_drift, auction_share, t1_revert.
+- HEADLINE (descriptive): the print moves AGAINST the forced
+  flow 71-80% of the time — deletes close median +45bps ABOVE
+  last continuous, adds -15bps below; the other side shows up
+  in the cross (2324 = the extreme, not an exception). MOC
+  benchmark less punitive than the pm tape implies. Deletes
+  put 72% of day volume through the auction vs 44% for adds.
+  T+1 decay positive both sides (adds fade +182, deletes bounce
+  +50) — measured FROM THE PRINT this time.
+- Registry discipline: against-the-flow print + auction-share
+  split NAMED as v6 candidates (directions on record), graded
+  only on forward events. Doc: docs/AUCTION_EXPOST_TCA.md;
+  recorded as Q38. Fixed perf traps (_official_close and
+  vintage-cache reloads per call -> module caches). Pinned
+  test_auction_expost; suite 459 green.
+
+## Session 9i continued-70 (2026-08-05) — DATA-SCIENCE INTEGRATION MAP (external frameworks referenced)
+- User: where can data science plug into the workflow, with
+  online examples to reference. Researched + wrote
+  docs/DATA_SCIENCE_INTEGRATION.md: Step-1 calls -> calibrated
+  probabilities graded by Brier score (front-running economics
+  documented in Duke/QuantPedia + NBER w33554); rule-engine
+  verdicts + META-LABELING (AFML: rules keep the side, ML only
+  sizes confidence); Step-2 T-day print = the Optiver
+  "Trading at the Close" Kaggle problem (imbalance features ->
+  GBDT, per-name MAE vs naive baseline — our 5-sec auction
+  capture feeds it from Aug-31); print ranges -> CONFORMAL
+  intervals with graded empirical coverage; outcomes ->
+  triple-barrier labels; validation -> purged/EMBARGOED CV
+  (adjacent-review windows overlap) + PBO on the strategy
+  leaderboard; data layer mapped to ML4T/MLOps names (sentinels
+  = drift detection, PIT caches = feature store) + expectation
+  checks at harvest time (the mieu ghost-cache failure class).
+- Priority order proposed: conformal grading -> Brier-scored
+  Step-1 calls -> embargoed CV into v5 protocol -> auction
+  feature model -> meta-labeling/triple-barrier -> harvest
+  expectation checks. No code change; suite 458 green.
+- Follow-up (Q37): Optiver contest anatomy documented — target
+  = 60s WAP move MINUS synthetic-index move (bps), metric MAE,
+  scored on 3 months of LIVE forward data; winner = ~300
+  features -> CatBoost(0.5)+GRU(0.3)+Transformer(0.2), online
+  retrain ~12d, zero-sum cross-sectional post-processing.
+  Five transfer rules for the TWSE auction model recorded.
+
+## Session 9i continued-69 (2026-08-05) — REGISTRY v5 LOCKED (hypotheses PRE-registered while harvesters run)
+- User: hypothesize BEFORE the data lands + what statistics make
+  findings useful. Exactly the honesty-culture move — locked
+  Registry v5 (8 hypotheses H18–H26) in
+  docs/VARIABLE_LAB_REGISTRY.md before any new dataset row was
+  evaluated: margin longs = weak hands (H18), margin shorts =
+  retail borrow supply (H19), day-trade capacity dampens
+  dislocation (H20/H21), window blocks = off-tape demand (H22),
+  SSF OI = synthetic pre-positioning LOG-ONLY n=1 (H23),
+  dealer-prop flow = arb footprint (H24), H16 foreign leg
+  rebuilt from signed flow — downgrade if it vanishes (H25),
+  crowding index vs lambda residual OOS (H26).
+- v5 methods protocol fixed: BH q=0.10 family control on top of
+  per-hypothesis bars, event-clustered permutation only, effect
+  size + event-bootstrap CI first, temporal OOS 2015-22 -> 23-26
+  (Aug-2026 standing live OOS), incremental-value regression vs
+  existing controls, power stated (n~77 -> |rho|~0.31 at 80%),
+  nulls pinned, no post-hoc promotion (v6 waits for next
+  vintage).
+- Deliberate omission: no SBL-fee hypothesis until a fee series
+  exists (H27 reserved, registered-before-evaluated).
+- Recorded as Q35 in docs/INDEX_REVIEW_EXPLAINED_QA.md. No code
+  change; suite stays 458 green.
+
+## Session 9i continued-68 (2026-08-05) — ROADMAP HARVESTERS BUILT (margin / daytrade / blocks / TAIFEX SSF capture)
+- User: "help me write script to build the rest of the roadmap."
+  Probed every candidate endpoint FIRST (2015 + 2026 dates):
+  MI_MARGN ok, TWTB4U (day-trade) ok 2015+, BFIAUU (blocks) ok
+  2015+, TAIFEX OpenAPI live (current-day only), TWT96U = SBL
+  availability NOT fees (item 5 stays open, finding recorded).
+- `scripts/roadmap_harvest.py` — ONE engine, four datasets:
+  margin/daytrade/blocks day-file harvesters (watch-name subset,
+  RAW-row storage + nf so era changes can't corrupt extracts,
+  resumable atomic cache, 2.0–2.2s pacing, 60s backoff) +
+  `taifex` capture-forward (2,184 contract rows/day incl. ~2,138
+  SSF contracts with OpenInterest; archive starts today so the
+  Aug-11→Aug-31 event window is covered).
+- Field stability verified across the decade: nf 15/5/5
+  identical at 20150105 and 20260605. Pilots parse: TSMC
+  margin-long 20,527 lots / short 4,830 (2015); day-trade 1.056M
+  sh; blocks trade-level rows.
+- Honest gaps stated in handoff: TAIFEX contract→underlying map
+  and HISTORICAL SSF OI (download forms) remain queued; SBL fee
+  rates remain open (probe result: TWT96U is quantity, not
+  price).
+- Handoff updated: run order for Bill's TWSE terminal = SBL →
+  T86 → margin → daytrade → blocks (one at a time, same host);
+  `taifex` daily anytime (different host). Roadmap statuses
+  updated (items 3,4,6 DONE; 2 PARTIAL; 5 OPEN).
+- Pinned `test_roadmap_harvest` (schema + era + nf + taifex
+  OpenInterest). Suite 458 green.
+
+## Session 9i continued-67 (2026-08-05) — MISSING-DATA ROADMAP + T86 HARVESTER (signed institutional flow)
+- User: what liquidity-relevant data haven't we extracted?
+  Prioritized roadmap written into the handoff: **T86 (BUILT) >
+  TAIFEX single-stock-futures OI (CH3.5 observable!) > MI_MARGN
+  margin balances (verified 2015+) > day-trade ratio (CH3
+  capacity) > SBL fee rates (cost dimension; FinMind paywalled,
+  TWSE endpoint = investigation) > block-trade backfill** — each
+  with a ready prompt for a future session; the proven day-file
+  harvester pattern documented
+- scripts/t86_history_harvest.py: TWSE T86 = daily NET buy/sell
+  per stock BY INVESTOR TYPE (foreign / trusts / DEALER PROP —
+  the signed arb footprint, never held before), 2015+ verified
+  (7,768 rows 2015; format 15->18 fields, era-tolerant parser
+  stores raw rows + stable extracts f=foreign_net t=total_net);
+  PILOT 8 days Jan-2015 clean (TSMC f +3.69M). Sequential-after-
+  SBL note (same TWSE host). +1 pinned test; suite 457 green
+
+## Session 9i continued-66 (2026-08-05) — SBL BORROW HISTORY: the decade harvester built + piloted
+- Sources probed: FinMind HAS TaiwanStockSecuritiesLending +
+  TaiwanDailyShortSaleBalances (depth unverified — rate-limited
+  today; fee-rate dataset PAYWALLED); **TWSE TWT93U day-file
+  VERIFIED to 2015 (896-1,300 rows/day, STABLE 14-field format
+  across 2015/2018/2023)** -> primary source
+- scripts/sbl_history_harvest.py: iterate ~2,950 weekdays
+  2015-01 -> 2026-04, subset each day-file to the 150 tracked
+  names -> data/sbl_history.json {day: {code: [sell_qty,
+  balance]}} (live-cache-compatible shape); resumable, atomic,
+  holiday-tolerant, 60s backoff, ~1.5-2h full run. PILOT: 12 days
+  Jan-2015 parsed (TSMC bal 42.9M sh; 121/150 names/day)
+- HANDOFF added (runs vs TWSE — parallel-safe with the FinMind
+  census in a second terminal). Queued on landing: decade
+  borrow-panel test (borrow hypothesis at n≈77 not n=7), CH1b
+  standing-base refinement, H16 borrow leg backfill. Fee-rate gap
+  stated (TWSE SBL fee endpoint = queued investigation).
+  +1 pinned test; suite 456 green
+
+## Session 9i continued-65 (2026-08-05) — PATTERN STUDY 2015-2026 (autopilot): one replication, one decisive null
+- scripts/pattern_study.py: 133 name-events, extended features
+  (T-day return, window drift, vol-ratio added), event-clustered
+  permutation tests (2,000 block perms) + depth-2 trees w/
+  leave-one-EVENT-out CV (sklearn installed in sandbox)
+- **REPLICATED: completion -> print SIZE rho +0.347 clustered-p
+  0.002, Q spread 13.0->28.5x — the volume forecaster confirmed
+  by a second method. DECISIVE NULL: effective-day RETURNS
+  unpredictable from daily window features — 9 tests ns (p
+  0.21-0.76, Q spreads <2.5pp), ML LOO-event 0.52-0.56 vs 0.66
+  base (BELOW majority guessing). Economic read: the average
+  print is efficiently arbitraged; edge = SIZE + TAILS (H16) +
+  STRUCTURE (tolls/reversals), not mean returns**
+- H17 registered (foreign-outflow intensity -> T+3 bounce, rho
+  -0.20 ns — locked thresholds, graded from Aug-26); NULL PINNED
+  in registry + test (future return-claims must beat the
+  clustered bar); borrow-rate hypothesis honestly deferred (SBL
+  history Apr-26+ only; May-26 anecdote n=7 ran OPPOSITE);
+  case_studies/PATTERN_STUDY_2015_2026.md. Suite 455 green
+
+## Session 9i continued-64 (2026-08-05) — LIQUIDITY ENGINE v2: CHANNEL DECOMPOSITION (Q34 encoded)
+- (c-63 interlude: mieu_census failure-caching BUG found via
+  user's terminal errors — rate-limited empties cached as
+  permanent (1,956 ghosts incl. TSMC); purge cmd added + failures
+  never cached + RateLimited backoff 10min + FINMIND_TOKEN
+  support + 404-spam silenced; user re-running w/ token)
+- agents/liquidity_forecast.py: supply_decomposition() — passive
+  demand PER-STOCK (lambda x float, 6.1-69.3x across May names,
+  replacing flat 16/8), CH1 borrow-visible (SBL build; deletes
+  PRIMARY, adds = fade signal), CH2 inventory/long (completion
+  residual SIGNED by foreign direction: consistent 1.0 / neutral
+  0.5 / wrongway 0), CH3 toll-reliance = uncommitted remainder,
+  CH3.5 derivatives flagged unobservable. V2 scenarios DECLARED
+  then regraded: SQUEEZE-RISK / OVERSUPPLIED / COMMITTED /
+  PARTIAL / TOLL-DEPENDENT
+- **MAY-26 V2 REGRADE (data/liquidity_forecast_v2_may26.json):
+  2324 SQUEEZE-RISK by rule (+28.2%); 2474 exposed as the
+  INVENTORY-channel positioner (CH1=0, CH2=2.07 — the channels-
+  diverge insight live); toll-dependent names printed clean w/
+  small reversals (toll-collection works when flow telegraphed).
+  CAVEAT SURFACED: standing borrow bases (18-23 ADVd) pre-dating
+  the window also cover at the print -> CH3 overestimates;
+  CH1b refinement REGISTERED for v2.1, not silently patched**
+- v1 artifacts untouched (pins intact); +1 pinned v2 test; suite
+  454 green. Live Aug window runs v2 alongside v1
+
+## Session 9i continued-62 (2026-08-05) — APAC FACTSHEETS x10 + PER-MARKET CENSUS SCRIPT
+- All 10 markets' MSCI factsheet URLs found (same folder; India =
+  msci-india-index-gross-usd.pdf via search).
+  scripts/apac_factsheet_capture.py -> data/apac_factsheet_archive
+  .json (Jul-31-2026 all): index float caps, counts, smallest,
+  implied denominators, DM/EM corridors (JP/AU/HK vs DM ref
+  $16.41B -> corridor 8.21-18.87; EM vs $8.21B -> 4.10-9.44)
+- **COUNT CROSS-VALIDATION, ALL 10: factsheet constituent counts
+  match the fund-derived membership EXACTLY (JP 168=EWJ, AU 47,
+  HK 25, IN 165=INDA, KR 77, MY 21, ID 11, PH 10, TW 77, CN 576)
+  — MSCI's own numbers certify the constituent pipeline
+  market-wide.** Implied denominators: JP $6,031B, KR $2,859B,
+  CN $3,007B, IN $1,640B ... Indonesia $69B (tiny)
+- scripts/apac_member_census.py: per-market member caps+floats
+  via Yahoo (suffix logic incl. HK Jardine .SI lines + Yahoo-
+  search resolver for Malaysia mnemonics; marketCap-preferred w/
+  sanity bound after a bad-parse trap), TW-style reconciliation
+  report + bottom ladder vs corridor. PILOT: HongKong 22/25
+  priced, members-vs-factsheet +10.9%. Full runs handed off
+  (MIEU handoff §added; China ~25 min). +1 pinned test (counts,
+  corridors, denominators); suite 453 green
+
+## Session 9i continued-61 (2026-08-05) — PRINT FORECASTS -> MULTI-METHOD RANGES
+- User: ranges not points, multiple methods, scenario-aware.
+  Advisory cards upgraded: print_range_x_adv = ensemble of
+  **M1 structural lambda BAND (fit quartiles .074/.093/.117 x
+  float-days — carries the 77-obs fit uncertainty), M2 matched
+  peers (float-days 0.5-2x -> realized print quartiles; for ADDS
+  demoted to context — historical adds far less liquid, would
+  import illiquidity), M3 scenario overlay (panel crowding
+  multipliers 0.64/1.0/1.64 — resolves via Step-2 tracker in
+  window), M4 holdings-floor cross-check (May calibration
+  0.77-1.25)**; institutional convention verified (days-of-ADV +
+  benchmarked-AUM standard in rebalance planning)
+- Aug-26 ranges: 2408 add 1.0-1.8x (easy); 1101 15.0-31.5x;
+  2834 15.7-34.9x; method-divergence flagged not averaged (3529
+  structural 6x vs peers 10.5x). Trader reading documented (low =
+  quiet print, high = crowded, tight agreement = confidence).
+  Pinned test updated to range schema; suite 452 green
+
+## Session 9i continued-60 (2026-08-05) — PRE-ANNOUNCEMENT ADVISORY CARDS (the 3 questions per name, T-6)
+- User: once the Step-1 list is final, how to analyze (changes /
+  close preview / MOC deviation)? BUILT for Aug-26:
+  data/preann_advisory_aug26.json + case_studies/PREANN_ADVISORY_
+  AUG26.md — per name: λ-model forced flow -> expected print
+  multiple, auction-share prior, STANDING BORROW in ADV-days
+  (live TWT93U day-file fetch; 2408 onboarded), foreign 12m
+  trend, squeeze-precursor flag, archetype-conditional advice
+- KEY READS: **2408 easy add (rally exploded ADV to 118M -> whole
+  forced buy ~1.1 normal days, minimal impact); 1101 loaded
+  BEFORE any announcement (SBL 586M sh = 18.7 ADV-days, foreign
+  -4pp — heavy print if deleted, squeeze fuel if retained);
+  2609/3529/3533 carry the Compal precursor (foreign +5.5/+6.0/
+  +10.4pp INTO deletion candidates) — H16 watch from ann day 1
+  if deleted in Nov**
+- Deviation framework: trackers never; flexible only in
+  identified cells (decade -112bps avg, concentrated in
+  OVERCROWDED/H16; UNDERSUPPLIED -> start early); guaranteed-
+  close pricing input = the precursor column. Sentinel watchlist
+  needs candidate names added (borrow series accumulation).
+  +1 pinned test; suite 452 green
+
+## Session 9i continued-59 (2026-08-05) — CASE STUDY: 2324 COMPAL, the deletion that closed +9.6%
+- docs/case_studies/CASE_2324_COMPAL_MAY26.md — four independent
+  held series (daily tape / 5m w/ auction separated / foreign /
+  SBL): deletion CONFIRMED; squeeze STARTED MID-WINDOW (two +10%
+  limit-ups May-21/25 on 114/280M vs 35M ADV — unnamed catalyst,
+  tape-visible); standing SBL base ~440M sh (~13x ADV, ~10% of
+  shares) FLAT through window incl. index-arb pre-sell
+  (completion 2.04); foreign +2.85pp INTO the deletion (H16's
+  wrong-way leg — flagged THIS name only at T-1)
+- EFF DAY 5m: gap +4.5% open, grind to 36.85, last cont 36.35 ->
+  **AUCTION 338.6M shares (49% of 693M day vs 78% median) matched
+  AT 36.70 — the entire passive stake sold in one print and the
+  price went UP.** Close +9.6%, high 36.85 (not locked, verified)
+- AFTERMATH: covering avalanche −270M SBL in 4 sessions ->
+  +9.9/+9.9/+6.1%; the day the balance stopped falling the stock
+  cracked −10.0% (Jun-04); foreign peaked 42.0% Jun-01, dumped to
+  38.4% by Jun-04 — fast money exited its own top
+- MECHANISM: anticipated flow gets pre-sold; a catalyst flips
+  price against a 10%-of-shares short base; the passive sale
+  becomes the squeeze's FEEDSTOCK and demand exceeds even that ->
+  print clears UP. Desk lessons pinned (H16 priority, agency
+  gift, guaranteed-close casualty, SBL called the top). +1 pinned
+  test (auction share/price-above-tape/covering >200M); suite 451
+
+## Session 9i continued-58 (2026-08-05) — CROSSING SOURCES + LIMIT-LOCK STUDY 2015-2026 (Q29-Q32)
+- Q29: per-stock model explained from first principles (price
+  cancels -> index fund holds SAME fraction of every member's
+  float; lambda = AUM/index float value; consortium metaphor)
+- Q30: MOC vs intraday split MEASURED: auction = median 78%
+  (49-91%) of deletion-day tape; auction volume = 77-85% of
+  predicted passive stake -> estimate ~80-90% of tracker selling
+  executes at the close, 10-20% spread; clean names reconcile
+  0.74-0.81, OVERCROWDED names >1.2 (positioning in the print)
+- Q31: "wouldn't all desks be identical on MOC?" — yes for the
+  commodity slice; differentiation = risk transfer pricing
+  (guaranteed close), netting/internalization, auction failure
+  modes, advice for flexible clients, winning the mandate via
+  research — mapped 1:1 to platform steps
+- Q32 + data/limit_lock_study.json: crossing sources enumerated
+  (arb unwinds = canonical cross, segment migrations = genuine
+  opposite passive flow, calendar diffs, opportunists, principal);
+  LIMIT-LOCK CASE STUDY ~140 name-events: **3 locks in 12 years,
+  ALL 2015 (2615 add up->reversed -2.0/-3.3; 1789 del down->+1.1/
+  -2.3; 4174 OBI presumed at cap->+6.2/+3.6); ZERO locks
+  2016-2026 — the classic lock is nearly extinct for TW index
+  names. Modern tail = the SQUEEZE: 2324 del closed +9.6% UP on
+  deletion day (NOT locked, verified OHLC), ran +20.8% T+2 —
+  agency gift, guaranteed-close loss scenario -> H16 signature is
+  the monitoring priority.** Suite 450 green
+
+## Session 9i continued-57 (2026-08-05) — 16x CRITIQUE ACCEPTED -> PER-STOCK FLOW MODEL ADOPTED (Q28)
+- User challenged the class-median prior as poor — CORRECT (scale
+  prior, not model). Literature located: Benchmarking Intensity
+  (Pavlova & Sikorskaya RFS 2023) = exactly the per-stock
+  inelastic-demand object; + Shleifer/Harris-Gurel/Petajisto/
+  Greenwood/Duffie/CNS index-effect canon
+- Model: forced_shares = lambda x float_shares -> implied multiple
+  = lambda x float-turnover-days. **GRADED on 77 deletions / 31
+  events: lambda = 0.093 (9.3% of float forced through the print
+  — measured TW benchmarking-intensity proxy); corr(log fd, log
+  t_mult) 0.671 name / 0.645 event-clustered; MAE 7.8x vs 12.1x
+  constant (-36%). ADOPTED as v2 expected-flow (deletes; adds
+  pending; lambda refit annually; saturation stated 2633 69->42)**
+- **RESIDUAL = CROWDING: May OVERCROWDED names printed far ABOVE
+  passive-only prediction (2324 8.2->20.2, 2474 13.6->23.1) — the
+  excess IS the arb inventory unwinding. v2 separates passive
+  base (structural) from excess (positioning)** — what the
+  constant conflated. data/perstock_flow_model.json; +1 pinned
+  test; suite 450 green; QA Q28
+
+## Session 9i continued-56 (2026-08-05) — STEP-2 FULL-HISTORY PANEL (133 name-events, thresholds graded)
+- scripts/liquidity_panel.py: every MSCI TW change 2015-2026 ->
+  PIT-at-T-1 features (completion, foreign delta, wrongway) +
+  outcomes (t_mult, rev3) — 133 name-events / 33 events, ZERO new
+  fetching (vintage cache was built from exactly these names);
+  5m legs 2023+ already covered by IB harvest/H9
+- **DECLARED 0.3/0.7/1.2 THRESHOLDS GRADED (never tuned):
+  completion -> T-mult MONOTONE 8.3/12.9/19.8/21.1x — the
+  crowding ratio IS the effective-date VOLUME forecaster
+  (ADOPTED). Mean reversals FLAT across buckets; event-level
+  corr(completion,|rev3|) NEGATIVE -0.43 — well-supplied closes
+  are ORDERLY: supply framing confirmed, naive crowding=reversal
+  REJECTED at the mean. Reversal alpha = COMPOUND TAIL: completion
+  >=1.5 AND wrong-way foreign — 2 members in history (Nov25 3702
+  +7.4%, May26 2324 +28.2%; mean 17.8% vs 4.6% base) ->
+  REGISTERED as H16 in registry v4 (locked thresholds, NOT
+  adopted at n=2; grades from Aug-26 onward)**
+- STEP2 doc panel section added; +1 pinned test (monotonicity,
+  negative corr, tail membership); suite 449 green
+
+## Session 9i continued-55 (2026-08-05) — MIEU CENSUS BUILT + HANDED OFF (Q25)
+- scripts/mieu_census.py: full-market census of the investable
+  universe (2,146 TWSE/TPEx common equities; ETF/warrant/emerging
+  excluded), phases universe -> fund (shares/foreign/FOL) -> tape
+  (12m daily -> cap/ATVR-12m/3m/frequency) -> floats (insiders,
+  size-screened names; tail banded 0.6 default) -> report
+  (screens + sum vs factsheet-implied $3,745B). All phases
+  resumable/atomic; pilot 50 names validated (~1.6s/name -> full
+  run 75-90 min)
+- User stopped the in-chat run (time) -> **HANDOFF:
+  docs/MIEU_CENSUS_HANDOFF.md** — self-contained: commands
+  (harvest/floats/report), rate-limit notes, report reading guide
+  (gap ±5% = confirmation; default-float share check; expected
+  pass set 300-600), and the follow-up queue for the analysis
+  session (adopt census into frame trio, re-check 2408 shadow
+  call, next QA entry, pin test). QA Q25 records feasibility
+  verdict: free-data feasible; irreducibles = MSCI floats/FIF
+  rounding/price date/min-size figure
+
+## Session 9i continued-54 (2026-08-05) — DENOMINATOR CHALLENGED -> MSCI-IMPLIED ADOPTED + ILL-CONDITIONING FOUND (Q24)
+- User challenged the $4,197B denominator. MSCI definition stated
+  (investable universe float-adj, screens applied — NOT total
+  market). **BETTER NUMBER ADOPTED: factsheet-implied 3,183/0.85
+  = $3,745B = MSCI's own arithmetic at the same price vintage;
+  our bottom-up $4,173B runs +11.4% over -> demoted to
+  cross-check.** TWSE official aggregate still queued (endpoints
+  served trade values not caps today)
+- **DEEP FIND: the crossing is ILL-CONDITIONED — 11% denominator
+  gap moves the raw line $6.7B -> $11.2B (flat tail). MSCI's own
+  slack absorbs this (coverage AREA 85±5%, corridor, buffers).
+  NEW POLICY: only FRAME-ROBUST verdicts ship as calls.** Applied:
+  2408 Nanya STRONG (2.84x/1.71x both frames); 2344/8046
+  downgraded to FRAME-SENSITIVE (declared, not called). Bonus
+  structural argument: under MSCI's denominator top ~54 already
+  deliver 85% -> pressure to ADD large outsiders — Nanya call
+  STRENGTHENED by the better number
+- aug26_cutoff_calc.json carries full reconciliation + policy;
+  suite 448 green; QA Q24
+
+## Session 9i continued-53 (2026-08-05) — AUG-26 CUTOFF CALCULATED + SHADOW ADD CALL DECLARED (T-6)
+- data/aug26_cutoff_calc.json: A. global ref $15.75B x 1.042 =
+  $16.41B -> EM $8.21B, range $4.10-9.44B; B. TW walk (v2-layered
+  floats) denom $4,197B -> target $3,568B -> crossing $6.74B rank
+  115; C. cutoff $6.74B (inside range, unbound) | add bar 1.8x =
+  $12.14B (Aug=QIR) | grace 2/3 = $4.50B
+- REFUSED default-float verdicts on add side; fetched REAL
+  insiders for 8 ex-member candidates. **SHADOW ADD CALL
+  (declared 2026-08-05, T-6, grades Aug-12): 2408 NANYA STRONG
+  (2.83x bar, float .456 via parent Nan Ya Plastics 54.4% named,
+  fcap 2.58x half-bar, room 88%, churn expired since Feb-25 del);
+  2344 WINBOND moderate (1.48x, ff .69); 8046 marginal (1.51x but
+  fcap 1.15x half-bar). PROOF-BY-COUNTEREXAMPLE: 6505 BLOCKED —
+  1.71x on size but 88% insider-held -> float .12 < .15 floor.**
+  The locked 16-name engine CANNOT see these names — locked call
+  (zero visible) remains call of record; both engines grade
+  Aug-12
+- Delete side: 9 below cutoff (deepest 6919 .73x, 2834/2609 .81x,
+  1101 .84x) + 8 watch band — cadence-gated: Aug=QIR, sweep not
+  armed -> pool = Nov-26 SAIR watchlist w/ ~2/3 conversion, not
+  an Aug call; blind band declared. +1 pinned test; suite 448
+  green; QA Q22 records the full derivation
+
+## Session 9i continued-52c (2026-08-05) — Q21: cutoff walkthrough + the four lessons as stories
+- QA Q21: 5-step cutoff mechanics (global walk -> published ref ->
+  range 0.5-1.15x -> local walk constrained inside -> buffers two
+  unequal doors -> recomputed each review). Four lessons told
+  honestly: cadence (Aug-25 QIR: sweep applied at a quarterly ->
+  10 false dels vs official 2; fix = cadence gate, 0 on re-run,
+  x-validated Feb-26); discretion (Nov-25 9 flags, 0 same-review,
+  6/9 deleted at May-26 -> flags are probabilities, ~2/3
+  conversion; cutline residents repeat); blind band (Nov-25: 7
+  actual dels overlapped flags ZERO — all below 16-name floor;
+  13/21 decade -> declared blind share + EWT full ladder fixed
+  delete-side structurally, 7/7 replay); proof (every lesson found
+  ONLY by grading vs official outcomes; old detector keys
+  themselves wrong — 2 of 13 — caught the same way)
+
+## Session 9i continued-52b (2026-08-05) — Q20: v2 interpreted end-to-end + LIVE AUG FRAME RECOMPUTED
+- Live Aug frame w/ v2-layered floats (MSCI FIFs top10 > v2 >
+  default): TW line $6.74B (rank 115), inside global EM band
+  8.0-8.4/2-derived range; members' float sum $3,301B vs factsheet
+  $3,183B (+3.7%, price drift since Jul-31); denominator $4,197B;
+  17-name inclusive pool; TW TOTAL MARKET est $4,974B full
+  (named 3,958 + body 1,016; TWSE-official value-anchor = queued
+  upgrade)
+- Wide-band question answered 3-legged: buffers protect (his
+  point) + decisions ride FULL-cap ORDERING (floats untouched) +
+  estimates now validated 0.022 — band is third defense, not only
+  (May cutline misses prove band alone insufficient)
+- Rules-without-history question: mechanical layer names the
+  CANDIDATES (May bottom-7 proof); history supplies cadence (the
+  Aug-25 10-false-dels lesson), discretion calibration (~2/3),
+  the blind band (13/21 below floor), and PROOF of faithful
+  implementation — for Aug-26's zero-visible margin, history IS
+  most of the remaining signal. QA Q20 records all
+
+## Session 9i continued-52 (2026-08-05) — MOPS v2 FLOAT ESTIMATOR: ADOPTED (0.022 vs 0.104)
+- MOPS unreachable from sandbox; same filings quantity via yfinance
+  heldPercentInsiders (named directors/officers/controlling).
+  scripts/mops_float_v2.py (resumable insider cache, 76/77
+  members) -> data/tw_float_mops_v2.json
+- **GRADE: mean abs err 0.022 vs MSCI implied FIFs — 5x better
+  than incumbent (0.104), 6.5x better than rejected TDCC v1
+  (0.143). Near-exact per name: Fubon .593/.603, Elite .810/.805,
+  ASE .757/.750, Delta .741/.754.** Residual-67 aggregate 770 vs
+  739.8 target (+4%). Why it works: subtracts holders BY NAME not
+  by size — the exact Q17 prescription
+- RESIDUAL STATED: board-seatless gov stakes escape (TSMC 1.00 vs
+  .955, CTBC .92/.855) — moot in production: layered stack = MSCI
+  FIFs (top10) > v2 insiders > flagged default. ADOPTED for live
+  float layer (pinned test enforces superiority); graded
+  historical frames keep stated float policy. Scope: affects
+  float-adjusted values only, full caps untouched. Wiring into
+  live Aug-26 walk/workbench queued. Suite 447 green; QA Q19
+
+## Session 9i continued-51b (2026-08-05) — Q18: two lines untangled + backtest float honesty
+- QA Q18: GLOBAL reference (DM walk, published, halved for EM) vs
+  the TAIWAN cutoff (market walk, must land in the global band) —
+  two lines, one confusion resolved. User's two-sided reading
+  corrected: deletes right (walk-passes-after-target + 2/3 grace);
+  adds judged on FULL cap (float secondary half-bar + 0.15 gate)
+  and need 1.5-1.8x, not a mere cross — one line, two unequal
+  doors, buffer gap = churn control. Backtest float question
+  answered: estimated floats blur the LINE LEVEL (measured band
+  5.15-6.79), not the ORDERING (May's 7 deletes = 7 deepest by
+  full cap); pools are bands; FLOAT-SENSITIVE exclusion policy;
+  cutline discretion remains the stated miss class, now attacked
+  via implied FIFs + aggregate reconciliation
+
+## Session 9i continued-51 (2026-08-05) — TDCC FLOAT RECIPE v1: GRADED, REJECTED, NULL-PINNED (Q17)
+- TDCC open data verified (getOD.ashx?id=1-5, 68K rows, Jul-31 —
+  same date as factsheet; codes space-padded trap). Recipe v1:
+  float = 1 - max(bracket15 - foreign, 0), all 77 members ->
+  data/tw_float_tdcc.json
+- **VERDICT: REJECTED as replacement.** vs 8 MSCI implied FIFs:
+  mean abs err 0.143 (v1) vs 0.104 (incumbent); aggregate
+  residual-67: 670 vs 719 vs target 739.8 — worse on both.
+  FAILURE DIAGNOSED: bracket 15 can't tell founders from domestic
+  funds/insurers/pensions (float!) — worst on financials (Fubon
+  0.34 vs 0.60, CTBC 0.56 vs 0.86). NULL-PINNED (test enforces
+  the verdict until a v2 beats incumbent)
+- v2 queued: MOPS insider/major-holder filings = the NAMED
+  strategic list (replaces size-bracket inference); TDCC demoted
+  to change-detection signal. Suite 446 green
+
+## Session 9i continued-50 (2026-08-05) — AUG-26 GMS FORECAST + AGGREGATE FLOAT CALIBRATION (Q16)
+- data/aug26_gmsr_forecast.json: Aug GLOBAL reference forecast =
+  May's published $15.75B (Apr-20 data) x DM move proxy (+4.2%,
+  banded +/-2pp) -> DM $16.1-16.7B -> EM $8.0-8.4B -> EM range
+  $4.0-9.6B (deletion floor up ~4% from May's 3.94); TW cutoff
+  estimates sit inside. Structural correction recorded: GMS ref is
+  GLOBAL (DM-derived, halved for EM) — factsheet predicts the TW
+  CUTOFF, not the reference
+- **AGGREGATE FLOAT CALIBRATION: factsheet pins the residual-67
+  members' float sum (3,183 - 2,443.2 = $739.8B); our independent
+  estimates sum $719.0B — factor 1.029, within 2.9% of MSCI's own
+  arithmetic.** Per-name floats still needed for candidate calls;
+  uncertainty now lives in the DISTRIBUTION, not the total
+- +1 pinned test (calibration 0.9-1.1, EM band sane, sum
+  reconciliation); suite 445 green; QA Q16 recorded
+
+## Session 9i continued-49 (2026-08-05) — ANIMATED WALK + Q15
+- "Animate the walk" toggle in Show-the-walk: plotly frames (78 —
+  every rank for the giants, every 2nd past the crossing), Play/
+  Pause, per-frame title names the arriving company + running
+  coverage; gray = modeled body. Reading caption: last-added
+  before the line = SURVIVORS; members after = deletion
+  candidates w/ buffer grace (2/3) — deepest = likeliest (May-26:
+  7 deleted were the 7 deepest). walk json extended w/ anim
+  frames + per-rank code/company; suite 444 green; screenshot
+  verified (Play button live)
+- Q15 recorded: float ratios still required for every name in the
+  summation — source ranking (factsheet FIFs > TDCC weekly open
+  data > MOPS insiders > TIP/FTSE > flagged defaults); factsheet
+  history beyond Wayback: SEC EDGAR full-text, distributor PDF
+  caches, Refinitiv/Bloomberg index-cap SERIES (the clean route
+  if CLSA access lands), WRDS; MSCI end-of-day search = levels
+  only (stated). Capture-forward archive running since Jul-2026
+
+## Session 9i continued-48 (2026-08-05) — FACTSHEET CAPTURE + IMPLIED-FIF CALIBRATION (Q13 upgrade #1 built)
+- scripts/factsheet_capture.py: monthly fetch+parse of the MSCI TW
+  factsheet PDF (pdftotext) -> data/msci_factsheet_archive.json +
+  raw PDFs in data/factsheets/. Jul-2026 SEEDED: n=77, index float
+  cap $3,183B -> implied denominator $3,745B; smallest member
+  $1.84B float-adj; **top-10 implied FIFs extracted (MSCI float
+  cap / our full cap): MediaTek 0.905, Delta 0.754, ASE 0.750,
+  Elite 0.805, Fubon 0.603, CTBC 0.855, Accton 0.905** — the free
+  monthly float calibration, live. Parse traps fixed: top-10 caps
+  already in $B; header line swallowed as a name (off-by-one)
+- Q14 recorded: history not on msci.com — Wayback snapshots
+  checkable by user in-browser (URL in doc; archive.org blocked
+  from env), parser ready for dropped-in PDFs; capture-forward
+  running. Reverse-engineering scope stated: cap/0.85 = monthly
+  denominator ground truth; smallest-constituent = realized
+  boundary; forward line still requires the walk — "prediction
+  walks; the factsheet grades the walker"
+- +1 pinned test (n=77 match, denominator range, TSMC>1500B,
+  FIFs sane 0.3-1.05, >=5 extracted); suite 444 green
+
+## Session 9i continued-47b (2026-08-05) — Q13: THE DENOMINATOR VALIDATED BY MSCI'S OWN FACTSHEET
+- User challenged $3,552B as arbitrary. FETCHED THE OFFICIAL MSCI
+  TAIWAN FACTSHEET (Jul-31-2026): **77 constituents (EXACTLY our
+  three-fund count) + index float-adj cap $3,183B -> implied
+  market denominator 3,183/0.85 = $3,745B — ours $3,552B within
+  ~5% on free data.** TSMC per-name check: MSCI float-adj $1,848.5B
+  vs ours $1,765B (-4.5%) — gap = float factor (implied 0.955 vs
+  our 0.912), not price/shares
+- 144 = union(current members, all review names 2015-26, boundary)
+  minus delisted/unpriced — defined sets, stated. 0.7 default =
+  flagged assumption, sensitivity-bounded
+- HOW OTHERS DO IT (researched): MSCI FIF strategic-holder
+  exclusion; FTSE TWSE series uses ACTUAL float since Mar-2013;
+  Morningstar method public. BETTER TW FLOAT SOURCES QUEUED:
+  (1) MSCI factsheet top-10 reverse-engineered FIFs (free,
+  monthly — calibrate vs ground truth!), (2) TDCC open-data
+  dispersion (free, weekly, all stocks), (3) MOPS insider filings,
+  (4) TIP/FTSE actual floats. QA doc Q13 records all
+
+## Session 9i continued-47 (2026-08-05) — SHOW THE WALK (Q4 commitment delivered)
+- scripts/show_the_walk.py -> data/gmsr_walk_may26.json: the full
+  size-line computation exposed — denominator (named head 144 cos
+  $2,840B tradable + modeled body 400 names $711B = $3,552B),
+  target $3,019B (x0.85), walk crossing rank 135 -> size line
+  $5.81B at exactly 85.0% coverage; HONESTY: crossing lands in the
+  modeled body, nearest real members bracket it (5871 6.08 / 2615
+  6.44 / 3293 6.49); SENSITIVITY band 5.15-6.79 (body ff 0.5-0.8,
+  head ff +/-10%) — whole band inside MSCI's published May-26 EM
+  range 3.9-9.1 (external consistency check)
+- UI: "Show the walk" expander (Tab 1) — 3 step-cards, denominator
+  breakdown, cumulative-coverage curve w/ 85% crossing marked,
+  honesty warning, sensitivity table, reproduce-it-yourself caption
+  (script named); $-LaTeX escapes fixed (recurring Streamlit trap)
+- QA doc Q9-Q12 recorded (MSCI website confirmation links, TWSE
+  total + float bridge, ELI5 + exact recipe, this derivation);
+  +1 pinned test (component sums, 85% crossing, MSCI-range bound,
+  monotonic curve); suite 443 green; screenshot verified
+
+## Session 9i continued-46b (2026-08-05) — QA doc: Q7 (why Standard) + Q8 (implicit market total)
+- Q7: we predict the STANDARD segment because flagship products
+  (MSCI Taiwan, MSCI EM) and the desk's flows are Standard-tracker
+  flows (§2.3 three-layer design cited)
+- Q8 COMPUTED: our walk's implicit "whole market" (May-26 frame) =
+  named 144 stocks $2,840B float-adj + modeled tail $711B =
+  **$3,552B float-adj ($4,527B full); TSMC 43.7% of float total**;
+  count anchor substitutes for measuring the true total; UPGRADE
+  RECORDED: reconcile vs TWSE official aggregate market cap
+  (count-anchored -> value-anchored tail)
+
+## Session 9i continued-46 (2026-08-05) — EXPLAINED-FROM-ZERO QA DOC (running record)
+- Hover fix: company name first inside parens on the full-ladder
+  chart. docs/INDEX_REVIEW_EXPLAINED_QA.md created: Part 1 =
+  no-abbreviation explanation; Part 2 = running Q&A (user's
+  follow-ups recorded there by standing instruction)
+- KEY CITATIONS nailed from the May-2026 book: 85% = published
+  design parameter (Standard 85%±5%, §2.3.1 p.23); global
+  reference from DM investable universe, EM = HALF of DM
+  (§2.3.2.1); **the book's own May-2026 worked example (Apr-20
+  data): DM reference $15.75B -> EM range ~$3.9-9.1B — our TW walk
+  ($4.6-5.8B) sits inside it, the consistency check**
+- HONESTY DEMO computed: walking only our 150 named stocks crosses
+  85% at rank 33 (~$15B — TSMC alone 55% of tracked float value);
+  the count-anchored modeled body pushes it to ~$5.8B between real
+  members (~2376 Gigabyte) — "no single real company at the
+  stopping point, and we say so"
+- Deletion line (Q5): buffer 2/3-1.5x cutoff §3.1.5.1 p.44 (+fn24
+  light 1/2-1.8x), range floor 0.5x §2.3.2; May-26 realized: dels
+  0.73-0.99x our line, survivors >=1.05x. Add gates (Q6) all in
+  book: float §2.2.4/§3.1.2.3/.5, liquidity §2.2.5/§3.1.2.4,
+  foreign room §3.1.2.6 p.40. Queued: "show the walk" workbench
+  view (Q4 commitment); next QA entry = decade PIT quality review
+
+## Session 9i continued-45 (2026-08-05) — VIEWER COLUMN DROP + FULL-LADDER WORKBENCH CHART
+- (Note: the interim c-44 attempt was REVERTED at user request via
+  git checkout to bc45c31 — clean single-file restore, verified)
+- Constituent viewer: 'confidence' column removed (ticker+company)
+- Workbench live chart REPLACED by _full_member_chart: ALL current
+  TW members (~77-79) on one chart, SMALLEST cap left -> LARGEST
+  right, log-y, zones colored (red = below GMSR sweep zone, orange
+  = 1.0-1.15x buffer, blue safe), tail names labeled, GMSR/buffer/
+  hard-floor hlines; caption states full-ladder GMSR ($6.45B)
+  differs from boundary-frame estimate — frames stated, not blended
+- Suite 442 green; sandbox screenshot verified (7 red / 10 orange
+  in today's frame)
+
 ## Session 9i continued-43 (2026-08-05) — PIT TIME-TRAVEL: any-date index reconstruction (TW)
 - agents/pit_constituents.py: members_asof(date) = EWT anchor
   reverse-rolled through reviews by EFFECTIVE date (changes bind at

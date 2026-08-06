@@ -138,6 +138,129 @@ def name_forecast(code, side, ann, asof, shares_hint=None):
             "scenario": scen, "advice": ADVICE[scen]}
 
 
+# ── v2 (c-64): CHANNEL DECOMPOSITION per Q34 ─────────────────────
+# Supply on the effective date arrives through 3.5 channels, each
+# leaking into a DIFFERENT dataset:
+#   CH1 borrow-visible   shorts built in the window (SBL delta) —
+#                        PRIMARY instrument for deletions
+#   CH2 inventory/long   existing holders selling early to re-buy
+#                        (deletes) or longs accumulating (adds) —
+#                        visible only as residual abnormal volume,
+#                        SIGNED by foreign net direction
+#   CH3 toll-collectors  no pre-position: bid the auction at a
+#                        discount, exit T+1 — INVISIBLE in the
+#                        window; modeled as the uncommitted
+#                        residual that must be paid the measured
+#                        toll (15-55bps by cell)
+#   CH3.5 derivatives    footprint shifted to futures/swaps —
+#                        flagged unobservable from cash data
+# Side-aware weighting: deletes read CH1 first; adds read CH2
+# (completion + foreign-in) first, with borrow build reinterpreted
+# as post-add FADE positioning.
+LAM = 0.093                       # per-stock passive ratio (Q28)
+
+V2_SCEN = [
+    # (name, rule summary) — rules DECLARED before the regrade
+    ("SQUEEZE-RISK", "wrong-way foreign AND completion >= 1.5 "
+                     "(H16 compound) — print may clear AGAINST "
+                     "the obligated side"),
+    ("OVERSUPPLIED", "committed supply > 1.2x passive demand"),
+    ("COMMITTED", "0.7-1.2x — inventory matches demand; clean "
+                  "print expected"),
+    ("PARTIAL", "0.3-0.7x — building; monitor daily"),
+    ("TOLL-DEPENDENT", "< 0.3x — the close leans on "
+                       "toll-collectors; expect a discount print "
+                       "and T+1 bounce"),
+]
+
+
+def _sbl_series(code, d0, d1):
+    p = ROOT / "data" / "event_data_cache.json"
+    if not p.exists():
+        return None
+    sh = json.loads(p.read_text()).get("short", {})
+    days = sorted(d for d in sh
+                  if d0.replace("-", "") <= d <= d1.replace("-", ""))
+    bal = [sh[d][code][1] for d in days
+           if sh.get(d, {}).get(code)]
+    return bal if len(bal) >= 2 else None
+
+
+def supply_decomposition(code, side, ann, asof,
+                         float_shares=None):
+    """v2 read: passive demand (per-stock lambda model) vs the
+    committed supply decomposed by channel. All PIT at `asof`."""
+    import pandas as pd
+    px, sh = _series(code)
+    px, shd = px[px.index <= asof], sh[sh.index <= asof]
+    pre = px[px.index < ann]
+    base_adv = float(pre["Trading_Volume"].tail(60).median())
+    if float_shares is None:
+        n_sh = float(shd["NumberOfSharesIssued"].iloc[-1])
+        float_shares = n_sh * 0.7          # fallback; caller may
+        #                                    pass the v2 float
+    passive = LAM * float_shares           # Q28 per-stock model
+    win = px[px.index >= ann]
+    cum_abn = float((win["Trading_Volume"] - base_adv)
+                    .clip(lower=0).sum())
+    # CH1 borrow-visible
+    bal = _sbl_series(code, ann, asof)
+    ch1 = (max(bal[-1] - bal[0], 0.0) / passive
+           if bal and passive else None)
+    standing_advd = (bal[-1] / base_adv
+                     if bal and base_adv else None)
+    # foreign direction (signs CH2)
+    shw = shd[shd.index >= ann]
+    f_pp = (float(shw["ForeignInvestmentSharesRatio"].iloc[-1]
+                  - shw["ForeignInvestmentSharesRatio"].iloc[0])
+            if len(shw) > 1 else 0.0)
+    consistent = (f_pp < 0) if side == "del" else (f_pp > 0)
+    wrongway = (f_pp > 0.5) if side == "del" else (f_pp < -0.5)
+    # CH2 inventory/long = completion residual after CH1, signed
+    completion = cum_abn / passive if passive else None
+    resid = max((completion or 0) - (ch1 or 0), 0.0)
+    ch2 = resid * (1.0 if consistent else 0.5 if not wrongway
+                   else 0.0)
+    committed = (ch1 or 0) + ch2
+    ch3 = max(1.0 - committed, 0.0)        # toll-collector reliance
+    if wrongway and (completion or 0) >= 1.5:
+        scen = "SQUEEZE-RISK"
+    elif committed > 1.2:
+        scen = "OVERSUPPLIED"
+    elif committed >= 0.7:
+        scen = "COMMITTED"
+    elif committed >= 0.3:
+        scen = "PARTIAL"
+    else:
+        scen = "TOLL-DEPENDENT"
+    fade_flag = (side == "add" and ch1 is not None and ch1 > 0.1)
+    return {"code": code, "side": side, "asof": asof,
+            "passive_demand_sh": int(passive),
+            "passive_x_adv": round(passive / base_adv, 1)
+            if base_adv else None,
+            "completion": round(completion, 2)
+            if completion is not None else None,
+            "ch1_borrow_x_demand": round(ch1, 2)
+            if ch1 is not None else None,
+            "standing_borrow_adv_days": round(standing_advd, 1)
+            if standing_advd is not None else None,
+            "ch2_inventory_x_demand": round(ch2, 2),
+            "foreign_pp": round(f_pp, 2),
+            "foreign_consistent": bool(consistent),
+            "wrongway": bool(wrongway),
+            "ch3_toll_reliance": round(ch3, 2),
+            "ch35_derivatives": "unobservable from cash data "
+                                "(flagged)",
+            "add_fade_pressure": bool(fade_flag),
+            "scenario_v2": scen,
+            "instrument_priority": ("CH1 borrow (primary) -> "
+                                    "completion -> foreign"
+                                    if side == "del" else
+                                    "completion + foreign-in "
+                                    "(primary pair) -> borrow = "
+                                    "fade signal")}
+
+
 def realized(code, eff):
     """Post-hoc check (NOT part of the PIT frame): actual T-day
     volume multiple + T+3 close-to-close move."""

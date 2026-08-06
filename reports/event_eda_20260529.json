@@ -1,0 +1,177 @@
+{
+ "event": "MSCI 2026-05 SAIR",
+ "ann": "2026-05-12",
+ "eff": "2026-05-29",
+ "summary": [
+  "1102 DEL | 9.7M | 1951 | 18.7* | 21.1 | -164 | -59",
+  "1402 DEL | 13.9M | 2944 | 19.6* | 23.7 | -281 | -234",
+  "1504 DEL | 13.9M | 1307 | 8.7* | 12.7 | +119 | +493",
+  "2324 DEL | 48.3M | 2424 | 4.7* | 14.7 | -96 | +995",
+  "2474 DEL | 5.0M | 309 | 5.7* | 12.3 | -0 | +983",
+  "2610 DEL | 26.8M | 3365 | 11.7* | 11.7 | -26 | +236",
+  "2633 DEL | 5.4M | 3096 | 53.5* | 41.4 | +80 | +101"
+ ],
+ "panel": {
+  "1102": {
+   "side": "DEL",
+   "adv": 9710266.2,
+   "float_shares": 1950609584.5500002,
+   "ff_src": "default",
+   "forced_est": 181406691.36315,
+   "ann": "2026-05-12",
+   "eff": "2026-05-29",
+   "expost": {
+    "event": "MSCI 2026-05 SAIR",
+    "prov": "MSCI",
+    "eff": "2026-05-29",
+    "code": "1102",
+    "side": "Sell",
+    "last_cont": 33.45,
+    "auction_px": 34.0,
+    "disl_bps": 164.4,
+    "pressure_bps": -164.4,
+    "pm_drift_bps": 29.8,
+    "auction_share": 0.914,
+    "t1_revert_bps": -58.8
+   }
+  },
+  "1402": {
+   "side": "DEL",
+   "adv": 13939624.8,
+   "float_shares": 2944081374.8500004,
+   "ff_src": "default",
+   "forced_est": 273799567.86105,
+   "ann": "2026-05-12",
+   "eff": "2026-05-29",
+   "expost": {
+    "event": "MSCI 2026-05 SAIR",
+    "prov": "MSCI",
+    "eff": "2026-05-29",
+    "code": "1402",
+    "side": "Sell",
+    "last_cont": 24.95,
+    "auction_px": 25.65,
+    "disl_bps": 280.6,
+    "pressure_bps": -280.6,
+    "pm_drift_bps": 20.0,
+    "auction_share": 0.786,
+    "t1_revert_bps": -233.9
+   }
+  },
+  "1504": {
+   "side": "DEL",
+   "adv": 13901988.166666666,
+   "float_shares": 1307042376.2,
+   "ff_src": "default",
+   "forced_est": 121554940.9866,
+   "ann": "2026-05-12",
+   "eff": "2026-05-29",
+   "expost": {
+    "event": "MSCI 2026-05 SAIR",
+    "prov": "MSCI",
+    "eff": "2026-05-29",
+    "code": "1504",
+    "side": "Sell",
+    "last_cont": 75.9,
+    "auction_px": 75.0,
+    "disl_bps": -118.6,
+    "pressure_bps": 118.6,
+    "pm_drift_bps": -26.4,
+    "auction_share": 0.676,
+    "t1_revert_bps": 493.3
+   }
+  },
+  "2324": {
+   "side": "DEL",
+   "adv": 48265756.6,
+   "float_shares": 2423930643.75,
+   "ff_src": "default",
+   "forced_est": 225425549.86875,
+   "ann": "2026-05-12",
+   "eff": "2026-05-29",
+   "expost": {
+    "event": "MSCI 2026-05 SAIR",
+    "prov": "MSCI",
+    "eff": "2026-05-29",
+    "code": "2324",
+    "side": "Sell",
+    "last_cont": 36.35,
+    "auction_px": 36.7,
+    "disl_bps": 96.3,
+    "pressure_bps": -96.3,
+    "pm_drift_bps": 13.7,
+    "auction_share": 0.489,
+    "t1_revert_bps": 994.6
+   }
+  },
+  "2474": {
+   "side": "DEL",
+   "adv": 5027536.066666666,
+   "float_shares": 308752987.40000004,
+   "ff_src": "default",
+   "forced_est": 28714027.8282,
+   "ann": "2026-05-12",
+   "eff": "2026-05-29",
+   "expost": {
+    "event": "MSCI 2026-05 SAIR",
+    "prov": "MSCI",
+    "eff": "2026-05-29",
+    "code": "2474",
+    "side": "Sell",
+    "last_cont": 203.5,
+    "auction_px": 203.5,
+    "disl_bps": 0.0,
+    "pressure_bps": -0.0,
+    "pm_drift_bps": -74.3,
+    "auction_share": 0.738,
+    "t1_revert_bps": 982.8
+   }
+  },
+  "2610": {
+   "side": "DEL",
+   "adv": 26807193.3,
+   "float_shares": 3364867700.15,
+   "ff_src": "default",
+   "forced_est": 312932696.11395,
+   "ann": "2026-05-12",
+   "eff": "2026-05-29",
+   "expost": {
+    "event": "MSCI 2026-05 SAIR",
+    "prov": "MSCI",
+    "eff": "2026-05-29",
+    "code": "2610",
+    "side": "Sell",
+    "last_cont": 19.05,
+    "auction_px": 19.1,
+    "disl_bps": 26.2,
+    "pressure_bps": -26.2,
+    "pm_drift_bps": -52.8,
+    "auction_share": 0.783,
+    "t1_revert_bps": 235.6
+   }
+  },
+  "2633": {
+   "side": "DEL",
+   "adv": 5379517.8,
+   "float_shares": 3095561181.9,
+   "ff_src": "default",
+   "forced_est": 287887189.9167,
+   "ann": "2026-05-12",
+   "eff": "2026-05-29",
+   "expost": {
+    "event": "MSCI 2026-05 SAIR",
+    "prov": "MSCI",
+    "eff": "2026-05-29",
+    "code": "2633",
+    "side": "Sell",
+    "last_cont": 25.05,
+    "auction_px": 24.85,
+    "disl_bps": -79.8,
+    "pressure_bps": 79.8,
+    "pm_drift_bps": -20.0,
+    "auction_share": 0.895,
+    "t1_revert_bps": 100.6
+   }
+  }
+ }
+}

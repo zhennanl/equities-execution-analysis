@@ -1,0 +1,77 @@
+{
+ "2026-07": {
+  "asof": "JUL 31, 2026",
+  "n_constituents": 77,
+  "index_float_cap_musd": 3183008.39,
+  "largest_musd": 1848511.82,
+  "smallest_musd": 1838.55,
+  "median_musd": 10366.44,
+  "implied_market_denominator_busd": 3745.0,
+  "top10": [
+   {
+    "name": "TAIWAN SEMICONDUCTOR MFG",
+    "float_cap_busd": 1848.51,
+    "weight_pct": 58.07
+   },
+   {
+    "name": "MEDIATEK INC",
+    "float_cap_busd": 158.78,
+    "weight_pct": 4.99,
+    "our_full_cap_busd": 175.44,
+    "implied_fif": 0.905
+   },
+   {
+    "name": "DELTA ELECTRONICS",
+    "float_cap_busd": 98.86,
+    "weight_pct": 3.11,
+    "our_full_cap_busd": 131.08,
+    "implied_fif": 0.754
+   },
+   {
+    "name": "HON HAI PRECISION IND CO",
+    "float_cap_busd": 94.71,
+    "weight_pct": 2.98
+   },
+   {
+    "name": "ASE TECHNOLOGY HOLDING",
+    "float_cap_busd": 57.28,
+    "weight_pct": 1.8,
+    "our_full_cap_busd": 76.34,
+    "implied_fif": 0.75
+   },
+   {
+    "name": "UNITED MICROELECTRONICS",
+    "float_cap_busd": 42.38,
+    "weight_pct": 1.33
+   },
+   {
+    "name": "ELITE MATERIAL CO",
+    "float_cap_busd": 42.09,
+    "weight_pct": 1.32,
+    "our_full_cap_busd": 52.31,
+    "implied_fif": 0.805
+   },
+   {
+    "name": "FUBON FINANCIAL HOLDING",
+    "float_cap_busd": 33.81,
+    "weight_pct": 1.06,
+    "our_full_cap_busd": 56.03,
+    "implied_fif": 0.603
+   },
+   {
+    "name": "CTBC FINANCIAL HOLDING",
+    "float_cap_busd": 33.59,
+    "weight_pct": 1.06,
+    "our_full_cap_busd": 39.29,
+    "implied_fif": 0.855
+   },
+   {
+    "name": "ACCTON TECHNOLOGY CORP",
+    "float_cap_busd": 33.2,
+    "weight_pct": 1.04,
+    "our_full_cap_busd": 36.69,
+    "implied_fif": 0.905
+   }
+  ]
+ }
+}

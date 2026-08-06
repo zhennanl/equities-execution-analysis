@@ -1,0 +1,988 @@
+{
+ "asof": "2026-05-01",
+ "event": "MSCI May-2026 frame",
+ "denominator": {
+  "named_head": {
+   "n": 144,
+   "full_b": 3510.0,
+   "float_adj_b": 2840.0,
+   "how": "per-company price x shares (TWSE filings via FinMind, Apr-30) x per-company float estimate"
+  },
+  "modeled_body": {
+   "n": 400,
+   "full_b": 1016.0,
+   "float_adj_b": 711.0,
+   "how": "400 names, sizes drawn log-uniform $0.3-10B (seed 11), float ratio 0.7; stands in for the ~1,700 listed companies we do not track by name"
+  },
+  "total_float_adj_b": 3552.0
+ },
+ "target_b": 3019.0,
+ "walk": {
+  "crossing_rank": 135,
+  "crossing_kind": "body",
+  "size_line_b": 5.81,
+  "coverage_at_crossing": 0.8501,
+  "honesty": "the crossing lands in the MODELED body, not at a nameable company \u2014 the nearest real members bracket it"
+ },
+ "nearest_real_names": [
+  {
+   "code": "4938",
+   "company": "PEGATRON",
+   "cap_b": 6.79
+  },
+  {
+   "code": "6770",
+   "company": "",
+   "cap_b": 6.78
+  },
+  {
+   "code": "3293",
+   "company": "INTERNATIONAL GAMES SYSTEM LTD",
+   "cap_b": 6.49
+  },
+  {
+   "code": "2615",
+   "company": "WAN HAI LINES",
+   "cap_b": 6.44
+  },
+  {
+   "code": "5871",
+   "company": "CHAILEASE HOLDING LTD",
+   "cap_b": 6.08
+  },
+  {
+   "code": "1802",
+   "company": "",
+   "cap_b": 6.0
+  },
+  {
+   "code": "3481",
+   "company": "INNOLUX CORP",
+   "cap_b": 5.89
+  },
+  {
+   "code": "5876",
+   "company": "SHANGHAI COMMERCIAL",
+   "cap_b": 5.84
+  }
+ ],
+ "sensitivity": {
+  "body_ff_0.5": {
+   "denominator_b": 3348.0,
+   "size_line_b": 6.79
+  },
+  "body_ff_0.8": {
+   "denominator_b": 3653.0,
+   "size_line_b": 5.15
+  },
+  "head_ff_-10%": {
+   "denominator_b": 3268.0,
+   "size_line_b": 5.22
+  },
+  "head_ff_+10%": {
+   "denominator_b": 3830.0,
+   "size_line_b": 6.08
+  }
+ },
+ "curve": [
+  {
+   "rank": 1,
+   "cap_b": 1703.57,
+   "cum_share": 0.4375,
+   "kind": "named",
+   "code": "2330",
+   "company": "TAIWAN SEMICONDUCTOR MANUFACTU"
+  },
+  {
+   "rank": 5,
+   "cap_b": 65.04,
+   "cum_share": 0.5345,
+   "kind": "named",
+   "code": "3711",
+   "company": "ASE TECHNOLOGY HOLDING"
+  },
+  {
+   "rank": 9,
+   "cap_b": 38.79,
+   "cum_share": 0.5679,
+   "kind": "named",
+   "code": "2881",
+   "company": "FUBON FINANCIAL HOLDING"
+  },
+  {
+   "rank": 13,
+   "cap_b": 32.46,
+   "cum_share": 0.5951,
+   "kind": "named",
+   "code": "2412",
+   "company": "CHUNGHWA TELECOM LTD"
+  },
+  {
+   "rank": 17,
+   "cap_b": 27.38,
+   "cum_share": 0.6181,
+   "kind": "named",
+   "code": "7769",
+   "company": "HONPRECISION INC"
+  },
+  {
+   "rank": 21,
+   "cap_b": 21.86,
+   "cum_share": 0.6369,
+   "kind": "named",
+   "code": "1303",
+   "company": "NAN YA PLASTICS CORP"
+  },
+  {
+   "rank": 25,
+   "cap_b": 19.98,
+   "cum_share": 0.653,
+   "kind": "named",
+   "code": "8046",
+   "company": ""
+  },
+  {
+   "rank": 29,
+   "cap_b": 17.57,
+   "cum_share": 0.6674,
+   "kind": "named",
+   "code": "3443",
+   "company": "GLOBAL UNICHIP"
+  },
+  {
+   "rank": 33,
+   "cap_b": 14.85,
+   "cum_share": 0.6807,
+   "kind": "named",
+   "code": "6223",
+   "company": "MPI CORP"
+  },
+  {
+   "rank": 37,
+   "cap_b": 13.41,
+   "cum_share": 0.6914,
+   "kind": "named",
+   "code": "3231",
+   "company": "WISTRON"
+  },
+  {
+   "rank": 41,
+   "cap_b": 12.76,
+   "cum_share": 0.7016,
+   "kind": "named",
+   "code": "2892",
+   "company": "FIRST FINANCIAL HOLDING LTD"
+  },
+  {
+   "rank": 45,
+   "cap_b": 11.83,
+   "cum_share": 0.7112,
+   "kind": "named",
+   "code": "2301",
+   "company": "LITE ON TECHNOLOGY"
+  },
+  {
+   "rank": 49,
+   "cap_b": 11.07,
+   "cum_share": 0.7201,
+   "kind": "named",
+   "code": "5880",
+   "company": "TAIWAN COOPERATIVE FINANCIAL H"
+  },
+  {
+   "rank": 53,
+   "cap_b": 10.09,
+   "cum_share": 0.7282,
+   "kind": "named",
+   "code": "1301",
+   "company": "FORMOSA PLASTICS CORP"
+  },
+  {
+   "rank": 57,
+   "cap_b": 9.56,
+   "cum_share": 0.7359,
+   "kind": "named",
+   "code": "2395",
+   "company": "ADVANTECH"
+  },
+  {
+   "rank": 61,
+   "cap_b": 9.3,
+   "cum_share": 0.7429,
+   "kind": "body",
+   "code": "BODY004",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 65,
+   "cap_b": 9.08,
+   "cum_share": 0.7502,
+   "kind": "named",
+   "code": "2002",
+   "company": "CHINA STEEL CORP"
+  },
+  {
+   "rank": 69,
+   "cap_b": 8.95,
+   "cum_share": 0.7573,
+   "kind": "named",
+   "code": "1590",
+   "company": "AIRTAC INTERNATIONAL GROUP"
+  },
+  {
+   "rank": 73,
+   "cap_b": 8.63,
+   "cum_share": 0.7643,
+   "kind": "named",
+   "code": "1519",
+   "company": "FORTUNE ELECTRIC"
+  },
+  {
+   "rank": 77,
+   "cap_b": 8.52,
+   "cum_share": 0.771,
+   "kind": "named",
+   "code": "2379",
+   "company": "REALTEK SEMICONDUCTOR CORP"
+  },
+  {
+   "rank": 81,
+   "cap_b": 8.17,
+   "cum_share": 0.7771,
+   "kind": "named",
+   "code": "2207",
+   "company": "HOTAI MOTOR LTD"
+  },
+  {
+   "rank": 85,
+   "cap_b": 7.8,
+   "cum_share": 0.7834,
+   "kind": "body",
+   "code": "BODY018",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 89,
+   "cap_b": 7.66,
+   "cum_share": 0.7895,
+   "kind": "named",
+   "code": "2801",
+   "company": "CHANG HWA COMMERCIAL BANK LTD"
+  },
+  {
+   "rank": 93,
+   "cap_b": 7.42,
+   "cum_share": 0.7954,
+   "kind": "body",
+   "code": "BODY023",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 97,
+   "cap_b": 7.22,
+   "cum_share": 0.8011,
+   "kind": "body",
+   "code": "BODY027",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 101,
+   "cap_b": 7.09,
+   "cum_share": 0.8068,
+   "kind": "body",
+   "code": "BODY030",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 105,
+   "cap_b": 6.95,
+   "cum_share": 0.8123,
+   "kind": "body",
+   "code": "BODY033",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 109,
+   "cap_b": 6.81,
+   "cum_share": 0.8177,
+   "kind": "body",
+   "code": "BODY037",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 113,
+   "cap_b": 6.74,
+   "cum_share": 0.8231,
+   "kind": "body",
+   "code": "BODY039",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 117,
+   "cap_b": 6.49,
+   "cum_share": 0.8283,
+   "kind": "named",
+   "code": "3293",
+   "company": "INTERNATIONAL GAMES SYSTEM LTD"
+  },
+  {
+   "rank": 121,
+   "cap_b": 6.44,
+   "cum_share": 0.8334,
+   "kind": "named",
+   "code": "2615",
+   "company": "WAN HAI LINES"
+  },
+  {
+   "rank": 125,
+   "cap_b": 6.27,
+   "cum_share": 0.8384,
+   "kind": "body",
+   "code": "BODY049",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 129,
+   "cap_b": 6.0,
+   "cum_share": 0.8432,
+   "kind": "named",
+   "code": "1802",
+   "company": ""
+  },
+  {
+   "rank": 133,
+   "cap_b": 5.84,
+   "cum_share": 0.8478,
+   "kind": "named",
+   "code": "5876",
+   "company": "SHANGHAI COMMERCIAL"
+  }
+ ],
+ "anim": [
+  {
+   "rank": 1,
+   "cap_b": 1703.57,
+   "cum_share": 0.4375,
+   "kind": "named",
+   "code": "2330",
+   "company": "TAIWAN SEMICONDUCTOR MANUFACTU"
+  },
+  {
+   "rank": 2,
+   "cap_b": 173.04,
+   "cum_share": 0.4669,
+   "kind": "named",
+   "code": "2308",
+   "company": "DELTA ELECTRONICS"
+  },
+  {
+   "rank": 3,
+   "cap_b": 128.81,
+   "cum_share": 0.4988,
+   "kind": "named",
+   "code": "2454",
+   "company": "MEDIATEK"
+  },
+  {
+   "rank": 4,
+   "cap_b": 94.31,
+   "cum_share": 0.5217,
+   "kind": "named",
+   "code": "2317",
+   "company": "HON HAI PRECISION INDUSTRY"
+  },
+  {
+   "rank": 5,
+   "cap_b": 65.04,
+   "cum_share": 0.5345,
+   "kind": "named",
+   "code": "3711",
+   "company": "ASE TECHNOLOGY HOLDING"
+  },
+  {
+   "rank": 6,
+   "cap_b": 48.49,
+   "cum_share": 0.544,
+   "kind": "named",
+   "code": "2383",
+   "company": "ELITE MATERIAL"
+  },
+  {
+   "rank": 7,
+   "cap_b": 42.81,
+   "cum_share": 0.5525,
+   "kind": "named",
+   "code": "3037",
+   "company": "UNIMICRON TECHNOLOGY"
+  },
+  {
+   "rank": 8,
+   "cap_b": 39.36,
+   "cum_share": 0.5602,
+   "kind": "named",
+   "code": "2345",
+   "company": "ACCTON TECHNOLOGY"
+  },
+  {
+   "rank": 9,
+   "cap_b": 38.79,
+   "cum_share": 0.5679,
+   "kind": "named",
+   "code": "2881",
+   "company": "FUBON FINANCIAL HOLDING"
+  },
+  {
+   "rank": 10,
+   "cap_b": 37.14,
+   "cum_share": 0.5752,
+   "kind": "named",
+   "code": "2382",
+   "company": "QUANTA COMPUTER INC"
+  },
+  {
+   "rank": 11,
+   "cap_b": 34.85,
+   "cum_share": 0.5821,
+   "kind": "named",
+   "code": "2882",
+   "company": "CATHAY FINANCIAL HOLDING"
+  },
+  {
+   "rank": 12,
+   "cap_b": 33.86,
+   "cum_share": 0.5887,
+   "kind": "named",
+   "code": "3017",
+   "company": "ASIA VITAL COMPONENTS"
+  },
+  {
+   "rank": 13,
+   "cap_b": 32.46,
+   "cum_share": 0.5951,
+   "kind": "named",
+   "code": "2412",
+   "company": "CHUNGHWA TELECOM LTD"
+  },
+  {
+   "rank": 14,
+   "cap_b": 31.67,
+   "cum_share": 0.6014,
+   "kind": "named",
+   "code": "2891",
+   "company": "CTBC FINANCIAL HOLDING"
+  },
+  {
+   "rank": 15,
+   "cap_b": 29.92,
+   "cum_share": 0.6073,
+   "kind": "named",
+   "code": "2303",
+   "company": "UNITED MICRO ELECTRONICS CORP"
+  },
+  {
+   "rank": 16,
+   "cap_b": 27.74,
+   "cum_share": 0.6127,
+   "kind": "named",
+   "code": "2360",
+   "company": "CHROMA ATE INC"
+  },
+  {
+   "rank": 17,
+   "cap_b": 27.38,
+   "cum_share": 0.6181,
+   "kind": "named",
+   "code": "7769",
+   "company": "HONPRECISION INC"
+  },
+  {
+   "rank": 18,
+   "cap_b": 26.73,
+   "cum_share": 0.6234,
+   "kind": "named",
+   "code": "6669",
+   "company": "WIWYNN CORPORATION"
+  },
+  {
+   "rank": 19,
+   "cap_b": 24.29,
+   "cum_share": 0.6282,
+   "kind": "named",
+   "code": "3653",
+   "company": "JENTECH PRECISION INDUSTRIAL L"
+  },
+  {
+   "rank": 20,
+   "cap_b": 22.11,
+   "cum_share": 0.6325,
+   "kind": "named",
+   "code": "2368",
+   "company": "GOLD CIRCUIT ELECTRONICS"
+  },
+  {
+   "rank": 21,
+   "cap_b": 21.86,
+   "cum_share": 0.6369,
+   "kind": "named",
+   "code": "1303",
+   "company": "NAN YA PLASTICS CORP"
+  },
+  {
+   "rank": 23,
+   "cap_b": 20.55,
+   "cum_share": 0.6451,
+   "kind": "named",
+   "code": "2408",
+   "company": ""
+  },
+  {
+   "rank": 25,
+   "cap_b": 19.98,
+   "cum_share": 0.653,
+   "kind": "named",
+   "code": "8046",
+   "company": ""
+  },
+  {
+   "rank": 27,
+   "cap_b": 18.21,
+   "cum_share": 0.6604,
+   "kind": "named",
+   "code": "2887",
+   "company": "TS FINANCIAL HOLDING LTD"
+  },
+  {
+   "rank": 29,
+   "cap_b": 17.57,
+   "cum_share": 0.6674,
+   "kind": "named",
+   "code": "3443",
+   "company": "GLOBAL UNICHIP"
+  },
+  {
+   "rank": 31,
+   "cap_b": 16.53,
+   "cum_share": 0.6739,
+   "kind": "named",
+   "code": "6505",
+   "company": ""
+  },
+  {
+   "rank": 33,
+   "cap_b": 14.85,
+   "cum_share": 0.6807,
+   "kind": "named",
+   "code": "6223",
+   "company": "MPI CORP"
+  },
+  {
+   "rank": 35,
+   "cap_b": 13.72,
+   "cum_share": 0.6861,
+   "kind": "named",
+   "code": "2880",
+   "company": "HUA NAN FINANCIAL HOLDINGS"
+  },
+  {
+   "rank": 37,
+   "cap_b": 13.41,
+   "cum_share": 0.6914,
+   "kind": "named",
+   "code": "3231",
+   "company": "WISTRON"
+  },
+  {
+   "rank": 39,
+   "cap_b": 12.93,
+   "cum_share": 0.6965,
+   "kind": "named",
+   "code": "8299",
+   "company": ""
+  },
+  {
+   "rank": 41,
+   "cap_b": 12.76,
+   "cum_share": 0.7016,
+   "kind": "named",
+   "code": "2892",
+   "company": "FIRST FINANCIAL HOLDING LTD"
+  },
+  {
+   "rank": 43,
+   "cap_b": 12.39,
+   "cum_share": 0.7065,
+   "kind": "named",
+   "code": "4958",
+   "company": "ZHEN DING TECHNOLOGY HOLDING L"
+  },
+  {
+   "rank": 45,
+   "cap_b": 11.83,
+   "cum_share": 0.7112,
+   "kind": "named",
+   "code": "2301",
+   "company": "LITE ON TECHNOLOGY"
+  },
+  {
+   "rank": 47,
+   "cap_b": 11.38,
+   "cum_share": 0.7157,
+   "kind": "named",
+   "code": "2449",
+   "company": "KING YUAN ELECTRONICS"
+  },
+  {
+   "rank": 49,
+   "cap_b": 11.07,
+   "cum_share": 0.7201,
+   "kind": "named",
+   "code": "5880",
+   "company": "TAIWAN COOPERATIVE FINANCIAL H"
+  },
+  {
+   "rank": 51,
+   "cap_b": 10.37,
+   "cum_share": 0.7242,
+   "kind": "named",
+   "code": "3661",
+   "company": "ALCHIP TECHNOLOGIES LTD"
+  },
+  {
+   "rank": 53,
+   "cap_b": 10.09,
+   "cum_share": 0.7282,
+   "kind": "named",
+   "code": "1301",
+   "company": "FORMOSA PLASTICS CORP"
+  },
+  {
+   "rank": 55,
+   "cap_b": 9.88,
+   "cum_share": 0.7321,
+   "kind": "body",
+   "code": "BODY001",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 57,
+   "cap_b": 9.56,
+   "cum_share": 0.7359,
+   "kind": "named",
+   "code": "2395",
+   "company": "ADVANTECH"
+  },
+  {
+   "rank": 59,
+   "cap_b": 9.39,
+   "cum_share": 0.7393,
+   "kind": "named",
+   "code": "2337",
+   "company": ""
+  },
+  {
+   "rank": 61,
+   "cap_b": 9.3,
+   "cum_share": 0.7429,
+   "kind": "body",
+   "code": "BODY004",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 63,
+   "cap_b": 9.14,
+   "cum_share": 0.7466,
+   "kind": "body",
+   "code": "BODY006",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 65,
+   "cap_b": 9.08,
+   "cum_share": 0.7502,
+   "kind": "named",
+   "code": "2002",
+   "company": "CHINA STEEL CORP"
+  },
+  {
+   "rank": 67,
+   "cap_b": 9.02,
+   "cum_share": 0.7538,
+   "kind": "body",
+   "code": "BODY008",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 69,
+   "cap_b": 8.95,
+   "cum_share": 0.7573,
+   "kind": "named",
+   "code": "1590",
+   "company": "AIRTAC INTERNATIONAL GROUP"
+  },
+  {
+   "rank": 71,
+   "cap_b": 8.93,
+   "cum_share": 0.7608,
+   "kind": "body",
+   "code": "BODY010",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 73,
+   "cap_b": 8.63,
+   "cum_share": 0.7643,
+   "kind": "named",
+   "code": "1519",
+   "company": "FORTUNE ELECTRIC"
+  },
+  {
+   "rank": 75,
+   "cap_b": 8.56,
+   "cum_share": 0.7676,
+   "kind": "named",
+   "code": "3189",
+   "company": ""
+  },
+  {
+   "rank": 77,
+   "cap_b": 8.52,
+   "cum_share": 0.771,
+   "kind": "named",
+   "code": "2379",
+   "company": "REALTEK SEMICONDUCTOR CORP"
+  },
+  {
+   "rank": 79,
+   "cap_b": 8.34,
+   "cum_share": 0.7743,
+   "kind": "body",
+   "code": "BODY013",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 81,
+   "cap_b": 8.17,
+   "cum_share": 0.7771,
+   "kind": "named",
+   "code": "2207",
+   "company": "HOTAI MOTOR LTD"
+  },
+  {
+   "rank": 83,
+   "cap_b": 8.03,
+   "cum_share": 0.7803,
+   "kind": "body",
+   "code": "BODY016",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 85,
+   "cap_b": 7.8,
+   "cum_share": 0.7834,
+   "kind": "body",
+   "code": "BODY018",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 87,
+   "cap_b": 7.76,
+   "cum_share": 0.7864,
+   "kind": "body",
+   "code": "BODY020",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 89,
+   "cap_b": 7.66,
+   "cum_share": 0.7895,
+   "kind": "named",
+   "code": "2801",
+   "company": "CHANG HWA COMMERCIAL BANK LTD"
+  },
+  {
+   "rank": 91,
+   "cap_b": 7.49,
+   "cum_share": 0.7924,
+   "kind": "body",
+   "code": "BODY021",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 93,
+   "cap_b": 7.42,
+   "cum_share": 0.7954,
+   "kind": "body",
+   "code": "BODY023",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 95,
+   "cap_b": 7.34,
+   "cum_share": 0.7983,
+   "kind": "body",
+   "code": "BODY025",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 97,
+   "cap_b": 7.22,
+   "cum_share": 0.8011,
+   "kind": "body",
+   "code": "BODY027",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 99,
+   "cap_b": 7.17,
+   "cum_share": 0.804,
+   "kind": "named",
+   "code": "2912",
+   "company": "PRESIDENT CHAIN STORE CORP"
+  },
+  {
+   "rank": 101,
+   "cap_b": 7.09,
+   "cum_share": 0.8068,
+   "kind": "body",
+   "code": "BODY030",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 103,
+   "cap_b": 7.04,
+   "cum_share": 0.8095,
+   "kind": "body",
+   "code": "BODY032",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 105,
+   "cap_b": 6.95,
+   "cum_share": 0.8123,
+   "kind": "body",
+   "code": "BODY033",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 107,
+   "cap_b": 6.94,
+   "cum_share": 0.815,
+   "kind": "body",
+   "code": "BODY035",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 109,
+   "cap_b": 6.81,
+   "cum_share": 0.8177,
+   "kind": "body",
+   "code": "BODY037",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 111,
+   "cap_b": 6.78,
+   "cum_share": 0.8204,
+   "kind": "named",
+   "code": "6770",
+   "company": ""
+  },
+  {
+   "rank": 113,
+   "cap_b": 6.74,
+   "cum_share": 0.8231,
+   "kind": "body",
+   "code": "BODY039",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 115,
+   "cap_b": 6.63,
+   "cum_share": 0.8257,
+   "kind": "body",
+   "code": "BODY041",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 117,
+   "cap_b": 6.49,
+   "cum_share": 0.8283,
+   "kind": "named",
+   "code": "3293",
+   "company": "INTERNATIONAL GAMES SYSTEM LTD"
+  },
+  {
+   "rank": 119,
+   "cap_b": 6.47,
+   "cum_share": 0.8308,
+   "kind": "body",
+   "code": "BODY044",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 121,
+   "cap_b": 6.44,
+   "cum_share": 0.8334,
+   "kind": "named",
+   "code": "2615",
+   "company": "WAN HAI LINES"
+  },
+  {
+   "rank": 123,
+   "cap_b": 6.35,
+   "cum_share": 0.8359,
+   "kind": "body",
+   "code": "BODY047",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 125,
+   "cap_b": 6.27,
+   "cum_share": 0.8384,
+   "kind": "body",
+   "code": "BODY049",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 127,
+   "cap_b": 6.17,
+   "cum_share": 0.8408,
+   "kind": "body",
+   "code": "BODY051",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 129,
+   "cap_b": 6.0,
+   "cum_share": 0.8432,
+   "kind": "named",
+   "code": "1802",
+   "company": ""
+  },
+  {
+   "rank": 131,
+   "cap_b": 5.95,
+   "cum_share": 0.8455,
+   "kind": "body",
+   "code": "BODY053",
+   "company": "(modeled body)"
+  },
+  {
+   "rank": 133,
+   "cap_b": 5.84,
+   "cum_share": 0.8478,
+   "kind": "named",
+   "code": "5876",
+   "company": "SHANGHAI COMMERCIAL"
+  },
+  {
+   "rank": 135,
+   "cap_b": 5.81,
+   "cum_share": 0.8501,
+   "kind": "body",
+   "code": "BODY055",
+   "company": "(modeled body)"
+  }
+ ],
+ "consistency_check": "MSCI's published May-2026 numbers (methodology worked example, Apr-20 data): DM reference $15.75B -> EM range ~$3.9-9.1B; our line must sit inside it"
+}

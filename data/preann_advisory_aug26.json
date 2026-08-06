@@ -1,0 +1,585 @@
+{
+ "asof": "2026-08-05 (T-6)",
+ "lambda": 0.093,
+ "cards": [
+  {
+   "code": "2408",
+   "company": "",
+   "side": "add",
+   "status": "SHADOW CALL \u2014 STRONG (frame-robust 1.71-2.84x bar)",
+   "adv_sh_m": 117.6,
+   "float_sh_m": 1413.0,
+   "ff": 0.456,
+   "forced_flow_m_sh": 131.4,
+   "expected_auction_share": "~30-50% of day (add range)",
+   "sbl_balance_m": 86.9,
+   "sbl_pct_of_float": 6.1,
+   "sbl_adv_days": 0.7,
+   "foreign_12m_pp": 2.5,
+   "squeeze_precursor": false,
+   "print_range_x_adv": [
+    1.0,
+    1.8
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      0.9,
+      1.1,
+      1.4
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      3.0,
+      6.1,
+      10.4
+     ],
+     "n_peers": 56,
+     "how": "CONTEXT ONLY \u2014 historical additions were far less liquid names (their float-days 5-10x this name's); excluded from the range to avoid importing their illiquidity",
+     "in_range": false
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      0.7,
+      1.1,
+      1.8
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "2344",
+   "company": "",
+   "side": "add",
+   "status": "frame-sensitive (declared, not called)",
+   "adv_sh_m": 212.6,
+   "float_sh_m": 3105.0,
+   "ff": 0.69,
+   "forced_flow_m_sh": 288.8,
+   "expected_auction_share": "~30-50% of day (add range)",
+   "sbl_balance_m": 146.8,
+   "sbl_pct_of_float": 4.7,
+   "sbl_adv_days": 0.7,
+   "foreign_12m_pp": 3.7,
+   "squeeze_precursor": false,
+   "print_range_x_adv": [
+    1.0,
+    2.3
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      1.1,
+      1.4,
+      1.7
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      3.0,
+      6.1,
+      10.4
+     ],
+     "n_peers": 56,
+     "how": "CONTEXT ONLY \u2014 historical additions were far less liquid names (their float-days 5-10x this name's); excluded from the range to avoid importing their illiquidity",
+     "in_range": false
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      0.9,
+      1.4,
+      2.3
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "8046",
+   "company": "",
+   "side": "add",
+   "status": "frame-sensitive (declared, not called)",
+   "adv_sh_m": 18.1,
+   "float_sh_m": 246.0,
+   "ff": 0.381,
+   "forced_flow_m_sh": 22.9,
+   "expected_auction_share": "~30-50% of day (add range)",
+   "sbl_balance_m": 1.4,
+   "sbl_pct_of_float": 0.6,
+   "sbl_adv_days": 0.1,
+   "foreign_12m_pp": 6.9,
+   "squeeze_precursor": false,
+   "print_range_x_adv": [
+    1.0,
+    2.1
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      1.0,
+      1.3,
+      1.6
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      3.0,
+      6.1,
+      10.4
+     ],
+     "n_peers": 56,
+     "how": "CONTEXT ONLY \u2014 historical additions were far less liquid names (their float-days 5-10x this name's); excluded from the range to avoid importing their illiquidity",
+     "in_range": false
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      0.8,
+      1.3,
+      2.1
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "6919",
+   "company": "CALIWAY BIOPHARMACEUTICA",
+   "side": "del",
+   "status": "pool deepest 0.73x",
+   "adv_sh_m": 7.0,
+   "float_sh_m": 1039.0,
+   "ff": 0.667,
+   "forced_flow_m_sh": 96.6,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": 9.6,
+   "sbl_pct_of_float": 0.9,
+   "sbl_adv_days": 1.4,
+   "foreign_12m_pp": 3.8,
+   "squeeze_precursor": true,
+   "print_range_x_adv": [
+    10.9,
+    23.4
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      10.9,
+      13.8,
+      17.3
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      12.9,
+      18.6,
+      23.4
+     ],
+     "n_peers": 40,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      8.8,
+      13.8,
+      22.6
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "2834",
+   "company": "TAIWAN BUSINESS BANK LTD",
+   "side": "del",
+   "status": "pool 0.81x",
+   "adv_sh_m": 39.7,
+   "float_sh_m": 9106.0,
+   "ff": 0.937,
+   "forced_flow_m_sh": 846.8,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": 291.6,
+   "sbl_pct_of_float": 3.2,
+   "sbl_adv_days": 7.4,
+   "foreign_12m_pp": 0.8,
+   "squeeze_precursor": false,
+   "print_range_x_adv": [
+    15.7,
+    34.9
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      16.9,
+      21.3,
+      26.8
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      15.7,
+      22.7,
+      27.6
+     ],
+     "n_peers": 50,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      13.6,
+      21.3,
+      34.9
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "2609",
+   "company": "YANG MING MARINE TRANSPO",
+   "side": "del",
+   "status": "pool 0.81x",
+   "adv_sh_m": 27.9,
+   "float_sh_m": 2808.0,
+   "ff": 0.804,
+   "forced_flow_m_sh": 261.1,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": 75.1,
+   "sbl_pct_of_float": 2.7,
+   "sbl_adv_days": 2.7,
+   "foreign_12m_pp": 5.5,
+   "squeeze_precursor": true,
+   "print_range_x_adv": [
+    7.4,
+    15.8
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      7.4,
+      9.4,
+      11.8
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      7.8,
+      12.7,
+      15.8
+     ],
+     "n_peers": 29,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      6.0,
+      9.4,
+      15.4
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "1101",
+   "company": "TAIWAN CEMENT",
+   "side": "del",
+   "status": "pool 0.84x",
+   "adv_sh_m": 31.4,
+   "float_sh_m": 6485.0,
+   "ff": 0.862,
+   "forced_flow_m_sh": 603.1,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": 586.6,
+   "sbl_pct_of_float": 9.0,
+   "sbl_adv_days": 18.7,
+   "foreign_12m_pp": -4.0,
+   "squeeze_precursor": true,
+   "print_range_x_adv": [
+    15.0,
+    31.5
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      15.2,
+      19.2,
+      24.1
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      15.0,
+      22.3,
+      26.8
+     ],
+     "n_peers": 47,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      12.3,
+      19.2,
+      31.5
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "3529",
+   "company": "EMEMORY TECHNOLOGY INC",
+   "side": "del",
+   "status": "pool 0.84x",
+   "adv_sh_m": 0.8,
+   "float_sh_m": 52.0,
+   "ff": 0.7,
+   "forced_flow_m_sh": 4.9,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": null,
+   "sbl_pct_of_float": null,
+   "sbl_adv_days": null,
+   "foreign_12m_pp": 6.0,
+   "squeeze_precursor": true,
+   "print_range_x_adv": [
+    4.8,
+    14.0
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      4.8,
+      6.0,
+      7.6
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      6.9,
+      10.5,
+      14.0
+     ],
+     "n_peers": 19,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      3.8,
+      6.0,
+      9.8
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "5871",
+   "company": "CHAILEASE HOLDING LTD",
+   "side": "del",
+   "status": "pool 0.87x",
+   "adv_sh_m": 11.3,
+   "float_sh_m": 1311.0,
+   "ff": 0.766,
+   "forced_flow_m_sh": 121.9,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": 95.5,
+   "sbl_pct_of_float": 7.3,
+   "sbl_adv_days": 8.5,
+   "foreign_12m_pp": 3.0,
+   "squeeze_precursor": true,
+   "print_range_x_adv": [
+    8.6,
+    18.8
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      8.6,
+      10.8,
+      13.6
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      10.5,
+      14.2,
+      18.8
+     ],
+     "n_peers": 30,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      6.9,
+      10.8,
+      17.7
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "3533",
+   "company": "LOTES",
+   "side": "del",
+   "status": "pool 0.95x",
+   "adv_sh_m": 1.3,
+   "float_sh_m": 83.0,
+   "ff": 0.741,
+   "forced_flow_m_sh": 7.8,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": 1.2,
+   "sbl_pct_of_float": 1.4,
+   "sbl_adv_days": 0.9,
+   "foreign_12m_pp": 10.4,
+   "squeeze_precursor": true,
+   "print_range_x_adv": [
+    4.7,
+    13.7
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      4.7,
+      5.9,
+      7.5
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      6.3,
+      10.2,
+      13.7
+     ],
+     "n_peers": 17,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      3.8,
+      5.9,
+      9.7
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "8069",
+   "company": "E INK HOLDINGS",
+   "side": "del",
+   "status": "pool ~1.0x",
+   "adv_sh_m": 10.8,
+   "float_sh_m": 805.0,
+   "ff": 0.697,
+   "forced_flow_m_sh": 74.8,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": null,
+   "sbl_pct_of_float": null,
+   "sbl_adv_days": null,
+   "foreign_12m_pp": -1.8,
+   "squeeze_precursor": false,
+   "print_range_x_adv": [
+    5.5,
+    15.3
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      5.5,
+      6.9,
+      8.7
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      8.8,
+      12.6,
+      15.3
+     ],
+     "n_peers": 24,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      4.4,
+      6.9,
+      11.3
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  },
+  {
+   "code": "3293",
+   "company": "INTERNATIONAL GAMES SYST",
+   "side": "del",
+   "status": "pool ~1.0x",
+   "adv_sh_m": 2.3,
+   "float_sh_m": 229.0,
+   "ff": 0.811,
+   "forced_flow_m_sh": 21.3,
+   "expected_auction_share": "~78% of day (del median)",
+   "sbl_balance_m": null,
+   "sbl_pct_of_float": null,
+   "sbl_adv_days": null,
+   "foreign_12m_pp": -3.8,
+   "squeeze_precursor": false,
+   "print_range_x_adv": [
+    7.3,
+    15.8
+   ],
+   "print_methods": {
+    "M1_structural_lambda_band": {
+     "p25_p50_p75": [
+      7.3,
+      9.3,
+      11.6
+     ],
+     "how": "lambda quartiles (0.058/0.093/0.147 fitted on 77 deletions) x float-days"
+    },
+    "M2_matched_peers": {
+     "p25_p50_p75": [
+      7.8,
+      12.7,
+      15.8
+     ],
+     "n_peers": 29,
+     "how": "historical deletions with float-days within 0.5-2x of this name"
+    },
+    "M3_scenario_overlay": {
+     "quiet_base_crowded": [
+      6.0,
+      9.3,
+      15.3
+     ],
+     "how": "structural median x panel bucket multipliers (0.64/1.0/1.63); scenario resolves via the Step-2 tracker in the window"
+    },
+    "M4_holdings_floor": "observable fund quantities x May-26 calibration 0.77-1.25 (cross-check where holdings visible)"
+   }
+  }
+ ]
+}

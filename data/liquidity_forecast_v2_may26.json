@@ -1,0 +1,192 @@
+{
+ "event": "MSCI May-2026 SAIR TW (v2 channel regrade)",
+ "ann": "2026-05-12",
+ "eff": "2026-05-29",
+ "asof_PIT": "2026-05-28",
+ "names": [
+  {
+   "code": "1102",
+   "side": "del",
+   "asof": "2026-05-28",
+   "passive_demand_sh": 230881243,
+   "passive_x_adv": 25.4,
+   "completion": 0.25,
+   "ch1_borrow_x_demand": 0.04,
+   "standing_borrow_adv_days": 17.7,
+   "ch2_inventory_x_demand": 0.2,
+   "foreign_pp": -1.78,
+   "foreign_consistent": true,
+   "wrongway": false,
+   "ch3_toll_reliance": 0.75,
+   "ch35_derivatives": "unobservable from cash data (flagged)",
+   "add_fade_pressure": false,
+   "scenario_v2": "TOLL-DEPENDENT",
+   "instrument_priority": "CH1 borrow (primary) -> completion -> foreign",
+   "REALIZED": {
+    "t_mult": 21.7,
+    "t3_move_pct": 0.6
+   }
+  },
+  {
+   "code": "2474",
+   "side": "del",
+   "asof": "2026-05-28",
+   "passive_demand_sh": 35077251,
+   "passive_x_adv": 13.1,
+   "completion": 2.07,
+   "ch1_borrow_x_demand": 0.0,
+   "standing_borrow_adv_days": 18.9,
+   "ch2_inventory_x_demand": 2.07,
+   "foreign_pp": -2.56,
+   "foreign_consistent": true,
+   "wrongway": false,
+   "ch3_toll_reliance": 0.0,
+   "ch35_derivatives": "unobservable from cash data (flagged)",
+   "add_fade_pressure": false,
+   "scenario_v2": "OVERSUPPLIED",
+   "instrument_priority": "CH1 borrow (primary) -> completion -> foreign",
+   "REALIZED": {
+    "t_mult": 24.8,
+    "t3_move_pct": 26.3
+   }
+  },
+  {
+   "code": "2610",
+   "side": "del",
+   "asof": "2026-05-28",
+   "passive_demand_sh": 398277976,
+   "passive_x_adv": 13.4,
+   "completion": 0.2,
+   "ch1_borrow_x_demand": 0.0,
+   "standing_borrow_adv_days": 7.3,
+   "ch2_inventory_x_demand": 0.2,
+   "foreign_pp": -0.08,
+   "foreign_consistent": true,
+   "wrongway": false,
+   "ch3_toll_reliance": 0.8,
+   "ch35_derivatives": "unobservable from cash data (flagged)",
+   "add_fade_pressure": false,
+   "scenario_v2": "TOLL-DEPENDENT",
+   "instrument_priority": "CH1 borrow (primary) -> completion -> foreign",
+   "REALIZED": {
+    "t_mult": 9.9,
+    "t3_move_pct": 4.5
+   }
+  },
+  {
+   "code": "2324",
+   "side": "del",
+   "asof": "2026-05-28",
+   "passive_demand_sh": 286905245,
+   "passive_x_adv": 8.2,
+   "completion": 3.98,
+   "ch1_borrow_x_demand": 0.0,
+   "standing_borrow_adv_days": 12.5,
+   "ch2_inventory_x_demand": 0.0,
+   "foreign_pp": 2.85,
+   "foreign_consistent": false,
+   "wrongway": true,
+   "ch3_toll_reliance": 1.0,
+   "ch35_derivatives": "unobservable from cash data (flagged)",
+   "add_fade_pressure": false,
+   "scenario_v2": "SQUEEZE-RISK",
+   "instrument_priority": "CH1 borrow (primary) -> completion -> foreign",
+   "REALIZED": {
+    "t_mult": 19.9,
+    "t3_move_pct": 28.2
+   }
+  },
+  {
+   "code": "1402",
+   "side": "del",
+   "asof": "2026-05-28",
+   "passive_demand_sh": 348472177,
+   "passive_x_adv": 24.1,
+   "completion": 1.1,
+   "ch1_borrow_x_demand": null,
+   "standing_borrow_adv_days": null,
+   "ch2_inventory_x_demand": 1.1,
+   "foreign_pp": -0.93,
+   "foreign_consistent": true,
+   "wrongway": false,
+   "ch3_toll_reliance": 0.0,
+   "ch35_derivatives": "unobservable from cash data (flagged)",
+   "add_fade_pressure": false,
+   "scenario_v2": "COMMITTED",
+   "instrument_priority": "CH1 borrow (primary) -> completion -> foreign",
+   "REALIZED": {
+    "t_mult": 22.8,
+    "t3_move_pct": 6.4
+   }
+  },
+  {
+   "code": "2633",
+   "side": "del",
+   "asof": "2026-05-28",
+   "passive_demand_sh": 366401878,
+   "passive_x_adv": 69.3,
+   "completion": 0.21,
+   "ch1_borrow_x_demand": 0.03,
+   "standing_borrow_adv_days": 22.7,
+   "ch2_inventory_x_demand": 0.18,
+   "foreign_pp": -1.14,
+   "foreign_consistent": true,
+   "wrongway": false,
+   "ch3_toll_reliance": 0.79,
+   "ch35_derivatives": "unobservable from cash data (flagged)",
+   "add_fade_pressure": false,
+   "scenario_v2": "TOLL-DEPENDENT",
+   "instrument_priority": "CH1 borrow (primary) -> completion -> foreign",
+   "REALIZED": {
+    "t_mult": 41.7,
+    "t3_move_pct": 3.6
+   }
+  },
+  {
+   "code": "1504",
+   "side": "del",
+   "asof": "2026-05-28",
+   "passive_demand_sh": 154706288,
+   "passive_x_adv": 16.1,
+   "completion": 0.49,
+   "ch1_borrow_x_demand": null,
+   "standing_borrow_adv_days": null,
+   "ch2_inventory_x_demand": 0.49,
+   "foreign_pp": -0.19,
+   "foreign_consistent": true,
+   "wrongway": false,
+   "ch3_toll_reliance": 0.51,
+   "ch35_derivatives": "unobservable from cash data (flagged)",
+   "add_fade_pressure": false,
+   "scenario_v2": "PARTIAL",
+   "instrument_priority": "CH1 borrow (primary) -> completion -> foreign",
+   "REALIZED": {
+    "t_mult": 18.4,
+    "t3_move_pct": 10.7
+   }
+  },
+  {
+   "code": "6223",
+   "side": "add",
+   "asof": "2026-05-28",
+   "passive_demand_sh": 7973229,
+   "passive_x_adv": 6.1,
+   "completion": 0.4,
+   "ch1_borrow_x_demand": null,
+   "standing_borrow_adv_days": null,
+   "ch2_inventory_x_demand": 0.4,
+   "foreign_pp": 0.42,
+   "foreign_consistent": true,
+   "wrongway": false,
+   "ch3_toll_reliance": 0.6,
+   "ch35_derivatives": "unobservable from cash data (flagged)",
+   "add_fade_pressure": false,
+   "scenario_v2": "PARTIAL",
+   "instrument_priority": "completion + foreign-in (primary pair) -> borrow = fade signal",
+   "REALIZED": {
+    "t_mult": 5.9,
+    "t3_move_pct": -1.0
+   }
+  }
+ ]
+}

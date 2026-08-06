@@ -1,0 +1,100 @@
+{
+ "market": "Malaysia",
+ "n_priced": 4,
+ "unpriced": [
+  "AMBANK",
+  "CDB",
+  "CIMB",
+  "HLBANK",
+  "IHH",
+  "KLK",
+  "MAXIS",
+  "MAYBANK",
+  "MISC",
+  "PCHEM",
+  "PETGAS",
+  "PMETAL",
+  "RHBBANK",
+  "SDG",
+  "SWB",
+  "TENAGA",
+  "TM"
+ ],
+ "members_float_sum_busd": 112435952876.0,
+ "factsheet_index_cap_busd": 116.0,
+ "members_vs_factsheet": "+97073716742.0%",
+ "implied_denominator_busd": 136.0,
+ "corridor_busd": [
+  4.1,
+  9.44
+ ],
+ "observed_boundary_musd": 1950.86,
+ "bottom_ladder": [
+  {
+   "code": "GAMUDA",
+   "company": "GAMUDA",
+   "cap_usd_b": 11425233872.83,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 6855140323.7
+  },
+  {
+   "code": "PBBANK",
+   "company": "PUBLIC BANK",
+   "cap_usd_b": 41358705119.87,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 24815223071.92
+  },
+  {
+   "code": "IOICORP",
+   "company": "IOI CORPORATION",
+   "cap_usd_b": 46816830023.38,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 28090098014.03
+  },
+  {
+   "code": "YTLPOWR",
+   "company": "YTL POWER INTERNATIONAL",
+   "cap_usd_b": 87792485776.42,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 52675491465.85
+  }
+ ],
+ "rows": [
+  {
+   "code": "YTLPOWR",
+   "company": "YTL POWER INTERNATIONAL",
+   "cap_usd_b": 87792485776.42,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 52675491465.85
+  },
+  {
+   "code": "IOICORP",
+   "company": "IOI CORPORATION",
+   "cap_usd_b": 46816830023.38,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 28090098014.03
+  },
+  {
+   "code": "PBBANK",
+   "company": "PUBLIC BANK",
+   "cap_usd_b": 41358705119.87,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 24815223071.92
+  },
+  {
+   "code": "GAMUDA",
+   "company": "GAMUDA",
+   "cap_usd_b": 11425233872.83,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 6855140323.7
+  }
+ ]
+}

@@ -1,0 +1,236 @@
+{
+ "Taiwan": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 77,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 3183008.39,
+   "largest_musd": 1848511.82,
+   "smallest_musd": 1838.55,
+   "median_musd": 10366.44,
+   "classification": "EM",
+   "implied_denominator_busd": 3745.0,
+   "cutoff_corridor_busd": [
+    4.1,
+    9.44
+   ],
+   "observed_boundary_smallest_musd": 1838.55
+  }
+ },
+ "Japan": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 168,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 5126012.78,
+   "largest_musd": 239545.52,
+   "smallest_musd": 3156.02,
+   "median_musd": 15551.41,
+   "classification": "DM",
+   "implied_denominator_busd": 6031.0,
+   "cutoff_corridor_busd": [
+    8.21,
+    18.87
+   ],
+   "observed_boundary_smallest_musd": 3156.02
+  }
+ },
+ "Australia": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 47,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 1467983.5,
+   "largest_musd": 215241.29,
+   "smallest_musd": 4927.29,
+   "median_musd": 14400.45,
+   "classification": "DM",
+   "implied_denominator_busd": 1727.0,
+   "cutoff_corridor_busd": [
+    8.21,
+    18.87
+   ],
+   "observed_boundary_smallest_musd": 4927.29
+  }
+ },
+ "HongKong": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 25,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 411633.62,
+   "largest_musd": 106200.61,
+   "smallest_musd": 4447.97,
+   "median_musd": 8594.74,
+   "classification": "DM",
+   "implied_denominator_busd": 484.0,
+   "cutoff_corridor_busd": [
+    8.21,
+    18.87
+   ],
+   "observed_boundary_smallest_musd": 4447.97
+  }
+ },
+ "Korea": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 77,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 2429804.69,
+   "largest_musd": 861133.83,
+   "smallest_musd": 1113.99,
+   "median_musd": 6267.9,
+   "classification": "EM",
+   "implied_denominator_busd": 2859.0,
+   "cutoff_corridor_busd": [
+    4.1,
+    9.44
+   ],
+   "observed_boundary_smallest_musd": 1113.99
+  }
+ },
+ "China": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 576,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 2555683.07,
+   "largest_musd": 373281.82,
+   "smallest_musd": 163.86,
+   "median_musd": 927.28,
+   "classification": "EM",
+   "implied_denominator_busd": 3007.0,
+   "cutoff_corridor_busd": [
+    4.1,
+    9.44
+   ],
+   "observed_boundary_smallest_musd": 163.86
+  }
+ },
+ "India": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 165,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 1394346.5,
+   "largest_musd": 89317.67,
+   "smallest_musd": 1529.5,
+   "median_musd": 5136.49,
+   "classification": "EM",
+   "implied_denominator_busd": 1640.0,
+   "cutoff_corridor_busd": [
+    4.1,
+    9.44
+   ],
+   "observed_boundary_smallest_musd": 1529.5
+  }
+ },
+ "Malaysia": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 21,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 115825.33,
+   "largest_musd": 18417.95,
+   "smallest_musd": 1950.86,
+   "median_musd": 3507.39,
+   "classification": "EM",
+   "implied_denominator_busd": 136.0,
+   "cutoff_corridor_busd": [
+    4.1,
+    9.44
+   ],
+   "observed_boundary_smallest_musd": 1950.86
+  }
+ },
+ "Indonesia": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 11,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 58889.98,
+   "largest_musd": 17332.77,
+   "smallest_musd": 1124.32,
+   "median_musd": 2560.9,
+   "classification": "EM",
+   "implied_denominator_busd": 69.0,
+   "cutoff_corridor_busd": [
+    4.1,
+    9.44
+   ],
+   "observed_boundary_smallest_musd": 1124.32
+  }
+ },
+ "Philippines": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 10,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 35882.5,
+   "largest_musd": 15090.49,
+   "smallest_musd": 1413.93,
+   "median_musd": 2036.6,
+   "classification": "EM",
+   "implied_denominator_busd": 42.0,
+   "cutoff_corridor_busd": [
+    4.1,
+    9.44
+   ],
+   "observed_boundary_smallest_musd": 1413.93
+  }
+ },
+ "NewZealand": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 5,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 40001.18,
+   "largest_musd": 14042.95,
+   "smallest_musd": 4435.88,
+   "median_musd": 7811.55,
+   "classification": "DM",
+   "implied_denominator_busd": 47.0,
+   "cutoff_corridor_busd": [
+    8.21,
+    18.87
+   ],
+   "observed_boundary_smallest_musd": 4435.88
+  }
+ },
+ "Singapore": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 16,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 398812.79,
+   "largest_musd": 118876.38,
+   "smallest_musd": 3842.99,
+   "median_musd": 12045.2,
+   "classification": "DM",
+   "implied_denominator_busd": 469.0,
+   "cutoff_corridor_busd": [
+    8.21,
+    18.87
+   ],
+   "observed_boundary_smallest_musd": 3842.99
+  }
+ },
+ "Thailand": {
+  "2026-07": {
+   "asof": "JUL 31, 2026",
+   "n_constituents": 18,
+   "coverage_pct": 85,
+   "index_float_cap_musd": 119178.62,
+   "largest_musd": 25961.82,
+   "smallest_musd": 2003.62,
+   "median_musd": 4972.2,
+   "classification": "EM",
+   "implied_denominator_busd": 140.0,
+   "cutoff_corridor_busd": [
+    4.1,
+    9.44
+   ],
+   "observed_boundary_smallest_musd": 2003.62
+  }
+ }
+}

@@ -94,6 +94,202 @@ def _run_event_engine(event, markets):
     return results, boundary, crowding
 
 
+def _walk_expander():
+    """C-47: 'Show the walk' — the size-line computation fully
+    exposed so users judge the calculation themselves (QA doc Q4
+    commitment)."""
+    import json
+    from pathlib import Path
+    p = Path("data/gmsr_walk_may26.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    with st.expander("📐 Show the walk — how the size line is "
+                     "computed, judge it yourself (May-2026 frame)"):
+        den = d["denominator"]
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Step 2 — the denominator",
+                  f"${den['total_float_adj_b']:,.0f}B",
+                  "Taiwan's tradable value (reconstructed)")
+        c2.metric("Step 3 — the 85% target",
+                  f"${d['target_b']:,.0f}B", "denominator × 0.85")
+        c3.metric("Step 4 — the size line",
+                  f"${d['walk']['size_line_b']}B",
+                  f"crossing at rank {d['walk']['crossing_rank']}")
+        st.markdown(
+            f"**Where the denominator comes from** — "
+            f"**named head**: {den['named_head']['n']} companies, "
+            f"${den['named_head']['float_adj_b']:,.0f}B tradable "
+            f"({den['named_head']['how']}); **modeled body**: "
+            f"${den['modeled_body']['float_adj_b']:,.0f}B "
+            f"({den['modeled_body']['how']}).")
+        import plotly.graph_objects as go
+        cv = d["curve"]
+        fig = go.Figure()
+        for kind, color in (("named", "#4C78A8"),
+                            ("body", "#B8B8B8")):
+            sub = [r for r in cv if r["kind"] == kind]
+            fig.add_trace(go.Scatter(
+                x=[r["rank"] for r in sub],
+                y=[100 * r["cum_share"] for r in sub],
+                mode="markers", name=kind,
+                marker=dict(size=5, color=color)))
+        fig.add_hline(y=85, line_dash="dash", line_color="#E45756",
+                      annotation_text="85% target")
+        fig.add_vline(x=d["walk"]["crossing_rank"],
+                      line_dash="dot", line_color="#E45756",
+                      annotation_text=f"crossing (size line "
+                      f"${d['walk']['size_line_b']}B)")
+        fig.update_xaxes(title="companies added, largest first")
+        fig.update_yaxes(title="cumulative tradable value "
+                               "covered (%)")
+        fig.update_layout(height=380,
+                          margin=dict(l=10, r=10, t=25, b=10))
+        st.plotly_chart(fig, use_container_width=True)
+        # c-49: the one-by-one summation, animated
+        if d.get("anim") and st.toggle(
+                "▶️ Animate the walk — add companies one by one "
+                "until 85%", key="walk_anim"):
+            _walk_animation(d)
+        st.warning("Honesty note: " + d["walk"]["honesty"] + ". "
+                   "Nearest real members around the line: "
+                   + ", ".join(f"{r['code']} ({r['cap_b']}B)"
+                               for r in d["nearest_real_names"][:5])
+                   + ".")
+        st.markdown("**Sensitivity — how the line moves if the "
+                    "float assumptions are wrong:**")
+        st.dataframe(
+            [{"assumption": k,
+              "denominator $B": v["denominator_b"],
+              "size line $B": v["size_line_b"]}
+             for k, v in d["sensitivity"].items()],
+            use_container_width=True, hide_index=True)
+        st.caption(
+            d["consistency_check"].replace("$", "\\$")
+            + ". Every input is reproducible: "
+            "scripts/show_the_walk.py rebuilds this page's numbers "
+            "from the cached public data — run it and check us.")
+
+
+def _walk_animation(d):
+    """C-49: press play — companies join largest-first, the
+    coverage bar climbs, the 85% line waits. The names arriving
+    just BEFORE the line are the nervous survivors; members
+    appearing AFTER it are the deletion candidates."""
+    import plotly.graph_objects as go
+    A = d["anim"]
+    colors = {"named": "#4C78A8", "body": "#B8B8B8"}
+    frames = []
+    for k in range(1, len(A) + 1):
+        sub = A[:k]
+        cur = sub[-1]
+        frames.append(go.Frame(
+            name=str(k),
+            data=[go.Scatter(
+                x=[r["rank"] for r in sub],
+                y=[100 * r["cum_share"] for r in sub],
+                mode="lines+markers",
+                line=dict(color="#4C78A8", width=2),
+                marker=dict(
+                    size=7,
+                    color=[colors[r["kind"]] for r in sub]))],
+            layout=go.Layout(title=(
+                f"#{cur['rank']}  {cur['code']} "
+                f"{cur['company']}  →  cumulative "
+                f"{100 * cur['cum_share']:.1f}%"))))
+    fig = go.Figure(data=frames[0].data, frames=frames)
+    fig.add_hline(y=85, line_dash="dash", line_color="#E45756",
+                  annotation_text="85% — the size line is drawn "
+                                  "where this is crossed")
+    fig.update_layout(
+        height=430, margin=dict(l=10, r=10, t=45, b=10),
+        xaxis=dict(range=[0, A[-1]["rank"] + 5],
+                   title="companies added, largest first"),
+        yaxis=dict(range=[0, 95],
+                   title="cumulative tradable value covered (%)"),
+        updatemenus=[dict(
+            type="buttons", showactive=False, y=1.12, x=0,
+            buttons=[
+                dict(label="▶ Play", method="animate",
+                     args=[None, {"frame": {"duration": 120,
+                                            "redraw": False},
+                                  "fromcurrent": True,
+                                  "transition": {"duration": 0}}]),
+                dict(label="⏸ Pause", method="animate",
+                     args=[[None], {"frame": {"duration": 0},
+                                    "mode": "immediate"}])])])
+    st.plotly_chart(fig, use_container_width=True)
+    st.caption(
+        "Reading the ending: the last companies added just BEFORE "
+        "the 85% line are the borderline SURVIVORS; current "
+        "members whose size would place them AFTER the line are "
+        "the DELETION candidates (buffer tolerance decides the "
+        "exact cut — the book gives members grace down to roughly "
+        "two-thirds of the cutoff before removal). The gray dots "
+        "are the modeled mid-cap body between real names.")
+
+
+def _full_member_chart(L):
+    """C-45: ALL index constituents on one chart, ordered smallest
+    market cap (left) -> largest (right); log-y because the index
+    spans ~600x TSMC-to-smallest. The left edge IS the deletion
+    zone: red = below GMSR (sweep zone), orange = 1.0-1.15x buffer."""
+    import math
+    import plotly.graph_objects as go
+    gmsr = L["gmsr_usd_b"]
+    mem = sorted((r for r in L["ladder"] if r["member"]),
+                 key=lambda r: r["cap_usd_b"])       # smallest first
+    xs = list(range(1, len(mem) + 1))
+    caps = [r["cap_usd_b"] for r in mem]
+    colors, zones = [], []
+    for r in mem:
+        x = r["cap_usd_b"] / gmsr
+        if x < 1.0:
+            colors.append("#E45756")
+            zones.append("DELETION SWEEP ZONE (< 1.0x GMSR)")
+        elif x < 1.15:
+            colors.append("#F5A623")
+            zones.append("buffer band (1.0-1.15x)")
+        else:
+            colors.append("#4C78A8")
+            zones.append("safe")
+    fig = go.Figure(go.Scatter(
+        x=xs, y=caps, mode="markers+text",
+        marker=dict(size=8, color=colors),
+        text=[r["code"] if r["cap_usd_b"] < 1.15 * gmsr else ""
+              for r in mem],
+        textposition="top center", textfont=dict(size=9),
+        hovertext=[f"{r['code']} "
+                   f"({r['company'] or 'name pending'}): "
+                   f"${r['cap_usd_b']}B — {z}"
+                   for r, z in zip(mem, zones)],
+        hoverinfo="text", showlegend=False))
+    for v, lbl, dash in ((gmsr, f"GMSR ${gmsr}B", "dash"),
+                         (1.15 * gmsr, "buffer edge 1.15x", "dot"),
+                         (0.5 * gmsr, "hard floor 0.5x", "dot")):
+        fig.add_hline(y=v, line_dash=dash, line_color="#888",
+                      annotation_text=lbl,
+                      annotation_position="left")
+    fig.update_yaxes(type="log",
+                     range=[math.log10(min(caps) * 0.35),
+                            math.log10(max(caps) * 2.2)],
+                     title="full market cap, USD B (log)")
+    fig.update_xaxes(title=f"all {len(mem)} constituents — "
+                           "smallest cap (left) to largest (right)")
+    fig.update_layout(height=440,
+                      margin=dict(l=10, r=10, t=25, b=10))
+    st.plotly_chart(fig, use_container_width=True)
+    n_d = sum(1 for z in zones if z.startswith("DELETION"))
+    n_b = sum(1 for z in zones if z.startswith("buffer"))
+    st.caption(
+        f"All {len(mem)} current members (caps as of latest "
+        f"close). 🔴 {n_d} in the deletion sweep zone, 🟠 {n_b} in "
+        "the buffer band — the labeled left tail IS the "
+        "deletion-candidate pool. Full-ladder GMSR "
+        f"${gmsr}B (differs from the boundary-frame estimate above "
+        "— frames stated, not blended).")
+
+
 def _workbench_expander():
     """Session 9i c-29: Step-1 universe-assembly workbench — the
     CLEAR NUMBERS behind every name: local cap -> FX -> refresh ->
@@ -132,37 +328,11 @@ def _workbench_expander():
                   "full cap must exceed")
         c3.metric("Deletion floor (0.5×)", f"${thr['floor_usd_b']}B",
                   "members below = candidates")
-        import plotly.graph_objects as go
+        # c-45: the FULL constituent ladder (all ~79 members),
+        # smallest market cap on the LEFT -> largest on the RIGHT
+        import datetime as _dt
+        _full_member_chart(_pit_ladder(str(_dt.date.today())))
         rows = b["rows"]
-        fig = go.Figure()
-        for memflag, name, color in ((True, "member", "#4C78A8"),
-                                     (False, "non-member",
-                                      "#E45756")):
-            sub = [r for r in rows if r["member"] == memflag]
-            fig.add_trace(go.Scatter(
-                x=[r["cap_usd_b_now"] for r in sub],
-                y=[r["ticker"] for r in sub],
-                mode="markers+text", name=name,
-                text=[f" {r['cap_usd_b_now']}B" for r in sub],
-                textposition="middle right",
-                marker=dict(size=11, color=color)))
-        for v, lbl, dash in ((thr["floor_usd_b"], "floor 0.5×",
-                              "dot"),
-                             (thr["gmsr_usd_b"], "GMSR", "dash"),
-                             (thr["add_bar_usd_b"], "add bar 1.8×",
-                              "dot")):
-            fig.add_vline(x=v, line_dash=dash, line_color="#888",
-                          annotation_text=lbl,
-                          annotation_position="top")
-        import math
-        xmax = max(r["cap_usd_b_now"] for r in rows)
-        fig.update_xaxes(type="log",
-                         range=[math.log10(1.5),
-                                math.log10(xmax * 4)],
-                         title="full market cap, USD B (log)")
-        fig.update_layout(height=430,
-                          margin=dict(l=10, r=10, t=30, b=10))
-        st.plotly_chart(fig, use_container_width=True)
         st.dataframe(rows, use_container_width=True,
                      hide_index=True)
         st.caption(
@@ -414,10 +584,7 @@ def _constituents_expander():
         for t in sorted(std):
             rows.append({
                 "ticker": t,
-                "company": (m.get("names") or {}).get(t, ""),
-                "confidence": ("CONFIRMED (both funds)"
-                               if t in conf else
-                               "LIKELY (one fund)")})
+                "company": (m.get("names") or {}).get(t, "")})
         with c2:
             st.metric(f"MSCI {mkt} Standard — members",
                       len(rows),
@@ -589,6 +756,7 @@ def _tab1_win_the_trade():
     _constituents_expander()
     _provenance_expander()
     _workbench_expander()
+    _walk_expander()
     _funnel_expander()
     _tday_cards_expander()
 

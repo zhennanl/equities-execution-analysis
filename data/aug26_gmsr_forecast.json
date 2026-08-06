@@ -1,0 +1,22 @@
+{
+ "asof": "2026-08-05",
+ "factsheet_month": "2026-07",
+ "denominator_busd": 3745.0,
+ "top10_float_busd": 2443.2,
+ "residual_target_busd": 739.8,
+ "our_residual_busd": 719.0,
+ "aggregate_float_calibration": 1.029,
+ "aug_gms_reference_forecast": {
+  "dm_busd": [
+   16.07,
+   16.41,
+   16.73
+  ],
+  "em_busd": [
+   8.03,
+   8.21,
+   8.36
+  ],
+  "how": "May-2026 published DM reference $15.75B (Apr-20 data) scaled by DM market move to the Aug cutoff; ACWI IMI 3-mo +4.2% proxy, band +/-2pp"
+ }
+}

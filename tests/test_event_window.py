@@ -127,9 +127,13 @@ def test_lifecycle_page_imports():
     assert callable(p.render)
     import views.page7_desk_brief as p7          # session 9i
     assert callable(p7.render)
+    # c-85 INTENTIONAL CHANGE: app.py refocused to the Aug-26
+    # single-purpose site; the v1 wiring lives in the backup.
     src = open("app.py").read()
-    assert "page7_desk_brief" in src
-    assert "Index Rebalance Desk Brief" in src
+    assert "aug26_review" in src and "LEGACY" in src
+    bsrc = open("backup/website_v1_20260806/app.py").read()
+    assert "page7_desk_brief" in bsrc
+    assert "Index Rebalance Desk Brief" in bsrc
 
 
 # ------------------------------------ violence curve v1 (session 8z)
@@ -289,6 +293,152 @@ def test_tw_vintage_cache():
     assert len(c["px|3474"]) > 100
 
 
+def test_aug26_cutoff_calc():
+    """Session 9i c-53: the full Aug-26 derivation — global ref
+    scaling, TW walk crossing inside the EM range, and the shadow
+    add call: 2408 qualifies on ALL gates with its REAL float
+    (0.456), 6505 blocked by the 0.15 float floor (the
+    demonstration), pool tiers coherent."""
+    import json
+    from pathlib import Path
+    p = Path("data/aug26_cutoff_calc.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    A, C = d["derivation"]["A_global"], d["derivation"]["C_cutoff"]
+    assert abs(A["dm_aug_busd"] - 15.75 * 1.042) < 0.01
+    assert abs(A["em_reference_busd"] - A["dm_aug_busd"] / 2) < 0.01
+    lo, hi = A["em_range_busd"]
+    assert lo <= C["cutoff_busd"] <= hi
+    assert abs(C["add_bar_busd"] - 1.8 * C["cutoff_busd"]) < 0.01
+    adds = {a["code"]: a for a in d["add_candidates"]}
+    assert adds["2408"]["verdict"].startswith("QUALIFIES")
+    assert adds["2408"]["ff"] < 0.5          # real float, not 0.7
+    assert "float < 0.15" in adds["6505"]["verdict"]
+    assert any("BELOW GRACE" in x["tier"] or "sweep zone"
+               in x["tier"] for x in d["delete_candidates"])
+    assert "shadow_add_call" in d
+    assert d["shadow_add_call"]["calls"][0]["code"] == "2408"
+
+
+def test_mops_v2_float_adopted():
+    """Session 9i c-52: v2 (named insiders) ADOPTED — 5x more
+    accurate than incumbent vs MSCI's implied factors (0.022 vs
+    0.104; TDCC v1 0.143). Residual stated: board-seatless
+    government stakes escape (TSMC class). Production stack:
+    MSCI FIFs (top-10) > v2 insiders > flagged default."""
+    import json
+    from pathlib import Path
+    p = Path("data/tw_float_mops_v2.json")
+    if not p.exists():
+        return
+    g = json.loads(p.read_text())["grading"]
+    assert g["mean_abs_err_v2"] <= 0.05
+    assert g["mean_abs_err_v2"] < g["mean_abs_err_old"]
+    for c in ("2881", "2383", "3711", "2308"):
+        v = g["vs_msci_fifs"][c]
+        assert abs(v["v2"] - v["msci"]) <= 0.02
+    # the stated residual: TSMC over-floated (gov stake escapes)
+    t = g["vs_msci_fifs"]["2330"]
+    assert t["v2"] > t["msci"]
+    assert 700 <= g["residual67_v2_busd"] <= 810
+
+
+def test_tdcc_float_null_result():
+    """Session 9i c-51: NULL-PINNED — the v1 TDCC bracket-15-minus-
+    foreign float recipe GRADED WORSE than incumbent estimates vs
+    MSCI's implied FIFs (0.143 vs 0.104 mean abs err; aggregate
+    670 vs 719 vs target 739.8). Pinned so the recipe cannot be
+    silently adopted; v2 requires MOPS insider data to separate
+    strategic from domestic-institutional holders."""
+    import json
+    from pathlib import Path
+    p = Path("data/tw_float_tdcc.json")
+    if not p.exists():
+        return
+    g = json.loads(p.read_text())["grading"]
+    assert g["mean_abs_err_tdcc"] > g["mean_abs_err_old"]
+    assert abs(g["residual67_old_busd"]
+               - g["residual67_target_busd"]) < \
+        abs(g["residual67_tdcc_busd"]
+            - g["residual67_target_busd"])
+    # failure signature: financials worst (domestic institutions
+    # pollute bracket 15)
+    fub = g["vs_msci_fifs"]["2881"]
+    assert abs(fub["tdcc"] - fub["msci"]) > 0.2
+
+
+def test_aug26_gmsr_forecast():
+    """Session 9i c-50: factsheet-anchored Aug-26 forecast — the
+    aggregate float calibration must stay near 1.0 (our residual
+    member floats vs the factsheet-implied sum), and the EM
+    reference forecast must stay in a sane band."""
+    import json
+    from pathlib import Path
+    p = Path("data/aug26_gmsr_forecast.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert 0.9 <= d["aggregate_float_calibration"] <= 1.1
+    em = d["aug_gms_reference_forecast"]["em_busd"]
+    assert em[0] < em[1] < em[2]
+    assert 7.0 <= em[1] <= 9.5
+    assert abs(d["denominator_busd"]
+               - d["top10_float_busd"] / 0.85
+               * (d["top10_float_busd"]
+                  + d["residual_target_busd"])
+               / d["top10_float_busd"] / 0.85) >= 0  # structural
+    assert abs((d["top10_float_busd"] + d["residual_target_busd"])
+               / 0.85 - d["denominator_busd"]) < 5
+
+
+def test_factsheet_archive():
+    """Session 9i c-48: the factsheet ground-truth archive —
+    Jul-2026 seed entry parses coherently: count matches the
+    three-fund pipeline, implied denominator near our
+    reconstruction, implied float factors in sane range."""
+    import json
+    from pathlib import Path
+    p = Path("data/msci_factsheet_archive.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())["2026-07"]
+    assert d["n_constituents"] == 77
+    assert 3000 <= d["index_float_cap_musd"] / 1000 <= 3400
+    assert 3400 <= d["implied_market_denominator_busd"] <= 4100
+    assert len(d["top10"]) == 10
+    assert d["top10"][0]["float_cap_busd"] > 1500   # TSMC
+    fifs = [t["implied_fif"] for t in d["top10"]
+            if "implied_fif" in t]
+    assert len(fifs) >= 5
+    assert all(0.3 <= f <= 1.05 for f in fifs)
+
+
+def test_show_the_walk():
+    """Session 9i c-47: the exposed walk — denominator components
+    sum, target = 0.85x, crossing coverage ~85%, size line inside
+    MSCI's published EM range, sensitivity band sane and honest
+    (body-float and head-float shifts move the line, bounded)."""
+    import json
+    from pathlib import Path
+    p = Path("data/gmsr_walk_may26.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    den = d["denominator"]
+    assert abs(den["named_head"]["float_adj_b"]
+               + den["modeled_body"]["float_adj_b"]
+               - den["total_float_adj_b"]) <= 2
+    assert abs(d["target_b"] - 0.85 * den["total_float_adj_b"]) <= 2
+    assert 0.845 <= d["walk"]["coverage_at_crossing"] <= 0.87
+    assert 3.9 <= d["walk"]["size_line_b"] <= 9.1   # MSCI EM range
+    lines = [v["size_line_b"] for v in d["sensitivity"].values()]
+    assert all(3.9 <= x <= 9.1 for x in lines)
+    assert max(lines) - min(lines) < 3.0            # bounded band
+    shares = [r["cum_share"] for r in d["curve"]]
+    assert shares == sorted(shares)                 # monotonic
+
+
 def test_pit_time_travel():
     """Session 9i c-43: any-date PIT reconstruction — May-01 frame
     resolves the pre-May index EXACTLY (83 members, the factsheet
@@ -418,6 +568,235 @@ def test_sentinels():
             assert r["status"] == "ALERT" and "funnel" in r["delta"]
         finally:
             os.utime(dep, (old, old))
+
+
+def test_apac_factsheet_archive():
+    """Session 9i c-62: all 10 markets' factsheets parsed —
+    counts CROSS-VALIDATE the fund-derived membership pipeline
+    (JP 168=EWJ, IN 165=INDA, ID 11, PH 10 ...); DM/EM corridors
+    assigned correctly; denominators coherent."""
+    import json
+    from pathlib import Path
+    p = Path("data/apac_factsheet_archive.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    # c-86 INTENTIONAL: 10 -> 13 (NZ/SG/TH added for full APAC)
+    assert len(d) == 13
+    latest = {m: v[sorted(v)[-1]] for m, v in d.items()}
+    expect = {"Taiwan": 77, "Japan": 168, "Australia": 47,
+              "HongKong": 25, "Korea": 77, "India": 165,
+              "Malaysia": 21, "Indonesia": 11, "Philippines": 10,
+              "NewZealand": 5, "Singapore": 16, "Thailand": 18}
+    for m, n in expect.items():
+        assert latest[m]["n_constituents"] == n, m
+    assert 550 <= latest["China"]["n_constituents"] <= 620
+    for m in ("Japan", "Australia", "HongKong", "NewZealand",
+              "Singapore"):
+        assert latest[m]["cutoff_corridor_busd"][0] > 8   # DM
+    for m in ("Taiwan", "Korea", "India", "China", "Thailand"):
+        assert latest[m]["cutoff_corridor_busd"][0] < 5   # EM
+    for m, v in latest.items():
+        if v.get("index_float_cap_musd"):
+            assert v["implied_denominator_busd"] > \
+                v["index_float_cap_musd"] / 1000
+
+
+def test_preann_advisory_aug26():
+    """Session 9i c-60: pre-announcement advisory cards — schema +
+    key reads pinned: 2408's easy-add profile (print ~1x ADV),
+    1101's standing borrow > 10 ADV-days, squeeze precursors
+    flagged where foreign accumulates into deletion candidates."""
+    import json
+    from pathlib import Path
+    p = Path("data/preann_advisory_aug26.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    cards = {c["code"]: c for c in d["cards"]}
+    assert cards["2408"]["side"] == "add"
+    # c-61: point estimate replaced by multi-method RANGE
+    lo, hi = cards["2408"]["print_range_x_adv"]
+    assert lo >= 1.0 and hi <= 3.0                        # easy add
+    dlo, dhi = cards["1101"]["print_range_x_adv"]
+    assert dlo >= 10 and dhi <= 40 and dhi > dlo * 1.5    # wide, fat
+    for c in d["cards"]:
+        if "print_range_x_adv" not in c:
+            continue
+        m = c["print_methods"]
+        assert "M1_structural_lambda_band" in m
+        assert "M3_scenario_overlay" in m
+        assert c["print_range_x_adv"][0] < c["print_range_x_adv"][1]
+    assert cards["1101"]["sbl_adv_days"] > 10             # loaded
+    assert cards["1101"]["squeeze_precursor"] is True
+    assert cards["3533"]["foreign_12m_pp"] > 5            # Compal-
+    assert cards["3533"]["squeeze_precursor"] is True     # like
+
+
+def test_case_2324_compal():
+    """Session 9i c-59: the Compal squeeze anatomy — pinned from
+    primary data: deletion confirmed; auction ~49% of day at a
+    price ABOVE the last continuous trade; post-T SBL covering
+    avalanche > 200M shares."""
+    import json
+    from pathlib import Path
+    ev = json.loads(Path("data/msci_tw_events.json").read_text())
+    assert "2324" in ev["May26"]["dels"]
+    try:
+        import sys
+        sys.path.insert(0, ".")
+        from scripts.tday_execution_studies import _ib_day, _load_ib
+        r = _ib_day(_load_ib(), "2324", "2026-05-29")
+    except Exception:
+        r = None
+    if r:
+        cont, auc, last_cont = r
+        tot = sum(x[3] for x in cont) + auc
+        assert 0.44 <= auc / tot <= 0.54          # ~49% auction
+        assert 36.5 <= 36.70                       # print 36.70
+        assert last_cont < 36.70                   # print ABOVE tape
+    sbl = json.loads(Path("data/event_data_cache.json")
+                     .read_text())["short"]
+    b_t = sbl["20260529"]["2324"][1]
+    b_5 = sbl["20260605"]["2324"][1]
+    assert b_t - b_5 > 2.0e8                       # >200M covered
+
+
+def test_perstock_flow_model():
+    """Session 9i c-57: the per-stock forced-flow model (lambda x
+    float-days, the benchmarking-intensity proxy) beats the
+    constant 16x prior — corr(log fd, log t_mult) > 0.5, MAE
+    improved, lambda in a plausible passive-ownership range."""
+    import json
+    from pathlib import Path
+    p = Path("data/perstock_flow_model.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert d["n"] >= 60
+    assert d["corr_log"] >= 0.5
+    assert d["mae_perstock"] < d["mae_const16"]
+    assert 0.05 <= d["lambda_passive_ratio"] <= 0.20
+
+
+def test_liquidity_panel():
+    """Session 9i c-56: the full-history Step-2 panel — 130+
+    name-events; completion -> t_mult MONOTONE across the declared
+    buckets (the volume forecaster); event-level corr NEGATIVE
+    (orderly well-supplied closes); H16 compound tail registered
+    with its two members."""
+    import json
+    from pathlib import Path
+    p = Path("data/liquidity_panel_tw.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert d["n_name_events"] >= 120
+    assert d["n_events"] >= 30
+    b = d["buckets"]
+    order = ["UNDERSUPPLIED", "BUILDING", "WELL-SUPPLIED",
+             "OVERCROWDED"]
+    tms = [b[s]["mean_t_mult"] for s in order]
+    assert tms == sorted(tms)                  # monotone volume
+    assert d["completion_vs_absrev3_corr_eventlevel"] < 0
+    tail = d["tail_analysis"]["completion_ge_1.5_and_wrongway"]
+    assert tail["n"] == 2 and tail["abs_rev3"] > 10
+    assert any("2324" in m for m in tail["members"])
+    assert "NOT adopted" in tail["status"]
+
+
+def test_t86_history():
+    """Session 9i c-67: signed institutional flow harvester —
+    era-tolerant parse (15-field 2015 rows), foreign/total nets
+    extracted, watch subsetting works."""
+    import json
+    from pathlib import Path
+    p = Path("data/t86_history.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    days = sorted(x for x in d if d[x])
+    assert days and days[0] <= "20150131"
+    first = d[days[0]]
+    assert len(first) >= 80
+    r = first["2330"]
+    assert r["nf"] in (15, 16, 17, 18, 19)
+    assert isinstance(r["f"], float) and isinstance(r["t"], float)
+    assert abs(r["f"]) < 5e8 and abs(r["t"]) < 5e8   # sane shares
+
+
+def test_sbl_history():
+    """Session 9i c-66: the decade borrow-history harvester —
+    pilot days parse with the stable field map (SBL balance idx
+    11), watch-name subsetting works, store shape matches the
+    live cache."""
+    import json
+    from pathlib import Path
+    p = Path("data/sbl_history.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    days = sorted(x for x in d if d[x])
+    assert days and days[0] <= "20150131"      # reaches 2015
+    first = d[days[0]]
+    assert len(first) >= 80                    # watch coverage
+    assert first["2330"][1] > 1e6              # TSMC balance sane
+    for v in first.values():
+        assert len(v) == 2 and v[1] >= 0
+
+
+def test_pattern_study():
+    """Session 9i c-65: the pattern study — volume relationship
+    re-confirmed (rho>0.3, clustered p<0.01); the RETURN null
+    PINNED (all return tests ns, ML below base rate) so mean-
+    return predictability cannot be claimed later without beating
+    this bar; H17 registered not adopted."""
+    import json
+    from pathlib import Path
+    p = Path("data/pattern_study_tw.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    t = d["tests"]
+    s5 = t["D5_compl_vs_tmult"]["spearman"]
+    assert s5["rho"] > 0.3 and s5["perm_p"] < 0.01
+    for tag in ("D1_foreign_vs_tdayret", "D2_compl_vs_tdayret",
+                "D3_drift_vs_tdayret", "D6_vol_vs_tdayret"):
+        assert t[tag]["spearman"]["perm_p"] > 0.05      # null
+    ml = d["ml"]["del_sign_tday"]
+    if "loo_event_accuracy" in ml:
+        assert ml["loo_event_accuracy"] <= ml["base_rate"]
+    s7 = t["D7_foreign_vs_fav3"]["spearman"]
+    assert abs(s7["rho"]) < 0.25                        # H17 not
+    assert "borrow_limitation" in d                     # adoptable
+
+
+def test_liquidity_v2_channels():
+    """Session 9i c-64: the channel-decomposition regrade —
+    declared rules catch the squeeze (2324 SQUEEZE-RISK), passive
+    demand is per-stock (lambda model, not flat 16x), channels
+    bounded, and the standing-base caveat is recorded."""
+    import json
+    from pathlib import Path
+    p = Path("data/liquidity_forecast_v2_may26.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    n = {r["code"]: r for r in d["names"]}
+    assert n["2324"]["scenario_v2"] == "SQUEEZE-RISK"
+    assert n["2324"]["wrongway"] is True
+    assert n["2324"]["REALIZED"]["t3_move_pct"] > 20
+    # per-stock passive demand replaced the flat prior
+    xs = {c: n[c]["passive_x_adv"] for c in
+          ("1102", "2324", "2633")}
+    assert xs["1102"] != xs["2324"] != xs["2633"]
+    assert xs["2633"] > 40                      # float-days giant
+    # 2474: the inventory-channel positioner (no borrow build)
+    assert n["2474"]["ch1_borrow_x_demand"] == 0.0
+    assert n["2474"]["ch2_inventory_x_demand"] > 1.5
+    assert n["2474"]["scenario_v2"] == "OVERSUPPLIED"
+    for r in d["names"]:
+        assert 0 <= r["ch3_toll_reliance"] <= 1
 
 
 def test_liquidity_forecast_may26():
@@ -1046,3 +1425,219 @@ def test_twap_vwap_moc_events_and_cache():
         return
     assert df["MOC_vs_close"].abs().max() == 0.0
     assert df["event"].nunique() >= 20
+
+
+def test_roadmap_harvest():
+    """Session 9i c-68: roadmap harvesters (margin / daytrade /
+    blocks / taifex) — raw-row storage parses, field counts
+    stable across eras (probed 2015 and 2026: nf 15/5/5), watch
+    subsetting works, taifex capture has OpenInterest."""
+    import json
+    from pathlib import Path
+    checks = {"margin_history.json": (15, 80),
+              "daytrade_history.json": (5, 50),
+              "blocks_history.json": (5, 1)}
+    for fname, (nf, min_names) in checks.items():
+        p = Path("data") / fname
+        if not p.exists():
+            continue
+        d = json.loads(p.read_text())
+        days = sorted(x for x in d if d[x])
+        assert days and days[0] <= "20150131"
+        first = d[days[0]]
+        assert len(first) >= min_names
+        sample = next(iter(first.values()))
+        if isinstance(sample, list):        # blocks: trade-level
+            sample = sample[0]
+        assert sample["nf"] == nf
+        assert sample["raw"][0].strip().isdigit()
+    p = Path("data/taifex_daily.json")
+    if p.exists():
+        d = json.loads(p.read_text())
+        rows = next(iter(d.values()))
+        assert len(rows) > 500
+        assert "OpenInterest" in rows[0] and "Contract" in rows[0]
+
+
+def test_auction_expost():
+    """Session 9i c-71: ex-post auction panel — schema, side
+    coverage, bounded shares, orientation fields present."""
+    import json
+    from pathlib import Path
+    p = Path("data/auction_expost.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert d["summary"]["n"] >= 50
+    assert {"Buy", "Sell"} <= set(d["summary"])
+    for r in d["rows"]:
+        assert r["side"] in ("Buy", "Sell")
+        if r["auction_share"] is not None:
+            assert 0.0 <= r["auction_share"] <= 1.0
+        assert r["pressure_bps"] == r["disl_bps"] * (
+            1 if r["side"] == "Buy" else -1)
+
+
+def test_auction5s_history():
+    """Session 9i c-72: MI_5MINS harvester — call-window rows
+    stored (13:00 ref + 13:20:00-on), 8 fields, trades freeze
+    during the call then jump at the 13:30 cross."""
+    import json
+    from pathlib import Path
+    p = Path("data/auction5s_history.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    days = sorted(x for x in d if d[x])
+    assert days and days[0] <= "20150131"
+    rows = d[days[0]]
+    assert 100 <= len(rows) <= 130
+    assert rows[0][0] == "13:00:00" and rows[-1][0] == "13:30:00"
+    assert all(len(r) == 8 for r in rows)
+    tx = [float(r[5].replace(",", "")) for r in rows
+          if r[0] >= "13:25:00"]
+    assert tx[-1] > tx[0]           # the cross printed
+    assert len(set(tx[:-1])) == 1   # frozen during the call
+
+
+def test_market_profiles():
+    """Session 9i c-74: the standardization registry — profiles
+    complete + consistent with the factsheet pipeline; TW is the
+    only fitted lambda; India's auction analytics blocked; no
+    silent parameter borrowing possible."""
+    from agents.market_profiles import (PROFILES, step1_plan,
+                                        step2_plan)
+    from scripts.apac_factsheet_capture import MARKETS
+    assert set(PROFILES) == set(MARKETS)
+    req = {"tier", "ccy", "anchor", "access", "float_source",
+           "universe_census", "borrow", "short_sale",
+           "price_limit", "settlement", "close_mech", "lambda",
+           "derivatives_oi"}
+    for mkt, p in PROFILES.items():
+        assert req <= set(p), mkt
+        assert p["tier"] == MARKETS[mkt][1], mkt
+        tag, lam = p["lambda"]
+        if mkt == "Taiwan":
+            assert tag == "fitted" and lam == 0.093
+        else:
+            assert tag == "UNCALIBRATED" and lam is None
+        assert len(step1_plan(mkt)) == 8
+    india = dict(step2_plan("India"))
+    assert india["auction_analytics"].startswith(
+        "DOES_NOT_TRANSFER")
+    korea = dict(step2_plan("Korea"))
+    assert "era_flags" in korea and "BAN" in korea["era_flags"]
+
+
+def test_tday_decider():
+    """Session 9i c-75: early-vs-MOC decider + alert engine —
+    MOC-only mandate always forces (0,1,0); splits sum to 1;
+    alerts fire on transitions only; RED budget collapses to
+    one MARKET-MODE banner."""
+    from agents.tday_decider import (TdayAlertEngine,
+                                     decide_split,
+                                     render_tday_plan)
+    d = decide_split("2324", "Sell", "TOLL-DEPENDENT",
+                     client_flex=False)
+    assert d["split"] == (0.0, 1.0, 0.0)
+    assert "MOC-ONLY" in d["rationale"]
+    for sc in ("SQUEEZE-RISK", "OVERSUPPLIED", "COMMITTED",
+               "PARTIAL", "TOLL-DEPENDENT"):
+        s = decide_split("2330", "Buy", sc)["split"]
+        assert abs(sum(s) - 1.0) < 1e-9
+    eng = TdayAlertEngine(red_budget=2)
+    assert eng.observe("2324", disl_bps=50) is None    # SILENT
+    a = eng.observe("2324", disl_bps=300)
+    assert a and a["level"] == "RED"
+    assert eng.observe("2324", disl_bps=305) is None   # no refire
+    assert eng.observe("2330", halted=True)["level"] == "RED"
+    b = eng.observe("2408", at_limit=True)
+    assert b and b["level"] == "MARKET-MODE"           # budget
+    assert eng.observe("6505", at_limit=True) is None  # silenced
+    amber = TdayAlertEngine()
+    assert amber.observe("1101", disl_bps=200) is None # AMBER
+    assert amber.digest() == ["1101: AMBER"]
+    plan = render_tday_plan([("2324", "Sell", "SQUEEZE-RISK")])
+    assert len(plan["checkpoints"]) == 5
+    assert plan["plans"][0]["status"] == "DECLARED"
+
+
+def test_cutoff_walk_v2():
+    """Session 9i c-79: corrected walk — rank FULL / accumulate
+    FLOAT / express FULL; census frame within banding allowance
+    of the implied frame; corridor-binding conclusion
+    frame-robust across the default-float band."""
+    import json
+    from pathlib import Path
+    p = Path("data/cutoff_walk_v2.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    b = d["base"]
+    assert abs(b["gap_vs_implied_pct"]) <= 6.0
+    assert b["cutoff_full_cap_busd"] > b["corridor_busd"][1]
+    for k in ("default_ff_0.40", "default_ff_0.70"):
+        assert d["band"][k]["cutoff_full_cap_busd"] > \
+            b["corridor_busd"][0]
+    assert b["n_pass"] >= 500
+
+
+def test_event_eda():
+    """Session 9i c-82: repeatable event EDA — May-26 panel
+    builds with all 7 deletes, PIT baseline, channel coverage."""
+    from pathlib import Path
+    needed = ["sbl_history.json", "t86_history.json",
+              "margin_history.json", "daytrade_history.json",
+              "blocks_history.json"]
+    if not all((Path("data") / n).exists() for n in needed):
+        return
+    from scripts.event_eda import build_panel
+    ann, eff, panel = build_panel("MSCI 2026-05 SAIR")
+    assert (ann, eff) == ("2026-05-12", "2026-05-29")
+    assert len(panel) == 7
+    for code, p in panel.items():
+        assert p["side"] == "DEL"
+        assert p["adv"] and p["adv"] > 0
+        assert len(p["rows"]) >= 20
+        w = [r for r in p["rows"] if ann <= r["date"] <= eff]
+        assert any(r["sbl_bal"] for r in w), code
+        assert any(r["for_net"] is not None for r in w), code
+        assert any(r["marg_long"] for r in w), code
+
+
+def test_anticipation_clock():
+    """Session 9i c-83: the anticipation clock — sample size,
+    declared rule recorded, censoring-consistent outputs, and
+    the headline levels within sane bounds."""
+    import json
+    from pathlib import Path
+    p = Path("data/anticipation_clock.json")
+    if not p.exists():
+        return
+    d = json.loads(p.read_text())
+    assert d["n_del_curves"] >= 50
+    assert d["n_events"] >= 25
+    assert "DECLARED" in d["rule"]
+    assert d["share_with_detectable_build"] >= 0.8
+    assert 1.0 <= d["median_build_at_ann_advdays"] <= 20.0
+    assert len(d["rel"]) == len(d["median_del"]) == \
+        len(d["diff"])
+
+
+def test_aug26_site():
+    """Session 9i c-85: the single-purpose Aug-26 site — module
+    imports, backup exists, data artifacts it renders are
+    present and carry the declared call."""
+    import json
+    from pathlib import Path
+    assert Path("backup/website_v1_20260806/app.py").exists()
+    assert Path("backup/website_v1_20260806/views/"
+                "page6_lifecycle.py").exists()
+    import ast
+    ast.parse(Path("views/aug26_review.py").read_text(
+        encoding="utf-8"))
+    cut = json.loads(Path("data/aug26_cutoff_calc.json")
+                     .read_text())
+    calls = cut["shadow_add_call"]["calls"]
+    assert any(c["code"] == "2408" for c in calls)
+    assert "declared" in cut["shadow_add_call"]

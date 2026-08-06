@@ -78,6 +78,38 @@ consistency; monotonicity of feedback in η. Suite: 181 → 186.
    strategy's — feasible exactly when (1)–(3) have produced a trusted kernel;
    documented as the dependency chain it is.
 
+## 3b. Registered upgrade (c-72): the AUCTION LEG
+
+The kernel above is continuous-session physics; a closing-call
+fill needs its own term. Design registered before building:
+
+- **Wrong model for the close:** √(q/ADV) + forward propagation
+  assumes a walked book and a remaining session. A call auction
+  is one simultaneous match — impact = shift of the clearing
+  price along the aggregate step function (lumpy: zero until a
+  price level exhausts, then a tick), and the "temporary"
+  component has no afternoon to decay into: it becomes the
+  OVERNIGHT revert (measured from the print in
+  data/auction_expost.json: adds fade +182 bps, deletes bounce
+  +50 bps median at T+1).
+- **The deciding variable:** marginal_share = q_yours ÷ expected
+  cross. Effective dates: cross = 8–21× ADV (deletes put ~72%
+  of day volume through it) → a single desk's slice is
+  second-order; below ~5% marginal share, skip the adjustment
+  as sub-noise. Normal days: the cross is ~6% of day volume →
+  the SAME order is a dominant share; the auction leg is
+  mandatory for any schedule that moves size into a non-event
+  close.
+- **Calibration path:** elasticity slope from the ex-post TCA
+  panel — pressure_bps regressed on forced-flow size across the
+  80 name-events (a crude aggregate supply-curve slope, from
+  our own events); refined per-stock once the Aug-31 5-sec
+  captures accumulate indicative-price step functions.
+- **Composition rule:** auction fills charge the auction leg
+  INSTEAD of the continuous kernel (never both), and propagate
+  nothing intraday; their temporary component reverts at T+1
+  open/close in multi-day simulations.
+
 ## 4. The interview one-liner
 
 "The path now remembers what the simulation did to it — under assumptions we

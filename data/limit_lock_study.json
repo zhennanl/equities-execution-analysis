@@ -1,0 +1,71 @@
+{
+ "scope": "all MSCI TW index-change names, effective-date closing prints, 2015-2026 (34 events, ~140 name-events)",
+ "instances": [
+  {
+   "season": "Feb15",
+   "code": "2615",
+   "side": "add",
+   "t": "2015-03-02",
+   "eff_ret": 7.0,
+   "T1": -2.0,
+   "T2": -3.3,
+   "lock": "LIMIT-UP LOCKED (close=high)",
+   "ohlc": {
+    "high": 29.6,
+    "low": 27.55,
+    "close": 29.6
+   }
+  },
+  {
+   "season": "May15",
+   "code": "1789",
+   "side": "del",
+   "t": "2015-05-29",
+   "eff_ret": -6.9,
+   "T1": 1.1,
+   "T2": -2.3,
+   "lock": "LIMIT-DOWN LOCKED (close=low)",
+   "ohlc": {
+    "high": 39.38,
+    "low": 36.32,
+    "close": 36.32
+   }
+  },
+  {
+   "season": "Nov15",
+   "code": "4174",
+   "side": "add",
+   "t": "2015-11-30",
+   "eff_ret": 9.9,
+   "T1": 6.2,
+   "T2": 3.6,
+   "lock": "PRESUMED LIMIT-UP (+9.9% = the 10% cap; OHLC unverifiable \u2014 delisted TPEx name)",
+   "ohlc": {
+    "high": 1318.73,
+    "low": 1184.13,
+    "close": 1318.73
+   }
+  },
+  {
+   "season": "May26",
+   "code": "2324",
+   "side": "del",
+   "t": "2026-05-29",
+   "eff_ret": 9.6,
+   "T1": 9.9,
+   "T2": 20.8,
+   "lock": "NOT locked (cl 36.70 hi 36.85 lo 35.00)",
+   "ohlc": {
+    "high": 36.85,
+    "low": 35.0,
+    "close": 36.7
+   }
+  }
+ ],
+ "findings": [
+  "RARITY IS THE HEADLINE: 3 locked closes in 12 years \u2014 2615 add limit-up and 1789 del limit-down in the 7-percent-limit era (both 2015), OBI Pharma 4174 presumed limit-up Nov-2015 (10 percent era). ZERO locked effective closes 2016-2026: wider limits + anticipated flows + pre-positioned supply (the Step-2 mechanism) have made the classic lock nearly extinct for TW index names",
+  "The n=3 outcomes (anecdotes, not statistics, and pinned as such): locked-up ADD 2615 REVERSED (T+1 -2.0, T+2 -3.3 \u2014 buyers stuck at the lock got better prices next day); locked-down DEL 1789 bounced mildly then drifted (+1.1/-2.3); mania ADD 4174 CONTINUED (+6.2/+3.6)",
+  "THE MODERN VARIANT: 2324 Compal May-2026 \u2014 a DELETION that closed +9.6 percent UP on its own deletion day (not locked: high 36.85 vs close 36.70) and ran +9.9/+20.8 after: the crowding SQUEEZE has replaced the lock as the tail risk. For agency client sells the squeeze is a GIFT (better exit); for a guaranteed-close desk pre-hedged short, it is the loss scenario \u2014 which is why the compound crowding signature (H16) is the risk flag that matters now",
+  "Desk implication: the limit-move playbook stays (locks still possible on corporate-event days and thin TPEx names) but the live monitoring priority is the squeeze signature, not the lock"
+ ]
+}

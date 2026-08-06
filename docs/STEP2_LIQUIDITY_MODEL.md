@@ -81,6 +81,73 @@ calibration of the scenario boundaries, with Aug-2026 as the
 standing OOS event. Until then the model ships as declared rules —
 same discipline as every other layer.
 
+## The full-history panel (c-56 — the calibration this doc promised)
+
+133 name-events across 33 TW reviews 2015–2026, built entirely
+from the held vintage cache (data/liquidity_panel_tw.json;
+scripts/liquidity_panel.py). First full-history grade of the
+DECLARED thresholds:
+
+| Scenario (declared) | n | mean T-mult | mean \|rev T+3\| |
+|---|---|---|---|
+| UNDERSUPPLIED (<0.3) | 27 | 8.3× | 5.2% |
+| BUILDING (0.3–0.7) | 33 | 12.9× | 4.3% |
+| WELL-SUPPLIED (0.7–1.2) | 26 | 19.8× | 3.7% |
+| OVERCROWDED (>1.2) | 47 | 21.1× | 5.1% |
+
+**Adopted:** completion → print size is MONOTONE — the crowding
+ratio IS the effective-date volume forecaster (the question the
+model exists to answer). **Revised:** mean reversals are flat
+across buckets and the event-level correlation is NEGATIVE
+(−0.43): well-supplied events are ORDERLY — the supply framing
+confirmed, naive crowding=reversal at the mean rejected. The
+reversal alpha is a COMPOUND-TAIL phenomenon: completion ≥ 1.5×
+AND wrong-way foreign flow — two members in history (Nov-25 3702
++7.4%, May-26 2324 +28.2%, mean 17.8% vs 4.6% base) — registered
+as H16 in the variable-lab registry v4 (declared thresholds, NOT
+adopted at n=2; graded on every future event starting Aug-2026).
+5-minute legs (auction-share migration H9 etc.) cover 2023-05+
+via the existing IB harvest — no new fetching required.
+
+## v2 — channel decomposition (c-64, the Q34 conclusions encoded)
+
+`supply_decomposition()` replaces the single crowding ratio with a
+side-aware CHANNEL model (data/liquidity_forecast_v2_may26.json):
+
+- **Passive demand** is now PER-STOCK (λ × float shares — Q28),
+  not the flat 16×/8×: May names ranged 6.1× to 69.3×.
+- **CH1 borrow-visible** (SBL build since announcement ÷ demand) —
+  the PRIMARY instrument for deletions; for additions it flips
+  meaning to post-add FADE pressure.
+- **CH2 inventory/long** — the completion residual after CH1,
+  SIGNED by foreign net direction (consistent = full weight,
+  neutral = half, wrong-way = zero: wrong-way activity is demand,
+  not supply).
+- **CH3 toll-collectors** = the uncommitted remainder — invisible
+  in the window by definition, paid the measured toll at the
+  print.
+- **CH3.5 derivatives** — flagged unobservable from cash data.
+
+Scenario rules v2 (declared before the regrade): SQUEEZE-RISK
+(wrong-way + completion ≥ 1.5 — H16), OVERSUPPLIED (>1.2x),
+COMMITTED (0.7–1.2), PARTIAL (0.3–0.7), TOLL-DEPENDENT (<0.3).
+
+**May-2026 regrade highlights:** 2324 → SQUEEZE-RISK by rule (the
++28.2% name); 2474 revealed as the INVENTORY-channel positioner —
+zero borrow build, CH2 = 2.07, consistent foreign → OVERSUPPLIED
+(+26.3% reversal: oversupply unwinding carries elevated reversal
+risk, noted); TOLL-DEPENDENT names (1102/2610/2633) printed
+cleanly with small reversals (0.6–4.5%) — toll-collection works
+when flow is well-telegraphed.
+
+**Honest caveat surfaced by the regrade:** CH1 measures WINDOW
+borrow build; several toll-labeled names carried large STANDING
+borrow bases (18–23 ADV-days, pre-dating the window) whose
+covering also supplies the print — so CH3 overestimates
+toll-reliance where standing bases are heavy. Refinement
+registered (CH1b: standing-base coverage capacity, capped) —
+declared for v2.1, not silently patched.
+
 ## Aug-2026 live use
 
 Run daily from Aug-12 announcement on the actual change list:
