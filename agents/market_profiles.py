@@ -325,6 +325,53 @@ def profile(mkt):
     return PROFILES[mkt]
 
 
+# ---------------------------------------------------------------
+# REVIEW CALENDAR (c-92) — GIMI May-2026 §3.1.9 p.48: the three
+# data dates are defined PER REVIEW, GLOBALLY — one calendar for
+# every market in the index family. Universe: last b-day of
+# Nov/Feb/May/Aug; Liquidity: last b-day of Dec/Mar/Jun/Sep;
+# Price: any ONE of the last 10 b-days of Jan/Apr/Jul/Oct.
+# Business days approximated as weekdays here; fn 29's >80%-of-
+# ACWI-open definition and local-listing holiday handling are a
+# registered refinement (TO_VERIFY per date), not silently
+# assumed away.
+# ---------------------------------------------------------------
+_REVIEW_MONTHS = {2: (11, 12, 1), 5: (2, 3, 4),
+                  8: (5, 6, 7), 11: (8, 9, 10)}
+
+
+def review_dates(year, month):
+    """The three GIMI data dates for a review (year, month in
+    {2,5,8,11}). Returns dict with universe_cutoff,
+    liquidity_cutoff, price_window (list of ~10 weekday dates,
+    any ONE of which is the undisclosed Price Cutoff Date)."""
+    import datetime as dt
+
+    def last_weekday(y, m):
+        d = (dt.date(y + (m == 12), m % 12 + 1, 1)
+             - dt.timedelta(days=1))
+        while d.weekday() > 4:
+            d -= dt.timedelta(days=1)
+        return d
+
+    um, lm, pm = _REVIEW_MONTHS[month]
+    uy = year - (um > month)
+    ly = year - (lm > month)
+    py = year - (pm > month)
+    end = last_weekday(py, pm)
+    window, d = [], end
+    while len(window) < 10:
+        if d.weekday() < 5:
+            window.append(d)
+        d -= dt.timedelta(days=1)
+    return {"universe_cutoff": last_weekday(uy, um).isoformat(),
+            "liquidity_cutoff": last_weekday(ly, lm).isoformat(),
+            "price_window": [x.isoformat()
+                             for x in sorted(window)],
+            "note": "weekday approximation; fn29 ACWI-open "
+                    "definition = registered refinement"}
+
+
 def step1_plan(mkt):
     """Ordered Step-1 stages with per-market status. STD stages
     run the shared code path; hooks activate off the profile;

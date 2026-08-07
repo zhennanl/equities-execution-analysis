@@ -20,6 +20,14 @@ auction data back to 2015?":
    only; free historical per-stock paths do not exist, so this
    layer is still capture-forward for us
    (scripts/auction_capture.py, first live event Aug-31-2026).
+1b-note (c-98, full harvest complete — 3,024/3,024 days):
+   "trades freeze during the call" is TRUE TO FIRST ORDER but
+   not literally: 61% of days show zero trade drift in
+   13:25:00-13:29:55, median drift 0.00% of the cross, p90
+   0.04%, max 4.7% — the residual ticks are instruments that
+   keep matching to 13:30 (warrants et al.) plus late
+   bookings. Analyses use the 13:30 JUMP as the cross;
+   the call-window drift is noise at <0.1% typical.
 1b. **The MARKET-WIDE 5-sec order/trade aggregates (MI_5MINS):
    OFFICIAL HISTORY 2015+ — found c-72 after the user pushed
    back on layer 1.** TWSE archives accumulated bid/ask order

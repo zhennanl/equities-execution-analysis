@@ -1,41 +1,41 @@
 {
  "desc": "corrected walk: rank FULL cap / accumulate FLOAT / cutoff in FULL cap; real census names, screens applied; coverage partial until census completes",
  "base": {
-  "n_pass": 774,
+  "n_pass": 890,
   "excluded": {
-   "no_data": 18,
-   "min_size": 897,
-   "atvr": 20,
-   "low_float": 0
+   "no_data": 22,
+   "min_size": 1044,
+   "atvr": 21,
+   "low_float": 1
   },
-  "denominator_busd": 3883.3,
-  "gap_vs_implied_pct": 3.7,
-  "target_busd": 3300.8,
-  "cross_rank": 53,
-  "cross_code": "3481",
-  "cutoff_full_cap_busd": 12.95,
+  "denominator_busd": 3979.5,
+  "gap_vs_implied_pct": 6.3,
+  "target_busd": 3382.5,
+  "cross_rank": 61,
+  "cross_code": "3661",
+  "cutoff_full_cap_busd": 10.55,
   "corridor_busd": [
    4.1,
    9.44
   ],
   "in_corridor": false,
-  "default_ff_share_pct": 12.4
+  "default_ff_share_pct": 11.7
  },
  "band": {
   "default_ff_0.40": {
-   "denominator_busd": 3752.7,
-   "cutoff_full_cap_busd": 15.57,
-   "cross_rank": 44
+   "denominator_busd": 3853.6,
+   "cutoff_full_cap_busd": 14.13,
+   "cross_rank": 50
   },
   "default_ff_0.70": {
-   "denominator_busd": 4013.3,
-   "cutoff_full_cap_busd": 9.68,
-   "cross_rank": 64
+   "denominator_busd": 4104.9,
+   "cutoff_full_cap_busd": 7.65,
+   "cross_rank": 78
   }
  },
  "frames": {
-  "census_walk": 3883.3,
+  "census_walk": 3979.5,
   "factsheet_implied": 3745.0
  },
- "census_coverage": "774 pass of 1709 cached (2,146 target)"
+ "census_coverage": "890 pass of 1978 cached (2,146 target)"
 }

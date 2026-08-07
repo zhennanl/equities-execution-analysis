@@ -58,7 +58,26 @@ def suffix(mkt, code):
                 return [c + ".SS"]
             return [c + ".SZ"]
         return [c]
+    # c-95: full-region completion
+    if mkt == "NewZealand":
+        return [c + ".NZ"]
+    if mkt == "Singapore":
+        return [c + ".SI", c]
+    if mkt == "Thailand":
+        return [c + ".BK"]
     return [c]
+
+
+# c-99: hand-verified symbol fixes (EWS abbreviations that are
+# not SGX codes) and SHARES DONORS — names whose local Yahoo
+# line has price but NO share count anywhere (.info, fast_info,
+# shares_full all empty); the US OTC F-line carries the SAME
+# ordinary share count. Price stays LOCAL; only shares come
+# from the donor.
+SYMBOL_OVERRIDES = {("Singapore", "CICT"): ["C38U.SI"]}
+SHARES_DONORS = {("Singapore", "BS6"): "YSHLF",    # Yangzijiang
+                 ("Singapore", "S63"): "SGGKF",    # ST Engineering
+                 ("Singapore", "S68"): "SPXCF"}    # SGX
 
 
 def members(mkt):
@@ -87,7 +106,9 @@ def harvest(mkt, limit=None):
                 headers={"User-Agent": "Mozilla/5.0"},
                 timeout=15).json()
             sufs = {"Malaysia": ".KL", "Indonesia": ".JK",
-                    "Philippines": ".PS", "India": ".NS"}
+                    "Philippines": ".PS", "India": ".NS",
+                    "Singapore": ".SI", "NewZealand": ".NZ",
+                    "Thailand": ".BK"}
             want = sufs.get(mkt)
             for q in j.get("quotes", []):
                 s = q.get("symbol", "")
@@ -99,13 +120,31 @@ def harvest(mkt, limit=None):
 
     for i, c in enumerate(todo):
         got = None
-        for sym in suffix(mkt, c) + _resolve_extra(c):
+        syms = (SYMBOL_OVERRIDES.get((mkt, c))
+                or ([] if (mkt, c) in SHARES_DONORS
+                    else suffix(mkt, c) + _resolve_extra(c)))
+        for sym in syms:
             try:
-                info = yf.Ticker(sym).info
+                tk = yf.Ticker(sym)
+                info = tk.info
                 shares = info.get("sharesOutstanding")
                 px = (info.get("currentPrice")
                       or info.get("regularMarketPrice"))
                 mcap = info.get("marketCap")
+                if not shares or not (px or mcap):
+                    # c-95: .info gaps (SG banks etc.) —
+                    # fast_info carries shares/mcap when
+                    # quoteSummary doesn't
+                    try:
+                        fi = tk.fast_info
+                        shares = shares or fi.get("shares")
+                        mcap = mcap or fi.get("marketCap")
+                        px = px or fi.get("lastPrice")
+                        info = dict(info)
+                        info.setdefault("currency",
+                                        fi.get("currency"))
+                    except Exception:          # noqa: BLE001
+                        pass
                 if not shares or not (px or mcap):
                     continue
                 cap_local = float(mcap) if mcap else \
@@ -121,12 +160,33 @@ def harvest(mkt, limit=None):
                 break
             except Exception:                  # noqa: BLE001
                 continue
+        if got is None and (mkt, c) in SHARES_DONORS:
+            # local line has price but no shares anywhere —
+            # take shares from the US OTC F-line (same
+            # ordinaries), keep the LOCAL price/ccy
+            try:
+                loc = suffix(mkt, c)[0]
+                fi = yf.Ticker(loc).fast_info
+                px = fi.get("lastPrice")
+                dsh = yf.Ticker(SHARES_DONORS[(mkt, c)]).info \
+                    .get("sharesOutstanding")
+                if px and dsh:
+                    got = {"sym": f"{loc}+{SHARES_DONORS[(mkt, c)]}",
+                           "shares": dsh, "insiders": None,
+                           "ccy": fi.get("currency"),
+                           "cap_local": float(px) * float(dsh)}
+            except Exception:                  # noqa: BLE001
+                pass
         mc[c] = got or {"sym": None}
         if (i + 1) % 8 == 0:
             tmp = CACHE.with_suffix(".tmp")
             tmp.write_text(json.dumps(cache))
             tmp.replace(CACHE)
             print(f"  {i+1}/{len(todo)}")
+        if (i + 1) % 10 == 0:              # c-95: periodic save
+            tmp = CACHE.with_suffix(".tmp")
+            tmp.write_text(json.dumps(cache))
+            tmp.replace(CACHE)
         time.sleep(0.35)
     tmp = CACHE.with_suffix(".tmp")
     tmp.write_text(json.dumps(cache))
@@ -136,13 +196,18 @@ def harvest(mkt, limit=None):
 
 
 FX = {"JPY": 148.0, "AUD": 0.66, "HKD": 7.80, "KRW": 1385.0,
-      "TWD": 32.5, "INR": 87.0, "MYR": 4.25, "IDR": 16300.0,
-      "PHP": 57.0, "CNY": 7.15, "USD": 1.0}
+      "TWD": 29.5, "INR": 87.0, "MYR": 4.25, "IDR": 16300.0,
+      "PHP": 57.0, "CNY": 7.15, "USD": 1.0,
+      # c-95 additions (spot approximations, labeled):
+      "NZD": 0.61, "SGD": 1.28, "THB": 31.5}
+# c-95: TWD corrected 32.5 -> 29.5 (Q67 — factsheet-implied
+# ~29.3; the stale rate understated USD caps ~10%)
 
 
 def to_usd(v, ccy):
     r = FX.get(ccy or "USD", 1.0)
-    return v * r if ccy == "AUD" else v / r if r != 1.0 else v
+    return (v * r if ccy in ("AUD", "NZD")
+            else v / r if r != 1.0 else v)
 
 
 def report(mkt):

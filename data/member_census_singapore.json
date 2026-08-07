@@ -1,0 +1,242 @@
+{
+ "market": "Singapore",
+ "n_priced": 16,
+ "unpriced": [],
+ "members_float_sum_busd": 509.0,
+ "factsheet_index_cap_busd": 399.0,
+ "members_vs_factsheet": "+27.7%",
+ "implied_denominator_busd": 469.0,
+ "corridor_busd": [
+  8.21,
+  18.87
+ ],
+ "observed_boundary_musd": 3842.99,
+ "bottom_ladder": [
+  {
+   "code": "CLAR",
+   "company": "CAPITALAND ASCENDAS REIT",
+   "cap_usd_b": 0.13,
+   "ff": 0.929,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 0.12
+  },
+  {
+   "code": "U96",
+   "company": "SEMBCORP INDUSTRIES LTD",
+   "cap_usd_b": 7.78,
+   "ff": 0.989,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 7.69
+  },
+  {
+   "code": "9CI",
+   "company": "CAPITALAND INVESTMENT LT",
+   "cap_usd_b": 10.73,
+   "ff": 0.998,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 10.71
+  },
+  {
+   "code": "BS6",
+   "company": "YANGZIJIANG SHIPBUILDING",
+   "cap_usd_b": 12.11,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 7.27
+  },
+  {
+   "code": "CICT",
+   "company": "CAPITALAND INTEGRATED CO",
+   "cap_usd_b": 15.27,
+   "ff": 1.0,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 15.27
+  },
+  {
+   "code": "GRAB",
+   "company": "GRAB HOLDINGS CLASS A",
+   "cap_usd_b": 15.3,
+   "ff": 0.809,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 12.38
+  },
+  {
+   "code": "BN4",
+   "company": "KEPPEL LTD",
+   "cap_usd_b": 15.72,
+   "ff": 0.988,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 15.53
+  },
+  {
+   "code": "C6L",
+   "company": "SINGAPORE AIRLINES LTD",
+   "cap_usd_b": 18.95,
+   "ff": 0.998,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 18.91
+  },
+  {
+   "code": "F34",
+   "company": "WILMAR INTERNATIONAL LTD",
+   "cap_usd_b": 19.31,
+   "ff": 0.297,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 5.74
+  },
+  {
+   "code": "S68",
+   "company": "SINGAPORE EXCHANGE LTD",
+   "cap_usd_b": 20.3,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 12.18
+  },
+  {
+   "code": "S63",
+   "company": "SINGAPORE TECHNOLOGIES E",
+   "cap_usd_b": 24.98,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 14.99
+  },
+  {
+   "code": "Z74",
+   "company": "SINGAPORE TELECOMMUNICAT",
+   "cap_usd_b": 55.5,
+   "ff": 0.953,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 52.92
+  }
+ ],
+ "rows": [
+  {
+   "code": "D05",
+   "company": "DBS GROUP HOLDINGS LTD",
+   "cap_usd_b": 166.45,
+   "ff": 0.994,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 165.45
+  },
+  {
+   "code": "O39",
+   "company": "OVERSEA-CHINESE BANKING ",
+   "cap_usd_b": 102.88,
+   "ff": 0.719,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 73.95
+  },
+  {
+   "code": "SE",
+   "company": "SEA ADS REPRESENTING CLA",
+   "cap_usd_b": 70.38,
+   "ff": 0.74,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 52.05
+  },
+  {
+   "code": "U11",
+   "company": "UNITED OVERSEAS BANK LTD",
+   "cap_usd_b": 56.23,
+   "ff": 0.782,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 43.99
+  },
+  {
+   "code": "Z74",
+   "company": "SINGAPORE TELECOMMUNICAT",
+   "cap_usd_b": 55.5,
+   "ff": 0.953,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 52.92
+  },
+  {
+   "code": "S63",
+   "company": "SINGAPORE TECHNOLOGIES E",
+   "cap_usd_b": 24.98,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 14.99
+  },
+  {
+   "code": "S68",
+   "company": "SINGAPORE EXCHANGE LTD",
+   "cap_usd_b": 20.3,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 12.18
+  },
+  {
+   "code": "F34",
+   "company": "WILMAR INTERNATIONAL LTD",
+   "cap_usd_b": 19.31,
+   "ff": 0.297,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 5.74
+  },
+  {
+   "code": "C6L",
+   "company": "SINGAPORE AIRLINES LTD",
+   "cap_usd_b": 18.95,
+   "ff": 0.998,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 18.91
+  },
+  {
+   "code": "BN4",
+   "company": "KEPPEL LTD",
+   "cap_usd_b": 15.72,
+   "ff": 0.988,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 15.53
+  },
+  {
+   "code": "GRAB",
+   "company": "GRAB HOLDINGS CLASS A",
+   "cap_usd_b": 15.3,
+   "ff": 0.809,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 12.38
+  },
+  {
+   "code": "CICT",
+   "company": "CAPITALAND INTEGRATED CO",
+   "cap_usd_b": 15.27,
+   "ff": 1.0,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 15.27
+  },
+  {
+   "code": "BS6",
+   "company": "YANGZIJIANG SHIPBUILDING",
+   "cap_usd_b": 12.11,
+   "ff": 0.6,
+   "ff_src": "default0.6",
+   "ffcap_usd_b": 7.27
+  },
+  {
+   "code": "9CI",
+   "company": "CAPITALAND INVESTMENT LT",
+   "cap_usd_b": 10.73,
+   "ff": 0.998,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 10.71
+  },
+  {
+   "code": "U96",
+   "company": "SEMBCORP INDUSTRIES LTD",
+   "cap_usd_b": 7.78,
+   "ff": 0.989,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 7.69
+  },
+  {
+   "code": "CLAR",
+   "company": "CAPITALAND ASCENDAS REIT",
+   "cap_usd_b": 0.13,
+   "ff": 0.929,
+   "ff_src": "insiders",
+   "ffcap_usd_b": 0.12
+  }
+ ]
+}

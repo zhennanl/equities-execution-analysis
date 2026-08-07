@@ -54,6 +54,17 @@ TOP10_CODES = {"TAIWAN SEMICONDUCTOR MFG": "2330",
                "E.SUN FINANCIAL HOLDING": "2884"}
 
 
+# c-100 (user observation): prominent NON-members near the add
+# bar were carrying the 0.55 default. Named-insider floats
+# fetched for them (same v2 method as members). Direction of
+# the correction: 3 of 4 real floats are LOWER than the default
+# (the default was FLATTERING their half-bar, not creating
+# their candidacy — the add bar itself is a FULL-cap test).
+NONMEMBER_V2 = {"2408": 0.456, "2344": 0.690, "8046": 0.381,
+                "6505": 0.120, "3189": 0.604, "6274": 0.872,
+                "8299": 0.852, "6770": 0.790}
+
+
 def member_floats(fund, tape):
     """Member FIFs, tiered: (1) top-10 implied IN-FRAME — the
     factsheet's float cap / OUR census full cap, so head floats
@@ -61,7 +72,8 @@ def member_floats(fund, tape):
     floats for the rest (validated 0.022; known blind spot:
     board-seatless government stakes -> the top-10 override
     exists precisely for that)."""
-    out = {}
+    out = {code: (ff, "v2_insiders_nonmember")
+           for code, ff in NONMEMBER_V2.items()}
     p = ROOT / "data" / "tw_float_mops_v2.json"
     if p.exists():
         for r in json.loads(p.read_text())["rows"]:

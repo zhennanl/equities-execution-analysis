@@ -96,6 +96,36 @@ py scripts\apac_member_census.py report Japan
 ::             Indonesia Philippines
 ```
 
+**UPDATED (c-95): full 13-market ladder run.** Membership now
+covers all 13 (NZ/SG/TH added; counts match factsheets
+exactly). Fixes in: TWD FX 32.5->29.5 (Q67), NZD/SGD/THB
+added, fast_info fallback for .info gaps (SG banks), search
+resolver for SG/NZ/TH mnemonics, periodic saves (resumable
+mid-market). NZ already priced 5/5 from the session; SG 5/16
+partial. Run each (order = smallest first; China last ~25min):
+
+```
+py scripts\apac_member_census.py harvest Singapore
+py scripts\apac_member_census.py harvest Thailand
+py scripts\apac_member_census.py harvest Malaysia
+py scripts\apac_member_census.py harvest Indonesia
+py scripts\apac_member_census.py harvest Philippines
+py scripts\apac_member_census.py harvest HongKong
+py scripts\apac_member_census.py harvest Australia
+py scripts\apac_member_census.py harvest Korea
+py scripts\apac_member_census.py harvest India
+py scripts\apac_member_census.py harvest Japan
+py scripts\apac_member_census.py harvest China
+:: then per market:
+py scripts\apac_member_census.py report <Market>
+```
+
+Reading each report: members-vs-factsheet within ±10-15%
+validates; the bottom-of-ladder table IS that market's
+delete-candidate region against its corridor (DM [8.21,
+18.87], EM [4.10, 9.44] — Aug-26 scaled). Names failing to
+price are listed per report — normal, stated.
+
 Runtimes: most markets 2–10 min; China ~25 min (576 names).
 Resumable per market. Pilot done: HongKong 22/25 priced,
 members-vs-factsheet +10.9%. Known symbol quirks handled in-code

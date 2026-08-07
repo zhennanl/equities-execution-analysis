@@ -19,7 +19,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FX = 32.5
+FX = 29.5   # c-94: corrected from stale 32.5 — MSCI factsheet-implied ~29.3 (TSMC full cap check); the 32.5 understated USD caps ~10%
 BUFFER_EDGE = 1.15          # pool cutoff: generous buffer-band edge
 API = "https://api.finmindtrade.com/api/v4/data"
 

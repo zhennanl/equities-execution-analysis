@@ -2017,5 +2017,382 @@ the art, structurally identical to MSCI's own classification
 exercise (Q48) with the top-10 answers copied from their
 published arithmetic.
 
+### Q54. With CLSA-like licensed MSCI access, what data would help the research?
+
+REPLACED outright: (1) daily security-level constituent files
+(actual FIFs, shares, float/full caps, weights, segment
+membership — kills implied-FIF extraction, v2 floats, ETF
+membership triangulation, factsheet inversion; daily history =
+true PIT membership); (2) the official review parameters (the
+actual GMSR/ranges + per-market cutoffs — the corrected walk
+becomes verification; the 44-review backtest can decompose
+every miss into input error vs discretion — the license's
+single most valuable calibration unlock); (3) machine-readable
+change lists + corporate-event notices. SHARPENED: (4)
+pro-forma files at announcement (exact Δweights -> forced flow
+= Σ AUM x Δw / px, replacing lambda post-announcement); (5)
+Small/IMI files — the quiet biggest upgrade: demotions get
+BOUGHT by small-cap trackers, net flow = Standard sell − Small
+buy, changing print forecasts for every demoted name; (6)
+foreign-room data for restricted markets (CN/IN activation);
+(7) index-linked AUM estimates (pins the flow arithmetic).
+UNCHANGED by any license: the price-snap date, fresh GMSR
+recalc, discretion corner cases — and the ENTIRE supply side
+(SBL/T86/margin/auction/anticipation clock/channel model):
+MSCI sells inputs, not knowledge of who's pre-positioned. The
+license removes estimation risk; the differentiating research
+remains the Step-2/3 machinery (Q50).
+
+### Q55. Can retail investors buy MSCI's data — and at what cost?
+
+Practically no retail tier exists for the data that matters
+(Q54's security-level files). Licensing is custom/institutional:
+reported averages ~$120k/yr (small team) to ~$733k/yr
+(enterprise); MSCI's published pricing principles are
+quote-based by content/usage. Middle path = a terminal
+(Bloomberg ~$30k/yr shows membership/weights interactively —
+checking, not files); academic WRDS-type access sometimes
+carries history. Free retail layer = exactly what this project
+mines: latest factsheets (overwritten monthly — hence
+capture-forward), change lists/press releases, the GIMI book,
+ETF holdings as membership proxies. Framing: our
+public-exhaust approach IS the retail ceiling, and the
+measured gaps (0.022 floats, +3.7% denominator) quantify the
+distance between that ceiling and the six-figure product.
+
+### Q56. Where does the rulebook say MSCI "snaps any of the last 10 business days"?
+
+[CITATIONS SUPERSEDED — see the c-91 correction below; the
+user then pointed to the CURRENT May-2026 edition.] Originally
+pinned to the Dec-2022 edition (§3.2.6 p.66 QIR / §3.1.9 p.54
+SAIR). **Current citation (GIMI May-2026, archived at
+data/msci_archive/MSCI_GIMIMethodology_May2026.pdf): §3.1.9
+"Date of Data Used for Index Reviews", p.48** — the edition
+restructured the old SAIR/QIR split into one section covering
+all four reviews ("any one of the last 10 business days of
+January / April / July / October"; old §3.2.6 is now "Early
+Deletions"). The provision governs cap prices, FIF updates,
+foreign room, and NOS. Precisions: MSCI picks ONE undisclosed
+date (fn 28: the window PREPONES if the effective date falls
+inside the announcement month; fn 29 defines a business day
+as >80% of ACWI float open); the two OTHER data dates are
+deterministic and per-review — for Aug-2026: Equity Universe
+Cutoff 2026-05-29, Liquidity Cutoff 2026-06-30 — so universe
+and ATVR inputs align to MSCI's exact dates while the price
+date cannot. NEW in this edition's text: the post-cutoff
+extraordinary-events discretion (fraud/takeover/suspension
+between price cutoff and announcement can veto a migration) —
+the discretion LIMIT now has a rulebook citation. Step 0
+renders all of this; full record in
+docs/FRAMEWORK_CUTOFF_STEPS.md.
+
+### Q57. Explain the three cutoff dates and their mapping to our analysis
+### Q58. Explain Step 1 term by term ($15.75B / x1.042 / half / corridor)
+
+Both answered in full in docs/FRAMEWORK_CUTOFF_STEPS.md Q&A
+section (c-91). Q57 headline: universe cutoff (Aug-26:
+2026-05-29) = who can be considered — post-May listings
+auto-disqualified; liquidity cutoff (2026-06-30) = ATVR
+windows must END 6/30 (actionable census correction — we use
+latest-12m); price cutoff (one of last 10 July b-days) = the
+only stochastic date, mapping onto frame-robustness (formal
+upgrade: 10-day ladder sweep). Q58 headline: $15.75B = full
+cap of the company at the aggregated DM universe's 85%
+free-float coverage crossing (the global yardstick, §2.3.2.1);
+x1.042 = our proxy for MSCI's per-review recompute (broad-DM
+move between price windows; ±2pt honesty tax for marginal-vs-
+average, unknown day, composition churn); EM = half by fixed
+rule; the corridor (§2.3.2, 0.5-1.15x) = the coverage-vs-
+comparability treaty — inside it the market's walk wins,
+outside it the clamp wins (Taiwan's case).
+
+### Q59. Do the three data dates apply to all APAC markets — and how do they affect the analysis?
+
+YES — global by construction: GIMI §3.1.9 defines the dates
+PER REVIEW for the whole index family, not per market (one
+methodology, one calendar; fn 29's business-day definition is
+itself global — >80% of ACWI float open — with per-listing
+holiday handling). Consequence: the data-date logic is
+STANDARDIZED once — agents/market_profiles.review_dates(year,
+month) now returns the three dates for any review (Aug-2026:
+universe 2026-05-29, liquidity 2026-06-30, price window
+2026-07-20..31), used identically by all 13 markets AND by
+historical PIT backtests (all 44 reviews can now be
+date-aligned properly). Effects on the analysis, per input:
+(1) UNIVERSE — membership eligibility and the minimum-size
+data freeze at end-May: post-May listings are auto-
+disqualified adds; (2) LIQUIDITY — ATVR windows must END at
+the liquidity cutoff (actionable census correction; July
+volume earns no credit); (3) PRICE — caps/FIFs/foreign room/
+NOS from ONE undisclosed day in the 10-day window: the formal
+upgrade is sweeping the ladder across all 10 dates and
+shipping only sweep-stable verdicts. Registered refinement:
+weekday approximation vs fn29's exact ACWI-open day count.
+
+### Q60. The Global Minimum Size Reference, explained (with the §2.3.2.1 text in hand)
+
+THE PROBLEM: each market's Standard index targets 85% of ITS
+OWN float, but "the 85% line" is a $20B company in a deep
+market and a $1B company in a small one — without a yardstick,
+"Standard member" would mean different sizes everywhere. THE
+FIX: pool the ENTIRE DM investable universe, sort by FULL cap,
+walk cumulative FREE-FLOAT coverage, and read the full cap at
+three crossings: 70% -> Large Cap ref ($51.3B), 85% ->
+STANDARD ref ($15.75B — our number), 99% -> IMI ref ($1.19B).
+The reference = "the size of the company at the global
+boundary". EM = one-half DM by fixed rule; FM refs come from
+the FM universe's own walk (hence tiny). USE: each market's
+own 85% walk proposes a cutoff; it must land in 0.5-1.15x the
+applicable reference — the book computes the ranges itself:
+DM [7.87, 18.11], EM [3.94, 9.06] — and our corridor [4.10,
+9.44] = exactly those numbers x our 1.042 scaling (check
+passes to the cent). Inside the range the walk wins; outside
+(Taiwan) the clamp wins. One sentence: THE MARKET'S WALK
+PROPOSES, THE GLOBAL RANGE DISPOSES.
+
+**NEW FACT surfaced by the passage:** "based on April 20, 2026
+data" = MSCI disclosed, EX POST, the May-2026 review's chosen
+Price Cutoff Date (2nd business day of the April window).
+Each methodology edition reveals the prior review's choice ->
+(a) the 10-day sweep can be graded retroactively per review by
+collecting disclosed dates from successive editions; (b) a
+prior on WHERE in the window MSCI tends to pick becomes
+buildable. Registered as a follow-up (edition-mining the
+price-date history).
+
+### Q61. Must Taiwan's 85% crossing fall in [3.94, 9.06] — and what happens if it doesn't?
+
+The FINAL cutoff must respect the range; the RAW crossing need
+not — and §2.3.3 (May-2026 ed., archived) gives the exact
+mechanism, sharper than the "clamp" shorthand: if the crossing
+company's full cap lies inside the range it BECOMES the cutoff
+(the walk wins). If not, MSCI adjusts the MEMBERSHIP COUNT,
+not the number: crossing ABOVE the ceiling (Taiwan, ~$12.95B)
+-> "the number of companies is increased to include ALL
+companies with a full market capitalization higher than the
+upper bound" — cutoff = full cap of the smallest company above
+~$9.44B, coverage OVERSHOOTS 85% (hence 77 members vs the raw
+walk's ~53); crossing BELOW the floor -> count DECREASED until
+the smallest member clears the lower bound, coverage
+undershoots. The book's own philosophy line: "priority to
+GLOBAL SIZE INTEGRITY over market coverage" — coverage is the
+goal, size integrity the constraint, coverage the casualty.
+Knock-ons surfaced: §2.3.6.1 — with the cutoff outside the
+range, the HALF-BAR float requirement references the RANGE
+BOUNDARY not the cutoff (affects our add gates); fn 22 — a
+company inside the range is deletion-protected if its removal
+would drag coverage below the coverage target range (a
+delete-pool subtlety for the frontier logic).
+
+### Q62. Why the 1.042 scaling — does the rulebook prescribe it?
+
+No — the rulebook prescribes MSCI's OWN update, and the
+scaling is our labeled proxy for it. **GIMI May-2026 Appendix
+X p.117** ("Updating the Global Minimum Size References and
+Ranges"): at each review the DM Standard reference = the full
+cap of the company AT THE SAME RANK as last review's
+reference-setter, held as long as coverage at that rank stays
+within 85-87%; outside the tolerance, the rank resets and the
+reference is recalculated. EM stays = half DM; FM from its own
+universe. So the published $15.75B / [3.94, 9.06] are the MAY
+review's values at April-20 prices; the AUGUST review gets a
+NEW reference repriced (rank-anchored) at the July price date.
+Unscaled May numbers would judge an August review at April
+prices (~4% stale in a rising tape). Our x1.042 = broad-DM
+move as a stand-in for "reprice the rank-N company" — an
+ASSUMPTION by construction, with the ±2pt band now precisely
+characterized by Appendix X: (a) the marginal rank-anchored
+company ≠ the average index; (b) a rank reset (85-87%
+tolerance breaking) is a discontinuity smooth scaling can't
+see. Vocabulary note: the 85-87% band is the GMSR RANK-HOLD
+tolerance — distinct from the market-level coverage target
+range. Framework page Step 1 now cites Appendix X.
+
+### Q63. May-2026 confirmed latest edition; the GMSR-to-shortlist chain
+
+Edition check: Jun/Jul/Aug-2026 URLs 404, May-2026 200 — the
+latest, and the edition in force for the Aug-2026 review. The
+chain, each link mapped to its artifact: (1) reference ->
+range (Appendix X repricing, our x1.042 proxy; EM = half);
+(2) the market walk PROPOSES ($12.95B crossing —
+cutoff_walk_v2); (3) the range DISPOSES (§2.3.3 membership
+expansion; effective cutoff ~$9.44B); (4) buffers -> two
+frontiers (delete ~$6.29B, add ~$14.16B — asymmetric by
+design: turnover paid only for decisive moves); (5) the
+ladder names names (members below the floor = delete pool;
+non-members above the bar = add candidates); (6) add gates
+prune (universe eligibility by 5/29, float ≥ 0.15, half-bar
+vs the RANGE boundary, ATVR ending 6/30, foreign room); (7)
+delete protections prune (fn22 coverage protection,
+extraordinary-events discretion); (8) robustness ships
+(frames + float band + the 10-day price sweep -> sweep-stable
+names only). One sentence: the GMSR sets the yardstick, the
+walk and range set the boundary, buffers set the frontiers,
+the ladder names the names, gates and protections prune,
+robustness decides what survives to the client email.
+
+### Q64. The Q63 chain made concrete — Taiwan's Aug-2026 worked example
+
+Link by link with real numbers (ladder vintage): (1) 15.75 x
+1.042 = 16.41 -> EM 8.21 -> range [4.10, 9.44]; (2) the walk
+crosses at rank ~53 / $12.95B; (3) above the ceiling ->
+membership expands, effective cutoff ~$9.44B (hence 77
+members); (4) frontiers 6.29 / 14.16; (5) the ladder: delete
+pool = 6919 4.94, 2834 5.44, 2609 5.46, 1101 5.63, 3529 5.69,
+5871 5.87; sweep-sensitive survivors 3533 6.42, 8069 6.71,
+3293 6.73, 5876 6.80, 2356 6.82; add side 2408 34.4 (census
+46.7), 6505 20.8, 8046 18.3, 2344 18.0, below-bar 8299/3189/
+6770; (6) gates: 6505 BLOCKED (float 0.12); 2408 passes all
+(float 0.456 parent-named, half-bar 1.56-2.59x, room 88%);
+8046/2344 pass in-frame; (7) fn22 doesn't bind (coverage
+overshoots); (8) robustness: 2408 = the one STRONG call
+(1.7-2.8x the bar in every frame, declared T-6); 8046/2344
+frame-sensitive; delete ordering: 6919 safest call, 5871
+within ~7% of the floor (price-sweep rescue-able), 3533 only
+2% above it (nearest at-risk survivor). THE BOX: adds 2408
+strong, 8046/2344 possible, 6505 excluded; deletes 6919/2834/
+2609/1101/3529/5871. Graded at the Aug-12 announcement;
+misses ship.
+
+### Q65. How would CLSA's PT desk predict THIS shortlist (TW Aug-26) — and what data makes them more accurate?
+
+Same eight links; at each one the desk READS what we ESTIMATE:
+(1-2) reference via repricing the actual Appendix-X rank
+company from the licensed daily DM universe (band ~fractions
+of a pt vs our ±2); denominator exact from official FIFs/NOS —
+our whole float stack is work they never do; (3-4) INTERIM
+Market Size-Segment Cutoffs distributed to clients daily
+(§3.2.1) — the frontier is read, not derived; (5) same public
+prices, exact shares, evaluated on all 10 candidate dates; (6)
+the gate labels change: 6505's float-block becomes certain
+(official FIF), 8046/2344's "frame-sensitive" label DISSOLVES
+(one exact denominator = one frame -> definite yes/no), 2408's
+foreign room read from MSCI's published room fields; (7-8)
+still no price date and no discretion foresight — 5871's
+rescue-ability is THEIR uncertainty too; their edge there =
+~40 graded reviews of MSCI behavior + the client-coverage
+phone line + FLOW (their borrow desk sees locates building in
+2609/1101; client inquiries reveal the street's consensus).
+NET: their box differs from ours in CONFIDENCE, not much in
+NAMES — the license converts our labeled assumptions into
+facts and leaves the two unknowables (price date, discretion)
+untouched.
+
+### Q66. From the range to the shortlist — the RATIONALE at each step (teaching version)
+
+Each step exists because the prior one left a problem: the
+RANGE constrains but doesn't pick (MSCI's objective is still
+85% of TAIWAN's buyable value) -> the WALK finds Taiwan's own
+line (rank by full cap = "how big", accumulate float = "how
+much can be owned"; TSMC ~half the float -> the line lands at
+~rank 53 / $12.95B) -> the COLLISION ($12.95 > $9.44 ceiling
+would break global comparability) resolves by GROWING THE
+LIST, not shrinking the boundary (§2.3.3: all companies above
+the ceiling enter; cutoff ~$9.44B; 77 members; coverage
+overshoots — harmless, unlike a broken yardstick) -> the
+FRONTIERS add hysteresis (thermostat logic: members deleted
+only below 2/3x = $6.29B, entrants only above 1.5x = $14.16B
+— turnover paid only for decisive changes) -> the LADDER makes
+prediction two look-ups (retention test: 6 members below the
+floor, 6919 deepest at -21%, 5871 shallowest at -7%; entry
+test: 4 non-members above the bar; distance from frontier =
+confidence, since caps are measured on ONE unknown July day)
+-> the GATES add buyability (float floor kills 6505 at $20.8B;
+half-bar, ATVR, room, universe date) -> protections + the
+robustness sweep decide what ships. The shortlist is the
+residue of six honest filters, each with a stated reason.
+
+### Q67. Precision audit of the Q64 caps (user question — caught a real bug)
+
+**Provenance of the Q64/Q66 ladder numbers:** FULL company
+market cap (the correct GIMI basis for cutoff/floor/bar tests
+— float matters only for coverage + half-bar), computed as
+close x NumberOfSharesIssued ÷ FX from the vintage cache;
+BOTH price and shares are 2026-07-31 vintage — the LAST day of
+MSCI's own price window, i.e., a legitimate candidate price
+day.
+
+**The bug the question caught:** ladder_engine converted at FX
+32.5 TWD/USD (stale) while the census uses 29.5 — and MSCI's
+own factsheet arbitrates: TSMC float cap ÷ implied FIF ->
+full cap ~$2,125B vs 62,367B TWD -> implied FX ≈ 29.3. The
+32.5 understated every USD cap ~10%. FIXED (ladder FX -> 29.5,
+suite green).
+
+**Corrected pool (7/31 closes, 7/31 shares, FX 29.5):** DELETE
+POOL = 6919 5.44, 2834 6.00, 2609 6.01, 1101 6.20, 3529 6.27
+(all < 6.29) — **5871 EXITS the pool at 6.47** (the Q64 six
+becomes five; 3529 is now the marginal name at 0.3% under the
+floor — maximally price-date-sensitive). ADD side: order
+unchanged (2408 37.9, 6505 22.9, 8046 20.2, 2344 19.8 all
+clear the bar; 8299 12.3 / 3189 11.3 still below). The 2408
+STRONG call and the 6505 float-block are UNAFFECTED (FX
+cancels in ratios vs the bar by >30%); the frame-robust
+verdicts survive; the pool's marginal names were always the
+labeled uncertainty and the FX fix moved exactly them —
+demonstrating why the precision audit mattered. Q64's numbers
+stand as the historical record; THIS entry is the corrected
+current state.
+
+### Q68. Extending the TW framework to all APAC — readiness exam + membership complete (c-95)
+
+MEMBERSHIP now complete for all 13 markets (ENZL 239672 / EWS
+239678 / THD 239688 added to the harvester; ENZL+THD are IMI
+anchors like EIDO/EPHE — Standard = composite subset). Counts
+match factsheets EXACTLY: NZ 5, SG 16, TH 18 (13/13 total).
+READINESS TIERS: full TW replication possible = Korea (KRX FF
+ratios; short-ban era breaks), India (promoter floats better
+than TW's; NO closing auction — Step-3 doesn't transfer),
+Japan (JPX FFW; close-time era). Partial = China (two-stage
+floats, borrow unobservable). Structurally capped at Frame A +
+implied member FIFs = AU/HK/SG/MY (no float sources exist —
+not closable, least harmful given deep DM floats). Semantic
+restriction = Thailand (NVDR: float/room mean different
+things). Small three (ID/PH/NZ): concentration means implied
+FIFs cover most of the index (NZ Standard = 5 names). Next:
+price the ladders via apac_member_census (resolvers wired).
+Tests updated INTENTIONALLY (10->13; NZ n=5). Suite 468 green.
+
+### Q69. Do default floats CREATE add candidates? (user pattern-spot in the walk display)
+
+The mechanism check: NO — the add-candidate test is on FULL
+cap (1.5x cutoff), which never touches ff, so a default float
+cannot create a candidate. Where ff bites for adds is the
+float gate (≥ 0.15) and the HALF-BAR (float cap ≥ 50% of the
+boundary) — and there the risk runs OPPOSITE to the worry: a
+too-high default FLATTERS a candidate. The user's instinct to
+fetch real floats was right for exactly that reason. Fetched
+(named-insider v2 method): 2408 = 0.456, 8046 = 0.381, 6505 =
+0.120 — all BELOW the 0.55 default (2344 = 0.690 above; also
+3189 0.604, 6274 0.872, 8299 0.852, 6770 0.790). Wired into
+the walk as tier "v2_insiders_nonmember" (NONMEMBER_V2 in
+cutoff_walk_v2). VERDICTS UNDER REAL FLOATS: 2408 float cap
+17.3B, 2344 13.7B, 8046 7.7B — all clear the 4.72B half-bar
+comfortably; 6505 blocked twice over (float 0.12 < 0.15 AND
+float cap 2.7B < half-bar). Every shipped verdict SURVIVES;
+what changed is that the shipped verdicts now rest on named
+floats instead of defaults for all four names near the bar.
+(Walk gap 6.3% vs implied — census MID-HARVEST, test tolerance
+temporarily 8%, tighten after the floats phase.)
+
+### Q70. Where do our TW ff values come from — is there a source with ALL companies?
+
+No official all-company float file exists (Q47: TAIEX is
+full-cap weighted; FTSE/MSCI floats are licensed) — ff is
+DERIVED through three layers: (1) PRIMARY: TWSE MOPS monthly
+insider-holding filings (directors/supervisors/officers/10%
+holders — official, free, all companies, but per-company form
+pages); (2) the AGGREGATED SHORTCUT we query: Yahoo
+heldPercentInsiders (vendor aggregation of those filings) ->
+ff = 1 − insiders (the v2 method); (3) VALIDATION: MSCI's own
+implied FIFs from factsheet arithmetic (v2 graded 0.022;
+gov-stake blind spot -> top-10 use implied directly). Files:
+tw_float_mops_v2.json (76 members), factsheet archive implied
+(top-10), NONMEMBER_V2 (8 bar names), insider_pct_cache (85),
+mieu floats phase (= the all-companies extension, pending
+Bill's `floats` run; shrinks the 11.7% default share).
+Registered upgrade: scrape MOPS directly (layer 1) — the same
+work MSCI's analysts do (Q48).
+
 *(Next planned entry: the MIEU census result, then the
 point-in-time review of prediction quality across 2015–2026.)*

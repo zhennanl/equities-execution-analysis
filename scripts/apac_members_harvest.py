@@ -55,8 +55,18 @@ MARKETS = {
                     "EEM", "Indonesia"),
     "Philippines": ("EPHE", 239675, "ishares-msci-philippines-etf",
                     "EEM", "Philippines"),
+    # c-95: full-region completion. ENZL and THD track IMI
+    # variants (like EIDO/EPHE) -> Standard = composite subset;
+    # EWS tracks the 25/50 Standard family (like EWT).
+    "NewZealand":  ("ENZL", 239672, "ishares-msci-new-zealand-etf",
+                    "EFA", "New Zealand"),
+    "Singapore":   ("EWS",  239678, "ishares-msci-singapore-etf",
+                    "EFA", "Singapore"),
+    "Thailand":    ("THD",  239688, "ishares-msci-thailand-etf",
+                    "EEM", "Thailand"),
 }
-IMI_ANCHORS = {"Indonesia", "Philippines"}   # anchor = IMI superset
+IMI_ANCHORS = {"Indonesia", "Philippines", "NewZealand",
+               "Thailand"}                   # anchor = IMI superset
 COMPOSITES = {"EEM": (239637, "ishares-msci-emerging-markets-etf"),
               "EFA": (239623, "ishares-msci-eafe-etf")}
 

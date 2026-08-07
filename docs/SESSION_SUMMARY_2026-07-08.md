@@ -1,5 +1,265 @@
 # Session Summary — 2026-07-08
 
+## Session 9i continued-101 (2026-08-06) — SITE PAGE 2: REVIEW HISTORY EXPLORER (trader-first design)
+- views/history_explorer.py built on msci_changes_db; app.py
+  now a two-page site (sidebar: History Explorer / Cutoff
+  Framework). Design = the three questions a PT trader asks:
+  (1) RHYTHM — KPI strip (reviews, % quiet = the staffing base
+  rate, avg adds/dels, biggest) + diverging-bar heartbeat
+  (adds up / dels down, hover names, SAIR/QIR filter,
+  seasonality expander); (2) HAS THIS NAME MOVED — search by
+  name/TW code + churn leaderboard (TW top: China Airlines /
+  Walsin Lihwa / TECO, 3 moves each); (3) HOW BIG WAS THAT
+  REVIEW — drill-down w/ all-APAC context table + CSV
+  download. Quiet reviews rendered, not skipped (base rates).
+- Smoke: TW 34 active reviews, biggest Nov25; 2408 lookup 2
+  rows. Pinned test_history_explorer_page. Suite 470 green.
+
+## Session 9i continued-100 (2026-08-06) — NON-MEMBER FLOATS UPGRADED (user pattern-spot; Q69)
+- User noticed add candidates carry default ff 0.55 in the walk
+  display and asked whether defaults CREATE candidates.
+  Mechanism check: no — the add bar is a FULL-cap test; ff
+  bites at the float gate + half-bar, where a high default
+  FLATTERS (3 of 4 real floats are LOWER: 2408 0.456, 8046
+  0.381, 6505 0.120; 2344 0.690 higher; also fetched 3189/
+  6274/8299/6770). Wired as NONMEMBER_V2 tier in
+  cutoff_walk_v2 ("v2_insiders_nonmember").
+- Verdicts under real floats ALL SURVIVE: 2408/2344/8046 clear
+  the 4.72B half-bar (17.3/13.7/7.7B float caps); 6505 doubly
+  blocked (0.12 gate + 2.7B half-bar). The calls now rest on
+  NAMED floats for every name near the bar.
+- Walk re-run: D 3,979B, gap 6.3% (census MID-HARVEST — body
+  growing on default floats); pinned tolerance temporarily
+  6->8% with tighten-back note. Suite 469 green.
+
+## Session 9i continued-99 (2026-08-06) — SINGAPORE LADDER 16/16 (symbol overrides + shares donors)
+- Bill's SG run stalled at 12/16. Diagnosis: (1) CICT = EWS
+  abbreviation, real SGX code C38U.SI (full data) -> new
+  SYMBOL_OVERRIDES map; (2) BS6/S63/S68: local .SI lines have
+  price but NO shares in .info/fast_info/shares_full — a real
+  Yahoo gap -> new SHARES_DONORS map: US OTC F-lines (YSHLF/
+  SGGKF/SPXCF) donate the identical ordinary share count,
+  LOCAL price+ccy kept; donor names skip the slow doomed chain.
+  Result: Yangzijiang S$15.5B, ST Eng S$32.0B, SGX S$26.0B,
+  CICT S$19.5B — all sane; 16/16.
+- Operational lesson recorded: Bill's terminal + sandbox ran
+  the same market concurrently on one cache (his pre-fix run
+  re-saved cleared failures) -> rule: ONE MACHINE PER MARKET,
+  same as the TWSE convention. Maps generalize per (market,
+  ticker) for any similar case in the remaining runs.
+
+## Session 9i continued-98 (2026-08-06) — AUCTION5S COMPLETE (the last harvester lands)
+- Bill's run + session top-up: 3,024/3,024 days, 2,815 trading
+  days with data, 0 missing weekdays, 0 malformed (all days
+  122 rows, 13:00 ref -> 13:30:00), ~10 error days recovered.
+  THE ENTIRE TWSE DAY-FILE ROADMAP IS NOW ON DISK (SBL, T86,
+  margin, daytrade, blocks, auction5s — six decade files).
+- Precision nuance quantified: "trades freeze during the call"
+  is first-order true, not literal — 61% of days zero drift in
+  13:25-13:29:55, median 0.00% of the cross, p90 0.04%, max
+  4.7% (instruments matching to 13:30 + late bookings).
+  Analyses use the 13:30 JUMP as the cross; noted in
+  AUCTION_EXPOST_TCA (1b-note). Pinned test still passes
+  (asserts the frozen day it pinned).
+
+## Session 9i continued-97 (2026-08-06) — THE CHANGES DATABASE (13 markets, 2015->May-26, CSV+pickle)
+- scripts/changes_db.py: parses all 46 archived STPublicList
+  texts -> data/msci_changes_db.csv/.pkl — 3,193 rows, 45
+  reviews, 13 markets (CN 1,930 / JP 340 / IN 207 / KR 190 /
+  TW 136 ...). Query CLI by name substring or TW code.
+- VALIDATION vs the independent TW registry FOUND A REGISTRY
+  BUG: Feb-2026 QIR added "HON PRECISION" (confirmed in the
+  QIRPR text: "Hon. Precision (Taiwan)" among largest adds) —
+  msci_tw_events.json had +0/-4 vs MSCI's +1/-4. DB carries
+  the row as published; documented as KNOWN_REGISTRY_GAPS in
+  the build assertion (dels match exactly 78/78); registry
+  code-resolution = registered task (late-2025 TW listing,
+  local code TBD — do NOT guess).
+- Query gold already: 2408 = ADDED May16 / DELETED Feb25 ->
+  the Aug-26 STRONG call is a RE-ENTRY 18 months after the
+  DRAM-downcycle exit; WAN HAI = Feb15 in / Nov15 out (churn
+  case). eff_date_est = last weekday of review month (labeled
+  estimate). Pinned test_changes_db. Suite 469 green.
+
+## Session 9i continued-96 (2026-08-06) — LADDER PRICING: plumbing fixed, NZ done, bulk handed off
+- Member-census upgrades for the 13-market ladder run: suffix
+  rules NZ(.NZ)/SG(.SI)/TH(.BK); search-resolver extended to
+  the three; fast_info fallback for .info gaps (SG banks:
+  D05.SI has price but no shares/mcap in quoteSummary —
+  fast_info carries both, verified); periodic saves every 8-10
+  (mid-market resumability); FX: TWD 32.5->29.5 (the Q67 bug
+  lived here too) + NZD 0.61 / SGD 1.28 / THB 31.5 (spot
+  approximations, labeled).
+- Sandbox run: NZ priced 5/5; SG 5/16 partial (45s window
+  thrash vs slow Yahoo mnemonics) -> bulk run handed off to
+  Bill's terminal (handoff updated: 11-market command list,
+  smallest-first, China last; report reading guide with
+  Aug-26-scaled corridors). Suite 468 green.
+
+## Session 9i continued-95 (2026-08-06) — ALL-13 MEMBERSHIP COMPLETE + FRAMEWORK READINESS EXAM (Q68)
+- apac_members_harvest extended with ENZL(239672)/EWS(239678)/
+  THD(239688, found via product screener after 239866 500'd);
+  ENZL+THD flagged IMI anchors (Standard = composite subset).
+  Run: 13/13 counts match factsheets exactly (NZ 5, SG 16, TH
+  18; ENZL 25->5, THD 81->18 superset pattern held).
+- Readiness tiers recorded (Q68): FULL replication = KR/IN/JP
+  (India floats better than TW's; India lacks a closing
+  auction -> Step-3 blocked; KR short-ban eras; JP close-time
+  era); PARTIAL = CN (two-stage floats, borrow unobservable);
+  STRUCTURALLY CAPPED at Frame A + implied FIFs = AU/HK/SG/MY
+  (no float source exists — least harmful, deep DM floats);
+  SEMANTIC restriction = TH (NVDR); small three ID/PH/NZ =
+  implied FIFs cover most of index (NZ Standard = 5 names).
+- Tests updated INTENTIONALLY (members 10->13; NZ n>=5).
+  Suite 468 green. Next: apac_member_census to price the 13
+  ladders (resolvers wired).
+
+## Session 9i continued-94 (2026-08-06) — FULL WALK DISPLAYED + FX BUG CAUGHT BY USER PRECISION AUDIT (Q63-Q67)
+- Q63/Q64: May-2026 edition confirmed latest (Jun/Jul/Aug 404);
+  the GMSR->shortlist chain recorded abstract + concrete.
+  Q65: the CLSA-desk version (license converts labeled
+  assumptions to facts; price date + discretion remain). Q66:
+  the teaching version (rationale per step).
+- scripts/walk_display.py -> reports/walk_display.html: ALL
+  891 screened names, zones colored. RECONCILIATION: 77
+  members = 59 above ceiling + 14 buffer-zone incumbents + 4-5
+  below floor — membership ≠ "all above 9.44"; §2.3.3 sets the
+  review-day assignment, buffers accumulate the rest. Live
+  census vintage moved the crossing (rank 62 @ $10.55B) —
+  corridor-binding HELD (frame-robust as designed).
+- Q67 (user: total or float cap? which day?): ladder numbers =
+  FULL cap (correct basis), 7/31 close x 7/31 shares (= the
+  last day of MSCI's price window) — but FX was STALE 32.5 vs
+  factsheet-implied ~29.3. FIXED to 29.5 (~10% understatement
+  corrected). Corrected pool: 6919/2834/2609/1101/3529 (five,
+  not six) — 5871 EXITS at 6.47; 3529 marginal at -0.3%. Add
+  side unchanged (2408 37.9 = 2.7x bar; STRONG call
+  unaffected). Q64 kept as historical record; Q67 = current
+  state. Suite 468 green.
+
+## Session 9i continued-93 (2026-08-06) — GMSR MECHANICS PINNED TO THE MAY-2026 BOOK (Q60-Q62)
+- Q60: GMSR explained (DM-universe walk; 70/85/99% crossings =
+  Large/Standard/IMI refs $51.3B/$15.75B/$1.19B; EM = half;
+  book computes ranges itself: DM [7.87, 18.11], EM [3.94,
+  9.06] — our [4.10, 9.44] = those x1.042 to the cent). NEW
+  FACT: the worked example discloses the May review's price
+  date EX POST (April 20, 2nd b-day of the window) ->
+  edition-mining historical price dates registered.
+- Q61: outside-the-range mechanism (§2.3.3): membership COUNT
+  adjusts, not the number — above the ceiling ALL companies
+  above the bound enter (TW: 77 members, coverage overshoots);
+  below the floor the count shrinks; "priority to global size
+  integrity over market coverage". Knock-ons: §2.3.6.1
+  half-bar references the RANGE boundary when the cutoff is
+  outside; fn22 deletion protection (unlikely to bind in TW —
+  coverage overshoots).
+- Q62: the 1.042 is NOT in the rulebook — Appendix X p.117
+  prescribes MSCI's rank-anchored repricing (rank holds while
+  coverage in 85-87%); our scaling is the labeled proxy, band
+  now precisely characterized (marginal-vs-average + rank
+  reset). Framework Step 1 cites Appendix X. Suite 468 green.
+
+## Session 9i continued-92 (2026-08-06) — GLOBAL REVIEW CALENDAR STANDARDIZED (Q57-Q59)
+- Q57/Q58 recorded (cutoff-date mapping + Step-1 term-by-term
+  in FRAMEWORK_CUTOFF_STEPS.md Q&A). Q59: the three data dates
+  are GLOBAL per review (§3.1.9 — one methodology, one
+  calendar) -> standardized once:
+  market_profiles.review_dates(year, month) returns
+  universe/liquidity cutoffs + the 10-day price window for any
+  review (Aug-26: 5/29, 6/30, 7/20-7/31; cross-year reviews
+  resolve). Serves all 13 markets AND the 44-review PIT
+  backtests.
+- Analysis effects encoded as upgrades: post-universe-cutoff
+  listings = auto-disqualified adds; ATVR windows must END at
+  the liquidity cutoff (census correction, actionable); price
+  = 10-day ladder sweep -> sweep-stable verdicts (the formal
+  blind band). Registered refinement: fn29 exact ACWI-open
+  day-count vs weekday approximation.
+- Pinned test_review_calendar. Suite 468 green.
+
+## Session 9i continued-91 (2026-08-06) — CITATIONS MOVED TO THE CURRENT RULEBOOK (May-2026 ed., user-pointed)
+- User supplied the CURRENT GIMI edition URL -> downloaded +
+  archived (MSCI_GIMIMethodology_May2026.pdf + txt; Dec-2022
+  kept for era work). Edition RESTRUCTURED the section: one
+  §3.1.9 "Date of Data Used for Index Reviews" (p.48) covers
+  all four reviews (old Dec-2022 §3.2.6 QIR split is gone —
+  that number now = "Early Deletions").
+- Gains beyond the re-cite: (1) all three data dates now
+  defined PER REVIEW — Aug-2026: universe cutoff 2026-05-29,
+  liquidity cutoff 2026-06-30 (deterministic, alignable),
+  price cutoff = one of last 10 b-days of July (undisclosed);
+  (2) fn 28 prepone rule (window shifts if effective date is
+  inside the announcement month); (3) fn 29 business-day
+  definition (>80% ACWI float open); (4) the post-cutoff
+  EXTRAORDINARY-EVENTS discretion paragraph (fraud/takeover/
+  suspension can veto a migration) — the discretion LIMIT now
+  has rulebook text. Step 0 renders all four items.
+- Q56 amended with the supersession noted (not silently
+  rewritten); FRAMEWORK_CUTOFF_STEPS.md updated. Suite 467
+  green.
+
+## Session 9i continued-90 (2026-08-06) — STEP 0 PINNED TO THE RULEBOOK (Q56) + framework doc
+- User challenged the "last 10 business days" claim -> GIMI
+  book DOWNLOADED + archived (MSCI_GIMIMethodology_Dec2022.pdf
+  + txt in data/msci_archive) and the provision pinned to the
+  letter: §3.2.6 p.66 (QIR: any ONE of the last 10 b-days of
+  Jan/Jul) + §3.1.9 p.54 (SAIR: Apr/Oct) = the PRICE Cutoff
+  Date, governing cap prices / FIF updates / foreign room.
+- Precision gained: the rulebook defines THREE data dates —
+  price (unknowable choice), liquidity (deterministic, last
+  b-day Mar/Sep — ATVR), universe (deterministic, last b-day
+  Feb/Aug) — so ATVR/universe inputs CAN be date-aligned to
+  MSCI exactly; only the price date cannot. Step 0 of the
+  framework page now renders all three with citations.
+- docs/FRAMEWORK_CUTOFF_STEPS.md written: full steps 0-6
+  record (sources, assumptions, template contract) + the
+  framework Q&A section (Q56 mirrored). Suite 467 green.
+
+## Session 9i continued-89 (2026-08-06) — ONE TEMPLATE, 13 MARKETS (edit TW -> all inherit)
+- framework_cutoff.py refactored to a single-template engine:
+  the step functions (_step0.._step6) ARE the template — edit
+  them once, every market changes (no per-market page code).
+  Market facts assemble from market_profiles + the factsheet
+  archive; sparse MARKET_OVERRIDES for extras (TW: fx, census,
+  shortlist flags). Sidebar market selector, 13 markets.
+- Honest degradation: markets without census/ladder artifacts
+  render OPEN rows (new tag) — Frame B "NOT BUILT" w/
+  activation path, walk replaced by corridor + smallest-member
+  bound, frontiers shown AT THE CEILING with the LIMIT that
+  whether their walk clamps (TW-like) or crosses inside is
+  unknown until their census runs. No borrowed numbers.
+- Smoke-verified: cfg + corridor assemble for all 13 (TW the
+  only census=True). Pinned test extended (OPEN tag
+  INTENTIONAL; 13-market cfg contract). Suite 467 green.
+
+## Session 9i continued-88 (2026-08-06) — FRAMEWORK PAGE 1: the cutoff, step by step, provenance-tagged
+- New site's first page: views/framework_cutoff.py (app MODE
+  "framework"). Six steps, every number badged FACT / RULE /
+  DERIVED / ASSUMPTION / LIMIT with its source line: Step 0
+  event dates (+ the unknowable price date flagged), Step 1
+  reference chain (15.75 FACT -> x1.042 ASSUMPTION ±2pt ->
+  8.21 RULE -> corridor RULE), Step 2 two-frame denominator
+  (factsheet inversion w/ the exact-85% assumption vs census
+  w/ screens/float-tier/FX assumptions; +3.7% agreement;
+  coverage LIMIT), Step 3 the walk (rank-full/accumulate-float
+  RULES; crossing DERIVED; float-band robustness), Step 4 the
+  corridor CLAMP as the binding rule, Step 5 frontiers (6.29 /
+  14.16 RULE), Step 6 shortlist tables + discretion LIMIT.
+- Framework hook for APAC automation: all market specifics in
+  ONE dict (MARKET) + three artifacts (factsheet archive /
+  cutoff walk / ladder) — automation = loop over
+  market_profiles. Assumptions enumerated: price date, 1.042
+  proxy, exact-85%, $0.2B min size, default float 0.55
+  [0.40-0.70], FX 29.5.
+- Pinned test_framework_cutoff_page (tags all used, MARKET
+  hook, app wiring). Suite 467 green.
+
+## Session 9i continued-87 (2026-08-06) — BLANK CANVAS (user request; both prior sites switchable)
+- app.py -> MODE switch: "blank" (current, empty page) /
+  "aug26" (the c-85 review page, untouched in views/) /
+  "legacy" (v1 via backup/website_v1_20260806). Nothing
+  deleted; pinned site tests still pass. Suite 466 green.
+
 ## Session 9i continued-86 (2026-08-06) — FULL 13-MARKET APAC COVERAGE + archive completed
 - Past-year review PDFs completed in data/msci_archive
   (Feb26/May26 STPublicList+QIRPR downloaded; Aug25/Nov25 were
