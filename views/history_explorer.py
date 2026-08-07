@@ -40,11 +40,7 @@ def render():
     import plotly.graph_objects as go
     df = _db()
     st.title("Index Review History — APAC")
-    st.caption("Source: 46 official MSCI change lists "
-               "(STPublicList, archived + parsed; TW validated "
-               "against the independent event registry). "
-               "Quiet reviews shown — a no-change quarter is a "
-               "base rate, not a gap.")
+    st.caption("Source: MSCI change lists")
 
     markets = sorted(df.market.unique())
     mkt = st.selectbox("Market", markets,
@@ -93,35 +89,44 @@ def render():
                 marker_color="crimson",
                 hovertext=[names.get("DEL", pd.Series()).get(r, "")
                            for r in per.index])
-    fig.update_layout(barmode="relative", height=380,
-                      title=f"{mkt}: adds up, deletes down — "
-                      "the review heartbeat",
-                      xaxis_tickangle=60)
+    PDF = ("https://www.msci.com/eqb/gimi/stdindex/"
+           "MSCI_{}_STPublicList.pdf")
+    fig.update_layout(
+        barmode="relative", height=380, title=mkt,
+        xaxis=dict(
+            tickangle=60, tickmode="array",
+            tickvals=list(per.index),
+            ticktext=[f"<a href='{PDF.format(r)}'>{r}</a>"
+                      for r in per.index]))
     st.plotly_chart(fig, use_container_width=True)
 
     seas = sub.groupby([sub.review.str[:3], "action"]) \
         .size().unstack(fill_value=0)
     seas = seas.reindex(["Feb", "May", "Aug", "Nov"]).fillna(0)
-    with st.expander("Seasonality (total changes by review "
-                     "month — SAIRs carry the breadth)"):
+    with st.expander("Seasonality"):
         st.dataframe(seas, use_container_width=True)
 
     # ---- 2. has this name moved before? ------------------
     st.header("Security lookup")
-    q = st.text_input("Name substring or TW code "
-                      "(e.g. NANYA, 2324, WAN HAI)")
+    q = st.text_input("Company name or stock ticker "
+                      "(e.g. NANYA, 2408, 005930, 9984)")
     if q:
         t = q.strip().upper()
+        tick = df.get("ticker",
+                      df.code).astype(str).str.upper()
         hit = df[(df.security.str.upper()
                   .str.contains(t, regex=False))
-                 | (df.code == q.strip())]
+                 | (df.code == q.strip())
+                 | (tick == t)
+                 | (tick.str.split(".").str[0] == t)]
         if hit.empty:
             st.info(f"No index-review moves on record for "
                     f"{q!r} (2015-02 -> 2026-05).")
         else:
-            st.dataframe(hit[["review", "market", "action",
-                              "security", "code",
-                              "eff_date_est"]],
+            cols_ = ["review", "market", "action", "security",
+                     "ticker" if "ticker" in hit else "code",
+                     "eff_date_est"]
+            st.dataframe(hit[cols_],
                          use_container_width=True,
                          hide_index=True)
     with st.expander("Churn leaderboard — names with the most "
@@ -134,8 +139,12 @@ def render():
                  .head(15))
         st.dataframe(churn, use_container_width=True)
 
-    # ---- 3. drill-down -----------------------------------
-    st.header("Review drill-down")
+    # ---- 3. individual review study ----------------------
+    st.header("Individual review study")
+    st.caption("Pick a review to see its changes and context. "
+               "Full point-in-time reconstruction (why each "
+               "name moved, under the rules in force that day) "
+               "— see docs/REVIEW_STUDY_DESIGN.md roadmap.")
     active = [r for r in revs
               if per.loc[r, "ADD"] + per.loc[r, "DEL"] > 0]
     if active:
@@ -144,6 +153,10 @@ def render():
         d1 = sub[(sub.review == pick)]
         with cols[0]:
             st.subheader(f"{mkt} — {pick}")
+            st.markdown(f"[Official change list (PDF)]"
+                        f"(https://www.msci.com/eqb/gimi/"
+                        f"stdindex/MSCI_{pick}_STPublicList"
+                        f".pdf)")
             st.dataframe(d1[["action", "security", "code"]],
                          use_container_width=True,
                          hide_index=True)

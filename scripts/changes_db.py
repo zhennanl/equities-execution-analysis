@@ -133,6 +133,20 @@ def build():
     df["code"] = [
         name2code.get(s.upper(), "") if mk == "Taiwan" else ""
         for s, mk in zip(df.security, df.market)]
+    # c-102: local tickers from the resolver map (all markets);
+    # TW registry code wins where present
+    tmap = {}
+    tp = ROOT / "data" / "security_ticker_map.json"
+    if tp.exists():
+        tmap = json.loads(tp.read_text())
+    import re as _re
+
+    def _norm(s):
+        s = _re.sub(r"[^A-Z0-9 ]", " ", str(s).upper())
+        return _re.sub(r"\s+", " ", s).strip()
+    df["ticker"] = [
+        c or (tmap.get(f"{mk}|{_norm(s)}") or "")
+        for c, s, mk in zip(df.code, df.security, df.market)]
     df = df.sort_values(["year", "month", "market", "action",
                          "security"]).reset_index(drop=True)
 

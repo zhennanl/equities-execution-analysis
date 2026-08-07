@@ -1,5 +1,27 @@
 # Session Summary — 2026-07-08
 
+## Session 9i continued-102 (2026-08-06) — EXPLORER POLISH + TICKER MAP (backfill handed off)
+- UI edits per user: caption "Source: MSCI change lists";
+  x-axis review labels now CLICKABLE links to the official
+  STPublicList PDFs (+ link in drill-down; confirmed the app2
+  pressreleases base 404s for change lists — stdindex base is
+  the live one); chart title = market name only; SAIR/QIR
+  expander added then removed on request (answer kept in
+  chat: Semi-Annual vs Quarterly Index Review); seasonality
+  expander renamed "Seasonality" (calc walked through w/ TW:
+  Feb 1.4 / May 3.8 / Aug 1.3 / Nov 5.5 moves per review —
+  noted the Aug base rate vs our heavier Aug-26 call).
+- Security lookup GENERALIZED to name OR ticker (any market):
+  scripts/ticker_backfill.py — tier A current-member fuzzy
+  (token-prefiltered; full-list difflib was the bottleneck) +
+  tier C Yahoo-search backfill (resumable, suffix-filtered,
+  cleans MSCI class suffixes like " A (HK-C)"). changes_db
+  build joins the map into a 'ticker' column (TW code wins);
+  UI matches ticker w/ and w/o exchange suffix. Coverage 10%
+  now (tier A) -> Bill's terminal runs the backfill:
+  `py scripts\\ticker_backfill.py run` (~25-35 min, resumable),
+  then `py scripts\\changes_db.py build`.
+
 ## Session 9i continued-101 (2026-08-06) — SITE PAGE 2: REVIEW HISTORY EXPLORER (trader-first design)
 - views/history_explorer.py built on msci_changes_db; app.py
   now a two-page site (sidebar: History Explorer / Cutoff
