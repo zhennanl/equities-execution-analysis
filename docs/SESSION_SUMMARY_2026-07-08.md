@@ -1,5 +1,28 @@
 # Session Summary — 2026-07-08
 
+## Session 9i continued-103 (2026-08-06) — INDIVIDUAL REVIEW STUDY: design + roadmap (drill-down redesigned)
+- Section renamed "Individual review study" (Phase 0 done).
+  docs/REVIEW_STUDY_DESIGN.md: four-layer architecture —
+  L1 PIT inputs (TW fully buildable from vintage cache; floats
+  = the honest weak point, current-vintage labeled until the
+  MOPS-history harvester); L2 RULES-IN-FORCE timeline (harvest
+  all GIMI editions, edition-mine each review's ACTUAL GMSR +
+  disclosed price date — retires the 1.042 proxy for HISTORY;
+  rule-change deltas registry); L3 reconstruction engine
+  (per-name verdict table: margin vs binding frontier + gates
+  + reason string; grade = explained / miss-input / miss-rule
+  / NOT-EXPLAINED); L4 anomaly explainer = LLM-agent leg with
+  MECHANICAL trigger (>3x trailing-8 avg, wild asymmetry, >30%
+  unexplained — May-18 China trips all three), QIRPR-first
+  then web research -> cached context cards, labeled
+  agent-researched, context never grade.
+- Roadmap: P1 edition harvest/mining -> P2 TW engine (34
+  reviews w/ answer keys) -> P3 agent cards -> P4 UI -> P5
+  MOPS PIT floats -> P6 APAC rolling. P1-P2 flagged as
+  highest-value pre-Aug-11 (edition index also grades the
+  price-date sweep). End state = the 44-review PIT backtest
+  with answer keys.
+
 ## Session 9i continued-102 (2026-08-06) — EXPLORER POLISH + TICKER MAP (backfill handed off)
 - UI edits per user: caption "Source: MSCI change lists";
   x-axis review labels now CLICKABLE links to the official

@@ -108,8 +108,21 @@ def render():
 
     # ---- 2. has this name moved before? ------------------
     st.header("Security lookup")
+    _EX = {"Taiwan": "NANYA, 2408",
+           "Japan": "SONY, 6758",
+           "Korea": "SAMSUNG, 005930",
+           "China": "TENCENT, 0700",
+           "India": "RELIANCE",
+           "HongKong": "AIA, 1299",
+           "Australia": "BHP",
+           "Singapore": "DBS, D05",
+           "Malaysia": "MAYBANK, 1155",
+           "Thailand": "PTT",
+           "Indonesia": "BCA, BBCA",
+           "Philippines": "SM",
+           "NewZealand": "FPH"}
     q = st.text_input("Company name or stock ticker "
-                      "(e.g. NANYA, 2408, 005930, 9984)")
+                      f"(e.g. {_EX.get(mkt, 'NANYA, 2408')})")
     if q:
         t = q.strip().upper()
         tick = df.get("ticker",
@@ -161,7 +174,7 @@ def render():
                          use_container_width=True,
                          hide_index=True)
         with cols[1]:
-            st.subheader("All-APAC that review")
+            st.subheader(f"All-APAC — {pick}")
             ctx = (df[df.review == pick]
                    .groupby(["market", "action"]).size()
                    .unstack(fill_value=0))
