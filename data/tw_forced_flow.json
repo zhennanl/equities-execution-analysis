@@ -1,0 +1,81 @@
+{
+ "_what": "P(add) x delta-weight x AUM, over the liquidity that is actually there when the flow arrives",
+ "generated": "2026-08-11T04:39:07",
+ "inputs": {
+  "tracking_aum_usd_b": 60.1,
+  "aum_basis": "scripts/tw_mandate_size.py \u2014 named ETFs plus a floor on non-ETF indexed mandates from MSCI's reported fee revenue",
+  "index_float_value_usd_b": 3183.0,
+  "usd_twd": 32.214,
+  "ordinary_close_share": 0.094814,
+  "effective_day_close_share": 0.790112
+ },
+ "names": [
+  {
+   "code": "2344",
+   "name": "Winbond Electronics Corporation",
+   "p_add": 0.6177,
+   "delta_weight_pct": 0.39583097706566134,
+   "forced_flow_usd_m": 237.9,
+   "forced_flow_shares_m": 58.95,
+   "alpha_ratio_day": 0.4251,
+   "alpha_ratio_close": 4.484,
+   "expected_flow_usd_m": 146.9,
+   "expected_alpha_ratio_day": 0.2626
+  },
+  {
+   "code": "2408",
+   "name": "Nanya Technology Corporation",
+   "p_add": 0.6177,
+   "delta_weight_pct": 0.5115457115928369,
+   "forced_flow_usd_m": 307.4,
+   "forced_flow_shares_m": 27.47,
+   "alpha_ratio_day": 0.3408,
+   "alpha_ratio_close": 3.594,
+   "expected_flow_usd_m": 189.9,
+   "expected_alpha_ratio_day": 0.2105
+  },
+  {
+   "code": "8046",
+   "name": "Nan Ya Printed Circuit Board Corporation",
+   "p_add": 0.6177,
+   "delta_weight_pct": 0.22276782909205153,
+   "forced_flow_usd_m": 133.9,
+   "forced_flow_shares_m": 4.69,
+   "alpha_ratio_day": 0.2664,
+   "alpha_ratio_close": 2.81,
+   "expected_flow_usd_m": 82.7,
+   "expected_alpha_ratio_day": 0.1646
+  }
+ ],
+ "pools_of_forced_demand": [
+  {
+   "pool": "index ETFs",
+   "counted": true,
+   "where": "tw_tracking_aum.py, fund by fund"
+  },
+  {
+   "pool": "index mutual funds",
+   "counted": true,
+   "where": "inside the non-ETF indexed floor"
+  },
+  {
+   "pool": "institutional passive mandates",
+   "counted": true,
+   "where": "inverted from MSCI's non-ETF fee revenue"
+  },
+  {
+   "pool": "benchmark-aware active funds",
+   "counted": false,
+   "where": "not visible without holdings data \u2014 a manager holding none of a new 1% constituent is running a -1% active bet by standing still, so some of this money buys too"
+  }
+ ],
+ "out_of_sample_features_tested": [
+  "adv",
+  "borrow_build",
+  "gap1",
+  "n_same_review",
+  "pre_drift",
+  "prevol"
+ ],
+ "gap": "None of the tested features is expected forced flow over liquidity. Per-event index weights need a point-in-time float stack for every review, which exists only for recent ones."
+}

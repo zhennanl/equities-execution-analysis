@@ -56,17 +56,22 @@ def test_the_intro_states_its_two_limits(intro):
     Asserted on the CONSEQUENCE rather than on any one phrasing —
     these cards have been reworded three times and a test that
     pins the wording fails on edits that improve it."""
-    # 1 · no MSCI licence, so the float is estimated and the
-    #     cutoff can land in the wrong place
+    # 1 · no MSCI licence, so the cutoff is struck from
+    #     estimates and the prediction inherits the error
     assert "MSCI" in intro
-    assert "Free float is an estimate" in intro
-    assert "cutoff" in intro
+    assert "cutoff" in intro and "estimate" in intro
+    assert "wrong index change prediction" in intro
     # 2 · no institutional data, so positioning is inferred
-    assert "positioning data" in intro
-    assert "borrow" in intro and "short interest" in intro
-    # the reasons Taiwan was chosen, both halves
-    assert "internship" in intro
+    assert "borrow book" in intro
+    assert "public data only" in intro
+    # the reasons Taiwan was chosen, both halves — c-356 dropped
+    # the internship mention and the Reason one/two eyebrows
+    assert "Prior project experience" in intro
+    assert "microstructure" in intro
     assert "TWSE" in intro
+    for stale in ("Reason one", "Reason two", "internship",
+                  "short interest"):
+        assert stale not in intro, stale
 
 
 def test_the_intro_routes_a_busy_reader_to_the_case_study(intro):

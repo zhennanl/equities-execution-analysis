@@ -482,6 +482,87 @@ def _scan_chart(sc, k):
         "in the cutoff-value calculation.")
 
 
+def _add_probability_block():
+    """P(addition) per name, from evidence (c-355).
+
+    WHY THIS EXISTS. The registered call prices every
+    guaranteed-zone name at the same probability — a base rate
+    times four flat haircuts — which throws away the one thing
+    the size screen measures: HOW FAR each name clears. This
+    block renders scripts/tw_add_probability.py, which keeps the
+    rule sharp and Monte Carlos the INPUTS, each with a measured
+    error distribution. That is the Russell-literature
+    fuzzy-threshold method, and it is how the names finally
+    separate: input error alone cannot bridge a 4.8x clearance,
+    but it fails a 1.55x clearance in a third of draws.
+
+    The page holds no facts — everything below is read from the
+    JSON, and test_walkthrough pins the rendered numbers to it.
+    """
+    src = ROOT / "data" / "tw_add_probability.json"
+    if not src.exists():
+        return
+    try:
+        st_ = src.stat()
+        stamp = (st_.st_mtime_ns, st_.st_size)
+    except OSError:
+        stamp = (0, 0)
+    d = _load_add_probability(stamp)
+    if not d:
+        return
+    m = d["method"]
+    fe = m["fif_error"]
+    # c-358, Bill: the four stat cards are REMOVED. This slot
+    # renders a flowchart once its design is agreed; until then
+    # the per-name arithmetic lives in the Calculation expander
+    # below, so the numbers stay on the page without the card
+    # strip. TODO(c-358): flowchart here.
+    # c-362: the expander is the whole block now — the section
+    # header went with the stat cards, and the institutional
+    # framing, the unpriced-discretion essay, the per-name
+    # commentary and the backtest warning are all cut at Bill's
+    # request. What survives is the method and the per-name
+    # arithmetic: the three measured error sources, and each
+    # name's clearance -> probability line. The flowchart slot
+    # from c-358 stays open above this.
+    with st.expander("Calculation \u2014 how P(addition) is "
+                     "built"):
+        st.markdown(
+            f"**{m['draws']:,} Monte Carlo draws.** Each draw "
+            "perturbs three inputs by their measured errors and "
+            "re-runs the rule sharp:\n\n"
+            f"- the cutoff, uniform \u00b1{m['cutoff_band']:.0%} "
+            "\u2014 the site's standing band on the 85% coverage "
+            "walk; both derived bars move with it\n"
+            f"- the price date \u2014 MSCI uses one of the last "
+            f"{m['price_window_days']} sessions of July; a draw "
+            "picks one and moves the cap by that many days of "
+            "the name's own realised vol\n"
+            "- the free float \u2014 our FIF against the FIF "
+            "implied by MSCI's own factsheet, measured on "
+            f"{fe['n']} Taiwan large caps: mean "
+            f"{fe['mean']:+.1%}, sd {fe['sd']:.1%}\n\n"
+            "P(add) is the share of draws that clear both the "
+            "addition bar and the free-float minimum. Above 95% "
+            "the page prints \u201c>95%\u201d rather than a "
+            "false ranking among near-certainties.\n\n"
+            + "\n".join(
+                f"- **{r['name'].split()[0]} ({r['code']})** "
+                f"\u2014 clears at {r['x_cutoff']:.2f}x "
+                f"\u2192 **P(add) "
+                + (">95%" if r["p_add"] > 0.95
+                   else f"{r['p_add']:.0%}") + "**"
+                for r in d["names"]))
+
+
+@st.cache_data(show_spinner=False)
+def _load_add_probability(stamp=None):
+    src = ROOT / "data" / "tw_add_probability.json"
+    if not src.exists():
+        return None
+    return json.loads(src.read_text(encoding="utf-8"))
+
+
 def _step_visuals(key, s):
     """The diagrams that belong to a step (c-249).
 
@@ -738,25 +819,43 @@ def _hero(s):
     st.markdown("# Predict MSCI Index Changes")
 
 
-def _call_rows(rows, kind, caps):
-    """Dense call rows, carrying the name's market cap.
+def _call_rows(rows, kind, caps, probs=None):
+    """Dense call rows: cap, and the model probability.
 
-    c-320, Bill: the probability bar is replaced by the company's
-    market capitalisation. The probabilities have not been
-    deleted from the project — they are fields on every call in
-    data/aug26_tw_call_v2.json and still travel with the
-    registered prediction. What went is their prominence on a
-    step whose job is to state the result.
+    c-320 replaced the probability bar with market cap; c-359
+    brings a probability BACK as a second column — but the
+    evidence-based one from tw_add_probability.py, not the flat
+    zone number c-320 removed. The two columns now answer the
+    two different questions a reader has: how big is it, and how
+    sure are we.
     """
+    probs = probs or {}
+    _plabel = "P(add)" if kind == "ADD" else "P(delete)"
+
+    def _p(code):
+        v = probs.get(str(code))
+        if v is None:
+            return "\u2014"
+        # c-360/c-362: with discretion unpriced, a 4.78x
+        # clearance rounds to 100%. Printing near-certainty
+        # about an unannounced decision invites the right
+        # objection, so everything above 95% prints as ">95%" —
+        # Bill's chosen gap, wide enough that the three
+        # mechanically-safe names share one honest label
+        # instead of a false ranking among 99s.
+        return ">95%" if v > 0.95 else f"{v:.0%}"
     st.markdown(
         "".join(
             f"<div class='drow'>"
             f"<span class='dact {kind.lower()}'>{kind}</span>"
             f"<span class='dnm'>{r['name']}</span>"
             f"<span class='dcode'>{r['code']}</span>"
-            f"<span class='dcode' style='flex:0 0 120px;"
+            f"<span class='dcode' style='flex:0 0 96px;"
             f"text-align:right;font-weight:700;color:#1f4e79'>"
-            f"{_cap_txt(caps.get(str(r['code'])))}</span></div>"
+            f"{_cap_txt(caps.get(str(r['code'])))}</span>"
+            f"<span class='dcode' style='flex:0 0 118px;"
+            f"text-align:right'>"
+            f"{_plabel} {_p(r['code'])}</span></div>"
             for r in rows),
         unsafe_allow_html=True)
 
@@ -772,7 +871,6 @@ def _results(s):
     derivation. The seven steps still exist and still generate
     every number — they simply move below a fold now.
     """
-    from views import design
     c = s.get("call")
     if not c:
         return
@@ -788,27 +886,66 @@ def _results(s):
         caps.setdefault(str(r["code"]), r.get("cap_usd_b"))
     adds.sort(key=lambda x: -(caps.get(str(x["code"])) or 0))
     dels.sort(key=lambda x: -(caps.get(str(x["code"])) or 0))
-    # c-322, Bill: a name whose verdict flips inside the ±5% band
-    # comes OFF the headline table. It is not deleted from the
-    # page — its reasoning is in the amber block below, with the
-    # band sentence attached — but a list headed "Additions" should
-    # contain the calls this method is willing to stand behind.
+    # c-358, Bill: PHISON GOES BACK IN and the table reports
+    # FOUR additions. c-322 had pulled any name whose verdict
+    # flips inside the ±5% band off the headline list; the
+    # judgement now is the opposite one — the table reports what
+    # the screens produced, and the probability model two blocks
+    # down is where confidence lives. One name, two treatments
+    # was defensible; one name, three places to look was not.
+    #
+    # AND THE SAME RULE RUNS ON THE DELETION SIDE. A member
+    # sitting ABOVE the deletion floor but INSIDE its +5% band is
+    # a deletion a slightly differently calculated floor would
+    # have produced — the mirror image of Phison's position at
+    # the addition bar. The scan carries those names with verdict
+    # "held"; the call file, registered before this change, does
+    # not. They are added here from the scan, marked as
+    # band-borderline, so the two sides of the table apply one
+    # standard.
     _k = s["keys"]
-    _shaky = [x for x in adds
-              if (caps.get(str(x["code"])) or 0) < _k["bar"] * 1.05]
-    adds = [x for x in adds if x not in _shaky]
+    _floor_band = _k["floor"] * (1 + BAND)
+    _border_dels = [
+        {"code": str(r["code"]), "name": r.get("name") or "",
+         "action": "DEL", "band_borderline": True,
+         "cap_usd_b": r.get("cap_usd_b")}
+        for r in (s.get("scan") or {}).get("deletes", [])
+        if r.get("cap_usd_b") is not None
+        and _k["floor"] <= r["cap_usd_b"] < _floor_band]
+    for _bd in _border_dels:
+        caps.setdefault(_bd["code"], _bd["cap_usd_b"])
+    dels = dels + [b for b in _border_dels
+                   if b["code"] not in {str(x["code"])
+                                        for x in dels}]
+    dels.sort(key=lambda x: -(caps.get(str(x["code"])) or 0))
     # c-320, Bill: the "Index Review Prediction — MSCI Taiwan,
     # August 2026" heading is removed. It sat directly under the
     # step-5 rule and repeated it — the step already says this is
     # the prediction, and the market and review are named in the
     # page title.
+    # c-359, Bill: a P(add) / P(delete) column on the table,
+    # read from the evidence-based model. The header names which
+    # probability each side carries, because "P 72%" against an
+    # ADD and "P 28%" against a DEL are answers to opposite
+    # questions and a shared bare "P" would invite misreading.
+    _prob_src = ROOT / "data" / "tw_add_probability.json"
+    try:
+        _pst = _prob_src.stat()
+        _pd = _load_add_probability((_pst.st_mtime_ns,
+                                     _pst.st_size))
+    except OSError:
+        _pd = None
+    _padd = {r["code"]: r["p_add"]
+             for r in (_pd or {}).get("names", [])}
+    _pdel = {r["code"]: r["p_delete"]
+             for r in (_pd or {}).get("border_deletions", [])}
     a, b = st.columns(2)
     with a:
         st.markdown(f"**Additions ({len(adds)})**")
-        _call_rows(adds, "ADD", caps)
+        _call_rows(adds, "ADD", caps, _padd)
     with b:
         st.markdown(f"**Deletions ({len(dels)})**")
-        _call_rows(dels, "DEL", caps)
+        _call_rows(dels, "DEL", caps, _pdel)
     # ── WHY EACH NAME IS ON THE LIST ────────────────────────
     #
     # c-322, Bill: the reasoning moves OUT of a collapsed
@@ -818,6 +955,18 @@ def _results(s):
     # a reason a reader has to click for is a reason most readers
     # never see.
     k = s["keys"]
+    # c-358, Bill: the "However, Phison clears the bar by only
+    # 3.0% ... not carried as a confident addition" sentence is
+    # REMOVED. The hedge now lives where a hedge belongs — in the
+    # probability model below, where Phison prices at ~48%
+    # against the carried names' ~72% — instead of as a warning
+    # paragraph contradicting the table above it.
+    #
+    # And the whole block moves from an always-open amber box to
+    # a click-to-expand, in the same shape as "Rulebook
+    # References" (c-358, Bill). Five screen results are
+    # reference material: a reader checks the one name they care
+    # about, not all five at once.
     body = []
     for r in c["calls"]:
         # c-296: the call file stores its rationale with `&#36;`
@@ -825,30 +974,28 @@ def _results(s):
         # markdown. This is the last place that renders it.
         why = _strip_clauses(
             _md_money(r.get("why", "")).replace("`", ""))
-        cap = caps.get(str(r["code"]))
-        # THE BAND SENTENCE, added only where it is true. Phison
-        # clears the addition bar by about 3%, which is inside the
-        # ±5% band on a cutoff nobody publishes — so the arithmetic
-        # says ADD and the uncertainty on the arithmetic says do
-        # not lean on it. Generated from the numbers rather than
-        # typed, so it appears on whichever name is borderline
-        # after a re-run rather than on Phison forever.
-        extra = ""
-        if cap and r["action"] == "ADD" and cap < k["bar"] * 1.05:
-            over = cap / k["bar"] - 1
-            extra = (
-                f" <b>However, {r['name'].split()[0]} clears the "
-                f"USD {k['bar']}bn bar by only {over:.1%}, which "
-                f"is inside the ±5% error-bar band on the addition "
-                f"bar. A slightly differently calculated addition "
-                f"bar could exclude {r['name'].split()[0]} from "
-                f"the index addition altogether. It is therefore "
-                f"reported, but not carried as a confident "
-                f"addition.</b>")
-        body.append(f"<b>{r['name']} ({r['code']}) — "
-                    f"{r['action']}</b><br>{why}{extra}")
+        body.append(f"**{r['name']} ({r['code']}) — "
+                    f"{r['action']}**\n\n{why}")
+    # the band-borderline deletions carry a GENERATED why — the
+    # call file was registered before they were added, and their
+    # entire reason for being listed is the band, so the text
+    # states exactly that and nothing stronger.
+    for b in _border_dels:
+        over = b["cap_usd_b"] / k["floor"] - 1
+        body.append(
+            f"**{b['name'].title()} ({b['code']}) — DEL**\n\n"
+            f"Currently in the index. Its full market cap of "
+            f"USD {b['cap_usd_b']:.2f}B sits above the USD "
+            f"{k['floor']}B deletion floor by {over:.1%} — "
+            f"inside the ±{BAND:.0%} band on a floor derived "
+            f"from an estimated float stack. A slightly "
+            f"differently calculated floor deletes it, so it is "
+            f"reported as a band-borderline deletion.")
     if body:
-        design.caveat("<br><br>".join(body))
+        with st.expander("Screen Results — why each name is on "
+                         "the list"):
+            for b_ in body:
+                st.markdown(b_)
 
 
 def render():
@@ -944,6 +1091,7 @@ def _method(s):
         # call being made on them.
         if stp["key"] == "call":
             _results(s)
+            _add_probability_block()
 
     # c-257: the "Take It With You" download block is off the
     # page at Bill's request. `walkthrough_export.to_html` is

@@ -88,6 +88,12 @@ SECTIONS = ["Data Review",
             # history and the sizing — it is the bridge from
             # "what usually happens" to "what is happening now".
             "Market Positioning Before Announcement Day",
+            # c-357: the flow-vs-normal study sits between the
+            # positioning read and the sizing — it is what makes
+            # the sizing's denominator concrete. A normal day's
+            # foreign traffic is the yardstick the order lands
+            # against.
+            "Foreign Flow Through the Rebalance Window",
             "How Big Is the Market on Close Order"]
 
 

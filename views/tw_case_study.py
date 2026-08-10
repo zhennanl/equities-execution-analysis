@@ -150,6 +150,27 @@ def _load_mandate(stamp=None):
     return json.loads(MAND_SRC.read_text(encoding="utf-8"))
 
 
+FB_SRC = ROOT / "data" / "tw_foreign_baseline.json"
+
+
+def _fb_stamp():
+    try:
+        s_ = FB_SRC.stat()
+        return (s_.st_mtime_ns, s_.st_size)
+    except OSError:
+        return (0, 0)
+
+
+@st.cache_data(show_spinner=False)
+def _load_foreign_baseline(stamp=None):
+    """scripts/tw_foreign_baseline.py — foreign flow by phase of
+    the rebalance window, as a multiple of the same stock's own
+    normal day."""
+    if not FB_SRC.exists():
+        return None
+    return json.loads(FB_SRC.read_text(encoding="utf-8"))
+
+
 PB_SRC = ROOT / "data" / "tw_tracker_playbook.json"
 
 
@@ -358,6 +379,118 @@ def render():
             "\u00d7 a normal day's volume</b> of foreign buying in "
             "the 20 sessions before its announcement.")
 
+    # ---- foreign flow vs a normal day (c-357) ---------------
+    #
+    # Bill: can we measure daily foreign net buying for
+    # index-change stocks ON the effective date, against normal
+    # times — and ideally the whole window, before the
+    # announcement and after the effective date?
+    #
+    # YES, AND THE BASELINE WAS THE MISSING PIECE. The phase
+    # aggregates existed in the addition study; what nothing on
+    # the site had was the yardstick that makes them readable —
+    # each stock's OWN normal day, measured over the 100 sessions
+    # ending 21 before its announcement. With phases converted to
+    # per-session rates the comparison is finally one unit, and
+    # the answer is sharp: the pre and mid phases sit INSIDE the
+    # normal range; the flow lands on the effective day.
+    FB = _load_foreign_baseline(_fb_stamp())
+    _fb = 0
+    if FB:
+        _fb = 1
+        design.sect(_used + 1 + _pre,
+                    "Foreign Flow Through the Rebalance Window",
+                    "Daily foreign net buying by phase, as a "
+                    "multiple of the same stock's own normal day")
+        A_fb = FB["sides"]["ADD"]
+        D_fb = FB["sides"]["DEL"]
+        # c-359, Bill: the "A normal day / 8% of ADV" card is
+        # off. The baseline still exists — it is the DENOMINATOR
+        # of every multiple on the chart and stays in the hover
+        # and the doc — but as a headline card it read as a
+        # finding, and it is a yardstick.
+        design.stats([
+            {"k": "Effective day, additions",
+             "v": f"{A_fb['x_normal']['eff']['p50']:+.1f}\u00d7",
+             "s": f"a normal day \u00b7 n={A_fb['n']}"},
+            {"k": "Effective day, deletions",
+             "v": f"{D_fb['x_normal']['eff']['p50']:+.1f}\u00d7",
+             "s": f"a normal day \u00b7 n={D_fb['n']}"},
+            {"k": "After the print, deletions",
+             "v": f"{D_fb['x_normal']['post']['p50']:+.1f}\u00d7",
+             "s": "per session, for ten more sessions"},
+        ])
+        _phases = [("pre", "20 sessions before announcement"),
+                   ("mid", "announcement \u2192 effective"),
+                   ("eff", "the effective day"),
+                   ("post", "10 sessions after")]
+        fig = go.Figure()
+        for side, col, sd in (("ADD", GREEN, A_fb),
+                              ("DEL", RED, D_fb)):
+            xs = [sd["x_normal"][ph]["p50"] for ph, _ in _phases]
+            fig.add_bar(
+                y=[lab for _, lab in _phases][::-1],
+                x=xs[::-1], orientation="h", name=side,
+                marker_color=col, marker_line_width=0,
+                customdata=[[sd["x_normal"][ph]["p25"],
+                             sd["x_normal"][ph]["p75"],
+                             sd["rates_adv"][ph]["p50"] * 100,
+                             sd["n"]]
+                            for ph, _ in _phases][::-1],
+                hovertemplate=design.hover(
+                    "%{y}",
+                    eyebrow=("additions" if side == "ADD"
+                             else "deletions"),
+                    rows=[("median, \u00d7 a normal day",
+                           "%{x:+.1f}\u00d7"),
+                          ("IQR", "%{customdata[0]:+.1f} to "
+                                  "%{customdata[1]:+.1f}\u00d7"),
+                          ("flow per session",
+                           "%{customdata[2]:+.1f}% of ADV"),
+                          ("events", "%{customdata[3]}")],
+                    note="phases are per-session rates, so all "
+                         "four rows share one unit"))
+        # c-361, Bill asked whether these n's should match the
+        # intraday sections'. NO, AND THE DIFFERENCE IS THE
+        # INSTRUMENT, NOT A MISTAKE. Sections 1-4 run on IB
+        # 5-minute bars, which reach back only to May 2023 — 43
+        # Taiwan events. This section runs on the daily T86 flow
+        # file, 2015-2026 — 107 events carry flow, and 97 also
+        # support a clean pre-event baseline. Forcing this
+        # section down to the intraday window would discard
+        # two-thirds of its own sample to match a limit it does
+        # not have. Each section uses the deepest history its
+        # source supports, and the Data Review section names
+        # each source.
+        fig.add_vline(x=1, line_color=RULE, line_width=1,
+                      line_dash="dot")
+        fig.add_vline(x=-1, line_color=RULE, line_width=1,
+                      line_dash="dot")
+        # c-361, Bill: the label sits INSIDE the band it names,
+        # centred at zero, rather than hanging off the -1 line.
+        fig.add_annotation(
+            x=0, y=-0.13, yref="paper", showarrow=False,
+            text="\u00b11 normal day band",
+            font=dict(size=10.5, color=MUTED))
+        fig.update_layout(
+            height=310, barmode="group",
+            legend=dict(orientation="h", yanchor="bottom",
+                        y=1.0, x=0),
+            xaxis=dict(title="median foreign net flow per "
+                             "session, \u00d7 the stock's own "
+                             "normal day"),
+            yaxis=dict(title=""),
+            margin=dict(l=0, t=30, b=40))
+        design.chart(fig)
+        design.caveat(
+            "On the effective day itself the median addition "
+            f"draws <b>{A_fb['x_normal']['eff']['p50']:.1f}"
+            "\u00d7</b> the stock's normal day and the median "
+            "deletion prints "
+            f"<b>{D_fb['x_normal']['eff']['p50']:.1f}\u00d7</b> "
+            "\u2014 the same one-day concentration shown in the "
+            "volume chart above.")
+
     # ---- the tracker's capacity question (c-321) ------------
     PB = _load_playbook(_pb_stamp())
     if PB and SCN:
@@ -376,7 +509,7 @@ def render():
         rows = sorted([kv for kv in PB["names"].items()
                        if kv[1].get("capacity_rank")],
                       key=lambda kv: kv[1]["capacity_rank"])
-        design.sect(_used + 1 + _pre,
+        design.sect(_used + 1 + _pre + _fb,
                     "How Big Is the Market on Close Order",
                     "Expected order size at the closing auction "
                     "on the effective day")

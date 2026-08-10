@@ -1381,21 +1381,56 @@ def test_the_caption_is_about_the_band_only(at):
     assert "Filled = clears every screen" not in caps
 
 
-def test_a_name_inside_the_band_leaves_the_headline_table(at):
-    """c-322. Phison clears the addition bar by 3.4% against a ±5%
-    band, so its verdict flips inside its own error bar. It comes
-    off the Additions table — and its REASONING stays, with the
-    band sentence attached, because removing the name from the
-    page would be hiding the call rather than qualifying it."""
+def test_the_table_reports_all_four_adds_and_the_border_del(at):
+    """c-358, Bill: PHISON GOES BACK IN — the table reports what
+    the screens produced, four additions, and confidence lives in
+    the probability model rather than in a smaller table. c-322's
+    "not carried" hedge sentence is gone with it.
+
+    AND THE SAME STANDARD RUNS ON THE DELETION SIDE. A member
+    above the floor but inside its +5% band is the mirror image
+    of Phison at the addition bar, so it joins the Deletions
+    table as band-borderline — one rule, both directions."""
     md = " ".join(str(m.value) for m in at.markdown)
-    assert "**Additions (3)**" in md
-    # the row is gone from the table...
+    assert "**Additions (4)**" in md
     rows = re.findall(r"dcode'>(\d{4})</span>", md)
-    assert "8299" not in rows[:6], rows[:6]
-    # ...and the reasoning is still on the page, in the amber block
-    assert "Phison Electronics Corp. (8299)" in md
-    assert "inside the ±5% error-bar band" in md
-    assert "not carried as a confident addition" in md
+    assert "8299" in rows, "Phison must be in the table"
+    # the hedge sentence must be gone
+    assert "not carried as a confident addition" not in md
+    assert "However, Phison" not in md
+    # the deletion side carries the band-borderline member(s)
+    m_del = re.search(r"\*\*Deletions \((\d+)\)", md)
+    assert m_del and int(m_del.group(1)) >= 1, "no deletion rows"
+    assert "band-borderline deletion" in md
+    # and the borderline member really is inside the band —
+    # re-derived from the scan, not trusted from the view
+    import walkthrough_story as W
+    from views.walkthrough import REVIEW as _REV
+    s_ = W.story("Taiwan", _REV)
+    k = s_["keys"]
+    border = [r for r in s_["scan"]["deletes"]
+              if r.get("cap_usd_b") is not None
+              and k["floor"] <= r["cap_usd_b"]
+              < k["floor"] * 1.05]
+    assert border, "no member inside the floor band in the scan"
+    for r in border:
+        assert str(r["code"]) in rows, r["code"]
+
+
+def test_the_screen_results_moved_behind_a_click(at):
+    """c-358, Bill: the five whys move from an always-open amber
+    block into an expander shaped like Rulebook References. Five
+    screen results are reference material — a reader checks the
+    one name they care about."""
+    labs = [e.label for e in at.expander]
+    assert any("Screen Results" in x for x in labs), labs
+    md = " ".join(str(m.value) for m in at.markdown)
+    # every call's why is inside it, including the generated
+    # border-deletion why
+    for code in ("2408", "8046", "2344", "8299"):
+        assert f"({code}) — ADD" in md, code
+    assert ") — DEL" in md
+    assert "deletion floor by" in md
 
 
 def test_the_reasoning_is_not_hidden_behind_a_click(at):
@@ -1411,16 +1446,21 @@ def test_the_reasoning_is_not_hidden_behind_a_click(at):
         assert f"({code})" in md, code
 
 
-def test_the_band_sentence_is_generated_not_typed():
-    """It must attach to whichever name is borderline after a
-    re-run, not to Phison forever."""
+def test_the_border_deletion_why_is_generated_not_typed():
+    """c-358 replaced the Phison band sentence with a generated
+    why on band-borderline DELETIONS. Same rule as before: the
+    text must name no company, so it attaches to whichever member
+    is inside the floor band after a re-run rather than to
+    Caliway forever."""
     src = (ROOT / "views" / "walkthrough.py").read_text(
         encoding="utf-8")
-    i = src.index("        extra = (")
-    block = src[i:src.index("body.append(", i)]
-    # the SENTENCE itself must name no company — the comment above
-    # it may, because a comment explaining which name triggered it
-    # is exactly the kind of provenance worth keeping
-    assert "Phison" not in block, block[:200]
-    assert "r['name'].split()[0]" in block
-    assert 'cap < k["bar"] * 1.05' in src
+    # the sentence may survive in COMMENTS (provenance); it must
+    # not survive in a string that can reach the screen
+    live = "\n".join(l for l in src.split("\n")
+                     if not l.lstrip().startswith("#"))
+    assert "not carried as a confident" not in live
+    i = src.index("for b in _border_dels:")
+    block = src[i:src.index("if body:", i)]
+    assert "Caliway" not in block and "6919" not in block
+    assert "deletion floor" in block
+    assert '_k["floor"] <= r["cap_usd_b"]' in src

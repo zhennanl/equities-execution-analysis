@@ -88,10 +88,12 @@ def _cards(items, accent, tint):
             f"{accent};background:{tint};padding:.65rem .85rem'>"
             f"<div style='font-size:.62rem;letter-spacing:.11em;"
             f"text-transform:uppercase;color:{accent};"
-            f"font-weight:600'>{eyebrow}</div>"
-            f"<div style='font-size:.9rem;font-weight:600;"
-            f"color:{INK};margin:.3rem 0 .32rem;line-height:1.35'>"
-            f"{head}</div>"
+            f"font-weight:700'>{eyebrow}</div>"
+            + (f"<div style='font-size:.9rem;font-weight:600;"
+               f"color:{INK};margin:.3rem 0 .32rem;"
+               f"line-height:1.35'>{head}</div>" if head else
+               "<div style='margin-top:.3rem'></div>")
+            +
             f"<div style='font-size:.81rem;color:#4a4038;"
             f"line-height:1.55'>{body}</div></div>")
     st.markdown("<div style='display:flex;flex-wrap:wrap;gap:.7rem;"
@@ -107,49 +109,48 @@ def render():
     design.sect(1, "What Is on This Site")
     _route([
         ("MSCI Index Review Database",
-         "Every MSCI Taiwan index change since 2006, rebuilt from "
-         "press releases and factsheets.", False),
+         "Every MSCI index change since 2006, rebuilt from index "
+         "review results.", False),
         ("Predict MSCI Index Changes",
-         "The rulebook walked step by step \u2014 universe, "
-         "liquidity, size cutoff, buffers \u2014 leading to a "
-         "prediction for the August 2026 review.", False),
+         "Apply the MSCI rulebook \u2014 universe, liquidity, "
+         "size cutoff, buffers \u2014 to generate a prediction "
+         "for the August 2026 index review.", False),
         ("Index Rebalance Daily Data",
-         "The same event across twelve APAC markets: how big the "
-         "print is, and how volume behaves around it.", False),
+         "Analysis built on historical daily data across the "
+         "rebalance window, covering trading volume and stock "
+         "return.", False),
         ("Taiwan Case Study",
-         "Where the volume prints, what the closing auction "
-         "charges, whether anyone has positioned early, and how "
-         "big the August order is.", True),
+         "Assess market positioning and the expected order flow "
+         "for the August index review.", True),
     ])
 
     # ── 2 · the limits ────────────────────────────────────────
     design.sect(2, "Analysis Limitations")
     _cards([
-        ("No MSCI data licence",
-         "Free float is an estimate",
-         "MSCI sells the constituent and free-float files. "
-         "Without the real free-float data, the size cutoff for a "
-         "review can be calculated in the wrong place, which "
-         "produces the wrong index change prediction."),
-        ("No institutional data",
-         "No access to positioning data",
-         "No prime-broker borrow book, no live short interest, no "
-         "vendor holdings feed. Positioning ahead of an index "
-         "trade has to be pieced together from exchange "
-         "disclosure and public data only."),
+        ("No MSCI data licence", "",
+         "Without access to MSCI's index constituent and "
+         "free-float data, the size cutoff for a review is "
+         "calculated from estimates \u2014 and an inaccurate "
+         "estimate produces the wrong index change prediction."),
+        ("No institutional data", "",
+         "Institutional-level data \u2014 the prime-broker "
+         "borrow book, or fund-flow data showing what the index "
+         "trackers bought each day \u2014 is out of reach. "
+         "Positioning ahead of an index trade has to be pieced "
+         "together from exchange disclosure and public data "
+         "only."),
     ], design.AMBER, "#fdf8ee")
 
     # ── 3 · why Taiwan ────────────────────────────────────────
     design.sect(3, "Why Conduct a Case Study on the Taiwan Market")
     _cards([
-        ("Reason one",
-         "A prior project on this market",
-         "I built an index-rebalancing analysis for Taiwan during "
-         "a previous internship. This project continues that "
-         "work."),
-        ("Reason two",
-         "Taiwan offers a wide range of alternative datasets",
-         "TWSE publishes a comprehensive set of data: daily net "
-         "buying by foreign, trust and dealer accounts per stock, "
-         "alongside securities borrowing and lending balances."),
+        ("Prior project experience", "",
+         "Built an index-rebalancing analysis for Taiwan "
+         "previously, so this project starts with a working "
+         "knowledge of the market's microstructure."),
+        ("A wide range of datasets", "",
+         "TWSE publishes a comprehensive set of data \u2014 daily "
+         "net buying by foreign investors per stock, securities "
+         "borrowing and lending balances \u2014 which feeds "
+         "directly into this analysis."),
     ], NAVY, "#f7f9fb")

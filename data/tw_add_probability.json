@@ -1,0 +1,215 @@
+{
+ "_what": "P(add) = the Monte Carlo probability that the rule fires given the measured errors in its inputs; MSCI discretion is a named UNPRICED risk, not a multiplier",
+ "generated": "2026-08-11T06:00:23",
+ "method": {
+  "draws": 20000,
+  "seed": 20260812,
+  "cutoff_usd_b": 7.22,
+  "cutoff_band": 0.05,
+  "addition_bar_x": 1.5,
+  "float_bar_x": 0.5,
+  "price_window_days": 10,
+  "fif_error": {
+   "n": 10,
+   "mean": -0.0373,
+   "sd": 0.0599,
+   "source": "tw_fif_aligned_jul31.json"
+  },
+  "unpriced_discretion": {
+   "what": "MSCI discretion is NOT in these numbers",
+   "count_flex": "the member count can flex (\u00a72.3.3)",
+   "atvr": "ATVR liquidity screens run on MSCI's own data",
+   "was": "previously priced as 0.85 x 0.85 = 0.7225, removed at c-360 \u2014 two judgement constants dressed as data"
+  }
+ },
+ "empirical_bands": [
+  {
+   "band_x_bar": [
+    0.4,
+    0.445
+   ],
+   "added": 2,
+   "not_added": 51,
+   "precision": 0.038,
+   "wilson_95": [
+    0.01,
+    0.128
+   ]
+  },
+  {
+   "band_x_bar": [
+    0.445,
+    0.467
+   ],
+   "added": 0,
+   "not_added": 21,
+   "precision": 0.0,
+   "wilson_95": [
+    0,
+    0.155
+   ]
+  },
+  {
+   "band_x_bar": [
+    0.467,
+    0.5
+   ],
+   "added": 1,
+   "not_added": 17,
+   "precision": 0.056,
+   "wilson_95": [
+    0.01,
+    0.258
+   ]
+  },
+  {
+   "band_x_bar": [
+    0.5,
+    0.533
+   ],
+   "added": 1,
+   "not_added": 20,
+   "precision": 0.048,
+   "wilson_95": [
+    0.008,
+    0.227
+   ]
+  },
+  {
+   "band_x_bar": [
+    0.533,
+    0.6
+   ],
+   "added": 6,
+   "not_added": 12,
+   "precision": 0.333,
+   "wilson_95": [
+    0.163,
+    0.563
+   ]
+  },
+  {
+   "band_x_bar": [
+    0.6,
+    0.667
+   ],
+   "added": 6,
+   "not_added": 9,
+   "precision": 0.4,
+   "wilson_95": [
+    0.198,
+    0.643
+   ]
+  },
+  {
+   "band_x_bar": [
+    0.667,
+    0.833
+   ],
+   "added": 6,
+   "not_added": 4,
+   "precision": 0.6,
+   "wilson_95": [
+    0.313,
+    0.832
+   ]
+  },
+  {
+   "band_x_bar": [
+    0.833,
+    1.0
+   ],
+   "added": 5,
+   "not_added": 3,
+   "precision": 0.625,
+   "wilson_95": [
+    0.306,
+    0.863
+   ]
+  },
+  {
+   "band_x_bar": [
+    1.0,
+    null
+   ],
+   "added": 1,
+   "not_added": 19,
+   "precision": 0.05,
+   "wilson_95": [
+    0.009,
+    0.236
+   ],
+   "contaminated": "recurring names failing float/foreign gates sit here every review; size clearance alone is not sufficient"
+  }
+ ],
+ "names": [
+  {
+   "code": "2408",
+   "name": "Nanya Technology Corporation",
+   "carried": true,
+   "x_cutoff": 4.78,
+   "full_cap_usd_b": 34.48,
+   "fif": 0.4722,
+   "float_cap_usd_b": 16.28,
+   "prevol_daily": 0.0679,
+   "p_size_mc": 1.0,
+   "p_add": 1.0,
+   "p_registered": 0.6177
+  },
+  {
+   "code": "8046",
+   "name": "Nan Ya Printed Circuit Board Corporation",
+   "carried": true,
+   "x_cutoff": 2.54,
+   "full_cap_usd_b": 18.35,
+   "fif": 0.3864,
+   "float_cap_usd_b": 7.09,
+   "prevol_daily": 0.0727,
+   "p_size_mc": 0.9903,
+   "p_add": 0.9903,
+   "p_registered": 0.6177
+  },
+  {
+   "code": "2344",
+   "name": "Winbond Electronics Corporation",
+   "carried": true,
+   "x_cutoff": 2.5,
+   "full_cap_usd_b": 18.06,
+   "fif": 0.6977,
+   "float_cap_usd_b": 12.6,
+   "prevol_daily": 0.058,
+   "p_size_mc": 0.9976,
+   "p_add": 0.9976,
+   "p_registered": 0.6177
+  },
+  {
+   "code": "8299",
+   "name": "Phison Electronics Corp.",
+   "carried": false,
+   "x_cutoff": 1.55,
+   "full_cap_usd_b": 11.2,
+   "fif": 0.7898,
+   "float_cap_usd_b": 8.84,
+   "prevol_daily": 0.0451,
+   "p_size_mc": 0.6617,
+   "p_add": 0.6617,
+   "p_registered": 0.3706
+  }
+ ],
+ "border_deletions": [
+  {
+   "code": "6919",
+   "name": "Caliway Biopharmaceuti",
+   "full_cap_usd_b": 4.94,
+   "x_floor": 1.027,
+   "vol_daily": 0.053,
+   "vol_source": "quotes.json 60d to 20260618",
+   "p_size_mc": 0.3916,
+   "p_delete": 0.3916
+  }
+ ],
+ "reading": [
+  "The three carried names separate from Phison because P_size responds to clearance distance \u2014 the thing the flat zone probability ignored.",
+  "For the carried names essentially all residual risk is MSCI discretion, which no public data models. That is what institutional access buys down."
+ ]
+}

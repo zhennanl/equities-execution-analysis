@@ -52,6 +52,12 @@ you say.]**
 > What makes it interesting isn't that it happens. It's that
 > everyone can see it coming.
 >
+> And the buying isn't a view. A tracker buys the name because
+> its benchmark now contains it, full stop. That's forced demand
+> rather than fundamental demand, and it behaves completely
+> differently — it's price-insensitive, and it turns up on a
+> known date.
+>
 > So I wasn't trying to work out whether the stock goes up. That's
 > a PM's question. I wanted the dealer's version: how much has to
 > trade, when does it show up, and where do you put it.
@@ -290,9 +296,17 @@ the room knows it.*
 
 > Last section, and the one you'd actually use.
 >
-> Order size is index weight times tracking assets. Weight I can
-> build. The tracking assets were the hard part, and that's where
-> most of the time went.
+> The way the platforms frame this is a two-line model. Expected
+> flow is the probability of the add, times the weight it comes
+> in at, times the money tracking the index. And then what you
+> actually care about is that flow divided by the liquidity
+> available to absorb it — a billion dollars into a name that
+> trades ten billion a day is nothing, and into a name that
+> trades two hundred million it's a week of volume.
+>
+> Weight I can build. Liquidity I've just spent five minutes on.
+> The money tracking the index was the hard part, and that's
+> where most of the time went.
 >
 > The number this project started with was USD 180 billion,
 > which someone had typed into a script years ago as a proxy with
@@ -300,12 +314,23 @@ the room knows it.*
 
 **[Open the mandate dropdown.]**
 
-> There are two pieces. First, the ETFs I can actually name — the
-> Taiwan exposure sitting inside emerging-market and global
-> trackers, plus the funds on the MSCI Taiwan indexes themselves.
-> That last group was missing from the earlier version, and it
-> shouldn't have been, because a new constituent goes into those
-> at the same review.
+> There are four pools of money that have to buy, and most people
+> only think of the first. Index ETFs. Index mutual funds.
+> Institutional passive mandates — a pension fund handing
+> BlackRock twenty billion to track MSCI World, which sits in no
+> ticker anyone can look up. And then benchmark-aware active
+> managers, who technically don't have to buy, but a manager
+> holding none of a new one-percent constituent is running a
+> minus-one-percent active bet by standing still.
+>
+> I can reach the first three. Let me show you how.
+>
+> First, the ETFs I can actually name — the Taiwan exposure
+> sitting inside emerging-market and global trackers, plus the
+> funds on the MSCI Taiwan indexes themselves. That last group
+> was missing from the earlier version, and it shouldn't have
+> been, because a new constituent goes into those at the same
+> review.
 >
 > Second, and this is the part I like — the indexed money that has
 > no ticker. Separate accounts, index mutual funds, pension
@@ -327,6 +352,11 @@ the room knows it.*
 > there. And I deliberately didn't scale up for the ETFs I
 > couldn't enumerate, because a lot of them are single-country
 > China and India funds that hold no Taiwan at all.
+>
+> The fourth pool is missing entirely, too. Benchmark-aware
+> active money buys some of this and I can't see any of it
+> without holdings data. So sixty billion is a floor in at least
+> three separate ways.
 
 **[Back to the bars.]**
 
@@ -350,8 +380,21 @@ the room knows it.*
 >
 > That's a null result and I've written it up as one. It's the
 > reason this site sizes the trade instead of forecasting the
-> price. I'd rather give a desk a size I can defend than a view I
-> can't.
+> price.
+>
+> Although here's what I'd say in my own defence, and it's the
+> more interesting version. None of the things I tested was the
+> ratio that actually matters — forced flow over available
+> liquidity. I couldn't build it historically, because per-event
+> index weights need a point-in-time float stack going back a
+> decade and I only rebuilt the recent ones. Two of the features
+> that did come back significant are crude proxies for it: how
+> liquid the name is, and how many other names are competing for
+> the same day.
+>
+> So it's less "nothing works" than "I tested what I could build,
+> and the thing worth testing needs data I don't have." That's a
+> specific ask, not a shrug.
 
 ---
 
@@ -433,10 +476,18 @@ up?"**
 > broker feed.
 
 **"What would you do with a terminal?"**
-> Three things. Real free float, which removes the band. A borrow
-> book, so I can see crowding while it's forming instead of after.
-> And deeper intraday history, which would let me test whether any
-> of the auction behaviour is regime-specific.
+> Four things, roughly in order of value. Licensed index files, so
+> free float is real and the weight stops being an estimate.
+> Mandate data, which reaches the institutional passive money
+> directly instead of me backing it out of MSCI's fee revenue.
+> Holdings data on benchmark-aware active funds, which is the one
+> pool of forced buying I can't see at all. And a borrow book, so
+> I can watch crowding form instead of reading about it a week
+> later.
+>
+> With the first of those I could finally build the feature I
+> actually want to test — expected forced flow over available
+> liquidity, per event, back a decade.
 
 **"Would you trade it?"**
 > I'd size it, not direct it. The order is a known fraction of a
