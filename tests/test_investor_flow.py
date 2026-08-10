@@ -7,15 +7,25 @@ import pytest
 from agents.investor_flow import parse_t86, attribute_window, handoff_metrics
 
 
+# c-291: the dealer-net column used to read "x". That was harmless while
+# parse_t86 DERIVED dealer as total - foreign - trust and never looked at
+# column 10 — but it meant the fixture was not a response TWSE could ever
+# have sent. The parser now reads the column and checks that
+# foreign + trust + dealer == total on every row, so the placeholder is
+# filled with the value the rest of the row implies:
+#   3665   236,908 - (-4,363,092) - 4,500,000 =    100,000
+#   2330  11,700,000 -  11,633,000 -    50,000 =     17,000
+# The dealer prop/hedge legs are set to match, because in a real response
+# they sum to the dealer total.
 CANNED = {"stat": "OK", "data": [
     # code, fB, fS, fNet, fdB, fdS, fdNet, tB, tS, tNet, dealerNet,
     # dsB, dsS, dsNet, dhB, dhS, dhNet, total
     ["3665", "1,248,393", "5,611,485", "-4,363,092", "0", "0", "0",
-     "4,599,708", "99,708", "4,500,000", "x", "0", "0", "0",
-     "0", "0", "0", "236,908"],
+     "4,599,708", "99,708", "4,500,000", "100,000",
+     "100,000", "0", "100,000", "0", "0", "0", "236,908"],
     ["2330", "12,633,000", "1,000,000", "11,633,000", "0", "0", "0",
-     "100,000", "50,000", "50,000", "x", "0", "0", "0",
-     "0", "0", "0", "11,700,000"],
+     "100,000", "50,000", "50,000", "17,000",
+     "17,000", "0", "17,000", "0", "0", "0", "11,700,000"],
 ]}
 
 

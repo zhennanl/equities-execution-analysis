@@ -82,7 +82,7 @@ def test_record_fingerprint_roundtrip(tmp_path):
     record_fingerprint(fp, p)
     record_fingerprint(fp, p)
     import json
-    lib = json.loads(p.read_text())
+    lib = json.loads(p.read_text(encoding="utf-8"))
     assert len(lib) == 2 and lib[0]["market"] == "Taiwan (TWSE)"
     assert "words" not in lib[0]                          # numbers only stored
 

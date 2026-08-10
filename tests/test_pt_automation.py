@@ -75,7 +75,7 @@ def test_cutoff_alert_and_ack_log(basket, tmp_path):
     assert any(a["ticker"] == "2330.TW" for a in cut)
     log = tmp_path / "alerts.json"
     n = acknowledge(cut, who="dealer1", note="MOC submitted", path=log)
-    saved = json.loads(log.read_text())
+    saved = json.loads(log.read_text(encoding="utf-8"))
     assert len(saved) == n and saved[0]["acknowledged_by"] == "dealer1"
     assert saved[0]["rules_version"] == rules_version()
 

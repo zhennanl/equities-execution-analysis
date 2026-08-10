@@ -1,0 +1,377 @@
+{
+ "editions": {
+  "MSCI_Aug19_GIMIMethod": {
+   "gmsr_dm": 6.2,
+   "data_date": "April 17 2019",
+   "em_range": [
+    1.55,
+    3.57
+   ]
+  },
+  "MSCI_Feb19_GIMIMethod": {
+   "gmsr_dm": 5.93,
+   "data_date": "October 22 2018",
+   "em_range": [
+    1.48,
+    3.41
+   ]
+  },
+  "MSCI_Feb20_GIMIMethod": {
+   "gmsr_dm": 6.13,
+   "data_date": "October 18 2019",
+   "em_range": [
+    1.53,
+    3.52
+   ]
+  },
+  "Apr2019": {
+   "gmsr_dm": 5.93,
+   "data_date": "October 22 2018",
+   "em_range": [
+    1.48,
+    3.41
+   ]
+  },
+  "Apr2020": {
+   "gmsr_dm": 6.13,
+   "data_date": "October 18 2019",
+   "em_range": [
+    1.53,
+    3.52
+   ]
+  },
+  "Aug2018": {
+   "gmsr_dm": 6.37,
+   "data_date": "April 23 2018",
+   "em_range": [
+    1.59,
+    3.67
+   ]
+  },
+  "Aug2020": {
+   "gmsr_dm": 5.6,
+   "data_date": "April 21 2020",
+   "em_range": [
+    1.4,
+    3.22
+   ]
+  },
+  "Aug2021": {
+   "gmsr_dm": 9.37,
+   "data_date": "April 19 2021",
+   "em_range": [
+    2.34,
+    5.39
+   ]
+  },
+  "Aug2022": {
+   "gmsr_dm": 8.56,
+   "data_date": "April 19 2022",
+   "em_range": [
+    2.14,
+    4.92
+   ]
+  },
+  "Aug2023": {
+   "gmsr_dm": 9.01,
+   "data_date": "July 18 2023",
+   "em_range": [
+    2.25,
+    5.18
+   ]
+  },
+  "Aug2024": {
+   "gmsr_dm": 11.04,
+   "data_date": "July 18 2024",
+   "em_range": [
+    2.76,
+    6.35
+   ]
+  },
+  "Aug2025": {
+   "gmsr_dm": 13.35,
+   "data_date": "July 16 2025",
+   "em_range": [
+    3.34,
+    7.68
+   ]
+  },
+  "Dec2018": {
+   "gmsr_dm": 5.93,
+   "data_date": "October 22 2018",
+   "em_range": [
+    1.48,
+    3.41
+   ]
+  },
+  "Dec2020": {
+   "gmsr_dm": 7.32,
+   "data_date": "October 19 2020",
+   "em_range": [
+    1.83,
+    4.21
+   ]
+  },
+  "Dec2022": {
+   "gmsr_dm": 7.06,
+   "data_date": "October 18 2022",
+   "em_range": [
+    1.77,
+    4.06
+   ]
+  },
+  "Feb2021": {
+   "gmsr_dm": 7.32,
+   "data_date": "October 19 2020",
+   "em_range": [
+    1.83,
+    4.21
+   ]
+  },
+  "Feb2022": {
+   "gmsr_dm": 9.51,
+   "data_date": "October 18 2021",
+   "em_range": [
+    2.38,
+    5.47
+   ]
+  },
+  "Feb2023": {
+   "gmsr_dm": 8.05,
+   "data_date": "January 18 2023",
+   "em_range": [
+    2.01,
+    4.63
+   ]
+  },
+  "Feb2024": {
+   "gmsr_dm": 9.68,
+   "data_date": "January 18 2024",
+   "em_range": [
+    2.42,
+    5.56
+   ]
+  },
+  "Feb2025": {
+   "gmsr_dm": 12.35,
+   "data_date": "January 17 2025",
+   "em_range": [
+    3.09,
+    7.1
+   ]
+  },
+  "Feb2026": {
+   "gmsr_dm": 15.2,
+   "data_date": "January 16 2026",
+   "em_range": [
+    3.8,
+    8.74
+   ]
+  },
+  "Jan2019": {
+   "gmsr_dm": 5.93,
+   "data_date": "October 22 2018",
+   "em_range": [
+    1.48,
+    3.41
+   ]
+  },
+  "Jul2018": {
+   "gmsr_dm": 6.37,
+   "data_date": "April 23 2018",
+   "em_range": [
+    1.59,
+    3.67
+   ]
+  },
+  "Mar2021": {
+   "gmsr_dm": 7.32,
+   "data_date": "October 19 2020",
+   "em_range": [
+    1.83,
+    4.21
+   ]
+  },
+  "Mar2022": {
+   "gmsr_dm": 9.51,
+   "data_date": "October 18 2021",
+   "em_range": [
+    2.38,
+    5.47
+   ]
+  },
+  "Mar2023": {
+   "gmsr_dm": 8.05,
+   "data_date": "January 18 2023",
+   "em_range": [
+    2.01,
+    4.63
+   ]
+  },
+  "May2018": {
+   "gmsr_dm": 6.37,
+   "data_date": "April 23 2018",
+   "em_range": [
+    1.59,
+    3.67
+   ]
+  },
+  "May2019": {
+   "gmsr_dm": 6.2,
+   "data_date": "April 17 2019",
+   "em_range": [
+    1.55,
+    3.57
+   ]
+  },
+  "May2020": {
+   "gmsr_dm": 5.6,
+   "data_date": "April 21 2020",
+   "em_range": [
+    1.4,
+    3.22
+   ]
+  },
+  "May2021": {
+   "gmsr_dm": 9.37,
+   "data_date": "April 19 2021",
+   "em_range": [
+    2.34,
+    5.39
+   ]
+  },
+  "May2022": {
+   "gmsr_dm": 8.56,
+   "data_date": "April 19 2022",
+   "em_range": [
+    2.14,
+    4.92
+   ]
+  },
+  "May2023": {
+   "gmsr_dm": 8.27,
+   "data_date": "April 18 2023",
+   "em_range": [
+    2.07,
+    4.75
+   ]
+  },
+  "May2024": {
+   "gmsr_dm": 10.19,
+   "data_date": "April 19 2024",
+   "em_range": [
+    2.55,
+    5.86
+   ]
+  },
+  "May2025": {
+   "gmsr_dm": 11.86,
+   "data_date": "April 17 2025",
+   "em_range": [
+    2.96,
+    6.82
+   ]
+  },
+  "May2026": {
+   "gmsr_dm": 15.75,
+   "data_date": "April 20 2026",
+   "em_range": [
+    3.94,
+    9.06
+   ]
+  },
+  "Nov2018": {
+   "gmsr_dm": 5.93,
+   "data_date": "October 22 2018",
+   "em_range": [
+    1.48,
+    3.41
+   ]
+  },
+  "Nov2020": {
+   "gmsr_dm": 7.32,
+   "data_date": "October 19 2020",
+   "em_range": [
+    1.83,
+    4.21
+   ]
+  },
+  "Nov2021": {
+   "gmsr_dm": 9.51,
+   "data_date": "October 18 2021",
+   "em_range": [
+    2.38,
+    5.47
+   ]
+  },
+  "Nov2022": {
+   "gmsr_dm": 7.06,
+   "data_date": "October 18 2022",
+   "em_range": [
+    1.77,
+    4.06
+   ]
+  },
+  "Nov2023": {
+   "gmsr_dm": 8.7,
+   "data_date": "October 18 2023",
+   "em_range": [
+    2.18,
+    5.01
+   ]
+  },
+  "Nov2024": {
+   "gmsr_dm": 11.87,
+   "data_date": "October 16 2024",
+   "em_range": [
+    2.97,
+    6.82
+   ]
+  },
+  "Nov2025": {
+   "gmsr_dm": 14.31,
+   "data_date": "October 15 2025",
+   "em_range": [
+    3.58,
+    8.23
+   ]
+  },
+  "Oct2019": {
+   "gmsr_dm": 6.2,
+   "data_date": "April 17 2019",
+   "em_range": [
+    1.55,
+    3.57
+   ]
+  },
+  "Oct2020": {
+   "gmsr_dm": 5.6,
+   "data_date": "April 21 2020",
+   "em_range": [
+    1.4,
+    3.22
+   ]
+  },
+  "Sep2020": {
+   "gmsr_dm": 5.6,
+   "data_date": "April 21 2020",
+   "em_range": [
+    1.4,
+    3.22
+   ]
+  },
+  "MSCI_Nov19_GIMIMethod": {
+   "gmsr_dm": 6.13,
+   "data_date": "October 18 2019",
+   "em_range": [
+    1.53,
+    3.52
+   ]
+  }
+ },
+ "n": 46,
+ "mined_gmsr": 46,
+ "mined_date": 46,
+ "gap": "2015-2017 editions (older naming) not yet harvested \u2014 registered",
+ "halted": null
+}

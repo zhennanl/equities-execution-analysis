@@ -32,7 +32,7 @@ def watch_mode():
     """The proactive loop: fetch -> diff vs seen -> cluster NEW notices
     into stories -> emit a flash brief ONLY when something scored
     FLASH/NOTABLE arrived. Run on a schedule; silence means no news."""
-    seen = set(json.loads(SEEN.read_text())) if SEEN.exists() else set()
+    seen = set(json.loads(SEEN.read_text(encoding="utf-8"))) if SEEN.exists() else set()
     fresh = []
     for name, fn in FEEDS:
         try:
@@ -41,7 +41,7 @@ def watch_mode():
             print(f"{name}: FAILED ({e})")
     first_run = not seen
     seen |= {notice_id(n) for n in fresh}
-    SEEN.write_text(json.dumps(sorted(seen)))
+    SEEN.write_text(json.dumps(sorted(seen)), encoding="utf-8")
     if first_run:
         print(f"baseline established: {len(fresh)} notices marked seen "
               "(no brief on first run — everything is 'new' today)")
@@ -64,7 +64,7 @@ def main():
     if "watch" in sys.argv:
         watch_mode()
         return
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     today = dt.date.today().isoformat()
     if "--digest-only" not in sys.argv:
         notices, errors = [], []
@@ -77,7 +77,7 @@ def main():
                 errors.append(f"{name}: {e}")
                 print(f"{name}: FAILED ({e})")
         cache[today] = {"notices": notices, "errors": errors}
-        CACHE.write_text(json.dumps(cache, ensure_ascii=False))
+        CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
     day = cache.get(today, {"notices": []})
     tri = triage_notices(day["notices"])
     reg = load_registry()

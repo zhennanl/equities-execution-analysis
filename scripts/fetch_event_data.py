@@ -39,7 +39,7 @@ def forward_mode():
     """Append today's data + date-keyed TDCC snapshot (archive builder).
     Aug-12 QIR watchlist names are added to KEEP before announcement."""
     import datetime as dt
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     cache.setdefault("short", {})
     cache.setdefault("blocks", {})
     cache.setdefault("tdcc_archive", {})
@@ -65,7 +65,7 @@ def forward_mode():
         if wk not in cache["tdcc_archive"]:
             cache["tdcc_archive"][wk] = df.to_dict("records")
             print(f"forward: TDCC week {wk} archived")
-    CACHE.write_text(json.dumps(cache))
+    CACHE.write_text(json.dumps(cache), encoding="utf-8")
 
 
 def main():
@@ -74,7 +74,7 @@ def main():
         return
     n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() \
         else 8
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     cache.setdefault("short", {})
     cache.setdefault("blocks", {})
     cache.setdefault("holidays", [])
@@ -113,7 +113,7 @@ def main():
         print("ALL CACHED")
     else:
         print(f"{len(pending) - done} dates remaining")
-    CACHE.write_text(json.dumps(cache))
+    CACHE.write_text(json.dumps(cache), encoding="utf-8")
 
 
 if __name__ == "__main__":

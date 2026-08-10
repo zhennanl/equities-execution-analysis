@@ -39,7 +39,7 @@ def tw_calls():
     """The Step-1 PIT output for Taiwan — the basket source."""
     u = pit_universe("Taiwan")
     ledgers = [parse_msci_public_list(
-        Path("data/msci_feb26_public_list.txt").read_text())]
+        Path("data/msci_feb26_public_list.txt").read_text(encoding="utf-8"))]
     r = run_full_review(
         "Taiwan", u, TW_ALIASES, ledgers, "TAIWAN",
         review="SAIR", member_count=PRE_COUNT["Taiwan"],
@@ -62,14 +62,14 @@ def basket_from_calls(calls, u):
 
 
 def cache_through(day):
-    c = json.loads(Path("data/event_data_cache.json").read_text())
+    c = json.loads(Path("data/event_data_cache.json").read_text(encoding="utf-8"))
     return {"short": {d: v for d, v in c.get("short", {}).items()
                       if d <= day.replace("-", "")}}
 
 
 def daily_log(basket):
     days = sorted({d for d in json.loads(
-        Path("data/event_data_cache.json").read_text())["short"]
+        Path("data/event_data_cache.json").read_text(encoding="utf-8"))["short"]
         if ANN.replace("-", "") < d <= T1.replace("-", "")})
     prev, log, last_read = {}, [], {}
     for d in days:

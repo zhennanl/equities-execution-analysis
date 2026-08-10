@@ -34,7 +34,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-TWD = 29.5                      # TWD/USD (state; sensitivity small)
+TWD = 32.214                      # TWD/USD (state; sensitivity small)
 MIN_SIZE_USD = 0.2e9
 DEFAULT_FF = 0.55
 FF_BAND = (0.40, 0.70)
@@ -76,12 +76,12 @@ def member_floats(fund, tape):
            for code, ff in NONMEMBER_V2.items()}
     p = ROOT / "data" / "tw_float_mops_v2.json"
     if p.exists():
-        for r in json.loads(p.read_text())["rows"]:
+        for r in json.loads(p.read_text(encoding="utf-8"))["rows"]:
             out[r["code"]] = (min(float(r["float_v2"]), 1.0),
                               "v2_insiders")
     p = ROOT / "data" / "msci_factsheet_archive.json"
     if p.exists():
-        arch = json.loads(p.read_text())
+        arch = json.loads(p.read_text(encoding="utf-8"))
         latest = arch[sorted(arch)[-1]]
         for row in latest.get("top10", []):
             code = TOP10_CODES.get(row["name"])
@@ -95,7 +95,7 @@ def member_floats(fund, tape):
 
 
 def build(default_ff=DEFAULT_FF):
-    c = json.loads((ROOT / "data" / "mieu_cache.json").read_text())
+    c = json.loads((ROOT / "data" / "mieu_cache.json").read_text(encoding="utf-8"))
     fund, tape = c["fund"], c["tape"]
     ffs = member_floats(fund, tape)
     rows, excl = [], {"no_data": 0, "min_size": 0, "atvr": 0,
@@ -167,5 +167,5 @@ if __name__ == "__main__":
            f"{base['n_pass'] + sum(base['excluded'].values())} "
            "cached (2,146 target)"}
     (ROOT / "data" / "cutoff_walk_v2.json").write_text(
-        json.dumps(out, indent=1))
+        json.dumps(out, indent=1), encoding="utf-8")
     print(json.dumps(out, indent=1))

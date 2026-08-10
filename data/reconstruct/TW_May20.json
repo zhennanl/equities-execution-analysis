@@ -1,0 +1,99 @@
+{
+ "market": "Taiwan",
+ "review": "May20",
+ "keys": {
+  "gmsr_dm": 5.6,
+  "em_range": [
+   1.4,
+   3.22
+  ],
+  "ceiling": 3.22,
+  "floor": 2.147,
+  "bar": 4.83,
+  "price_date": "2020-04-21",
+  "source": "Sep2020"
+ },
+ "fx_used": 29.63,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "6415",
+   "security": "SILERGY CORP",
+   "action": "ADD",
+   "pit_cap_busd": 3.81,
+   "verdict": "NOT-EXPLAINED: 3.81B well below bar"
+  },
+  {
+   "code": "2915",
+   "security": "RUENTEX INDUSTRIES",
+   "action": "DEL",
+   "pit_cap_busd": 1.26,
+   "verdict": "EXPLAINED: 1.26B is 41% below the 2.147B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "4966": 1.91,
+   "2603": 1.6,
+   "8299": 1.78,
+   "2353": 1.58,
+   "1605": 1.44,
+   "2371": 1.73,
+   "8046": 1.41,
+   "3481": 1.97,
+   "2347": 2.13,
+   "2344": 1.72,
+   "8464": 2.06,
+   "1504": 1.73,
+   "4743": 0.56,
+   "2615": 1.19,
+   "1434": 1.77,
+   "2915": 1.26,
+   "5269": 1.49,
+   "2542": 1.59,
+   "3702": 2.11,
+   "3296": 0.04,
+   "9921": 1.82,
+   "1227": 2.05,
+   "2385": 2.03,
+   "6409": 1.78,
+   "9945": 1.4,
+   "2610": 1.28
+  },
+  "hits": [
+   "2915"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1227",
+   "1434",
+   "1504",
+   "1605",
+   "2344",
+   "2347",
+   "2353",
+   "2371",
+   "2385",
+   "2542",
+   "2603",
+   "2610",
+   "2615",
+   "3296",
+   "3481",
+   "3702",
+   "4743",
+   "4966",
+   "5269",
+   "6409",
+   "8046",
+   "8299",
+   "8464",
+   "9921",
+   "9945"
+  ]
+ }
+}

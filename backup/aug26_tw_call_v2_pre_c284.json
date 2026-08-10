@@ -1,0 +1,299 @@
+{
+ "market": "Taiwan",
+ "review": "Aug-2026",
+ "declared": "2026-08-08",
+ "supersedes": "2026-08-07 declaration (kept for grading; not edited)",
+ "data_asof": "20260731",
+ "cutoff_usd_b": 6.75,
+ "cutoff_rule": "full cap at rank 77 under count stability (\u00a72.3.3)",
+ "raw_85pct_crossing": {
+  "rank": 52,
+  "code": "3481",
+  "cutoff_usd_b": 11.221
+ },
+ "addition_bar_usd_b": 10.126,
+ "incumbent_floor_usd_b": 4.5,
+ "mieu_n": 398,
+ "registered_base_rates": {
+  "add_guaranteed": 0.85,
+  "add_queue": 0.45,
+  "del_float_gate": 0.85,
+  "del_deep": 0.85,
+  "del_below_floor": 0.7,
+  "del_displaced": 0.55,
+  "del_proximity": 0.3
+ },
+ "registered_haircuts": {
+  "count_flex": 0.85,
+  "atvr_not_evaluated": 0.85,
+  "float_estimated": 0.9,
+  "blind_band": 0.95
+ },
+ "calls": [
+  {
+   "action": "ADD",
+   "code": "2408",
+   "rank": 15,
+   "full_cap_usd_b": 34.48,
+   "float_cap_usd_b": 16.28,
+   "fif": 0.4722,
+   "float_src": "yahoo",
+   "x_cutoff": 5.11,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.62,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Passes every \u00a72.2 screen, and at rank 15 of the Market Investable Equity Universe its full cap $34.48B is 5.11x the $6.75B cutoff \u2014 above the 1.5x bar, which \u00a73.1.5 makes a GUARANTEED addition when a slot exists. Float cap $16.28B (FIF 0.4722, yahoo) clears the \u00a72.3.6.1 gate of $3.38B."
+  },
+  {
+   "action": "ADD",
+   "code": "8046",
+   "rank": 30,
+   "full_cap_usd_b": 18.35,
+   "float_cap_usd_b": 7.09,
+   "fif": 0.3864,
+   "float_src": "yahoo",
+   "x_cutoff": 2.72,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.62,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Passes every \u00a72.2 screen, and at rank 30 of the Market Investable Equity Universe its full cap $18.35B is 2.72x the $6.75B cutoff \u2014 above the 1.5x bar, which \u00a73.1.5 makes a GUARANTEED addition when a slot exists. Float cap $7.09B (FIF 0.3864, yahoo) clears the \u00a72.3.6.1 gate of $3.38B."
+  },
+  {
+   "action": "ADD",
+   "code": "2344",
+   "rank": 32,
+   "full_cap_usd_b": 18.06,
+   "float_cap_usd_b": 12.6,
+   "fif": 0.6977,
+   "float_src": "yahoo",
+   "x_cutoff": 2.68,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.62,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Passes every \u00a72.2 screen, and at rank 32 of the Market Investable Equity Universe its full cap $18.06B is 2.68x the $6.75B cutoff \u2014 above the 1.5x bar, which \u00a73.1.5 makes a GUARANTEED addition when a slot exists. Float cap $12.60B (FIF 0.6977, yahoo) clears the \u00a72.3.6.1 gate of $3.38B."
+  },
+  {
+   "action": "ADD",
+   "code": "8299",
+   "rank": 53,
+   "full_cap_usd_b": 11.2,
+   "float_cap_usd_b": 8.84,
+   "fif": 0.7898,
+   "float_src": "yahoo",
+   "x_cutoff": 1.66,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.53,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk",
+    "TPEx \u2014 ATVR NOT_EVALUATED (\u00a72.2.5 assumed pass, not measured)",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Passes every \u00a72.2 screen, and at rank 53 of the Market Investable Equity Universe its full cap $11.20B is 1.66x the $6.75B cutoff \u2014 above the 1.5x bar, which \u00a73.1.5 makes a GUARANTEED addition when a slot exists. Float cap $8.84B (FIF 0.7898, yahoo) clears the \u00a72.3.6.1 gate of $3.38B."
+  },
+  {
+   "action": "ADD",
+   "code": "3189",
+   "rank": 57,
+   "full_cap_usd_b": 10.33,
+   "float_cap_usd_b": 6.45,
+   "fif": 0.6247,
+   "float_src": "yahoo",
+   "x_cutoff": 1.53,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.62,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Passes every \u00a72.2 screen, and at rank 57 of the Market Investable Equity Universe its full cap $10.33B is 1.53x the $6.75B cutoff \u2014 above the 1.5x bar, which \u00a73.1.5 makes a GUARANTEED addition when a slot exists. Float cap $6.45B (FIF 0.6247, yahoo) clears the \u00a72.3.6.1 gate of $3.38B."
+  },
+  {
+   "action": "ADD",
+   "code": "6274",
+   "rank": 58,
+   "full_cap_usd_b": 10.15,
+   "float_cap_usd_b": 8.57,
+   "fif": 0.8446,
+   "float_src": "yahoo",
+   "x_cutoff": 1.5,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.53,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk",
+    "TPEx \u2014 ATVR NOT_EVALUATED (\u00a72.2.5 assumed pass, not measured)",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Passes every \u00a72.2 screen, and at rank 58 of the Market Investable Equity Universe its full cap $10.15B is 1.50x the $6.75B cutoff \u2014 above the 1.5x bar, which \u00a73.1.5 makes a GUARANTEED addition when a slot exists. Float cap $8.57B (FIF 0.8446, yahoo) clears the \u00a72.3.6.1 gate of $3.38B."
+  },
+  {
+   "action": "ADD",
+   "code": "6770",
+   "rank": 67,
+   "full_cap_usd_b": 7.92,
+   "float_cap_usd_b": 5.94,
+   "fif": 0.7498,
+   "float_src": "yahoo",
+   "x_cutoff": 1.17,
+   "zone": "priority queue (1.0-1.5x)",
+   "prob": 0.33,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Passes every \u00a72.2 screen, and at rank 67 of the Market Investable Equity Universe its full cap $7.92B is 1.17x the $6.75B cutoff \u2014 inside the 1.0-1.5x band, so \u00a73.1.5 puts it in the priority queue: it goes in only if slots remain after the guaranteed names. Float cap $5.94B (FIF 0.7498, yahoo) clears the \u00a72.3.6.1 gate of $3.38B."
+  },
+  {
+   "action": "ADD",
+   "code": "3036",
+   "rank": 68,
+   "full_cap_usd_b": 7.7,
+   "float_cap_usd_b": 4.45,
+   "fif": 0.5782,
+   "float_src": "yahoo",
+   "x_cutoff": 1.14,
+   "zone": "priority queue (1.0-1.5x)",
+   "prob": 0.33,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Passes every \u00a72.2 screen, and at rank 68 of the Market Investable Equity Universe its full cap $7.70B is 1.14x the $6.75B cutoff \u2014 inside the 1.0-1.5x band, so \u00a73.1.5 puts it in the priority queue: it goes in only if slots remain after the guaranteed names. Float cap $4.45B (FIF 0.5782, yahoo) clears the \u00a72.3.6.1 gate of $3.38B."
+  },
+  {
+   "action": "DELETE",
+   "code": "2615",
+   "name": "WAN HAI LINES",
+   "full_cap_usd_b": 7.34,
+   "float_cap_usd_b": 1.84,
+   "fif": 0.251,
+   "rule": "del_float_gate",
+   "x_cutoff": 1.09,
+   "prob": 0.72,
+   "caveats": [
+    "\u00a72.3.3 count-flex risk"
+   ],
+   "why": "Float-adjusted cap $1.84B is below the \u00a72.3.6.1 constituent gate $2.25B (50% of the $6.75B cutoff, with the 2/3 relief incumbents get). Its FIF is 0.251 \u2014 MSCI's OWN number, recovered from the published weights, so this is not float-estimate risk. Full cap $7.34B would survive on size alone; the float is what fails. Note the mechanism: foreign room is 10.8%, inside the 7.5-15% band, so \u00a72.3.6.2 applies an adjustment factor of 0.5 \u2014 and indeed MSCI's FIF 0.251 is almost exactly half of 0.502. Low foreign room does NOT delete on its own; it halves the float, and the halved float is what breaches the gate."
+  },
+  {
+   "action": "DELETE",
+   "code": "6919",
+   "name": "CALIWAY BIOPHARMA",
+   "full_cap_usd_b": 4.95,
+   "float_cap_usd_b": 2.98,
+   "fif": 0.601,
+   "rule": "del_displaced",
+   "x_cutoff": 0.73,
+   "prob": 0.47,
+   "caveats": [
+    "displacement is CONDITIONAL on the additions landing \u2014 it is the weakest link in the chain",
+    "\u00a72.3.3 count-flex risk"
+   ],
+   "why": "Passes every rule on its own (full cap $4.95B = 0.73x cutoff, above the 2/3 floor), but it is among the smallest surviving incumbents. With 8 additions qualifying and the Segment Number of Companies held at 77 (\u00a72.3.3), the smallest members are displaced to make room. This is the channel that produced 5 of the 6 deletions in the previous call."
+  },
+  {
+   "action": "DELETE",
+   "code": "2834",
+   "name": "TAIWAN BUSINESS BANK",
+   "full_cap_usd_b": 5.46,
+   "float_cap_usd_b": 3.83,
+   "fif": 0.702,
+   "rule": "del_displaced",
+   "x_cutoff": 0.81,
+   "prob": 0.47,
+   "caveats": [
+    "displacement is CONDITIONAL on the additions landing \u2014 it is the weakest link in the chain",
+    "\u00a72.3.3 count-flex risk"
+   ],
+   "why": "Passes every rule on its own (full cap $5.46B = 0.81x cutoff, above the 2/3 floor), but it is among the smallest surviving incumbents. With 8 additions qualifying and the Segment Number of Companies held at 77 (\u00a72.3.3), the smallest members are displaced to make room. This is the channel that produced 5 of the 6 deletions in the previous call."
+  },
+  {
+   "action": "DELETE",
+   "code": "2609",
+   "name": "YANG MING MARINE TRANSP",
+   "full_cap_usd_b": 5.48,
+   "float_cap_usd_b": 2.74,
+   "fif": 0.501,
+   "rule": "del_displaced",
+   "x_cutoff": 0.81,
+   "prob": 0.47,
+   "caveats": [
+    "displacement is CONDITIONAL on the additions landing \u2014 it is the weakest link in the chain",
+    "\u00a72.3.3 count-flex risk"
+   ],
+   "why": "Passes every rule on its own (full cap $5.48B = 0.81x cutoff, above the 2/3 floor), but it is among the smallest surviving incumbents. With 8 additions qualifying and the Segment Number of Companies held at 77 (\u00a72.3.3), the smallest members are displaced to make room. This is the channel that produced 5 of the 6 deletions in the previous call."
+  },
+  {
+   "action": "DELETE",
+   "code": "1101",
+   "name": "TAIWAN CEMENT CORP",
+   "full_cap_usd_b": 5.64,
+   "float_cap_usd_b": 4.81,
+   "fif": 0.852,
+   "rule": "del_displaced",
+   "x_cutoff": 0.84,
+   "prob": 0.47,
+   "caveats": [
+    "displacement is CONDITIONAL on the additions landing \u2014 it is the weakest link in the chain",
+    "\u00a72.3.3 count-flex risk"
+   ],
+   "why": "Passes every rule on its own (full cap $5.64B = 0.84x cutoff, above the 2/3 floor), but it is among the smallest surviving incumbents. With 8 additions qualifying and the Segment Number of Companies held at 77 (\u00a72.3.3), the smallest members are displaced to make room. This is the channel that produced 5 of the 6 deletions in the previous call."
+  },
+  {
+   "action": "DELETE",
+   "code": "3529",
+   "name": "EMEMORY TECHNOLOGY",
+   "full_cap_usd_b": 5.71,
+   "float_cap_usd_b": 4.86,
+   "fif": 0.852,
+   "rule": "del_displaced",
+   "x_cutoff": 0.85,
+   "prob": 0.47,
+   "caveats": [
+    "displacement is CONDITIONAL on the additions landing \u2014 it is the weakest link in the chain",
+    "\u00a72.3.3 count-flex risk"
+   ],
+   "why": "Passes every rule on its own (full cap $5.71B = 0.85x cutoff, above the 2/3 floor), but it is among the smallest surviving incumbents. With 8 additions qualifying and the Segment Number of Companies held at 77 (\u00a72.3.3), the smallest members are displaced to make room. This is the channel that produced 5 of the 6 deletions in the previous call."
+  },
+  {
+   "action": "DELETE",
+   "code": "5871",
+   "name": "CHAILEASE HOLDING",
+   "full_cap_usd_b": 5.89,
+   "float_cap_usd_b": 5.17,
+   "fif": 0.877,
+   "rule": "del_displaced",
+   "x_cutoff": 0.87,
+   "prob": 0.47,
+   "caveats": [
+    "displacement is CONDITIONAL on the additions landing \u2014 it is the weakest link in the chain",
+    "\u00a72.3.3 count-flex risk"
+   ],
+   "why": "Passes every rule on its own (full cap $5.89B = 0.87x cutoff, above the 2/3 floor), but it is among the smallest surviving incumbents. With 8 additions qualifying and the Segment Number of Companies held at 77 (\u00a72.3.3), the smallest members are displaced to make room. This is the channel that produced 5 of the 6 deletions in the previous call."
+  },
+  {
+   "action": "DELETE",
+   "code": "3533",
+   "name": "LOTES CO",
+   "full_cap_usd_b": 6.44,
+   "float_cap_usd_b": 4.85,
+   "fif": 0.752,
+   "rule": "del_displaced",
+   "x_cutoff": 0.95,
+   "prob": 0.47,
+   "caveats": [
+    "displacement is CONDITIONAL on the additions landing \u2014 it is the weakest link in the chain",
+    "\u00a72.3.3 count-flex risk"
+   ],
+   "why": "Passes every rule on its own (full cap $6.44B = 0.95x cutoff, above the 2/3 floor), but it is among the smallest surviving incumbents. With 8 additions qualifying and the Segment Number of Companies held at 77 (\u00a72.3.3), the smallest members are displaced to make room. This is the channel that produced 5 of the 6 deletions in the previous call."
+  }
+ ]
+}

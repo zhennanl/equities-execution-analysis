@@ -45,18 +45,18 @@ START, END = dt.date(2015, 1, 5), dt.date.today()
 
 def watch_names():
     cache = json.loads((ROOT / "data" / "tw_vintage_cache.json")
-                       .read_text())
+                       .read_text(encoding="utf-8"))
     return {k.split("|")[1] for k in cache
             if k.startswith("sh|")}
 
 
 def _load():
-    return json.loads(OUT.read_text()) if OUT.exists() else {}
+    return json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
 
 
 def _save(d):
     tmp = OUT.with_suffix(".tmp")
-    tmp.write_text(json.dumps(d))
+    tmp.write_text(json.dumps(d), encoding="utf-8")
     tmp.replace(OUT)
 
 

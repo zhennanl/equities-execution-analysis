@@ -1,0 +1,106 @@
+{
+ "n": {
+  "windows": 157,
+  "adds": 64,
+  "dels": 93
+ },
+ "P1_close_cost": {
+  "question": "what does the effective close itself cost vs the E-1 close?",
+  "ADD_eff_day_med": 0.0029,
+  "DEL_eff_day_med": -0.016,
+  "read": "the tracker BUYS adds at a print that is this far above/below E-1; negative for adds = the close was actually CHEAPER than E-1"
+ },
+ "P2_early_cost": {
+  "question": "what does pre-trading cost instead (the drift you chase day2->E-1)?",
+  "ADD_drift_med": 0.0326,
+  "DEL_drift_med": -0.0152,
+  "ADD_gap1_med": 0.0069,
+  "read": "buying early means paying the drift; buying day-1 means paying the gap first"
+ },
+ "P3_close_reverts": {
+  "question": "is the close print systematically rich?",
+  "ADD_revert5_med": -0.0238,
+  "ADD_frac_reverting": 0.688,
+  "DEL_revert5_med": 0.0,
+  "DEL_frac_reverting": 0.473,
+  "read": "adds falling after E / dels bouncing after E = the close was a temporarily-pressured print"
+ },
+ "P4_close_capacity": {
+  "question": "can the close absorb the size?",
+  "eff_day_volume_x_ADV_med": 12.3362,
+  "p90": 35.39,
+  "read": "effective-day volume runs this multiple of normal \u2014 the day the whole market shows up"
+ },
+ "H1_alpha_and_decay": {
+  "question": "total alpha day1->E-1, by era \u2014 decaying?",
+  "ADD_total_alpha_med": 0.0349,
+  "DEL_total_alpha_med": -0.0257,
+  "ADD_by_era": {
+   "2010-14": 0.0218,
+   "2015-18": 0.0487,
+   "2019-22": 0.0759,
+   "2023-26": 0.0293
+  },
+  "DEL_by_era": {
+   "2010-14": -0.0467,
+   "2015-18": -0.0516,
+   "2019-22": 0.0164,
+   "2023-26": -0.0125
+  }
+ },
+ "H2_entry_timing": {
+  "question": "how much is left after day 1?",
+  "ADD_capture_med": 0.8629,
+  "read": "capture = drift/(gap+drift): the share of the move NOT taken instantly. >0.5 = latecomers still ate most of it"
+ },
+ "H3_exit_timing": {
+  "question": "exit E-1 or hold into the close?",
+  "ADD_extra_from_holding": 0.0029,
+  "ADD_frac_close_higher": 0.516,
+  "read": "positive = the close pays you to hold and sell TO the trackers; negative = exit E-1"
+ },
+ "H4_reversal_trade": {
+  "question": "fade the close (short adds / buy dels at E close, unwind E+5): edge + hit rate?",
+  "short_ADD_edge_med": 0.0238,
+  "short_ADD_hit": 0.688,
+  "long_DEL_edge_med": 0.0,
+  "long_DEL_hit": 0.473
+ },
+ "H5_front_running": {
+  "question": "does the market pre-position before the announcement?",
+  "ADD_pre_drift_med": 0.0348,
+  "DEL_pre_drift_med": -0.0261,
+  "DEL_borrow_build_pre_med": 1.2149,
+  "read": "adds already up / dels already down before day 0, and borrow built pre-announcement = the prediction was tradeable consensus"
+ },
+ "H6_hit_rates": {
+  "ADD_alpha_hit": 0.719,
+  "DEL_alpha_hit": 0.634,
+  "ADD_worst": -0.17117,
+  "ADD_best": 0.50385
+ },
+ "C1_flow_before_close": {
+  "question": "how much of expected passive demand printed as foreign net buy by E-1?",
+  "ADD_progress_Eminus1_med": 0.0094,
+  "n": 25,
+  "read": ">1 = arbs accumulated MORE than tracker demand before the close (inventory to sell into it); <0.5 = the close must do the work"
+ },
+ "C4_crowding_triage": {
+  "question": "does high pre-positioning predict a worse close for the tracker?",
+  "ADD_eff_day_lowPRE_med": -0.002,
+  "ADD_eff_day_highPRE_med": 0.0032,
+  "PRE_terciles": [
+   0.085,
+   0.779
+  ],
+  "read": "if high-PRE closes are lower (adds), the crowd sells into the tracker's buy \u2014 the client should shift flow earlier"
+ },
+ "C3_arb_exit": {
+  "question": "do arbs sell into the close?",
+  "evidence": {
+   "ADD_eff_day_med": 0.0029,
+   "ADD_drift_med": 0.0326
+  },
+  "read": "drift up then a flat/negative effective day = supply meeting the trackers AT the close \u2014 the arbs' exit IS the tracker's liquidity"
+ }
+}

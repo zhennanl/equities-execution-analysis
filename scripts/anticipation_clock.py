@@ -45,7 +45,7 @@ THRESH, SUSTAIN = 0.25, 5
 
 
 def _j(name):
-    return json.loads((ROOT / "data" / name).read_text())
+    return json.loads((ROOT / "data" / name).read_text(encoding="utf-8"))
 
 
 def curves():
@@ -191,7 +191,7 @@ def main():
            "median_add": m_add, "f_del": mf_del,
            "f_ctrl": mf_ctl}
     (ROOT / "data" / "anticipation_clock.json").write_text(
-        json.dumps(out, indent=1))
+        json.dumps(out, indent=1), encoding="utf-8")
 
     f1 = go.Figure()
     f1.add_scatter(x=rel, y=hi_d, line_width=0,

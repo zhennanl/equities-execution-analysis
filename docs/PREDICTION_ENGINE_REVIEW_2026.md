@@ -30,10 +30,52 @@ wrong without it; the engine is its own error history, compiled.
 
 ## 2. Why the data starts at 2015
 
-The boundary is Taiwan's, and it is regulatory, not ours: the TWSE
-files that power the crowding and flow pillars — TWT93U (daily SBL
-balances/quotas) and TWT38U (daily per-name foreign flow) — begin in
-2015, when the disclosure regime that creates them came into force.
+The boundary is Taiwan's: the TWSE files that power the crowding and
+flow pillars — TWT93U (daily SBL balances/quotas) and TWT38U (daily
+per-name foreign flow) — are where like-for-like history stops being
+available to us at 2015.
+
+**c-226 CORRECTION — THE CLAIM IS FALSE, and TWSE says so on its
+own pages.** Bill asked for the source twice. There is none, and
+looking properly takes one page load each:
+
+TWSE publishes the start date on each report page itself:
+
+* TWT93U 融券借券賣出餘額 — 「本資訊自民國94年7月1日起開始提供」
+  = **2005-07-01**
+  https://www.twse.com.tw/zh/trading/margin/twt93u.html
+* TWT38U 外資及陸資買賣超彙總表 — 「本資訊自民國93年12月17日起
+  開始提供」 = **2004-12-17**
+  https://www.twse.com.tw/zh/trading/foreign/twt38u.html
+
+So the files predate the claim by a DECADE. TWT93U runs from
+2005-07-01, not 2015; TWT38U from 2004-12-17. The sentence "when the
+disclosure regime that creates them came into force" was invented to
+explain a boundary that is ours, and it survived three revisions
+because it sounded like the kind of thing that would be true.
+
+(c-225 had already found our own probe serving 2014-06-16 and
+downgraded the claim to "unmeasured". That was the right direction
+and still too timid — I corrected the confidence without checking
+the fact, when the fact was one click away.)
+
+What is actually true:
+
+* **2015 is our harvest start, and it is a CHOICE** — it lines up
+  with the MSCI key archive and with where the rest of the stack is
+  complete.
+* **The real ~2-3 year limit is elsewhere and unrelated**: PIT
+  universe reconstruction needs share counts and floats AS OF each
+  vintage, and ours are current-dated. That constraint is measured,
+  binding, and has nothing to do with TWSE retention.
+* **~10 further years of borrow and foreign-flow history are
+  available** and unharvested — roughly 40 more review cycles.
+* **c-228: there IS a genuine 2015 boundary, and it is the
+  AUCTION layer, not the positioning layer.** MI_5MINS only
+  moves to a 5-second grid on 2014-12-29; before that it is
+  10s, 15s and 1-minute. Bill remembered this correctly and I
+  had swept it away with the rest. See TAIWAN_MARKET_ANALYSIS
+  §1 for the table and the source.
 Prices and index answer keys go deeper (STOCK_DAY to 2016+, MSCI
 STPublicLists to 2003), but a PIT replication without the
 positioning pillars would be a different, weaker engine — so 2015 is

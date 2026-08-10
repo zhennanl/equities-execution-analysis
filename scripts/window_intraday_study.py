@@ -152,7 +152,7 @@ def main():
          "n_events": int(df["event"].nunique()), "H9": res["H9"],
          "H10": res["H10"],
          "desc": json.loads(desc.to_json())}, indent=1,
-        default=str))
+        default=str), encoding="utf-8")
     print("H9:", json.dumps(res["H9"]))
     print("H10:", json.dumps(res["H10"]))
     print(desc.to_string())

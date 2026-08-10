@@ -59,7 +59,7 @@ def _row(label, value, source, tag):
 def _artifacts():
     def j(name):
         p = ROOT / "data" / name
-        return json.loads(p.read_text()) if p.exists() else {}
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
     return (j("apac_factsheet_archive.json"),
             j("cutoff_walk_v2.json"),
             j("aug26_cutoff_calc.json"))

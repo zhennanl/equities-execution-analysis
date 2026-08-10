@@ -90,13 +90,13 @@ NOTES = (
 
 
 def main():
-    event_cache = json.load(open("data/event_flow_study.json"))
+    event_cache = json.load(open("data/event_flow_study.json", encoding="utf-8"))
     for label, ev in event_cache.items():
         if isinstance(ev, dict):
             for pref, eff in EFF_BY_PREFIX.items():
                 if label.startswith(pref):
                     ev.setdefault("eff", eff)
-    short_cache = json.load(open("data/event_data_cache.json"))
+    short_cache = json.load(open("data/event_data_cache.json", encoding="utf-8"))
 
     t_stats = {
         "MSCI deletions (Sell)": expected_t_multiples(

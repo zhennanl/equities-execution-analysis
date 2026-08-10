@@ -1,0 +1,182 @@
+{
+ "market": "Indonesia",
+ "cutoff_usd_b": 10.113,
+ "cutoff_derivation": {
+  "member_coverage": 1.0,
+  "members_unsized": 0,
+  "coverage_gate": "USABLE",
+  "confidence": "OK",
+  "flagged_fraction_of_checked": null,
+  "count_anchor_usd_b": 10.113,
+  "n_members": 11,
+  "n_members_source": "MSCI factsheet",
+  "country_flagged_excluded": 0,
+  "country_check_run": false,
+  "smallest_member_usd_b": 0.117,
+  "members_matched": "11/11",
+  "note": "seed only \u2014 the binding cutoff comes from the stage-2 float-coverage walk"
+ },
+ "band": [
+  0.5,
+  2.0
+ ],
+ "n": 14,
+ "of_universe": 835,
+ "next": "stage 2 \u2014 float (\u00a72.2.4/\u00a72.2.6), ATVR (\u00a72.2.5), foreign room (\u00a72.2.8) for these names only",
+ "rows": {
+  "AMMN.JK": {
+   "name": "PT Amman Mineral Internasional Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 318614.6327,
+   "cap_usd_b": 17.8146,
+   "shares": 72412413856,
+   "price": 4400.0,
+   "exchange": "Jakarta",
+   "rank": 7
+  },
+  "TLKM.JK": {
+   "name": "Perusahaan Perseroan (Persero) PT Telekomunikasi Indonesia Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 267154.3478,
+   "cap_usd_b": 14.9373,
+   "shares": 98580940799,
+   "price": 2710.0,
+   "exchange": "Jakarta",
+   "rank": 8
+  },
+  "ASII.JK": {
+   "name": "PT Astra International Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 203592.3215,
+   "cap_usd_b": 11.3834,
+   "shares": 39920061040,
+   "price": 5100.0,
+   "exchange": "Jakarta",
+   "rank": 9
+  },
+  "TPIA.JK": {
+   "name": "PT Chandra Asri Pacific Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 192815.8291,
+   "cap_usd_b": 10.7809,
+   "shares": 86464496192,
+   "price": 2230.0,
+   "exchange": "Jakarta",
+   "rank": 10
+  },
+  "BRPT.JK": {
+   "name": "PT Barito Pacific Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 180863.6733,
+   "cap_usd_b": 10.1126,
+   "shares": 93711740929,
+   "price": 1930.0,
+   "exchange": "Jakarta",
+   "rank": 11
+  },
+  "SRAJ.JK": {
+   "name": "PT Sejahteraraya Anugrahjaya Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 159412.4424,
+   "cap_usd_b": 8.9132,
+   "shares": 12238959990,
+   "price": 13025.0,
+   "exchange": "Jakarta",
+   "rank": 12
+  },
+  "DSSA.JK": {
+   "name": "PT Dian Swastatika Sentosa Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 150863.8133,
+   "cap_usd_b": 8.4352,
+   "shares": 154732123250,
+   "price": 975.0,
+   "exchange": "Jakarta",
+   "rank": 13
+  },
+  "DNET.JK": {
+   "name": "PT Indoritel Makmur Internasional Tbk.",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 138648.5991,
+   "cap_usd_b": 7.7522,
+   "shares": 14184000000,
+   "price": 9775.0,
+   "exchange": "Jakarta",
+   "rank": 14
+  },
+  "MORA.JK": {
+   "name": "PT Mora Telematika Indonesia Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 124145.0147,
+   "cap_usd_b": 6.9413,
+   "shares": 23646668691,
+   "price": 5250.0,
+   "exchange": "Jakarta",
+   "rank": 15
+  },
+  "MPRO.JK": {
+   "name": "PT Maha Properti Indonesia Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 119807.1313,
+   "cap_usd_b": 6.6987,
+   "shares": 9942500000,
+   "price": 12050.0,
+   "exchange": "Jakarta",
+   "rank": 16
+  },
+  "PANI.JK": {
+   "name": "PT Pantai Indah Kapuk Dua Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 114593.863,
+   "cap_usd_b": 6.4073,
+   "shares": 18189502198,
+   "price": 6300.0,
+   "exchange": "Jakarta",
+   "rank": 17
+  },
+  "EMAS.JK": {
+   "name": "PT Merdeka Gold Resources Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 110116.9636,
+   "cap_usd_b": 6.1569,
+   "shares": 14731366060,
+   "price": 7475.0,
+   "exchange": "Jakarta",
+   "rank": 18
+  },
+  "CASA.JK": {
+   "name": "PT Capital Financial Indonesia Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 98057.291,
+   "cap_usd_b": 5.4827,
+   "shares": 54476269803,
+   "price": 1800.0,
+   "exchange": "Jakarta",
+   "rank": 19
+  },
+  "HMSP.JK": {
+   "name": "PT Hanjaya Mandala Sampoerna Tbk",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 90728.0971,
+   "cap_usd_b": 5.0729,
+   "shares": 116318076900,
+   "price": 780.0,
+   "exchange": "Jakarta",
+   "rank": 20
+  }
+ }
+}

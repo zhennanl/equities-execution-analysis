@@ -1,0 +1,4261 @@
+{
+ "per_review": [
+  {
+   "review": "May18",
+   "hits": 1,
+   "misses": 0,
+   "false_alarms": 29,
+   "pool": 30,
+   "floor": 2.447,
+   "bar": 5.505,
+   "price_date": "2018-04-23",
+   "key_source": "May2018"
+  },
+  {
+   "review": "Aug18",
+   "hits": 0,
+   "misses": 0,
+   "false_alarms": 29,
+   "pool": 29,
+   "floor": 2.447,
+   "bar": 5.505,
+   "price_date": "2018-04-23",
+   "key_source": "prevailing May18 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "Nov18",
+   "hits": 4,
+   "misses": 0,
+   "false_alarms": 32,
+   "pool": 36,
+   "floor": 2.273,
+   "bar": 5.115,
+   "price_date": "2018-10-22",
+   "key_source": "Nov2018"
+  },
+  {
+   "review": "Feb19",
+   "hits": 0,
+   "misses": 0,
+   "false_alarms": 33,
+   "pool": 33,
+   "floor": 2.273,
+   "bar": 5.115,
+   "price_date": "2018-10-22",
+   "key_source": "prevailing Nov18 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "May19",
+   "hits": 0,
+   "misses": 0,
+   "false_alarms": 27,
+   "pool": 27,
+   "floor": 2.38,
+   "bar": 5.355,
+   "price_date": "2019-04-17",
+   "key_source": "Oct2019"
+  },
+  {
+   "review": "Aug19",
+   "hits": 0,
+   "misses": 0,
+   "false_alarms": 27,
+   "pool": 27,
+   "floor": 2.38,
+   "bar": 5.355,
+   "price_date": "2019-04-17",
+   "key_source": "prevailing May19 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "Nov19",
+   "hits": 1,
+   "misses": 0,
+   "false_alarms": 25,
+   "pool": 26,
+   "floor": 2.347,
+   "bar": 5.28,
+   "price_date": "2019-10-18",
+   "key_source": "MSCI_Nov19_GIMIMethod"
+  },
+  {
+   "review": "Feb20",
+   "hits": 0,
+   "misses": 0,
+   "false_alarms": 25,
+   "pool": 25,
+   "floor": 2.347,
+   "bar": 5.28,
+   "price_date": "2019-10-18",
+   "key_source": "prevailing Nov19 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "May20",
+   "hits": 1,
+   "misses": 0,
+   "false_alarms": 25,
+   "pool": 26,
+   "floor": 2.147,
+   "bar": 4.83,
+   "price_date": "2020-04-21",
+   "key_source": "Sep2020"
+  },
+  {
+   "review": "Aug20",
+   "hits": 2,
+   "misses": 0,
+   "false_alarms": 23,
+   "pool": 25,
+   "floor": 2.147,
+   "bar": 4.83,
+   "price_date": "2020-04-21",
+   "key_source": "prevailing May20 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "Nov20",
+   "hits": 1,
+   "misses": 1,
+   "false_alarms": 18,
+   "pool": 19,
+   "floor": 2.807,
+   "bar": 6.315,
+   "price_date": "2020-10-19",
+   "key_source": "Nov2020"
+  },
+  {
+   "review": "Feb21",
+   "hits": 1,
+   "misses": 0,
+   "false_alarms": 17,
+   "pool": 18,
+   "floor": 2.807,
+   "bar": 6.315,
+   "price_date": "2020-10-19",
+   "key_source": "prevailing Nov20 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "May21",
+   "hits": 2,
+   "misses": 0,
+   "false_alarms": 10,
+   "pool": 12,
+   "floor": 3.593,
+   "bar": 8.085,
+   "price_date": "2021-04-19",
+   "key_source": "May2021"
+  },
+  {
+   "review": "Aug21",
+   "hits": 0,
+   "misses": 1,
+   "false_alarms": 10,
+   "pool": 10,
+   "floor": 3.593,
+   "bar": 8.085,
+   "price_date": "2021-04-19",
+   "key_source": "prevailing May21 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "Nov21",
+   "hits": 3,
+   "misses": 0,
+   "false_alarms": 11,
+   "pool": 14,
+   "floor": 3.647,
+   "bar": 8.205,
+   "price_date": "2021-10-18",
+   "key_source": "Nov2021"
+  },
+  {
+   "review": "Feb22",
+   "hits": 0,
+   "misses": 1,
+   "false_alarms": 11,
+   "pool": 11,
+   "floor": 3.647,
+   "bar": 8.205,
+   "price_date": "2021-10-18",
+   "key_source": "prevailing Nov21 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "May22",
+   "hits": 3,
+   "misses": 0,
+   "false_alarms": 6,
+   "pool": 9,
+   "floor": 3.28,
+   "bar": 7.38,
+   "price_date": "2022-04-19",
+   "key_source": "May2022"
+  },
+  {
+   "review": "Aug22",
+   "hits": 0,
+   "misses": 0,
+   "false_alarms": 6,
+   "pool": 6,
+   "floor": 3.28,
+   "bar": 7.38,
+   "price_date": "2022-04-19",
+   "key_source": "prevailing May22 (pre-2023 QIR regime)"
+  },
+  {
+   "review": "Nov22",
+   "hits": 1,
+   "misses": 0,
+   "false_alarms": 11,
+   "pool": 12,
+   "floor": 2.707,
+   "bar": 6.09,
+   "price_date": "2022-10-18",
+   "key_source": "Nov2022"
+  },
+  {
+   "review": "May23",
+   "hits": 0,
+   "misses": 0,
+   "false_alarms": 7,
+   "pool": 7,
+   "floor": 3.167,
+   "bar": 7.125,
+   "price_date": "2023-04-18",
+   "key_source": "May2023"
+  },
+  {
+   "review": "Aug23",
+   "hits": 1,
+   "misses": 0,
+   "false_alarms": 7,
+   "pool": 8,
+   "floor": 3.453,
+   "bar": 7.77,
+   "price_date": "2023-07-18",
+   "key_source": "Aug2023"
+  },
+  {
+   "review": "Nov23",
+   "hits": 1,
+   "misses": 0,
+   "false_alarms": 8,
+   "pool": 9,
+   "floor": 3.34,
+   "bar": 7.515,
+   "price_date": "2023-10-18",
+   "key_source": "Nov2023"
+  },
+  {
+   "review": "Feb24",
+   "hits": 0,
+   "misses": 1,
+   "false_alarms": 9,
+   "pool": 9,
+   "floor": 3.087,
+   "bar": 6.945,
+   "price_date": "2023-01-18",
+   "key_source": "Mar2023"
+  },
+  {
+   "review": "May24",
+   "hits": 3,
+   "misses": 0,
+   "false_alarms": 9,
+   "pool": 12,
+   "floor": 3.907,
+   "bar": 8.79,
+   "price_date": "2024-04-19",
+   "key_source": "May2024"
+  },
+  {
+   "review": "Aug24",
+   "hits": 0,
+   "misses": 1,
+   "false_alarms": 7,
+   "pool": 7,
+   "floor": 4.233,
+   "bar": 9.525,
+   "price_date": "2024-07-18",
+   "key_source": "Aug2024"
+  },
+  {
+   "review": "Nov24",
+   "hits": 1,
+   "misses": 0,
+   "false_alarms": 15,
+   "pool": 16,
+   "floor": 4.547,
+   "bar": 10.23,
+   "price_date": "2024-10-16",
+   "key_source": "Nov2024"
+  },
+  {
+   "review": "Feb25",
+   "hits": 0,
+   "misses": 2,
+   "false_alarms": 11,
+   "pool": 11,
+   "floor": 3.707,
+   "bar": 8.34,
+   "price_date": "2024-01-18",
+   "key_source": "Feb2024"
+  },
+  {
+   "review": "May25",
+   "hits": 0,
+   "misses": 0,
+   "false_alarms": 25,
+   "pool": 25,
+   "floor": 4.547,
+   "bar": 10.23,
+   "price_date": "2025-04-17",
+   "key_source": "May2025"
+  },
+  {
+   "review": "Aug25",
+   "hits": 2,
+   "misses": 0,
+   "false_alarms": 21,
+   "pool": 23,
+   "floor": 5.12,
+   "bar": 11.52,
+   "price_date": "2025-07-16",
+   "key_source": "Aug2025"
+  },
+  {
+   "review": "Nov25",
+   "hits": 7,
+   "misses": 0,
+   "false_alarms": 17,
+   "pool": 24,
+   "floor": 5.487,
+   "bar": 12.345,
+   "price_date": "2025-10-15",
+   "key_source": "Nov2025"
+  },
+  {
+   "review": "Feb26",
+   "hits": 3,
+   "misses": 1,
+   "false_alarms": 14,
+   "pool": 17,
+   "floor": 4.733,
+   "bar": 10.65,
+   "price_date": "2025-01-17",
+   "key_source": "Feb2025"
+  },
+  {
+   "review": "May26",
+   "hits": 7,
+   "misses": 0,
+   "false_alarms": 8,
+   "pool": 15,
+   "floor": 6.04,
+   "bar": 13.59,
+   "price_date": "2026-04-20",
+   "key_source": "May2026"
+  }
+ ],
+ "deletions": {
+  "hits": 45,
+  "misses": 8,
+  "false_alarms": 533,
+  "recall": 0.849,
+  "precision": 0.078
+ },
+ "additions": {
+  "actual": 41,
+  "flagged": 1,
+  "recall": 0.024,
+  "near_miss_within_25pct": 9,
+  "rows": [
+   {
+    "review": "May18",
+    "code": "2492",
+    "security": "WALSIN TECHNOLOGY CORP",
+    "cap": 2.96,
+    "bar": 5.505,
+    "flagged": false,
+    "shortfall_pct": 46.2
+   },
+   {
+    "review": "Nov18",
+    "code": "2371",
+    "security": "TATUNG",
+    "cap": 2.81,
+    "bar": 5.115,
+    "flagged": false,
+    "shortfall_pct": 45.1
+   },
+   {
+    "review": "Feb19",
+    "code": "5876",
+    "security": "SHANGHAI COMM & SAV BANK",
+    "cap": 4.96,
+    "bar": 5.115,
+    "flagged": false,
+    "shortfall_pct": 2.9
+   },
+   {
+    "review": "Nov19",
+    "code": "2345",
+    "security": "ACCTON TECHNOLOGY CORP",
+    "cap": 3.5,
+    "bar": 5.28,
+    "flagged": false,
+    "shortfall_pct": 33.8
+   },
+   {
+    "review": "Nov19",
+    "code": "6669",
+    "security": "WIWYNN CORPORATION",
+    "cap": 2.86,
+    "bar": 5.28,
+    "flagged": false,
+    "shortfall_pct": 45.9
+   },
+   {
+    "review": "May20",
+    "code": "6415",
+    "security": "SILERGY CORP",
+    "cap": 3.81,
+    "bar": 4.83,
+    "flagged": false,
+    "shortfall_pct": 21.2
+   },
+   {
+    "review": "Aug20",
+    "code": "5269",
+    "security": "ASMEDIA TECHNOLOGY",
+    "cap": 1.49,
+    "bar": 4.83,
+    "flagged": false,
+    "shortfall_pct": 69.1
+   },
+   {
+    "review": "Nov20",
+    "code": "4743",
+    "security": "ONENESS BIOTECH",
+    "cap": 4.29,
+    "bar": 6.315,
+    "flagged": false,
+    "shortfall_pct": 32.0
+   },
+   {
+    "review": "Nov20",
+    "code": "3037",
+    "security": "UNIMICRON TECHNOLOGY",
+    "cap": 4.54,
+    "bar": 6.315,
+    "flagged": false,
+    "shortfall_pct": 28.2
+   },
+   {
+    "review": "Feb21",
+    "code": "8046",
+    "security": "NAN YA PRINTED CIRCUIT",
+    "cap": 2.88,
+    "bar": 6.315,
+    "flagged": false,
+    "shortfall_pct": 54.4
+   },
+   {
+    "review": "May21",
+    "code": "2609",
+    "security": "YANG MING MARINE TRANSP",
+    "cap": 5.15,
+    "bar": 8.085,
+    "flagged": false,
+    "shortfall_pct": 36.3
+   },
+   {
+    "review": "Aug21",
+    "code": "8454",
+    "security": "MOMO.COM",
+    "cap": 5.04,
+    "bar": 8.085,
+    "flagged": false,
+    "shortfall_pct": 37.6
+   },
+   {
+    "review": "Nov21",
+    "code": "3529",
+    "security": "EMEMORY TECHNOLOGY",
+    "cap": 5.95,
+    "bar": 8.205,
+    "flagged": false,
+    "shortfall_pct": 27.5
+   },
+   {
+    "review": "Nov21",
+    "code": "4966",
+    "security": "PARADE TECHNOLOGIES",
+    "cap": 5.06,
+    "bar": 8.205,
+    "flagged": false,
+    "shortfall_pct": 38.3
+   },
+   {
+    "review": "Nov21",
+    "code": "6409",
+    "security": "VOLTRONIC POWER TECH",
+    "cap": 5.19,
+    "bar": 8.205,
+    "flagged": false,
+    "shortfall_pct": 36.8
+   },
+   {
+    "review": "Feb22",
+    "code": "8069",
+    "security": "E INK HOLDINGS",
+    "cap": 3.3,
+    "bar": 8.205,
+    "flagged": false,
+    "shortfall_pct": 59.8
+   },
+   {
+    "review": "May22",
+    "code": "2610",
+    "security": "CHINA AIRLINES",
+    "cap": 5.32,
+    "bar": 7.38,
+    "flagged": false,
+    "shortfall_pct": 27.9
+   },
+   {
+    "review": "May22",
+    "code": "2618",
+    "security": "EVA AIRWAYS CORP",
+    "cap": 6.35,
+    "bar": 7.38,
+    "flagged": false,
+    "shortfall_pct": 14.0
+   },
+   {
+    "review": "May22",
+    "code": "6770",
+    "security": "POWERCHIP SEMICONDUCTOR",
+    "cap": 6.32,
+    "bar": 7.38,
+    "flagged": false,
+    "shortfall_pct": 14.3
+   },
+   {
+    "review": "May22",
+    "code": "1605",
+    "security": "WALSIN LIHWA CORP",
+    "cap": 4.98,
+    "bar": 7.38,
+    "flagged": false,
+    "shortfall_pct": 32.5
+   },
+   {
+    "review": "Nov22",
+    "code": "6446",
+    "security": "PHARMAESSENTIA",
+    "cap": 4.21,
+    "bar": 6.09,
+    "flagged": false,
+    "shortfall_pct": 30.8
+   },
+   {
+    "review": "Nov22",
+    "code": "2834",
+    "security": "TAIWAN BUSINESS BANK",
+    "cap": 3.0,
+    "bar": 6.09,
+    "flagged": false,
+    "shortfall_pct": 50.7
+   },
+   {
+    "review": "May23",
+    "code": "3443",
+    "security": "GLOBAL UNICHIP CORP",
+    "cap": 4.47,
+    "bar": 7.125,
+    "flagged": false,
+    "shortfall_pct": 37.3
+   },
+   {
+    "review": "May23",
+    "code": "3231",
+    "security": "WISTRON CORP",
+    "cap": 4.1,
+    "bar": 7.125,
+    "flagged": false,
+    "shortfall_pct": 42.5
+   },
+   {
+    "review": "Aug23",
+    "code": "2376",
+    "security": "GIGABYTE TECHNOLOGY CO",
+    "cap": 6.34,
+    "bar": 7.77,
+    "flagged": false,
+    "shortfall_pct": 18.5
+   },
+   {
+    "review": "Nov23",
+    "code": "3661",
+    "security": "ALCHIP TECHNOLOGIES",
+    "cap": 5.59,
+    "bar": 7.515,
+    "flagged": false,
+    "shortfall_pct": 25.6
+   },
+   {
+    "review": "May24",
+    "code": "3017",
+    "security": "ASIA VITAL COMPONENTS",
+    "cap": 7.45,
+    "bar": 8.79,
+    "flagged": false,
+    "shortfall_pct": 15.3
+   },
+   {
+    "review": "May24",
+    "code": "1519",
+    "security": "FORTUNE ELECTRIC CO",
+    "cap": 7.36,
+    "bar": 8.79,
+    "flagged": false,
+    "shortfall_pct": 16.2
+   },
+   {
+    "review": "Nov24",
+    "code": "3293",
+    "security": "INTL GAMES SYSTEM C",
+    "cap": 9.55,
+    "bar": 10.23,
+    "flagged": false,
+    "shortfall_pct": 6.6
+   },
+   {
+    "review": "Nov24",
+    "code": "3653",
+    "security": "JENTECH PRECISION INDL",
+    "cap": 6.48,
+    "bar": 10.23,
+    "flagged": false,
+    "shortfall_pct": 36.7
+   },
+   {
+    "review": "Feb25",
+    "code": "2383",
+    "security": "ELITE MATERIAL CO",
+    "cap": 4.19,
+    "bar": 8.34,
+    "flagged": false,
+    "shortfall_pct": 49.8
+   },
+   {
+    "review": "Feb25",
+    "code": "3533",
+    "security": "LOTES CO",
+    "cap": 3.42,
+    "bar": 8.34,
+    "flagged": false,
+    "shortfall_pct": 59.0
+   },
+   {
+    "review": "Aug25",
+    "code": "6919",
+    "security": "CALIWAY BIOPHARMA",
+    "cap": 6.33,
+    "bar": 11.52,
+    "flagged": false,
+    "shortfall_pct": 45.0
+   },
+   {
+    "review": "Aug25",
+    "code": "2059",
+    "security": "KING SLIDE WORKS CO",
+    "cap": 6.98,
+    "bar": 11.52,
+    "flagged": false,
+    "shortfall_pct": 39.4
+   },
+   {
+    "review": "Nov25",
+    "code": "5274",
+    "security": "ASPEED TECHNOLOGY",
+    "cap": 6.77,
+    "bar": 12.345,
+    "flagged": false,
+    "shortfall_pct": 45.2
+   },
+   {
+    "review": "Nov25",
+    "code": "3665",
+    "security": "BIZLINK HOLDING",
+    "cap": 7.48,
+    "bar": 12.345,
+    "flagged": false,
+    "shortfall_pct": 39.4
+   },
+   {
+    "review": "Nov25",
+    "code": "2360",
+    "security": "CHROMA ATE",
+    "cap": 9.51,
+    "bar": 12.345,
+    "flagged": false,
+    "shortfall_pct": 23.0
+   },
+   {
+    "review": "Nov25",
+    "code": "2368",
+    "security": "GOLD CIRCUIT ELECTRONICS",
+    "cap": 6.61,
+    "bar": 12.345,
+    "flagged": false,
+    "shortfall_pct": 46.5
+   },
+   {
+    "review": "Nov25",
+    "code": "2449",
+    "security": "KING YUAN ELECTRONICS CO",
+    "cap": 6.6,
+    "bar": 12.345,
+    "flagged": false,
+    "shortfall_pct": 46.5
+   },
+   {
+    "review": "Nov25",
+    "code": "1504",
+    "security": "TECO ELECTRIC & MACH",
+    "cap": 8.35,
+    "bar": 12.345,
+    "flagged": false,
+    "shortfall_pct": 32.3
+   },
+   {
+    "review": "May26",
+    "code": "6223",
+    "security": "MPI CORP",
+    "cap": 15.91,
+    "bar": 13.59,
+    "flagged": true,
+    "shortfall_pct": 0
+   }
+  ]
+ },
+ "misses": [
+  {
+   "review": "Nov20",
+   "code": "2618",
+   "security": "EVA AIRWAYS CORP",
+   "cap": 1.83,
+   "floor": 2.807,
+   "above_floor_pct": -34.8
+  },
+  {
+   "review": "Aug21",
+   "code": "2834",
+   "security": "TAIWAN BUSINESS BANK",
+   "cap": 2.75,
+   "floor": 3.593,
+   "above_floor_pct": -23.4
+  },
+  {
+   "review": "Feb22",
+   "code": "3231",
+   "security": "WISTRON CORP",
+   "cap": 2.96,
+   "floor": 3.647,
+   "above_floor_pct": -18.9
+  },
+  {
+   "review": "Feb24",
+   "code": "8454",
+   "security": "MOMO.COM",
+   "cap": 5.79,
+   "floor": 3.087,
+   "above_floor_pct": 87.7
+  },
+  {
+   "review": "Aug24",
+   "code": "6505",
+   "security": "FORMOSA PETROCHEMICAL CO",
+   "cap": 19.28,
+   "floor": 4.233,
+   "above_floor_pct": 355.4
+  },
+  {
+   "review": "Feb25",
+   "code": "1605",
+   "security": "WALSIN LIHWA CORP",
+   "cap": 4.54,
+   "floor": 3.707,
+   "above_floor_pct": 22.5
+  },
+  {
+   "review": "Feb25",
+   "code": "2408",
+   "security": "NANYA TECHNOLOGY",
+   "cap": 6.78,
+   "floor": 3.707,
+   "above_floor_pct": 82.9
+  },
+  {
+   "review": "Feb26",
+   "code": "2105",
+   "security": "CHENG SHIN RUBBER IND",
+   "cap": 4.87,
+   "floor": 4.733,
+   "above_floor_pct": 2.9
+  }
+ ],
+ "survival": {
+  "total_fa": 533,
+  "later_deleted": 424,
+  "share": 0.795,
+  "median_lag_reviews": 10.5,
+  "rows": [
+   {
+    "review": "May18",
+    "code": "1227",
+    "lag": 11,
+    "cap": 2.09
+   },
+   {
+    "review": "May18",
+    "code": "1434",
+    "lag": 10,
+    "cap": 1.88
+   },
+   {
+    "review": "May18",
+    "code": "1504",
+    "lag": 2,
+    "cap": 1.67
+   },
+   {
+    "review": "May18",
+    "code": "1605",
+    "lag": 27,
+    "cap": 2.38
+   },
+   {
+    "review": "May18",
+    "code": "2344",
+    "lag": 26,
+    "cap": 2.4
+   },
+   {
+    "review": "May18",
+    "code": "2353",
+    "lag": 30,
+    "cap": 2.42
+   },
+   {
+    "review": "May18",
+    "code": "2371",
+    "lag": 9,
+    "cap": 2.02
+   },
+   {
+    "review": "May18",
+    "code": "2379",
+    "lag": null,
+    "cap": 2.29
+   },
+   {
+    "review": "May18",
+    "code": "2385",
+    "lag": 12,
+    "cap": 1.82
+   },
+   {
+    "review": "May18",
+    "code": "2498",
+    "lag": 2,
+    "cap": 1.7
+   },
+   {
+    "review": "May18",
+    "code": "2542",
+    "lag": 12,
+    "cap": 1.8
+   },
+   {
+    "review": "May18",
+    "code": "2603",
+    "lag": null,
+    "cap": 2.02
+   },
+   {
+    "review": "May18",
+    "code": "2610",
+    "lag": 9,
+    "cap": 1.91
+   },
+   {
+    "review": "May18",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.29
+   },
+   {
+    "review": "May18",
+    "code": "2915",
+    "lag": 8,
+    "cap": 1.85
+   },
+   {
+    "review": "May18",
+    "code": "3296",
+    "lag": 14,
+    "cap": 0.05
+   },
+   {
+    "review": "May18",
+    "code": "3702",
+    "lag": 30,
+    "cap": 2.35
+   },
+   {
+    "review": "May18",
+    "code": "4743",
+    "lag": 16,
+    "cap": 0.21
+   },
+   {
+    "review": "May18",
+    "code": "4958",
+    "lag": null,
+    "cap": 1.77
+   },
+   {
+    "review": "May18",
+    "code": "4966",
+    "lag": 24,
+    "cap": 1.24
+   },
+   {
+    "review": "May18",
+    "code": "5269",
+    "lag": 18,
+    "cap": 0.7
+   },
+   {
+    "review": "May18",
+    "code": "6409",
+    "lag": 30,
+    "cap": 1.41
+   },
+   {
+    "review": "May18",
+    "code": "6415",
+    "lag": 30,
+    "cap": 1.85
+   },
+   {
+    "review": "May18",
+    "code": "6456",
+    "lag": 2,
+    "cap": 2.01
+   },
+   {
+    "review": "May18",
+    "code": "8046",
+    "lag": 24,
+    "cap": 0.62
+   },
+   {
+    "review": "May18",
+    "code": "8299",
+    "lag": 14,
+    "cap": 1.87
+   },
+   {
+    "review": "May18",
+    "code": "8454",
+    "lag": 23,
+    "cap": 1.25
+   },
+   {
+    "review": "May18",
+    "code": "9921",
+    "lag": 22,
+    "cap": 1.92
+   },
+   {
+    "review": "May18",
+    "code": "9945",
+    "lag": 29,
+    "cap": 2.05
+   },
+   {
+    "review": "Aug18",
+    "code": "1227",
+    "lag": 10,
+    "cap": 2.09
+   },
+   {
+    "review": "Aug18",
+    "code": "1434",
+    "lag": 9,
+    "cap": 1.88
+   },
+   {
+    "review": "Aug18",
+    "code": "1504",
+    "lag": 1,
+    "cap": 1.67
+   },
+   {
+    "review": "Aug18",
+    "code": "1605",
+    "lag": 26,
+    "cap": 2.38
+   },
+   {
+    "review": "Aug18",
+    "code": "2344",
+    "lag": 25,
+    "cap": 2.4
+   },
+   {
+    "review": "Aug18",
+    "code": "2353",
+    "lag": 29,
+    "cap": 2.42
+   },
+   {
+    "review": "Aug18",
+    "code": "2371",
+    "lag": 8,
+    "cap": 2.02
+   },
+   {
+    "review": "Aug18",
+    "code": "2379",
+    "lag": null,
+    "cap": 2.29
+   },
+   {
+    "review": "Aug18",
+    "code": "2385",
+    "lag": 11,
+    "cap": 1.82
+   },
+   {
+    "review": "Aug18",
+    "code": "2498",
+    "lag": 1,
+    "cap": 1.7
+   },
+   {
+    "review": "Aug18",
+    "code": "2542",
+    "lag": 11,
+    "cap": 1.8
+   },
+   {
+    "review": "Aug18",
+    "code": "2603",
+    "lag": null,
+    "cap": 2.02
+   },
+   {
+    "review": "Aug18",
+    "code": "2610",
+    "lag": 8,
+    "cap": 1.91
+   },
+   {
+    "review": "Aug18",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.29
+   },
+   {
+    "review": "Aug18",
+    "code": "2915",
+    "lag": 7,
+    "cap": 1.85
+   },
+   {
+    "review": "Aug18",
+    "code": "3296",
+    "lag": 13,
+    "cap": 0.05
+   },
+   {
+    "review": "Aug18",
+    "code": "3702",
+    "lag": 29,
+    "cap": 2.35
+   },
+   {
+    "review": "Aug18",
+    "code": "4743",
+    "lag": 15,
+    "cap": 0.21
+   },
+   {
+    "review": "Aug18",
+    "code": "4958",
+    "lag": null,
+    "cap": 1.77
+   },
+   {
+    "review": "Aug18",
+    "code": "4966",
+    "lag": 23,
+    "cap": 1.24
+   },
+   {
+    "review": "Aug18",
+    "code": "5269",
+    "lag": 17,
+    "cap": 0.7
+   },
+   {
+    "review": "Aug18",
+    "code": "6409",
+    "lag": 29,
+    "cap": 1.41
+   },
+   {
+    "review": "Aug18",
+    "code": "6415",
+    "lag": 29,
+    "cap": 1.85
+   },
+   {
+    "review": "Aug18",
+    "code": "6456",
+    "lag": 1,
+    "cap": 2.01
+   },
+   {
+    "review": "Aug18",
+    "code": "8046",
+    "lag": 23,
+    "cap": 0.62
+   },
+   {
+    "review": "Aug18",
+    "code": "8299",
+    "lag": 13,
+    "cap": 1.87
+   },
+   {
+    "review": "Aug18",
+    "code": "8454",
+    "lag": 22,
+    "cap": 1.25
+   },
+   {
+    "review": "Aug18",
+    "code": "9921",
+    "lag": 21,
+    "cap": 1.92
+   },
+   {
+    "review": "Aug18",
+    "code": "9945",
+    "lag": 28,
+    "cap": 2.05
+   },
+   {
+    "review": "Nov18",
+    "code": "1227",
+    "lag": 9,
+    "cap": 1.36
+   },
+   {
+    "review": "Nov18",
+    "code": "1434",
+    "lag": 8,
+    "cap": 1.84
+   },
+   {
+    "review": "Nov18",
+    "code": "1590",
+    "lag": null,
+    "cap": 1.75
+   },
+   {
+    "review": "Nov18",
+    "code": "1605",
+    "lag": 25,
+    "cap": 1.76
+   },
+   {
+    "review": "Nov18",
+    "code": "2049",
+    "lag": 14,
+    "cap": 2.09
+   },
+   {
+    "review": "Nov18",
+    "code": "2344",
+    "lag": 24,
+    "cap": 1.72
+   },
+   {
+    "review": "Nov18",
+    "code": "2347",
+    "lag": 28,
+    "cap": 1.86
+   },
+   {
+    "review": "Nov18",
+    "code": "2353",
+    "lag": 28,
+    "cap": 2.22
+   },
+   {
+    "review": "Nov18",
+    "code": "2377",
+    "lag": 28,
+    "cap": 1.93
+   },
+   {
+    "review": "Nov18",
+    "code": "2379",
+    "lag": null,
+    "cap": 1.83
+   },
+   {
+    "review": "Nov18",
+    "code": "2385",
+    "lag": 10,
+    "cap": 1.38
+   },
+   {
+    "review": "Nov18",
+    "code": "2542",
+    "lag": 10,
+    "cap": 1.72
+   },
+   {
+    "review": "Nov18",
+    "code": "2603",
+    "lag": null,
+    "cap": 1.67
+   },
+   {
+    "review": "Nov18",
+    "code": "2610",
+    "lag": 7,
+    "cap": 1.63
+   },
+   {
+    "review": "Nov18",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.17
+   },
+   {
+    "review": "Nov18",
+    "code": "2915",
+    "lag": 6,
+    "cap": 1.67
+   },
+   {
+    "review": "Nov18",
+    "code": "3105",
+    "lag": 19,
+    "cap": 1.65
+   },
+   {
+    "review": "Nov18",
+    "code": "3296",
+    "lag": 12,
+    "cap": 0.04
+   },
+   {
+    "review": "Nov18",
+    "code": "3702",
+    "lag": 28,
+    "cap": 1.99
+   },
+   {
+    "review": "Nov18",
+    "code": "4147",
+    "lag": 4,
+    "cap": 1.55
+   },
+   {
+    "review": "Nov18",
+    "code": "4743",
+    "lag": 14,
+    "cap": 0.19
+   },
+   {
+    "review": "Nov18",
+    "code": "4958",
+    "lag": null,
+    "cap": 1.86
+   },
+   {
+    "review": "Nov18",
+    "code": "4966",
+    "lag": 22,
+    "cap": 1.06
+   },
+   {
+    "review": "Nov18",
+    "code": "5269",
+    "lag": 16,
+    "cap": 0.88
+   },
+   {
+    "review": "Nov18",
+    "code": "6409",
+    "lag": 28,
+    "cap": 1.26
+   },
+   {
+    "review": "Nov18",
+    "code": "6415",
+    "lag": 28,
+    "cap": 1.2
+   },
+   {
+    "review": "Nov18",
+    "code": "8046",
+    "lag": 22,
+    "cap": 0.53
+   },
+   {
+    "review": "Nov18",
+    "code": "8299",
+    "lag": 12,
+    "cap": 1.3
+   },
+   {
+    "review": "Nov18",
+    "code": "8454",
+    "lag": 21,
+    "cap": 0.85
+   },
+   {
+    "review": "Nov18",
+    "code": "8464",
+    "lag": 29,
+    "cap": 1.87
+   },
+   {
+    "review": "Nov18",
+    "code": "9921",
+    "lag": 20,
+    "cap": 1.49
+   },
+   {
+    "review": "Nov18",
+    "code": "9945",
+    "lag": 27,
+    "cap": 1.43
+   },
+   {
+    "review": "Feb19",
+    "code": "1227",
+    "lag": 8,
+    "cap": 1.36
+   },
+   {
+    "review": "Feb19",
+    "code": "1434",
+    "lag": 7,
+    "cap": 1.84
+   },
+   {
+    "review": "Feb19",
+    "code": "1504",
+    "lag": 29,
+    "cap": 1.21
+   },
+   {
+    "review": "Feb19",
+    "code": "1590",
+    "lag": null,
+    "cap": 1.75
+   },
+   {
+    "review": "Feb19",
+    "code": "1605",
+    "lag": 24,
+    "cap": 1.76
+   },
+   {
+    "review": "Feb19",
+    "code": "2049",
+    "lag": 13,
+    "cap": 2.09
+   },
+   {
+    "review": "Feb19",
+    "code": "2344",
+    "lag": 23,
+    "cap": 1.72
+   },
+   {
+    "review": "Feb19",
+    "code": "2347",
+    "lag": 27,
+    "cap": 1.86
+   },
+   {
+    "review": "Feb19",
+    "code": "2353",
+    "lag": 27,
+    "cap": 2.22
+   },
+   {
+    "review": "Feb19",
+    "code": "2377",
+    "lag": 27,
+    "cap": 1.93
+   },
+   {
+    "review": "Feb19",
+    "code": "2379",
+    "lag": null,
+    "cap": 1.83
+   },
+   {
+    "review": "Feb19",
+    "code": "2385",
+    "lag": 9,
+    "cap": 1.38
+   },
+   {
+    "review": "Feb19",
+    "code": "2542",
+    "lag": 9,
+    "cap": 1.72
+   },
+   {
+    "review": "Feb19",
+    "code": "2603",
+    "lag": null,
+    "cap": 1.67
+   },
+   {
+    "review": "Feb19",
+    "code": "2610",
+    "lag": 6,
+    "cap": 1.63
+   },
+   {
+    "review": "Feb19",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.17
+   },
+   {
+    "review": "Feb19",
+    "code": "2915",
+    "lag": 5,
+    "cap": 1.67
+   },
+   {
+    "review": "Feb19",
+    "code": "3105",
+    "lag": 18,
+    "cap": 1.65
+   },
+   {
+    "review": "Feb19",
+    "code": "3296",
+    "lag": 11,
+    "cap": 0.04
+   },
+   {
+    "review": "Feb19",
+    "code": "3702",
+    "lag": 27,
+    "cap": 1.99
+   },
+   {
+    "review": "Feb19",
+    "code": "4147",
+    "lag": 3,
+    "cap": 1.55
+   },
+   {
+    "review": "Feb19",
+    "code": "4743",
+    "lag": 13,
+    "cap": 0.19
+   },
+   {
+    "review": "Feb19",
+    "code": "4958",
+    "lag": null,
+    "cap": 1.86
+   },
+   {
+    "review": "Feb19",
+    "code": "4966",
+    "lag": 21,
+    "cap": 1.06
+   },
+   {
+    "review": "Feb19",
+    "code": "5269",
+    "lag": 15,
+    "cap": 0.88
+   },
+   {
+    "review": "Feb19",
+    "code": "6409",
+    "lag": 27,
+    "cap": 1.26
+   },
+   {
+    "review": "Feb19",
+    "code": "6415",
+    "lag": 27,
+    "cap": 1.2
+   },
+   {
+    "review": "Feb19",
+    "code": "8046",
+    "lag": 21,
+    "cap": 0.53
+   },
+   {
+    "review": "Feb19",
+    "code": "8299",
+    "lag": 11,
+    "cap": 1.3
+   },
+   {
+    "review": "Feb19",
+    "code": "8454",
+    "lag": 20,
+    "cap": 0.85
+   },
+   {
+    "review": "Feb19",
+    "code": "8464",
+    "lag": 28,
+    "cap": 1.87
+   },
+   {
+    "review": "Feb19",
+    "code": "9921",
+    "lag": 19,
+    "cap": 1.49
+   },
+   {
+    "review": "Feb19",
+    "code": "9945",
+    "lag": 26,
+    "cap": 1.43
+   },
+   {
+    "review": "May19",
+    "code": "1227",
+    "lag": 7,
+    "cap": 1.52
+   },
+   {
+    "review": "May19",
+    "code": "1434",
+    "lag": 6,
+    "cap": 1.97
+   },
+   {
+    "review": "May19",
+    "code": "1504",
+    "lag": 28,
+    "cap": 1.48
+   },
+   {
+    "review": "May19",
+    "code": "1605",
+    "lag": 23,
+    "cap": 1.93
+   },
+   {
+    "review": "May19",
+    "code": "2344",
+    "lag": 22,
+    "cap": 2.16
+   },
+   {
+    "review": "May19",
+    "code": "2347",
+    "lag": 26,
+    "cap": 2.09
+   },
+   {
+    "review": "May19",
+    "code": "2353",
+    "lag": 26,
+    "cap": 2.12
+   },
+   {
+    "review": "May19",
+    "code": "2371",
+    "lag": 5,
+    "cap": 1.96
+   },
+   {
+    "review": "May19",
+    "code": "2377",
+    "lag": 26,
+    "cap": 2.37
+   },
+   {
+    "review": "May19",
+    "code": "2385",
+    "lag": 8,
+    "cap": 1.79
+   },
+   {
+    "review": "May19",
+    "code": "2542",
+    "lag": 8,
+    "cap": 1.86
+   },
+   {
+    "review": "May19",
+    "code": "2603",
+    "lag": null,
+    "cap": 1.86
+   },
+   {
+    "review": "May19",
+    "code": "2610",
+    "lag": 5,
+    "cap": 1.75
+   },
+   {
+    "review": "May19",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.16
+   },
+   {
+    "review": "May19",
+    "code": "2915",
+    "lag": 4,
+    "cap": 1.41
+   },
+   {
+    "review": "May19",
+    "code": "3296",
+    "lag": 10,
+    "cap": 0.06
+   },
+   {
+    "review": "May19",
+    "code": "3702",
+    "lag": 26,
+    "cap": 2.21
+   },
+   {
+    "review": "May19",
+    "code": "4147",
+    "lag": 2,
+    "cap": 1.37
+   },
+   {
+    "review": "May19",
+    "code": "4743",
+    "lag": 12,
+    "cap": 0.19
+   },
+   {
+    "review": "May19",
+    "code": "4966",
+    "lag": 20,
+    "cap": 1.37
+   },
+   {
+    "review": "May19",
+    "code": "5269",
+    "lag": 14,
+    "cap": 1.07
+   },
+   {
+    "review": "May19",
+    "code": "6409",
+    "lag": 26,
+    "cap": 1.61
+   },
+   {
+    "review": "May19",
+    "code": "6415",
+    "lag": 26,
+    "cap": 1.47
+   },
+   {
+    "review": "May19",
+    "code": "8046",
+    "lag": 20,
+    "cap": 1.02
+   },
+   {
+    "review": "May19",
+    "code": "8299",
+    "lag": 10,
+    "cap": 1.98
+   },
+   {
+    "review": "May19",
+    "code": "8454",
+    "lag": 19,
+    "cap": 1.25
+   },
+   {
+    "review": "May19",
+    "code": "9945",
+    "lag": 25,
+    "cap": 1.39
+   },
+   {
+    "review": "Aug19",
+    "code": "1227",
+    "lag": 6,
+    "cap": 1.52
+   },
+   {
+    "review": "Aug19",
+    "code": "1434",
+    "lag": 5,
+    "cap": 1.97
+   },
+   {
+    "review": "Aug19",
+    "code": "1504",
+    "lag": 27,
+    "cap": 1.48
+   },
+   {
+    "review": "Aug19",
+    "code": "1605",
+    "lag": 22,
+    "cap": 1.93
+   },
+   {
+    "review": "Aug19",
+    "code": "2344",
+    "lag": 21,
+    "cap": 2.16
+   },
+   {
+    "review": "Aug19",
+    "code": "2347",
+    "lag": 25,
+    "cap": 2.09
+   },
+   {
+    "review": "Aug19",
+    "code": "2353",
+    "lag": 25,
+    "cap": 2.12
+   },
+   {
+    "review": "Aug19",
+    "code": "2371",
+    "lag": 4,
+    "cap": 1.96
+   },
+   {
+    "review": "Aug19",
+    "code": "2377",
+    "lag": 25,
+    "cap": 2.37
+   },
+   {
+    "review": "Aug19",
+    "code": "2385",
+    "lag": 7,
+    "cap": 1.79
+   },
+   {
+    "review": "Aug19",
+    "code": "2542",
+    "lag": 7,
+    "cap": 1.86
+   },
+   {
+    "review": "Aug19",
+    "code": "2603",
+    "lag": null,
+    "cap": 1.86
+   },
+   {
+    "review": "Aug19",
+    "code": "2610",
+    "lag": 4,
+    "cap": 1.75
+   },
+   {
+    "review": "Aug19",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.16
+   },
+   {
+    "review": "Aug19",
+    "code": "2915",
+    "lag": 3,
+    "cap": 1.41
+   },
+   {
+    "review": "Aug19",
+    "code": "3296",
+    "lag": 9,
+    "cap": 0.06
+   },
+   {
+    "review": "Aug19",
+    "code": "3702",
+    "lag": 25,
+    "cap": 2.21
+   },
+   {
+    "review": "Aug19",
+    "code": "4147",
+    "lag": 1,
+    "cap": 1.37
+   },
+   {
+    "review": "Aug19",
+    "code": "4743",
+    "lag": 11,
+    "cap": 0.19
+   },
+   {
+    "review": "Aug19",
+    "code": "4966",
+    "lag": 19,
+    "cap": 1.37
+   },
+   {
+    "review": "Aug19",
+    "code": "5269",
+    "lag": 13,
+    "cap": 1.07
+   },
+   {
+    "review": "Aug19",
+    "code": "6409",
+    "lag": 25,
+    "cap": 1.61
+   },
+   {
+    "review": "Aug19",
+    "code": "6415",
+    "lag": 25,
+    "cap": 1.47
+   },
+   {
+    "review": "Aug19",
+    "code": "8046",
+    "lag": 19,
+    "cap": 1.02
+   },
+   {
+    "review": "Aug19",
+    "code": "8299",
+    "lag": 9,
+    "cap": 1.98
+   },
+   {
+    "review": "Aug19",
+    "code": "8454",
+    "lag": 18,
+    "cap": 1.25
+   },
+   {
+    "review": "Aug19",
+    "code": "9945",
+    "lag": 24,
+    "cap": 1.39
+   },
+   {
+    "review": "Nov19",
+    "code": "1227",
+    "lag": 5,
+    "cap": 1.85
+   },
+   {
+    "review": "Nov19",
+    "code": "1434",
+    "lag": 4,
+    "cap": 1.94
+   },
+   {
+    "review": "Nov19",
+    "code": "1504",
+    "lag": 26,
+    "cap": 1.7
+   },
+   {
+    "review": "Nov19",
+    "code": "1605",
+    "lag": 21,
+    "cap": 1.65
+   },
+   {
+    "review": "Nov19",
+    "code": "2344",
+    "lag": 20,
+    "cap": 2.32
+   },
+   {
+    "review": "Nov19",
+    "code": "2347",
+    "lag": 24,
+    "cap": 1.98
+   },
+   {
+    "review": "Nov19",
+    "code": "2353",
+    "lag": 24,
+    "cap": 1.82
+   },
+   {
+    "review": "Nov19",
+    "code": "2371",
+    "lag": 3,
+    "cap": 1.32
+   },
+   {
+    "review": "Nov19",
+    "code": "2385",
+    "lag": 6,
+    "cap": 2.26
+   },
+   {
+    "review": "Nov19",
+    "code": "2542",
+    "lag": 6,
+    "cap": 1.77
+   },
+   {
+    "review": "Nov19",
+    "code": "2603",
+    "lag": null,
+    "cap": 1.96
+   },
+   {
+    "review": "Nov19",
+    "code": "2610",
+    "lag": 3,
+    "cap": 1.65
+   },
+   {
+    "review": "Nov19",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.31
+   },
+   {
+    "review": "Nov19",
+    "code": "2915",
+    "lag": 2,
+    "cap": 1.36
+   },
+   {
+    "review": "Nov19",
+    "code": "3296",
+    "lag": 8,
+    "cap": 0.05
+   },
+   {
+    "review": "Nov19",
+    "code": "3481",
+    "lag": null,
+    "cap": 2.3
+   },
+   {
+    "review": "Nov19",
+    "code": "3702",
+    "lag": 24,
+    "cap": 2.06
+   },
+   {
+    "review": "Nov19",
+    "code": "4743",
+    "lag": 10,
+    "cap": 0.33
+   },
+   {
+    "review": "Nov19",
+    "code": "4966",
+    "lag": 18,
+    "cap": 1.51
+   },
+   {
+    "review": "Nov19",
+    "code": "5269",
+    "lag": 12,
+    "cap": 1.06
+   },
+   {
+    "review": "Nov19",
+    "code": "6409",
+    "lag": 24,
+    "cap": 1.83
+   },
+   {
+    "review": "Nov19",
+    "code": "8046",
+    "lag": 18,
+    "cap": 1.1
+   },
+   {
+    "review": "Nov19",
+    "code": "8299",
+    "lag": 8,
+    "cap": 1.82
+   },
+   {
+    "review": "Nov19",
+    "code": "8454",
+    "lag": 17,
+    "cap": 1.19
+   },
+   {
+    "review": "Nov19",
+    "code": "9945",
+    "lag": 23,
+    "cap": 1.51
+   },
+   {
+    "review": "Feb20",
+    "code": "1227",
+    "lag": 4,
+    "cap": 1.85
+   },
+   {
+    "review": "Feb20",
+    "code": "1434",
+    "lag": 3,
+    "cap": 1.94
+   },
+   {
+    "review": "Feb20",
+    "code": "1504",
+    "lag": 25,
+    "cap": 1.7
+   },
+   {
+    "review": "Feb20",
+    "code": "1605",
+    "lag": 20,
+    "cap": 1.65
+   },
+   {
+    "review": "Feb20",
+    "code": "2344",
+    "lag": 19,
+    "cap": 2.32
+   },
+   {
+    "review": "Feb20",
+    "code": "2347",
+    "lag": 23,
+    "cap": 1.98
+   },
+   {
+    "review": "Feb20",
+    "code": "2353",
+    "lag": 23,
+    "cap": 1.82
+   },
+   {
+    "review": "Feb20",
+    "code": "2371",
+    "lag": 2,
+    "cap": 1.32
+   },
+   {
+    "review": "Feb20",
+    "code": "2385",
+    "lag": 5,
+    "cap": 2.26
+   },
+   {
+    "review": "Feb20",
+    "code": "2542",
+    "lag": 5,
+    "cap": 1.77
+   },
+   {
+    "review": "Feb20",
+    "code": "2603",
+    "lag": null,
+    "cap": 1.96
+   },
+   {
+    "review": "Feb20",
+    "code": "2610",
+    "lag": 2,
+    "cap": 1.65
+   },
+   {
+    "review": "Feb20",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.31
+   },
+   {
+    "review": "Feb20",
+    "code": "2915",
+    "lag": 1,
+    "cap": 1.36
+   },
+   {
+    "review": "Feb20",
+    "code": "3296",
+    "lag": 7,
+    "cap": 0.05
+   },
+   {
+    "review": "Feb20",
+    "code": "3481",
+    "lag": null,
+    "cap": 2.3
+   },
+   {
+    "review": "Feb20",
+    "code": "3702",
+    "lag": 23,
+    "cap": 2.06
+   },
+   {
+    "review": "Feb20",
+    "code": "4743",
+    "lag": 9,
+    "cap": 0.33
+   },
+   {
+    "review": "Feb20",
+    "code": "4966",
+    "lag": 17,
+    "cap": 1.51
+   },
+   {
+    "review": "Feb20",
+    "code": "5269",
+    "lag": 11,
+    "cap": 1.06
+   },
+   {
+    "review": "Feb20",
+    "code": "6409",
+    "lag": 23,
+    "cap": 1.83
+   },
+   {
+    "review": "Feb20",
+    "code": "8046",
+    "lag": 17,
+    "cap": 1.1
+   },
+   {
+    "review": "Feb20",
+    "code": "8299",
+    "lag": 7,
+    "cap": 1.82
+   },
+   {
+    "review": "Feb20",
+    "code": "8454",
+    "lag": 16,
+    "cap": 1.19
+   },
+   {
+    "review": "Feb20",
+    "code": "9945",
+    "lag": 22,
+    "cap": 1.51
+   },
+   {
+    "review": "May20",
+    "code": "1227",
+    "lag": 3,
+    "cap": 2.05
+   },
+   {
+    "review": "May20",
+    "code": "1434",
+    "lag": 2,
+    "cap": 1.77
+   },
+   {
+    "review": "May20",
+    "code": "1504",
+    "lag": 24,
+    "cap": 1.73
+   },
+   {
+    "review": "May20",
+    "code": "1605",
+    "lag": 19,
+    "cap": 1.44
+   },
+   {
+    "review": "May20",
+    "code": "2344",
+    "lag": 18,
+    "cap": 1.72
+   },
+   {
+    "review": "May20",
+    "code": "2347",
+    "lag": 22,
+    "cap": 2.13
+   },
+   {
+    "review": "May20",
+    "code": "2353",
+    "lag": 22,
+    "cap": 1.58
+   },
+   {
+    "review": "May20",
+    "code": "2371",
+    "lag": 1,
+    "cap": 1.73
+   },
+   {
+    "review": "May20",
+    "code": "2385",
+    "lag": 4,
+    "cap": 2.03
+   },
+   {
+    "review": "May20",
+    "code": "2542",
+    "lag": 4,
+    "cap": 1.59
+   },
+   {
+    "review": "May20",
+    "code": "2603",
+    "lag": null,
+    "cap": 1.6
+   },
+   {
+    "review": "May20",
+    "code": "2610",
+    "lag": 1,
+    "cap": 1.28
+   },
+   {
+    "review": "May20",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.19
+   },
+   {
+    "review": "May20",
+    "code": "3296",
+    "lag": 6,
+    "cap": 0.04
+   },
+   {
+    "review": "May20",
+    "code": "3481",
+    "lag": null,
+    "cap": 1.97
+   },
+   {
+    "review": "May20",
+    "code": "3702",
+    "lag": 22,
+    "cap": 2.11
+   },
+   {
+    "review": "May20",
+    "code": "4743",
+    "lag": 8,
+    "cap": 0.56
+   },
+   {
+    "review": "May20",
+    "code": "4966",
+    "lag": 16,
+    "cap": 1.91
+   },
+   {
+    "review": "May20",
+    "code": "5269",
+    "lag": 10,
+    "cap": 1.49
+   },
+   {
+    "review": "May20",
+    "code": "6409",
+    "lag": 22,
+    "cap": 1.78
+   },
+   {
+    "review": "May20",
+    "code": "8046",
+    "lag": 16,
+    "cap": 1.41
+   },
+   {
+    "review": "May20",
+    "code": "8299",
+    "lag": 6,
+    "cap": 1.78
+   },
+   {
+    "review": "May20",
+    "code": "8464",
+    "lag": 23,
+    "cap": 2.06
+   },
+   {
+    "review": "May20",
+    "code": "9921",
+    "lag": 14,
+    "cap": 1.82
+   },
+   {
+    "review": "May20",
+    "code": "9945",
+    "lag": 21,
+    "cap": 1.4
+   },
+   {
+    "review": "Aug20",
+    "code": "1227",
+    "lag": 2,
+    "cap": 2.05
+   },
+   {
+    "review": "Aug20",
+    "code": "1434",
+    "lag": 1,
+    "cap": 1.77
+   },
+   {
+    "review": "Aug20",
+    "code": "1504",
+    "lag": 23,
+    "cap": 1.73
+   },
+   {
+    "review": "Aug20",
+    "code": "1605",
+    "lag": 18,
+    "cap": 1.44
+   },
+   {
+    "review": "Aug20",
+    "code": "2344",
+    "lag": 17,
+    "cap": 1.72
+   },
+   {
+    "review": "Aug20",
+    "code": "2347",
+    "lag": 21,
+    "cap": 2.13
+   },
+   {
+    "review": "Aug20",
+    "code": "2353",
+    "lag": 21,
+    "cap": 1.58
+   },
+   {
+    "review": "Aug20",
+    "code": "2385",
+    "lag": 3,
+    "cap": 2.03
+   },
+   {
+    "review": "Aug20",
+    "code": "2542",
+    "lag": 3,
+    "cap": 1.59
+   },
+   {
+    "review": "Aug20",
+    "code": "2603",
+    "lag": null,
+    "cap": 1.6
+   },
+   {
+    "review": "Aug20",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.19
+   },
+   {
+    "review": "Aug20",
+    "code": "3296",
+    "lag": 5,
+    "cap": 0.04
+   },
+   {
+    "review": "Aug20",
+    "code": "3481",
+    "lag": null,
+    "cap": 1.97
+   },
+   {
+    "review": "Aug20",
+    "code": "3702",
+    "lag": 21,
+    "cap": 2.11
+   },
+   {
+    "review": "Aug20",
+    "code": "4743",
+    "lag": 7,
+    "cap": 0.56
+   },
+   {
+    "review": "Aug20",
+    "code": "4966",
+    "lag": 15,
+    "cap": 1.91
+   },
+   {
+    "review": "Aug20",
+    "code": "5269",
+    "lag": 9,
+    "cap": 1.49
+   },
+   {
+    "review": "Aug20",
+    "code": "6409",
+    "lag": 21,
+    "cap": 1.78
+   },
+   {
+    "review": "Aug20",
+    "code": "8046",
+    "lag": 15,
+    "cap": 1.41
+   },
+   {
+    "review": "Aug20",
+    "code": "8299",
+    "lag": 5,
+    "cap": 1.78
+   },
+   {
+    "review": "Aug20",
+    "code": "8464",
+    "lag": 22,
+    "cap": 2.06
+   },
+   {
+    "review": "Aug20",
+    "code": "9921",
+    "lag": 13,
+    "cap": 1.82
+   },
+   {
+    "review": "Aug20",
+    "code": "9945",
+    "lag": 20,
+    "cap": 1.4
+   },
+   {
+    "review": "Nov20",
+    "code": "1227",
+    "lag": 1,
+    "cap": 2.05
+   },
+   {
+    "review": "Nov20",
+    "code": "1504",
+    "lag": 22,
+    "cap": 2.06
+   },
+   {
+    "review": "Nov20",
+    "code": "1605",
+    "lag": 17,
+    "cap": 1.98
+   },
+   {
+    "review": "Nov20",
+    "code": "2344",
+    "lag": 16,
+    "cap": 2.04
+   },
+   {
+    "review": "Nov20",
+    "code": "2347",
+    "lag": 20,
+    "cap": 2.47
+   },
+   {
+    "review": "Nov20",
+    "code": "2353",
+    "lag": 20,
+    "cap": 2.59
+   },
+   {
+    "review": "Nov20",
+    "code": "2354",
+    "lag": 6,
+    "cap": 2.59
+   },
+   {
+    "review": "Nov20",
+    "code": "2356",
+    "lag": null,
+    "cap": 2.75
+   },
+   {
+    "review": "Nov20",
+    "code": "2385",
+    "lag": 2,
+    "cap": 2.2
+   },
+   {
+    "review": "Nov20",
+    "code": "2492",
+    "lag": 4,
+    "cap": 2.77
+   },
+   {
+    "review": "Nov20",
+    "code": "2542",
+    "lag": 2,
+    "cap": 1.95
+   },
+   {
+    "review": "Nov20",
+    "code": "2610",
+    "lag": 22,
+    "cap": 1.64
+   },
+   {
+    "review": "Nov20",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.84
+   },
+   {
+    "review": "Nov20",
+    "code": "3296",
+    "lag": 4,
+    "cap": 0.05
+   },
+   {
+    "review": "Nov20",
+    "code": "3702",
+    "lag": 20,
+    "cap": 2.31
+   },
+   {
+    "review": "Nov20",
+    "code": "8299",
+    "lag": 4,
+    "cap": 2.04
+   },
+   {
+    "review": "Nov20",
+    "code": "9904",
+    "lag": 19,
+    "cap": 2.7
+   },
+   {
+    "review": "Nov20",
+    "code": "9945",
+    "lag": 19,
+    "cap": 2.05
+   },
+   {
+    "review": "Feb21",
+    "code": "1504",
+    "lag": 21,
+    "cap": 2.06
+   },
+   {
+    "review": "Feb21",
+    "code": "1605",
+    "lag": 16,
+    "cap": 1.98
+   },
+   {
+    "review": "Feb21",
+    "code": "2344",
+    "lag": 15,
+    "cap": 2.04
+   },
+   {
+    "review": "Feb21",
+    "code": "2347",
+    "lag": 19,
+    "cap": 2.47
+   },
+   {
+    "review": "Feb21",
+    "code": "2353",
+    "lag": 19,
+    "cap": 2.59
+   },
+   {
+    "review": "Feb21",
+    "code": "2354",
+    "lag": 5,
+    "cap": 2.59
+   },
+   {
+    "review": "Feb21",
+    "code": "2356",
+    "lag": null,
+    "cap": 2.75
+   },
+   {
+    "review": "Feb21",
+    "code": "2385",
+    "lag": 1,
+    "cap": 2.2
+   },
+   {
+    "review": "Feb21",
+    "code": "2492",
+    "lag": 3,
+    "cap": 2.77
+   },
+   {
+    "review": "Feb21",
+    "code": "2542",
+    "lag": 1,
+    "cap": 1.95
+   },
+   {
+    "review": "Feb21",
+    "code": "2610",
+    "lag": 21,
+    "cap": 1.64
+   },
+   {
+    "review": "Feb21",
+    "code": "2615",
+    "lag": null,
+    "cap": 1.84
+   },
+   {
+    "review": "Feb21",
+    "code": "3296",
+    "lag": 3,
+    "cap": 0.05
+   },
+   {
+    "review": "Feb21",
+    "code": "3702",
+    "lag": 19,
+    "cap": 2.31
+   },
+   {
+    "review": "Feb21",
+    "code": "8299",
+    "lag": 3,
+    "cap": 2.04
+   },
+   {
+    "review": "Feb21",
+    "code": "9904",
+    "lag": 18,
+    "cap": 2.7
+   },
+   {
+    "review": "Feb21",
+    "code": "9945",
+    "lag": 18,
+    "cap": 2.05
+   },
+   {
+    "review": "May21",
+    "code": "1504",
+    "lag": 20,
+    "cap": 2.57
+   },
+   {
+    "review": "May21",
+    "code": "1605",
+    "lag": 15,
+    "cap": 2.9
+   },
+   {
+    "review": "May21",
+    "code": "2347",
+    "lag": 18,
+    "cap": 3.39
+   },
+   {
+    "review": "May21",
+    "code": "2356",
+    "lag": null,
+    "cap": 3.53
+   },
+   {
+    "review": "May21",
+    "code": "3296",
+    "lag": 2,
+    "cap": 0.1
+   },
+   {
+    "review": "May21",
+    "code": "3702",
+    "lag": 18,
+    "cap": 2.92
+   },
+   {
+    "review": "May21",
+    "code": "4743",
+    "lag": 4,
+    "cap": 3.17
+   },
+   {
+    "review": "May21",
+    "code": "5269",
+    "lag": 6,
+    "cap": 2.97
+   },
+   {
+    "review": "May21",
+    "code": "8299",
+    "lag": 2,
+    "cap": 3.49
+   },
+   {
+    "review": "May21",
+    "code": "9945",
+    "lag": 17,
+    "cap": 2.88
+   },
+   {
+    "review": "Aug21",
+    "code": "1504",
+    "lag": 19,
+    "cap": 2.57
+   },
+   {
+    "review": "Aug21",
+    "code": "1605",
+    "lag": 14,
+    "cap": 2.9
+   },
+   {
+    "review": "Aug21",
+    "code": "2347",
+    "lag": 17,
+    "cap": 3.39
+   },
+   {
+    "review": "Aug21",
+    "code": "2356",
+    "lag": null,
+    "cap": 3.53
+   },
+   {
+    "review": "Aug21",
+    "code": "3296",
+    "lag": 1,
+    "cap": 0.1
+   },
+   {
+    "review": "Aug21",
+    "code": "3702",
+    "lag": 17,
+    "cap": 2.92
+   },
+   {
+    "review": "Aug21",
+    "code": "4743",
+    "lag": 3,
+    "cap": 3.17
+   },
+   {
+    "review": "Aug21",
+    "code": "5269",
+    "lag": 5,
+    "cap": 2.97
+   },
+   {
+    "review": "Aug21",
+    "code": "8299",
+    "lag": 1,
+    "cap": 3.49
+   },
+   {
+    "review": "Aug21",
+    "code": "9945",
+    "lag": 16,
+    "cap": 2.88
+   },
+   {
+    "review": "Nov21",
+    "code": "1504",
+    "lag": 18,
+    "cap": 2.31
+   },
+   {
+    "review": "Nov21",
+    "code": "1605",
+    "lag": 13,
+    "cap": 3.18
+   },
+   {
+    "review": "Nov21",
+    "code": "2347",
+    "lag": 16,
+    "cap": 3.12
+   },
+   {
+    "review": "Nov21",
+    "code": "2353",
+    "lag": 16,
+    "cap": 2.77
+   },
+   {
+    "review": "Nov21",
+    "code": "2354",
+    "lag": 2,
+    "cap": 3.49
+   },
+   {
+    "review": "Nov21",
+    "code": "2356",
+    "lag": null,
+    "cap": 3.41
+   },
+   {
+    "review": "Nov21",
+    "code": "2610",
+    "lag": 18,
+    "cap": 3.26
+   },
+   {
+    "review": "Nov21",
+    "code": "3702",
+    "lag": 16,
+    "cap": 2.99
+   },
+   {
+    "review": "Nov21",
+    "code": "4743",
+    "lag": 2,
+    "cap": 3.19
+   },
+   {
+    "review": "Nov21",
+    "code": "4958",
+    "lag": null,
+    "cap": 3.14
+   },
+   {
+    "review": "Nov21",
+    "code": "9904",
+    "lag": 15,
+    "cap": 3.52
+   },
+   {
+    "review": "Feb22",
+    "code": "1504",
+    "lag": 17,
+    "cap": 2.31
+   },
+   {
+    "review": "Feb22",
+    "code": "1605",
+    "lag": 12,
+    "cap": 3.18
+   },
+   {
+    "review": "Feb22",
+    "code": "2347",
+    "lag": 15,
+    "cap": 3.12
+   },
+   {
+    "review": "Feb22",
+    "code": "2353",
+    "lag": 15,
+    "cap": 2.77
+   },
+   {
+    "review": "Feb22",
+    "code": "2354",
+    "lag": 1,
+    "cap": 3.49
+   },
+   {
+    "review": "Feb22",
+    "code": "2356",
+    "lag": null,
+    "cap": 3.41
+   },
+   {
+    "review": "Feb22",
+    "code": "2610",
+    "lag": 17,
+    "cap": 3.26
+   },
+   {
+    "review": "Feb22",
+    "code": "3702",
+    "lag": 15,
+    "cap": 2.99
+   },
+   {
+    "review": "Feb22",
+    "code": "4743",
+    "lag": 1,
+    "cap": 3.19
+   },
+   {
+    "review": "Feb22",
+    "code": "4958",
+    "lag": null,
+    "cap": 3.14
+   },
+   {
+    "review": "Feb22",
+    "code": "9904",
+    "lag": 14,
+    "cap": 3.52
+   },
+   {
+    "review": "May22",
+    "code": "1504",
+    "lag": 16,
+    "cap": 2.39
+   },
+   {
+    "review": "May22",
+    "code": "2353",
+    "lag": 14,
+    "cap": 2.92
+   },
+   {
+    "review": "May22",
+    "code": "2356",
+    "lag": null,
+    "cap": 3.1
+   },
+   {
+    "review": "May22",
+    "code": "3702",
+    "lag": 14,
+    "cap": 3.21
+   },
+   {
+    "review": "May22",
+    "code": "8464",
+    "lag": 15,
+    "cap": 3.02
+   },
+   {
+    "review": "May22",
+    "code": "9904",
+    "lag": 13,
+    "cap": 3.05
+   },
+   {
+    "review": "Aug22",
+    "code": "1504",
+    "lag": 15,
+    "cap": 2.39
+   },
+   {
+    "review": "Aug22",
+    "code": "2353",
+    "lag": 13,
+    "cap": 2.92
+   },
+   {
+    "review": "Aug22",
+    "code": "2356",
+    "lag": null,
+    "cap": 3.1
+   },
+   {
+    "review": "Aug22",
+    "code": "3702",
+    "lag": 13,
+    "cap": 3.21
+   },
+   {
+    "review": "Aug22",
+    "code": "8464",
+    "lag": 14,
+    "cap": 3.02
+   },
+   {
+    "review": "Aug22",
+    "code": "9904",
+    "lag": 12,
+    "cap": 3.05
+   },
+   {
+    "review": "Nov22",
+    "code": "1504",
+    "lag": 14,
+    "cap": 1.84
+   },
+   {
+    "review": "Nov22",
+    "code": "2344",
+    "lag": 8,
+    "cap": 2.58
+   },
+   {
+    "review": "Nov22",
+    "code": "2353",
+    "lag": 12,
+    "cap": 2.13
+   },
+   {
+    "review": "Nov22",
+    "code": "2356",
+    "lag": null,
+    "cap": 2.54
+   },
+   {
+    "review": "Nov22",
+    "code": "3105",
+    "lag": 3,
+    "cap": 1.69
+   },
+   {
+    "review": "Nov22",
+    "code": "3529",
+    "lag": null,
+    "cap": 2.49
+   },
+   {
+    "review": "Nov22",
+    "code": "3702",
+    "lag": 12,
+    "cap": 2.38
+   },
+   {
+    "review": "Nov22",
+    "code": "4966",
+    "lag": 6,
+    "cap": 1.73
+   },
+   {
+    "review": "Nov22",
+    "code": "8464",
+    "lag": 13,
+    "cap": 2.26
+   },
+   {
+    "review": "Nov22",
+    "code": "9904",
+    "lag": 11,
+    "cap": 2.57
+   },
+   {
+    "review": "Nov22",
+    "code": "9921",
+    "lag": 4,
+    "cap": 2.53
+   },
+   {
+    "review": "May23",
+    "code": "1504",
+    "lag": 12,
+    "cap": 3.08
+   },
+   {
+    "review": "May23",
+    "code": "2353",
+    "lag": 10,
+    "cap": 2.9
+   },
+   {
+    "review": "May23",
+    "code": "3105",
+    "lag": 1,
+    "cap": 2.51
+   },
+   {
+    "review": "May23",
+    "code": "3702",
+    "lag": 10,
+    "cap": 2.76
+   },
+   {
+    "review": "May23",
+    "code": "4966",
+    "lag": 4,
+    "cap": 2.92
+   },
+   {
+    "review": "May23",
+    "code": "9904",
+    "lag": 9,
+    "cap": 3.05
+   },
+   {
+    "review": "May23",
+    "code": "9921",
+    "lag": 2,
+    "cap": 2.44
+   },
+   {
+    "review": "Aug23",
+    "code": "2347",
+    "lag": 9,
+    "cap": 3.17
+   },
+   {
+    "review": "Aug23",
+    "code": "3702",
+    "lag": 9,
+    "cap": 3.16
+   },
+   {
+    "review": "Aug23",
+    "code": "4958",
+    "lag": null,
+    "cap": 3.23
+   },
+   {
+    "review": "Aug23",
+    "code": "4966",
+    "lag": 3,
+    "cap": 2.4
+   },
+   {
+    "review": "Aug23",
+    "code": "8464",
+    "lag": 10,
+    "cap": 3.21
+   },
+   {
+    "review": "Aug23",
+    "code": "9904",
+    "lag": 8,
+    "cap": 2.87
+   },
+   {
+    "review": "Aug23",
+    "code": "9921",
+    "lag": 1,
+    "cap": 2.94
+   },
+   {
+    "review": "Nov23",
+    "code": "1504",
+    "lag": 10,
+    "cap": 3.22
+   },
+   {
+    "review": "Nov23",
+    "code": "2344",
+    "lag": 4,
+    "cap": 3.2
+   },
+   {
+    "review": "Nov23",
+    "code": "4958",
+    "lag": null,
+    "cap": 2.98
+   },
+   {
+    "review": "Nov23",
+    "code": "4966",
+    "lag": 2,
+    "cap": 2.74
+   },
+   {
+    "review": "Nov23",
+    "code": "6446",
+    "lag": null,
+    "cap": 3.21
+   },
+   {
+    "review": "Nov23",
+    "code": "8464",
+    "lag": 9,
+    "cap": 2.73
+   },
+   {
+    "review": "Nov23",
+    "code": "9904",
+    "lag": 7,
+    "cap": 2.67
+   },
+   {
+    "review": "Nov23",
+    "code": "9945",
+    "lag": 7,
+    "cap": 3.01
+   },
+   {
+    "review": "Feb24",
+    "code": "1504",
+    "lag": 9,
+    "cap": 2.0
+   },
+   {
+    "review": "Feb24",
+    "code": "2344",
+    "lag": 3,
+    "cap": 2.78
+   },
+   {
+    "review": "Feb24",
+    "code": "2353",
+    "lag": 7,
+    "cap": 2.48
+   },
+   {
+    "review": "Feb24",
+    "code": "2356",
+    "lag": null,
+    "cap": 3.06
+   },
+   {
+    "review": "Feb24",
+    "code": "2376",
+    "lag": null,
+    "cap": 2.41
+   },
+   {
+    "review": "Feb24",
+    "code": "3231",
+    "lag": null,
+    "cap": 2.91
+   },
+   {
+    "review": "Feb24",
+    "code": "3661",
+    "lag": null,
+    "cap": 2.0
+   },
+   {
+    "review": "Feb24",
+    "code": "3702",
+    "lag": 7,
+    "cap": 2.65
+   },
+   {
+    "review": "Feb24",
+    "code": "4966",
+    "lag": 1,
+    "cap": 2.41
+   },
+   {
+    "review": "May24",
+    "code": "2344",
+    "lag": 2,
+    "cap": 3.27
+   },
+   {
+    "review": "May24",
+    "code": "2610",
+    "lag": 8,
+    "cap": 3.61
+   },
+   {
+    "review": "May24",
+    "code": "2615",
+    "lag": null,
+    "cap": 3.74
+   },
+   {
+    "review": "May24",
+    "code": "3481",
+    "lag": null,
+    "cap": 3.79
+   },
+   {
+    "review": "May24",
+    "code": "4958",
+    "lag": null,
+    "cap": 3.27
+   },
+   {
+    "review": "May24",
+    "code": "6446",
+    "lag": null,
+    "cap": 3.0
+   },
+   {
+    "review": "May24",
+    "code": "8464",
+    "lag": 7,
+    "cap": 3.3
+   },
+   {
+    "review": "May24",
+    "code": "9904",
+    "lag": 5,
+    "cap": 3.21
+   },
+   {
+    "review": "May24",
+    "code": "9945",
+    "lag": 5,
+    "cap": 3.17
+   },
+   {
+    "review": "Aug24",
+    "code": "1504",
+    "lag": 7,
+    "cap": 3.3
+   },
+   {
+    "review": "Aug24",
+    "code": "2344",
+    "lag": 1,
+    "cap": 3.22
+   },
+   {
+    "review": "Aug24",
+    "code": "2347",
+    "lag": 5,
+    "cap": 3.77
+   },
+   {
+    "review": "Aug24",
+    "code": "2610",
+    "lag": 7,
+    "cap": 4.17
+   },
+   {
+    "review": "Aug24",
+    "code": "4958",
+    "lag": null,
+    "cap": 4.19
+   },
+   {
+    "review": "Aug24",
+    "code": "8464",
+    "lag": 6,
+    "cap": 3.3
+   },
+   {
+    "review": "Aug24",
+    "code": "9904",
+    "lag": 4,
+    "cap": 3.33
+   },
+   {
+    "review": "Nov24",
+    "code": "1504",
+    "lag": 6,
+    "cap": 3.35
+   },
+   {
+    "review": "Nov24",
+    "code": "1605",
+    "lag": 1,
+    "cap": 4.0
+   },
+   {
+    "review": "Nov24",
+    "code": "2347",
+    "lag": 4,
+    "cap": 3.81
+   },
+   {
+    "review": "Nov24",
+    "code": "2353",
+    "lag": 4,
+    "cap": 3.94
+   },
+   {
+    "review": "Nov24",
+    "code": "2408",
+    "lag": 1,
+    "cap": 4.15
+   },
+   {
+    "review": "Nov24",
+    "code": "2409",
+    "lag": 4,
+    "cap": 4.07
+   },
+   {
+    "review": "Nov24",
+    "code": "2610",
+    "lag": 6,
+    "cap": 4.05
+   },
+   {
+    "review": "Nov24",
+    "code": "2834",
+    "lag": null,
+    "cap": 4.5
+   },
+   {
+    "review": "Nov24",
+    "code": "3481",
+    "lag": null,
+    "cap": 3.96
+   },
+   {
+    "review": "Nov24",
+    "code": "3702",
+    "lag": 4,
+    "cap": 4.07
+   },
+   {
+    "review": "Nov24",
+    "code": "4958",
+    "lag": null,
+    "cap": 3.37
+   },
+   {
+    "review": "Nov24",
+    "code": "8464",
+    "lag": 5,
+    "cap": 4.49
+   },
+   {
+    "review": "Nov24",
+    "code": "9904",
+    "lag": 3,
+    "cap": 3.3
+   },
+   {
+    "review": "Nov24",
+    "code": "9910",
+    "lag": 5,
+    "cap": 4.28
+   },
+   {
+    "review": "Nov24",
+    "code": "9945",
+    "lag": 3,
+    "cap": 4.23
+   },
+   {
+    "review": "Feb25",
+    "code": "1504",
+    "lag": 5,
+    "cap": 3.01
+   },
+   {
+    "review": "Feb25",
+    "code": "1519",
+    "lag": null,
+    "cap": 3.02
+   },
+   {
+    "review": "Feb25",
+    "code": "2347",
+    "lag": 3,
+    "cap": 3.69
+   },
+   {
+    "review": "Feb25",
+    "code": "2834",
+    "lag": null,
+    "cap": 3.48
+   },
+   {
+    "review": "Feb25",
+    "code": "3293",
+    "lag": null,
+    "cap": 3.49
+   },
+   {
+    "review": "Feb25",
+    "code": "3653",
+    "lag": null,
+    "cap": 3.19
+   },
+   {
+    "review": "Feb25",
+    "code": "4958",
+    "lag": null,
+    "cap": 3.03
+   },
+   {
+    "review": "Feb25",
+    "code": "6446",
+    "lag": null,
+    "cap": 3.51
+   },
+   {
+    "review": "Feb25",
+    "code": "8464",
+    "lag": 4,
+    "cap": 3.2
+   },
+   {
+    "review": "Feb25",
+    "code": "9904",
+    "lag": 2,
+    "cap": 2.84
+   },
+   {
+    "review": "Feb25",
+    "code": "9945",
+    "lag": 2,
+    "cap": 3.18
+   },
+   {
+    "review": "May25",
+    "code": "1476",
+    "lag": 3,
+    "cap": 3.26
+   },
+   {
+    "review": "May25",
+    "code": "1504",
+    "lag": 4,
+    "cap": 3.3
+   },
+   {
+    "review": "May25",
+    "code": "1519",
+    "lag": null,
+    "cap": 3.52
+   },
+   {
+    "review": "May25",
+    "code": "2324",
+    "lag": 4,
+    "cap": 3.76
+   },
+   {
+    "review": "May25",
+    "code": "2347",
+    "lag": 2,
+    "cap": 3.5
+   },
+   {
+    "review": "May25",
+    "code": "2353",
+    "lag": 2,
+    "cap": 2.94
+   },
+   {
+    "review": "May25",
+    "code": "2356",
+    "lag": null,
+    "cap": 4.48
+   },
+   {
+    "review": "May25",
+    "code": "2377",
+    "lag": 2,
+    "cap": 3.55
+   },
+   {
+    "review": "May25",
+    "code": "2409",
+    "lag": 2,
+    "cap": 2.92
+   },
+   {
+    "review": "May25",
+    "code": "2474",
+    "lag": 4,
+    "cap": 4.49
+   },
+   {
+    "review": "May25",
+    "code": "2610",
+    "lag": 4,
+    "cap": 3.9
+   },
+   {
+    "review": "May25",
+    "code": "2834",
+    "lag": null,
+    "cap": 3.97
+   },
+   {
+    "review": "May25",
+    "code": "3037",
+    "lag": null,
+    "cap": 4.01
+   },
+   {
+    "review": "May25",
+    "code": "3443",
+    "lag": null,
+    "cap": 4.11
+   },
+   {
+    "review": "May25",
+    "code": "3481",
+    "lag": null,
+    "cap": 3.37
+   },
+   {
+    "review": "May25",
+    "code": "3533",
+    "lag": null,
+    "cap": 3.95
+   },
+   {
+    "review": "May25",
+    "code": "3653",
+    "lag": null,
+    "cap": 4.16
+   },
+   {
+    "review": "May25",
+    "code": "3702",
+    "lag": 2,
+    "cap": 3.36
+   },
+   {
+    "review": "May25",
+    "code": "4958",
+    "lag": null,
+    "cap": 2.69
+   },
+   {
+    "review": "May25",
+    "code": "6409",
+    "lag": 2,
+    "cap": 3.6
+   },
+   {
+    "review": "May25",
+    "code": "6488",
+    "lag": null,
+    "cap": 4.32
+   },
+   {
+    "review": "May25",
+    "code": "8464",
+    "lag": 3,
+    "cap": 3.17
+   },
+   {
+    "review": "May25",
+    "code": "9904",
+    "lag": 1,
+    "cap": 2.8
+   },
+   {
+    "review": "May25",
+    "code": "9910",
+    "lag": 3,
+    "cap": 3.28
+   },
+   {
+    "review": "May25",
+    "code": "9945",
+    "lag": 1,
+    "cap": 2.84
+   },
+   {
+    "review": "Aug25",
+    "code": "1102",
+    "lag": 3,
+    "cap": 4.76
+   },
+   {
+    "review": "Aug25",
+    "code": "1326",
+    "lag": null,
+    "cap": 4.51
+   },
+   {
+    "review": "Aug25",
+    "code": "1476",
+    "lag": 2,
+    "cap": 3.63
+   },
+   {
+    "review": "Aug25",
+    "code": "1504",
+    "lag": 3,
+    "cap": 3.41
+   },
+   {
+    "review": "Aug25",
+    "code": "2105",
+    "lag": 2,
+    "cap": 4.29
+   },
+   {
+    "review": "Aug25",
+    "code": "2324",
+    "lag": 3,
+    "cap": 4.27
+   },
+   {
+    "review": "Aug25",
+    "code": "2347",
+    "lag": 1,
+    "cap": 3.79
+   },
+   {
+    "review": "Aug25",
+    "code": "2353",
+    "lag": 1,
+    "cap": 3.15
+   },
+   {
+    "review": "Aug25",
+    "code": "2356",
+    "lag": null,
+    "cap": 5.11
+   },
+   {
+    "review": "Aug25",
+    "code": "2377",
+    "lag": 1,
+    "cap": 4.06
+   },
+   {
+    "review": "Aug25",
+    "code": "2409",
+    "lag": 1,
+    "cap": 3.05
+   },
+   {
+    "review": "Aug25",
+    "code": "2474",
+    "lag": 3,
+    "cap": 4.59
+   },
+   {
+    "review": "Aug25",
+    "code": "2610",
+    "lag": 3,
+    "cap": 4.3
+   },
+   {
+    "review": "Aug25",
+    "code": "2834",
+    "lag": null,
+    "cap": 5.06
+   },
+   {
+    "review": "Aug25",
+    "code": "3481",
+    "lag": null,
+    "cap": 3.0
+   },
+   {
+    "review": "Aug25",
+    "code": "3702",
+    "lag": 1,
+    "cap": 4.13
+   },
+   {
+    "review": "Aug25",
+    "code": "4958",
+    "lag": null,
+    "cap": 3.59
+   },
+   {
+    "review": "Aug25",
+    "code": "6409",
+    "lag": 1,
+    "cap": 3.69
+   },
+   {
+    "review": "Aug25",
+    "code": "6415",
+    "lag": 1,
+    "cap": 4.53
+   },
+   {
+    "review": "Aug25",
+    "code": "8464",
+    "lag": 2,
+    "cap": 3.97
+   },
+   {
+    "review": "Aug25",
+    "code": "9910",
+    "lag": 2,
+    "cap": 3.97
+   },
+   {
+    "review": "Nov25",
+    "code": "1102",
+    "lag": 2,
+    "cap": 4.24
+   },
+   {
+    "review": "Nov25",
+    "code": "1326",
+    "lag": null,
+    "cap": 5.45
+   },
+   {
+    "review": "Nov25",
+    "code": "1402",
+    "lag": 2,
+    "cap": 4.76
+   },
+   {
+    "review": "Nov25",
+    "code": "1476",
+    "lag": 1,
+    "cap": 3.92
+   },
+   {
+    "review": "Nov25",
+    "code": "2105",
+    "lag": 1,
+    "cap": 3.69
+   },
+   {
+    "review": "Nov25",
+    "code": "2324",
+    "lag": 2,
+    "cap": 4.54
+   },
+   {
+    "review": "Nov25",
+    "code": "2356",
+    "lag": null,
+    "cap": 5.07
+   },
+   {
+    "review": "Nov25",
+    "code": "2474",
+    "lag": 2,
+    "cap": 3.59
+   },
+   {
+    "review": "Nov25",
+    "code": "2610",
+    "lag": 2,
+    "cap": 4.09
+   },
+   {
+    "review": "Nov25",
+    "code": "2633",
+    "lag": 2,
+    "cap": 5.0
+   },
+   {
+    "review": "Nov25",
+    "code": "2834",
+    "lag": null,
+    "cap": 4.92
+   },
+   {
+    "review": "Nov25",
+    "code": "3481",
+    "lag": null,
+    "cap": 3.8
+   },
+   {
+    "review": "Nov25",
+    "code": "3529",
+    "lag": null,
+    "cap": 4.84
+   },
+   {
+    "review": "Nov25",
+    "code": "3533",
+    "lag": null,
+    "cap": 5.18
+   },
+   {
+    "review": "Nov25",
+    "code": "4958",
+    "lag": null,
+    "cap": 4.54
+   },
+   {
+    "review": "Nov25",
+    "code": "8464",
+    "lag": 1,
+    "cap": 3.8
+   },
+   {
+    "review": "Nov25",
+    "code": "9910",
+    "lag": 1,
+    "cap": 4.26
+   },
+   {
+    "review": "Feb26",
+    "code": "1102",
+    "lag": 1,
+    "cap": 4.46
+   },
+   {
+    "review": "Feb26",
+    "code": "1504",
+    "lag": 1,
+    "cap": 3.42
+   },
+   {
+    "review": "Feb26",
+    "code": "1519",
+    "lag": null,
+    "cap": 4.37
+   },
+   {
+    "review": "Feb26",
+    "code": "2059",
+    "lag": null,
+    "cap": 4.08
+   },
+   {
+    "review": "Feb26",
+    "code": "2368",
+    "lag": null,
+    "cap": 3.17
+   },
+   {
+    "review": "Feb26",
+    "code": "2449",
+    "lag": null,
+    "cap": 4.12
+   },
+   {
+    "review": "Feb26",
+    "code": "2474",
+    "lag": 1,
+    "cap": 4.12
+   },
+   {
+    "review": "Feb26",
+    "code": "2633",
+    "lag": 1,
+    "cap": 4.64
+   },
+   {
+    "review": "Feb26",
+    "code": "2834",
+    "lag": null,
+    "cap": 4.12
+   },
+   {
+    "review": "Feb26",
+    "code": "3481",
+    "lag": null,
+    "cap": 3.38
+   },
+   {
+    "review": "Feb26",
+    "code": "3665",
+    "lag": null,
+    "cap": 2.78
+   },
+   {
+    "review": "Feb26",
+    "code": "4958",
+    "lag": null,
+    "cap": 3.39
+   },
+   {
+    "review": "Feb26",
+    "code": "5274",
+    "lag": null,
+    "cap": 3.92
+   },
+   {
+    "review": "Feb26",
+    "code": "6919",
+    "lag": null,
+    "cap": 2.98
+   },
+   {
+    "review": "May26",
+    "code": "1101",
+    "lag": null,
+    "cap": 5.9
+   },
+   {
+    "review": "May26",
+    "code": "2356",
+    "lag": null,
+    "cap": 5.29
+   },
+   {
+    "review": "May26",
+    "code": "2376",
+    "lag": null,
+    "cap": 5.91
+   },
+   {
+    "review": "May26",
+    "code": "2609",
+    "lag": null,
+    "cap": 5.53
+   },
+   {
+    "review": "May26",
+    "code": "2618",
+    "lag": null,
+    "cap": 6.02
+   },
+   {
+    "review": "May26",
+    "code": "2834",
+    "lag": null,
+    "cap": 5.19
+   },
+   {
+    "review": "May26",
+    "code": "6919",
+    "lag": null,
+    "cap": 5.24
+   },
+   {
+    "review": "May26",
+    "code": "8069",
+    "lag": null,
+    "cap": 5.77
+   }
+  ]
+ },
+ "sensitivity": [
+  {
+   "floor_multiple": 0.6,
+   "recall": 0.396,
+   "precision": 0.186,
+   "hits": 21,
+   "false_alarms": 92,
+   "misses": 32
+  },
+  {
+   "floor_multiple": 0.7,
+   "recall": 0.604,
+   "precision": 0.177,
+   "hits": 32,
+   "false_alarms": 149,
+   "misses": 21
+  },
+  {
+   "floor_multiple": 0.8,
+   "recall": 0.736,
+   "precision": 0.126,
+   "hits": 39,
+   "false_alarms": 270,
+   "misses": 14
+  },
+  {
+   "floor_multiple": 0.9,
+   "recall": 0.83,
+   "precision": 0.097,
+   "hits": 44,
+   "false_alarms": 411,
+   "misses": 9
+  },
+  {
+   "floor_multiple": 1.0,
+   "recall": 0.849,
+   "precision": 0.078,
+   "hits": 45,
+   "false_alarms": 533,
+   "misses": 8
+  },
+  {
+   "floor_multiple": 1.1,
+   "recall": 0.868,
+   "precision": 0.063,
+   "hits": 46,
+   "false_alarms": 681,
+   "misses": 7
+  },
+  {
+   "floor_multiple": 1.25,
+   "recall": 0.887,
+   "precision": 0.052,
+   "hits": 47,
+   "false_alarms": 859,
+   "misses": 6
+  }
+ ],
+ "coverage": {
+  "reviews_scored": 32,
+  "reviews_in_window": 34,
+  "missing": [
+   "Feb18",
+   "Feb23"
+  ]
+ },
+ "add_sweep": [
+  {
+   "x_ceiling": 0.6,
+   "recall": 0.683,
+   "precision_partial": 0.152,
+   "hits": 28,
+   "misses": 13,
+   "flagged_other": 156
+  },
+  {
+   "x_ceiling": 0.667,
+   "recall": 0.634,
+   "precision_partial": 0.198,
+   "hits": 26,
+   "misses": 15,
+   "flagged_other": 105
+  },
+  {
+   "x_ceiling": 0.7,
+   "recall": 0.634,
+   "precision_partial": 0.236,
+   "hits": 26,
+   "misses": 15,
+   "flagged_other": 84
+  },
+  {
+   "x_ceiling": 0.75,
+   "recall": 0.61,
+   "precision_partial": 0.272,
+   "hits": 25,
+   "misses": 16,
+   "flagged_other": 67
+  },
+  {
+   "x_ceiling": 0.8,
+   "recall": 0.585,
+   "precision_partial": 0.338,
+   "hits": 24,
+   "misses": 17,
+   "flagged_other": 47
+  },
+  {
+   "x_ceiling": 0.9,
+   "recall": 0.439,
+   "precision_partial": 0.34,
+   "hits": 18,
+   "misses": 23,
+   "flagged_other": 35
+  },
+  {
+   "x_ceiling": 1.0,
+   "recall": 0.293,
+   "precision_partial": 0.316,
+   "hits": 12,
+   "misses": 29,
+   "flagged_other": 26
+  },
+  {
+   "x_ceiling": 1.25,
+   "recall": 0.146,
+   "precision_partial": 0.214,
+   "hits": 6,
+   "misses": 35,
+   "flagged_other": 22
+  },
+  {
+   "x_ceiling": 1.5,
+   "recall": 0.024,
+   "precision_partial": 0.05,
+   "hits": 1,
+   "misses": 40,
+   "flagged_other": 19
+  }
+ ],
+ "miss_classes": [
+  {
+   "review": "Nov20",
+   "code": "2618",
+   "security": "EVA AIRWAYS CORP",
+   "cap": 1.83,
+   "floor": 2.807,
+   "above_floor_pct": -34.8,
+   "in_pit_membership": false,
+   "class": "MEMBERSHIP GAP",
+   "why": "size test WOULD have fired \u2014 the name was missing from our reconstructed membership, so it never entered the pool"
+  },
+  {
+   "review": "Aug21",
+   "code": "2834",
+   "security": "TAIWAN BUSINESS BANK",
+   "cap": 2.75,
+   "floor": 3.593,
+   "above_floor_pct": -23.4,
+   "in_pit_membership": false,
+   "class": "MEMBERSHIP GAP",
+   "why": "size test WOULD have fired \u2014 the name was missing from our reconstructed membership, so it never entered the pool"
+  },
+  {
+   "review": "Feb22",
+   "code": "3231",
+   "security": "WISTRON CORP",
+   "cap": 2.96,
+   "floor": 3.647,
+   "above_floor_pct": -18.9,
+   "in_pit_membership": false,
+   "class": "MEMBERSHIP GAP",
+   "why": "size test WOULD have fired \u2014 the name was missing from our reconstructed membership, so it never entered the pool"
+  },
+  {
+   "review": "Feb24",
+   "code": "8454",
+   "security": "MOMO.COM",
+   "cap": 5.79,
+   "floor": 3.087,
+   "above_floor_pct": 87.7,
+   "in_pit_membership": true,
+   "class": "ABOVE FLOOR",
+   "why": "full cap sat 88% above the floor \u2014 size alone cannot explain this deletion; float or liquidity must"
+  },
+  {
+   "review": "Aug24",
+   "code": "6505",
+   "security": "FORMOSA PETROCHEMICAL CO",
+   "cap": 19.28,
+   "floor": 4.233,
+   "above_floor_pct": 355.4,
+   "in_pit_membership": true,
+   "class": "ABOVE FLOOR",
+   "why": "full cap sat 355% above the floor \u2014 size alone cannot explain this deletion; float or liquidity must"
+  },
+  {
+   "review": "Feb25",
+   "code": "1605",
+   "security": "WALSIN LIHWA CORP",
+   "cap": 4.54,
+   "floor": 3.707,
+   "above_floor_pct": 22.5,
+   "in_pit_membership": true,
+   "class": "ABOVE FLOOR",
+   "why": "full cap sat 22% above the floor \u2014 size alone cannot explain this deletion; float or liquidity must"
+  },
+  {
+   "review": "Feb25",
+   "code": "2408",
+   "security": "NANYA TECHNOLOGY",
+   "cap": 6.78,
+   "floor": 3.707,
+   "above_floor_pct": 82.9,
+   "in_pit_membership": true,
+   "class": "ABOVE FLOOR",
+   "why": "full cap sat 83% above the floor \u2014 size alone cannot explain this deletion; float or liquidity must"
+  },
+  {
+   "review": "Feb26",
+   "code": "2105",
+   "security": "CHENG SHIN RUBBER IND",
+   "cap": 4.87,
+   "floor": 4.733,
+   "above_floor_pct": 2.9,
+   "in_pit_membership": true,
+   "class": "ABOVE FLOOR",
+   "why": "full cap sat 3% above the floor \u2014 size alone cannot explain this deletion; float or liquidity must"
+  }
+ ],
+ "features": {
+  "persistence": {
+   "deleted_median": 3,
+   "fa_median": 3,
+   "verdict": "NO discriminating power \u2014 both medians are 3 consecutive reviews below the floor. A 'has been at risk for a while' feature does not separate the two groups."
+  },
+  "depth": {
+   "deleted_median": 0.62,
+   "fa_median": 0.792,
+   "verdict": "DOES discriminate \u2014 deleted names sit at 0.62x the floor vs 0.79x for survivors. Depth belongs in a ranking model, though on its own it only lifts precision from 8% to ~18%."
+  }
+ },
+ "float_coverage": {
+  "deleted_with_float": 5,
+  "deleted_total": 45,
+  "fa_with_float": 149,
+  "fa_total": 533,
+  "verdict": "float data exists for only 5 of 45 historically deleted names (11%). The single most plausible explanation for the above-floor deletions is therefore UNTESTABLE with what we hold \u2014 this is the top data gap, not a modelling gap."
+ }
+}

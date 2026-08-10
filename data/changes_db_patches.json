@@ -1,0 +1,563 @@
+{
+ "patches": {
+  "Aug20|China": {
+   "adds": [
+    "BEIJING SHANGHAI A(HK-C)",
+    "MAXSCEND A (HK-C)",
+    "POSTAL SAVINGS A (HK-C)"
+   ],
+   "dels": [
+    "SHUI ON LAND (CN)"
+   ],
+   "tier": "A-geometric"
+  },
+  "Aug21|China": {
+   "adds": [
+    "ADV MICRO-FABRIC A(HK-C)",
+    "BEIJING KINGSOFT A(HK-C)",
+    "BEIJING ROBOROCK A(HK-C)",
+    "BEIJING WANTAI A (HK-C)",
+    "CHINA BAOAN GRP A (HK-C)",
+    "CHINA UTD NETWK A (HK-C)",
+    "CHINASOFT INTERNATIONAL",
+    "CRRC CORP A (HK-C)",
+    "HUABAO INTL HLDG",
+    "IMEIK TECHNOLOGY A(HK-C)",
+    "NATIONAL SILICON A(HK-C)",
+    "STARPOWER SEMICO A(HK-C)",
+    "ZHONGTAI SEC A(HK-C)"
+   ],
+   "dels": [
+    "DOUYU INTERNATIONAL ADR",
+    "PERENNIAL ENERGY HLDGS"
+   ],
+   "tier": "A-geometric"
+  },
+  "Feb06|China": {
+   "adds": [
+    "AGILE PROPERTY HLDGS",
+    "DONGFENG MOTOR GROUP H"
+   ],
+   "dels": [],
+   "tier": "A-geometric"
+  },
+  "Feb25|Japan": {
+   "adds": [
+    "TOKYO METRO"
+   ],
+   "dels": [
+    "MCDONALD'S HLDGS CO JP",
+    "MITSUI CHEMICALS",
+    "SHIZUOKA FINANCIAL GROUP",
+    "TOKYO ELECTRIC POWER CO",
+    "TOTO",
+    "BROTHER INDUSTRIES",
+    "HITACHI CONST MACHINERY",
+    "JAPAN REAL ESTATE INV",
+    "KOKUSAI ELECTRIC"
+   ],
+   "tier": "C-reading-order"
+  },
+  "May08|Japan": {
+   "adds": [
+    "CHUGOKU BANK",
+    "DENA CO",
+    "HISAMITSU PHARMACEUTICAL",
+    "IYO BANK (THE)",
+    "MARUICHI STEEL TUBE",
+    "MITSUBISHI UFJ NICOS CO",
+    "SHIMADZU CORP",
+    "TOHO GAS CO",
+    "YAMAGUCHI FINANCIAL GP"
+   ],
+   "dels": [
+    "ACCESS CO",
+    "ADERANS HOLDINGS CO",
+    "AOYAMA TRADING CO",
+    "ASATSU-DK",
+    "AUTOBACS SEVEN CO",
+    "CENTRAL GLASS CO",
+    "CHIYODA CORP",
+    "CIRCLE K SUNKUS CO",
+    "COMSYS HOLDINGS",
+    "DAIFUKU CO",
+    "EACCESS",
+    "EBARA CORP",
+    "EDION CORP",
+    "FUJI SOFT",
+    "FUJIKURA",
+    "GLORY LTD",
+    "GOODWILL GROUP",
+    "GUNZE",
+    "H2O RETAILING CORP",
+    "HITACHI CABLE",
+    "HOUSE FOODS CORP",
+    "KK DAVINCI ADVISORS",
+    "KOKUYO CO",
+    "KOMORI CORP",
+    "KOSE CORPORATION",
+    "MATSUI SECURITIES CO",
+    "MATSUMOTOKIYOSHI HLDGS",
+    "MEIJI SEIKA KAISHA",
+    "MEITEC CORP",
+    "NICHIREI CORP",
+    "NIPPON KAYAKU CO",
+    "NIPPON LIGHT METAL CO",
+    "NIPPON SHOKUBAI CO",
+    "NIPPON ZEON CO",
+    "NISHIMATSU CONSTRUCTION",
+    "OKI ELECTRIC INDUSTRY CO",
+    "OKUMURA CORP",
+    "OSG CORP",
+    "Q. P. CORP",
+    "RINNAI CORP",
+    "ROUND ONE CORP",
+    "RYOHIN KEIKAKU CO",
+    "SANKEN ELECTRIC CO",
+    "SANWA HOLDINGS CORP",
+    "SEINO HOLDINGS CO",
+    "SHIMACHU CO",
+    "SUMITOMO OSAKA CEMENT CO",
+    "TAIYO YUDEN CO",
+    "TAKARA HLDGS INC",
+    "TODA CORP",
+    "TOKYO SEIMITSU CO",
+    "URBAN CORP",
+    "WACOAL HOLDINGS CORP"
+   ],
+   "tier": "A-geometric"
+  },
+  "May08|China": {
+   "adds": [
+    "BELLE INT'L HLDGS(CN)",
+    "BOSIDENG INTL HLDGS",
+    "FOSUN INT'L(CN)",
+    "HIDILI INDUSTRY INTL DEV",
+    "KINGSOFT",
+    "NETDRAGON WEBSOFT",
+    "PARKSON RETAIL GROUP(CN)",
+    "SHUI ON LAND(CN)",
+    "SINO-OCEAN LAND HLDGS",
+    "SOHO CHINA",
+    "TENCENT HOLDINGS LIM(CN)",
+    "TINGYI HOLDING CORP(CN)"
+   ],
+   "dels": [
+    "BRILLIANCE CHINA AUTO",
+    "CHINA FOODS",
+    "CHINA MOLYBDENUM CO H",
+    "FU JI FOOD & CATERING",
+    "GLOBAL BIO-CHEM TECH",
+    "GUANGDONG ELECT B SZ",
+    "HUADIAN POWER INT'L H",
+    "HUNAN NONFERROUS METAL H",
+    "SHANGHAI FORTE LAND H",
+    "SHENZHEN EXPRESSWAY H",
+    "SHENZHEN INVESTMENT",
+    "SINOPEC YIZHENG CHEM H",
+    "SINOTRANS H",
+    "SMIC",
+    "TPV TECHNOLOGY",
+    "TRAVELSKY TECHNOLOGY H",
+    "TSINGTAO BREWERY H",
+    "WEICHAI POWER CO H",
+    "WEIQIAO TEXTILE H",
+    "XINAO GAS HOLDINGS",
+    "ZHEJIANG S. ELE B SS(USD"
+   ],
+   "tier": "A-geometric"
+  },
+  "May08|Malaysia": {
+   "adds": [
+    "PARKSON BHD"
+   ],
+   "dels": [
+    "DRB-HICOM",
+    "GUINNESS ANCHOR",
+    "IOI PROPERTIES",
+    "MALAYSIAN BULK CARRIERS",
+    "MALAYSIAN PACIFIC IND",
+    "MALAYSIAN RESOURCES (NEW",
+    "MEDIA PRIMA",
+    "MULPHA INTERNATIONAL",
+    "MULTI-PURPOSE HOLDINGS",
+    "POS MALAYSIA",
+    "PROTON HOLDINGS",
+    "SCOMI GROUP",
+    "SHELL REFINING CO (FOM)",
+    "STAR PUBLICATIONS (MAL)",
+    "TA ENTERPRISE"
+   ],
+   "tier": "A-geometric"
+  },
+  "May12|China": {
+   "adds": [
+    "CITIC SECURITIES CO H",
+    "UNI-PRESIDENT CHINA HLDG"
+   ],
+   "dels": [
+    "SINOFERT HOLDINGS",
+    "SKYWORTH DIGITAL HLDGS",
+    "SMIC",
+    "CHINA DONGXIANG",
+    "CHINA MOLYBDENUM CO H",
+    "RENHE COMMERCIAL HLDGS"
+   ],
+   "tier": "C-reading-order"
+  },
+  "May14|Japan": {
+   "adds": [
+    "HIKARI TSUSHIN",
+    "JAPAN DISPLAY",
+    "NAGOYA RAILROAD CO"
+   ],
+   "dels": [
+    "SUMCO",
+    "TOYOTA BOSHOKU CORP",
+    "TSUMURA & CO",
+    "UBE INDUSTRIES",
+    "COCA-COLA WEST CO",
+    "HOKKAIDO ELECTRIC POWER",
+    "JAPAN PETROLEUM EXP.",
+    "JAPAN STEEL WORKS",
+    "KINDEN CORP",
+    "NISHI-NIPPON CITY BANK",
+    "SHOWA DENKO K.K",
+    "SOJITZ CORP"
+   ],
+   "tier": "C-reading-order"
+  },
+  "May17|Malaysia": {
+   "adds": [],
+   "dels": [
+    "BERJAYA SPORTS TOTO",
+    "LAFARGE MALAYSIA"
+   ],
+   "tier": "B-zero-side"
+  },
+  "May18|HongKong": {
+   "adds": [
+    "DAIRY FARM INTL (USD)"
+   ],
+   "dels": [
+    "FIRST PACIFIC CO",
+    "KINGSTON FINANCIAL GROUP"
+   ],
+   "tier": "C-reading-order"
+  },
+  "May20|Australia": {
+   "adds": [
+    "AFTERPAY",
+    "ALUMINA",
+    "EVOLUTION MINING"
+   ],
+   "dels": [
+    "BENDIGO & ADELAIDE BANK",
+    "NORTHERN STAR RESOURCES",
+    "BORAL",
+    "CHALLENGER",
+    "FLIGHT CENTRE TRAVEL GRP",
+    "HARVEY NORMAN HOLDINGS",
+    "INCITEC PIVOT LTD",
+    "WORLEY"
+   ],
+   "tier": "C-reading-order"
+  },
+  "May20|China": {
+   "adds": [
+    "ADDSINO CO A (HK-C)",
+    "AK MEDICAL HOLDINGS",
+    "ANHUI GUJING DISTILLER B",
+    "APELOA PHARMA A (HK-C)",
+    "BEIJING E-HUALU A (HK-C)",
+    "BEIJING KUNLUN A (HK-C)",
+    "BEIJING THUN A (HK-C)",
+    "BILIBILI ADR Z",
+    "C&S PAPER A (HK-C)",
+    "CANSINO BIOLOGICS H",
+    "CHINA FEIHE",
+    "CHINA GALAXY SEC A(HK-C)",
+    "CHINA GREAT SEC A (HK-C)",
+    "CHINA MERCH PPTY A(HK-C)",
+    "CHINA OVERSEAS PPTY HLDG",
+    "CHINA YUHUA EDUCATION",
+    "DA AN GENE CO A (HK-C)",
+    "FUJIAN STAR NET A (HK-C)",
+    "GSX TECHEDU A ADR",
+    "GUANGDONG HONGDA A(HK-C)",
+    "GUANGZHOU SHIYU A (HK-C)",
+    "GUANGZHOU WONDFO A(HK-C)",
+    "GUOCHENG MINING A (HK-C)",
+    "HAINAN AIRLINES A (HK-C)",
+    "HUAGONG TECH A (HK-C)",
+    "JIANGSU SHAGANG A (HK-C)",
+    "JOYOUNG A (HK-C)",
+    "KOOLEARN TECHNOLOGY HLDG",
+    "LEO GROUP CO A (HK-C)",
+    "LUENMEI QUANTUM A (HK-C)",
+    "NANYANG TOPSEC A (HK-C)",
+    "NINGBO TUOPU A (HK-C)",
+    "OFFCN EDUCATION A (HK-C)",
+    "POLY PROPERTY DEVLPT H",
+    "PROYA COSMETICS A (HK-C)",
+    "QIAQIA FOOD CO A (HK-C)",
+    "QINGDAO RURAL A (HK-C)",
+    "SG MICRO A (HK-C)",
+    "SHANGHAI PUTAIL A (HK-C)",
+    "SHENZHEN KAIFA A (HK-C)",
+    "STO EXPRESS A (HK-C)",
+    "THUNDER SOFTW A (HK-C)",
+    "TIANFENG SEC A(HK-C)",
+    "TIANJIN 712 COMM A(HK-C)",
+    "TIANJIN CHASE A (HK-C)",
+    "TIANSHUI HUATIA A (HK-C)",
+    "TONGFU MICROELEC A(HK-C)",
+    "VINDA INTL HOLDINGS(CN)",
+    "WONDERS INFO CO A (HK-C)",
+    "WUHU TOKEN SCI A (HK-C)",
+    "WUXI TAIJI INDUS A(HK-C)",
+    "XIAMEN INTRETECH A(HK-C)",
+    "YOUNGOR GROUP A (HK-C)",
+    "ZHEJIANG CENTURY A(HK-C)",
+    "ZHEJIANG JINGSH A (HK-C)",
+    "ZHONGTIAN FINL A (HK-C)"
+   ],
+   "dels": [
+    "ANXIN TRUST CO A (HK-C)",
+    "BBMG CORP H",
+    "BEIJING SANJU A (HK-C)",
+    "BEIJING SL PHAR A (HK-C)",
+    "CHINA COAL ENERGY H",
+    "CHINA INTL MAR A (HK-C)",
+    "CHINA RESOURCES A (HK-C)",
+    "CHINA ZHONGWANG HOLDINGS",
+    "CITIC GUOAN INF A (HK-C)",
+    "DALIAN PORT PDA A (HK-C)",
+    "DATANG INTL POWER H",
+    "GUANGSHEN RAIL A (HK-C)",
+    "GUANGZHOU AUTO A (HK-C)",
+    "GUIZHOU BAILING A (HK-C)",
+    "HUADIAN POWER INTL H",
+    "HYTERA COMMU A (HK-C)",
+    "LUCKIN COFFEE A ADR",
+    "LUXI CHEMICAL A (HK-C)",
+    "MAANSHAN IRON&STEEL H",
+    "METALLURGICAL CHINA H",
+    "NANJING IRON A(HK-C)",
+    "NEXTEER AUTOMOTIVE GRP",
+    "SHANDONG XINCHAO A(HK-C)",
+    "SHANGHAI AJ GRP A (HK-C)",
+    "SHANGHAI ME & EL A(HK-C)",
+    "SHANGHAI WAIGAOQ A(HK-C)",
+    "SHANYING INTL A (HK-C)",
+    "SHENGHE RES A (HK-C)",
+    "SHENZHEN ZHONGJ A (HK-C)",
+    "SICHUAN HEBANG A (HK-C)",
+    "SINOCHEM INTL A (HK-C)",
+    "SINOTRANS H",
+    "TANGSHAN PORT A (HK-C)",
+    "TECH BANK FOOD A (HK-C)",
+    "THAIHOT GRP CO A (HK-C)",
+    "TIAN DI SCIENCE A (HK-C)",
+    "TOWNGAS CHINA CO",
+    "TUS ENVIRONMENT A (HK-C)",
+    "VISUAL CHINA A (HK-C)",
+    "WANXIANG QIANCH A (HK-C)",
+    "XINJIANG ZHONGTA A(HK-C)",
+    "XINXING DUCTILE A (HK-C)",
+    "XINYU IRON & STL A(HK-C)",
+    "YUNNAN TIN CO A (HK-C)",
+    "ZHEJIANG JIAHUA A (HK-C)"
+   ],
+   "tier": "A-geometric"
+  },
+  "May21|Japan": {
+   "adds": [],
+   "dels": [
+    "AIR WATER",
+    "ALFRESA HOLDINGS",
+    "AMADA CO",
+    "BANK KYOTO",
+    "CALBEE",
+    "CHUGOKU ELECTRIC POWER",
+    "COCA-COLA BOTTLERS JAPAN",
+    "FUKUOKA FINANCIAL GROUP",
+    "JAPAN AIRPORT TERMINAL",
+    "KEIHAN HOLDINGS CO",
+    "KEIKYU CORP",
+    "KURARAY CO",
+    "KYUSHU ELECTRIC POWER CO",
+    "KYUSHU RAILWAY CO",
+    "MARUI GROUP CO",
+    "NAGOYA RAILROAD CO",
+    "NGK SPARK PLUG CO",
+    "SEGA SAMMY HOLDINGS",
+    "SEIBU HOLDINGS",
+    "SHIMAMURA CO",
+    "SHINSEI BANK",
+    "SUNDRUG CO",
+    "SUZUKEN CO",
+    "TAIHEIYO CEMENT CORP",
+    "TEIJIN",
+    "TOKYU FUDOSAN HLDGS CORP",
+    "TOYODA GOSEI CO",
+    "YAMAZAKI BAKING CO",
+    "AEON MALL CO"
+   ],
+   "tier": "B-zero-side"
+  },
+  "May22|Japan": {
+   "adds": [],
+   "dels": [
+    "MITSUBISHI GAS CHEMICAL",
+    "MIURA CO",
+    "ORIX JREIT",
+    "POLA ORBIS HOLDINGS",
+    "RINNAI CORP",
+    "RYOHIN KEIKAKU CO",
+    "SANTEN PHARMACEUTICAL CO",
+    "SOHGO SECURITY SVCS CO",
+    "STANLEY ELECTRIC CO",
+    "SUMITOMO PHARMA CO",
+    "TAISHO PHARM HOLDINGS CO",
+    "TOKYO CENTURY CORP",
+    "TOYO SUISAN KAISHA",
+    "TSURUHA HOLDINGS",
+    "BENEFIT ONE",
+    "COSMOS PHARMACEUTICAL",
+    "HINO MOTORS",
+    "KANSAI PAINT CO",
+    "LAWSON",
+    "LION CORP",
+    "MEDIPAL HOLDINGS CORP",
+    "MERCARI INC"
+   ],
+   "tier": "B-zero-side"
+  },
+  "May24|Japan": {
+   "adds": [
+    "ASICS CORP"
+   ],
+   "dels": [
+    "USS CO",
+    "YAMAHA CORP",
+    "ASAHI INTECC CO",
+    "AZBIL CORP",
+    "GLP J REIT",
+    "HIROSE ELECTRIC CO",
+    "IIDA GROUP HOLDINGS CO",
+    "JAPAN METROPOLITAN FUND",
+    "KDX REALTY INV CORP",
+    "MISUMI GROUP",
+    "ODAKYU ELECTRIC RAILWAY",
+    "SHARP CORP",
+    "SHIMIZU CORP",
+    "SQUARE ENIX HOLDINGS CO",
+    "TOBU RAILWAY CO"
+   ],
+   "tier": "C-reading-order"
+  },
+  "May26|Japan": {
+   "adds": [
+    "FURUKAWA ELECTRIC CO",
+    "MITSUI KINZOKU CO",
+    "RESONAC HOLDINGS CORP"
+   ],
+   "dels": [
+    "TOYOTA INDUSTRIES CORP",
+    "TSURUHA HOLDINGS",
+    "ZOZO",
+    "JAPAN AIRLINES CO",
+    "M3",
+    "MATSUKIYOCOCOKARA & CO",
+    "MONOTARO CO",
+    "ORACLE CORP JAPAN",
+    "SEKISUI CHEMICAL CO",
+    "SHIMADZU CORP",
+    "SONY FINANCIAL GROUP",
+    "SYSMEX CORP",
+    "TIS",
+    "TOKYU CORP"
+   ],
+   "tier": "C-reading-order"
+  },
+  "Nov07|China": {
+   "adds": [
+    "CHINA BLUECHEMICAL H",
+    "CHINA COAL ENERGY H",
+    "CHINA COMM SERVI H",
+    "CHINA HIGH SPEED TRANSMI",
+    "CHINA INSURANCE INT' L",
+    "CHINA MERCHANTS BANK H",
+    "CHINA MOLYBDENUM CO H",
+    "CHINA NAT BUILDING MAT H",
+    "CHINA NETCOM GROUP",
+    "CHINA OILFIELD SVCS H",
+    "CHINA UNICOM",
+    "CHINA VANKE CO B",
+    "CITIC RESOURCES HOLDINGS",
+    "CNPC HONG KONG",
+    "DONGFANG ELE MACH H",
+    "HARBIN POWER EQUIPMENT H",
+    "INNER MONGOLIA YITAI B",
+    "KWG PPTY HLDG",
+    "SHANGHAI LUJIA. B SS(USD",
+    "SHANGHAI ZHENHUA PORT- B",
+    "SHOUGANG CONCORD INT'L",
+    "YANTAI CHANGYU PIONEER B"
+   ],
+   "dels": [],
+   "tier": "A-geometric"
+  },
+  "Nov12|China": {
+   "adds": [
+    "CHINA FOODS",
+    "HAITONG SECURITIES CO H"
+   ],
+   "dels": [
+    "HENGDELI HOLDINGS",
+    "METALLURGICAL CHINA H",
+    "SANY HEAVY EQUIPMENT INT",
+    "CHINA RONGSHENG HEAVY IN",
+    "CHINA YURUN FOOD GROUP",
+    "CHINA ZHENGTONG AUTO SER",
+    "CHINA ZHONGWANG HOLDINGS",
+    "CSG HOLDING CO B"
+   ],
+   "tier": "C-reading-order"
+  },
+  "Nov13|HongKong": {
+   "adds": [],
+   "dels": [
+    "ORIENT OVERSEAS INTL",
+    "AAC TECHNOLOGIES HLDGS"
+   ],
+   "tier": "B-zero-side"
+  },
+  "Nov21|Japan": {
+   "adds": [
+    "BENEFIT ONE",
+    "OPEN HOUSE"
+   ],
+   "dels": [
+    "NSK",
+    "PEPTIDREAM",
+    "PIGEON CORP",
+    "THK CO",
+    "TOHO GAS CO",
+    "TOHOKU ELECTRIC POWER CO",
+    "UNITED URBAN INVESTMENT",
+    "YAMADA HOLDINGS CO",
+    "ABC-MART",
+    "ACOM CO",
+    "CASIO COMPUTER CO",
+    "HARMONIC DRIVE SYSTEMS",
+    "HISAMITSU PHARMACEUTICAL",
+    "NABTESCO CORP",
+    "NH FOODS"
+   ],
+   "tier": "C-reading-order"
+  }
+ },
+ "unresolved": []
+}

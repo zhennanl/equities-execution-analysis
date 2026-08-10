@@ -2394,5 +2394,690 @@ Bill's `floats` run; shrinks the 11.7% default share).
 Registered upgrade: scrape MOPS directly (layer 1) — the same
 work MSCI's analysts do (Q48).
 
+### Q71. THE FX SAGA RESOLVED — Q67's "fix" was circular; the live series arbitrates (c-108)
+
+Phase 2's PIT-FX input check caught it: the live TWD=X series
+reads Jul-26 ≈ 32.2-32.4, contradicting the 29.5 adopted in
+Q67. The audit exposed MY circularity: "factsheet-implied FX ≈
+29.3" assumed TSMC FIF ≈ 0.87 — but that FIF was computed by
+dividing factsheet caps by census caps priced AT 29.5.
+Breaking the circle with independent facts: TSMC holders (gov
+~6.3%, insiders ~0.4%) -> true float ~0.93 -> MSCI FIF 0.95 ->
+implied FX = 32.05 ✓ matching the live series. THE ORIGINAL
+32.5 WAS APPROXIMATELY RIGHT; the Q67 correction was wrong.
+FIX SWEEP (single source = data/fx_twd_history.json, monthly,
+live): walk TWD -> 32.214, ladder FX, census FX. RESULTS: D =
+$3,811B, gap vs implied +1.8% — the BEST frame agreement yet
+(corroborating the fix); crossing rank 57 @ $11.07B — corridor
+still binds in base and ff=0.40 frames, but at ff=0.70 the
+crossing ($7.44B) falls INSIDE the corridor: the binding
+conclusion is now flagged FRAME-SENSITIVE at the high-float
+end (weaker than before — stated, not hidden). POOL at
+7/31-close/FX-32.2: SIX names again — 6919 4.98, 2834 5.49,
+2609 5.51, 1101 5.67, 3529 5.74, 5871 5.92 (Q67's five-name
+pool superseded; 3533 nearest survivor at 6.48). Adds
+unchanged: 2408 34.7 / 6505 20.9(blocked) / 8046 18.5 / 2344
+18.2. LESSON: circular validation is invisible until an
+INDEPENDENT input contradicts it — the halt-on-abnormal gate
+did exactly its job.
+
+### Q72. Did we verify all "OUT — off-cycle exit" rows? (c-113 — YES, to the limit of the data)
+
+**Q:** After the ticker backfill (1,792/2,849 = 63%, stable),
+can we now check the 405 UNPROBEABLE candidates?
+
+**A:** The verification is now COMPLETE in the sense that every
+candidate carries an evidence-based classification; 3 findings:
+
+1. **The candidate list itself shrank 1,080 → 466** once
+   tickers joined the entity keys. All 377 candidates that
+   vanished in the first regeneration were verified one-by-one
+   as CURRENT MEMBERS matched via ticker (APA GROUP, CHINA
+   MERCHANTS BANK H, ANHUI CONCH A...) — name-variant false
+   positives, exactly what the ticker-first design was for.
+
+2. **75 probeable names: ALL still trading — and that's the
+   signature, not a bug.** Selection bias explains the shape
+   (Yahoo only issues tickers for live names, so dead names
+   stay UNPROBEABLE), and the still-trading exits decompose
+   into: **11 EO-13959 sanction deletions** — MSCI's own
+   documented OFF-CYCLE waves (close of Jan 5/8/26 + Jul 26,
+   2021: HIKVISION 002415.SZ is the flagship — correct
+   ticker, still trading, genuinely out), 10 entity-splits
+   (the DEL row exists under an unresolved variant:
+   KASIKORNBANK FGN, BGF RETAIL (NEW), GUNGHO ENTMT...), and
+   ~54 residual for the L4 queue (KANGMEI, BRILLIANCE,
+   HAINAN AIR suspensions; ARTGO's inclusion-reversal).
+
+3. **391 UNPROBEABLE remain honestly unproven**: no live
+   ticker resolvable anywhere — CONSISTENT with genuine
+   delisting (Yahoo drops dead symbols) but not positively
+   confirmed. Positive confirmation needs exchange delisting
+   archives (registered L4 task), not more Yahoo.
+
+En route, the probe HALTED twice legitimately: once on the
+all-STILL-TRADING anomaly (control probes TWTR/ATVI cleared
+the mechanism), once on PING AN INS A appearing as an exit —
+which exposed three real China ticker bugs (wrong-venue A→H
+resolutions, ETF/index codes passing as equities, truncated
+member names dropping the class letter) now fixed and pinned
+in tests/test_offcycle_verify.py. Artifacts:
+data/offcycle_exit_classified.csv, offcycle_verify_cache.json.
+
+### Q73. Does MSCI publish full index constituents? (c-114 — YES, with two limits)
+
+**Q:** I don't think MSCI produces the full member list — fact-check
+this. If they do, take it from the website; if not, use fund
+holdings. And can we reverse-engineer past membership back to 2006?
+
+**A: They do publish it.** msci.com/constituents serves the complete
+constituent list with closing weights for every index — but it exists
+because EU **ESMA guidelines for ETFs/UCITS require it**, not as a
+service, which is why it carries two limits that matter to us:
+
+1. **~2-month delay.** Today (Aug 2026) it serves "As Of 01 Jun 2026" —
+   the **May-2026** membership. It will not show Aug-2026 until roughly
+   October. So it can never front-run a live review; for the Aug-26
+   trade the iShares census remains primary.
+2. **Names and weights only** — no tickers, shares, or float. Joining
+   to a tradeable universe still needs our own entity resolution.
+
+What it adds that nothing else did: **closing weights** (the project's
+first real weight data — the ETF census has none) and an authoritative
+dated anchor.
+
+**The validation was the payoff.** Three independent MSCI artifacts —
+the constituents tool, the July-2026 country factsheets ("Number of
+Constituents"), and our iShares census built months earlier from a
+different source — agree on index size in **all 13 markets**. Where
+they didn't, the official list arbitrated: Taiwan's census said 79,
+MSCI says 77, so 1602 Pacific Electric Wire and 2418 Ya Hsin are
+EWT holdings that are not index members.
+
+**Both your reverse-engineering routes were tried.** Route A
+(historical fund holdings) is rejected as the spine: iShares publishes
+only the *latest* holdings file, and an ETF's book is a portfolio
+(sampling, cash, fair-value lines), not the index — it stays as a
+cross-check. **Route B is implemented**: reverse-roll from MSCI's own
+dated list back to Feb-2006, undoing one review at a time through the
+count-validated changes database. Taiwan went 77 members (May-26) to
+101 (Feb-06); Japan 168 to 390; China 576 to 221.
+
+The estimate is honest about its error: off-cycle exits and IPO
+fast-entries never appear in review lists, so the roll undercounts by
+the number of off-cycle names already added at that point. That's
+published as an uncertainty band on the chart, not buried. And the
+band is corroborated — the additions the roll *cannot* undo turn out
+to be 92–100% exactly the names the off-cycle audit independently
+flagged (Taiwan 11 of 12, Australia 23 of 23), two pipelines built for
+different purposes naming the same securities.
+
+One halt fired: India's anchor produced 164 keys for 165 published
+names because the entity key stripped all parentheses, merging VEDANTA
+with VEDANTA (DETACHED) — the demerged line, a separate index
+security. Country markers like (AU)/(CN) are noise; identity
+qualifiers are not. Fixed, and the anchor now hard-gates against the
+factsheet count.
+
+### Q74. How should the plain-English walkthrough be built? (c-115)
+
+**Q:** I want an easy-to-understand walkthrough of how we run the
+point-in-time analysis, comprehensible to someone not in finance.
+This is critical because we'll apply the same framework to explain
+predictions for every APAC market.
+
+**A: the decisive choice is that the walkthrough is GENERATED, not
+written.** Every number in the narrative is interpolated from the
+engine's own output at render time. Two consequences, and they are
+the whole reason for the design:
+
+- It cannot drift from the code. If the floor moves, the sentence
+  moves. A hand-written explainer would be wrong within a quarter
+  and nobody would notice.
+- Pointing it at another market regenerates the entire story. Thirteen
+  markets need **zero** additional prose — only their reconstructions.
+  A test enforces this: any `$<number>B` literal appearing in prose
+  without interpolation fails the suite.
+
+**Two layers, because you have two audiences.** Each step carries a
+`plain` layer (zero jargon, every term defined on first use — a friend
+outside finance reads only this and gets the whole method) and a
+collapsed `desk` layer (§3.1.9 cutoff window, §2.3.2.1 GMSR, error
+bars, where the edge dies). Plus an always-visible **"what this step
+can get wrong"** — the house rule, applied to teaching.
+
+**The seven steps:** what's being decided and why money must move →
+the photograph is taken before anyone sees it → how big is big enough
+→ measuring at the frozen instant → draw the two lines → what we said
+vs what MSCI did → what we still cannot know.
+
+**The one interactive lever** sits at step 5: drag the size threshold
+and watch companies cross it, with captured-removals and
+wrongly-flagged updating live. It teaches the thing no paragraph can —
+that there is no correct setting. Drop the line and false alarms
+vanish along with real removals; raise it and you catch everything
+while flagging half the index. That trade-off *is* the problem.
+
+**Step 6 is where the honesty culture pays off pedagogically.** May-26
+scored 7 of 7 removals caught and 8 false alarms — and the walkthrough
+explains that the false alarms are not simply errors: our rule says
+"below the floor", MSCI removes only a subset and judges the rest, so
+the gap is MSCI's discretion *measured*, which is precisely the
+prediction model's learning target.
+
+Lives at page 4 of the site plus a self-contained HTML export (inline
+CSS and SVG, no scripts or CDN, ~21KB — opens anywhere, prints, emails).
+
+### Q75. What do the May-2026 rules actually say, and what did MSCI actually do? (c-117)
+
+**Q:** Our addition engine is clearly wrong. Go to the May-2026
+rulebook: how are the addition and deletion thresholds defined —
+which price data, which date, which free float, how is the cutoff
+calculated, and where does it say so? Any difficulty getting the
+point-in-time data? And from the actual result, what calculation was
+really used?
+
+**A: the defect is bigger than the addition bar — we were anchoring
+every threshold to the wrong number.**
+
+The engine treated the **upper bound of the Global Minimum Size
+Range** as the cutoff and hung 2/3 and 1.5 off it. §2.3.3 (p.26) says
+the **Market Size-Segment Cutoff** is computed *per market* — sort
+Taiwan's Investable Equity Universe by full market cap, cumulate
+**float-adjusted** cap, take the full cap of the company at 85%
+coverage; if it lands inside the range, that *is* the cutoff and its
+rank becomes the Segment Number of Companies. The range (§2.3.2,
+0.5×–1.15× the Global Minimum Size Reference, EM Standard $3.94–9.06B
+for May-26) only *constrains* the cutoff; it is not the cutoff.
+
+The buffers then hang off that computed number, not off the range:
+§3.1.5.1 (p.43) — **"boundaries of 2/3rd of and 1.5 times the Market
+Size-Segment Cutoff"** (0.5×/1.8× at light rebalancings, fn24).
+
+And there is no single addition bar. §3.1.5 (p.42) is a priority list
+filled **until the Segment Number of Companies is reached**: newly
+investable companies need **≥ 1.0× cutoff**; Small Cap constituents
+migrating up need **> 1.5×**; and between those two sits a queue —
+*"the largest companies from the upper buffer of the next lower
+size-segment"* — filled largest-first until the count is met.
+
+**Dates (§3.1.9, p.48):** Equity Universe cutoff = last business day
+of February for a May review; Liquidity cutoff = last business day of
+March; **Price Cutoff = any one of the last 10 business days of
+April**, and it governs *price, FIF, number of shares and foreign
+room* — so point-in-time float is required by the rules, not optional.
+May-2026 used **April 20, 2026** (disclosed in §2.3.2.1's worked
+example). **Float gate (§2.3.6.1, p.30):** float-adjusted cap ≥ **50%
+of the cutoff**, ×1.8 if FIF < 0.15, with existing constituents
+getting 2/3 relief (§3.1.6.2).
+
+**What MSCI actually did in May-2026.** At the disclosed cutoff date
+the seven deletions ($3.48B–$4.76B) and the survivors ($5.19B and up)
+are **perfectly separable**. So 2/3 × cutoff sits between $4.76B and
+$5.19B, implying a **Market Size-Segment Cutoff of about $7.5B** —
+inside the range, and well below the $9.06B ceiling we assumed. Run
+the review with that cutoff and it scores **7 hits, 0 misses, 0 false
+alarms**; the eight false alarms our engine produced were exactly the
+names sitting between the true floor and our inflated one. MPI Corp,
+the sole addition, comes in at 2.13× the inferred cutoff — clearing
+the 1.5× upper buffer outright. Across the eight cleanly separable
+reviews, **16 of 16 additions clear 1.0× the cutoff and only 8 of 16
+clear 1.5×** — precisely the two-path structure of §3.1.5.
+
+**The difficulty is one input.** Prices, shares, FX and the price date
+are all obtainable. Computing the cutoff from first principles is not:
+§2.3.3 needs a free-float factor for **every company in the Taiwan
+universe**, at that date, and we hold float for ~11% of the relevant
+names, current-vintage. That is the same D-grade input from the
+backtest — but its role is now clear. Float is not a tie-breaker in
+this methodology; **it sets the threshold that decides every case.**
+
+So the reframe: our precision was never limited by the rule. It was
+limited by our cutoff estimate. A fixed multiple of the ceiling cannot
+repair it (tested on a grid — it just trades recall for precision)
+because the true cutoff moves within the range each period, 0.56×–0.82×
+the ceiling across clean reviews. Full write-up with page citations:
+`docs/MSCI_SIZE_SEGMENT_SPEC.md`.
+
 *(Next planned entry: the MIEU census result, then the
 point-in-time review of prediction quality across 2015–2026.)*
+
+### Q76. Where do the weights-inversion FIFs come from, and how does the inversion work? (c-139)
+
+**The two public inputs.** (1) MSCI's official constituents
+page for the Taiwan index (harvested by
+`scripts/msci_constituents.py`) publishes every member's
+**index weight** — gated in our harvester to sum to ~100%.
+(2) The MSCI Taiwan **factsheet** publishes the index's total
+float-adjusted market cap ($3,331.4B at Jun-01).
+
+**The identity being inverted.** A cap-weighted index defines
+each member's weight as
+
+    weight_i = (P_i x S_i x FIF_i) / IndexFloatCap
+
+Every quantity except FIF_i is public or computable by us:
+weight_i (constituents page), IndexFloatCap (factsheet),
+P_i x S_i = full cap (our PIT universe: TWSE close x
+NumberOfSharesIssued, same date). Rearranged:
+
+    FIF_i = weight_i x IndexFloatCap / (P_i x S_i)
+
+**Worked example — MediaTek (2454).** weight 6.208% x
+$3,331.4B = $206.8B MSCI float cap; our Jun-01 full cap
+$229.26B; FIF = 206.8/229.26 = **0.902** -> MSCI grid 0.90.
+
+**Why the date must match (and why it then cancels).** The
+weight's numerator contains MSCI's price on date D; our full
+cap contains OUR price on date D'. If D = D' the price
+cancels exactly and pure FIF drops out. If D != D' the error
+equals the price return between the dates — same lesson as
+the implied-FIF work (price moves 6.0% in 11 days, float
+0.39%): align dates and the method is exact; small
+misalignment contaminates via price only.
+
+**Self-validation (why we trust it).** The recovered FIFs
+land ON MSCI's rounding grid without being asked to — Wan Hai
+0.251 -> 0.25, Eva Air 0.501 -> 0.50 — a fingerprint no noisy
+estimator produces. And the weight-derived float caps of the
+top-10 reproduce the factsheet top-10 float caps (the
+identity check that ties the two publications together).
+
+**Coverage.** 60 of 77 members mapped (name->ticker prefix
+matching limits, not method limits). Stored in
+`data/tw_member_fifs_weights.json`; used as tier 2 of the
+c-139 float policy stack (upgraded 53 names off Yahoo/TDCC,
+median correction 2.3pp).
+
+### Q77. Why only 60/77 members? Is the constituents page complete, and would EWT holdings help? (c-140)
+
+**The 60/77 was OUR mapping gap, not MSCI's.** The public
+constituents tool (the page behind
+www-cdn.msci.com/web/msci/index-tools/constituents — the same
+tool our harvester consumes via its JSON endpoint, index code
+915800) carries ALL 77 Taiwan members and the weights sum to
+exactly 100.000%. Seventeen names failed our name->ticker
+prefix matcher on MSCI's abbreviations ('TAIWAN SEMICONDUCTOR
+MFG', 'NOVATEK MICROELECTRS', 'TAIWAN COPR FINL HLDG'...) —
+and they included TSMC itself at 54.78% weight. Fixed by a
+17-line hand map in scripts/tw_fif_inversion.py:
+**77/77 mapped, and all 77 recovered FIFs land on MSCI's
+rounding grid within <=1pp** (TSMC 0.952->0.95, Hon Hai
+0.873->0.875) — the strongest validation the method has
+produced.
+
+**So is the EWT route needed?** Not for coverage. But the
+idea is sound and worth registering, with two caveats:
+1. EWT tracks the MSCI Taiwan **25/50** (an IRS-capped
+   version: no issuer >25%, sum of >5% weights <50%). Its
+   WEIGHTS are therefore distorted vs the plain index —
+   TSMC is capped far below its natural 54.8%. Inverting
+   EWT weights directly gives WRONG FIFs for capped names.
+2. The clean version uses SHARES HELD, not weights: for a
+   replicating fund, shares_held_i / shares_outstanding_i =
+   (TNA / IndexFloatCap) x FIF_i — a constant times FIF —
+   and the constant calibrates off names whose FIF we know.
+   Proportional 25/50 rescaling cancels for uncapped names.
+**Where EWT genuinely adds value: FRESHNESS.** The ESMA
+constituents tool is ~2 months delayed; iShares publishes
+EWT's full holdings daily (T-1). Between MSCI publications,
+daily EWT holdings could reveal FIF changes (block sales,
+new caps) before the constituents tool does. Registered as a
+data route (TW_DATASETS_BRAINSTORM.md), not built.
+
+### Q78. How different are fund-derived FIFs (EWT) from weights-inversion FIFs? (c-141 — MEASURED: very)
+
+Bill asked for the head-to-head table. Built
+(`scripts/ewt_fif_compare.py`; EWT holdings as of Aug-06 via
+the /latest-holdings.csv endpoint found in the page DOM —
+all 77 members present in the fund). Method: hold-ratio
+shares_held/shares_out = c x FIF, c calibrated on sub-5%
+names.
+
+**Result — the EWT route FAILS for FIF levels:**
+- clean-name (sub-5%) median |gap| = **19.1pp**; p90 34.7pp;
+  only 5.3% of names land within one grid step (2.5pp)
+- several fund-implied "FIFs" exceed 1.0 (impossible):
+  Taiwan Business Bank 1.246, Caliway 1.036
+- cap cohort as predicted: TSMC 0.16 vs true 0.95,
+  MediaTek 0.47 vs 0.90, Hon Hai 0.47 vs 0.87
+
+**Why it fails (the real lesson):** EWT tracks the 25/50
+CAPPED index, and with TSMC's natural weight at 54.8% the
+cap forces ~34% of the index to be REDISTRIBUTED. The 5%/50%
+aggregate constraint makes that redistribution iterative and
+non-proportional — it contaminates every name, not just the
+capped ones, so no single calibration constant can undo it.
+On top sits representative-sampling noise. The
+weights-inversion (plain index, Q76-Q77) remains the only
+reliable public recovery of MSCI FIFs.
+
+**What EWT holdings remain good for:** day-over-day CHANGES
+(T-1 freshness) as a directional tell between MSCI
+publications — levels no, deltas maybe. A fund tracking the
+PLAIN index (e.g. iShares MSCI Taiwan UCITS) would be the
+clean test of the fund route; the UK site geo-gated our
+sandbox (HTTP 500) — registered as a terminal follow-up.
+Artifacts: reports/ewt_fif_compare.csv (full 77-row table),
+data/ewt_fif_compare.json.
+
+### Q79. Do ALL funds tracking MSCI Taiwan use capped designs? Does MSCI itself cap? Is this universal? (c-142)
+
+**1. Foreign-domiciled funds: capped BY REGULATION, not
+choice.** EWT (US) tracks MSCI Taiwan 25/50 — the US
+Internal Revenue Code's RIC diversification rules (no issuer
+>25%, sum of >5% issuers <50%). ITWN (UCITS) tracked the
+plain MSCI Taiwan Index until 2020-02-11, then switched to
+MSCI Taiwan 20/35 — the UCITS concentration limits. TSMC at
+~55% natural weight violates BOTH regimes, so no US or EU
+fund CAN replicate the plain index.
+
+**2. MSCI itself does NOT cap the plain country index.**
+Confirmed three ways: (a) our own constituents harvest shows
+TSMC at 54.78% — no cap applied; (b) the capped variants
+exist as SEPARATE index families (25/50, 20/35, 10/40)
+precisely because the parent is uncapped; (c) the GIMI
+universe/cutoff machinery runs on FULL market caps
+(§2.3.2.1) and weights on uncapped float caps — the capping
+families sit downstream of index construction, applied only
+for fund-regulatory consumption.
+
+**3. Universal? Almost — with one useful exception.**
+LOCALLY-domiciled funds escape both RIC and UCITS: the
+Yuanta MSCI Taiwan ETF (006203.TW) tracks the PLAIN MSCI
+Taiwan Index — TSMC weight 54.88%, matching MSCI's official
+54.78% (vintage gap). Taiwan-listed, discloses holdings
+daily. So an exact-weight fund DOES exist; registered as the
+candidate FRESHNESS overlay (daily vs the ~2-month ESMA
+delay) — to be tested with the same hold-ratio method that
+failed on EWT (Q78) before trusting it (sampling noise
+possible in a small fund).
+Also: the capping only BITES in concentrated markets. Korea
+(EWY -> 25/50, Samsung) has the same disease; India/Japan
+funds (INDA, EWJ) track effectively-uncapped exposure since
+no issuer approaches the caps — there, fund holdings ARE a
+usable weights source.
+
+**Verdict (Bill's argument, confirmed and sharpened):** for
+Taiwan, US/EU fund weights are structurally wrong for FIF
+work; the MSCI official weights inversion stays primary
+despite its delay; 006203 daily holdings are the one fund
+route worth testing for freshness.
+
+### Q80. Top-10 FIF: Jul-31 factsheet-implied vs Jun-1 weights-inversion (c-143 — EXACT MATCH)
+
+Two independent MSCI publications, two months apart, two
+different derivations:
+  - implied  = Jul-31 factsheet float cap / Jul-31 full cap
+  - inverted = Jun-1 constituents weight x Jun-1 index float
+               cap / Jun-1 full cap
+All 10 names agree to the THIRD DECIMAL (TSMC 0.952=0.952,
+MediaTek 0.902=0.902, ... Accton 0.902=0.902; max |diff|
+0.0pp). Reading: FIF is a slow variable — MSCI left every
+top-10 FIF untouched between publications — and both
+recovery methods are exact, validating each other. This also
+retroactively certifies the c-140 hand-mapping (TSMC, Hon
+Hai, UMC recovered identically through both routes). Table:
+reports/fif_factsheet_vs_weights.csv.
+
+### Q81. How often does 006203 rebalance, does it front-run FIF changes, and which date's FIF governs the Aug review? (c-143)
+
+**1. 006203 has no rebalance schedule of its own.** It is a
+FULL-REPLICATION tracker of the plain MSCI Taiwan Index
+(Yuanta product page / MoneyDJ), so it trades exactly when
+the INDEX changes: at the four review effective dates
+(Feb/May/Aug/Nov) plus any event-driven implementation MSCI
+makes between reviews.
+
+**2. A FIF change after Jun-1: two regimes (GIMI §3.2.3).**
+- Event MEETS the Corporate Events implementation threshold
+  (large placement, block sale, rights): MSCI implements the
+  FIF change "simultaneously with the event" -> the index
+  moves that day -> the fund rebalances that day -> its
+  daily holdings REVEAL the change ~T+1. This is exactly the
+  freshness value of the 006203 overlay.
+- Event BELOW threshold (gradual drift, NOS <±1%): MSCI
+  itself defers to the next Index Review (§3.1.7/3.1.8) —
+  the index does not move, so the fund does not either.
+  Nothing to observe, because the OFFICIAL FIF genuinely
+  has not changed yet. The fund can never front-run MSCI;
+  it can only echo implementations fast.
+
+**3. The governing date (§3.1.9 + §3.1.7): the Price Cutoff
+Date.** For the Aug-2026 review, MSCI uses security data —
+price, NOS, FIF, foreign room — as of one undisclosed day
+among the LAST 10 BUSINESS DAYS OF JULY. §3.1.7: "FIF
+changes are implemented as part of a given Index Review if
+the changes take place prior to the Price Cutoff Date...
+changes effective after... postponed to the next closest
+Index Review" (escape hatch: MSCI MAY still include late
+changes, announceable until 3 b-days before effective).
+The Equity Universe Cutoff (last b-day of May) governs the
+universe list and EUMSR, not FIFs. Our Jul-31
+factsheet-implied FIFs — which Q80 showed identical to the
+Jun-1 inversion on the top-10 — are therefore exactly the
+right vintage for the prediction: hence the 20260720-31
+universe harvest.
+
+### Q82. Yuanta 006203 (Aug-7) vs MSCI Jun-1 weights: do they match, and is Jun-1 FIF safe for the Aug prediction? (c-143 — YES)
+
+Fund holdings scraped from the Yuanta ratio page (Trade Date
+2026-08-07, all 77 names + quantities; saved
+data/yuanta_006203_holdings.json). Two tests:
+
+**1. Weights (fund Aug-7, renormalized, vs Jun-1 MSCI
+weights rolled forward by prices to Jul-31):** median |diff|
+**0.022pp**, p90 0.12pp across all 77. The fund IS the Jun-1
+index composition, moved only by prices. The one visible
+gap — TSMC 56.29% vs 58.14% expected (−1.85pp) — is fund
+mechanics, not index information: 006203 runs a 1.04%
+futures sleeve and odd-lot practicalities that dilute the
+mega-position slightly.
+
+**2. Hold-ratio FIF (quantity/shares, price-free):** median
+|diff| 1.9pp vs the weights-inversion FIFs; the tail (p90
+7.8pp) is concentrated in sub-0.2%-weight positions (2615
+held just 6,928 shares — creation-basket rounding dominates)
+— replication noise, not FIF signal.
+
+**Verdict — agree with Bill, with three stated caveats:**
+Jun-1 weights-inversion FIFs are SAFE for the Aug-26
+prediction, because (Q80) the Jul-31 factsheet reproduces
+them exactly on the top-10 AND (this test) the live fund
+shows no implemented FIF change through Aug-7, bracketing
+the late-July Price Cutoff window. Caveats: (a) the
+guarantee covers implemented changes only — a big corporate
+event before the cutoff would appear in the index and fund
+first (none has); (b) don't read FIF levels off the fund for
+micro-weight names; (c) fund weights carry a small
+futures-sleeve bias on TSMC.
+
+### Q83. CORRECTION — where the $3,331.4B "Jun-1 index float cap" actually came from (c-145)
+
+**I described it in-session as read off a June factsheet.
+That is wrong, and the record is corrected here rather than
+edited silently.** MSCI publishes a factsheet monthly, but
+our archive holds only the JUL-31 edition ($3,183.0B). The
+Jun-1 figure was never published to us — it was SOLVED
+(c-126b, "FIF-constancy calibration").
+
+**The derivation.** For each of the ten Jul-31 factsheet
+anchors, assume its FIF did not change between Jun-1 and
+Jul-31 (floats drift ~0.4%/11 days vs prices ~6%), then
+
+    IdxCap(Jun-1) = FIF_Jul31 x full_cap_i(Jun-1) / weight_i
+
+Ten independent solutions: 3331.0 / 3331.1 / 3331.4 (x2) /
+3331.5 / 3331.6 / 3331.7 (x2) / 3331.8 (x2) — **spread
+0.026%**. Ten different companies, ten different sizes, one
+answer. That agreement is what justified the constant.
+
+**The consequence, which must be stated: Q80's "exact match"
+on the top-10 is NOT independent evidence.** IdxCap(Jun-1)
+was calibrated by assuming precisely those ten FIFs constant,
+so their Jun-1-inverted and Jul-31-implied values agree BY
+CONSTRUCTION. Q80 demonstrates internal consistency (and that
+the 17-name hand map didn't corrupt the anchors), not
+external validation.
+
+**What DOES independently validate the Taiwan FIFs:**
+1. **The 67 non-anchor members.** Nothing forces them onto
+   MSCI's 2.5% grid — yet all 77 land within 1pp (c-140).
+2. **Grid-snap (c-144).** It uses only weights, full caps and
+   the grid — never the anchors, never any index float cap —
+   and independently recovered c = 33.27 vs the calibrated
+   33.314 (0.13%). An unrelated route reaching the same
+   constant is the real check.
+3. **The live fund (Q82).** 006203's Aug-7 weights match the
+   Jun-1 composition price-rolled forward to 0.022pp median.
+
+Net: the number stands, the evidence for it is different
+from what I first said, and the anchor-circularity is now on
+the record.
+
+### Q84. Is "rank by full cap, accumulate float cap to 85%" the correct MSCI method? (c-149 — YES, verbatim)
+
+Bill restated the engine's logic from walk_display.html. It is
+correct, and §2.3.3 says it almost word for word:
+  - "The companies in the Market Investable Equity Universe
+    are sorted in descending order of FULL market
+    capitalization."
+  - "The cumulative FREE FLOAT-ADJUSTED capitalization
+    coverage of the Market Investable Equity Universe is
+    calculated at each company."
+  - MSCI notes the FULL market cap of the company providing
+    70% (Large), **85% (Standard)**, 99% (IMI) coverage.
+  - If that full cap sits inside the Global Minimum Size
+    Range, it IS the Market Size-Segment Cutoff and the count
+    of companies at or above it becomes the Segment Number of
+    Companies, "used to maintain the indexes over time". If
+    not, the COUNT flexes until it fits.
+
+Three refinements to the restatement:
+1. **85%, not 90%.** The +-5% in §2.3.1 is the tolerance band
+   the RESULT may land in, not the target.
+2. **Coverage is of the MIEU** — the post-screen universe —
+   not of the whole listed market. And the crossing company's
+   FULL cap is the cutoff, while the accumulator is FLOAT cap.
+   Two different columns; mixing them is the classic error.
+3. **Additions are not "everything above the cutoff."**
+   §3.1.5: >=1.0x cutoff is necessary, >1.5x is guaranteed,
+   the gap is a priority queue; and incumbents get 2/3
+   relief (§3.1.4.2). That relief is why walk_display shows
+   77 members but only 67 companies above the ceiling.
+
+Screens confirmed against the rulebook (Bill's list was
+right; exact clauses):
+  §2.2.3 full cap >= Equity Universe Minimum Size Req ($537M)
+  §2.2.4 float-adj cap >= 50% of EUMSR ($268.5M)
+  §2.2.5 ATVR 3m/12m >= 15% + 80% frequency of trading
+  §2.2.6 FIF >= 0.15
+  §2.2.7 3 months of trading before implementation (IPOs)
+  §2.2.8 foreign room >= 15%
+  §2.2.9 financial reporting (we mark NOT_EVALUATED)
+
+So the addition side needs exactly what Bill described: every
+listed company in the market, screened, ranked, accumulated.
+That is the universe file — the one input the weights
+inversion can never supply.
+
+### Q85. Is the factsheet's 3,183,008.39 full or float-adjusted cap — and which do we accumulate? (c-151)
+
+**The factsheet number is FLOAT-ADJUSTED market cap, in USD
+millions: $3,183.0B.** Proof from our own data, no
+interpretation needed: the factsheet's TSMC line is
+$1,848.51B, our measured FULL cap for TSMC at the same date
+is $1,941.23B, and 1848.51/1941.23 = **0.952 — exactly
+TSMC's FIF**. A full-cap table would show 1,941, not 1,848.
+Same for every top-10 line (their 10 sum to $2,443B vs
+$2,666B of full cap).
+
+**Both measures are used, for different jobs (§2.3.3):**
+  - RANK the universe by FULL market cap
+  - ACCUMULATE FREE FLOAT-ADJUSTED cap down that ranking
+  - the cutoff VALUE is the FULL cap of the company where
+    cumulative FLOAT coverage hits 85%
+
+Taiwan at 2026-07-31, measured:
+  MIEU float total          $3,609B
+  85% target                $3,068B
+  crossing                  rank 52 (3481), cum float
+                            $3,072B, FULL cap $11.22B
+  rank 77 (count stability) FULL cap $6.74B, cum float
+                            $3,224B = 89.3% coverage
+
+**Cross-check on the factsheet:** index float cap $3,183.0B
+divided by our MIEU float $3,609B = **88.2% coverage** —
+inside the §2.3.1 85%+-5% band, and close to the 89.3% our
+rank-77 walk implies. Two independent constructions agreeing
+to ~1pp is the strongest evidence the universe is measured
+correctly.
+
+**Which cutoff the engine uses, and why it matters:** the
+raw crossing says $11.22B, the count-stability rank-77 says
+$6.74B. We use $6.74B because §2.3.3 says the Segment Number
+of Companies is "used to maintain the indexes over time",
+and the factsheet still shows 77 constituents. If MSCI let
+the count shrink toward the raw crossing instead, far more
+names would go. That single choice is the largest source of
+error in the Aug call and is carried as the count_flex
+haircut (x0.85) on every probability.
+
+### Q86. Can we replace the MIEU build with "factsheet index float / 0.85"? (c-151 — NO, but keep it as the error bar)
+
+**Does it follow the rulebook? No.** §2.3.3 defines a
+PROCEDURE, not an identity: sort the MIEU by full cap,
+accumulate float-adjusted cap, note the company whose full
+cap sits at 85% coverage. The universe determines the index.
+Dividing the index by 0.85 reverses that arrow and assumes
+the outcome landed exactly on target. §2.3.1 explicitly makes
+85% a TARGET RANGE (+-5%), so the assumption is not merely
+unsupported — for Taiwan it is measurably false: realised
+coverage is 88.2%, so /0.85 overstates the universe by 3.7%
+(3,745 vs our measured 3,611).
+
+**And it cannot produce a cutoff anyway.** The cutoff is the
+full cap of a SPECIFIC company. A scalar total names no
+company; the ranked list is still required. Worse, feeding
+MSCI's denominator into OUR ranked list mixes numerator and
+denominator from two different constructions: the crossing
+then lands at rank 69 ($7.34B) largely because ~$3,183B of
+our list IS the index membership. That is an artifact of list
+composition, not an independent measurement of the cutoff.
+
+**What it IS good for, and how we already use it:**
+1. COMPLETENESS CHECK. The band [index/0.90, index/0.80] =
+   [$3,537B, $3,979B] is where a correctly-built MIEU float
+   total must sit. Ours ($3,611B) is inside — evidence the
+   universe is not materially missing names. This is the
+   `implied_denominator_busd` / `cutoff_corridor_busd` already
+   stored in apac_factsheet_archive.
+2. ERROR BAR ON THE CUTOFF. Measured walk says $11.22B;
+   count-stability rank-77 says $6.75B; Bill's /0.85 route
+   says $7.34B. The two MSCI-anchored numbers cluster low and
+   apart from the raw walk — so the defensible range for the
+   Aug call is **$6.75-11.22B**, not a point estimate, and
+   the count_flex haircut is justified rather than cosmetic.
+
+**Verdict:** build the MIEU (it is the rulebook's own
+procedure and the only route to names); use the factsheet
+ratio to validate the build and to size the uncertainty.
+
+
+## Q87 — How do we know a company is delisted, rather than
+## just missing from our data?
+
+We stopped inferring it and started checking a register. The
+TWSE and TPEx open-data endpoints publish every currently
+listed company (1,983 codes as of 08 Aug 2026). If MSCI's
+historical member code is absent from that list, the exchange
+is telling us it no longer trades. That is evidence. Our
+earlier method — "our search found nothing, so it must be
+gone" — is not evidence, and it was wrong nine times out of
+the twelve names tested, because those companies had simply
+been RENAMED.
+
+The asymmetry worth remembering for the desk: a rename keeps
+the code, a merger kills it. Checking the CODE against the
+live register separates the two cleanly; checking the NAME
+never will.

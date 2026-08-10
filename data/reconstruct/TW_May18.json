@@ -1,0 +1,107 @@
+{
+ "market": "Taiwan",
+ "review": "May18",
+ "keys": {
+  "gmsr_dm": 6.37,
+  "em_range": [
+   1.59,
+   3.67
+  ],
+  "ceiling": 3.67,
+  "floor": 2.447,
+  "bar": 5.505,
+  "price_date": "2018-04-23",
+  "source": "May2018"
+ },
+ "fx_used": 29.54,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "2492",
+   "security": "WALSIN TECHNOLOGY CORP",
+   "action": "ADD",
+   "pit_cap_busd": 2.96,
+   "verdict": "NOT-EXPLAINED: 2.96B well below bar"
+  },
+  {
+   "code": "3682",
+   "security": "ASIA PACIFIC TELECOM CO",
+   "action": "DEL",
+   "pit_cap_busd": 1.27,
+   "verdict": "EXPLAINED: 1.27B is 48% below the 2.447B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "4966": 1.24,
+   "2603": 2.02,
+   "8299": 1.87,
+   "6415": 1.85,
+   "2353": 2.42,
+   "1605": 2.38,
+   "2371": 2.02,
+   "8046": 0.62,
+   "2498": 1.7,
+   "8454": 1.25,
+   "2344": 2.4,
+   "6456": 2.01,
+   "1504": 1.67,
+   "4743": 0.21,
+   "2615": 1.29,
+   "1434": 1.88,
+   "2915": 1.85,
+   "5269": 0.7,
+   "2542": 1.8,
+   "3702": 2.35,
+   "3296": 0.05,
+   "9921": 1.92,
+   "4958": 1.77,
+   "1227": 2.09,
+   "2385": 1.82,
+   "6409": 1.41,
+   "9945": 2.05,
+   "2379": 2.29,
+   "3682": 1.27,
+   "2610": 1.91
+  },
+  "hits": [
+   "3682"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1227",
+   "1434",
+   "1504",
+   "1605",
+   "2344",
+   "2353",
+   "2371",
+   "2379",
+   "2385",
+   "2498",
+   "2542",
+   "2603",
+   "2610",
+   "2615",
+   "2915",
+   "3296",
+   "3702",
+   "4743",
+   "4958",
+   "4966",
+   "5269",
+   "6409",
+   "6415",
+   "6456",
+   "8046",
+   "8299",
+   "8454",
+   "9921",
+   "9945"
+  ]
+ }
+}

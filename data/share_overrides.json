@@ -1,0 +1,35 @@
+{
+ "note": "Market caps for index members Yahoo cannot size. Every entry carries its source; nothing here is inferred.",
+ "max_age_days": 120,
+ "overrides": {
+  "Japan|8951": {
+   "name": "Nippon Building Fund REIT",
+   "shares": 8815000,
+   "cap_local": 1144186994688,
+   "ccy": "JPY",
+   "source": "Yahoo v7/quote \u2014 the batch miss was TRANSIENT; a single re-ask returns both shares and cap. Re-running the harvest may resolve it without this entry.",
+   "asof": "2026-08-08"
+  },
+  "Taiwan|3529": {
+   "name": "eMemory Technology",
+   "shares": 74686492,
+   "cap_usd_b": 5.3026,
+   "source": "OUR OWN exchange harvest \u2014 TPEx line in data/tw_universe_pit.json at 2026-07-20. Yahoo lacks it; the exchange does not.",
+   "asof": "2026-07-20"
+  },
+  "Korea|015760": {
+   "name": "Korea Electric Power (KEPCO)",
+   "cap_usd_b": 16.036262912,
+   "source": "Yahoo v7/quote on the NYSE ADR 'KEP', whose marketCap is the WHOLE company in USD. The Seoul line 015760.KS returns a price but no share count.",
+   "asof": "2026-08-08",
+   "caveat": "ADR-derived. Yahoo's KEP sharesOutstanding is in ADS units, not common shares, so only the CAP is used \u2014 never the share count."
+  }
+ },
+ "still_missing": {
+  "Korea|032640": {
+   "name": "LG Uplus",
+   "why": "no published share count reachable. Yahoo has price and floatShares (259,478,138) but no total; there is no US ADR to borrow a cap from; KRX returns 403 unauthenticated. Needs DART (Korean regulator, API key) or a manual lookup.",
+   "impact": "Korea member coverage 76/77 instead of 77/77. One name below the top of the ladder, so the cutoff moves by roughly one rank."
+  }
+ }
+}

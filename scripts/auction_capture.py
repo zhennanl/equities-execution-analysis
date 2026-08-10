@@ -61,7 +61,7 @@ def capture(codes, until="13:31"):
     OUT.mkdir(exist_ok=True)
     day = dt.date.today().isoformat()
     f = OUT / f"{day}.json"
-    snaps = json.loads(f.read_text()) if f.exists() else []
+    snaps = json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
     print(f"capturing {codes} every 5s until {until} Taipei; "
           f"{len(snaps)} snaps already on file")
     while dt.datetime.now().strftime("%H:%M") <= until:
@@ -70,7 +70,7 @@ def capture(codes, until="13:31"):
             ts = dt.datetime.now().isoformat(timespec="seconds")
             snaps.append({"ts": ts, "snaps": batch})
             tmp = f.with_suffix(".tmp")
-            tmp.write_text(json.dumps(snaps))
+            tmp.write_text(json.dumps(snaps), encoding="utf-8")
             tmp.replace(f)
         except Exception as e:                 # noqa: BLE001
             print("snap failed:", e)

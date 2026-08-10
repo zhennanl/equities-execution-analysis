@@ -1,0 +1,60 @@
+{
+ "market": "Taiwan",
+ "review": "May23",
+ "keys": {
+  "gmsr_dm": 8.27,
+  "em_range": [
+   2.07,
+   4.75
+  ],
+  "ceiling": 4.75,
+  "floor": 3.167,
+  "bar": 7.125,
+  "price_date": "2023-04-18",
+  "source": "May2023"
+ },
+ "fx_used": 30.746,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "3443",
+   "security": "GLOBAL UNICHIP CORP",
+   "action": "ADD",
+   "pit_cap_busd": 4.47,
+   "verdict": "NOT-EXPLAINED: 4.47B well below bar"
+  },
+  {
+   "code": "3231",
+   "security": "WISTRON CORP",
+   "action": "ADD",
+   "pit_cap_busd": 4.1,
+   "verdict": "NOT-EXPLAINED: 4.10B well below bar"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "4966": 2.92,
+   "2353": 2.9,
+   "9904": 3.05,
+   "1504": 3.08,
+   "3702": 2.76,
+   "3105": 2.51,
+   "9921": 2.44
+  },
+  "hits": [],
+  "misses": [],
+  "false_alarms": [
+   "1504",
+   "2353",
+   "3105",
+   "3702",
+   "4966",
+   "9904",
+   "9921"
+  ]
+ }
+}

@@ -97,7 +97,7 @@ def main():
         "prediction": {"event": "MSCI Aug-2026 QIR (caps refreshed "
                        "to current)", "stages": f2, "journeys": j2},
     }
-    OUT.write_text(json.dumps(payload, indent=1))
+    OUT.write_text(json.dumps(payload, indent=1), encoding="utf-8")
     for tag, f in (("VALIDATION May-26", f1), ("PREDICTION Aug-26",
                                                f2)):
         print(f"\n== {tag}")

@@ -1,0 +1,1573 @@
+{
+ "Taiwan": {
+  "exchange": "TWSE",
+  "symbols": [
+   {
+    "symbol": "1301",
+    "note": "Formosa Plastics ~1964",
+    "resolved": "1301@TWSE",
+    "result": "EDGE",
+    "no_data_on_or_before": "2023-04-23",
+    "data_by": "2023-04-26",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 550
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 550
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 8,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 1301@TWSE Trades')"
+   },
+   {
+    "symbol": "2317",
+    "note": "Hon Hai ~1991",
+    "resolved": "2317@TWSE",
+    "result": "EDGE",
+    "no_data_on_or_before": "2023-04-23",
+    "data_by": "2023-04-26",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 495
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 550
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 8,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 2317@TWSE Trades')"
+   },
+   {
+    "symbol": "2330",
+    "note": "TSMC ~1994",
+    "resolved": "2330@TWSE",
+    "result": "EDGE",
+    "no_data_on_or_before": "2023-04-23",
+    "data_by": "2023-04-26",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 550
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 550
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 8,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 2330@TWSE Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2023-04-26",
+  "per_symbol_edges": {
+   "1301": "2023-04-26",
+   "2317": "2023-04-26",
+   "2330": "2023-04-26"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2023-04-26  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "Taiwan_TPEx": {
+  "exchange": "TPEX",
+  "symbols": [
+   {
+    "symbol": "6488",
+    "note": "GlobalWafers ~2015",
+    "resolved": "6488@TPEX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2025-11-16",
+    "data_by": "2025-11-19",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 7,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 6488@TPEX Trades')"
+   },
+   {
+    "symbol": "3105",
+    "note": "Win Semiconductors ~2011",
+    "resolved": "3105@TPEX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2025-11-16",
+    "data_by": "2025-11-19",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 7,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 3105@TPEX Trades')"
+   },
+   {
+    "symbol": "5274",
+    "note": "ASPEED ~2013",
+    "resolved": "5274@TPEX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2025-11-16",
+    "data_by": "2025-11-19",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 7,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 5274@TPEX Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2025-11-19",
+  "per_symbol_edges": {
+   "6488": "2025-11-19",
+   "3105": "2025-11-19",
+   "5274": "2025-11-19"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2025-11-19  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "Japan": {
+  "exchange": "TSEJ",
+  "symbols": [
+   {
+    "symbol": "7203",
+    "note": "Toyota ~1949",
+    "resolved": "7203@TSEJ",
+    "result": "EDGE",
+    "no_data_on_or_before": "2004-03-09",
+    "data_by": "2004-03-12",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 659
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 600
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 600
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 600
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 600
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 539
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 560
+     },
+     {
+      "date": "2002-08-07",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 7203.T@TSEJ Trades')"
+   },
+   {
+    "symbol": "6758",
+    "note": "Sony ~1958",
+    "resolved": "6758@TSEJ",
+    "result": "EDGE",
+    "no_data_on_or_before": "2004-03-09",
+    "data_by": "2004-03-12",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 660
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 600
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 600
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 599
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 599
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 535
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 556
+     },
+     {
+      "date": "2002-08-07",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 6758.T@TSEJ Trades')"
+   },
+   {
+    "symbol": "8306",
+    "note": "MUFG ~2001",
+    "resolved": "8306@TSEJ",
+    "result": "EDGE",
+    "no_data_on_or_before": "2004-03-09",
+    "data_by": "2004-03-12",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 660
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 600
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 600
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 599
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 600
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 538
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 560
+     },
+     {
+      "date": "2002-08-07",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 8306.T@TSEJ Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2004-03-12",
+  "per_symbol_edges": {
+   "7203": "2004-03-12",
+   "6758": "2004-03-12",
+   "8306": "2004-03-12"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2004-03-12  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "HongKong": {
+  "exchange": "SEHK",
+  "symbols": [
+   {
+    "symbol": "5",
+    "note": "HSBC ~1866",
+    "resolved": "5@SEHK",
+    "result": "EDGE",
+    "no_data_on_or_before": "2007-04-27",
+    "data_by": "2007-04-30",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 680
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 680
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 680
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 680
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 660
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 480
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 5@SEHK Trades')"
+   },
+   {
+    "symbol": "941",
+    "note": "China Mobile ~1997",
+    "resolved": "941@SEHK",
+    "result": "EDGE",
+    "no_data_on_or_before": "2007-04-27",
+    "data_by": "2007-04-30",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 680
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 680
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 680
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 680
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 660
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 480
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 941@SEHK Trades')"
+   },
+   {
+    "symbol": "700",
+    "note": "Tencent ~2004",
+    "resolved": "700@SEHK",
+    "result": "EDGE",
+    "no_data_on_or_before": "2007-04-27",
+    "data_by": "2007-04-30",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 680
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 680
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 680
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 680
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 660
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 480
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 700@SEHK Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2007-04-30",
+  "per_symbol_edges": {
+   "5": "2007-04-30",
+   "941": "2007-04-30",
+   "700": "2007-04-30"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2007-04-30  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "Korea": {
+  "exchange": "KRX",
+  "symbols": [
+   {
+    "symbol": "005930",
+    "note": "Samsung Elec ~1975",
+    "resolved": "005930@KRX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2004-05-14",
+    "data_by": "2004-05-17",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 780
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 780
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 780
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 780
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 720
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 720
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 720
+     },
+     {
+      "date": "2002-08-07",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 005930.KS@KRX Trades')"
+   },
+   {
+    "symbol": "005380",
+    "note": "Hyundai Motor ~1974",
+    "resolved": "005380@KRX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2004-05-14",
+    "data_by": "2004-05-17",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 780
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 780
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 780
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 780
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 720
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 720
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 720
+     },
+     {
+      "date": "2002-08-07",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 005380.KS@KRX Trades')"
+   },
+   {
+    "symbol": "000660",
+    "note": "SK Hynix ~1996",
+    "resolved": "000660@KRX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2004-05-14",
+    "data_by": "2004-05-17",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 780
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 780
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 780
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 780
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 720
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 720
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 720
+     },
+     {
+      "date": "2002-08-07",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 000660.KS@KRX Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2004-05-17",
+  "per_symbol_edges": {
+   "005930": "2004-05-17",
+   "005380": "2004-05-17",
+   "000660": "2004-05-17"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2004-05-17  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "Singapore": {
+  "exchange": "SGX",
+  "symbols": [
+   {
+    "symbol": "Z74",
+    "note": "Singtel ~1993",
+    "resolved": "Z74@SGX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2011-08-24",
+    "data_by": "2011-08-27",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 880
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 880
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 880
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 860
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 980
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: Z74@SGX Trades')"
+   },
+   {
+    "symbol": "O39",
+    "note": "OCBC ~1970s",
+    "resolved": "O39@SGX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2011-08-24",
+    "data_by": "2011-08-27",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 880
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 880
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 880
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 860
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 980
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: O39@SGX Trades')"
+   },
+   {
+    "symbol": "D05",
+    "note": "DBS ~1968",
+    "resolved": "D05@SGX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2011-08-24",
+    "data_by": "2011-08-27",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 880
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 880
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 880
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 860
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 980
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: D05@SGX Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2011-08-27",
+  "per_symbol_edges": {
+   "Z74": "2011-08-27",
+   "O39": "2011-08-27",
+   "D05": "2011-08-27"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2011-08-27  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "Australia": {
+  "exchange": "ASX",
+  "symbols": [
+   {
+    "symbol": "BHP",
+    "note": "BHP ~1885",
+    "resolved": "BHP@ASX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2004-05-03",
+    "data_by": "2004-05-06",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 730
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 654
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 654
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 727
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 750
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 748
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 740
+     },
+     {
+      "date": "2002-08-07",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: BHP@ASX Trades')"
+   },
+   {
+    "symbol": "CBA",
+    "note": "CommBank ~1991",
+    "resolved": "CBA@ASX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2004-05-03",
+    "data_by": "2004-05-06",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 730
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 648
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 648
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 720
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 750
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 750
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 740
+     },
+     {
+      "date": "2002-08-07",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: CBA@ASX Trades')"
+   },
+   {
+    "symbol": "CSL",
+    "note": "CSL ~1994",
+    "resolved": "CSL@ASX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2007-10-30",
+    "data_by": "2007-11-02",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 730
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 648
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 648
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 720
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 750
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 750
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: CSL@ASX Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2004-05-06",
+  "per_symbol_edges": {
+   "BHP": "2004-05-06",
+   "CBA": "2004-05-06",
+   "CSL": "2007-11-02"
+  },
+  "spread_days": 1275,
+  "verdict": "5m begins 2004-05-06  (probes disagree by 1275 days; the earliest is IBKR's floor, the later ones are listing dates)"
+ },
+ "India": {
+  "exchange": "NSE",
+  "symbols": [
+   {
+    "symbol": "RELIANCE",
+    "note": "Reliance ~1977",
+    "resolved": "RELIANCE@NSE",
+    "result": "EDGE",
+    "no_data_on_or_before": "2008-06-08",
+    "data_by": "2008-06-11",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 750
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 750
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 750
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 750
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 750
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 780
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: RELIANCE@NSE Trades')"
+   },
+   {
+    "symbol": "INFY",
+    "note": "Infosys ~1993",
+    "resolved": "INFY@NSE",
+    "result": "EDGE",
+    "no_data_on_or_before": "2008-06-08",
+    "data_by": "2008-06-11",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 750
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 750
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 750
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 750
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 750
+     },
+     {
+      "date": "2010-08-05",
+      "bars": 780
+     },
+     {
+      "date": "2006-08-06",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: INFY@NSE Trades')"
+   },
+   {
+    "symbol": "HINDUNILVR",
+    "note": "HUL ~1956",
+    "result": "NO CONTRACT"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2008-06-11",
+  "per_symbol_edges": {
+   "RELIANCE": "2008-06-11",
+   "INFY": "2008-06-11",
+   "HINDUNILVR": null
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2008-06-11  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "China_SH": {
+  "exchange": "SEHKNTL",
+  "symbols": [
+   {
+    "symbol": "600519",
+    "note": "Moutai ~2001",
+    "resolved": "600519@SEHKNTL",
+    "result": "EDGE",
+    "no_data_on_or_before": "2014-11-11",
+    "data_by": "2014-11-14",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 600519@SEHKNTL Trades')"
+   },
+   {
+    "symbol": "600036",
+    "note": "China Merchants Bk ~2002",
+    "resolved": "600036@SEHKNTL",
+    "result": "EDGE",
+    "no_data_on_or_before": "2014-11-11",
+    "data_by": "2014-11-14",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 600036@SEHKNTL Trades')"
+   },
+   {
+    "symbol": "601398",
+    "note": "ICBC ~2006",
+    "resolved": "601398@SEHKNTL",
+    "result": "EDGE",
+    "no_data_on_or_before": "2014-11-11",
+    "data_by": "2014-11-14",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 601398@SEHKNTL Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2014-11-14",
+  "per_symbol_edges": {
+   "600519": "2014-11-14",
+   "600036": "2014-11-14",
+   "601398": "2014-11-14"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2014-11-14  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "China_SZ": {
+  "exchange": "SEHKSZSE",
+  "symbols": [
+   {
+    "symbol": "000001",
+    "note": "Ping An Bank ~1991",
+    "resolved": "000001@SEHKSZSE",
+    "result": "EDGE",
+    "no_data_on_or_before": "2016-12-02",
+    "data_by": "2016-12-05",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 000001@SEHKSZSE Trades')"
+   },
+   {
+    "symbol": "000002",
+    "note": "Vanke ~1991",
+    "resolved": "000002@SEHKSZSE",
+    "result": "EDGE",
+    "no_data_on_or_before": "2016-12-02",
+    "data_by": "2016-12-05",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 000002@SEHKSZSE Trades')"
+   },
+   {
+    "symbol": "000333",
+    "note": "Midea ~2013",
+    "resolved": "000333@SEHKSZSE",
+    "result": "EDGE",
+    "no_data_on_or_before": "2016-12-02",
+    "data_by": "2016-12-05",
+    "walk": [
+     {
+      "date": "2025-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-01",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2014-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 000333@SEHKSZSE Trades')"
+   }
+  ],
+  "measured": "2026-08-08",
+  "edge": "2016-12-05",
+  "per_symbol_edges": {
+   "000001": "2016-12-05",
+   "000002": "2016-12-05",
+   "000333": "2016-12-05"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2016-12-05  (all probes agree within a month \u2014 this is IBKR's floor)"
+ },
+ "China_ChiNext": {
+  "exchange": "CHINEXT",
+  "symbols": [
+   {
+    "symbol": "300750",
+    "note": "CATL ~2018",
+    "resolved": "300750@CHINEXT",
+    "result": "EDGE",
+    "no_data_on_or_before": "2019-01-01",
+    "data_by": "2019-01-04",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 300750@CHINEXT Trades')"
+   },
+   {
+    "symbol": "300059",
+    "note": "East Money ~2010",
+    "resolved": "300059@CHINEXT",
+    "result": "EDGE",
+    "no_data_on_or_before": "2016-12-03",
+    "data_by": "2016-12-06",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-04",
+      "bars": 480
+     },
+     {
+      "date": "2014-08-05",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 300059@CHINEXT Trades')"
+   },
+   {
+    "symbol": "300760",
+    "note": "Mindray ~2018",
+    "resolved": "300760@CHINEXT",
+    "result": "EDGE",
+    "no_data_on_or_before": "2019-01-01",
+    "data_by": "2019-01-04",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 300760@CHINEXT Trades')"
+   }
+  ],
+  "measured": "2026-08-09",
+  "edge": "2016-12-06",
+  "per_symbol_edges": {
+   "300750": "2019-01-04",
+   "300059": "2016-12-06",
+   "300760": "2019-01-04"
+  },
+  "spread_days": 759,
+  "verdict": "5m begins 2016-12-06  (probes disagree by 759 days \u2014 the earliest is the VENUE floor, but coverage clearly varies by name, so per-window coverage must be read from the bars, not assumed from this date)"
+ },
+ "China_STAR": {
+  "exchange": "SEHKSTAR",
+  "symbols": [
+   {
+    "symbol": "688981",
+    "note": "SMIC ~2020",
+    "resolved": "688981@SEHKSTAR",
+    "result": "EDGE",
+    "no_data_on_or_before": "2021-12-11",
+    "data_by": "2021-12-14",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 688981@SEHKSTAR Trades')"
+   },
+   {
+    "symbol": "688111",
+    "note": "Kingsoft Office ~2019",
+    "resolved": "688111@SEHKSTAR",
+    "result": "EDGE",
+    "no_data_on_or_before": "2021-06-15",
+    "data_by": "2021-06-18",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 688111@SEHKSTAR Trades')"
+   },
+   {
+    "symbol": "688036",
+    "note": "Transsion ~2019",
+    "resolved": "688036@SEHKSTAR",
+    "result": "EDGE",
+    "no_data_on_or_before": "2021-06-15",
+    "data_by": "2021-06-18",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2024-08-02",
+      "bars": 480
+     },
+     {
+      "date": "2022-08-03",
+      "bars": 480
+     },
+     {
+      "date": "2018-08-04",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 9,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 688036@SEHKSTAR Trades')"
+   }
+  ],
+  "measured": "2026-08-09",
+  "edge": "2021-06-18",
+  "per_symbol_edges": {
+   "688981": "2021-12-14",
+   "688111": "2021-06-18",
+   "688036": "2021-06-18"
+  },
+  "spread_days": 179,
+  "verdict": "5m begins 2021-06-18  (probes disagree by 179 days \u2014 the earliest is the VENUE floor, but coverage clearly varies by name, so per-window coverage must be read from the bars, not assumed from this date)"
+ },
+ "Korea_KOSDAQ": {
+  "exchange": "KRX",
+  "symbols": [
+   {
+    "symbol": "035760",
+    "note": "CJ ENM ~1999",
+    "resolved": "035760@KRX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2026-01-31",
+    "data_by": "2026-02-02",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 7,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 035760.KQ@KRX Trades')"
+   },
+   {
+    "symbol": "086520",
+    "note": "Ecopro ~2007",
+    "resolved": "086520@KRX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2026-01-31",
+    "data_by": "2026-02-02",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 7,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 086520.KQ@KRX Trades')"
+   },
+   {
+    "symbol": "096530",
+    "note": "Seegene ~2010",
+    "resolved": "096530@KRX",
+    "result": "EDGE",
+    "no_data_on_or_before": "2026-01-31",
+    "data_by": "2026-02-02",
+    "walk": [
+     {
+      "date": "2025-08-02",
+      "bars": 0
+     }
+    ],
+    "bisection_steps": 7,
+    "confirmation": {
+     "20d_earlier_has_data": false,
+     "20d_later_has_data": true
+    },
+    "boundary_error": "(162, 'Historical Market Data Service error message:HMDS query returned no data: 096530.KQ@KRX Trades')"
+   }
+  ],
+  "measured": "2026-08-09",
+  "edge": "2026-02-02",
+  "per_symbol_edges": {
+   "035760": "2026-02-02",
+   "086520": "2026-02-02",
+   "096530": "2026-02-02"
+  },
+  "spread_days": 0,
+  "verdict": "5m begins 2026-02-02  (all probes agree within a month \u2014 this is IBKR's floor)"
+ }
+}

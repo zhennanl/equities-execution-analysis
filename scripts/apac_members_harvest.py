@@ -138,7 +138,7 @@ def main():
               f"{len(m['anchor_only'])} | comp-only "
               f"{len(m['composite_only'])}")
         time.sleep(1)
-    OUT.write_text(json.dumps(out, indent=1))
+    OUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print("wrote", OUT)
 
 

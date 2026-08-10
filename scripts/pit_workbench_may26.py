@@ -50,7 +50,7 @@ def membership_asof(events, asof):
     history fall back to the interval logic (covers delisted names).
     Returns ({code: bool}, source_map)."""
     ewt = json.loads((ROOT / "data" / "ewt_members.json")
-                     .read_text())
+                     .read_text(encoding="utf-8"))
     anchor = set(ewt["codes"])
     mem, src = {}, {}
     post = [ev for ev in events.values() if ev["ann"] > asof]
@@ -80,11 +80,11 @@ def membership_asof(events, asof):
 
 def main():
     cache = json.loads((ROOT / "data" / "tw_vintage_cache.json")
-                       .read_text())
+                       .read_text(encoding="utf-8"))
     events = json.loads((ROOT / "data" / "msci_tw_events.json")
-                        .read_text())
+                        .read_text(encoding="utf-8"))
     pitc = json.loads((ROOT / "data" / "pit_may26_asia_cache.json")
-                      .read_text())
+                      .read_text(encoding="utf-8"))
     interval, mem_srcs = membership_asof(events, ASOF)
     may = events["May26"]
     rows = []
@@ -209,7 +209,7 @@ def main():
         "tentative_adds": graded,
         "rows": df.sort_values("cap_usd_b_apr30", ascending=False)
         .to_dict("records")}
-    OUT.write_text(json.dumps(out, indent=1))
+    OUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print("members reconstructed:", out["members"], "of", len(df),
           "named; GMSR", out["thresholds"])
     print("tentative adds:")

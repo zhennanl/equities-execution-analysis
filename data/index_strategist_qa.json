@@ -1,0 +1,2211 @@
+{
+ "n_windows": 2175,
+ "markets": {
+  "Australia": 42,
+  "China": 1275,
+  "HongKong": 20,
+  "India": 164,
+  "Indonesia": 52,
+  "Japan": 228,
+  "Korea": 108,
+  "Malaysia": 37,
+  "NewZealand": 13,
+  "Singapore": 19,
+  "Taiwan": 176,
+  "Thailand": 41
+ },
+ "questions": [
+  {
+   "title": "Q1. How big is the print?",
+   "why": "Sizes the execution problem before anything else. T-multiple = effective-day volume / 20-session median ADV. It is the number that decides whether the trade is a schedule or a negotiation.",
+   "rows": [
+    {
+     "market": "Australia",
+     "action": "ADD",
+     "n": 15,
+     "t_mult_median": 16.527375433907892,
+     "t_mult_p75": 21.76598470073212,
+     "t_mult_max": 40.01532393539079,
+     "window_vol_x_adv": 1.1662878483194485,
+     "delisted_safe": false
+    },
+    {
+     "market": "Australia",
+     "action": "DEL",
+     "n": 27,
+     "t_mult_median": 14.364226570922499,
+     "t_mult_p75": 20.185711472640204,
+     "t_mult_max": 36.14769290508064,
+     "window_vol_x_adv": 1.3117444731600405,
+     "delisted_safe": false
+    },
+    {
+     "market": "China",
+     "action": "ADD",
+     "n": 820,
+     "t_mult_median": 1.391900402253014,
+     "t_mult_p75": 2.4846338575522813,
+     "t_mult_max": 998.515264498505,
+     "window_vol_x_adv": 0.9295343403808727,
+     "delisted_safe": false
+    },
+    {
+     "market": "China",
+     "action": "DEL",
+     "n": 454,
+     "t_mult_median": 2.1599528781529713,
+     "t_mult_p75": 3.9964123257154096,
+     "t_mult_max": 51.822971236649764,
+     "window_vol_x_adv": 1.038667959576404,
+     "delisted_safe": false
+    },
+    {
+     "market": "HongKong",
+     "action": "ADD",
+     "n": 4,
+     "t_mult_median": 25.314850087553822,
+     "t_mult_p75": 30.493959678705874,
+     "t_mult_max": 39.06863112860839,
+     "window_vol_x_adv": 1.9234925474124906,
+     "delisted_safe": false
+    },
+    {
+     "market": "HongKong",
+     "action": "DEL",
+     "n": 16,
+     "t_mult_median": 20.01454447685061,
+     "t_mult_p75": 24.789958609499198,
+     "t_mult_max": 34.736188072564886,
+     "window_vol_x_adv": 1.623238047615267,
+     "delisted_safe": false
+    },
+    {
+     "market": "India",
+     "action": "ADD",
+     "n": 125,
+     "t_mult_median": 16.747513288857633,
+     "t_mult_p75": 26.67394015704422,
+     "t_mult_max": 63.56009401830795,
+     "window_vol_x_adv": 1.3040096138623836,
+     "delisted_safe": true
+    },
+    {
+     "market": "India",
+     "action": "DEL",
+     "n": 39,
+     "t_mult_median": 17.067257028070212,
+     "t_mult_p75": 29.07879424353252,
+     "t_mult_max": 58.13045708955224,
+     "window_vol_x_adv": 1.577271343787722,
+     "delisted_safe": true
+    },
+    {
+     "market": "Indonesia",
+     "action": "ADD",
+     "n": 19,
+     "t_mult_median": 16.085787164050604,
+     "t_mult_p75": 20.563227680038366,
+     "t_mult_max": 31.64669326967936,
+     "window_vol_x_adv": 1.5051311006142971,
+     "delisted_safe": false
+    },
+    {
+     "market": "Indonesia",
+     "action": "DEL",
+     "n": 33,
+     "t_mult_median": 28.92857040470197,
+     "t_mult_p75": 42.87818965297143,
+     "t_mult_max": 170.53705940113542,
+     "window_vol_x_adv": 1.8950021807848128,
+     "delisted_safe": false
+    },
+    {
+     "market": "Japan",
+     "action": "ADD",
+     "n": 55,
+     "t_mult_median": 8.270089088824204,
+     "t_mult_p75": 11.74088888888889,
+     "t_mult_max": 18.087398555248374,
+     "window_vol_x_adv": 1.1626357354392893,
+     "delisted_safe": false
+    },
+    {
+     "market": "Japan",
+     "action": "DEL",
+     "n": 173,
+     "t_mult_median": 12.033822758259046,
+     "t_mult_p75": 15.569110041020153,
+     "t_mult_max": 41.804868472713,
+     "window_vol_x_adv": 1.411498429512841,
+     "delisted_safe": false
+    },
+    {
+     "market": "Korea",
+     "action": "ADD",
+     "n": 43,
+     "t_mult_median": 4.506625354467489,
+     "t_mult_p75": 8.509751244053453,
+     "t_mult_max": 23.76561460300333,
+     "window_vol_x_adv": 1.0281541157780927,
+     "delisted_safe": false
+    },
+    {
+     "market": "Korea",
+     "action": "DEL",
+     "n": 65,
+     "t_mult_median": 12.499001535416648,
+     "t_mult_p75": 18.33069424304328,
+     "t_mult_max": 50.475330955401816,
+     "window_vol_x_adv": 1.2996828890250443,
+     "delisted_safe": false
+    },
+    {
+     "market": "Malaysia",
+     "action": "ADD",
+     "n": 11,
+     "t_mult_median": 13.489112082020576,
+     "t_mult_p75": 18.999459709786972,
+     "t_mult_max": 36.93772006209064,
+     "window_vol_x_adv": 1.442918895735988,
+     "delisted_safe": false
+    },
+    {
+     "market": "Malaysia",
+     "action": "DEL",
+     "n": 26,
+     "t_mult_median": 41.9028717729991,
+     "t_mult_p75": 63.03631590461606,
+     "t_mult_max": 114.55318503922089,
+     "window_vol_x_adv": 2.0224615924297273,
+     "delisted_safe": false
+    },
+    {
+     "market": "NewZealand",
+     "action": "ADD",
+     "n": 5,
+     "t_mult_median": 52.83875488492179,
+     "t_mult_p75": 76.57508266849932,
+     "t_mult_max": 79.58628155109413,
+     "window_vol_x_adv": 1.892318307422907,
+     "delisted_safe": false
+    },
+    {
+     "market": "NewZealand",
+     "action": "DEL",
+     "n": 8,
+     "t_mult_median": 60.09957194800798,
+     "t_mult_p75": 68.30391379487264,
+     "t_mult_max": 76.86640023132371,
+     "window_vol_x_adv": 1.6170461024951992,
+     "delisted_safe": false
+    },
+    {
+     "market": "Singapore",
+     "action": "ADD",
+     "n": 6,
+     "t_mult_median": 13.412511872939756,
+     "t_mult_p75": 19.51408995149536,
+     "t_mult_max": 25.795690034828315,
+     "window_vol_x_adv": 1.378624831599613,
+     "delisted_safe": false
+    },
+    {
+     "market": "Singapore",
+     "action": "DEL",
+     "n": 13,
+     "t_mult_median": 21.325324584155553,
+     "t_mult_p75": 25.27560066979422,
+     "t_mult_max": 27.753206955530217,
+     "window_vol_x_adv": 1.4283893687249478,
+     "delisted_safe": false
+    },
+    {
+     "market": "Taiwan",
+     "action": "ADD",
+     "n": 76,
+     "t_mult_median": 6.255207941344619,
+     "t_mult_p75": 10.264975878377175,
+     "t_mult_max": 34.845106810737704,
+     "window_vol_x_adv": 1.1625352935373368,
+     "delisted_safe": true
+    },
+    {
+     "market": "Taiwan",
+     "action": "DEL",
+     "n": 100,
+     "t_mult_median": 17.414940125562968,
+     "t_mult_p75": 28.345982705614215,
+     "t_mult_max": 62.55851439097336,
+     "window_vol_x_adv": 1.6358032209242257,
+     "delisted_safe": true
+    },
+    {
+     "market": "Thailand",
+     "action": "ADD",
+     "n": 15,
+     "t_mult_median": 6.938106191130041,
+     "t_mult_p75": 10.66018882896889,
+     "t_mult_max": 25.229089741531546,
+     "window_vol_x_adv": 1.2336819037153632,
+     "delisted_safe": false
+    },
+    {
+     "market": "Thailand",
+     "action": "DEL",
+     "n": 23,
+     "t_mult_median": 8.66387128351732,
+     "t_mult_p75": 11.288614285915116,
+     "t_mult_max": 57.55361519607843,
+     "window_vol_x_adv": 1.4218613766496297,
+     "delisted_safe": false
+    }
+   ],
+   "reading": "Read the p75 and the max, not the median \u2014 the median is the day you plan for and the tail is the day that costs you."
+  },
+  {
+   "title": "Q2. When does the move happen \u2014 the pop or the drift?",
+   "why": "If the move is in gap1 the announcement is already priced and there is nothing to work; if it is in the drift there is a window to trade into. Capture = drift / (gap1 + drift).",
+   "rows": [
+    {
+     "market": "Australia",
+     "action": "ADD",
+     "n": 15,
+     "gap1": 0.0046511627906977715,
+     "drift": 0.016176470588235237,
+     "total_ann_to_eff": 0.017062314540059464,
+     "capture_share_of_move_in_drift": 0.7766830870279103
+    },
+    {
+     "market": "Australia",
+     "action": "DEL",
+     "n": 27,
+     "gap1": 0.00723589001447178,
+     "drift": 0.02298850574712641,
+     "total_ann_to_eff": 0.0389408099688473,
+     "capture_share_of_move_in_drift": 0.760594386351128
+    },
+    {
+     "market": "China",
+     "action": "ADD",
+     "n": 821,
+     "gap1": 0.0016000000000000458,
+     "drift": -0.016771488469601636,
+     "total_ann_to_eff": -0.017842790548143306,
+     "capture_share_of_move_in_drift": 1.1054609772275075
+    },
+    {
+     "market": "China",
+     "action": "DEL",
+     "n": 454,
+     "gap1": -0.002529351383190437,
+     "drift": -0.007278651756715271,
+     "total_ann_to_eff": -0.013500494714367539,
+     "capture_share_of_move_in_drift": 0.7421135222827067
+    },
+    {
+     "market": "HongKong",
+     "action": "ADD",
+     "n": 4,
+     "gap1": -0.005973495699861386,
+     "drift": 0.05509581881533099,
+     "total_ann_to_eff": 0.05001501614542514,
+     "capture_share_of_move_in_drift": 1.1216045032279878
+    },
+    {
+     "market": "HongKong",
+     "action": "DEL",
+     "n": 16,
+     "gap1": 0.0047687091030743645,
+     "drift": -0.04008679809368343,
+     "total_ann_to_eff": -0.04458396638041312,
+     "capture_share_of_move_in_drift": 1.1350217194464385
+    },
+    {
+     "market": "India",
+     "action": "ADD",
+     "n": 125,
+     "gap1": -0.0022099447513812542,
+     "drift": 0.01715846345662886,
+     "total_ann_to_eff": 0.008587405139129256,
+     "capture_share_of_move_in_drift": 1.1478370395727213
+    },
+    {
+     "market": "India",
+     "action": "DEL",
+     "n": 39,
+     "gap1": -0.017689331122167085,
+     "drift": 0.005096525096524918,
+     "total_ann_to_eff": -0.015833544785587406,
+     "capture_share_of_move_in_drift": -0.40471719219267666
+    },
+    {
+     "market": "Indonesia",
+     "action": "ADD",
+     "n": 19,
+     "gap1": 0.03759398496240607,
+     "drift": 0.02238805970149249,
+     "total_ann_to_eff": 0.08591065664283848,
+     "capture_share_of_move_in_drift": 0.37324602432179527
+    },
+    {
+     "market": "Indonesia",
+     "action": "DEL",
+     "n": 33,
+     "gap1": -0.04724423043149095,
+     "drift": -0.027322355681032584,
+     "total_ann_to_eff": -0.06514657980456029,
+     "capture_share_of_move_in_drift": 0.366415536843838
+    },
+    {
+     "market": "Japan",
+     "action": "ADD",
+     "n": 55,
+     "gap1": 0.006585753671204397,
+     "drift": 0.017142857142857126,
+     "total_ann_to_eff": 0.034639927073837784,
+     "capture_share_of_move_in_drift": 0.7224551524397841
+    },
+    {
+     "market": "Japan",
+     "action": "DEL",
+     "n": 173,
+     "gap1": -0.002613240418118501,
+     "drift": 0.002406159769008598,
+     "total_ann_to_eff": -0.0035511363636363535,
+     "capture_share_of_move_in_drift": -11.619433198374736
+    },
+    {
+     "market": "Korea",
+     "action": "ADD",
+     "n": 43,
+     "gap1": -0.001076374272603764,
+     "drift": 0.011695906432748648,
+     "total_ann_to_eff": 0.011695906432748648,
+     "capture_share_of_move_in_drift": 1.1013579747555544
+    },
+    {
+     "market": "Korea",
+     "action": "DEL",
+     "n": 65,
+     "gap1": -0.012600229095074411,
+     "drift": -0.012765957446808529,
+     "total_ann_to_eff": -0.021024967148488782,
+     "capture_share_of_move_in_drift": 0.5032667179093018
+    },
+    {
+     "market": "Malaysia",
+     "action": "ADD",
+     "n": 11,
+     "gap1": 0.0,
+     "drift": 0.007885219659690357,
+     "total_ann_to_eff": 0.009786644848637449,
+     "capture_share_of_move_in_drift": 1.0
+    },
+    {
+     "market": "Malaysia",
+     "action": "DEL",
+     "n": 26,
+     "gap1": -0.02421984163949692,
+     "drift": -0.06348638238402016,
+     "total_ann_to_eff": -0.09078764907090692,
+     "capture_share_of_move_in_drift": 0.7238526466148771
+    },
+    {
+     "market": "NewZealand",
+     "action": "ADD",
+     "n": 5,
+     "gap1": -0.005376344086021612,
+     "drift": -0.025945945945946014,
+     "total_ann_to_eff": -0.010085337470907785,
+     "capture_share_of_move_in_drift": 0.8283540545555738
+    },
+    {
+     "market": "NewZealand",
+     "action": "DEL",
+     "n": 8,
+     "gap1": -0.010702965813900789,
+     "drift": 0.00562700964630225,
+     "total_ann_to_eff": -0.002546689303904892,
+     "capture_share_of_move_in_drift": -1.108561512453804
+    },
+    {
+     "market": "Singapore",
+     "action": "ADD",
+     "n": 6,
+     "gap1": 0.01704506556427421,
+     "drift": -0.06549828394880508,
+     "total_ann_to_eff": -0.022322250335079563,
+     "capture_share_of_move_in_drift": 1.3517839708603547
+    },
+    {
+     "market": "Singapore",
+     "action": "DEL",
+     "n": 13,
+     "gap1": -0.021922428330522714,
+     "drift": 0.0,
+     "total_ann_to_eff": -0.026666666666666727,
+     "capture_share_of_move_in_drift": -0.0
+    },
+    {
+     "market": "Taiwan",
+     "action": "ADD",
+     "n": 76,
+     "gap1": 0.010349104365329542,
+     "drift": 0.03432187730968217,
+     "total_ann_to_eff": 0.041333693968378826,
+     "capture_share_of_move_in_drift": 0.7683260143996639
+    },
+    {
+     "market": "Taiwan",
+     "action": "DEL",
+     "n": 100,
+     "gap1": -0.00903457653457651,
+     "drift": -0.014001779164280248,
+     "total_ann_to_eff": -0.02493443754313318,
+     "capture_share_of_move_in_drift": 0.6078122489216089
+    },
+    {
+     "market": "Thailand",
+     "action": "ADD",
+     "n": 15,
+     "gap1": 0.018292682926829285,
+     "drift": 0.041284403669724856,
+     "total_ann_to_eff": 0.03984033783588359,
+     "capture_share_of_move_in_drift": 0.6929577464788735
+    },
+    {
+     "market": "Thailand",
+     "action": "DEL",
+     "n": 26,
+     "gap1": 0.0,
+     "drift": 0.014285714285714346,
+     "total_ann_to_eff": 0.0,
+     "capture_share_of_move_in_drift": 1.0
+    }
+   ],
+   "reading": "Capture near 1 means the market takes the whole window to price it. Capture near 0 or negative means it gapped and then went the other way."
+  },
+  {
+   "title": "Q3. Does it revert after the print?",
+   "why": "Decides whether the effective close is a price to fade or a price to accept. rev5/rev20 are the returns from the effective close forward.",
+   "rows": [
+    {
+     "market": "Australia",
+     "action": "ADD",
+     "n": 15,
+     "eff_day": -0.0033285094066568544,
+     "rev5": 0.0027662517289073207,
+     "rev20": -0.03401943967981702,
+     "abs_rev5_median": 0.022606382978723416,
+     "delisted_safe": false
+    },
+    {
+     "market": "Australia",
+     "action": "DEL",
+     "n": 27,
+     "eff_day": 0.0,
+     "rev5": -0.01718803712616024,
+     "rev20": -0.027898643460455452,
+     "abs_rev5_median": 0.03887147335423191,
+     "delisted_safe": false
+    },
+    {
+     "market": "China",
+     "action": "ADD",
+     "n": 821,
+     "eff_day": 0.007946520308496519,
+     "rev5": -0.00460299194476399,
+     "rev20": -0.02671696553149716,
+     "abs_rev5_median": 0.031059871263556804,
+     "delisted_safe": false
+    },
+    {
+     "market": "China",
+     "action": "DEL",
+     "n": 454,
+     "eff_day": -0.0023985502293030203,
+     "rev5": -0.007383710646257813,
+     "rev20": 0.0,
+     "abs_rev5_median": 0.030160057333970425,
+     "delisted_safe": false
+    },
+    {
+     "market": "HongKong",
+     "action": "ADD",
+     "n": 4,
+     "eff_day": 0.015202893033879117,
+     "rev5": 0.023407266427543094,
+     "rev20": 0.12020879871127699,
+     "abs_rev5_median": 0.023407266427543094,
+     "delisted_safe": false
+    },
+    {
+     "market": "HongKong",
+     "action": "DEL",
+     "n": 16,
+     "eff_day": -0.013628610729023383,
+     "rev5": 0.002073287329564355,
+     "rev20": 0.009530848011082504,
+     "abs_rev5_median": 0.033535999749473855,
+     "delisted_safe": false
+    },
+    {
+     "market": "India",
+     "action": "ADD",
+     "n": 125,
+     "eff_day": 0.006568144499178974,
+     "rev5": 0.00033301617507119907,
+     "rev20": 0.0059356136820925,
+     "abs_rev5_median": 0.02653115100316794,
+     "delisted_safe": true
+    },
+    {
+     "market": "India",
+     "action": "DEL",
+     "n": 39,
+     "eff_day": -0.0029054410987851,
+     "rev5": 0.023940374915305318,
+     "rev20": 0.023596673596673723,
+     "abs_rev5_median": 0.042173085371210894,
+     "delisted_safe": true
+    },
+    {
+     "market": "Indonesia",
+     "action": "ADD",
+     "n": 19,
+     "eff_day": 0.024922118380062308,
+     "rev5": -0.0365296803652968,
+     "rev20": -0.019867549668874163,
+     "abs_rev5_median": 0.06951871657754016,
+     "delisted_safe": false
+    },
+    {
+     "market": "Indonesia",
+     "action": "DEL",
+     "n": 33,
+     "eff_day": -0.04051172707889128,
+     "rev5": 0.03913043478260869,
+     "rev20": 0.004310344827586299,
+     "abs_rev5_median": 0.05513784461152882,
+     "delisted_safe": false
+    },
+    {
+     "market": "Japan",
+     "action": "ADD",
+     "n": 55,
+     "eff_day": 0.0,
+     "rev5": 0.0005257097791797616,
+     "rev20": -0.007284079084287187,
+     "abs_rev5_median": 0.03201113430758529,
+     "delisted_safe": false
+    },
+    {
+     "market": "Japan",
+     "action": "DEL",
+     "n": 173,
+     "eff_day": -0.0004053506282934993,
+     "rev5": 0.0,
+     "rev20": 0.006130268199233679,
+     "abs_rev5_median": 0.027186761229314405,
+     "delisted_safe": false
+    },
+    {
+     "market": "Korea",
+     "action": "ADD",
+     "n": 43,
+     "eff_day": 0.0046511172229812825,
+     "rev5": -0.053380782918149516,
+     "rev20": -0.03954463750748949,
+     "abs_rev5_median": 0.0652173913043479,
+     "delisted_safe": false
+    },
+    {
+     "market": "Korea",
+     "action": "DEL",
+     "n": 65,
+     "eff_day": -0.017473117267002736,
+     "rev5": -0.00990099009900991,
+     "rev20": -0.011204481792717047,
+     "abs_rev5_median": 0.041353383458646586,
+     "delisted_safe": false
+    },
+    {
+     "market": "Malaysia",
+     "action": "ADD",
+     "n": 11,
+     "eff_day": 0.011363636363636243,
+     "rev5": -0.03491271820448871,
+     "rev20": 0.016548463356973908,
+     "abs_rev5_median": 0.0453183759321818,
+     "delisted_safe": false
+    },
+    {
+     "market": "Malaysia",
+     "action": "DEL",
+     "n": 26,
+     "eff_day": -0.021732188693612375,
+     "rev5": 0.01210317460317456,
+     "rev20": 0.030978260869565233,
+     "abs_rev5_median": 0.04792321841808589,
+     "delisted_safe": false
+    },
+    {
+     "market": "NewZealand",
+     "action": "ADD",
+     "n": 5,
+     "eff_day": 0.003831417624520883,
+     "rev5": 0.010687022900763399,
+     "rev20": 0.054277828886844626,
+     "abs_rev5_median": 0.028793774319066046,
+     "delisted_safe": false
+    },
+    {
+     "market": "NewZealand",
+     "action": "DEL",
+     "n": 8,
+     "eff_day": -0.01513134027917895,
+     "rev5": -0.010450740074416265,
+     "rev20": -0.006984582627547864,
+     "abs_rev5_median": 0.03390067198069535,
+     "delisted_safe": false
+    },
+    {
+     "market": "Singapore",
+     "action": "ADD",
+     "n": 6,
+     "eff_day": 0.002123828431598973,
+     "rev5": -0.0209007049748115,
+     "rev20": -0.04626017544596622,
+     "abs_rev5_median": 0.03615235270374184,
+     "delisted_safe": false
+    },
+    {
+     "market": "Singapore",
+     "action": "DEL",
+     "n": 13,
+     "eff_day": -0.040000000000000036,
+     "rev5": 0.027397260273972712,
+     "rev20": -0.006849315068493178,
+     "abs_rev5_median": 0.032786885245901676,
+     "delisted_safe": false
+    },
+    {
+     "market": "Taiwan",
+     "action": "ADD",
+     "n": 76,
+     "eff_day": 0.0046476350854683934,
+     "rev5": -0.030864197530864224,
+     "rev20": -0.01888006571741513,
+     "abs_rev5_median": 0.06481208548268236,
+     "delisted_safe": true
+    },
+    {
+     "market": "Taiwan",
+     "action": "DEL",
+     "n": 100,
+     "eff_day": -0.013343583104062195,
+     "rev5": 0.0,
+     "rev20": -0.0018139813221780265,
+     "abs_rev5_median": 0.043501847568815755,
+     "delisted_safe": true
+    },
+    {
+     "market": "Thailand",
+     "action": "ADD",
+     "n": 15,
+     "eff_day": -0.021186440677966045,
+     "rev5": 0.005847953216374213,
+     "rev20": 0.0,
+     "abs_rev5_median": 0.02144772117962468,
+     "delisted_safe": false
+    },
+    {
+     "market": "Thailand",
+     "action": "DEL",
+     "n": 26,
+     "eff_day": 0.0,
+     "rev5": 0.0035714285714285587,
+     "rev20": 0.004761904761904745,
+     "abs_rev5_median": 0.05041023690502061,
+     "delisted_safe": false
+    }
+   ],
+   "reading": "A deletion reversal on a SURVIVORS-ONLY market is the most biased number in this whole document: the names that did not survive cannot bounce."
+  },
+  {
+   "title": "Q4. Which schedule beats the effective close?",
+   "why": "Cost in bps versus doing 100% on the effective close, signed so NEGATIVE = beat the benchmark. This is the only question on this page a desk gets paid for directly.",
+   "rows": [
+    {
+     "market": "Australia",
+     "action": "ADD",
+     "n": 15,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": 57.24637681159494,
+     "ALL_DAY1_bps": -30.959752321980673,
+     "LATE5_bps": 22.941774357485567,
+     "EARLY30_MOC70_bps": -26.95652173913099,
+     "delisted_safe": false
+    },
+    {
+     "market": "Australia",
+     "action": "DEL",
+     "n": 27,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": 16.906170752324368,
+     "ALL_DAY1_bps": 241.5458937198056,
+     "LATE5_bps": 12.375386730836269,
+     "EARLY30_MOC70_bps": 61.47722246793607,
+     "delisted_safe": false
+    },
+    {
+     "market": "China",
+     "action": "ADD",
+     "n": 821,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": 56.06925044265188,
+     "ALL_DAY1_bps": 148.14814814814835,
+     "LATE5_bps": 4.870129870129247,
+     "EARLY30_MOC70_bps": 29.27580893682613,
+     "delisted_safe": false
+    },
+    {
+     "market": "China",
+     "action": "DEL",
+     "n": 454,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -84.7398222478013,
+     "ALL_DAY1_bps": -108.32600410436766,
+     "LATE5_bps": -16.303226950752368,
+     "EARLY30_MOC70_bps": -42.23597708661653,
+     "delisted_safe": false
+    },
+    {
+     "market": "HongKong",
+     "action": "ADD",
+     "n": 4,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -513.1353231465303,
+     "ALL_DAY1_bps": -794.0955390217447,
+     "LATE5_bps": -302.82080019444436,
+     "EARLY30_MOC70_bps": -228.76072934811532,
+     "delisted_safe": false
+    },
+    {
+     "market": "HongKong",
+     "action": "DEL",
+     "n": 16,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -300.1765605949014,
+     "ALL_DAY1_bps": -314.94113763890437,
+     "LATE5_bps": -181.1461388074298,
+     "EARLY30_MOC70_bps": -91.09362098532858,
+     "delisted_safe": false
+    },
+    {
+     "market": "India",
+     "action": "ADD",
+     "n": 125,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -115.31808571977776,
+     "ALL_DAY1_bps": -218.81230041813083,
+     "LATE5_bps": -29.84610601585502,
+     "EARLY30_MOC70_bps": -49.403992531955595,
+     "delisted_safe": true
+    },
+    {
+     "market": "India",
+     "action": "DEL",
+     "n": 39,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": 18.11335428371752,
+     "ALL_DAY1_bps": -9.857766511758292,
+     "LATE5_bps": -14.645824531756002,
+     "EARLY30_MOC70_bps": 11.879171852020587,
+     "delisted_safe": true
+    },
+    {
+     "market": "Indonesia",
+     "action": "ADD",
+     "n": 19,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -468.7499581445709,
+     "ALL_DAY1_bps": -634.146341463414,
+     "LATE5_bps": -181.24991887656927,
+     "EARLY30_MOC70_bps": -188.14431260280818,
+     "delisted_safe": false
+    },
+    {
+     "market": "Indonesia",
+     "action": "DEL",
+     "n": 33,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -417.23318299262456,
+     "ALL_DAY1_bps": -521.7384825030135,
+     "LATE5_bps": -318.84057971014454,
+     "EARLY30_MOC70_bps": -208.69561215459686,
+     "delisted_safe": false
+    },
+    {
+     "market": "Japan",
+     "action": "ADD",
+     "n": 55,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -124.42198085815703,
+     "ALL_DAY1_bps": -199.73368841544658,
+     "LATE5_bps": 41.753653444676075,
+     "EARLY30_MOC70_bps": -73.30827067669188,
+     "delisted_safe": false
+    },
+    {
+     "market": "Japan",
+     "action": "DEL",
+     "n": 173,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": 25.326579578778265,
+     "ALL_DAY1_bps": 48.939641109299046,
+     "LATE5_bps": -5.236973029589809,
+     "EARLY30_MOC70_bps": 24.999999999999467,
+     "delisted_safe": false
+    },
+    {
+     "market": "Korea",
+     "action": "ADD",
+     "n": 43,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -132.85021368314776,
+     "ALL_DAY1_bps": -276.67984189723273,
+     "LATE5_bps": -52.83018867924483,
+     "EARLY30_MOC70_bps": -77.28558423233278,
+     "delisted_safe": false
+    },
+    {
+     "market": "Korea",
+     "action": "DEL",
+     "n": 65,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -179.18381344307343,
+     "ALL_DAY1_bps": -261.8657937806868,
+     "LATE5_bps": -120.05421223290736,
+     "EARLY30_MOC70_bps": -94.53781512605008,
+     "delisted_safe": false
+    },
+    {
+     "market": "Malaysia",
+     "action": "ADD",
+     "n": 11,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -74.99853518486033,
+     "ALL_DAY1_bps": -295.4898911353021,
+     "LATE5_bps": -54.86284289276777,
+     "EARLY30_MOC70_bps": -82.42612752721756,
+     "delisted_safe": false
+    },
+    {
+     "market": "Malaysia",
+     "action": "DEL",
+     "n": 26,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -610.2053764191062,
+     "ALL_DAY1_bps": -1015.1960784313718,
+     "LATE5_bps": -319.7994987468677,
+     "EARLY30_MOC70_bps": -262.2979016167859,
+     "delisted_safe": false
+    },
+    {
+     "market": "NewZealand",
+     "action": "ADD",
+     "n": 5,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": 70.46388725778118,
+     "ALL_DAY1_bps": 251.9083969465652,
+     "LATE5_bps": -41.221374045802285,
+     "EARLY30_MOC70_bps": 81.67938931297857,
+     "delisted_safe": false
+    },
+    {
+     "market": "NewZealand",
+     "action": "DEL",
+     "n": 8,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -253.79647789806282,
+     "ALL_DAY1_bps": -132.6784826530669,
+     "LATE5_bps": -174.98488208022576,
+     "EARLY30_MOC70_bps": -78.64682088231544,
+     "delisted_safe": false
+    },
+    {
+     "market": "Singapore",
+     "action": "ADD",
+     "n": 6,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": 40.745285305223696,
+     "ALL_DAY1_bps": 608.6212660517975,
+     "LATE5_bps": -126.09850476361484,
+     "EARLY30_MOC70_bps": 127.31664688035882,
+     "delisted_safe": false
+    },
+    {
+     "market": "Singapore",
+     "action": "DEL",
+     "n": 13,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -426.1747634571034,
+     "ALL_DAY1_bps": -376.08332670748143,
+     "LATE5_bps": -356.53650254668935,
+     "EARLY30_MOC70_bps": -75.34246575342519,
+     "delisted_safe": false
+    },
+    {
+     "market": "Taiwan",
+     "action": "ADD",
+     "n": 76,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -299.2745254745249,
+     "ALL_DAY1_bps": -504.83817150483776,
+     "LATE5_bps": -130.82140462952032,
+     "EARLY30_MOC70_bps": -171.88818565400942,
+     "delisted_safe": true
+    },
+    {
+     "market": "Taiwan",
+     "action": "DEL",
+     "n": 100,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -153.26810414687085,
+     "ALL_DAY1_bps": -329.8520452567455,
+     "LATE5_bps": -151.98274841103807,
+     "EARLY30_MOC70_bps": -76.50706496697856,
+     "delisted_safe": true
+    },
+    {
+     "market": "Thailand",
+     "action": "ADD",
+     "n": 15,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -37.79457536682962,
+     "ALL_DAY1_bps": -190.4761904761909,
+     "LATE5_bps": 84.3881856540074,
+     "EARLY30_MOC70_bps": -54.054054054055726,
+     "delisted_safe": false
+    },
+    {
+     "market": "Thailand",
+     "action": "DEL",
+     "n": 26,
+     "MOC_baseline_bps": 0.0,
+     "LINEAR_bps": -22.71241087258291,
+     "ALL_DAY1_bps": 2.115628726391261,
+     "LATE5_bps": -99.75124378109435,
+     "EARLY30_MOC70_bps": 7.787958837232045,
+     "delisted_safe": false
+    }
+   ],
+   "reading": "These are UNCONDITIONAL medians on a survivors-biased panel for ten of thirteen markets. They size the opportunity; they are not a schedule."
+  },
+  {
+   "title": "Q5. Is the name already positioned before the announcement?",
+   "why": "20 sessions of pre-announcement drift, signed so POSITIVE = already moving the way the review will push it. Anticipation is the part of the trade that is gone before the desk is called.",
+   "rows": [
+    {
+     "market": "Australia",
+     "action": "ADD",
+     "n": 15,
+     "pre_drift_20s": 0.03464566929133861,
+     "favourable_pre_drift": 0.03464566929133861,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Australia",
+     "action": "DEL",
+     "n": 27,
+     "pre_drift_20s": -0.002512329022052673,
+     "favourable_pre_drift": 0.002512329022052673,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "China",
+     "action": "ADD",
+     "n": 821,
+     "pre_drift_20s": -0.0009276437847866026,
+     "favourable_pre_drift": -0.0009276437847866026,
+     "share_moving_the_right_way": 0.0
+    },
+    {
+     "market": "China",
+     "action": "DEL",
+     "n": 454,
+     "pre_drift_20s": -0.008840777668574995,
+     "favourable_pre_drift": 0.008840777668574995,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "HongKong",
+     "action": "ADD",
+     "n": 4,
+     "pre_drift_20s": -0.045107681217254725,
+     "favourable_pre_drift": -0.045107681217254725,
+     "share_moving_the_right_way": 0.0
+    },
+    {
+     "market": "HongKong",
+     "action": "DEL",
+     "n": 16,
+     "pre_drift_20s": 0.042956007625312265,
+     "favourable_pre_drift": -0.042956007625312265,
+     "share_moving_the_right_way": 0.0
+    },
+    {
+     "market": "India",
+     "action": "ADD",
+     "n": 125,
+     "pre_drift_20s": 0.04247104247104261,
+     "favourable_pre_drift": 0.04247104247104261,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "India",
+     "action": "DEL",
+     "n": 39,
+     "pre_drift_20s": -0.04016411142301879,
+     "favourable_pre_drift": 0.04016411142301879,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Indonesia",
+     "action": "ADD",
+     "n": 19,
+     "pre_drift_20s": 0.028169014084507005,
+     "favourable_pre_drift": 0.028169014084507005,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Indonesia",
+     "action": "DEL",
+     "n": 33,
+     "pre_drift_20s": -0.05666666666666664,
+     "favourable_pre_drift": 0.05666666666666664,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Japan",
+     "action": "ADD",
+     "n": 55,
+     "pre_drift_20s": 0.06951033175355459,
+     "favourable_pre_drift": 0.06951033175355459,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Japan",
+     "action": "DEL",
+     "n": 173,
+     "pre_drift_20s": -0.010008006405124115,
+     "favourable_pre_drift": 0.010008006405124115,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Korea",
+     "action": "ADD",
+     "n": 43,
+     "pre_drift_20s": 0.02652519893899208,
+     "favourable_pre_drift": 0.02652519893899208,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Korea",
+     "action": "DEL",
+     "n": 65,
+     "pre_drift_20s": 0.009960159362549792,
+     "favourable_pre_drift": -0.009960159362549792,
+     "share_moving_the_right_way": 0.0
+    },
+    {
+     "market": "Malaysia",
+     "action": "ADD",
+     "n": 11,
+     "pre_drift_20s": 0.07371007371007376,
+     "favourable_pre_drift": 0.07371007371007376,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Malaysia",
+     "action": "DEL",
+     "n": 26,
+     "pre_drift_20s": -0.02180254874865656,
+     "favourable_pre_drift": 0.02180254874865656,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "NewZealand",
+     "action": "ADD",
+     "n": 5,
+     "pre_drift_20s": 0.017940717628705194,
+     "favourable_pre_drift": 0.017940717628705194,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "NewZealand",
+     "action": "DEL",
+     "n": 8,
+     "pre_drift_20s": -0.023146547999654377,
+     "favourable_pre_drift": 0.023146547999654377,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Singapore",
+     "action": "ADD",
+     "n": 6,
+     "pre_drift_20s": 0.017828865512951042,
+     "favourable_pre_drift": 0.017828865512951042,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Singapore",
+     "action": "DEL",
+     "n": 13,
+     "pre_drift_20s": -0.014586709886547755,
+     "favourable_pre_drift": 0.014586709886547755,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Taiwan",
+     "action": "ADD",
+     "n": 76,
+     "pre_drift_20s": 0.039334072373109485,
+     "favourable_pre_drift": 0.039334072373109485,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Taiwan",
+     "action": "DEL",
+     "n": 100,
+     "pre_drift_20s": -0.03021089419137135,
+     "favourable_pre_drift": 0.03021089419137135,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Thailand",
+     "action": "ADD",
+     "n": 15,
+     "pre_drift_20s": 0.07179487179487176,
+     "favourable_pre_drift": 0.07179487179487176,
+     "share_moving_the_right_way": 1.0
+    },
+    {
+     "market": "Thailand",
+     "action": "DEL",
+     "n": 26,
+     "pre_drift_20s": 0.0,
+     "favourable_pre_drift": -0.0,
+     "share_moving_the_right_way": 0.0
+    }
+   ],
+   "reading": "Tier-1 can only see PRICE anticipation. Taiwan's borrow-build clock (98% of deletions show excess build) is a Tier-2 measurement and has no analog here."
+  },
+  {
+   "title": "Q6. Did the Feb-2023 QCIR regime change the trade?",
+   "why": "MSCI moved Feb/Aug from light maintenance to full comprehensive reviews. More names per review could mean smaller individual prints, or the same print size four times a year instead of twice.",
+   "rows": [
+    {
+     "market": "Australia",
+     "period": "before Feb-2023",
+     "n": 26,
+     "t_mult_median": 14.34715446769667,
+     "abs_eff_day": 0.02237129319065112,
+     "abs_gap1": 0.02302108885190851
+    },
+    {
+     "market": "Australia",
+     "period": "since Feb-2023",
+     "n": 16,
+     "t_mult_median": 19.046102460619835,
+     "abs_eff_day": 0.01654536222071762,
+     "abs_gap1": 0.014364925270531681
+    },
+    {
+     "market": "China",
+     "period": "before Feb-2023",
+     "n": 806,
+     "t_mult_median": 1.5835593130307555,
+     "abs_eff_day": 0.016728624535315983,
+     "abs_gap1": 0.011583011583011449
+    },
+    {
+     "market": "China",
+     "period": "since Feb-2023",
+     "n": 468,
+     "t_mult_median": 1.6907096028148962,
+     "abs_eff_day": 0.017870449222908258,
+     "abs_gap1": 0.013726894160652703
+    },
+    {
+     "market": "HongKong",
+     "period": "before Feb-2023",
+     "n": 16,
+     "t_mult_median": 22.860989287546047,
+     "abs_eff_day": 0.015202893033879117,
+     "abs_gap1": 0.01258209056250481
+    },
+    {
+     "market": "India",
+     "period": "before Feb-2023",
+     "n": 90,
+     "t_mult_median": 16.100058083607315,
+     "abs_eff_day": 0.01743725777080135,
+     "abs_gap1": 0.025024613307200516
+    },
+    {
+     "market": "India",
+     "period": "since Feb-2023",
+     "n": 74,
+     "t_mult_median": 18.075744430982976,
+     "abs_eff_day": 0.014489780655673579,
+     "abs_gap1": 0.018767180122458482
+    },
+    {
+     "market": "Indonesia",
+     "period": "before Feb-2023",
+     "n": 31,
+     "t_mult_median": 24.442964350124306,
+     "abs_eff_day": 0.03952569169960474,
+     "abs_gap1": 0.049261083743842415
+    },
+    {
+     "market": "Indonesia",
+     "period": "since Feb-2023",
+     "n": 21,
+     "t_mult_median": 23.548235052908545,
+     "abs_eff_day": 0.04166666666666663,
+     "abs_gap1": 0.04278074866310155
+    },
+    {
+     "market": "Japan",
+     "period": "before Feb-2023",
+     "n": 137,
+     "t_mult_median": 11.555034550839093,
+     "abs_eff_day": 0.014705882352941124,
+     "abs_gap1": 0.017997750281214864
+    },
+    {
+     "market": "Japan",
+     "period": "since Feb-2023",
+     "n": 91,
+     "t_mult_median": 10.384670757207006,
+     "abs_eff_day": 0.013389711064129672,
+     "abs_gap1": 0.015794223826714804
+    },
+    {
+     "market": "Korea",
+     "period": "before Feb-2023",
+     "n": 53,
+     "t_mult_median": 9.141230154957695,
+     "abs_eff_day": 0.022267206477732726,
+     "abs_gap1": 0.03155334127808751
+    },
+    {
+     "market": "Korea",
+     "period": "since Feb-2023",
+     "n": 55,
+     "t_mult_median": 7.070086802480071,
+     "abs_eff_day": 0.026627218934911268,
+     "abs_gap1": 0.015706806282722474
+    },
+    {
+     "market": "Malaysia",
+     "period": "before Feb-2023",
+     "n": 23,
+     "t_mult_median": 25.157768902654386,
+     "abs_eff_day": 0.022157125494717822,
+     "abs_gap1": 0.03418803418803418
+    },
+    {
+     "market": "Malaysia",
+     "period": "since Feb-2023",
+     "n": 14,
+     "t_mult_median": 28.14810406147093,
+     "abs_eff_day": 0.036370730015606034,
+     "abs_gap1": 0.02421984163949692
+    },
+    {
+     "market": "NewZealand",
+     "period": "before Feb-2023",
+     "n": 8,
+     "t_mult_median": 54.34733392858319,
+     "abs_eff_day": 0.018047694367701095,
+     "abs_gap1": 0.027861421401975006
+    },
+    {
+     "market": "Singapore",
+     "period": "before Feb-2023",
+     "n": 10,
+     "t_mult_median": 20.41970726782546,
+     "abs_eff_day": 0.03750000000000003,
+     "abs_gap1": 0.03112280315955529
+    },
+    {
+     "market": "Singapore",
+     "period": "since Feb-2023",
+     "n": 9,
+     "t_mult_median": 16.598287279708362,
+     "abs_eff_day": 0.014814814814814836,
+     "abs_gap1": 0.011764705882353121
+    },
+    {
+     "market": "Taiwan",
+     "period": "before Feb-2023",
+     "n": 126,
+     "t_mult_median": 11.93502219310442,
+     "abs_eff_day": 0.023496140473215688,
+     "abs_gap1": 0.022324770527428706
+    },
+    {
+     "market": "Taiwan",
+     "period": "since Feb-2023",
+     "n": 50,
+     "t_mult_median": 11.001209234033514,
+     "abs_eff_day": 0.01815186460985474,
+     "abs_gap1": 0.015424037140138791
+    },
+    {
+     "market": "Thailand",
+     "period": "before Feb-2023",
+     "n": 20,
+     "t_mult_median": 7.786674609998771,
+     "abs_eff_day": 0.021606436198013834,
+     "abs_gap1": 0.0226558509225393
+    },
+    {
+     "market": "Thailand",
+     "period": "since Feb-2023",
+     "n": 18,
+     "t_mult_median": 6.705699119847492,
+     "abs_eff_day": 0.014084507042253502,
+     "abs_gap1": 0.005154356254334802
+    }
+   ],
+   "reading": "A period split is not a controlled experiment \u2014 2023-2026 is also a different volatility regime. Treat a difference here as a question, not a finding."
+  },
+  {
+   "title": "Q7. Which markets print violently?",
+   "why": "|effective-day return| \u2014 the risk the desk carries into the close. Ranked by the 90th percentile, because the tail is what breaks a schedule.",
+   "rows": [
+    {
+     "market": "Indonesia",
+     "n": 52,
+     "abs_eff_day_median": 0.041089196872778955,
+     "abs_eff_day_p90": 0.13888888888888884,
+     "abs_eff_day_max": 0.3486238532110091,
+     "share_over_5pct": 0.40384615384615385
+    },
+    {
+     "market": "Malaysia",
+     "n": 37,
+     "abs_eff_day_median": 0.024096385542168752,
+     "abs_eff_day_p90": 0.08510638297872353,
+     "abs_eff_day_max": 0.19491525423728817,
+     "share_over_5pct": 0.24324324324324326
+    },
+    {
+     "market": "Korea",
+     "n": 108,
+     "abs_eff_day_median": 0.02291153887446362,
+     "abs_eff_day_p90": 0.07771534220163656,
+     "abs_eff_day_max": 0.13525265681874377,
+     "share_over_5pct": 0.23148148148148148
+    },
+    {
+     "market": "Taiwan",
+     "n": 176,
+     "abs_eff_day_median": 0.022796662861809425,
+     "abs_eff_day_p90": 0.06295149638802888,
+     "abs_eff_day_max": 0.09918699186991864,
+     "share_over_5pct": 0.17613636363636365
+    },
+    {
+     "market": "Australia",
+     "n": 42,
+     "abs_eff_day_median": 0.02003968253968247,
+     "abs_eff_day_p90": 0.06145251396648033,
+     "abs_eff_day_max": 0.08048289738430592,
+     "share_over_5pct": 0.16666666666666666
+    },
+    {
+     "market": "Thailand",
+     "n": 41,
+     "abs_eff_day_median": 0.017241379310344862,
+     "abs_eff_day_p90": 0.060194174757281615,
+     "abs_eff_day_max": 0.08176100628930816,
+     "share_over_5pct": 0.14634146341463414
+    },
+    {
+     "market": "Singapore",
+     "n": 19,
+     "abs_eff_day_median": 0.0273972602739726,
+     "abs_eff_day_p90": 0.056736790790115066,
+     "abs_eff_day_max": 0.09938214802155909,
+     "share_over_5pct": 0.2631578947368421
+    },
+    {
+     "market": "China",
+     "n": 1275,
+     "abs_eff_day_median": 0.017029328287606393,
+     "abs_eff_day_p90": 0.04859967051070835,
+     "abs_eff_day_max": 0.18749266830987987,
+     "share_over_5pct": 0.09411764705882353
+    },
+    {
+     "market": "HongKong",
+     "n": 20,
+     "abs_eff_day_median": 0.019937889079538862,
+     "abs_eff_day_p90": 0.047457627118643986,
+     "abs_eff_day_max": 0.06627393225331368,
+     "share_over_5pct": 0.1
+    },
+    {
+     "market": "India",
+     "n": 164,
+     "abs_eff_day_median": 0.016612756385114724,
+     "abs_eff_day_p90": 0.04601170311056357,
+     "abs_eff_day_max": 0.12408759124087587,
+     "share_over_5pct": 0.07317073170731707
+    },
+    {
+     "market": "Japan",
+     "n": 228,
+     "abs_eff_day_median": 0.01388538093778302,
+     "abs_eff_day_p90": 0.04104477611940305,
+     "abs_eff_day_max": 0.11513012792236432,
+     "share_over_5pct": 0.06578947368421052
+    },
+    {
+     "market": "NewZealand",
+     "n": 13,
+     "abs_eff_day_median": 0.015793848711554426,
+     "abs_eff_day_p90": 0.03105590062111807,
+     "abs_eff_day_max": 0.0642695356738393,
+     "share_over_5pct": 0.07692307692307693
+    }
+   ],
+   "reading": "This is the market-selection question: where does an index-rebalance book deserve more risk budget and tighter pre-trade limits."
+  },
+  {
+   "title": "Q8. Is the deletion side harder than the addition side?",
+   "why": "Desk lore says deletions are worse: a forced seller into a name nobody has to own, with the borrow already lent out. Tier 1 can test the size and the violence of it.",
+   "rows": [
+    {
+     "market": "Australia",
+     "n_add": 15,
+     "n_del": 27,
+     "add_t_mult": 16.527375433907892,
+     "del_t_mult": 14.364226570922499,
+     "add_abs_eff": 0.023129251700680253,
+     "del_abs_eff": 0.015233581584292444,
+     "delisted_safe": false
+    },
+    {
+     "market": "China",
+     "n_add": 821,
+     "n_del": 454,
+     "add_t_mult": 1.391900402253014,
+     "del_t_mult": 2.1599528781529713,
+     "add_abs_eff": 0.0174825174825175,
+     "del_abs_eff": 0.016150769498304574,
+     "delisted_safe": false
+    },
+    {
+     "market": "HongKong",
+     "n_add": 4,
+     "n_del": 16,
+     "add_t_mult": 25.314850087553822,
+     "del_t_mult": 20.01454447685061,
+     "add_abs_eff": 0.019174143215380413,
+     "del_abs_eff": 0.020045277395690064,
+     "delisted_safe": false
+    },
+    {
+     "market": "India",
+     "n_add": 125,
+     "n_del": 39,
+     "add_t_mult": 16.747513288857633,
+     "del_t_mult": 17.067257028070212,
+     "add_abs_eff": 0.016966580976863765,
+     "del_abs_eff": 0.016403785488958933,
+     "delisted_safe": true
+    },
+    {
+     "market": "Indonesia",
+     "n_add": 19,
+     "n_del": 33,
+     "add_t_mult": 16.085787164050604,
+     "del_t_mult": 28.92857040470197,
+     "add_abs_eff": 0.02898550724637683,
+     "del_abs_eff": 0.046875,
+     "delisted_safe": false
+    },
+    {
+     "market": "Japan",
+     "n_add": 55,
+     "n_del": 173,
+     "add_t_mult": 8.270089088824204,
+     "del_t_mult": 12.033822758259046,
+     "add_abs_eff": 0.015366430260047248,
+     "del_abs_eff": 0.013781697905181911,
+     "delisted_safe": false
+    },
+    {
+     "market": "Korea",
+     "n_add": 43,
+     "n_del": 65,
+     "add_t_mult": 4.506625354467489,
+     "del_t_mult": 12.499001535416648,
+     "add_abs_eff": 0.01919720767888311,
+     "del_abs_eff": 0.026454984411950377,
+     "delisted_safe": false
+    },
+    {
+     "market": "Malaysia",
+     "n_add": 11,
+     "n_del": 26,
+     "add_t_mult": 13.489112082020576,
+     "del_t_mult": 41.9028717729991,
+     "add_abs_eff": 0.0216110019646365,
+     "del_abs_eff": 0.02501563477173241,
+     "delisted_safe": false
+    },
+    {
+     "market": "NewZealand",
+     "n_add": 5,
+     "n_del": 8,
+     "add_t_mult": 52.83875488492179,
+     "del_t_mult": 60.09957194800798,
+     "add_abs_eff": 0.007053291536050166,
+     "del_abs_eff": 0.018071342960428394,
+     "delisted_safe": false
+    },
+    {
+     "market": "Singapore",
+     "n_add": 6,
+     "n_del": 13,
+     "add_t_mult": 13.412511872939756,
+     "del_t_mult": 21.325324584155553,
+     "add_abs_eff": 0.014263204207338342,
+     "del_abs_eff": 0.040000000000000036,
+     "delisted_safe": false
+    },
+    {
+     "market": "Taiwan",
+     "n_add": 76,
+     "n_del": 100,
+     "add_t_mult": 6.255207941344619,
+     "del_t_mult": 17.414940125562968,
+     "add_abs_eff": 0.01815186460985474,
+     "del_abs_eff": 0.026503595328151608,
+     "delisted_safe": true
+    },
+    {
+     "market": "Thailand",
+     "n_add": 15,
+     "n_del": 26,
+     "add_t_mult": 6.938106191130041,
+     "del_t_mult": 8.66387128351732,
+     "add_abs_eff": 0.021186440677966045,
+     "del_abs_eff": 0.014395194697597258,
+     "delisted_safe": false
+    }
+   ],
+   "reading": "On survivors-only markets the deletion column is biased toward the survivors, which understates the difficulty. Taiwan and India are the honest rows."
+  },
+  {
+   "title": "Q9. Does the first three sessions tell me anything?",
+   "why": "Taiwan's window study found conditioning on day +3 separated the schedules that worked from the ones that did not. Spearman of the favourable day+3 move against the drift that comes AFTER it (day+3 to effective-1), then the execution cost split on that sign. The second column repeats the same correlation against the FULL drift, which contains day+3 \u2014 it is printed only to show how much of an apparent signal is arithmetic.",
+   "rows": [
+    {
+     "market": "Thailand",
+     "n": 41,
+     "spearman_early3_vs_LATER_drift": 0.2183743104437392,
+     "overlapping_window_rho_ARTIFACT": 0.5017676998815845,
+     "hot_n": 19,
+     "hot_linear_bps": -37.79457536682962,
+     "cold_n": 22,
+     "cold_linear_bps": -33.165446646138406
+    },
+    {
+     "market": "HongKong",
+     "n": 20,
+     "spearman_early3_vs_LATER_drift": 0.06315789473684211,
+     "overlapping_window_rho_ARTIFACT": 0.41353383458646614,
+     "hot_n": 11,
+     "hot_linear_bps": -318.53026698387407,
+     "cold_n": 9,
+     "cold_linear_bps": -471.87171398527903
+    },
+    {
+     "market": "Taiwan",
+     "n": 176,
+     "spearman_early3_vs_LATER_drift": -0.0006669931931333824,
+     "overlapping_window_rho_ARTIFACT": 0.4413691165534666,
+     "hot_n": 99,
+     "hot_linear_bps": -296.2018140589562,
+     "cold_n": 77,
+     "cold_linear_bps": -149.6110113704363
+    },
+    {
+     "market": "China",
+     "n": 1275,
+     "spearman_early3_vs_LATER_drift": -0.016332160809429806,
+     "overlapping_window_rho_ARTIFACT": 0.39342653643976855,
+     "hot_n": 524,
+     "hot_linear_bps": -78.23082892690958,
+     "cold_n": 751,
+     "cold_linear_bps": 50.23547880690815
+    },
+    {
+     "market": "Australia",
+     "n": 42,
+     "spearman_early3_vs_LATER_drift": -0.022931691110931043,
+     "overlapping_window_rho_ARTIFACT": 0.4697350295762094,
+     "hot_n": 17,
+     "hot_linear_bps": -35.630116942736436,
+     "cold_n": 25,
+     "cold_linear_bps": 87.98391151332407
+    },
+    {
+     "market": "Japan",
+     "n": 228,
+     "spearman_early3_vs_LATER_drift": -0.0799202569284251,
+     "overlapping_window_rho_ARTIFACT": 0.37825715420178685,
+     "hot_n": 111,
+     "hot_linear_bps": 25.326579578778265,
+     "cold_n": 117,
+     "cold_linear_bps": -34.70213996529692
+    },
+    {
+     "market": "Korea",
+     "n": 108,
+     "spearman_early3_vs_LATER_drift": -0.16622326176777838,
+     "overlapping_window_rho_ARTIFACT": 0.4814903909255174,
+     "hot_n": 51,
+     "hot_linear_bps": -160.57692307692272,
+     "cold_n": 57,
+     "cold_linear_bps": -148.34205933682344
+    },
+    {
+     "market": "NewZealand",
+     "n": 13,
+     "spearman_early3_vs_LATER_drift": -0.17032967032967034,
+     "overlapping_window_rho_ARTIFACT": 0.08791208791208792,
+     "hot_n": 5,
+     "hot_linear_bps": 70.46388725778118,
+     "cold_n": 8,
+     "cold_linear_bps": -236.80974934122025
+    },
+    {
+     "market": "India",
+     "n": 164,
+     "spearman_early3_vs_LATER_drift": -0.20817814536204482,
+     "overlapping_window_rho_ARTIFACT": 0.221430223225824,
+     "hot_n": 104,
+     "hot_linear_bps": -34.767416258008055,
+     "cold_n": 60,
+     "cold_linear_bps": -148.72518201636709
+    },
+    {
+     "market": "Malaysia",
+     "n": 37,
+     "spearman_early3_vs_LATER_drift": -0.2107633949739213,
+     "overlapping_window_rho_ARTIFACT": 0.34281650071123754,
+     "hot_n": 19,
+     "hot_linear_bps": -525.3772290809344,
+     "cold_n": 18,
+     "cold_linear_bps": -359.2410093035875
+    },
+    {
+     "market": "Indonesia",
+     "n": 52,
+     "spearman_early3_vs_LATER_drift": -0.2793403145546124,
+     "overlapping_window_rho_ARTIFACT": 0.12736140412679697,
+     "hot_n": 21,
+     "hot_linear_bps": -483.4851412273433,
+     "cold_n": 31,
+     "cold_linear_bps": -365.03362151777185
+    },
+    {
+     "market": "Singapore",
+     "n": 19,
+     "spearman_early3_vs_LATER_drift": -0.3385964912280702,
+     "overlapping_window_rho_ARTIFACT": 0.45964912280701753,
+     "hot_n": 8,
+     "hot_linear_bps": -411.5985479816542,
+     "cold_n": 11,
+     "cold_linear_bps": -136.61202185792254
+    }
+   ],
+   "reading": "Compare the two rho columns. Where the overlapping one is large and the honest one is near zero, the early move is not forecasting anything \u2014 it is part of what it appears to predict. Also: events in one review share a market move, so n is not independent. Treat |rho| under ~0.25 as noise."
+  },
+  {
+   "title": "Q10. How much of the trade can the close actually absorb?",
+   "why": "share_under_2x is the quiet-event rate \u2014 reviews where the print barely registers and the desk should not be spending risk. share_over_10x is where the print IS the day.",
+   "rows": [
+    {
+     "market": "Malaysia",
+     "n": 36,
+     "eff_day_x_adv_median": 28.14810406147093,
+     "eff_day_x_adv_p90": 90.68617288078917,
+     "window_days_x_adv_median": 1.851016850668216,
+     "share_over_10x": 0.8333333333333334,
+     "share_under_2x": 0.05555555555555555
+    },
+    {
+     "market": "NewZealand",
+     "n": 13,
+     "eff_day_x_adv_median": 55.85591297224459,
+     "eff_day_x_adv_p90": 76.86640023132371,
+     "window_days_x_adv_median": 1.7708883116782814,
+     "share_over_10x": 0.8461538461538461,
+     "share_under_2x": 0.15384615384615385
+    },
+    {
+     "market": "Indonesia",
+     "n": 52,
+     "eff_day_x_adv_median": 23.995599701516426,
+     "eff_day_x_adv_p90": 55.85931030127494,
+     "window_days_x_adv_median": 1.7321966076729267,
+     "share_over_10x": 0.8653846153846154,
+     "share_under_2x": 0.0
+    },
+    {
+     "market": "India",
+     "n": 164,
+     "eff_day_x_adv_median": 16.83038866848592,
+     "eff_day_x_adv_p90": 42.41119787985317,
+     "window_days_x_adv_median": 1.3984871862044903,
+     "share_over_10x": 0.7560975609756098,
+     "share_under_2x": 0.04878048780487805
+    },
+    {
+     "market": "Taiwan",
+     "n": 176,
+     "eff_day_x_adv_median": 11.692976271009812,
+     "eff_day_x_adv_p90": 34.845106810737704,
+     "window_days_x_adv_median": 1.4622956042037512,
+     "share_over_10x": 0.5681818181818182,
+     "share_under_2x": 0.056818181818181816
+    },
+    {
+     "market": "HongKong",
+     "n": 20,
+     "eff_day_x_adv_median": 21.42072026403894,
+     "eff_day_x_adv_p90": 33.85840350183676,
+     "window_days_x_adv_median": 1.673629412611432,
+     "share_over_10x": 0.95,
+     "share_under_2x": 0.05
+    },
+    {
+     "market": "Australia",
+     "n": 42,
+     "eff_day_x_adv_median": 14.757699649810155,
+     "eff_day_x_adv_p90": 30.265975484028573,
+     "window_days_x_adv_median": 1.2626685950295418,
+     "share_over_10x": 0.8095238095238095,
+     "share_under_2x": 0.07142857142857142
+    },
+    {
+     "market": "Singapore",
+     "n": 19,
+     "eff_day_x_adv_median": 17.989776521346343,
+     "eff_day_x_adv_p90": 25.795690034828315,
+     "window_days_x_adv_median": 1.421176150856224,
+     "share_over_10x": 0.8947368421052632,
+     "share_under_2x": 0.0
+    },
+    {
+     "market": "Korea",
+     "n": 108,
+     "eff_day_x_adv_median": 8.74704253793174,
+     "eff_day_x_adv_p90": 21.118066051128437,
+     "window_days_x_adv_median": 1.1649603129434971,
+     "share_over_10x": 0.46296296296296297,
+     "share_under_2x": 0.1111111111111111
+    },
+    {
+     "market": "Thailand",
+     "n": 35,
+     "eff_day_x_adv_median": 8.473983753567628,
+     "eff_day_x_adv_p90": 20.985044298716154,
+     "window_days_x_adv_median": 1.3412601342758044,
+     "share_over_10x": 0.4,
+     "share_under_2x": 0.11428571428571428
+    },
+    {
+     "market": "Japan",
+     "n": 228,
+     "eff_day_x_adv_median": 11.31504564084922,
+     "eff_day_x_adv_p90": 18.64687028657617,
+     "window_days_x_adv_median": 1.3543480195550632,
+     "share_over_10x": 0.6008771929824561,
+     "share_under_2x": 0.07894736842105263
+    },
+    {
+     "market": "China",
+     "n": 1267,
+     "eff_day_x_adv_median": 1.6482568192456775,
+     "eff_day_x_adv_p90": 9.68148779686903,
+     "window_days_x_adv_median": 0.9651091304008512,
+     "share_over_10x": 0.09707971586424625,
+     "share_under_2x": 0.5927387529597474
+    }
+   ],
+   "reading": "China's low share_over_10x with a huge n is the single most important planning fact in this table: most Chinese index events are not liquidity events."
+  }
+ ],
+ "briefs": [
+  {
+   "market": "China",
+   "n": 1275,
+   "n_add": 821,
+   "n_del": 454,
+   "delisted_safe": false,
+   "reviews": 32,
+   "span": [
+    "2015-05-12",
+    "2026-05-12"
+   ],
+   "print_median_x_adv": 1.6482568192456775,
+   "print_p90_x_adv": 9.68148779686903,
+   "quiet_rate": 0.5927387529597474,
+   "abs_eff_median": 0.017029328287606393,
+   "abs_eff_p90": 0.04859967051070835,
+   "add_gap1": 0.0016000000000000458,
+   "add_drift": -0.016771488469601636,
+   "add_rev5": -0.00460299194476399,
+   "add_best_sched": "MOC",
+   "add_best_bps": 0.0,
+   "del_gap1": -0.002529351383190437,
+   "del_drift": -0.007278651756715271,
+   "del_rev5": -0.007383710646257813,
+   "del_best_sched": "ALL_DAY1",
+   "del_best_bps": -108.32600410436766,
+   "early3_rho": -0.016332160809429806,
+   "early3_n": 1275
+  },
+  {
+   "market": "Japan",
+   "n": 228,
+   "n_add": 55,
+   "n_del": 173,
+   "delisted_safe": false,
+   "reviews": 28,
+   "span": [
+    "2015-05-12",
+    "2026-05-12"
+   ],
+   "print_median_x_adv": 11.31504564084922,
+   "print_p90_x_adv": 18.64687028657617,
+   "quiet_rate": 0.07894736842105263,
+   "abs_eff_median": 0.01388538093778302,
+   "abs_eff_p90": 0.04104477611940305,
+   "add_gap1": 0.006585753671204397,
+   "add_drift": 0.017142857142857126,
+   "add_rev5": 0.0005257097791797616,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -199.73368841544658,
+   "del_gap1": -0.002613240418118501,
+   "del_drift": 0.002406159769008598,
+   "del_rev5": 0.0,
+   "del_best_sched": "LATE5",
+   "del_best_bps": -5.236973029589809,
+   "early3_rho": -0.0799202569284251,
+   "early3_n": 228
+  },
+  {
+   "market": "Taiwan",
+   "n": 176,
+   "n_add": 76,
+   "n_del": 100,
+   "delisted_safe": true,
+   "reviews": 44,
+   "span": [
+    "2010-05-17",
+    "2026-05-12"
+   ],
+   "print_median_x_adv": 11.692976271009812,
+   "print_p90_x_adv": 34.845106810737704,
+   "quiet_rate": 0.056818181818181816,
+   "abs_eff_median": 0.022796662861809425,
+   "abs_eff_p90": 0.06295149638802888,
+   "add_gap1": 0.010349104365329542,
+   "add_drift": 0.03432187730968217,
+   "add_rev5": -0.030864197530864224,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -504.83817150483776,
+   "del_gap1": -0.00903457653457651,
+   "del_drift": -0.014001779164280248,
+   "del_rev5": 0.0,
+   "del_best_sched": "ALL_DAY1",
+   "del_best_bps": -329.8520452567455,
+   "early3_rho": -0.0006669931931333824,
+   "early3_n": 176
+  },
+  {
+   "market": "India",
+   "n": 164,
+   "n_add": 125,
+   "n_del": 39,
+   "delisted_safe": true,
+   "reviews": 28,
+   "span": [
+    "2015-02-11",
+    "2026-05-12"
+   ],
+   "print_median_x_adv": 16.83038866848592,
+   "print_p90_x_adv": 42.41119787985317,
+   "quiet_rate": 0.04878048780487805,
+   "abs_eff_median": 0.016612756385114724,
+   "abs_eff_p90": 0.04601170311056357,
+   "add_gap1": -0.0022099447513812542,
+   "add_drift": 0.01715846345662886,
+   "add_rev5": 0.00033301617507119907,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -218.81230041813083,
+   "del_gap1": -0.017689331122167085,
+   "del_drift": 0.005096525096524918,
+   "del_rev5": 0.023940374915305318,
+   "del_best_sched": "LATE5",
+   "del_best_bps": -14.645824531756002,
+   "early3_rho": -0.20817814536204482,
+   "early3_n": 164
+  },
+  {
+   "market": "Korea",
+   "n": 108,
+   "n_add": 43,
+   "n_del": 65,
+   "delisted_safe": false,
+   "reviews": 30,
+   "span": [
+    "2015-02-11",
+    "2026-05-12"
+   ],
+   "print_median_x_adv": 8.74704253793174,
+   "print_p90_x_adv": 21.118066051128437,
+   "quiet_rate": 0.1111111111111111,
+   "abs_eff_median": 0.02291153887446362,
+   "abs_eff_p90": 0.07771534220163656,
+   "add_gap1": -0.001076374272603764,
+   "add_drift": 0.011695906432748648,
+   "add_rev5": -0.053380782918149516,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -276.67984189723273,
+   "del_gap1": -0.012600229095074411,
+   "del_drift": -0.012765957446808529,
+   "del_rev5": -0.00990099009900991,
+   "del_best_sched": "ALL_DAY1",
+   "del_best_bps": -261.8657937806868,
+   "early3_rho": -0.16622326176777838,
+   "early3_n": 108
+  },
+  {
+   "market": "Indonesia",
+   "n": 52,
+   "n_add": 19,
+   "n_del": 33,
+   "delisted_safe": false,
+   "reviews": 22,
+   "span": [
+    "2015-05-12",
+    "2026-05-12"
+   ],
+   "print_median_x_adv": 23.995599701516426,
+   "print_p90_x_adv": 55.85931030127494,
+   "quiet_rate": 0.0,
+   "abs_eff_median": 0.041089196872778955,
+   "abs_eff_p90": 0.13888888888888884,
+   "add_gap1": 0.03759398496240607,
+   "add_drift": 0.02238805970149249,
+   "add_rev5": -0.0365296803652968,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -634.146341463414,
+   "del_gap1": -0.04724423043149095,
+   "del_drift": -0.027322355681032584,
+   "del_rev5": 0.03913043478260869,
+   "del_best_sched": "ALL_DAY1",
+   "del_best_bps": -521.7384825030135,
+   "early3_rho": -0.2793403145546124,
+   "early3_n": 52
+  },
+  {
+   "market": "Australia",
+   "n": 42,
+   "n_add": 15,
+   "n_del": 27,
+   "delisted_safe": false,
+   "reviews": 21,
+   "span": [
+    "2015-02-11",
+    "2026-05-12"
+   ],
+   "print_median_x_adv": 14.757699649810155,
+   "print_p90_x_adv": 30.265975484028573,
+   "quiet_rate": 0.07142857142857142,
+   "abs_eff_median": 0.02003968253968247,
+   "abs_eff_p90": 0.06145251396648033,
+   "add_gap1": 0.0046511627906977715,
+   "add_drift": 0.016176470588235237,
+   "add_rev5": 0.0027662517289073207,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -30.959752321980673,
+   "del_gap1": 0.00723589001447178,
+   "del_drift": 0.02298850574712641,
+   "del_rev5": -0.01718803712616024,
+   "del_best_sched": "MOC",
+   "del_best_bps": 0.0,
+   "early3_rho": -0.022931691110931043,
+   "early3_n": 42
+  },
+  {
+   "market": "Thailand",
+   "n": 41,
+   "n_add": 15,
+   "n_del": 26,
+   "delisted_safe": false,
+   "reviews": 19,
+   "span": [
+    "2016-05-12",
+    "2025-08-07"
+   ],
+   "print_median_x_adv": 8.473983753567628,
+   "print_p90_x_adv": 20.985044298716154,
+   "quiet_rate": 0.11428571428571428,
+   "abs_eff_median": 0.017241379310344862,
+   "abs_eff_p90": 0.060194174757281615,
+   "add_gap1": 0.018292682926829285,
+   "add_drift": 0.041284403669724856,
+   "add_rev5": 0.005847953216374213,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -190.4761904761909,
+   "del_gap1": 0.0,
+   "del_drift": 0.014285714285714346,
+   "del_rev5": 0.0035714285714285587,
+   "del_best_sched": "LATE5",
+   "del_best_bps": -99.75124378109435,
+   "early3_rho": 0.2183743104437392,
+   "early3_n": 41
+  },
+  {
+   "market": "Malaysia",
+   "n": 37,
+   "n_add": 11,
+   "n_del": 26,
+   "delisted_safe": false,
+   "reviews": 20,
+   "span": [
+    "2015-05-12",
+    "2026-05-12"
+   ],
+   "print_median_x_adv": 28.14810406147093,
+   "print_p90_x_adv": 90.68617288078917,
+   "quiet_rate": 0.05555555555555555,
+   "abs_eff_median": 0.024096385542168752,
+   "abs_eff_p90": 0.08510638297872353,
+   "add_gap1": 0.0,
+   "add_drift": 0.007885219659690357,
+   "add_rev5": -0.03491271820448871,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -295.4898911353021,
+   "del_gap1": -0.02421984163949692,
+   "del_drift": -0.06348638238402016,
+   "del_rev5": 0.01210317460317456,
+   "del_best_sched": "ALL_DAY1",
+   "del_best_bps": -1015.1960784313718,
+   "early3_rho": -0.2107633949739213,
+   "early3_n": 37
+  },
+  {
+   "market": "HongKong",
+   "n": 20,
+   "n_add": 4,
+   "n_del": 16,
+   "delisted_safe": false,
+   "reviews": 13,
+   "span": [
+    "2015-11-12",
+    "2024-08-12"
+   ],
+   "print_median_x_adv": 21.42072026403894,
+   "print_p90_x_adv": 33.85840350183676,
+   "quiet_rate": 0.05,
+   "abs_eff_median": 0.019937889079538862,
+   "abs_eff_p90": 0.047457627118643986,
+   "add_gap1": -0.005973495699861386,
+   "add_drift": 0.05509581881533099,
+   "add_rev5": 0.023407266427543094,
+   "add_best_sched": "ALL_DAY1",
+   "add_best_bps": -794.0955390217447,
+   "del_gap1": 0.0047687091030743645,
+   "del_drift": -0.04008679809368343,
+   "del_rev5": 0.002073287329564355,
+   "del_best_sched": "ALL_DAY1",
+   "del_best_bps": -314.94113763890437,
+   "early3_rho": 0.06315789473684211,
+   "early3_n": 20
+  },
+  {
+   "market": "Singapore",
+   "n": 19,
+   "n_add": 6,
+   "n_del": 13,
+   "delisted_safe": false,
+   "reviews": 11,
+   "span": [
+    "2016-11-14",
+    "2025-11-05"
+   ],
+   "print_median_x_adv": 17.989776521346343,
+   "print_p90_x_adv": 25.795690034828315,
+   "quiet_rate": 0.0,
+   "abs_eff_median": 0.0273972602739726,
+   "abs_eff_p90": 0.056736790790115066,
+   "add_gap1": 0.01704506556427421,
+   "add_drift": -0.06549828394880508,
+   "add_rev5": -0.0209007049748115,
+   "add_best_sched": "LATE5",
+   "add_best_bps": -126.09850476361484,
+   "del_gap1": -0.021922428330522714,
+   "del_drift": 0.0,
+   "del_rev5": 0.027397260273972712,
+   "del_best_sched": "LINEAR",
+   "del_best_bps": -426.1747634571034,
+   "early3_rho": -0.3385964912280702,
+   "early3_n": 19
+  },
+  {
+   "market": "NewZealand",
+   "n": 13,
+   "n_add": 5,
+   "n_del": 8,
+   "delisted_safe": false,
+   "reviews": 9,
+   "span": [
+    "2017-11-13",
+    "2025-02-11"
+   ],
+   "print_median_x_adv": 55.85591297224459,
+   "print_p90_x_adv": 76.86640023132371,
+   "quiet_rate": 0.15384615384615385,
+   "abs_eff_median": 0.015793848711554426,
+   "abs_eff_p90": 0.03105590062111807,
+   "add_gap1": -0.005376344086021612,
+   "add_drift": -0.025945945945946014,
+   "add_rev5": 0.010687022900763399,
+   "add_best_sched": "LATE5",
+   "add_best_bps": -41.221374045802285,
+   "del_gap1": -0.010702965813900789,
+   "del_drift": 0.00562700964630225,
+   "del_rev5": -0.010450740074416265,
+   "del_best_sched": "LINEAR",
+   "del_best_bps": -253.79647789806282,
+   "early3_rho": -0.17032967032967034,
+   "early3_n": 13
+  }
+ ]
+}

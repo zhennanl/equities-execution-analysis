@@ -74,7 +74,7 @@ def codes_2026():
 
 def _save(cache):
     tmp = CACHE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(cache))
+    tmp.write_text(json.dumps(cache), encoding="utf-8")
     tmp.replace(CACHE)
 
 
@@ -82,7 +82,7 @@ def _fetch(codes, interval_key, budget=25):
     from tvDatafeed import Interval, TvDatafeed
     iv = {"60m": Interval.in_1_hour, "5m": Interval.in_5_minute}
     tv = TvDatafeed()
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     todo = [c for c in codes
             if interval_key not in cache.get(c, {})][:budget]
     print(f"{interval_key}: {len(todo)} codes to fetch")
@@ -116,7 +116,7 @@ def fetch5():
 
 
 def status():
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     n60 = sum(1 for v in cache.values() if v.get("60m"))
     n5 = sum(1 for v in cache.values() if v.get("5m"))
     print(f"{len(cache)} codes cached; 60m: {n60}, 5m: {n5}; "
@@ -126,7 +126,7 @@ def status():
 # ---------------------------------------------------------- derivation
 def _official_vol(code, day):
     sd = json.loads(
-        (ROOT / "data" / "tw_history" / "stock_day.json").read_text())
+        (ROOT / "data" / "tw_history" / "stock_day.json").read_text(encoding="utf-8"))
     for m in sd.get(code, {}):
         for r in sd[code][m]:
             if r[0] == day:
@@ -135,7 +135,7 @@ def _official_vol(code, day):
 
 
 def derive():
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     rows = []
     for event, prov, eff, names in event_set():
         for code, side in names.items():
@@ -171,7 +171,7 @@ def derive():
                 "auction_share": round(1 - cont / off, 3),
                 "flag": "OK"})
     df = pd.DataFrame(rows)
-    OUT.write_text(df.to_json(orient="records"))
+    OUT.write_text(df.to_json(orient="records"), encoding="utf-8")
     ok = df[df["flag"] == "OK"]
     agg = ok.groupby(["provider", "side"])["auction_share"].agg(
         ["count", "median", "min", "max"]).round(3)

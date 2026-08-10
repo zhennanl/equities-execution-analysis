@@ -1,0 +1,54 @@
+{
+ "Australia": {
+  "movers": 42,
+  "priced": 38
+ },
+ "China": {
+  "movers": 1289,
+  "priced": 1241
+ },
+ "HongKong": {
+  "movers": 20,
+  "priced": 20
+ },
+ "India": {
+  "movers": 166,
+  "priced": 166
+ },
+ "Indonesia": {
+  "movers": 54,
+  "priced": 51
+ },
+ "Japan": {
+  "movers": 228,
+  "priced": 219
+ },
+ "Korea": {
+  "movers": 108,
+  "priced": 102
+ },
+ "Malaysia": {
+  "movers": 37,
+  "priced": 37
+ },
+ "NewZealand": {
+  "movers": 13,
+  "priced": 13
+ },
+ "Philippines": {
+  "movers": 14,
+  "priced": 0
+ },
+ "Singapore": {
+  "movers": 19,
+  "priced": 19
+ },
+ "Taiwan": {
+  "movers": 136,
+  "priced": 135
+ },
+ "Thailand": {
+  "movers": 41,
+  "priced": 41
+ }
+}

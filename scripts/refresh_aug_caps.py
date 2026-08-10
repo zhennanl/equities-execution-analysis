@@ -29,14 +29,14 @@ APR_END = "2026-05-01"
 
 def universe_tickers():
     cache = json.loads(
-        (ROOT / "data" / "pit_may26_asia_cache.json").read_text())
+        (ROOT / "data" / "pit_may26_asia_cache.json").read_text(encoding="utf-8"))
     return sorted(t for t, v in cache.items() if "cap_pit" in v)
 
 
 def fetch(batch=15):
     import yfinance as yf
     tickers = universe_tickers()
-    done = json.loads(OUT.read_text()) if OUT.exists() else {}
+    done = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     todo = [t for t in tickers if t not in done]
     print(f"{len(todo)} of {len(tickers)} tickers missing")
     for i in range(0, len(todo), batch):
@@ -58,7 +58,7 @@ def fetch(batch=15):
                 done[t] = round(b / a, 4) if a > 0 else 1.0
             except Exception:                         # noqa: BLE001
                 done[t] = 1.0                # stale — listed below
-        OUT.write_text(json.dumps(done))
+        OUT.write_text(json.dumps(done), encoding="utf-8")
         print(f"  ...{min(i + batch, len(todo))}/{len(todo)}",
               flush=True)
     stale = [t for t, r in done.items() if r == 1.0]
@@ -66,7 +66,7 @@ def fetch(batch=15):
 
 
 def status():
-    done = json.loads(OUT.read_text()) if OUT.exists() else {}
+    done = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     import statistics
     rs = [r for r in done.values() if r != 1.0]
     if rs:

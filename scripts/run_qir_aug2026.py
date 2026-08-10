@@ -68,7 +68,7 @@ FX = {"Taiwan": 32.5, "Korea": 1385.0, "Japan": 155.0}  # local->USD approx
 
 def fetch(n=8):
     import yfinance as yf
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     todo = [(mkt, t, m) for mkt, lst in UNIVERSES.items()
             for t, m in lst if t not in cache]
     done = 0
@@ -92,7 +92,7 @@ def fetch(n=8):
         except Exception as e:                        # noqa: BLE001
             cache[t] = {"error": str(e)[:80]}
             done += 1
-    CACHE.write_text(json.dumps(cache))
+    CACHE.write_text(json.dumps(cache), encoding="utf-8")
     left = len([1 for mkt, lst in UNIVERSES.items()
                 for t, m in lst if t not in cache])
     print("ALL CACHED" if not left else f"{left} remaining")
@@ -102,7 +102,7 @@ def report():
     import numpy as np
     import pandas as pd
     from agents.reconstitution import MSCIRules, predict_msci
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     out = {}
     for mkt, lst in UNIVERSES.items():
         rows = []
@@ -173,9 +173,9 @@ def verify():
     from agents.reconstitution import (parse_msci_public_list,
                                        reconcile_membership)
     ledgers = [parse_msci_public_list(
-        Path(f"data/msci_{p}_public_list.txt").read_text())
+        Path(f"data/msci_{p}_public_list.txt").read_text(encoding="utf-8"))
         for p in ("feb26", "may26")]
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     members = {}
     for t, m in UNIVERSES["Taiwan"]:
         if t in TW_ALIASES and "cap_usd" in cache.get(t, {}):

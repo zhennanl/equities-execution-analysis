@@ -50,7 +50,7 @@ def main():
         crowding.update(crowding_reads(
             cache, list(BASKET["ticker"])))
     event_cache = json.loads(
-        Path("data/event_flow_study.json").read_text())
+        Path("data/event_flow_study.json").read_text(encoding="utf-8"))
     tm = expected_t_multiples(event_cache, "MSCI", "Sell")
     med, mx = tm.get("median", 16.0), tm.get("max", 38.0)
     # live borrow read: latest TWT93U day

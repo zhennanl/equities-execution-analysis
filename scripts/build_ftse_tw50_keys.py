@@ -11,7 +11,7 @@ import re
 from pathlib import Path
 
 DIR = Path("data/tip_news")
-IDX = json.loads(Path("data/tip_news_index.json").read_text())
+IDX = json.loads(Path("data/tip_news_index.json").read_text(encoding="utf-8"))
 OUT = Path("data/ftse_tw50_changes.json")
 
 PAIR = re.compile(r"([\w\-\*．·＊]+?)\s*[（(]\s*(\d{4}[A-Z]?)\s*[）)]")
@@ -70,7 +70,7 @@ def main():
         out.setdefault(q, {"status": "NOT FOUND — pre-TIP era; "
                            "path: TWSE-era announcements / "
                            "證交資料月刊 (manual)"})
-    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1))
+    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     n_q = sum(1 for v in out.values() if "adds" in v)
     n_chg = sum(len(v.get("adds", [])) + len(v.get("dels", []))
                 for v in out.values())

@@ -1,0 +1,101 @@
+{
+ "market": "Taiwan",
+ "review": "Nov20",
+ "keys": {
+  "gmsr_dm": 7.32,
+  "em_range": [
+   1.83,
+   4.21
+  ],
+  "ceiling": 4.21,
+  "floor": 2.807,
+  "bar": 6.315,
+  "price_date": "2020-10-19",
+  "source": "Nov2020"
+ },
+ "fx_used": 28.366,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "4743",
+   "security": "ONENESS BIOTECH",
+   "action": "ADD",
+   "pit_cap_busd": 4.29,
+   "verdict": "NOT-EXPLAINED: 4.29B well below bar"
+  },
+  {
+   "code": "3037",
+   "security": "UNIMICRON TECHNOLOGY",
+   "action": "ADD",
+   "pit_cap_busd": 4.54,
+   "verdict": "NOT-EXPLAINED: 4.54B well below bar"
+  },
+  {
+   "code": "2618",
+   "security": "EVA AIRWAYS CORP",
+   "action": "DEL",
+   "pit_cap_busd": 1.83,
+   "verdict": "EXPLAINED: 1.83B is 35% below the 2.807B floor"
+  },
+  {
+   "code": "1434",
+   "security": "FORMOSA TAFFETA CO",
+   "action": "DEL",
+   "pit_cap_busd": 1.85,
+   "verdict": "EXPLAINED: 1.85B is 34% below the 2.807B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "8299": 2.04,
+   "2353": 2.59,
+   "1605": 1.98,
+   "2347": 2.47,
+   "2356": 2.75,
+   "2344": 2.04,
+   "9904": 2.7,
+   "1504": 2.06,
+   "2615": 1.84,
+   "1434": 1.85,
+   "2542": 1.95,
+   "3702": 2.31,
+   "2492": 2.77,
+   "3296": 0.05,
+   "1227": 2.05,
+   "2385": 2.2,
+   "2354": 2.59,
+   "9945": 2.05,
+   "2610": 1.64
+  },
+  "hits": [
+   "1434"
+  ],
+  "misses": [
+   "2618"
+  ],
+  "false_alarms": [
+   "1227",
+   "1504",
+   "1605",
+   "2344",
+   "2347",
+   "2353",
+   "2354",
+   "2356",
+   "2385",
+   "2492",
+   "2542",
+   "2610",
+   "2615",
+   "3296",
+   "3702",
+   "8299",
+   "9904",
+   "9945"
+  ]
+ }
+}

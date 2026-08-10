@@ -75,7 +75,7 @@ EVENTS = [
 
 def fetch():
     import yfinance as yf
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     for name, prov, tday, names in EVENTS:
         key = f"{name}|{tday}"
         if key in cache:
@@ -104,12 +104,12 @@ def fetch():
         cache[key] = ev
         print(name, len(ev), "names", flush=True)
         tmp = CACHE.with_suffix(".tmp")
-        tmp.write_text(json.dumps(cache))
+        tmp.write_text(json.dumps(cache), encoding="utf-8")
         tmp.replace(CACHE)
 
 
 def table() -> pd.DataFrame:
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     ev_map = {f"{n}|{d}": (n, p, d, names)
               for n, p, d, names in EVENTS}
     rows = []

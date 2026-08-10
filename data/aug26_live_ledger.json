@@ -1,0 +1,117 @@
+{
+ "shortlist": {
+  "ADD": [
+   "2408",
+   "8046",
+   "2344",
+   "8299",
+   "3189",
+   "6274"
+  ],
+  "DEL": [
+   "2615",
+   "6919",
+   "2609",
+   "3529",
+   "2834",
+   "1101"
+  ],
+  "BUBBLE": [
+   "3293",
+   "8069",
+   "2356",
+   "5871"
+  ],
+  "BLOCKED": [
+   "6505"
+  ]
+ },
+ "ann": "2026-08-11",
+ "eff": "2026-08-31",
+ "declared": "2026-08-07",
+ "days": {
+  "20260807": {
+   "1101": {
+    "close": 24.35,
+    "vol": 18367476.0,
+    "foreign_net": 3459974.0
+   },
+   "2344": {
+    "close": 163.5,
+    "vol": 176709453.0,
+    "foreign_net": -43331455.0
+   },
+   "2356": {
+    "close": 64.0,
+    "vol": 14275463.0,
+    "foreign_net": 1479463.0
+   },
+   "2408": {
+    "close": 457.0,
+    "vol": 70547660.0,
+    "foreign_net": 2147570.0
+   },
+   "2609": {
+    "close": 50.5,
+    "vol": 9901509.0,
+    "foreign_net": 168703.0
+   },
+   "2615": {
+    "close": 84.9,
+    "vol": 3867951.0,
+    "foreign_net": 801228.0
+   },
+   "2834": {
+    "close": 16.5,
+    "vol": 31569522.0,
+    "foreign_net": -10896660.0
+   },
+   "3189": {
+    "close": 823.0,
+    "vol": 16107601.0,
+    "foreign_net": -1660821.0
+   },
+   "5871": {
+    "close": 109.0,
+    "vol": 2478623.0,
+    "foreign_net": -281175.0
+   },
+   "6505": {
+    "close": 71.0,
+    "vol": 41571771.0,
+    "foreign_net": -6535221.0
+   },
+   "6919": {
+    "close": 105.0,
+    "vol": 2996870.0,
+    "foreign_net": -139610.0
+   },
+   "8046": {
+    "close": 1080.0,
+    "vol": 4069277.0,
+    "foreign_net": -841918.0
+   }
+  }
+ },
+ "reports": [
+  {
+   "generated": "2026-08-07T23:59:53",
+   "day_offset": 0,
+   "lines": [
+    "=== Aug-26 live report, day +0 after announcement (pulled 20260807) ===",
+    "ADD 2408: insufficient data",
+    "ADD 8046: insufficient data",
+    "ADD 2344: insufficient data",
+    "ADD 8299: insufficient data",
+    "ADD 3189: insufficient data",
+    "ADD 6274: insufficient data",
+    "DEL 2615: insufficient data",
+    "DEL 6919: insufficient data",
+    "DEL 2609: insufficient data",
+    "DEL 3529: insufficient data",
+    "DEL 2834: insufficient data",
+    "DEL 1101: insufficient data"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+  "_what": "MSCI's own published Index Review dates. Kept as DATA, not typed into a view, because the page's standing promise is that it holds no facts (see views/walkthrough.py).",
+  "_sources": [
+    {
+      "what": "announcement and effective dates for the next eight regular Index Reviews",
+      "title": "MSCI Announces the Next Eight Index Review Dates",
+      "published": "2026-05-12",
+      "url": "https://www.msci.com/eqb/pressreleases/archive/ir_dates.pdf"
+    },
+    {
+      "what": "the rebalance-close date and the announcement time for Aug-2026",
+      "title": "MSCI August Index Review Announcement Scheduled for August 12, 2026",
+      "quote": "All changes will be made as of the close of August 31, 2026.",
+      "url": "https://ir.msci.com/news-releases/news-release-details/msci-august-index-review-announcement-scheduled-august-12-2026"
+    }
+  ],
+  "_cutoffs": "GIMI May-2026 §3.1.9 'Date of Data Used for Index Reviews', p.48, sets THREE data cutoffs, and they are deterministic from the review month — the dates below are the rule applied to a calendar, not an estimate. For an AUGUST review: Equity Universe Cutoff = last business day of MAY; Liquidity Cutoff = last business day of JUNE; Price Cutoff = ANY ONE of the last 10 business days of JULY, and MSCI never says which. Only the price window is uncertain, which is why it is stored as a start and an end. A business day is one where markets making up >80% of ACWI float cap are open (fn29); global holidays such as Thanksgiving, Good Friday and Easter Monday are excluded.",
+  "_naming": "MSCI uses TWO dates for one event and they are one day apart. The index change is made 'as of the close of' the last trading day of the month (Aug 31); the date MSCI labels 'Effective date' is the next day (Sep 1), when the new list is live. The TRADE prints at the earlier one. data/msci_changes_db.pkl stores the close date in eff_date_est, which is the tradeable one.",
+  "retrieved": "2026-08-09",
+  "reviews": {
+    "Aug26": {
+      "announced": "2026-08-12",
+      "announced_time": "shortly after 23:00 CEST",
+      "announced_time_lines": [
+        "Note: MSCI posts the list shortly after 23:00",
+        "Central European Summer Time — 05:00 Hong Kong",
+        "time the following morning, 13 August."
+      ],
+      "rebalance_close": "2026-08-31",
+      "effective": "2026-09-01",
+      "equity_universe_cutoff": "2026-05-29",
+      "liquidity_cutoff": "2026-06-30",
+      "price_window_start": "2026-07-20",
+      "price_window_end": "2026-07-31"
+    },
+    "Nov26": {
+      "announced": "2026-11-11",
+      "rebalance_close": null,
+      "effective": "2026-12-01"
+    },
+    "Feb27": {
+      "announced": "2027-02-09",
+      "rebalance_close": null,
+      "effective": "2027-03-01"
+    },
+    "May27": {
+      "announced": "2027-05-10",
+      "rebalance_close": null,
+      "effective": "2027-05-28"
+    },
+    "Aug27": {
+      "announced": "2027-08-12",
+      "rebalance_close": null,
+      "effective": "2027-09-01"
+    },
+    "Nov27": {
+      "announced": "2027-11-11",
+      "rebalance_close": null,
+      "effective": "2027-12-01"
+    },
+    "Feb28": {
+      "announced": "2028-02-09",
+      "rebalance_close": null,
+      "effective": "2028-03-01"
+    },
+    "May28": {
+      "announced": "2028-05-11",
+      "rebalance_close": null,
+      "effective": "2028-06-01"
+    }
+  }
+}

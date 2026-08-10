@@ -244,7 +244,7 @@ def test_bestex_record_roundtrip_and_dedupe(tmp_path):
     record_bestex(rec, path=path)                       # rerun -> update, not dup
     rec2 = build_bestex_record(_es(), v, a, "Cost-Minimizing", steps)
     record_bestex(rec2, path=path)
-    rows = json.loads(path.read_text())
+    rows = json.loads(path.read_text(encoding="utf-8"))
     assert len(rows) == 2
     r = rows[0]
     assert r["decision"]["strategy"].startswith("S1")

@@ -103,9 +103,9 @@ def name_event(cache, code, side, ann, eff):
 
 def main():
     cache = json.loads((ROOT / "data" / "tw_vintage_cache.json")
-                       .read_text())
+                       .read_text(encoding="utf-8"))
     events = json.loads((ROOT / "data" / "msci_tw_events.json")
-                        .read_text())
+                        .read_text(encoding="utf-8"))
     panel, skipped = [], []
     for season, ev in sorted(events.items(),
                              key=lambda kv: kv[1]["ann"]):
@@ -167,7 +167,7 @@ def main():
            "wrongway_flag": ww_stats,
            "panel": panel}
     (ROOT / "data" / "liquidity_panel_tw.json").write_text(
-        json.dumps(out, indent=1))
+        json.dumps(out, indent=1), encoding="utf-8")
     print(f"panel: {len(df)} name-events across "
           f"{df['season'].nunique()} events "
           f"(skipped {len(skipped)})")

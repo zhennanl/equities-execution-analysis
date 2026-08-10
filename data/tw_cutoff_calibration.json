@@ -1,0 +1,85 @@
+{
+ "price_date": "20260420",
+ "implied_fif_check": {
+  "sum_top10_float_usd_b": 2443.21,
+  "factsheet_total": 2443.2,
+  "matches": true,
+  "note": "identity check on the inputs \u2014 if our full caps and FX were wrong this would not tie"
+ },
+ "implied_fifs": {
+  "2330": 0.952,
+  "2454": 0.902,
+  "2308": 0.752,
+  "2317": 0.873,
+  "3711": 0.748,
+  "2303": 0.902,
+  "2383": 0.802,
+  "2881": 0.601,
+  "2891": 0.852,
+  "2345": 0.902
+ },
+ "tdcc_proxy_error_vs_implied": {
+  "median": -0.038,
+  "mean": -0.072,
+  "worst": [
+   [
+    "2881",
+    -0.48
+   ],
+   [
+    "2891",
+    -0.36
+   ],
+   [
+    "3711",
+    0.31
+   ],
+   [
+    "2303",
+    -0.3
+   ]
+  ]
+ },
+ "targets": {
+  "segment_number_of_companies": 77,
+  "cutoff_usd_b": 5.19,
+  "universe_float_usd_b": 3745.0
+ },
+ "scenarios": {
+  "A_tdcc_proxy": {
+   "universe_n": 424,
+   "rank": 69,
+   "cutoff_usd_b": 8.063,
+   "universe_float_usd_b": 2894.0,
+   "code_at_cutoff": "1590"
+  },
+  "B_factsheet_top10": {
+   "universe_n": 424,
+   "rank": 63,
+   "cutoff_usd_b": 8.77,
+   "universe_float_usd_b": 3041.5,
+   "code_at_cutoff": "2379"
+  },
+  "C_tail_flat_0.55": {
+   "universe_n": 461,
+   "rank": 60,
+   "cutoff_usd_b": 9.268,
+   "universe_float_usd_b": 2964.8,
+   "code_at_cutoff": "3661"
+  },
+  "D_tail_flat_0.75": {
+   "universe_n": 461,
+   "rank": 79,
+   "cutoff_usd_b": 6.897,
+   "universe_float_usd_b": 3294.4,
+   "code_at_cutoff": "6770"
+  },
+  "E_tail_flat_0.85": {
+   "universe_n": 461,
+   "rank": 86,
+   "cutoff_usd_b": 6.126,
+   "universe_float_usd_b": 3459.2,
+   "code_at_cutoff": "5876"
+  }
+ }
+}

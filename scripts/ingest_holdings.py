@@ -94,7 +94,7 @@ def main():
         if r:
             out[etf] = r
     if out:
-        OUT.write_text(json.dumps(out))
+        OUT.write_text(json.dumps(out), encoding="utf-8")
         print(f"\nuniverse skeletons -> {OUT} (feed to QIR screener "
               "after a boundary-cap yfinance pass)")
 

@@ -1,0 +1,155 @@
+{
+ "n": {
+  "windows": 157,
+  "adds": 64,
+  "dels": 93
+ },
+ "caveats": [
+  "flow attribution 2015+ only",
+  "attribution is correlational",
+  "margin balance = retail-leverage proxy, not all retail"
+ ],
+ "A_early_attribution_ADD": {
+  "early_terciles_cutoffs": [
+   0.0027,
+   0.0324
+  ],
+  "weak_early": {
+   "n": 16,
+   "r_late_med": -0.0143,
+   "eff_day_med": 0.0025,
+   "revert5_med": -0.0111,
+   "f_early_adv_med": -0.0213,
+   "margin_chg_adv_med": 0.0
+  },
+  "mid_early": {
+   "n": 15,
+   "r_late_med": 0.0689,
+   "eff_day_med": 0.0112,
+   "revert5_med": -0.0201,
+   "f_early_adv_med": 0.0688,
+   "margin_chg_adv_med": -0.0
+  },
+  "strong_early": {
+   "n": 15,
+   "r_late_med": 0.051,
+   "eff_day_med": -0.0052,
+   "revert5_med": -0.0652,
+   "f_early_adv_med": 0.0043,
+   "margin_chg_adv_med": 0.0
+  },
+  "strong_early_foreign_led": {
+   "n": 7,
+   "r_late_med": 0.0317,
+   "revert5_med": -0.0309
+  },
+  "strong_early_NOT_foreign_led": {
+   "n": 8,
+   "r_late_med": 0.0877,
+   "revert5_med": -0.0741,
+   "margin_chg_adv_med": 0.0
+  }
+ },
+ "B_hot_start_ADD": {
+  "cutoffs_day5": [
+   0.0,
+   0.0423
+  ],
+  "cold_start": {
+   "n": 23,
+   "remaining_drift_med": 0.0017,
+   "eff_day_med": -0.0016,
+   "revert5_med": -0.0073,
+   "total_med": -0.0137
+  },
+  "mid": {
+   "n": 20,
+   "remaining_drift_med": 0.0306,
+   "eff_day_med": 0.0098,
+   "revert5_med": -0.0286,
+   "total_med": 0.0428
+  },
+  "hot_start": {
+   "n": 21,
+   "remaining_drift_med": 0.0669,
+   "eff_day_med": 0.0,
+   "revert5_med": -0.0201,
+   "total_med": 0.1547
+  }
+ },
+ "C_del_borrow": {
+  "window_build_cutoffs": [
+   1.021,
+   1.137
+  ],
+  "light_short": {
+   "n": 24,
+   "eff_day_med": -0.0161,
+   "revert5_med": -0.0026,
+   "total_med": -0.0012
+  },
+  "mid_short": {
+   "n": 23,
+   "eff_day_med": -0.0062,
+   "revert5_med": 0.0118,
+   "total_med": -0.0221
+  },
+  "crowded_short": {
+   "n": 23,
+   "eff_day_med": -0.0167,
+   "revert5_med": 0.0,
+   "total_med": -0.0277
+  },
+  "pre_ann_build": {
+   "cutoffs": [
+    1.085,
+    1.276
+   ],
+   "low": {
+    "n": 24,
+    "total_med": -0.0125
+   },
+   "high": {
+    "n": 23,
+    "total_med": -0.0378,
+    "revert5_med": 0.0333
+   }
+  }
+ },
+ "D_liquidity_ADD": {
+  "small_<20M": {
+   "n": 25,
+   "drift_med": 0.0252,
+   "eff_day_med": 0.0084,
+   "revert5_med": -0.024
+  },
+  "mid_20-60M": {
+   "n": 18,
+   "drift_med": 0.0213,
+   "eff_day_med": 0.0111,
+   "revert5_med": -0.0351
+  },
+  "large_>60M": {
+   "n": 21,
+   "drift_med": 0.1495,
+   "eff_day_med": -0.0029,
+   "revert5_med": -0.0168
+  }
+ },
+ "E_risk_shape_ADD": {
+  "mae_med": -0.0222,
+  "mae_p10": -0.0966,
+  "mfe_med": 0.057,
+  "read": "MAE = worst drawdown a day-1 long endures before E-1; the pod's stop placement and sizing input"
+ },
+ "F_review_size": {
+  "small_reviews(<=3 names)": {
+   "n": 29,
+   "total_med": 0.0323
+  },
+  "big_reviews(>=6 names)": {
+   "n": 21,
+   "total_med": 0.0573
+  }
+ }
+}

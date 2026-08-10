@@ -92,7 +92,7 @@ FETCHERS = {"quotes": fetch_quotes, "shorts": fetch_shorts,
 
 def load(kind):
     p = DIR / f"{kind}.json"
-    return json.loads(p.read_text()) if p.exists() else {}
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
 
 def backfill(kind, d0, d1, max_days=18):
@@ -121,7 +121,7 @@ def backfill(kind, d0, d1, max_days=18):
     # no longer truncate the cache mid-write (the quotes.json
     # corruption incident)
     tmp = DIR / f"{kind}.json.tmp"
-    tmp.write_text(json.dumps(cache))
+    tmp.write_text(json.dumps(cache), encoding="utf-8")
     tmp.replace(DIR / f"{kind}.json")
     print(f"{kind}: {len(cache)} dates cached (+{len(todo)} tried)")
 
@@ -148,7 +148,7 @@ FEB_TICKERS = {"CHENG SHIN RUBBER IND": "2105",
 def feb_names():
     from agents.reconstitution import parse_msci_public_list
     led = parse_msci_public_list(
-        Path("data/msci_feb26_public_list.txt").read_text())
+        Path("data/msci_feb26_public_list.txt").read_text(encoding="utf-8"))
     tw = led.get("TAIWAN", {})
     adds = [FEB_TICKERS[n] for n in tw.get("adds", [])
             if n in FEB_TICKERS]

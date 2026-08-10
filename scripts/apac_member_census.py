@@ -82,14 +82,14 @@ SHARES_DONORS = {("Singapore", "BS6"): "YSHLF",    # Yangzijiang
 
 def members(mkt):
     d = json.loads((ROOT / "data" / "apac_members.json")
-                   .read_text())["markets"][mkt]
+                   .read_text(encoding="utf-8"))["markets"][mkt]
     return d["standard_members"], d.get("names", {})
 
 
 def harvest(mkt, limit=None):
     import yfinance as yf
     codes, _ = members(mkt)
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     mc = cache.setdefault(mkt, {})
     todo = [c for c in codes if c not in mc]
     if limit:
@@ -180,23 +180,23 @@ def harvest(mkt, limit=None):
         mc[c] = got or {"sym": None}
         if (i + 1) % 8 == 0:
             tmp = CACHE.with_suffix(".tmp")
-            tmp.write_text(json.dumps(cache))
+            tmp.write_text(json.dumps(cache), encoding="utf-8")
             tmp.replace(CACHE)
             print(f"  {i+1}/{len(todo)}")
         if (i + 1) % 10 == 0:              # c-95: periodic save
             tmp = CACHE.with_suffix(".tmp")
-            tmp.write_text(json.dumps(cache))
+            tmp.write_text(json.dumps(cache), encoding="utf-8")
             tmp.replace(CACHE)
         time.sleep(0.35)
     tmp = CACHE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(cache))
+    tmp.write_text(json.dumps(cache), encoding="utf-8")
     tmp.replace(CACHE)
     ok = sum(1 for v in mc.values() if v.get("shares"))
     print(f"{mkt}: {ok}/{len(codes)} priced")
 
 
 FX = {"JPY": 148.0, "AUD": 0.66, "HKD": 7.80, "KRW": 1385.0,
-      "TWD": 29.5, "INR": 87.0, "MYR": 4.25, "IDR": 16300.0,
+      "TWD": 32.214, "INR": 87.0, "MYR": 4.25, "IDR": 16300.0,
       "PHP": 57.0, "CNY": 7.15, "USD": 1.0,
       # c-95 additions (spot approximations, labeled):
       "NZD": 0.61, "SGD": 1.28, "THB": 31.5}
@@ -212,9 +212,9 @@ def to_usd(v, ccy):
 
 def report(mkt):
     codes, names = members(mkt)
-    cache = json.loads(CACHE.read_text()).get(mkt, {})
+    cache = json.loads(CACHE.read_text(encoding="utf-8")).get(mkt, {})
     fs = json.loads((ROOT / "data" / "apac_factsheet_archive.json")
-                    .read_text())[mkt]
+                    .read_text(encoding="utf-8"))[mkt]
     fsm = fs[sorted(fs)[-1]]
     rows, unpriced = [], []
     for c in codes:
@@ -248,7 +248,7 @@ def report(mkt):
            "observed_boundary_musd": fsm["smallest_musd"],
            "bottom_ladder": rows[-12:][::-1]}
     p = ROOT / "data" / f"member_census_{mkt.lower()}.json"
-    p.write_text(json.dumps({**out, "rows": rows}, indent=1))
+    p.write_text(json.dumps({**out, "rows": rows}, indent=1), encoding="utf-8")
     print(json.dumps({k: v for k, v in out.items()
                       if k != "bottom_ladder"}, indent=1))
     print("bottom of ladder (deletion-candidate region):")

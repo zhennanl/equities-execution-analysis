@@ -29,11 +29,11 @@ CACHE = Path("data/crowding_asia_cache.json")
 
 
 def load():
-    return json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    return json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
 
 
 def save(c):
-    CACHE.write_text(json.dumps(c))
+    CACHE.write_text(json.dumps(c), encoding="utf-8")
     for mkt, mc in c.items():
         dates = sorted(mc.get("short", {}))
         n = len(mc.get("short", {}).get(dates[-1], {})) if dates else 0

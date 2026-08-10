@@ -1,0 +1,467 @@
+{
+ "Taiwan": {
+  "n": 157,
+  "survivorship": "DELISTED-SAFE (TWSE day-files)",
+  "flows": "t86 + SBL + margin (full)",
+  "playbook": {
+   "ADD": {
+    "n": 64,
+    "gap1": 0.0069,
+    "drift": 0.0326,
+    "eff_day": 0.0029,
+    "revert5": -0.0238,
+    "revert20": -0.0217,
+    "total_alpha": 0.0349,
+    "pre_drift": 0.0348,
+    "capture": 0.8629,
+    "vol_mult_eff": 6.1705,
+    "vol_mult_win": 1.1088,
+    "PRE": 0.3475,
+    "labels": {
+     "QUIET": 10,
+     "MIXED": 32,
+     "CLEAN-DRIFT": 19,
+     "FRONT-RUN-FADE": 3
+    }
+   },
+   "DEL": {
+    "n": 93,
+    "gap1": -0.007,
+    "drift": -0.0152,
+    "eff_day": -0.016,
+    "revert5": 0.0,
+    "revert20": -0.0049,
+    "total_alpha": -0.0257,
+    "pre_drift": -0.0261,
+    "capture": 0.8364,
+    "vol_mult_eff": 18.2044,
+    "vol_mult_win": 1.684,
+    "PRE": 0.483,
+    "labels": {
+     "CLEAN-DRIFT": 25,
+     "MIXED": 35,
+     "QUIET": 19,
+     "SQUEEZE": 11,
+     "FRONT-RUN-FADE": 3
+    }
+   }
+  }
+ },
+ "Australia": {
+  "n": 35,
+  "coverage": "35/36",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "ASIC daily shorts (harvested)",
+  "playbook": {
+   "ADD": {
+    "n": 14,
+    "gap1": 0.0038,
+    "drift": 0.0184,
+    "eff_day": -0.0051,
+    "revert5": -0.005,
+    "pre_drift": 0.0786,
+    "total_alpha": 0.0307,
+    "vol_mult_eff": 17.4614,
+    "labels": {
+     "MIXED": 11,
+     "CLEAN-DRIFT": 3
+    }
+   },
+   "DEL": {
+    "n": 21,
+    "gap1": 0.0072,
+    "drift": 0.0246,
+    "eff_day": 0.0032,
+    "revert5": -0.0172,
+    "pre_drift": -0.0409,
+    "total_alpha": 0.0389,
+    "vol_mult_eff": 14.3642,
+    "labels": {
+     "MIXED": 20,
+     "CLEAN-DRIFT": 1
+    }
+   }
+  }
+ },
+ "China": {
+  "n": 1237,
+  "coverage": "1239/1253",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 801,
+    "gap1": 0.0015,
+    "drift": -0.0178,
+    "eff_day": 0.0083,
+    "revert5": -0.0045,
+    "pre_drift": 0.0114,
+    "total_alpha": -0.0179,
+    "vol_mult_eff": 1.377,
+    "labels": {
+     "MIXED": 414,
+     "QUIET": 240,
+     "FRONT-RUN-FADE": 20,
+     "CLEAN-DRIFT": 127
+    }
+   },
+   "DEL": {
+    "n": 436,
+    "gap1": -0.0022,
+    "drift": -0.0065,
+    "eff_day": -0.0039,
+    "revert5": -0.0074,
+    "pre_drift": -0.0119,
+    "total_alpha": -0.0129,
+    "vol_mult_eff": 2.1385,
+    "labels": {
+     "CLEAN-DRIFT": 77,
+     "MIXED": 257,
+     "QUIET": 92,
+     "FRONT-RUN-FADE": 10
+    }
+   }
+  }
+ },
+ "HongKong": {
+  "n": 20,
+  "coverage": "20/20",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 4,
+    "gap1": -0.006,
+    "drift": 0.0551,
+    "eff_day": 0.0152,
+    "revert5": 0.0234,
+    "pre_drift": 0.0098,
+    "total_alpha": 0.05,
+    "vol_mult_eff": 25.3149,
+    "labels": {
+     "CLEAN-DRIFT": 1,
+     "MIXED": 3
+    }
+   },
+   "DEL": {
+    "n": 16,
+    "gap1": 0.0048,
+    "drift": -0.0401,
+    "eff_day": -0.0136,
+    "revert5": 0.0021,
+    "pre_drift": 0.0129,
+    "total_alpha": -0.0446,
+    "vol_mult_eff": 20.0145,
+    "labels": {
+     "MIXED": 10,
+     "CLEAN-DRIFT": 6
+    }
+   }
+  }
+ },
+ "India": {
+  "n": 164,
+  "coverage": "166/166",
+  "survivorship": "DELISTED-SAFE (day-files)",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 125,
+    "gap1": -0.0022,
+    "drift": 0.0172,
+    "eff_day": 0.0066,
+    "revert5": 0.0003,
+    "pre_drift": 0.0726,
+    "total_alpha": 0.0086,
+    "vol_mult_eff": 16.7475,
+    "labels": {
+     "CLEAN-DRIFT": 35,
+     "MIXED": 82,
+     "QUIET": 3,
+     "FRONT-RUN-FADE": 5
+    }
+   },
+   "DEL": {
+    "n": 39,
+    "gap1": -0.0177,
+    "drift": 0.0051,
+    "eff_day": -0.0029,
+    "revert5": 0.0239,
+    "pre_drift": -0.0428,
+    "total_alpha": -0.0158,
+    "vol_mult_eff": 17.0673,
+    "labels": {
+     "MIXED": 28,
+     "CLEAN-DRIFT": 8,
+     "FRONT-RUN-FADE": 3
+    }
+   }
+  }
+ },
+ "Indonesia": {
+  "n": 51,
+  "coverage": "51/53",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 19,
+    "gap1": 0.0376,
+    "drift": 0.0224,
+    "eff_day": 0.0249,
+    "revert5": -0.0365,
+    "pre_drift": 0.0413,
+    "total_alpha": 0.0859,
+    "vol_mult_eff": 16.0858,
+    "labels": {
+     "FRONT-RUN-FADE": 1,
+     "MIXED": 13,
+     "CLEAN-DRIFT": 5
+    }
+   },
+   "DEL": {
+    "n": 32,
+    "gap1": -0.045,
+    "drift": -0.0276,
+    "eff_day": -0.0392,
+    "revert5": 0.0345,
+    "pre_drift": -0.0916,
+    "total_alpha": -0.0673,
+    "vol_mult_eff": 29.911,
+    "labels": {
+     "CLEAN-DRIFT": 13,
+     "MIXED": 16,
+     "FRONT-RUN-FADE": 3
+    }
+   }
+  }
+ },
+ "Japan": {
+  "n": 202,
+  "coverage": "202/202",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 55,
+    "gap1": 0.0066,
+    "drift": 0.0171,
+    "eff_day": 0.0,
+    "revert5": 0.0005,
+    "pre_drift": 0.0962,
+    "total_alpha": 0.0346,
+    "vol_mult_eff": 8.2701,
+    "labels": {
+     "FRONT-RUN-FADE": 3,
+     "MIXED": 34,
+     "QUIET": 2,
+     "CLEAN-DRIFT": 16
+    }
+   },
+   "DEL": {
+    "n": 147,
+    "gap1": -0.0026,
+    "drift": -0.0023,
+    "eff_day": -0.0012,
+    "revert5": 0.0,
+    "pre_drift": -0.0346,
+    "total_alpha": -0.0056,
+    "vol_mult_eff": 11.7832,
+    "labels": {
+     "MIXED": 98,
+     "CLEAN-DRIFT": 37,
+     "QUIET": 4,
+     "FRONT-RUN-FADE": 8
+    }
+   }
+  }
+ },
+ "Korea": {
+  "n": 102,
+  "coverage": "102/102",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 42,
+    "gap1": -0.0005,
+    "drift": 0.0135,
+    "eff_day": 0.0047,
+    "revert5": -0.0531,
+    "pre_drift": 0.1129,
+    "total_alpha": 0.014,
+    "vol_mult_eff": 4.4594,
+    "labels": {
+     "QUIET": 2,
+     "MIXED": 35,
+     "CLEAN-DRIFT": 4,
+     "FRONT-RUN-FADE": 1
+    }
+   },
+   "DEL": {
+    "n": 60,
+    "gap1": -0.0129,
+    "drift": -0.0128,
+    "eff_day": -0.019,
+    "revert5": -0.0107,
+    "pre_drift": -0.001,
+    "total_alpha": -0.027,
+    "vol_mult_eff": 12.1135,
+    "labels": {
+     "MIXED": 42,
+     "CLEAN-DRIFT": 16,
+     "FRONT-RUN-FADE": 1,
+     "QUIET": 1
+    }
+   }
+  }
+ },
+ "Malaysia": {
+  "n": 37,
+  "coverage": "37/37",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 11,
+    "gap1": 0.0,
+    "drift": 0.0079,
+    "eff_day": 0.0114,
+    "revert5": -0.0349,
+    "pre_drift": 0.1721,
+    "total_alpha": 0.0098,
+    "vol_mult_eff": 13.7257,
+    "labels": {
+     "MIXED": 9,
+     "CLEAN-DRIFT": 1,
+     "QUIET": 1
+    }
+   },
+   "DEL": {
+    "n": 26,
+    "gap1": -0.0242,
+    "drift": -0.0635,
+    "eff_day": -0.0217,
+    "revert5": 0.0121,
+    "pre_drift": -0.0355,
+    "total_alpha": -0.0908,
+    "vol_mult_eff": 41.9029,
+    "labels": {
+     "CLEAN-DRIFT": 11,
+     "MIXED": 15
+    }
+   }
+  }
+ },
+ "NewZealand": {
+  "n": 13,
+  "coverage": "13/13",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 5,
+    "gap1": -0.0054,
+    "drift": -0.0259,
+    "eff_day": 0.0038,
+    "revert5": 0.0107,
+    "pre_drift": 0.0215,
+    "total_alpha": -0.0101,
+    "vol_mult_eff": 52.8388,
+    "labels": {
+     "MIXED": 5
+    }
+   },
+   "DEL": {
+    "n": 8,
+    "gap1": -0.0107,
+    "drift": 0.0056,
+    "eff_day": -0.0151,
+    "revert5": -0.0105,
+    "pre_drift": 0.0255,
+    "total_alpha": -0.0025,
+    "vol_mult_eff": 60.0996,
+    "labels": {
+     "CLEAN-DRIFT": 2,
+     "QUIET": 1,
+     "MIXED": 5
+    }
+   }
+  }
+ },
+ "Singapore": {
+  "n": 19,
+  "coverage": "19/19",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 6,
+    "gap1": 0.017,
+    "drift": -0.0655,
+    "eff_day": 0.0021,
+    "revert5": -0.0209,
+    "pre_drift": -0.0503,
+    "total_alpha": -0.0223,
+    "vol_mult_eff": 13.4125,
+    "labels": {
+     "MIXED": 5,
+     "CLEAN-DRIFT": 1
+    }
+   },
+   "DEL": {
+    "n": 13,
+    "gap1": -0.0219,
+    "drift": 0.0,
+    "eff_day": -0.04,
+    "revert5": 0.0274,
+    "pre_drift": -0.035,
+    "total_alpha": -0.0267,
+    "vol_mult_eff": 21.3253,
+    "labels": {
+     "MIXED": 8,
+     "FRONT-RUN-FADE": 3,
+     "CLEAN-DRIFT": 2
+    }
+   }
+  }
+ },
+ "Thailand": {
+  "n": 41,
+  "coverage": "41/41",
+  "survivorship": "SURVIVORS ONLY (Yahoo) \u2014 DEL side biased toward names that lived",
+  "flows": "none yet (see terminal harvesters)",
+  "playbook": {
+   "ADD": {
+    "n": 15,
+    "gap1": 0.0183,
+    "drift": 0.0413,
+    "eff_day": -0.0212,
+    "revert5": 0.0058,
+    "pre_drift": 0.101,
+    "total_alpha": 0.0398,
+    "vol_mult_eff": 6.9381,
+    "labels": {
+     "FRONT-RUN-FADE": 2,
+     "CLEAN-DRIFT": 8,
+     "MIXED": 5
+    }
+   },
+   "DEL": {
+    "n": 26,
+    "gap1": 0.0,
+    "drift": 0.0143,
+    "eff_day": 0.0,
+    "revert5": 0.0036,
+    "pre_drift": 0.0,
+    "total_alpha": 0.0,
+    "vol_mult_eff": 9.2174,
+    "labels": {
+     "MIXED": 18,
+     "CLEAN-DRIFT": 2,
+     "QUIET": 6
+    }
+   }
+  }
+ }
+}

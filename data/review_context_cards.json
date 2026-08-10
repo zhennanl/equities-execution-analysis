@@ -1,0 +1,13 @@
+{
+ "Taiwan|WAN HAI LINES": {
+  "type": "off-cycle re-entry (UNRESOLVED)",
+  "facts": "Current Standard member (confirmed in both fund anchors; in the walk buffer zone) yet NO review addition in any public change list 2006-2026 (history: DEL May14 -> ADD Feb15 -> DEL Nov15). May-21 counts match MSCI's own table (+1/-2), so not a parse miss. Re-entered outside the review lists \u2014 mechanism unidentified.",
+  "agent_todo": "research 2021-22 Taiwan press + MSCI corporate-event notices for the Wan Hai inclusion announcement",
+  "status": "STUB \u2014 agent research queued"
+ },
+ "India|HDFC BANK": {
+  "type": "corporate-event continuation (probable)",
+  "facts": "Current member with DEL-ending review history. The Jul-2023 HDFC Ltd/HDFC Bank merger created the combined entity via corporate-event handling (announced outside review lists); the famous Aug-24 foreign-room FIF increase was a weight change, not an addition.",
+  "status": "explained (probable) \u2014 verify against MSCI corporate-event notice"
+ }
+}

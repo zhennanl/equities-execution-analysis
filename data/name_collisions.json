@@ -1,0 +1,3917 @@
+[
+ {
+  "display_name": "37 INTERACTIVE ENTERTAINMENT NETWORK TECHNOLOGY GROUP CO., LTD.",
+  "tickers": [
+   "002555.SS",
+   "002555.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "3SBIO INC.",
+  "tickers": [
+   "1530.HK",
+   "1530.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "AAC TECHNOLOGIES HOLDINGS INC.",
+  "tickers": [
+   "2018.HK",
+   "2018.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ACCELINK TECHNOLOGIES CO,LTD.",
+  "tickers": [
+   "002281.SS",
+   "002281.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ADVANCED FIBER RESOURCES (ZHUHAI), LTD.",
+  "tickers": [
+   "300620.SS",
+   "300620.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ADVANCED INFO SERVICE PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "ADVANC.BK",
+   "ADVANC.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "AGRICULTURAL BANK OF CHINA LIMITED",
+  "tickers": [
+   "1288.HK",
+   "1288.SS",
+   "601288.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "AIER EYE HOSPITAL GROUP CO., LTD.",
+  "tickers": [
+   "300015.SS",
+   "300015.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "AIR CHINA LIMITED",
+  "tickers": [
+   "0753.HK",
+   "601111.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "AIRPORTS OF THAILAND PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "AOT.BK",
+   "AOT.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "AKESO, INC.",
+  "tickers": [
+   "9926.HK",
+   "9926.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ALIBABA GROUP HOLDING LIMITED",
+  "tickers": [
+   "9988.HK",
+   "9988.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ALIBABA HEALTH INFORMATION TECHNOLOGY LIMITED",
+  "tickers": [
+   "0241.HK",
+   "241.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ALTEOGEN INC.",
+  "tickers": [
+   "196170.KQ",
+   "196170.KS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ALUMINUM CORPORATION OF CHINA LIMITED",
+  "tickers": [
+   "2600.HK",
+   "2600.SS",
+   "601600.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "ANGANG STEEL COMPANY LIMITED",
+  "tickers": [
+   "000898.SZ",
+   "0347.HK"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "ANHUI CONCH CEMENT COMPANY LIMITED",
+  "tickers": [
+   "0914.HK",
+   "600585.SS",
+   "914.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "ANHUI GUJING DISTILLERY CO., LTD.",
+  "tickers": [
+   "000596.SS",
+   "000596.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ANKER INNOVATIONS TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "300866.SS",
+   "300866.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ANTA SPORTS PRODUCTS LIMITED",
+  "tickers": [
+   "2020.HK",
+   "2020.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "APOLLO HOSPITALS ENTERPRISE LIMITED",
+  "tickers": [
+   "APOLLOHOSP.BO",
+   "APOLLOHOSP.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "ASPEED TECHNOLOGY INC.",
+  "tickers": [
+   "5274.TW",
+   "5274.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "AVARY HOLDING(SHENZHEN)CO., LIMITED",
+  "tickers": [
+   "002938.SS",
+   "002938.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BAIDU, INC.",
+  "tickers": [
+   "9888.HK",
+   "9888.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BANGKOK DUSIT MEDICAL SERVICES PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "BDMS.BK",
+   "BDMS.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "BANGKOK EXPRESSWAY AND METRO PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "BEM.BK",
+   "BEM.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "BANK OF CHINA LIMITED",
+  "tickers": [
+   "3988.HK",
+   "3988.SS",
+   "601988.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "BANK OF COMMUNICATIONS CO., LTD.",
+  "tickers": [
+   "3328.HK",
+   "3328.SS",
+   "601328.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "BANK OF NINGBO CO., LTD.",
+  "tickers": [
+   "002142.SS",
+   "002142.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BANK OF SUZHOU CO., LTD.",
+  "tickers": [
+   "002966.SS",
+   "002966.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BBMG CORPORATION",
+  "tickers": [
+   "2009.HK",
+   "601992.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "BEIJING COMPASS TECHNOLOGY DEVELOPMENT CO., LTD.",
+  "tickers": [
+   "300803.SS",
+   "300803.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BEIJING ENLIGHT MEDIA CO., LTD",
+  "tickers": [
+   "300251.SS",
+   "300251.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BEIJING ENTERPRISES HOLDINGS LIMITED",
+  "tickers": [
+   "0392.HK",
+   "392.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BEIJING NEW BUILDING MATERIALS PUBLIC LIMITED COMPANY",
+  "tickers": [
+   "000786.SS",
+   "000786.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BEONE MEDICINES AG",
+  "tickers": [
+   "6160.HK",
+   "6160.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BHARAT FORGE LIMITED",
+  "tickers": [
+   "BHARATFORG.BO",
+   "BHARATFORG.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "BILIBILI INC.",
+  "tickers": [
+   "9626.HK",
+   "9626.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BLUEFOCUS INTELLIGENT COMMUNICATIONS GROUP CO., LTD.",
+  "tickers": [
+   "300058.SS",
+   "300058.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BOC AVIATION LIMITED",
+  "tickers": [
+   "2588.HK",
+   "2588.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BOE TECHNOLOGY GROUP COMPANY LIMITED",
+  "tickers": [
+   "000725.SS",
+   "000725.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BOSIDENG INTERNATIONAL HOLDINGS LIMITED",
+  "tickers": [
+   "3998.HK",
+   "3998.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "BUMRUNGRAD HOSPITAL PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "BH.BK",
+   "BH.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "BYD COMPANY LIMITED",
+  "tickers": [
+   "002594.SS",
+   "002594.SZ",
+   "1211.HK",
+   "1211.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "BYD ELECTRONIC (INTERNATIONAL) COMPANY LIMITED",
+  "tickers": [
+   "0285.HK",
+   "285.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "C&D INTERNATIONAL INVESTMENT GROUP LIMITED",
+  "tickers": [
+   "1908.HK",
+   "1908.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CANMAX TECHNOLOGIES CO., LTD.",
+  "tickers": [
+   "300390.SS",
+   "300390.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CAPITALAND ASCENDAS REIT",
+  "tickers": [
+   "A17U.SI",
+   "CLAR.SI"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "CAPITALAND INTEGRATED COMMERCIAL TRUST",
+  "tickers": [
+   "C38U.SI",
+   "CICT.SI"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "CCOOP GROUP CO., LTD",
+  "tickers": [
+   "000564.SS",
+   "000564.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CELCOMDIGI BERHAD",
+  "tickers": [
+   "6947.KL",
+   "CDB.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "CENTRAL PATTANA PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "CPN-R.BK",
+   "CPN.BK",
+   "CPN.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "CGN POWER CO., LTD.",
+  "tickers": [
+   "003816.SZ",
+   "1816.HK",
+   "1816.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHANGCHUN HIGH-TECH INDUSTRY (GROUP) CO., LTD.",
+  "tickers": [
+   "000661.SS",
+   "000661.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHANGJIANG SECURITIES COMPANY LIMITED",
+  "tickers": [
+   "000783.SS",
+   "000783.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHAOZHOU THREE-CIRCLE (GROUP) CO.,LTD.",
+  "tickers": [
+   "300408.SS",
+   "300408.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHAROEN POKPHAND FOODS PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "CPF.BK",
+   "CPF.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "CHINA CITIC BANK CORPORATION LIMITED",
+  "tickers": [
+   "0998.HK",
+   "601998.SS",
+   "998.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA COAL ENERGY COMPANY LIMITED",
+  "tickers": [
+   "1898.HK",
+   "1898.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA CONSTRUCTION BANK CORPORATION",
+  "tickers": [
+   "0939.HK",
+   "601939.SS",
+   "939.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA EASTERN AIRLINES CORPORATION LIMITED",
+  "tickers": [
+   "0670.HK",
+   "600115.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA EVERBRIGHT BANK COMPANY LIMITED",
+  "tickers": [
+   "601818.SS",
+   "6818.HK"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA FEIHE LIMITED",
+  "tickers": [
+   "6186.HK",
+   "6186.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA GALAXY SECURITIES CO., LTD.",
+  "tickers": [
+   "601881.SS",
+   "6881.HK",
+   "6881.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA GAS HOLDINGS LIMITED",
+  "tickers": [
+   "0384.HK",
+   "384.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA GOLD INTERNATIONAL RESOURCES CORP. LTD.",
+  "tickers": [
+   "2099.HK",
+   "2099.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA GREAT WALL SECURITIES CO.,LTD.",
+  "tickers": [
+   "002939.SS",
+   "002939.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA HONGQIAO GROUP LIMITED",
+  "tickers": [
+   "1378.HK",
+   "1378.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA INTERNATIONAL CAPITAL CORPORATION LIMITED",
+  "tickers": [
+   "3908.HK",
+   "3908.SS",
+   "601995.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA LIFE INSURANCE COMPANY LIMITED",
+  "tickers": [
+   "2628.HK",
+   "2628.SS",
+   "601628.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA LONGYUAN POWER GROUP CORPORATION LIMITED",
+  "tickers": [
+   "0916.HK",
+   "916.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA MENGNIU DAIRY COMPANY LIMITED",
+  "tickers": [
+   "2319.HK",
+   "2319.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA MERCHANTS BANK CO., LTD.",
+  "tickers": [
+   "3968.HK",
+   "3968.SS",
+   "600036.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA MERCHANTS EXPRESSWAY NETWORK & TECHNOLOGY HOLDINGS CO.,LTD.",
+  "tickers": [
+   "001965.SS",
+   "001965.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA MERCHANTS PORT HOLDINGS COMPANY LIMITED",
+  "tickers": [
+   "0144.HK",
+   "144.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA MERCHANTS SHEKOU INDUSTRIAL ZONE HOLDINGS CO., LTD.",
+  "tickers": [
+   "001979.SS",
+   "001979.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA MINSHENG BANKING CORP., LTD.",
+  "tickers": [
+   "1988.HK",
+   "1988.SS",
+   "600016.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA NATIONAL BUILDING MATERIAL COMPANY LIMITED",
+  "tickers": [
+   "3323.HK",
+   "3323.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA NONFERROUS MINING CORPORATION LIMITED",
+  "tickers": [
+   "1258.HK",
+   "1258.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA OILFIELD SERVICES LIMITED",
+  "tickers": [
+   "2883.HK",
+   "2883.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA OVERSEAS LAND & INVESTMENT LIMITED",
+  "tickers": [
+   "0688.HK",
+   "688.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA PACIFIC INSURANCE (GROUP) CO., LTD.",
+  "tickers": [
+   "2601.HK",
+   "2601.SS",
+   "601601.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA PETROLEUM & CHEMICAL CORPORATION",
+  "tickers": [
+   "0386.HK",
+   "386.SS",
+   "600028.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA POWER INTERNATIONAL DEVELOPMENT LIMITED",
+  "tickers": [
+   "2380.HK",
+   "2380.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA RAILWAY GROUP LIMITED",
+  "tickers": [
+   "0390.HK",
+   "390.SS",
+   "601390.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA RARE EARTH RESOURCES AND TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "000831.SS",
+   "000831.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA RESOURCES BEER (HOLDINGS) COMPANY LIMITED",
+  "tickers": [
+   "0291.HK",
+   "291.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA RESOURCES GAS GROUP LIMITED",
+  "tickers": [
+   "1193.HK",
+   "1193.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA RESOURCES LAND LIMITED",
+  "tickers": [
+   "1109.HK",
+   "1109.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA RESOURCES MIXC LIFESTYLE SERVICES LIMITED",
+  "tickers": [
+   "1209.HK",
+   "1209.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA RESOURCES POWER HOLDINGS COMPANY LIMITED",
+  "tickers": [
+   "0836.HK",
+   "836.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA RESOURCES SANJIU MEDICAL & PHARMACEUTICAL CO., LTD.",
+  "tickers": [
+   "000999.SS",
+   "000999.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA RUYI HOLDINGS LIMITED",
+  "tickers": [
+   "0136.HK",
+   "136.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA SHENHUA ENERGY COMPANY LIMITED",
+  "tickers": [
+   "1088.HK",
+   "1088.SS",
+   "601088.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA TAIPING INSURANCE HOLDINGS COMPANY LIMITED",
+  "tickers": [
+   "0966.HK",
+   "966.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA TOURISM GROUP DUTY FREE CORPORATION LIMITED",
+  "tickers": [
+   "1880.HK",
+   "601888.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHINA TOWER CORPORATION LIMITED",
+  "tickers": [
+   "0788.HK",
+   "788.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHINA TUNGSTEN AND HIGHTECH MATERIALS CO.,LTD",
+  "tickers": [
+   "000657.SS",
+   "000657.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHONGQING CHANGAN AUTOMOBILE COMPANY LIMITED",
+  "tickers": [
+   "000625.SS",
+   "000625.SZ",
+   "200625.SZ"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "CHONGQING RURAL COMMERCIAL BANK CO., LTD.",
+  "tickers": [
+   "3618.HK",
+   "3618.SS",
+   "601077.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CHONGQING ZHIFEI BIOLOGICAL PRODUCTS CO., LTD.",
+  "tickers": [
+   "300122.SS",
+   "300122.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CHOW TAI FOOK JEWELLERY GROUP LIMITED",
+  "tickers": [
+   "1929.HK",
+   "1929.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CIMB GROUP HOLDINGS BERHAD",
+  "tickers": [
+   "1023.KL",
+   "CIMB.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "CITIC LIMITED",
+  "tickers": [
+   "0267.HK",
+   "267.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CITIC PACIFIC SPECIAL STEEL GROUP CO., LTD",
+  "tickers": [
+   "000708.SS",
+   "000708.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CITIC SECURITIES COMPANY LIMITED",
+  "tickers": [
+   "600030.SS",
+   "6030.HK",
+   "6030.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CK HUTCHISON HOLDINGS LIMITED",
+  "tickers": [
+   "0001.HK",
+   "1.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CLP HOLDINGS LIMITED",
+  "tickers": [
+   "0002.HK",
+   "2.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CMOC GROUP LIMITED",
+  "tickers": [
+   "3993.HK",
+   "3993.SS",
+   "603993.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CNGR ADVANCED MATERIAL CO., LTD.",
+  "tickers": [
+   "300919.SS",
+   "300919.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CNPC CAPITAL COMPANY LIMITED",
+  "tickers": [
+   "000617.SS",
+   "000617.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CONTEMPORARY AMPEREX TECHNOLOGY CO., LIMITED",
+  "tickers": [
+   "300750.SS",
+   "300750.SZ",
+   "3750.HK",
+   "3750.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "COSCO SHIPPING DEVELOPMENT CO., LTD.",
+  "tickers": [
+   "2866.HK",
+   "601866.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "COSCO SHIPPING ENERGY TRANSPORTATION CO., LTD.",
+  "tickers": [
+   "1138.HK",
+   "1138.SS",
+   "600026.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "COSCO SHIPPING HOLDINGS CO., LTD.",
+  "tickers": [
+   "1919.HK",
+   "1919.SS",
+   "601919.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CP ALL PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "CPALL.BK",
+   "CPALL.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "CRRC CORPORATION LIMITED",
+  "tickers": [
+   "1766.HK",
+   "1766.SS",
+   "601766.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "CSPC INNOVATION PHARMACEUTICAL CO., LTD.",
+  "tickers": [
+   "300765.SS",
+   "300765.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "CSPC PHARMACEUTICAL GROUP LIMITED",
+  "tickers": [
+   "1093.HK",
+   "1093.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "DAJIN HEAVY INDUSTRY CO.,LTD.",
+  "tickers": [
+   "002487.SS",
+   "002487.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "DAZHONG MINING CO., LTD.",
+  "tickers": [
+   "001203.SS",
+   "001203.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "DELTA ELECTRONICS (THAILAND) PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "DELTA.BK",
+   "DELTA.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "DELTON TECHNOLOGY (GUANGZHOU) INC.",
+  "tickers": [
+   "001389.SS",
+   "001389.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "DLF LIMITED",
+  "tickers": [
+   "DLF.BO",
+   "DLF.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "E INK HOLDINGS INC.",
+  "tickers": [
+   "8069.TW",
+   "8069.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "EAST MONEY INFORMATION CO.,LTD.",
+  "tickers": [
+   "300059.SS",
+   "300059.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ECOPRO BM CO., LTD.",
+  "tickers": [
+   "247540.KQ",
+   "247540.KS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ECOPRO CO., LTD.",
+  "tickers": [
+   "086520.KQ",
+   "086520.KS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "EICHER MOTORS LIMITED",
+  "tickers": [
+   "EICHERMOT.BO",
+   "EICHERMOT.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "EMEMORY TECHNOLOGY INC.",
+  "tickers": [
+   "3529.TW",
+   "3529.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "EMPYREAN TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "301269.SS",
+   "301269.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ENN ENERGY HOLDINGS LIMITED",
+  "tickers": [
+   "2688.HK",
+   "2688.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "EOPTOLINK TECHNOLOGY INC., LTD.",
+  "tickers": [
+   "300502.SS",
+   "300502.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "EVE ENERGY CO., LTD.",
+  "tickers": [
+   "300014.SS",
+   "300014.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "EVERPROX TECHNOLOGIES CO., LTD.",
+  "tickers": [
+   "300548.SS",
+   "300548.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "FAR EAST HORIZON LIMITED",
+  "tickers": [
+   "3360.HK",
+   "3360.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "FOCUS MEDIA INFORMATION TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "002027.SS",
+   "002027.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "FULL TRUCK ALLIANCE CO. LTD.",
+  "tickers": [
+   "YMM",
+   "YMM.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "FUTU HOLDINGS LIMITED",
+  "tickers": [
+   "FUTU",
+   "FUTU.HK"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "FUYAO GLASS INDUSTRY GROUP CO., LTD.",
+  "tickers": [
+   "3606.HK",
+   "3606.SS",
+   "600660.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "GALAXY ENTERTAINMENT GROUP LIMITED",
+  "tickers": [
+   "0027.HK",
+   "27.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GAMUDA BERHAD",
+  "tickers": [
+   "5398.KL",
+   "GAMUDA.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "GANFENG LITHIUM GROUP CO., LTD.",
+  "tickers": [
+   "002460.SS",
+   "002460.SZ",
+   "1772.HK",
+   "1772.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "GCL TECHNOLOGY HOLDINGS LIMITED",
+  "tickers": [
+   "3800.HK",
+   "3800.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GDS HOLDINGS LIMITED",
+  "tickers": [
+   "9698.HK",
+   "9698.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GEELY AUTOMOBILE HOLDINGS LIMITED",
+  "tickers": [
+   "0175.HK",
+   "175.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GEM CO., LTD.",
+  "tickers": [
+   "002340.SS",
+   "002340.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GENSCRIPT BIOTECH CORPORATION",
+  "tickers": [
+   "1548.HK",
+   "1548.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GF SECURITIES CO., LTD.",
+  "tickers": [
+   "000776.SS",
+   "000776.SZ",
+   "1776.HK",
+   "1776.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "GIANT BIOGENE HOLDING CO., LTD.",
+  "tickers": [
+   "2367.HK",
+   "2367.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GIANT NETWORK GROUP CO., LTD.",
+  "tickers": [
+   "002558.SS",
+   "002558.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GLOBALWAFERS CO., LTD.",
+  "tickers": [
+   "6488.TW",
+   "6488.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GOERTEK INC.",
+  "tickers": [
+   "002241.SS",
+   "002241.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GOLDWIND SCIENCE&TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "002202.SS",
+   "002202.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GOTION HIGH-TECH CO.,LTD.",
+  "tickers": [
+   "002074.SS",
+   "002074.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GRAB HOLDINGS LIMITED",
+  "tickers": [
+   "GRAB",
+   "GRAB.SI"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "GREAT WALL MOTOR COMPANY LIMITED",
+  "tickers": [
+   "2333.HK",
+   "2333.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GREE ELECTRIC APPLIANCES, INC. OF ZHUHAI",
+  "tickers": [
+   "000651.SS",
+   "000651.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GUANGDONG HAID GROUP CO., LIMITED",
+  "tickers": [
+   "002311.SS",
+   "002311.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GUANGDONG INVESTMENT LIMITED",
+  "tickers": [
+   "0270.HK",
+   "270.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GUANGZHOU AUTOMOBILE GROUP CO., LTD.",
+  "tickers": [
+   "2238.HK",
+   "601238.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "GUANGZHOU HAIGE COMMUNICATIONS GROUP INCORPORATED COMPANY",
+  "tickers": [
+   "002465.SS",
+   "002465.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GUANGZHOU TINCI MATERIALS TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "002709.SS",
+   "002709.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GULF DEVELOPMENT PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "GULF.BK",
+   "GULF.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "GUOSEN SECURITIES CO., LTD.",
+  "tickers": [
+   "002736.SS",
+   "002736.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "GUOTAI HAITONG SECURITIES CO., LTD.",
+  "tickers": [
+   "2611.HK",
+   "2611.SS",
+   "601211.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "GUOYUAN SECURITIES COMPANY LIMITED",
+  "tickers": [
+   "000728.SS",
+   "000728.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "H WORLD GROUP LIMITED",
+  "tickers": [
+   "HTHT",
+   "HTHT.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "HAIDILAO INTERNATIONAL HOLDING LTD.",
+  "tickers": [
+   "6862.HK",
+   "6862.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HAIER SMART HOME CO., LTD.",
+  "tickers": [
+   "600690.SS",
+   "6690.HK",
+   "6690.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "HAINAN AIRLINES HOLDING CO., LTD.",
+  "tickers": [
+   "600221.SS",
+   "900945.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "HAISCO PHARMACEUTICAL GROUP CO., LTD.",
+  "tickers": [
+   "002653.SS",
+   "002653.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HAITIAN INTERNATIONAL HOLDINGS LIMITED",
+  "tickers": [
+   "1882.HK",
+   "1882.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HANGZHOU CHANGCHUAN TECHNOLOGY CO.,LTD",
+  "tickers": [
+   "300604.SS",
+   "300604.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HANGZHOU TIGERMED CONSULTING CO., LTD",
+  "tickers": [
+   "300347.SS",
+   "300347.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HANSOH PHARMACEUTICAL GROUP COMPANY LIMITED",
+  "tickers": [
+   "3692.HK",
+   "3692.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HAVELLS INDIA LIMITED",
+  "tickers": [
+   "HAVELLS.BO",
+   "HAVELLS.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "HEBEI CHANGSHAN BIOCHEMICAL PHARMACEUTICAL CO., LTD.",
+  "tickers": [
+   "300255.SS",
+   "300255.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HENAN SHUANGHUI INVESTMENT & DEVELOPMENT CO.,LTD.",
+  "tickers": [
+   "000895.SS",
+   "000895.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HENDERSON LAND DEVELOPMENT COMPANY LIMITED",
+  "tickers": [
+   "0012.HK",
+   "12.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HENGAN INTERNATIONAL GROUP COMPANY LIMITED",
+  "tickers": [
+   "1044.HK",
+   "1044.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HESAI GROUP",
+  "tickers": [
+   "2525.HK",
+   "2525.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HIMILE MECHANICAL SCIENCE AND TECHNOLOGY (SHANDONG) CO., LTD",
+  "tickers": [
+   "002595.SS",
+   "002595.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HITHINK ROYALFLUSH INFORMATION NETWORK CO., LTD.",
+  "tickers": [
+   "300033.SS",
+   "300033.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HLB CO., LTD.",
+  "tickers": [
+   "028300.KQ",
+   "028300.KS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HMM CO.,LTD",
+  "tickers": [
+   "011200.KQ",
+   "011200.KS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HONG KONG EXCHANGES AND CLEARING LIMITED",
+  "tickers": [
+   "0388.HK",
+   "388.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HONG LEONG BANK BERHAD",
+  "tickers": [
+   "5819.KL",
+   "HLBANK.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "HONGKONG LAND HOLDINGS LIMITED",
+  "tickers": [
+   "H78.HK",
+   "H78.SI"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "HORIZON ROBOTICS",
+  "tickers": [
+   "9660.HK",
+   "9660.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HUA HONG GRACE SEMICONDUCTOR LIMITED",
+  "tickers": [
+   "1347.HK",
+   "1347.SS",
+   "688347.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "HUADONG MEDICINE CO., LTD",
+  "tickers": [
+   "000963.SS",
+   "000963.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HUAFON CHEMICAL CO.,LTD",
+  "tickers": [
+   "002064.SS",
+   "002064.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HUANENG POWER INTERNATIONAL, INC.",
+  "tickers": [
+   "0902.HK",
+   "600011.SS",
+   "902.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "HUATAI SECURITIES CO., LTD.",
+  "tickers": [
+   "601688.SS",
+   "6886.HK",
+   "6886.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "HUBEI FEILIHUA QUARTZ GLASS CO., LTD.",
+  "tickers": [
+   "300395.SS",
+   "300395.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HUIZHOU DESAY SV AUTOMOTIVE CO., LTD.",
+  "tickers": [
+   "002920.SS",
+   "002920.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HUNAN YUNENG NEW ENERGY BATTERY MATERIAL CO.,LTD.",
+  "tickers": [
+   "301358.SS",
+   "301358.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "HYUNDAI MOTOR COMPANY",
+  "tickers": [
+   "005380.KS",
+   "005385.KS",
+   "005387.KS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "HYUNDAI WIA CORPORATION",
+  "tickers": [
+   "011210.KQ",
+   "011210.KS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "IFLYTEK CO.,LTD",
+  "tickers": [
+   "002230.SS",
+   "002230.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "IHH HEALTHCARE BERHAD",
+  "tickers": [
+   "5225.KL",
+   "IHH.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "IMEIK TECHNOLOGY DEVELOPMENT CO.,LTD.",
+  "tickers": [
+   "300896.SS",
+   "300896.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "INDUSIND BANK LIMITED",
+  "tickers": [
+   "INDUSINDBK.BO",
+   "INDUSINDBK.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "INDUSTRIAL AND COMMERCIAL BANK OF CHINA LIMITED",
+  "tickers": [
+   "1398.HK",
+   "1398.SS",
+   "601398.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "INGENIC SEMICONDUCTOR CO.,LTD.",
+  "tickers": [
+   "300223.SS",
+   "300223.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "INNER MONGOLIA DIAN TOU ENERGY CORPORATION LIMITED",
+  "tickers": [
+   "002128.SS",
+   "002128.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "INNER MONGOLIA XINGYE SILVER & TIN MINING CO., LTD",
+  "tickers": [
+   "000426.SS",
+   "000426.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "INNOVENT BIOLOGICS, INC.",
+  "tickers": [
+   "1801.HK",
+   "1801.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "INTERNATIONAL GAMES SYSTEM CO.,LTD.",
+  "tickers": [
+   "3293.TW",
+   "3293.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "IOI CORPORATION BERHAD",
+  "tickers": [
+   "1961.KL",
+   "IOICORP.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "ISOFTSTONE INFORMATION TECHNOLOGY (GROUP) CO., LTD.",
+  "tickers": [
+   "301236.SS",
+   "301236.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "J&T GLOBAL EXPRESS LIMITED",
+  "tickers": [
+   "1519.HK",
+   "1519.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "JA SOLAR TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "002459.SS",
+   "002459.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "JARDINE MATHESON HOLDINGS LIMITED",
+  "tickers": [
+   "J36.HK",
+   "J36.SI"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "JD HEALTH INTERNATIONAL INC.",
+  "tickers": [
+   "6618.HK",
+   "6618.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "JD LOGISTICS, INC.",
+  "tickers": [
+   "2618.HK",
+   "2618.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "JD.COM, INC.",
+  "tickers": [
+   "9618.HK",
+   "9618.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "JIANGSU EASTERN SHENGHONG CO.,LTD.",
+  "tickers": [
+   "000301.SS",
+   "000301.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "JIANGSU YANGHE DISTILLERY CO., LTD.",
+  "tickers": [
+   "002304.SS",
+   "002304.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "JIANGXI COPPER COMPANY LIMITED",
+  "tickers": [
+   "0358.HK",
+   "358.SS",
+   "600362.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "JL MAG RARE-EARTH CO., LTD.",
+  "tickers": [
+   "300748.SS",
+   "300748.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "JSW ENERGY LIMITED",
+  "tickers": [
+   "JSWENERGY.BO",
+   "JSWENERGY.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "KANZHUN LIMITED",
+  "tickers": [
+   "BZ",
+   "BZ.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "KASIKORNBANK PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "KBANK-R.BK",
+   "KBANK.BK",
+   "KBANK.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "KE HOLDINGS INC.",
+  "tickers": [
+   "2423.HK",
+   "2423.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "KIATNAKIN PHATRA BANK PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "KKP.BK",
+   "KKP.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "KINGBOARD LAMINATES HOLDINGS LIMITED",
+  "tickers": [
+   "1888.HK",
+   "1888.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "KINGDEE INTERNATIONAL SOFTWARE GROUP COMPANY LIMITED",
+  "tickers": [
+   "0268.HK",
+   "268.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "KINGNET NETWORK CO., LTD.",
+  "tickers": [
+   "002517.SS",
+   "002517.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "KINGSOFT CORPORATION LIMITED",
+  "tickers": [
+   "3888.HK",
+   "3888.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "KRUNG THAI BANK PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "KTB.BK",
+   "KTB.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "KUAISHOU TECHNOLOGY",
+  "tickers": [
+   "1024.HK",
+   "1024.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "KUALA LUMPUR KEPONG BERHAD",
+  "tickers": [
+   "2445.KL",
+   "KLK.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "KUANG-CHI TECHNOLOGIES CO., LTD.",
+  "tickers": [
+   "002625.SS",
+   "002625.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "KUNLUN ENERGY COMPANY LIMITED",
+  "tickers": [
+   "0135.HK",
+   "135.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "KUNLUN TECH CO., LTD.",
+  "tickers": [
+   "300418.SS",
+   "300418.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LAOPU GOLD CO., LTD.",
+  "tickers": [
+   "6181.HK",
+   "6181.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LB GROUP CO., LTD.",
+  "tickers": [
+   "002601.SS",
+   "002601.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LEGEND BIOTECH CORPORATION",
+  "tickers": [
+   "LEGN",
+   "LEGN.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "LENOVO GROUP LIMITED",
+  "tickers": [
+   "0992.HK",
+   "992.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LENS TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "300433.SS",
+   "300433.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LEO GROUP CO., LTD.",
+  "tickers": [
+   "002131.SS",
+   "002131.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LI AUTO INC.",
+  "tickers": [
+   "2015.HK",
+   "2015.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LI NING COMPANY LIMITED",
+  "tickers": [
+   "2331.HK",
+   "2331.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LINGYI ITECH (GUANGDONG) COMPANY",
+  "tickers": [
+   "002600.SS",
+   "002600.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LINK REAL ESTATE INVESTMENT TRUST",
+  "tickers": [
+   "0823.HK",
+   "823.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LONGFOR GROUP HOLDINGS LIMITED",
+  "tickers": [
+   "0960.HK",
+   "960.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LUXSHARE PRECISION INDUSTRY CO., LTD.",
+  "tickers": [
+   "002475.SS",
+   "002475.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "LUZHOU LAOJIAO CO.,LTD",
+  "tickers": [
+   "000568.SS",
+   "000568.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "MALAYAN BANKING BERHAD",
+  "tickers": [
+   "1155.KL",
+   "MAYBANK.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "MANGO EXCELLENT MEDIA CO., LTD.",
+  "tickers": [
+   "300413.SS",
+   "300413.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "MAXSCEND MICROELECTRONICS COMPANY LIMITED",
+  "tickers": [
+   "300782.SS",
+   "300782.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "MEITUAN",
+  "tickers": [
+   "3690.HK",
+   "3690.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "MIDEA GROUP CO., LTD.",
+  "tickers": [
+   "000333.SS",
+   "000333.SZ",
+   "0300.HK",
+   "300.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "MINISO GROUP HOLDING LIMITED",
+  "tickers": [
+   "9896.HK",
+   "9896.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "MINOR INTERNATIONAL PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "MINT.BK",
+   "MINT.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "MIRAE ASSET SECURITIES CO., LTD.",
+  "tickers": [
+   "006800.KS",
+   "006805.KS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "MISC BERHAD",
+  "tickers": [
+   "3816.KL",
+   "MISC.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "MMG LIMITED",
+  "tickers": [
+   "1208.HK",
+   "1208.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "MPI CORPORATION",
+  "tickers": [
+   "6223.TW",
+   "6223.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "MRF LIMITED",
+  "tickers": [
+   "MRF.BO",
+   "MRF.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "MTR CORPORATION LIMITED",
+  "tickers": [
+   "0066.HK",
+   "66.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "MUYUAN FOODS GROUP CO., LTD.",
+  "tickers": [
+   "002714.SS",
+   "002714.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "NAURA TECHNOLOGY GROUP CO., LTD.",
+  "tickers": [
+   "002371.SS",
+   "002371.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "NESTL\u00c9 INDIA LIMITED",
+  "tickers": [
+   "NESTLEIND.BO",
+   "NESTLEIND.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "NETEASE, INC.",
+  "tickers": [
+   "9999.HK",
+   "9999.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "NEW CHINA LIFE INSURANCE COMPANY LTD.",
+  "tickers": [
+   "1336.HK",
+   "1336.SS",
+   "601336.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "NEW HOPE LIUHE CO.,LTD.",
+  "tickers": [
+   "000876.SS",
+   "000876.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "NEW ORIENTAL EDUCATION & TECHNOLOGY GROUP INC.",
+  "tickers": [
+   "9901.HK",
+   "9901.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "NHPC LIMITED",
+  "tickers": [
+   "NHPC.BO",
+   "NHPC.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "NIO INC.",
+  "tickers": [
+   "9866.HK",
+   "9866.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "NMDC LIMITED",
+  "tickers": [
+   "NMDC.BO",
+   "NMDC.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "NONGFU SPRING CO., LTD.",
+  "tickers": [
+   "9633.HK",
+   "9633.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "OBI PHARMA, INC.",
+  "tickers": [
+   "4174.TW",
+   "4174.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "OIL INDIA LIMITED",
+  "tickers": [
+   "OIL.BO",
+   "OIL.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "ONENESS BIOTECH CO., LTD.",
+  "tickers": [
+   "4743.TW",
+   "4743.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ORIENT OVERSEAS (INTERNATIONAL) LIMITED",
+  "tickers": [
+   "0316.HK",
+   "316.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "PARADE TECHNOLOGIES, LTD.",
+  "tickers": [
+   "4966.TW",
+   "4966.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "PB FINTECH LIMITED",
+  "tickers": [
+   "POLICYBZR.BO",
+   "POLICYBZR.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PDD HOLDINGS INC.",
+  "tickers": [
+   "PDD",
+   "PDD.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PETROCHINA COMPANY LIMITED",
+  "tickers": [
+   "0857.HK",
+   "601857.SS",
+   "857.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "PETRONAS CHEMICALS GROUP BERHAD",
+  "tickers": [
+   "5183.KL",
+   "PCHEM.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PETRONAS GAS BERHAD",
+  "tickers": [
+   "6033.KL",
+   "PETGAS.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PHARMARON BEIJING CO., LTD.",
+  "tickers": [
+   "300759.SS",
+   "300759.SZ",
+   "3759.HK"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "PHISON ELECTRONICS CORP.",
+  "tickers": [
+   "8299.TW",
+   "8299.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "PI INDUSTRIES LIMITED",
+  "tickers": [
+   "PIIND.BO",
+   "PIIND.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PICC PROPERTY AND CASUALTY COMPANY LIMITED",
+  "tickers": [
+   "2328.HK",
+   "2328.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "PING AN INSURANCE (GROUP) COMPANY OF CHINA, LTD.",
+  "tickers": [
+   "2318.HK",
+   "2318.SS",
+   "601318.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "PONY AI INC.",
+  "tickers": [
+   "2026.HK",
+   "2026.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "POP MART INTERNATIONAL GROUP LIMITED",
+  "tickers": [
+   "9992.HK",
+   "9992.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "POSTAL SAVINGS BANK OF CHINA CO., LTD.",
+  "tickers": [
+   "1658.HK",
+   "1658.SS",
+   "601658.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "POWER ASSETS HOLDINGS LIMITED",
+  "tickers": [
+   "0006.HK",
+   "6.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "POWER FINANCE CORPORATION LIMITED",
+  "tickers": [
+   "PFC.BO",
+   "PFC.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "POWER GRID CORPORATION OF INDIA LIMITED",
+  "tickers": [
+   "POWERGRID.BO",
+   "POWERGRID.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PRESS METAL ALUMINIUM HOLDINGS BERHAD",
+  "tickers": [
+   "8869.KL",
+   "PMETAL.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PTT EXPLORATION AND PRODUCTION PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "PTTEP.BK",
+   "PTTEP.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PTT PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "PTT.BK",
+   "PTT.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "PUBLIC BANK BERHAD",
+  "tickers": [
+   "1295.KL",
+   "PBBANK.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "QINGHAI SALT LAKE INDUSTRY CO.,LTD",
+  "tickers": [
+   "000792.SS",
+   "000792.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "RANGE INTELLIGENT COMPUTING TECHNOLOGY GROUP COMPANY LIMITED",
+  "tickers": [
+   "300442.SS",
+   "300442.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "REMEGEN CO., LTD.",
+  "tickers": [
+   "688331.SS",
+   "9995.HK",
+   "9995.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "RHB BANK BERHAD",
+  "tickers": [
+   "1066.KL",
+   "RHBBANK.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "ROBOTECHNIK INTELLIGENT TECHNOLOGY CO., LTD",
+  "tickers": [
+   "300757.SS",
+   "300757.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "RONGSHENG PETROCHEMICAL CO., LTD.",
+  "tickers": [
+   "002493.SS",
+   "002493.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "S.F. HOLDING CO., LTD.",
+  "tickers": [
+   "002352.SS",
+   "002352.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SAMSUNG ELECTRONICS CO., LTD.",
+  "tickers": [
+   "005930.KS",
+   "005935.KS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "SANGFOR TECHNOLOGIES INC.",
+  "tickers": [
+   "300454.SS",
+   "300454.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SATELLITE CHEMICAL CO.,LTD.",
+  "tickers": [
+   "002648.SS",
+   "002648.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SBI CARDS AND PAYMENT SERVICES LIMITED",
+  "tickers": [
+   "SBICARD.BO",
+   "SBICARD.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "SCB X PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "SCB.BK",
+   "SCB.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "SEA LIMITED",
+  "tickers": [
+   "SE",
+   "SE.SI"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "SENSETIME GROUP INC.",
+  "tickers": [
+   "0020.HK",
+   "20.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SG MICRO CORP",
+  "tickers": [
+   "300661.SS",
+   "300661.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHANDONG GOLD MINING CO., LTD.",
+  "tickers": [
+   "1787.HK",
+   "1787.SS",
+   "600547.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "SHANDONG HONGQIAO ALUMINUM INDUSTRY HOLDING COMPANY LIMITED",
+  "tickers": [
+   "002379.SS",
+   "002379.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHANDONG SUNPAPER CO., LTD.",
+  "tickers": [
+   "002078.SS",
+   "002078.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHANGHAI BAOSIGHT SOFTWARE CO.,LTD.",
+  "tickers": [
+   "600845.SS",
+   "900926.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "SHANGHAI FOSUN PHARMACEUTICAL (GROUP) CO., LTD.",
+  "tickers": [
+   "2196.HK",
+   "600196.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "SHANGHAI PHARMACEUTICALS HOLDING CO., LTD",
+  "tickers": [
+   "2607.HK",
+   "601607.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "SHANGHAI RAAS BLOOD PRODUCTS CO., LTD.",
+  "tickers": [
+   "002252.SS",
+   "002252.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHANGHAI STONEHILL TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "002195.SS",
+   "002195.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHANJIN INTERNATIONAL GOLD CO., LTD.",
+  "tickers": [
+   "000975.SS",
+   "000975.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHANNON SEMICONDUCTOR TECHNOLOGY CO.,LTD.",
+  "tickers": [
+   "300475.SS",
+   "300475.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHANXI COKING COAL ENERGY GROUP CO., LTD.",
+  "tickers": [
+   "000983.SS",
+   "000983.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHARETRONIC DATA TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "300857.SS",
+   "300857.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENNAN CIRCUITS CO., LTD.",
+  "tickers": [
+   "002916.SS",
+   "002916.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENWAN HONGYUAN GROUP CO., LTD.",
+  "tickers": [
+   "000166.SS",
+   "000166.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN ENVICOOL TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "002837.SS",
+   "002837.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN EVERWIN PRECISION TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "300115.SS",
+   "300115.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN INOVANCE TECHNOLOGY CO.,LTD",
+  "tickers": [
+   "300124.SS",
+   "300124.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN KEDALI INDUSTRY CO., LTD.",
+  "tickers": [
+   "002850.SS",
+   "002850.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN LONGSYS ELECTRONICS CO., LTD.",
+  "tickers": [
+   "301308.SS",
+   "301308.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN MEGMEET ELECTRICAL CO., LTD",
+  "tickers": [
+   "002851.SS",
+   "002851.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN MINDRAY BIO-MEDICAL ELECTRONICS CO., LTD.",
+  "tickers": [
+   "300760.SS",
+   "300760.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN NEW INDUSTRIES BIOMEDICAL ENGINEERING CO., LTD.",
+  "tickers": [
+   "300832.SS",
+   "300832.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN SALUBRIS PHARMACEUTICALS CO., LTD.",
+  "tickers": [
+   "002294.SS",
+   "002294.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN SUNWAY COMMUNICATION CO., LTD.",
+  "tickers": [
+   "300136.SS",
+   "300136.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHEN TECHWINSEMI TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "001309.SS",
+   "001309.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SHENZHOU INTERNATIONAL GROUP HOLDINGS LIMITED",
+  "tickers": [
+   "2313.HK",
+   "2313.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SICHUAN KELUN PHARMACEUTICAL CO., LTD.",
+  "tickers": [
+   "002422.SS",
+   "002422.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SICHUAN KELUN-BIOTECH BIOPHARMACEUTICAL CO., LTD.",
+  "tickers": [
+   "6990.HK",
+   "6990.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SIMPLO TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "6121.TW",
+   "6121.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SINO BIOPHARMACEUTICAL LIMITED",
+  "tickers": [
+   "1177.HK",
+   "1177.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SINO LAND COMPANY LIMITED",
+  "tickers": [
+   "0083.HK",
+   "83.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SINOMA SCIENCE & TECHNOLOGY CO.,LTD.",
+  "tickers": [
+   "002080.SS",
+   "002080.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SINOMINE RESOURCE GROUP CO., LTD.",
+  "tickers": [
+   "002738.SS",
+   "002738.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SINOPHARM GROUP CO. LTD.",
+  "tickers": [
+   "1099.HK",
+   "1099.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SINOTRUK (HONG KONG) LIMITED",
+  "tickers": [
+   "3808.HK",
+   "3808.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SMOORE INTERNATIONAL HOLDINGS LIMITED",
+  "tickers": [
+   "6969.HK",
+   "6969.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SUN HUNG KAI PROPERTIES LIMITED",
+  "tickers": [
+   "0016.HK",
+   "16.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SUNGROW POWER SUPPLY CO., LTD.",
+  "tickers": [
+   "300274.SS",
+   "300274.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SUNNY OPTICAL TECHNOLOGY (GROUP) COMPANY LIMITED",
+  "tickers": [
+   "2382.HK",
+   "2382.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SUNWODA ELECTRONIC CO.,LTD",
+  "tickers": [
+   "300207.SS",
+   "300207.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SUZHOU DONGSHAN PRECISION MANUFACTURING CO., LTD.",
+  "tickers": [
+   "002384.SS",
+   "002384.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SUZHOU MAXWELL TECHNOLOGIES CO., LTD.",
+  "tickers": [
+   "300751.SS",
+   "300751.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SUZHOU TFC OPTICAL COMMUNICATION CO., LTD.",
+  "tickers": [
+   "300394.SS",
+   "300394.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "SWIRE PACIFIC LIMITED",
+  "tickers": [
+   "0019.HK",
+   "19.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TAIMED BIOLOGICS INC.",
+  "tickers": [
+   "4147.TW",
+   "4147.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TAL EDUCATION GROUP",
+  "tickers": [
+   "TAL",
+   "TAL.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "TCL ZHONGHUAN RENEWABLE ENERGY TECHNOLOGY CO.,LTD.",
+  "tickers": [
+   "002129.SS",
+   "002129.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TECHTRONIC INDUSTRIES COMPANY LIMITED",
+  "tickers": [
+   "0669.HK",
+   "669.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TENAGA NASIONAL BERHAD",
+  "tickers": [
+   "5347.KL",
+   "TENAGA.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "TENCENT HOLDINGS LIMITED",
+  "tickers": [
+   "0700.HK",
+   "700.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TENCENT MUSIC ENTERTAINMENT GROUP",
+  "tickers": [
+   "TME",
+   "TME.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "THE FEDERAL BANK LIMITED",
+  "tickers": [
+   "FEDERALBNK.BO",
+   "FEDERALBNK.NS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "THE HONG KONG AND CHINA GAS COMPANY LIMITED",
+  "tickers": [
+   "0003.HK",
+   "3.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "THE PEOPLE'S INSURANCE COMPANY (GROUP) OF CHINA LIMITED",
+  "tickers": [
+   "1339.HK",
+   "1339.SS",
+   "601319.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "THE SIAM CEMENT PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "SCC.BK",
+   "SCC.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "TIANQI LITHIUM CORPORATION",
+  "tickers": [
+   "002466.SS",
+   "002466.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TIANSHAN ALUMINUM GROUP CO.,LTD",
+  "tickers": [
+   "002532.SS",
+   "002532.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TIANSHUI HUATIAN TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "002185.SS",
+   "002185.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TINGYI (CAYMAN ISLANDS) HOLDING CORP.",
+  "tickers": [
+   "0322.HK",
+   "322.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TMBTHANACHART BANK PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "TTB-R.BK",
+   "TTB.BK",
+   "TTB.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "TONGCHENG TRAVEL HOLDINGS LIMITED",
+  "tickers": [
+   "0780.HK",
+   "780.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TONGFU MICROELECTRONICS CO.,LTD",
+  "tickers": [
+   "002156.SS",
+   "002156.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TONGLING NONFERROUS METALS GROUP CO.,LTD.",
+  "tickers": [
+   "000630.SS",
+   "000630.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TRIP.COM GROUP LIMITED",
+  "tickers": [
+   "9961.HK",
+   "9961.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "TRUE CORPORATION PUBLIC COMPANY LIMITED",
+  "tickers": [
+   "TRUE.BK",
+   "TRUE.R"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "TSINGTAO BREWERY COMPANY LIMITED",
+  "tickers": [
+   "0168.HK",
+   "168.SS",
+   "600600.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "UBTECH ROBOTICS CORP LTD",
+  "tickers": [
+   "9880.HK",
+   "9880.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "UNIGROUP GUOXIN MICROELECTRONICS CO., LTD.",
+  "tickers": [
+   "002049.SS",
+   "002049.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "UNISPLENDOUR CORPORATION LIMITED",
+  "tickers": [
+   "000938.SS",
+   "000938.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "VANGUARD INTERNATIONAL SEMICONDUCTOR CORPORATION",
+  "tickers": [
+   "5347.TW",
+   "5347.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "VICTORY GIANT TECHNOLOGY (HUIZHOU) CO.,LTD",
+  "tickers": [
+   "300476.SS",
+   "300476.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "VIPSHOP HOLDINGS LIMITED",
+  "tickers": [
+   "VIPS",
+   "VIPS.SS"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "WANT WANT CHINA HOLDINGS LIMITED",
+  "tickers": [
+   "0151.HK",
+   "151.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WANXIANG QIANCHAO CO.,LTD.",
+  "tickers": [
+   "000559.SS",
+   "000559.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WEICHAI POWER CO., LTD.",
+  "tickers": [
+   "000338.SS",
+   "000338.SZ",
+   "2338.HK",
+   "2338.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "WENS FOODSTUFF GROUP CO., LTD.",
+  "tickers": [
+   "300498.SS",
+   "300498.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WH GROUP LIMITED",
+  "tickers": [
+   "0288.HK",
+   "288.HK"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WIN SEMICONDUCTORS CORP.",
+  "tickers": [
+   "3105.TW",
+   "3105.TWO"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WUHAN GUIDE INFRARED CO., LTD.",
+  "tickers": [
+   "002414.SS",
+   "002414.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WULIANGYE YIBIN CO.,LTD.",
+  "tickers": [
+   "000858.SS",
+   "000858.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WUS PRINTED CIRCUIT (KUNSHAN) CO., LTD.",
+  "tickers": [
+   "002463.SS",
+   "002463.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WUXI APPTEC CO., LTD.",
+  "tickers": [
+   "2359.HK",
+   "2359.SS",
+   "603259.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "WUXI BIOLOGICS (CAYMAN) INC.",
+  "tickers": [
+   "2269.HK",
+   "2269.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "WUXI XDC CAYMAN INC.",
+  "tickers": [
+   "2268.HK",
+   "2268.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "XCMG CONSTRUCTION MACHINERY CO., LTD.",
+  "tickers": [
+   "000425.SS",
+   "000425.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "XIAOMI CORPORATION",
+  "tickers": [
+   "1810.HK",
+   "1810.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "XINYI SOLAR HOLDINGS LIMITED",
+  "tickers": [
+   "0968.HK",
+   "968.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "XPENG INC.",
+  "tickers": [
+   "9868.HK",
+   "9868.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "XTALPI HOLDINGS LIMITED",
+  "tickers": [
+   "2228.HK",
+   "2228.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "YADEA GROUP HOLDINGS LTD.",
+  "tickers": [
+   "1585.HK",
+   "1585.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "YANGTZE OPTICAL FIBRE AND CABLE JOINT STOCK LIMITED COMPANY",
+  "tickers": [
+   "601869.SS",
+   "6869.HK",
+   "6869.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "YANKUANG ENERGY GROUP COMPANY LIMITED",
+  "tickers": [
+   "1171.HK",
+   "1171.SS",
+   "600188.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "YANTAI JEREH OILFIELD SERVICES GROUP CO., LTD.",
+  "tickers": [
+   "002353.SS",
+   "002353.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "YEALINK NETWORK TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "300628.SS",
+   "300628.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "YTL POWER INTERNATIONAL BERHAD",
+  "tickers": [
+   "6742.KL",
+   "YTLPOWR.KL"
+  ],
+  "kind": "UNKNOWN",
+  "why": "same name, different codes, and no structural reason found \u2014 worth a look"
+ },
+ {
+  "display_name": "YUM CHINA HOLDINGS, INC.",
+  "tickers": [
+   "9987.HK",
+   "9987.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "YUNNAN BAIYAO GROUP CO.,LTD",
+  "tickers": [
+   "000538.SS",
+   "000538.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "YUNNAN ENERGY NEW MATERIAL (GROUP) CO., LTD.",
+  "tickers": [
+   "002812.SS",
+   "002812.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "YUNNAN TIN COMPANY LIMITED",
+  "tickers": [
+   "000960.SS",
+   "000960.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZANGGE MINING COMPANY LIMITED",
+  "tickers": [
+   "000408.SS",
+   "000408.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHAOJIN MINING INDUSTRY COMPANY LIMITED",
+  "tickers": [
+   "1818.HK",
+   "1818.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHEJIANG CENTURY HUATONG GROUP CO.,LTD",
+  "tickers": [
+   "002602.SS",
+   "002602.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHEJIANG DAHUA TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "002236.SS",
+   "002236.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHEJIANG JINGSHENG MECHANICAL & ELECTRICAL CO., LTD.",
+  "tickers": [
+   "300316.SS",
+   "300316.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHEJIANG LEAPMOTOR TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "9863.HK",
+   "9863.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHEJIANG NHU COMPANY LTD.",
+  "tickers": [
+   "002001.SS",
+   "002001.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHEJIANG SANHUA INTELLIGENT CONTROLS CO.,LTD",
+  "tickers": [
+   "002050.SS",
+   "002050.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHONGJI INNOLIGHT CO., LTD.",
+  "tickers": [
+   "300308.SS",
+   "300308.SZ"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZHUZHOU CRRC TIMES ELECTRIC CO., LTD.",
+  "tickers": [
+   "3898.HK",
+   "3898.SS",
+   "688187.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "ZIJIN GOLD INTERNATIONAL COMPANY LIMITED",
+  "tickers": [
+   "2259.HK",
+   "2259.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZIJIN MINING GROUP COMPANY LIMITED",
+  "tickers": [
+   "2899.HK",
+   "2899.SS",
+   "601899.SS"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "ZOOMLION HEAVY INDUSTRY SCIENCE AND TECHNOLOGY CO., LTD.",
+  "tickers": [
+   "000157.SS",
+   "000157.SZ",
+   "1157.HK"
+  ],
+  "kind": "DUAL_LISTING",
+  "why": "an A-share and its H-share: two securities, two exchanges, two prices"
+ },
+ {
+  "display_name": "ZTE CORPORATION",
+  "tickers": [
+   "0763.HK",
+   "763.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ },
+ {
+  "display_name": "ZTO EXPRESS (CAYMAN) INC.",
+  "tickers": [
+   "2057.HK",
+   "2057.SS"
+  ],
+  "kind": "PADDING",
+  "why": "same code with and without leading zeros, same code family \u2014 one security, stored twice"
+ }
+]

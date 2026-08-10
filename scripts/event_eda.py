@@ -35,7 +35,7 @@ PRE, POST = 15, 10           # context trading days around window
 
 
 def _j(name):
-    return json.loads((ROOT / "data" / name).read_text())
+    return json.loads((ROOT / "data" / name).read_text(encoding="utf-8"))
 
 
 def _num(x):
@@ -262,7 +262,7 @@ def render(key="MSCI 2026-05 SAIR"):
          "summary": lines,
          "panel": {c: {k: v for k, v in p.items()
                        if k != "rows"} for c, p in
-                   panel.items()}}, indent=1, default=str))
+                   panel.items()}}, indent=1, default=str), encoding="utf-8")
     print(f"written: reports/event_eda_{tag}.html "
           f"({len(panel)} names)")
     for ln in [head] + lines:

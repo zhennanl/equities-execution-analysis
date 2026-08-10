@@ -42,7 +42,7 @@ IB_UNIT_CUTOFF = "2024-05-01"   # sanity-verified: bars before this
 
 def _load_ib():
     f = ROOT / "data" / "ib_bars.json"
-    return json.loads(f.read_text()) if f.exists() else {}
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
 
 
 def _ib_day(ib, code, day):
@@ -77,7 +77,7 @@ def _bars(cache, code, day):
 
 def _official_close(code, day):
     sd = json.loads((ROOT / "data" / "tw_history" /
-                     "stock_day.json").read_text())
+                     "stock_day.json").read_text(encoding="utf-8"))
     for m in sd.get(code, {}):
         for r in sd[code][m]:
             if r[0] == day:
@@ -91,7 +91,7 @@ def base_table() -> pd.DataFrame:
     Events: the full IB event set (bridge events included)."""
     from scripts.ib_harvest import _ib_event_set
     ib = _load_ib()
-    cache = json.loads((ROOT / "data" / "tv_bars.json").read_text())
+    cache = json.loads((ROOT / "data" / "tv_bars.json").read_text(encoding="utf-8"))
     try:
         derived = pd.read_json(ROOT / "data" /
                                "auction_shares_derived.json")
@@ -212,7 +212,7 @@ def main():
     OUT.write_text(json.dumps(
         {"n_rows": len(df), "violence_v2": v2,
          "decompose": json.loads(dec.to_json()),
-         "thin_rich": tr}, indent=1, default=str))
+         "thin_rich": tr}, indent=1, default=str), encoding="utf-8")
     print(f"{len(df)} name-days joined")
     print("\nVIOLENCE V2:", json.dumps(v2))
     print("\nDECOMPOSITION:\n", dec.to_string())

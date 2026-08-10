@@ -1,0 +1,68 @@
+{
+ "market": "Taiwan",
+ "review": "Aug21",
+ "keys": {
+  "gmsr_dm": 9.37,
+  "em_range": [
+   2.34,
+   5.39
+  ],
+  "ceiling": 5.39,
+  "floor": 3.593,
+  "bar": 8.085,
+  "price_date": "2021-04-19",
+  "source": "prevailing May21 (pre-2023 QIR regime)"
+ },
+ "fx_used": 27.766,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "8454",
+   "security": "MOMO.COM",
+   "action": "ADD",
+   "pit_cap_busd": 5.04,
+   "verdict": "NOT-EXPLAINED: 5.04B well below bar"
+  },
+  {
+   "code": "2834",
+   "security": "TAIWAN BUSINESS BANK",
+   "action": "DEL",
+   "pit_cap_busd": 2.75,
+   "verdict": "EXPLAINED: 2.75B is 23% below the 3.593B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "8299": 3.49,
+   "1605": 2.9,
+   "2347": 3.39,
+   "2356": 3.53,
+   "1504": 2.57,
+   "4743": 3.17,
+   "5269": 2.97,
+   "3702": 2.92,
+   "3296": 0.1,
+   "9945": 2.88
+  },
+  "hits": [],
+  "misses": [
+   "2834"
+  ],
+  "false_alarms": [
+   "1504",
+   "1605",
+   "2347",
+   "2356",
+   "3296",
+   "3702",
+   "4743",
+   "5269",
+   "8299",
+   "9945"
+  ]
+ }
+}

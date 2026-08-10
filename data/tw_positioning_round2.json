@@ -1,0 +1,246 @@
+{
+ "_what": "round-two stress of the capacity ladder",
+ "generated": "2026-08-10T11:17:59",
+ "close_share": 0.095,
+ "coverage": {
+  "vintage_last": "2026-07-31",
+  "turnover_last": "20260807",
+  "t86_last": "20260805",
+  "refreshed": false,
+  "refresh_last": null
+ },
+ "carried": [
+  "2344",
+  "2408",
+  "8046"
+ ],
+ "ladder_by_horizon": {
+  "20": {
+   "2344": 14.889117523735079,
+   "2408": 10.570287914524908,
+   "8046": 8.17443391301479
+  },
+  "60": {
+   "2344": 8.741753405141887,
+   "2408": 7.36260865027302,
+   "8046": 8.156463576229553
+  },
+  "120": {
+   "2344": 9.229209239065263,
+   "2408": 7.604794920452027,
+   "8046": 8.539703490443328
+  },
+  "250": {
+   "2344": 9.0704629475301,
+   "2408": 7.608163099896939,
+   "8046": 7.7265728608850175
+  }
+ },
+ "rank_by_horizon": {
+  "20": [
+   "2344",
+   "2408",
+   "8046"
+  ],
+  "60": [
+   "2344",
+   "8046",
+   "2408"
+  ],
+  "120": [
+   "2344",
+   "8046",
+   "2408"
+  ],
+  "250": [
+   "2344",
+   "8046",
+   "2408"
+  ]
+ },
+ "per_name": {
+  "2344": {
+   "name": "Winbond Electronics Corporation",
+   "board": "TWSE",
+   "carried": true,
+   "last_close": 130.0,
+   "last_date": "2026-07-31",
+   "ret_20d": -0.29155313351498635,
+   "ret_30d": -0.3467336683417085,
+   "vol_30d": 0.9245860576082601,
+   "drawdown_from_30d_high": -0.4144144144144144,
+   "adv_spread": 1.7032186603407642,
+   "closes_lo": 8.741753405141887,
+   "closes_hi": 14.889117523735079,
+   "closes_round1": 13.428388631859981,
+   "peer_pctile": 0.6068287635799275,
+   "turnover_ratio": 0.9708411722824498,
+   "foreign_net_5d_of_adv": 0.5582748425370212,
+   "foreign_net_20d_of_adv": -0.03620973220354325,
+   "foreign_net_60d_of_adv": -0.9193105565628081,
+   "blocks_30d_n": 8,
+   "blocks_30d_of_adv": 0.1273401739746097,
+   "sbl_build_20d_of_adv": -0.4725050437346076
+  },
+  "2408": {
+   "name": "Nanya Technology Corporation",
+   "board": "TWSE",
+   "carried": true,
+   "last_close": 360.5,
+   "last_date": "2026-07-31",
+   "ret_20d": -0.11425061425061422,
+   "ret_30d": -0.17505720823798632,
+   "vol_30d": 1.0935168412489928,
+   "drawdown_from_30d_high": -0.28613861386138617,
+   "adv_spread": 1.4356715692247124,
+   "closes_lo": 7.36260865027302,
+   "closes_hi": 10.570287914524908,
+   "closes_round1": 10.764392175910277,
+   "peer_pctile": 0.4511122607346094,
+   "turnover_ratio": 0.6711212904228786,
+   "foreign_net_5d_of_adv": 0.5100662985004358,
+   "foreign_net_20d_of_adv": -0.30651804742155425,
+   "foreign_net_60d_of_adv": 0.3759356155919112,
+   "blocks_30d_n": 4,
+   "blocks_30d_of_adv": 0.019612364687444813,
+   "sbl_build_20d_of_adv": 0.7938977583252057
+  },
+  "8046": {
+   "name": "Nan Ya Printed Circuit Board Corporation",
+   "board": "TWSE",
+   "carried": true,
+   "last_close": 920.0,
+   "last_date": "2026-07-31",
+   "ret_20d": -0.19650655021834063,
+   "ret_30d": 0.039548022598870025,
+   "vol_30d": 1.142962673236444,
+   "drawdown_from_30d_high": -0.34982332155477036,
+   "adv_spread": 1.105238201230807,
+   "closes_lo": 7.7265728608850175,
+   "closes_hi": 8.539703490443328,
+   "closes_round1": 8.41551402134483,
+   "peer_pctile": 0.08691153647180548,
+   "turnover_ratio": 0.2352380809787088,
+   "foreign_net_5d_of_adv": -0.04644059549968367,
+   "foreign_net_20d_of_adv": -0.920150225937659,
+   "foreign_net_60d_of_adv": 0.556996439428055,
+   "blocks_30d_n": 2,
+   "blocks_30d_of_adv": 0.1603974595951678,
+   "sbl_build_20d_of_adv": -0.0018114957229865296
+  },
+  "8299": {
+   "name": "Phison Electronics Corp.",
+   "board": "TPEX",
+   "carried": false,
+   "last_close": 1640.0,
+   "last_date": "2026-07-31",
+   "ret_20d": -0.2678571428571429,
+   "ret_30d": -0.296137339055794,
+   "vol_30d": 0.7476995188860586,
+   "drawdown_from_30d_high": -0.3643410852713178,
+   "adv_spread": 1.6490158668772854,
+   "closes_lo": null,
+   "closes_hi": null,
+   "closes_round1": 21.94097714827101,
+   "peer_pctile": 0.6352819451629591,
+   "turnover_ratio": 1.0625800256081945,
+   "foreign_net_5d_of_adv": null,
+   "foreign_net_20d_of_adv": null,
+   "foreign_net_60d_of_adv": null,
+   "blocks_30d_n": 0,
+   "blocks_30d_of_adv": 0.0,
+   "sbl_build_20d_of_adv": null
+  }
+ },
+ "tdcc": {
+  "2344": {
+   "weeks": 51,
+   "first": "20250815",
+   "last": "20260807",
+   "b15_first": 52.84,
+   "b15_last": 67.16,
+   "b15_min": 52.84,
+   "b15_max": 71.35,
+   "b15_8w_change": -1.4099999999999966,
+   "b15_vs_year_median": -0.18000000000000682,
+   "weekly_sd_pp": 1.8746773162333832,
+   "z_8w": -0.2659179136696046,
+   "verdict": "no signal",
+   "holders_first": 316335.0,
+   "holders_last": 555252.0,
+   "shares_first": 4500000193.0,
+   "shares_last": 4720490802.0,
+   "shares_change": 0.048997911009645234
+  },
+  "2408": {
+   "weeks": 51,
+   "first": "20250815",
+   "last": "20260807",
+   "b15_first": 76.77,
+   "b15_last": 80.31,
+   "b15_min": 75.33,
+   "b15_max": 84.75,
+   "b15_8w_change": 0.6500000000000057,
+   "b15_vs_year_median": -1.509999999999991,
+   "weekly_sd_pp": 1.218820478987779,
+   "z_8w": 0.18855090462254548,
+   "verdict": "no signal",
+   "holders_first": 170348.0,
+   "holders_last": 354553.0,
+   "shares_first": 3098627894.0,
+   "shares_last": 3450205894.0,
+   "shares_change": 0.11346247824102229
+  },
+  "8046": {
+   "weeks": 51,
+   "first": "20250815",
+   "last": "20260807",
+   "b15_first": 72.86,
+   "b15_last": 80.8,
+   "b15_min": 72.86,
+   "b15_max": 83.57,
+   "b15_8w_change": 2.7099999999999937,
+   "b15_vs_year_median": 1.7099999999999937,
+   "weekly_sd_pp": 1.3388691347551493,
+   "z_8w": 0.7156260934217377,
+   "verdict": "no signal",
+   "holders_first": 63302.0,
+   "holders_last": 89065.0,
+   "shares_first": 646165487.0,
+   "shares_last": 646165487.0,
+   "shares_change": 0.0
+  },
+  "8299": {
+   "weeks": 51,
+   "first": "20250815",
+   "last": "20260807",
+   "b15_first": 46.56,
+   "b15_last": 34.62,
+   "b15_min": 33.16,
+   "b15_max": 50.6,
+   "b15_8w_change": -1.2800000000000011,
+   "b15_vs_year_median": -10.440000000000005,
+   "weekly_sd_pp": 1.5631233348651679,
+   "z_8w": -0.28951543993067363,
+   "verdict": "no signal",
+   "holders_first": 48062.0,
+   "holders_last": 190193.0,
+   "shares_first": 206696328.0,
+   "shares_last": 221349247.0,
+   "shares_change": 0.07089104650180333
+  }
+ },
+ "rank_is_stable": false,
+ "distinct_orders": [
+  [
+   "2344",
+   "2408",
+   "8046"
+  ],
+  [
+   "2344",
+   "8046",
+   "2408"
+  ]
+ ]
+}

@@ -233,7 +233,7 @@ def fetch():
                             if r[0] not in existing])
         d.setdefault("_windows", []).append(f"{code}|{eff}")
         tmp = OUT.with_suffix(".tmp")
-        tmp.write_text(json.dumps(cache))
+        tmp.write_text(json.dumps(cache), encoding="utf-8")
         tmp.replace(OUT)
         print(f"{i+1}/{len(todo)} {code} {eff}: {len(rows)} bars",
               flush=True)
@@ -357,7 +357,7 @@ def fetch_apac_windows():
     covers HK (16:10) and CN (15:00) session ends."""
     import pandas as pd
     manifest = json.loads(
-        (ROOT / "data" / "apac_harvest_manifest.json").read_text())
+        (ROOT / "data" / "apac_harvest_manifest.json").read_text(encoding="utf-8"))
     ib = _connect()
     ib.reqMarketDataType(1)
     cache = (json.loads(APAC_OUT.read_text(encoding="utf-8"))
@@ -402,7 +402,7 @@ def fetch_apac_windows():
             f"{m['sym']}|{m['eff']}")
         d["side_by_eff"][m["eff"]] = m["side"]
         tmp = APAC_OUT.with_suffix(".tmp")
-        tmp.write_text(json.dumps(cache))
+        tmp.write_text(json.dumps(cache), encoding="utf-8")
         tmp.replace(APAC_OUT)
         print(f"{i+1}/{len(todo)} {key} {m['eff']}: {len(rows)} "
               "bars", flush=True)
@@ -416,7 +416,7 @@ def sanity_apac():
     auction-inclusion calibration, exactly as TW's sanity was."""
     cache = json.loads(APAC_OUT.read_text(encoding="utf-8"))
     ref = json.loads((ROOT / "data" / "decade_windows.json")
-                     .read_text())
+                     .read_text(encoding="utf-8"))
     print(f"{'key':16s} {'t_day':12s} {'ib_sum':>14s} "
           f"{'official':>14s} {'ratio':>8s}")
     shown = 0

@@ -26,9 +26,9 @@ TWSE's official endpoints:
 |---|---|---|---|
 | Outcome lists (answer keys) | MSCI/FTSE public announcements | 10+ years | never binding |
 | Daily quotes, all stocks | MI_INDEX (ALLBUT0999) | 2023 verified, ~2004+ by design | not binding |
-| Market/auction 5-second stats | MI_5MINS / MI_5MINS_INDEX | **2012 verified** (2012/2018/2023 all OK) | binds auction studies at 2012 |
-| Short balances (margin + SBL) | TWT93U | **2015 verified** | **THE BINDING LAYER** |
-| Foreign per-stock net flows | TWT38U | **2015 verified** | binds with shorts |
+| Market/auction stats | MI_5MINS / MI_5MINS_INDEX | file from **2004-10-15**; but **5-SECOND grid only from 2014-12-29** (c-228) | **binds auction PATH studies at 2014-12-29** — the real 2015 boundary |
+| Short balances (margin + SBL) | TWT93U | **PUBLISHED FROM 2005-07-01 by TWSE (c-226)**; we harvest from 2015 by choice | binds nothing — the binding layer is our float/share VINTAGE |
+| Foreign per-stock net flows | TWT38U | **PUBLISHED FROM 2004-12-17 by TWSE (c-226)**; harvested from 2015 by choice | as above |
 | Per-name intraday | (none free, historical) | 60-day wall | forward archive only |
 
 The crowding layer binds everything. TWT93U — the daily per-stock
@@ -39,7 +39,50 @@ bands, the CONSENSUS/UNPRICED overlay, the EXITING tag, the
 discretion matrix, the reversal grading) therefore cannot reach
 further back than the short ledger does.
 
-### Why 2015 specifically — the regulatory backstory
+**THE AUCTION LAYER IS THE REAL 2015 BOUNDARY (c-228).** TWSE
+serves MI_5MINS from 2004-10-15, but the `notes` field returned WITH
+every response says the RESOLUTION changed four times:
+
+| period | grid |
+|---|---|
+| before 2011-01-16 | every **minute** |
+| 2011-01-16 .. 2014-02-23 | every **15 seconds** |
+| 2014-02-24 .. 2014-12-28 | every **10 seconds** |
+| **from 2014-12-29** | every **5 seconds** |
+
+Source: the `notes` array of
+https://www.twse.com.tw/en/exchangeReport/MI_5MINS?response=json&date=20050415
+(page start date: https://www.twse.com.tw/zh/trading/historical/mi-5mins.html
+— 「本資訊自民國93年10月15日起開始提供」).
+
+The closing call runs 13:25-13:30. Five minutes on a 1-minute grid is
+FIVE points; on a 5-second grid it is sixty. The indicative path
+through the auction — the object of an auction study — exists only
+from **2014-12-29**. The auction SHARE (final print minus the last
+continuous row) survives a coarser grid and reaches 2004.
+
+So: 5-second auction studies are 2015-bound in the way that matters,
+and every conclusion drawn from an auction PATH must be dated
+2014-12-29 or later.
+
+### Why 2015 — CORRECTED at c-226
+
+**The regulatory backstory below is WRONG and is kept only so the
+correction has something to point at.** TWSE publishes the start date on each report page itself:
+
+* TWT93U 融券借券賣出餘額 — 「本資訊自民國94年7月1日起開始提供」
+  = **2005-07-01**
+  https://www.twse.com.tw/zh/trading/margin/twt93u.html
+* TWT38U 外資及陸資買賣超彙總表 — 「本資訊自民國93年12月17日起
+  開始提供」 = **2004-12-17**
+  https://www.twse.com.tw/zh/trading/foreign/twt38u.html
+
+Both files predate our start by a decade. 2015 is where WE start,
+for the good reason that it matches the MSCI key archive — not
+where the exchange starts. Do not repeat the paragraph that
+follows.
+
+### (SUPERSEDED) Why 2015 specifically — the regulatory backstory
 
 The date is not an accident of server retention. Taiwan's modern
 short-sale data regime is a product of the mid-2010s liberalization
@@ -72,7 +115,9 @@ only daily data — T-day volume multiples, front-run drift, reversal
 fractions, flow validation — run to ~2005: the event LIBRARY can
 grow far past 2015 even though the crowding-conditioned analyses
 cannot. Market-wide auction studies (value share of the print, the
-index auction gap, book-withdrawal behavior) run from 2012. Only
+index auction gap, book-withdrawal behavior) run from 2012 at
+15-second resolution and from 2014-12-29 at 5-second — see the
+c-228 table below. Only
 the complete predict-position-execute-grade replication is
 2015-bound.
 

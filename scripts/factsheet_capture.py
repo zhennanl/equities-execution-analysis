@@ -105,10 +105,10 @@ def capture():
                     t["float_cap_busd"] / by_cap[code], 3)
     except Exception:                          # noqa: BLE001
         pass
-    arch = json.loads(OUT.read_text()) if OUT.exists() else {}
+    arch = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     arch[tag] = entry
     tmp = OUT.with_suffix(".tmp")
-    tmp.write_text(json.dumps(arch, indent=1))
+    tmp.write_text(json.dumps(arch, indent=1), encoding="utf-8")
     tmp.replace(OUT)
     print(f"{tag} ({asof}): n={n}, index cap "
           f"${chars[0]/1000:,.0f}B -> implied denominator "

@@ -110,7 +110,7 @@ def _months(ann, eff):
 
 
 def load_cache():
-    return (json.loads(CACHE.read_text()) if CACHE.exists() else {})
+    return (json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {})
 
 
 def fetch_all(evts, workers=4, pause=1.2):
@@ -142,9 +142,9 @@ def fetch_all(evts, workers=4, pause=1.2):
                 continue
             cache.setdefault(code, {})[m] = rows
             if done % 15 == 0:                 # resumable: save as we go
-                CACHE.write_text(json.dumps(cache))
+                CACHE.write_text(json.dumps(cache), encoding="utf-8")
                 print(f"  ...{done}/{len(jobs)}", flush=True)
-    CACHE.write_text(json.dumps(cache))
+    CACHE.write_text(json.dumps(cache), encoding="utf-8")
     print(f"cache: {sum(len(v) for v in cache.values())} code-months")
     return cache
 

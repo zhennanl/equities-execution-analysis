@@ -146,7 +146,7 @@ def main():
                              "inside it",
     }
     p = ROOT / "data" / "gmsr_walk_may26.json"
-    p.write_text(json.dumps(out, indent=1))
+    p.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print(f"denominator: named {named_ff:,.0f} + body "
           f"{body_ff_sum:,.0f} = {total_ff:,.0f}B float-adj")
     print(f"target (85%): {target:,.0f}B")

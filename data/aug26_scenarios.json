@@ -1,0 +1,563 @@
+{
+ "_what": "Aug-2026 MSCI Taiwan additions \u2014 conditional scenarios given inclusion",
+ "conditional_on": "MSCI adding the name; the probability of that is carried separately per name and is NOT multiplied in here",
+ "generated": "2026-08-10",
+ "announce": "2026-08-12",
+ "effective": "2026-08-31",
+ "thresholds": {
+  "cutoff_usd_b": 7.22,
+  "addition_bar_usd_b": 10.83,
+  "incumbent_floor_usd_b": 4.81,
+  "band": 0.05,
+  "why": "the cutoff is derived from an 85% coverage walk over an estimated float stack, not published by MSCI, so every threshold carries a +-5% band and a verdict that flips inside it is reported rather than carried"
+ },
+ "assumptions": {
+  "index_float_value_usd_b": 3183.0,
+  "tracking_aum_usd_b": 180.0,
+  "usd_twd": 32.214,
+  "price_data_ends": "2026-07-31",
+  "sessions_unobserved_before_announcement": 8
+ },
+ "history": {
+  "n_additions": 52,
+  "sample": "May15-May26",
+  "drift": {
+   "n": 52,
+   "mean": 0.0637792114451,
+   "p10": -0.07499800776782815,
+   "p25": -0.03311606676906573,
+   "p50": 0.022067646179446898,
+   "p75": 0.16912579947698703,
+   "p90": 0.23095415333257285,
+   "min": -0.13217435837315694,
+   "max": 0.4760297934938613,
+   "right_sign_share": 0.6153846153846154
+  },
+  "eff_day": {
+   "n": 52,
+   "mean": 0.01181407372218479,
+   "p10": -0.023149819783169222,
+   "p25": -0.014188889982790581,
+   "p50": 0.005428596868156388,
+   "p75": 0.031584627156042266,
+   "p90": 0.05856574606937889,
+   "min": -0.03168361516157736,
+   "max": 0.10844947043726472,
+   "right_sign_share": 0.5576923076923077
+  },
+  "revert5": {
+   "n": 52,
+   "mean": -0.043355245449879655,
+   "p10": -0.14288939569921114,
+   "p25": -0.10225534743613124,
+   "p50": -0.04053060089671651,
+   "p75": 0.00859417850264299,
+   "p90": 0.04839912938443758,
+   "min": -0.2260691169339485,
+   "max": 0.17517911382372364
+  },
+  "revert20": {
+   "n": 52,
+   "mean": -0.03379781259529123,
+   "p10": -0.16208649846479478,
+   "p25": -0.11693955919422969,
+   "p50": -0.052864132708403844,
+   "p75": 0.02019085824989042,
+   "p90": 0.09017994998260517,
+   "min": -0.3491479765602111,
+   "max": 0.41172468341077906
+  },
+  "vol_mult_eff": {
+   "n": 52,
+   "mean": 7.324552321234945,
+   "p10": 2.0144843161784167,
+   "p25": 2.8987061758500525,
+   "p50": 6.579037998048662,
+   "p75": 10.302689154635619,
+   "p90": 13.56598263827374,
+   "min": 0.7968307866440294,
+   "max": 21.807902871252992
+  },
+  "pre_drift": {
+   "n": 52,
+   "mean": 0.09866347469430359,
+   "p10": -0.08675613544551922,
+   "p25": -0.014827061696202931,
+   "p50": 0.06960709070880178,
+   "p75": 0.13964915641371445,
+   "p90": 0.28821012632816884,
+   "min": -0.9818750396722368,
+   "max": 1.326564005889915,
+   "right_sign_share": 0.7307692307692307
+  },
+  "max_drawdown_in_drift": {
+   "n": 52,
+   "mean": -0.03782252565469007,
+   "p10": -0.0974357555510724,
+   "p25": -0.06676616622510034,
+   "p50": -0.027789222776174904,
+   "p75": -0.008366008258510776,
+   "p90": 0.01911668587873315,
+   "min": -0.20783036265865296,
+   "max": 0.0574588674113794
+  }
+ },
+ "scenarios": {
+  "announcement_to_effective": {
+   "measure": "market-adjusted return, ann+1 close to eff-1 close",
+   "bands": [
+    {
+     "band": "bear tail",
+     "prob": 0.1,
+     "at_or_below": -0.07499800776782815
+    },
+    {
+     "band": "bear",
+     "prob": 0.15,
+     "from": -0.07499800776782815,
+     "to": -0.03311606676906573
+    },
+    {
+     "band": "base",
+     "prob": 0.5,
+     "from": -0.03311606676906573,
+     "to": 0.16912579947698703,
+     "median": 0.022067646179446898
+    },
+    {
+     "band": "bull",
+     "prob": 0.15,
+     "from": 0.16912579947698703,
+     "to": 0.23095415333257285
+    },
+    {
+     "band": "bull tail",
+     "prob": 0.1,
+     "at_or_above": 0.23095415333257285
+    }
+   ],
+   "right_sign_share": 0.6153846153846154,
+   "worst_point_median": -0.027789222776174904,
+   "worst_point_p10": -0.0974357555510724
+  },
+  "effective_day": {
+   "measure": "market-adjusted return, eff-1 close to eff close",
+   "bands": [
+    {
+     "band": "bear tail",
+     "prob": 0.1,
+     "at_or_below": -0.023149819783169222
+    },
+    {
+     "band": "bear",
+     "prob": 0.15,
+     "from": -0.023149819783169222,
+     "to": -0.014188889982790581
+    },
+    {
+     "band": "base",
+     "prob": 0.5,
+     "from": -0.014188889982790581,
+     "to": 0.031584627156042266,
+     "median": 0.005428596868156388
+    },
+    {
+     "band": "bull",
+     "prob": 0.15,
+     "from": 0.031584627156042266,
+     "to": 0.05856574606937889
+    },
+    {
+     "band": "bull tail",
+     "prob": 0.1,
+     "at_or_above": 0.05856574606937889
+    }
+   ],
+   "right_sign_share": 0.5576923076923077
+  },
+  "post_effective_5": {
+   "measure": "market-adjusted return, eff close to +5",
+   "bands": [
+    {
+     "band": "bear tail",
+     "prob": 0.1,
+     "at_or_below": -0.14288939569921114
+    },
+    {
+     "band": "bear",
+     "prob": 0.15,
+     "from": -0.14288939569921114,
+     "to": -0.10225534743613124
+    },
+    {
+     "band": "base",
+     "prob": 0.5,
+     "from": -0.10225534743613124,
+     "to": 0.00859417850264299,
+     "median": -0.04053060089671651
+    },
+    {
+     "band": "bull",
+     "prob": 0.15,
+     "from": 0.00859417850264299,
+     "to": 0.04839912938443758
+    },
+    {
+     "band": "bull tail",
+     "prob": 0.1,
+     "at_or_above": 0.04839912938443758
+    }
+   ]
+  },
+  "post_effective_20": {
+   "measure": "market-adjusted return, eff close to +20",
+   "bands": [
+    {
+     "band": "bear tail",
+     "prob": 0.1,
+     "at_or_below": -0.16208649846479478
+    },
+    {
+     "band": "bear",
+     "prob": 0.15,
+     "from": -0.16208649846479478,
+     "to": -0.11693955919422969
+    },
+    {
+     "band": "base",
+     "prob": 0.5,
+     "from": -0.11693955919422969,
+     "to": 0.02019085824989042,
+     "median": -0.052864132708403844
+    },
+    {
+     "band": "bull",
+     "prob": 0.15,
+     "from": 0.02019085824989042,
+     "to": 0.09017994998260517
+    },
+    {
+     "band": "bull tail",
+     "prob": 0.1,
+     "at_or_above": 0.09017994998260517
+    }
+   ]
+  }
+ },
+ "demand_validation": {
+  "model_range_adv_days": [
+   0.7979085464197886,
+   2.0803118073361673
+  ],
+  "measured_cumulative_adv_days": {
+   "n": 42,
+   "mean": 2.1914828836557234,
+   "p10": -0.5392739719644359,
+   "p25": 0.2278509927339853,
+   "p50": 1.0377829872017128,
+   "p75": 2.924104093371519,
+   "p90": 5.034490196824761,
+   "min": -1.4382958025768398,
+   "max": 15.94274423441754
+  },
+  "note": "the measured figure is foreign net only and covers ann-20 to the effective close; the model figure is the passive requirement. They are different quantities and agreement is evidence the AUM assumption is the right order of magnitude, not proof of its level."
+ },
+ "flow_context": {
+  "n_with_flow": 42,
+  "pre": {
+   "n": 42,
+   "mean": 0.9169395555859394,
+   "p10": -0.5236526261172249,
+   "p25": -0.20990477460718027,
+   "p50": 0.5982776883280789,
+   "p75": 1.4737624660460464,
+   "p90": 4.076183243263372,
+   "min": -4.058711734657868,
+   "max": 6.13323708168404
+  },
+  "ann_to_eff": {
+   "n": 42,
+   "mean": 0.8706268013639092,
+   "p10": -0.3999208829788948,
+   "p25": -0.0868021186138926,
+   "p50": 0.5305231529976906,
+   "p75": 1.0522796139396553,
+   "p90": 1.9842666955262835,
+   "min": -1.506554846968054,
+   "max": 8.659548888623686
+  },
+  "effective_day": {
+   "n": 42,
+   "mean": 0.4039165267058748,
+   "p10": -0.175241306836438,
+   "p25": 0.012285289933519825,
+   "p50": 0.15894005113824694,
+   "p75": 0.47612192723919144,
+   "p90": 1.330093068644599,
+   "min": -0.4122144138011191,
+   "max": 3.2598165812559805
+  },
+  "post10": {
+   "n": 42,
+   "mean": 0.06260532211204209,
+   "p10": -0.9298015460963199,
+   "p25": -0.3606157299690514,
+   "p50": -0.1049566025168708,
+   "p75": 0.3429391412042514,
+   "p90": 0.8504968223443926,
+   "min": -2.6149525365089996,
+   "max": 4.621793476029164
+  },
+  "domestic_ann_to_eff": {
+   "n": 42,
+   "mean": 0.002169680953868033,
+   "p10": -0.7390904545087831,
+   "p25": -0.19564576584535767,
+   "p50": 0.022976390329715726,
+   "p75": 0.23873649184639617,
+   "p90": 0.8372382242063454,
+   "min": -2.663036928664121,
+   "max": 2.076776766095687
+  },
+  "domestic_effective_day": {
+   "n": 42,
+   "mean": -0.06283653036618536,
+   "p10": -0.1685574487361399,
+   "p25": -0.12421152514089787,
+   "p50": -0.015314543699743235,
+   "p75": 0.01029118236597876,
+   "p90": 0.06778177240905194,
+   "min": -0.7865965823613065,
+   "max": 0.3046921713748881
+  },
+  "domestic_post10": {
+   "n": 42,
+   "mean": -0.17209680681461884,
+   "p10": -0.6279540810518551,
+   "p25": -0.3155706329421767,
+   "p50": -0.0666824668942052,
+   "p75": 0.030392175261356985,
+   "p90": 0.23626655020222187,
+   "min": -2.0011624950720206,
+   "max": 1.5689366275996346
+  },
+  "cumulative_to_effective": {
+   "n": 42,
+   "mean": 2.1914828836557234,
+   "p10": -0.5392739719644359,
+   "p25": 0.2278509927339853,
+   "p50": 1.0377829872017128,
+   "p75": 2.924104093371519,
+   "p90": 5.034490196824761,
+   "min": -1.4382958025768398,
+   "max": 15.94274423441754
+  },
+  "share_accumulated_before_announcement": {
+   "n": 38,
+   "mean": 0.3821894002967112,
+   "p10": -0.6140231968316835,
+   "p25": 0.04841217623733659,
+   "p50": 0.4611846042656311,
+   "p75": 0.7483584396137285,
+   "p90": 1.0733985920891567,
+   "min": -1.445892476419129,
+   "max": 1.8526154471407041
+  },
+  "institutional_share_of_print": {
+   "n": 42,
+   "mean": 0.04773876741919847,
+   "p10": 0.009242028934356552,
+   "p25": 0.015411979700242008,
+   "p50": 0.041574549582831063,
+   "p75": 0.06305501062445452,
+   "p90": 0.09366067643201878,
+   "min": 1.096642938359711e-05,
+   "max": 0.18330478191292462
+  },
+  "mid_flow_vs_print": {
+   "rho": 0.29584312454420225,
+   "p": 0.056597170141492924,
+   "n": 42
+  },
+  "mid_flow_vs_drift": {
+   "rho": 0.21335386111336196,
+   "p": 0.17174141292935352,
+   "n": 42
+  }
+ },
+ "schedules": {
+  "eff_close": {
+   "n": 52,
+   "median_saved": 0.0,
+   "mean_saved": 0.0,
+   "p10": 0.0,
+   "p90": 0.0,
+   "hit_rate": 0.0,
+   "tracking_error": 0.0,
+   "median_saved_net": -0.004
+  },
+  "last_four": {
+   "n": 52,
+   "median_saved": 0.00983091958246932,
+   "mean_saved": 0.01183386881227155,
+   "p10": -0.013716124913589985,
+   "p90": 0.03551184893686068,
+   "hit_rate": 0.7115384615384616,
+   "tracking_error": 0.023427349651356816,
+   "median_saved_net": 0.00583091958246932
+  },
+  "ann_plus_1": {
+   "n": 52,
+   "median_saved": 0.04956377533723613,
+   "mean_saved": 0.057103481598441384,
+   "p10": -0.06880048615653465,
+   "p90": 0.1814755982680446,
+   "hit_rate": 0.5961538461538461,
+   "tracking_error": 0.10825097917948556,
+   "median_saved_net": 0.04556377533723613
+  }
+ },
+ "volume_normalises_sessions": {
+  "n": 49,
+  "mean": 3.163265306122449,
+  "p10": 1.0,
+  "p25": 1.0,
+  "p50": 2.0,
+  "p75": 4.0,
+  "p90": 7.200000000000003,
+  "min": 1,
+  "max": 18,
+  "censored_note": "events that never settle inside the horizon are NOT counted, so this is the median among those that did settle and understates the true wait"
+ },
+ "out_of_sample_verdict": "NO RULE SURVIVES. The best is gap1 at lift +0.30, but it selects only 7 of 18 test events and its binomial p is 0.108 \u2014 against a 0.008 threshold once the 6 rules tried are accounted for. The addition drift is not predictable out of sample from anything measured here.",
+ "names": {
+  "2408": {
+   "carried": true,
+   "clears_bar_by": 2.1839612188365654,
+   "name": "Nanya Technology Corporation",
+   "prob_of_addition": 0.6177,
+   "zone": "guaranteed (>1.5x)",
+   "last_close_twd": 360.5,
+   "last_close_date": "2026-07-31",
+   "adv_shares": 80618434.0,
+   "full_cap_usd_b": 34.4823,
+   "float_cap_usd_b": 16.2825,
+   "fif": 0.4722,
+   "fif_source": "yahoo",
+   "index_weight_pct": 0.5115457115928369,
+   "demand_usd_m": 920.7822808671064,
+   "demand_shares": 82280389.44758104,
+   "demand_adv_days": 1.020615079766757,
+   "demand_sensitivity": {
+    "0.5x": 0.5103075398833785,
+    "1x": 1.020615079766757,
+    "2x": 2.041230159533514
+   },
+   "pre_ann_excess_25d": -0.1764476994364852,
+   "pre_ann_percentile": 0.038461538461538464,
+   "prevol": 0.06793963847762727,
+   "prevol_percentile": 0.9807692307692307,
+   "adv_percentile": 0.9230769230769231,
+   "print_lean": 0.04807692307692313,
+   "expected_print_x_adv": 3.2546668959839744,
+   "extreme_price_screen": "NO BREACH",
+   "violence_rank": 4
+  },
+  "8046": {
+   "carried": true,
+   "clears_bar_by": 0.6944321329639889,
+   "name": "Nan Ya Printed Circuit Board Corporation",
+   "prob_of_addition": 0.6177,
+   "zone": "guaranteed (>1.5x)",
+   "last_close_twd": 920.0,
+   "last_close_date": "2026-07-31",
+   "adv_shares": 17596597.0,
+   "full_cap_usd_b": 18.3507,
+   "float_cap_usd_b": 7.0907,
+   "fif": 0.3864,
+   "fif_source": "yahoo",
+   "index_weight_pct": 0.22276782909205153,
+   "demand_usd_m": 400.9820923656928,
+   "demand_shares": 14040475.134204812,
+   "demand_adv_days": 0.7979085464197886,
+   "demand_sensitivity": {
+    "0.5x": 0.3989542732098943,
+    "1x": 0.7979085464197886,
+    "2x": 1.5958170928395772
+   },
+   "pre_ann_excess_25d": -0.05183012347829352,
+   "pre_ann_percentile": 0.15384615384615385,
+   "prevol": 0.07272201513858349,
+   "prevol_percentile": 0.9807692307692307,
+   "adv_percentile": 0.7115384615384616,
+   "print_lean": 0.15384615384615385,
+   "expected_print_x_adv": 4.0377804802786015,
+   "extreme_price_screen": "NO BREACH",
+   "violence_rank": 2
+  },
+  "2344": {
+   "carried": true,
+   "clears_bar_by": 0.667433056325023,
+   "name": "Winbond Electronics Corporation",
+   "prob_of_addition": 0.6177,
+   "zone": "guaranteed (>1.5x)",
+   "last_close_twd": 130.0,
+   "last_close_date": "2026-07-31",
+   "adv_shares": 138671500.5,
+   "full_cap_usd_b": 18.0583,
+   "float_cap_usd_b": 12.5993,
+   "fif": 0.6977,
+   "fif_source": "yahoo",
+   "index_weight_pct": 0.39583097706566134,
+   "demand_usd_m": 712.4957587181904,
+   "demand_shares": 176556449.01036757,
+   "demand_adv_days": 1.2731992397411722,
+   "demand_sensitivity": {
+    "0.5x": 0.6365996198705861,
+    "1x": 1.2731992397411722,
+    "2x": 2.5463984794823444
+   },
+   "pre_ann_excess_25d": -0.3399577733131728,
+   "pre_ann_percentile": 0.019230769230769232,
+   "prevol": 0.05797388162371205,
+   "prevol_percentile": 0.9615384615384616,
+   "adv_percentile": 0.9230769230769231,
+   "print_lean": 0.05769230769230771,
+   "expected_print_x_adv": 3.3258590400107586,
+   "extreme_price_screen": "NO BREACH",
+   "violence_rank": 3
+  },
+  "8299": {
+   "carried": false,
+   "clears_bar_by": 0.03384118190212382,
+   "name": "Phison Electronics Corp.",
+   "prob_of_addition": 0.3706,
+   "zone": "guaranteed (>1.5x)",
+   "last_close_twd": 1640.0,
+   "last_close_date": "2026-07-31",
+   "adv_shares": 4721803.0,
+   "full_cap_usd_b": 11.1965,
+   "float_cap_usd_b": 8.843,
+   "fif": 0.7898,
+   "fif_source": "yahoo",
+   "index_weight_pct": 0.2778196669808357,
+   "demand_usd_m": 500.07540056550425,
+   "demand_shares": 9822822.532815337,
+   "demand_adv_days": 2.0803118073361673,
+   "demand_sensitivity": {
+    "0.5x": 1.0401559036680836,
+    "1x": 2.0803118073361673,
+    "2x": 4.1606236146723345
+   },
+   "pre_ann_excess_25d": -0.2695866359716481,
+   "pre_ann_percentile": 0.019230769230769232,
+   "prevol": 0.0450957317068168,
+   "prevol_percentile": 0.8846153846153846,
+   "adv_percentile": 0.5,
+   "print_lean": 0.3076923076923077,
+   "expected_print_x_adv": 5.1768547847071495,
+   "extreme_price_screen": "NO BREACH",
+   "violence_rank": 1
+  }
+ }
+}

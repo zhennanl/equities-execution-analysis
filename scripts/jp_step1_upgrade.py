@@ -38,7 +38,7 @@ DOC = ROOT / "docs" / "case_studies" / "JP_STEP1_UPGRADE.md"
 def main():
     from scripts.window_study_decade import events as decade_events
     d = json.loads((ROOT / "data" / "decade_windows.json")
-                   .read_text())
+                   .read_text(encoding="utf-8"))
     evs = {e["season"]: e for e in decade_events()}
     rows = []
     for key, v in d.items():
@@ -84,7 +84,7 @@ def main():
            "note": "survivorship: delisted JP names absent from "
                    "yfinance — verification covers survivors only, "
                    "stated"}
-    OUT.write_text(json.dumps(out, indent=1))
+    OUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print(json.dumps(out, indent=1))
     agg = df.groupby(["side", "category"])["code"].count()
     L = ["# JP Step-1 Upgrade — from daily data already held\n",

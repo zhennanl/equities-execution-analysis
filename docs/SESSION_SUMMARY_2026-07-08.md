@@ -1,4 +1,5114 @@
+## c-243 — four table fixes, one of which I had claimed to fix already
+
+* **Section 5 drops the Ticker column.** Section 4 is where a
+  reader resolves a name to a code; here the question is which
+  NAMES moved at this review, and 35% of the codes are blank
+  anyway (TICKER_AUDIT). Two columns instead of three, with the
+  Action column narrowed so the names get the width.
+* **"Single Review Detail" -> "Individual Index Review
+  History".** page_lint caught the rename, as designed; EXPECTED
+  and the PAGE_SPEC both updated.
+* **The figure row had no left padding.** `.dstat` was
+  `padding: S3 S4 S3 0` — right padding but a hard zero on the
+  left, so every label sat against the rule beside it. Now
+  symmetric. This is one rule in design.py, so every figure row
+  on the site gains the same breathing room.
+
+**The one I had claimed to fix and had not.** At c-241 I
+removed the seasonality table's blank leading COLUMN and told
+Bill the whitespace was fixed. He was pointing at the bottom.
+Two different gaps, and I had answered the one I happened to
+find.
+
+The bottom band is the last row's `border-bottom` sitting above
+the white card's own 2px padding — a rule and then a strip of
+empty card below it. Fixed at the source for every table on the
+site: the last row loses its rule, and the card CLIPS
+(`overflow:hidden`) instead of padding, so the border closes
+the table exactly.
+
+Also: the Review column no longer says "Feb reviews" — the
+column is headed "Review", so the word was in every cell twice.
+
+Verified: page_lint CLEAN, section 5 headers are
+["Action", "Security"], seasonality rows read Feb/May/Aug/Nov,
+677 passed / 1 skipped.
+
+## c-242 — I shared the appearance and deleted the behaviour
+
+Bill: section 1's hover is broken. It was, and I broke it at
+c-236.
+
+POP_CSS carries how a card LOOKS. How it OPENS belongs to the
+host, because each anchors it differently — the strip below its
+cell, the chart at its zero line, the seasonality bars below
+theirs. When I replaced section 1's hand-written block with
+POP_CSS I took the appearance rules and deleted the three
+behaviour rules sitting among them:
+
+    .amk:hover .pop{display:block}
+    .amk .pop{top:calc(100% - 2px);left:-1px}
+    .amk:nth-child(6n) .pop,.amk:last-child .pop{...}
+
+leaving the card `display:none` with nothing to turn it on.
+Sections 2 and 3 were written after the split and supply their
+own; section 1 predated it and silently lost them.
+
+**AND EVERY TEST STILL PASSED.** They searched the page's CSS
+GLOBALLY — `"overflow-y:auto" in md` — which stays true as long
+as ANY host supplies the rule. Six revisions of green on a dead
+feature. There is now a per-host test: three hosts, three open
+rules, each checked inside its own block.
+
+Sharing a stylesheet is only safe if you can say which half you
+shared. Recorded as an amendment to D2.
+
+**The regime label is two rows now.** Title centred on the line
+above; below it `◀ before │ after ▶` with the bar still pinned
+to the same x as the dotted rule. Three anchors on one row
+could not carry the title as well — it is far longer than
+"after ▶", so a single centred string drags the midpoint off
+the line. Zone A grew from 1.35rem to 2.35rem, which is the D11
+contract working as intended: a label needing more room
+enlarges its zone rather than spilling into the plot.
+
+**A class-name collision I caused and the tests caught.** I
+gave the label's title `class='t'` — the same class the section
+rule uses — and `test_section_titles_are_title_case` promptly
+failed on "rule change". Correct catch: safe in CSS, where both
+are scoped by a parent, and unsafe for anything reading the
+markup. The label's class is `cap` now and the test's pattern
+is scoped to `.dsect`.
+
+Also: "All Markets" capitalised.
+
+Verified: page_lint CLEAN, all three card hosts have their open
+rule, 674 passed / 1 skipped.
+
+## c-241 — three Hyundais, and the tidier name that was false
+
+Bill: three rows read "Hyundai Motor Company" with tickers
+005380, 005385 and 005387, so why do the tickers differ?
+
+**Because they are three different securities** — the common
+line and two preferred lines. MSCI names them apart ("HYUNDAI
+MOTOR S1 PREF"). Yahoo returns the ISSUER name for all three,
+and c-156 preferred Yahoo's spelling because it was tidier.
+Tidier, and here false: the table showed one company three
+times, at three prices, with three liquidity profiles.
+
+**The rule that came out of it: a display name may not erase a
+distinction the source makes.** The roster now uses Yahoo's
+name only where it stays UNIQUE within a market; where it would
+collide it keeps MSCI's name and moves the issuer name into
+`aka`, so the link between the lines survives.
+
+**And Bill's other question — are there more?** 428 display
+names serve more than one ticker, in three kinds:
+
+    PADDING       291   one security stored twice
+    DUAL_LISTING   62   an A-share and its H-share
+    UNKNOWN        75   worth a look
+
+**I nearly shipped a worse bug than the one I was fixing.** My
+first PADDING rule was "strip leading zeros; if the codes match
+it is one security". China disproves it: `000598` is Shenzhen
+(Chengdu Xingrong) and `0598` is Hong Kong (Sinotrans).
+Depadding would have MERGED TWO DIFFERENT COMPANIES and invented
+a history — strictly worse than showing one company twice.
+Padding is only padding within one code family: mainland codes
+are six digits, Hong Kong codes at most five. Caught by checking
+the nine live China cases before trusting the classifier, and
+pinned by a test.
+
+**On Bill's premise that section 4 could fill section 5's
+tickers:** it cannot, and I checked rather than assuming.
+`msci_official_constituents.json` carries `security` and
+`weight` only — no ticker. The tickers section 4 shows for
+non-DB names come from `apac_members.json`, which covers
+CURRENT members; it cannot reach a name that left the index
+before that file was built. So the 913 live-era blanks stand.
+
+**Also done:** the seasonality panel is "Which Quarterly Review
+Has the Most Changes?", its caption is formal and prefixed
+"Note:", and the Review/Addition/Deletion table lost its blank
+leading column — `reset_index()` on a frame whose groupby key
+was an unnamed series had been emitting a spacer.
+
+Verified: page_lint CLEAN, all three Hyundai lines now show
+distinct names, 671 passed / 1 skipped.
+
+## c-240 — "All markets", and the one section that refuses it
+
+Bill asked for an aggregate option on the section-2 market
+selector. It leads the list now and drives sections 2, 4 and 5:
+the chart, the four statistics, the seasonality panel and the
+security lookup all aggregate across thirteen markets. The
+lookup gains a Market column, and the CSV downloads as
+`msci_changes_all_markets.csv`.
+
+**SECTION 3 REFUSES IT, and that is the interesting part.**
+That section reads one market's OFFICIAL constituent list with
+weights. There is no all-APAC constituent list — MSCI publishes
+a separate index per country — so concatenating thirteen of
+them would produce a portfolio nobody holds, with weights that
+sum to thirteen. It says so and asks for a single market
+instead. A dropdown option that silently produces a meaningless
+answer is worse than one that declines.
+
+The sentinel is `ALL = "__ALL__"`, deliberately not a market
+name, so `df.market == ALL` can never accidentally match a row.
+Tested.
+
+**page_lint caught the change**, correctly: adding a second
+`_sect(3, ...)` for the all-markets branch put the same section
+number in the source twice. "They never both run" is an
+argument the next reader should not have to reconstruct, so the
+heading moved OUT of `_members_now` and up to the page, where a
+section heading belongs — one call, then the branch.
+
+Under All markets the chart scales to 324 changes per side, and
+the statistics read 16 / 29.2 additions and 16 / 24.5 deletions
+per review (median / mean) — the mean-above-median signature of
+the pre-2023 May/Nov rebuilds, visible across the whole region
+rather than one market at a time.
+
+Verified: page_lint CLEAN, every section renders under the
+aggregate, 667 passed / 1 skipped.
+
+## c-239 — the layout bugs had one cause, and the ticker fill had none
+
+### The layout: zones, not offsets
+
+Bill listed a scrollbar making a table asymmetrical, a colour
+bar over the heatmap, and a regime label colliding with the
+legend — then asked for a systematic answer rather than three
+patches. The three had one cause: I had been positioning each
+new element by eye, absolutely, into whatever vertical space
+looked free at the time.
+
+DESIGN_DECISIONS D11 now states the contract. A chart block is
+three stacked zones in NORMAL FLOW; an absolutely positioned
+element may move only horizontally and only inside its own
+zone; a legend or colour bar gets a reserved strip rather than
+a negative offset over the plot; scrolling containers set
+`scrollbar-gutter:stable`.
+
+**And one level up, `design.chart()` was overwriting the
+caller.** It applied the theme's margin AFTER the caller's own
+`update_layout`, so the heatmap reserving 54px for its colour
+bar silently got 8px back — which is why the bar sat on the
+tiles. The theme now sets defaults and does not overrule; a
+caller knows things about its figure a site-wide default
+cannot. That one was invisible from either file alone.
+
+### The ticker fill: the program is right and the data is not there
+
+Built `ticker_fill.py` with three passes — exact, token-subset,
+fuzzy — a share-class guard, and a runner-up margin. It filled
+**10 of 1,534.**
+
+That is not a matcher failure. The median best candidate scores
+**0.651**: MACQUARIE OFFICE TRUST's closest local match is
+MAGELLAN FINANCIAL GROUP at 0.435, and ABC LEARNING CENTRES'
+is FLIGHT CENTRE at 0.606. **The names are not in our data at
+all**, for the same structural reason c-237 found — every local
+roster is built from names that ALREADY have tickers.
+
+So the honest report is: local sources cannot fill these, and
+the script proves it rather than assuming it. `load_candidates()`
+is the seam; drop an exchange listings file in per market and
+it works unchanged.
+
+**What the guards bought.** A naive fuzzy matcher at a
+threshold set by optimism would have written MACQUARIE OFFICE
+TRUST -> MFG and several hundred like it, and nothing
+downstream would ever have noticed: the T-multiple, the drift
+and the schedule cost would all have computed cleanly for the
+wrong company. 41 refusals were share-class mismatches alone —
+SAMSUNG ELEC vs SAMSUNG ELEC PREF are different securities with
+different prices.
+
+Nothing is written to the changes DB. `apply` writes a separate
+overlay a loader merges, so the original stays inspectable and
+a bad batch is undone by deleting one file.
+
+Verified: page_lint CLEAN, treemap margin now honours its 54px,
+zones render in order with the legend below the axis,
+scrollbar-gutter on both table helpers, 663 passed / 1 skipped.
+
+## c-238 — a heading that predated the design system
+
+Bill on the Taiwan page: make "How we got there" a larger
+title, rename it, paraphrase the line under it.
+
+Now: **"How We Predict Index Review Changes"**, with the lead
+*"The seven steps the engine runs, from the full listed
+universe to the names it calls. Every figure below is computed
+at page load, not written by hand."* — which says what the
+steps go from and to, where the old line only said how many
+there were.
+
+**Why it was small in the first place.** The heading used a
+page-local `.sect` at 1.02rem. The site's section rule is
+1.5rem serif with an eyebrow. Nothing chose that difference —
+this page was written before the design system existed and kept
+its own styles. `design.sect` now takes `n=None` to drop the
+eyebrow, so a heading outside a numbered sequence can still use
+the shared treatment.
+
+**I raised its sibling too.** "The Call — MSCI Taiwan, August
+2026" is the other top-level heading on the page. Enlarging one
+and leaving the other would have implied a hierarchy that does
+not exist. Slightly beyond what Bill asked, and the alternative
+was shipping a page with two sizes of the same thing.
+
+The lead also moved INTO the section rule rather than sitting
+below it as a grey caption — `design.sect` already has a slot
+for one, and two mechanisms for the same job is how they drift.
+
+Recorded as DESIGN_DECISIONS D10.
+
+Verified: both headings render at the section size, no "Section
+None" eyebrow leaks, 656 passed / 1 skipped.
+
+## c-237 — I rebuilt the chart and forgot to rebuild what it did
+
+Bill listed three regressions in the c-235 HTML chart: the card
+sat too far from the bars, the axis "looks very weird", and the
+regime label and zoom controls were gone. All three were real,
+and none was forced by moving off plotly — I had replaced the
+implementation and only reimplemented the parts I happened to
+be thinking about.
+
+* **DISTANCE.** CSS cannot make a card follow the cursor and
+  st.markdown strips script, so the only levers are chart
+  height and anchor point. The chart is 190px instead of 300
+  and the card now opens AT THE ZERO LINE rather than below the
+  whole column. Worst-case travel roughly quartered.
+* **THE AXIS.** I had put a label div under every column, so a
+  four-character year had to live in a twelve-pixel box and
+  spilled into its neighbours. It is now one absolutely
+  positioned label per year on its own layer, free to be wider
+  than the column it points at.
+* **THE REGIME LABEL** is back, in the same three-part form as
+  c-221 so the bar glyph lands on the line.
+* **ZOOM** is a year-range control. Plotly's was drag-to-zoom,
+  which is why c-215 had to add a toolbar — there was no way
+  back out. A range control cannot strand anyone.
+
+### The ticker audit, and a circular dependency
+
+Bill: *"make sure if the companies were not delisted, they
+should have a corresponding ticker."* 1,534 of 4,403 rows carry
+no ticker — 35% of the file. I built the audit expecting to
+sort them into delisted / already-known / pre-coverage /
+genuinely-missing.
+
+**Two of those four classes came back EMPTY, and that is the
+finding.** Every internal source I checked is structurally
+incapable of helping:
+
+* harvested window files only contain names that ALREADY had a
+  ticker, because `movers()` filters on it;
+* the delisted register is built from names we tried to FETCH,
+  which again needed a ticker;
+* a self-join inside the changes DB on security name returns
+  ZERO matches — a name is either always tickered or never.
+
+So Bill's test hits a circular dependency: **every delisting
+check we own requires a ticker to run.** These rows cannot be
+sorted into live and dead from our own data at all. The report
+says that in place of a column of zeros, because a zero in a
+DELISTED column reads as "none of these are delisted", which is
+not what we know.
+
+What is left is honest: 621 rows predate our ticker sources
+(2015+) and **913 are live-era names with no ticker anywhere** —
+China 593, Japan 82, Korea 81. Taiwan and New Zealand are
+clean. Resolving them needs an external name-to-ticker lookup
+per market; nothing internal shortcuts it.
+
+Nothing is written back to the changes DB. A wrong ticker is
+worse than a blank one — it silently prices a different
+company.
+
+Verified: 82 columns, 21 year ticks, regime line and label
+present, zoom slider live, page_lint CLEAN, 656 passed / 1
+skipped.
+
+## c-236 — Bill diagnosed the table contrast before I did
+
+Four changes on the review-database page, and one of them
+started with him noticing something I had walked past for
+thirty revisions.
+
+**THE WHITE CARD.** Bill: *"I like the white background for
+this chart… I know this design only applies to the dropdown
+table on this page."* He had spotted that the ONE table inside
+an expander read better than every other table on the page,
+and worked out that it was the expander doing it. Streamlit
+gives an expander a white backing; the page ground is PAPER
+(#fdfaf6), so every other table was sitting on a surface
+almost its own colour. Tables now get an explicit white card
+with a hairline border, applied in `_rtable` and
+`design.table` so the whole page changes at once.
+
+**SAVED AS A STANDING DECISION, not a fix.** He asked for it on
+the Taiwan page and the rest later, which means "later" needs
+an address — `docs/DESIGN_DECISIONS.md` now holds his nine
+standing choices with scope and status, D1 being this one with
+walkthrough.py and the remaining pages listed as TODO. A
+preference recorded in a chat is gone next session.
+
+**THE SEASONALITY CHART** was the last plotly tooltip on this
+page a reader would want to READ, so it is HTML with the same
+card as sections 1 and 2. A month is not a review, so its card
+carries no MSCI link — the one place the shared component
+legitimately differs.
+
+**A divider between the heatmap and its table**, matching the
+other sections.
+
+**Section titles are Title Case and two leads were rewritten.**
+"Individual review study" became "Single Review Detail" with a
+lead that says what it actually does; "Security lookup" now
+tells the reader to search.
+
+**THE LINT CAUGHT THE RENAME**, which is the lint working. Its
+title match is case-insensitive, so Title Case alone would have
+passed silently — what tripped it was section 5 quietly
+becoming a different section. EXPECTED and the PAGE_SPEC both
+updated, in that order, because updating the lint without
+updating the spec is how a spec becomes decorative.
+
+Verified: 4 month columns with cards, 6 white table cards,
+divider present, page_lint CLEAN, 656 passed / 1 skipped.
+
+## c-235 — the requirement and the library disagreed, and the library was the part we chose
+
+Bill asked for four things from the section-2 hover: that it
+survive the mouse moving onto it, that it look like the
+section-1 card, that it list every name rather than "+14 more",
+and that each date carry a link to MSCI's document.
+
+**Plotly can do none of them.** Its hover is an SVG label — it
+tracks the cursor, cannot be entered, and an `<a href>` inside
+it renders as literal characters. I had already said the link
+part three times (c-219, c-221, c-234), each time proposing a
+workaround INSIDE plotly: move the link to the axis, move it to
+a click, route the click into section 5. Three workarounds for
+one constraint is the signal I should have read two revisions
+ago — the requirement and the library disagreed, and the
+library is the part we chose.
+
+So the chart is HTML now. A row of flex columns, a green bar
+above the zero line and a red one below, and a CSS card per
+review that is a CHILD of its column — which is exactly why the
+pointer can move into it. Section 1 has worked this way since
+c-214; the chart simply stopped being the exception.
+
+**The two cards now share one stylesheet.** `POP_CSS` is
+lifted out and used by both, because "make it look like section
+1" is not a thing you can guarantee with two stylesheets that
+happen to agree today.
+
+**WHAT IT COST.** Plotly's zoom. That was added at c-215
+because 82 rotated labels were an unreadable smear — but the
+fix for THAT was one label per year, and that stays. If a
+reader turns out to need zoom on 82 bars it comes back as a
+range control, not as a reason to give up the card.
+
+Also gone: the click-into-section-5 indirection from c-221.
+The card carries MSCI's link directly, so the detour has no
+job. The keyed picker stays — it costs nothing and is what any
+future cross-section link would target.
+
+**A TEST FAILED ON A CHANGE THAT WAS NOT A REGRESSION.**
+`test_every_card_lists_as_many_names_as_it_counts` globbed
+every markdown element into one string and sliced on
+`<div class='amk`. That was fine while section 1 was the only
+thing emitting cards; when the chart started emitting 82 of its
+own, the last strip cell's slice ran to the end of the document
+and swallowed them all — 454 names against 444 counted. The
+test now parses PER ELEMENT. A false alarm on a correct change
+is the most expensive kind, because the next one gets ignored.
+
+Verified: 82 columns, 82 MSCI links, regime column marked,
+no truncation anywhere, page_lint CLEAN, 653 passed / 1
+skipped.
+
+## c-234 — a chart that needs a manual has a problem the manual does not fix
+
+Two wording changes on the review-database page, both from
+Bill, both making the same point from different directions.
+
+**The section-2 lead was three sentences of instruction** —
+how to read the axis, what a tick means, what a click does. It
+is now one line naming the control: "Select a market to view
+its index review history." The chart has to explain itself;
+the reader who scrolls past a manual is precisely the reader
+who needed it.
+
+One thing this costs, recorded rather than glossed: the
+click-a-bar-to-open-it-in-section-5 behaviour from c-221 is no
+longer advertised anywhere. It still works. If it turns out
+nobody finds it, the honest fix is to make the affordance
+visible ON the chart, not to put the sentence back — a feature
+that only exists because a caption describes it is a feature
+with a discoverability problem, not a documentation problem.
+
+**"Quarterly Comprehensive Index Review" became "2023
+Quarterly Review rule change".** The old label was MSCI's own
+term for the methodology, and it named the thing without
+saying what happened. What the reader needs from a line drawn
+across a chart is that a RULE CHANGED and WHEN; the official
+name of that rule is something they can look up if they care.
+The three-annotation alignment from c-221 is unchanged, so the
+bar still lands exactly on the dotted line.
+
+Verified: page_lint CLEAN, annotations render in the right
+anchors, 650 passed / 1 skipped.
+
+## c-233 — the snapshot showed eight names and hid fourteen
+
+Bill, on the section-1 strip: China's May-2026 card read
+"+14 more" and "+16 more". The card exists to answer WHICH
+NAMES; truncating it sends the reader somewhere else for
+exactly the thing it was built to provide. The cap is gone —
+all 46 China names now render (22 additions, 24 deletions,
+matching the database exactly).
+
+Two things had to change with it.
+
+**The per-row label could not survive an uncapped list.**
+"Added" printed twenty-two times is noise, and it was already
+redundant the second time. One group heading per side now
+carries its own count, then bare names, sorted. Fewer pixels
+per name is what makes 46 of them readable.
+
+**And the card had to be able to scroll.** 46 rows would have
+run off the bottom of the screen. `max-height:330px` with
+`overflow-y:auto`, and the heading is sticky so a reader
+scrolling a long list never loses track of which side they are
+looking at. The card is a child of `.amk`, so `:hover` survives
+the pointer moving into it and the scroll is actually usable.
+
+Also, Bill: the lead now reads "Hover a market to see the index
+review changes" rather than "the names" — the strip shows
+additions and deletions, and "changes" is what they are.
+
+**The test that matters is not the one about truncation.** It
+is `test_every_card_lists_as_many_names_as_it_counts`: the
+group heading states a count and the rows beneath it must
+match. A count that disagrees with its own list is worse than
+either alone, and it is the failure this restructuring could
+plausibly introduce.
+
+Verified: page_lint CLEAN, all 12 market cards match their
+counts, 650 passed / 1 skipped.
+
+## c-232 — Taiwan has two boards and the daily harvester read one
+
+Bill wants one final harvest, then to close the book. That
+needs a list separating three things a coverage count cannot,
+so `scripts/data_gaps.py` classifies every missing datapoint as
+RETRY, NEEDS_CODE or STRUCTURAL — and writing the middle class
+is what found the real problem.
+
+**139 PRICED TAIWAN DAILY WINDOWS ARE TWSE. NOT ONE IS TPEx.**
+Of the 22 unpriced, 16 are TPEx names — Win Semiconductors,
+Parade, MPI, eMemory, Phison, PharmaEssentia, TaiMed, Oneness.
+`tw_event_window.py` calls STOCK_DAY, the TWSE day-file.
+Asking it for an OTC code returns nothing, and nothing is
+exactly what a delisted name returns, so the gap read as
+ordinary attrition for as long as the harvester has existed.
+
+**Fourth time.** ib_5m_events c-195 (Taiwan TWSE/TPEx), c-195
+again (Korea KOSPI/KOSDAQ), c-225 (China's four venues), now
+the Taiwan daily harvester. The tell is identical every time: a
+market with two boards and a map that names one.
+
+Fixed: OTC codes try the TPEx day-file first; TWSE names that
+come back empty try TPEx as a fallback, because our universe
+file is current-state and names move boards. And the other
+half — `harvest()` skipped a window if the KEY was present, so
+the 22 empty windows were never re-asked. **A cache that
+remembers failures as results cannot benefit from a fix**,
+which is why the TPEx bug could not be repaired without also
+repairing the skip.
+
+**THE REST OF THE PICTURE**
+
+    5m     RETRY 1,607   STRUCTURAL 9
+    daily  RETRY    35   STRUCTURAL 14   NEEDS_CODE 1
+
+The 5m RETRY is almost entirely "never requested" — Japan (221)
+and China (1,319) have not run, India stopped at 111 of 177.
+Not failures; the fetch has not reached them.
+
+STRUCTURAL, the honest exclusion list: Korea KOSDAQ (6, floor
+measured 2026-02-02, three probes agreeing), one Korean
+no-permission, three venue-no-history singletons, Philippines
+(14 daily, excluded centrally).
+
+NEEDS_CODE is down to one: China's `000909.SS`, a Shenzhen
+number carrying a Shanghai suffix that `_china_yf` trusts. One
+window. Recorded rather than fixed — a one-window special case
+inside a routing function is worth less than the note.
+
+**`freeze` refuses to be quiet about premature abandonment.**
+If any row is still RETRY when Bill freezes, it says so: those
+windows would be excluded without their last attempt, the one
+failure mode this exercise exists to prevent.
+
+Also confirmed from the live fetch: Hong Kong finished 22/22
+and Taiwan 46/46 on the 5m side — the c-222 zero-padding fix
+recovered every window it was supposed to.
+
+Verified: pyflakes clean, 654 passed / 1 skipped (run in two
+halves; the suite now exceeds the sandbox's 178s shell cap).
+tests/test_data_gaps.py added, with its panel cached at module
+scope after the first version tripled the suite's runtime.
+
+## c-231 — the APAC panel as a page, and a test that pinned a bug
+
+Bill asked for the analysis website-ready. New page
+`views/apac_strategist.py`, registered as "APAC Rebalance
+Panel", eight sections, three charts, rendering
+`data/index_strategist_qa.json`.
+
+**THE PAGE COMPUTES NOTHING, and there is a test enforcing
+it.** The view may not import `statistics`, call `median(`,
+touch `np.` or `groupby`. Not purity — a view doing its own
+arithmetic will eventually disagree with the document generated
+from the same data, and the reader has no way to tell which one
+is wrong.
+
+**THE CAVEATS GET THE AMBER BLOCK, NOT GREY TEXT.** Ten of
+twelve markets are survivors-only, returns are total not
+excess, and events in one review are not independent. A caveat
+rendered as small grey text under a chart is a caveat nobody
+reads, so `design.caveat()` gives them a ruled amber treatment
+above the thing they qualify — and the test asserts all three
+phrases are on screen. Selecting a survivors-only market in
+section 7 raises its own block.
+
+Section 8 is "What this page cannot tell you", and it is NOT at
+the bottom of an expander. It states plainly that everything
+above is descriptive and that crowding, squeeze risk and the
+auction path exist for Taiwan alone. It is the section that
+keeps the other seven honest.
+
+**FINDINGS ARE NOT ASSERTED ON THE PAGE.** The narrative read
+stays in `INDEX_STRATEGIST_READ_APAC.md`, labelled judgement,
+and the five candidates plus two rejections went to
+`CANDIDATE_FINDINGS.md` for Bill to promote. The two
+rejections are recorded on purpose — the day+3 artefact and the
+QCIR non-result are exactly the things somebody would otherwise
+re-discover and believe.
+
+**`design.table()` and `design.caveat()` promoted into the
+design system.** history_explorer solved the header-alignment
+problem at c-221 and kept the solution to itself; a second page
+needing it is the moment a private helper should have been
+shared. history_explorer is untouched — new pages get it from
+design.
+
+### The test that was pinning the bug
+
+The full suite went red on
+`test_india_nse_symbols_are_truncated_to_nine_chars`. Cause:
+Bill's fetch was running while I worked, the c-229 truncation
+candidate fired, and five 10-character names resolved —
+APOLLOHOSP, BAJFINANCE, BHARATFORG, IDFCFIRSTB, PIDILITIND.
+
+My assertion was "every resolved symbol is 9 characters or
+fewer", which described the BROKEN state. **A test that fails
+when the bug is fixed is pinning the bug.** Inverted: short
+symbols must never fail, and long ones must now be able to
+succeed.
+
+Live progress from that same fetch, unprompted evidence the
+c-222 work paid: Hong Kong 20 -> 34 windows with bars (the
+zero-padding recovery), India 50 -> 75, Taiwan 45 -> 47,
+Singapore 19 -> 20.
+
+Verified: pyflakes clean, page renders with 8 sections / 3
+charts / 3 caveat blocks, 647 passed / 1 skipped,
+`docs/PAGE_SPEC_apac_strategist.md` written.
+
+## c-230 — the APAC strategist panel, and a correlation that was a definition
+
+Bill: study the Taiwan analysis, note what data is missing
+elsewhere, then act as a PT-desk index strategist and answer
+real questions across every market. Autopilot.
+
+**COVERAGE FIRST.** He was right that the daily harvest is
+done: 2,042 of 2,092 movers priced, 98%. China came in at
+1,239/1,253 and India at 166/166 — the c-223 predecessor map
+and the c-229 nine-character NSE truncation both paid out.
+
+**THE PANEL.** 2,078 name-events, 12 markets, 2015-2026
+(Taiwan to 2010), Tier 1 only — daily price and volume. Ten
+questions a desk actually asks, in
+`scripts/index_strategist_qa.py`, generating three documents
+where no number is typed by hand:
+INDEX_STRATEGIST_QA_APAC.md (cross-market),
+INDEX_STRATEGIST_BRIEFS_APAC.md (one page per market),
+INDEX_STRATEGIST_READ_APAC.md (the judgement layer).
+
+**THE ERROR I CAUGHT IN MY OWN FIRST OUTPUT.** Q9 asked whether
+the first three sessions forecast the rest of the window. It
+came back rho 0.35-0.44 in EVERY market. The uniformity was the
+tell, not the finding: `drift` runs day+1 to effective-1 and
+`early3` runs day+1 to day+3, so drift CONTAINS early3 and the
+correlation is arithmetic. Recomputed against the drift that
+starts where early3 ends, the honest range is -0.34 to +0.22 —
+noise everywhere, and Taiwan falls from 0.44 to 0.02.
+
+Both columns now print side by side, the artefact one labelled
+ARTIFACT, because seeing 0.44 next to 0.02 teaches the
+difference better than a footnote. A desk that had acted on the
+first version would have been reading its own left-hand side.
+
+**WHAT THE PANEL SUPPORTS**
+
+* China is not a liquidity-event market. 61% of 1,229 events
+  print under 2x ADV, 9% over 10x; every other market is the
+  reverse (HK 95% over 10x). Largest sample in the panel and it
+  corroborates the independent decade study.
+* Deletions are bigger, and Taiwan — the honest sample — shows
+  the widest gap: 18.2x vs 6.2x. India, the OTHER delisted-safe
+  market, shows none at all (17.1x vs 16.7x). Two honest
+  samples disagreeing is a question worth registering, not
+  noise to average.
+* Indonesia is the violence outlier: 13.9% p90 effective-day
+  move, 41% of events over 5%, against ~4.6% p90 for
+  India/Japan.
+* Early execution beat the close in 18 of 24 cells — held
+  loosely, because it is unconditional, survivorship inflates
+  the deletion column, and ALL_DAY1 is a benchmark rather than
+  a schedule at 12-40x ADV.
+
+**WHAT IT CANNOT DO, stated plainly in the read:** everything
+above is descriptive. Nothing in it says which name in the next
+review will be the violent one. Crowding, completion, squeeze
+risk and the auction path are Tier 2/3 and exist for Taiwan
+alone.
+
+**THE GAP REGISTER** (`docs/APAC_DATA_GAP_REGISTER.md`) is
+primary-sourced and marks every row VERIFIED or UNVERIFIED. The
+two findings that matter: only Australia, Hong Kong, India and
+Thailand publish a CENSUS short measure — Japan, Korea and
+Singapore are threshold regimes that will read "uncrowded"
+exactly when crowding is diffuse — and China's northbound flow
+went QUARTERLY in 2024, so no A-share foreign-flow series
+spans our panel comparably.
+
+Cheapest path to a Taiwan-style read: Australia, then Hong
+Kong. Largest bias to fix: delisted-safe harvesters for Japan
+(147) and China (436 deletion-side events on survivors-only
+data).
+
+**Provenance discipline:** every figure in the read was
+re-checked against the JSON. Two did not match and were
+corrected — 18 of 24 cells not 19, and India 16.7x/17.1x not
+17.1x/16.8x. Recorded in the document itself.
+
+Verified: pyflakes clean, 637 passed / 1 skipped,
+tests/test_strategist_qa.py added with the overlap trap as its
+headline regression.
+
+## c-229 — IB truncates NSE symbols at nine characters
+
+Two measurements came back and both changed the job list.
+
+**INDIA: THE SEPARATION IS PERFECT ON LENGTH.** `symbols India`
+split 46 codes with no overlap at all:
+
+    resolved    35 codes, longest 9  (EICHERMOT, LICHSGFIN,
+                                      POWERGRID)
+    unresolved  11 codes, every one exactly 10
+
+and IB's own search gave the mechanism away on the single case
+where it returned anything: asked for BAJAJ-AUTO it offered
+"BAJAJ-AUT/INR@NSE" — same name, nine characters. ASIANPAINT,
+BHARTIARTL, ULTRACEMCO, BAJFINANCE, INDUSINDBK and the rest are
+not missing from IB. They are spelled shorter.
+
+Which is why the `symbols` command was worth writing instead of
+guessing. My c-227 note said "if IB's search returns NOTHING
+for names this liquid, the answer is about permissions" — that
+was the wrong guess, and the command that would have let me
+guess wrong is the same one that produced the right answer.
+
+It ships as an extra CANDIDATE, tried after the full symbol,
+never instead of it, and the window records which form paid.
+Perfect separation on n=46 plus one confirmation from IB is a
+strong hypothesis, not a documented fact.
+
+**KOREA KOSDAQ IS MEASURED: 2026-02-02.** All three probes
+agree. IB holds roughly six months of KOSDAQ 5-minute history,
+so every KOSDAQ window in a 2015-2026 study is outside
+coverage. Korea drops 109 -> 81 jobs.
+
+**THE PART THAT MATTERED MORE THAN THE MEASUREMENT.** The
+boundary file had Korea_KOSDAQ in it and `_edge_for_code` never
+read it. c-224 added the venue, c-227 added the probe symbols,
+Bill measured it — and the answer would have sat in a JSON file
+that nothing consumed while the harvester fetched 28 windows
+and stamped each one `venue_no_history`. Same false absences,
+now with a measurement on disk proving we knew better. A
+measurement no code reads is a note, not a control. Wired, and
+tested for.
+
+**CHINA: ChiNext 2016-12-06, STAR 2021-06-18.** ChiNext lands
+one day after Shenzhen Connect's own floor (2016-12-05), which
+is the corroboration worth having. The prober also reported
+ChiNext probes disagreeing by 759 days — CATL and Mindray
+listed in 2018, so their floors are their LISTINGS, and East
+Money (2010) gives the venue. The tool said so itself rather
+than averaging them, which is the behaviour c-204 was built
+for. China drops 1,332 -> 1,319.
+
+Totals: 1,969 -> 1,927 events, 1,728 still to fetch.
+
+Verified: pyflakes clean, 631 passed / 1 skipped.
+
+## c-228 — Bill was right, and the boundary is the auction grid
+
+He remembered a 2015 wall in the AUCTION data. He is right, I was
+wrong to sweep it away with the rest at c-226, and the source was
+sitting inside a response we already fetch.
+
+TWSE serves MI_5MINS from 2004-10-15. But the `notes` array it
+returns WITH THE DATA says the resolution changed four times:
+
+    before 2011-01-16 ....... every MINUTE
+    2011-01-16 .. 2014-02-23  every 15 seconds
+    2014-02-24 .. 2014-12-28  every 10 seconds
+    from 2014-12-29 ......... every 5 seconds
+
+The closing call runs 13:25-13:30. Five minutes on a 1-minute
+grid is FIVE points; on a 5-second grid it is sixty. So the
+indicative PATH through the auction — the object of an auction
+study — begins 2014-12-29. The auction SHARE (final print minus
+the last continuous row) survives a coarse grid and reaches
+2004.
+
+**WHAT I DID WRONG AT c-226.** I checked whether the TWSE files
+EXIST and reported that nothing was 2015-bound. Existence was
+the wrong question: a file can serve a date and not serve the
+measurement you need from it. Our own doc even said "MI_5MINS
+2012 verified (2012/2018/2023 all OK)" — all three probes
+returned data and all three were on different grids, and nobody
+noticed because the probe only asked "did it answer".
+
+**AND IT WAS A SILENT BUG, NOT ONLY A DOC ERROR.**
+auction_study_2026.fetch_mi5 looked up the literal key
+"13:24:55", which exists only at 5-second resolution, and
+returned None otherwise. Every pre-2015 date therefore reported
+NO DATA for data that is there on a coarser grid — a resolution
+limit recorded as an absence, the same family as a permissions
+refusal recorded as a coverage fact. Now the key is chosen by
+regime, and every result carries `grid_seconds` and
+`path_usable` so a mixed-resolution sample cannot be pooled by
+accident.
+
+Corrected in TAIWAN_MARKET_ANALYSIS.md (with the table and both
+source URLs), PREDICTION_ENGINE_REVIEW_2026.md and
+EVENT_WINDOW_FRAMEWORK.md.
+
+**The 2015 story, finally straight:**
+
+* TWT93U borrow balances — published from 2005-07-01. NOT bound.
+* TWT38U foreign flows — published from 2004-12-17. NOT bound.
+* MI_5MINS auction — file from 2004-10-15, but **5-second grid
+  only from 2014-12-29. BOUND, and this is the one.**
+* PIT engine replication — ~2-3 years, our float/share vintage.
+  Unrelated to TWSE entirely.
+
+Verified: pyflakes clean, 628 passed / 1 skipped,
+tests/test_auction_resolution.py added.
+
+## c-227 — the two KOSDAQ successes were KOSPI companies
+
+The pre-flight came back 14 of 15 venues ready, all six China
+venues among them. Two things in it are worth more than the
+verdict line.
+
+**I ALMOST READ OUR OWN MISLABELLING AS EVIDENCE ABOUT IB.**
+The Korea file holds 35 ".KQ" windows; exactly two have bars —
+HMM and Hyundai Wia, 5,538 and 5,694 bars each. I had already
+used that fact once, to argue KOSDAQ was not categorically
+empty. Both companies are KOSPI listings. Our ticker map
+suffixes them ".KQ" and they are the only two of the nineteen
+".KQ" codes that are not genuinely KOSDAQ. So the two data
+points I was treating as evidence about IB's KOSDAQ archive
+were evidence about OUR suffix field — and they pointed the
+opposite way from the truth.
+
+Every genuinely KOSDAQ name is empty, and all three pre-flight
+probes on genuinely KOSDAQ names resolved contracts and
+returned zero bars. That reads like "IB serves no KOSDAQ 5m
+history" — which is the sentence I got wrong about TPEx at
+c-197 by generalising from two failures. So it goes to the
+boundary prober as `Korea_KOSDAQ` rather than into the docs as
+a finding. 28 windows ride on the answer.
+
+**INDIA: 1 of 3 PROBES, AND THE PATTERN IS NOT RANDOM.**
+Unresolved: Asian Paints, Bharti Airtel, UltraTech, Bajaj
+Finance, Bajaj Auto, IndusInd, Apollo Hospitals, Bank of
+Baroda, Aurobindo, Bharat Forge, Wockhardt, Adani Energy,
+Federal Bank. Resolving fine on the same venue with the same
+code shape: HDFC Bank, Axis Bank, DLF, Canara Bank, Dabur.
+Whatever separates those groups it is not "IB does not carry
+Indian equities", and it is not obscurity.
+
+The c-222 symbol-search fallback ran on every one of them and
+printed NOTHING, so "found no match" and "never ran" looked
+identical in the console. A silent fallback is an untestable
+one. It now reports its candidates, and there is a `symbols`
+command that asks IB about every unresolved code in a market
+and writes the answers to disk — about thirty seconds for all
+of India, versus me guessing at IB's spelling.
+
+Verified: pyflakes clean, 625 passed / 1 skipped.
+
+### Can Bill run `fetch` now — yes
+
+14 of 15 venues ready. The two gaps are BOUNDED and already
+labelled: 28 Korean windows and roughly 13 Indian symbols out
+of 1,770. Neither corrupts anything else, both are resumable,
+and `no_permission` / `venue_no_history` / `no_contract` keep
+them separable afterwards.
+
+## c-226 — the claim was false, and TWSE says so on its own page
+
+Bill asked me to verify it online. One page load each:
+
+    TWT93U 融券借券賣出餘額
+    「本資訊自民國94年7月1日起開始提供」   = 2005-07-01
+    TWT38U 外資及陸資買賣超彙總表
+    「本資訊自民國93年12月17日起開始提供」 = 2004-12-17
+
+So the sentence in PREDICTION_ENGINE_REVIEW §2 — "TWT93U and TWT38U
+begin in 2015, when the disclosure regime that creates them came
+into force" — is wrong by a DECADE, and the regulatory backstory
+attached to it was invented to explain a boundary that is ours.
+
+The part worth sitting with is c-225. I had already looked at this,
+found our own probe serving 2014-06-16, and downgraded the claim
+from "regulatory" to "unmeasured". That was the right direction and
+still cowardly: I corrected my CONFIDENCE in the fact instead of
+checking the fact, when checking it cost one click. A hedge is not a
+substitute for looking.
+
+Corrected in PREDICTION_ENGINE_REVIEW_2026.md, TAIWAN_MARKET_
+ANALYSIS.md (the backstory section is kept, marked SUPERSEDED, so
+the correction has something to point at), EVENT_WINDOW_FRAMEWORK.md
+and the harvester header — each with the Chinese source line.
+
+`sbl_floor_probe.py` changed job: it no longer hunts an unknown
+floor, it CHECKS the published one, because "TWSE says it publishes
+from 2005" and "the JSON endpoint returns rows for 2005" are
+different facts and only the second is the one our harvester lives
+with.
+
+**What this opens up:** ~10 further years of per-name borrow and
+foreign-flow history, roughly 40 more review cycles. Extending
+sbl_history_harvest.py's START is additive — new days, no stored day
+touched — but it is Bill's call.
+
+**What it does NOT change:** the real ~2-3 year limit on PIT
+replication, which is our share-count and float VINTAGE being
+current-dated. That constraint is measured and binding and has
+nothing to do with TWSE retention. It was being obscured by a
+retention story that was not true.
+
+### One command for the 5m harvest
+
+`py scripts\ib_5m_events.py fetch` is now an ordered run rather
+than a bare loop over EXCH.
+
+SMALLEST FIRST, which is not cosmetic: the c-222 symbol fixes have
+never been in front of IB, and running China's 1,332 windows before
+knowing whether symbol resolution works would be spending ten hours
+to find out.
+
+Two stop conditions. FATAL (locked account, dropped connection) now
+propagates out of fetch() and halts every remaining market — before
+this it returned quietly and the loop moved on, which is how one
+account problem becomes eight markets of false records. And SHUTOUT:
+any market that asks for 5+ windows and gets bars for none.
+
+I first wrote SHUTOUT as "if the FIRST market comes back empty", and
+the dry-run killed it immediately — smallest-first puts Australia's
+single window in front, so the rule armed on a sample of one and
+disarmed before Hong Kong's fourteen ever ran. A stop condition that
+only watches the first market is one that mostly does not fire.
+
+Verified: pyflakes clean, both stop paths exercised with a stubbed
+fetch, 623 passed / 1 skipped.
+
+## c-225 — the pre-flight found two venues I did not know existed
+
+11 of 13 venues answered with bars, including all four China
+probes and Japan. The entitlement question — the one that could
+have wasted ten hours — is settled and positive. What the probe
+found instead was three of my own errors.
+
+**CHINA HAS SIX IB VENUES, NOT FOUR.** Read the log carefully:
+
+    Stock('300620','SEHKSZSE','CNH') -> error 200
+      ... blank search resolved it on CHINEXT, 144 bars
+    Stock('688313','SEHKNTL','CNH')  -> error 200
+      ... blank search resolved it on SEHKSTAR, 144 bars
+
+Both served data, so the venue was never the problem — my code
+for it was. ChiNext (300/301) and STAR (688/689) are separate
+IB exchanges, not sub-boards of Shenzhen and Shanghai. 256 of
+China's 1,333 windows sit on them. The c-195 blank-exchange
+fallback caught every one, so this was waste rather than loss —
+but the venue recorded on each window would have been wrong,
+and bad provenance outlives a wasted request.
+
+**AND I COMMITTED THE c-222 BUG AGAIN, IN THE SAME FILE.**
+`_china_venue` branched per SUFFIX first with a separate branch
+for bare codes, so the new four-board logic only ran on bare
+codes — "688313.SS" returned from the .SS branch before ever
+reaching it. Identical shape to the Hong Kong zero-padding bug:
+a correct transformation placed after something that
+short-circuits past it. I wrote the fix three days after
+writing the test that describes the pattern. The suffix is
+decoration; the number is the fact, and the code now strips
+before it routes.
+
+**TWO TESTS WERE DEFENDING MY MODEL OF THE WORLD.**
+`test_star_board_is_shanghai` asserted 688xxx -> SEHKNTL, which
+is true about the MARKET and false about IB's exchange codes.
+Both had to be reversed before the fix could land. A test
+written from my assumption rather than the vendor's answer
+passes happily while the code it guards is wrong — for three
+revisions, in this case.
+
+**THE PROBE ITSELF WAS TOO THIN.** It reported "India / NSE: NO
+CONTRACT" off ONE symbol, ADANIENSOL — a recent listing IB may
+simply spell differently — while India's harvest file already
+holds 50 windows of real NSE bars. That is the c-197 TPEx
+mistake exactly: two failures became "IB serves no TPEx
+history". Three codes per venue now, and a venue passes if any
+of them returns bars.
+
+**Also:** Taiwan's TPEx codes now ask TPEX first instead of
+failing on TWSE and recovering, since our own universe file
+already knows which board they trade on. ChiNext and STAR have
+NO MEASURED FLOOR and currently inherit Shanghai's
+(2014-11-14), which is certainly wrong for a board that opened
+in July 2019 — an inherited floor that is too early turns into
+false `venue_no_history` records, so `plan` now names both and
+the boundary prober has probe symbols for each.
+
+**STILL OPEN: Korea KOSDAQ.** 28 of Korea's 109 windows. This
+run said "HMDS query returned no data" rather than the
+permissions error we saw before, so the diagnosis is not
+settled. It needs a measurement, not a guess.
+
+### The SBL question — the claim is ours, not TWSE's
+
+Bill asked where "TWSE only publishes SBL data since 2015"
+comes from. It comes from us. Our own probe log says the
+opposite: TWT93U served 2015-01-05 (885 rows), 2014-12-15 (884)
+and 2014-06-16 (870). We probed 2015-05-15 once, it worked,
+2015 became the convention because it lines up with the MSCI
+key archive — and a convention slowly hardened into a claim
+about the vendor. TWSE publishes no start date I have been able
+to find, and a search of their TWT93U pages does not give one.
+
+TAIWAN_MARKET_ANALYSIS.md already carried the correction in its
+qualifications section; the flat "2015+" statements elsewhere
+did not. Fixed in EVENT_WINDOW_FRAMEWORK.md and the harvester's
+own header, and `scripts/sbl_floor_probe.py` will replace the
+convention with a measured floor — doubling walk, bisection,
+and four nearby trading days per candidate so one holiday
+cannot be mistaken for an edge.
+
+Verified: pyflakes clean, plan runs and names both unmeasured
+venues, 623 passed / 1 skipped.
+
+## c-224 — the plan table cannot answer "are we ready"
+
+Bill asked whether we can start the remaining 5-minute harvest.
+`plan` says 1,969 events and 1,770 to fetch, and every number
+in it comes from OUR OWN files — the changes DB and the
+measured edges. It cannot see the one thing that decides
+whether a ten-hour run produces data or a thousand refusals:
+whether this ACCOUNT is entitled to each venue.
+
+That gap is not hypothetical. Korea has already proved it —
+KOSDAQ returns "No market data permissions" while KOSPI works,
+and both live behind the single exchange code KRX. Shanghai and
+Shenzhen reach IB only through Stock Connect. Japan needs the
+TSE subscription Bill bought but has never exercised at scale.
+Those three cover 1,554 of the 1,770 remaining windows, and
+none of them has been tested end to end.
+
+So `ready` — a pre-flight of 13 probes, one per ENTITLEMENT
+rather than one per market, under a minute, writing nothing. It
+resolves a contract and asks for three days of bars on the most
+recent window of each venue, then prints a verdict that
+separates the three failures that look identical in a log:
+an entitlement (subscribe), a symbol (our problem), and no
+history at that date (check the venue edge).
+
+`_probe_venue` is where the care is. Keying on IB's exchange
+code would have tested KOSPI, reported Korea ready, and lost
+every KOSDAQ window in the real run — the exact mistake this
+tool exists to catch, one level up. Korea splits on .KQ/.KS,
+Taiwan on TWSE/TPEx, China into its four venues.
+
+Also: `plan`'s time estimate said "0.6 minutes" because it
+priced pacing only. Until a market runs with c-222's
+`fetch_secs`, it now quotes 12-30 s/window DERIVED FROM BILL'S
+OWN CONSOLE — his ETA lines give elapsed/i directly — and says
+that is where the number came from. 1,770 windows is 6-15
+hours, not 0.6 minutes.
+
+Verified: pyflakes clean, probe selection dry-run covers all 13
+venues, 621 passed / 1 skipped.
+
+## c-223 — "all stages completed" over 1,253 empty windows
+
+No, the daily harvest is not complete. `py scripts\
+apac_event_days.py coverage` now answers this in one screen;
+the answer today is 794 of 2,092 movers priced.
+
+**CHINA WAS NEVER HARVESTED — 1,253 WINDOWS, 60% OF THE APAC
+SAMPLE.** c-205 added China to `harvest_all()`'s market list and
+left the `yf` sub-command's copy of the same list untouched. Two
+literals, one edited, and neither said anything: the run printed
+a per-market line for every market it DID visit and nothing at
+all for the one it skipped, then finished with "all stages
+completed". Absence is invisible in a log that only reports
+presence.
+
+This is the same defect page_lint bans in the views — a market
+list written out by hand in more than one place. There is now
+one `YF_MARKETS`, a test that China is in it, and a test that
+the literal does not appear twice in the source.
+
+**THE OTHER MARKET THAT LOOKED MISSING WASN'T.** Taiwan has 136
+movers and zero rows in apac_event_windows/, because it is
+priced by the TWSE harvester into data/tw_event_windows.json —
+117 of 136. `ELSEWHERE` records that, so the coverage report
+distinguishes "harvested by someone else" from "never
+harvested". Without it I would have sent Bill to fix a market
+that was already fine.
+
+**THE REMAINING TWELVE SHARE ONE CAUSE: our ticker map is
+current-state and the windows are historical.** IDFCFIRSTB did
+not exist before January 2019 (IDFC Bank until the Capital
+First merger); MSCI's "TATA MOTORS A" is the DVR line, which
+traded as TATAMTRDVR until the scheme cancelled it on
+2024-09-01; "SIEMENS INDIA" before the 2025 demerger is Siemens
+Ltd; and Korea's 456040 is the post-spin OCI line, which cannot
+have prices in 2020 because OCI Company Ltd was A010060 until
+2023-05-01. Yahoo and the bhavcopy were both answering
+correctly — that symbol did not trade on that date — and we
+were reading it as a delisting.
+
+`PREDECESSOR` carries each swap with its effective DATE and its
+SOURCE. The date is doing real work: the alias is offered only
+for windows closing before the change, so a rename cannot leak
+backwards. And every entry is a HYPOTHESIS — the alias is
+accepted only if rows actually come back, and which symbol paid
+is recorded on the window. One entry is not a rename at all:
+BANKBETF is a bank ETF sitting in the map where Bajaj Finserv
+belongs, so it carries no date and applies in every period.
+
+Not fixed, and named rather than quietly carried:
+Indonesia's WSKT (Waskita Karya, suspended since 2023) and
+Australia's BOQPG (a Bank of Queensland capital-notes line, not
+ordinary equity — arguably should not be in an equity event
+study at all). Both are in `gaps` output with what was tried.
+
+**NEXT, in order of size:** `yf China` (1,253 windows), then a
+re-run of India and Korea to collect the twelve.
+
+Verified: pyflakes clean, coverage and gaps run, 619 passed /
+1 skipped, tests/test_daily_coverage.py added.
+
+## c-222 — the 33 Hong Kong windows I lost to an ordering bug
+
+Bill stopped a long fetch after TWS locked him out and asked
+what the log actually says. Most of it is mine.
+
+**THE BIG ONE: c-204's FIX, IN THE WRONG ORDER.** Hong Kong
+returned 20 of 55 windows. 34 said NO CONTRACT, and 33 of those
+begin with a zero — Tencent among them. c-204 had already
+established the rule (Yahoo wants "0700.HK", IB wants "700")
+and implemented it as
+
+    if market == "HongKong" and sym.isdigit(): sym = str(int(sym))
+    ...
+    if "." in sym: sym = sym.split(".")[0]
+
+"0700.HK".isdigit() is False. So the de-padding never ran on a
+suffixed ticker, the suffix came off afterwards, and IB was
+asked for "0700" — the exact string c-204 had PROVEN does not
+resolve. I fixed the transformation and never looked at the
+pipeline it sits in, and the evidence was in every console line
+for the whole run: every failure started with a zero, every
+success did not. Normalisation is now `_norm_sym()`, tested for
+order rather than for output.
+
+**FUTU** was asked for as Stock("FUTU", "SEHK", "HKD"). MSCI
+counts the ADR in the Hong Kong index; the security trades in
+New York in USD. A letter-coded symbol now falls back to
+SMART/USD.
+
+**INDIA lost 11 symbols** — ULTRACEMCO, ASIANPAINT, BHARTIARTL
+and friends, none obscure. I could guess at IB's spelling;
+instead `reqMatchingSymbols` (IB's own search) runs as a last
+resort and caches to data/ib_5m_symbols.json. The answer comes
+from IB, not from me.
+
+**EIGHT KOREAN "unexplained" WERE TIMEOUTS**, with the word
+Timeout on the previous console line. IB's error 162 arrives
+asynchronously and landed after the code captured `err`, so
+_why_empty wrote "empty, IB reported no error". The local
+exception is evidence too and is now recorded; RequestTimeout
+is raised to 120s; and `timeout` windows retry on the next run.
+
+**FOUR "before_edge" WERE PERMISSIONS.** The classifier matched
+the substring "permission" and filed KOSDAQ's "No market data
+permissions" under a label meaning the data does not exist. It
+exists; we are not entitled to it. One is a fact about IB's
+archive, the other is a subscription line, and only one can be
+fixed with a credit card. `no_permission` is now its own
+reason, and every stored label is re-derived on read — a wrong
+label is worse than none, because it looks settled.
+
+**ERROR 438 SHOULD HAVE STOPPED THE RUN.** After the account
+locked, every request fails identically. The loop would have
+marched through India's remaining 152 windows writing "no
+contract" into each — a two-minute account problem turned into
+a file of false verdicts indistinguishable from measured
+absences. Bill stopped it with Ctrl-C; the script should not
+have needed him to. 438/1100/504 now save and exit with the
+reason.
+
+**HIS COVERAGE NUMBERS WERE FROM A STALE SCRIPT.** The log says
+"full 45d pre-announcement: 7" for Hong Kong. That line was
+replaced at c-208 — it demanded 45 CALENDAR days when the first
+bar lands on the first TRADING day, so a complete window scores
+43 and fails. Re-running `audit` on the same file reports
+11/20 at 30+ sessions. The data is better than the console
+said. 280 of the 294 fetched windows have 40+ pre-announcement
+days; 7 have a NEGATIVE pre-window and support no before/after
+test at all.
+
+**THE 2015 CAP** is now `SINCE` in one place, applied to the
+ANNOUNCEMENT rather than the window start — a January-2015
+review keeps its full run-up into December 2014, because the
+event has to be inside the study period, not the data around
+it. Measured floors in ib_5m_boundary.json are untouched, so
+moving the line later costs one edit, not a re-probe.
+2,337 windows -> 1,969; 1,770 still to fetch.
+
+**`plan` was estimating from PACE alone** and printed "0.6
+minutes" for 1,969 windows. Pacing is a floor; IB's response
+time is the whole cost. Each window now records `fetch_secs`
+and plan quotes the measured median.
+
+Verified: pyflakes clean, plan runs, 611 passed / 1 skipped,
+`tests/test_ib_symbols.py` added.
+
+## c-221 — the hover header was drawn by the axis
+
+**THE FEB BUG, AND WHY IT WAS INVISIBLE.** Bill: *"all Feb year
+popup window now just says the year."* In `hovermode="x
+unified"` the box header is rendered by the AXIS, not by the
+traces — so it obeys `tickvals`/`ticktext`. c-215 maps every
+February review to a bare year to keep the axis legible, and
+that mapping silently became the hover header too: Feb reviews
+hovered as "2010" while May/Aug/Nov hovered as "May10". Nothing
+in the code that builds the traces mentions the header, which
+is why reading that code told me nothing.
+
+Fixed by taking the header away from the axis. Each review now
+gets ONE pre-rendered block — full date, both actions, both
+name lists, capped at ten a side — and both traces carry the
+same block under `hovermode="closest"`. Hovering either bar
+answers the whole question, and the date comes from `_rlabel`
+rather than from a tick.
+
+`_rlabel("May10") -> "May 2010"` is now applied at every place
+a reader SEES a review: the strip popup, the section-1 title,
+the section-5 headings and its picker, and the Member Since
+column. The stored code is untouched — MSCI's PDF filenames are
+built from it.
+
+**THE LINK, A THIRD TIME.** It still cannot go in the hover:
+plotly draws hover labels as SVG, an `<a>` renders as literal
+characters and does nothing. What I could fix is Bill's real
+objection — *"I don't want you to add a new element here"* —
+and he was right that the c-219 line under the chart was one.
+Clicking a bar now sets section 5's review picker, which
+already opens that review in full and already has MSCI's
+official-document button. Nothing new on the page; an existing
+section answers the click.
+
+**TITLE CASE, CENTRALLY.** Twenty-odd axis titles across eight
+view files. Editing the strings fixes today's set and lets
+tomorrow's drift, so `design.chart()` — which every plotly call
+on the site passes through — title-cases them at render. Two
+carve-outs, because blind capitalisation is worse than none: a
+token already carrying a capital is left alone (USD, ×ADV,
+MSCI), and unit abbreviations stay lower ("bps", "(log)").
+Minor words drop unless they lead, so it reads "Number of Index
+Changes" rather than "Number Of Index Changes".
+
+**ALIGNMENT.** `st.dataframe` right-aligns numbers under
+left-aligned headers, so a numeric column reads as two columns
+that happen to overlap. Streamlit exposes no control, so the
+four remaining dataframes moved to `_rtable`, which now decides
+alignment PER COLUMN and applies it to header and cells
+together. I did not force one direction on the whole table:
+that is the letter of what Bill asked and would put company
+names against the right edge, which no financial table does.
+
+**Also:** the regime label is three annotations, not one — a
+single centred string puts its midpoint on the line, so the "│"
+floated wherever the text happened to be longest. Left half
+right-anchored, bar centred, right half left-anchored pins all
+three to the same x. Text is now "Quarterly Comprehensive Index
+Review ◀ before │ after ▶". The colorbar reads "Years in
+Index¹", sharing the table's footnote instead of repeating it.
+The footnote itself is formal now and says what it implies:
+years in the index should be read as a minimum.
+
+Verified: page_lint CLEAN, 604 passed / 1 skipped,
+`tests/test_labels.py` added for both label rules.
+
+## c-220 — the Philippines comes back, and a bold that was a bug
+
+Four asks from Bill, and only one of them was cosmetic.
+
+**PHILIPPINES, EVERYWHERE ON THIS PAGE.** It had been filtered
+out of the market selector since c-174 because `markets.py`
+excludes it — Yahoo has no Philippine coverage at all, so no
+price, no cap, no size screen, no prediction. That reasoning is
+sound and it is about the FORWARD pipeline. This page predicts
+nothing; it reports what MSCI already did, and the Philippine
+review history in the changes DB is as complete as anyone
+else's. I had applied a data-availability rule to a question
+that does not depend on the missing data.
+
+`filter_markets(...)` is gone from the view; it reads
+`df.market.unique()` now. `markets.py` is UNCHANGED — the
+exclusion still governs every forward script, and there is now
+a test asserting exactly that, so nobody reads this reversal as
+permission to predict the Philippines.
+
+`tests/test_review_db_page.py::test_philippines_is_not_offered`
+was inverted rather than deleted. The docstring records why the
+old assertion existed and why it was wrong; a deleted test
+leaves no trace that the question was ever settled.
+
+**THE DELETION HOVER WAS NOT A STYLING PREFERENCE — IT WAS A
+BROKEN TEMPLATE.** Bill asked me to bold "Deletion" the way
+"Addition" was bolded at c-219. The bold was already in the
+hovertemplate. What was wrong:
+
+    customdata=list(per.DEL)          # flat: [7, 3, 11, ...]
+    "<b>Deletion</b>  %{customdata}"
+
+Plotly's `customdata` is an array PER POINT. Given a flat list,
+`%{customdata}` resolves to nothing, the template fails, and
+Plotly silently falls back to the default hover — which of
+course has no bold. So the visible symptom (no bold) was three
+steps downstream of the cause (wrong shape), and had I "fixed"
+it by adding markup I would have changed nothing and reported
+success. Now `[[int(v)] for v in per.DEL]` with
+`%{customdata[0]}`.
+
+**THE REGIME ANNOTATION, SHORTER.** "◀ old rules │ every
+quarter is a full review ▶" named a rule change without naming
+what changed. Now: "Feb & Aug reviews: ◀ light │
+comprehensive ▶" — it says which reviews it is about and what
+happened to them, in fewer characters.
+
+**COLORBAR HORIZONTAL** on the section-3 heatmap, dropped below
+the plot: a vertical bar cost ~12% of the width for a legend
+that reads perfectly well lying down.
+
+Verified: 13 markets in both the strip and the dropdown,
+`page_lint` CLEAN, 598 passed / 1 skipped.
+
+## c-219 — hover cannot hold a link, so the link moved to click
+
+  * x-axis years are PLAIN TEXT now, no anchor.
+  * hover BOLDS the action: hovertemplate carries
+    "<b>Addition</b>" rather than bolding `name`, which would
+    have bolded the legend entry too. Deletion carries
+    customdata with the POSITIVE count — the bar is plotted at
+    -n, and "Deletion -7" would be wrong: seven were deleted,
+    not minus seven.
+  * the Feb-2006 caveat became a numbered FOOTNOTE on the
+    column it qualifies ("Member Since¹"), below the table.
+    It had been buried mid-sentence between two unrelated
+    facts, three elements above the values it describes — so
+    the one reader who needed it was the least likely to
+    connect it.
+
+THE PART I COULD NOT BUILD AS ASKED. Bill wanted the review
+hyperlink inside the hover window. Plotly renders hover labels
+as SVG text: `<b>`, `<i>` and `<br>` work, an `<a href>` shows
+as characters and does nothing when clicked. A link that looks
+real and is dead is worse than no link, so I did not ship one.
+
+Instead the chart takes click events — design.chart(select=True)
+returns the selection — and clicking a bar surfaces the review,
+its counts and a working link underneath. Same destination, one
+click instead of a hover, and it actually opens.
+
+VERIFIED BY INSPECTING THE FIGURE, not by reading the page:
+  Addition -> <b>Addition</b>  %{y}<br>%{hovertext}
+  Deletion -> <b>Deletion</b>  %{customdata}<br>%{hovertext}
+  ticktext -> ['2006','2007','2008','2009','2010']
+  anchors in ticks -> False
+The first attempt at that check spied the LAST matching figure
+and picked up the seasonality chart instead, reporting
+hovertemplate None — a reminder that a verification which
+inspects the wrong object is indistinguishable from a failure.
+
+pytest 597 green, page_lint clean.
+
+
+## c-218 — six edits, and a disclosure that has run out of homes
+
+  * CHART "nan". unstack() fills a review that had additions
+    but no deletions (or the reverse) with NaN, and the hover
+    printed the literal string "nan" where a company name
+    belongs. fillna("") — an empty side is the honest value:
+    there were no names, not a name we failed to find.
+  * seasonality moved INSIDE section 2, with the rest of that
+    market's history, instead of stranded at the foot of the
+    page under a different section. Its table is full width now
+    that _rtable sets width as a table attribute.
+  * section 6 "All APAC compared" REMOVED.
+  * the ticker-collision expander came OFF the page and onto
+    disk: scripts/ticker_collisions.py writes
+    docs/TICKER_COLLISIONS.md (25 collisions, 23 merged, 2 kept
+    separate). Right call — it is a DATA-QUALITY record and the
+    page is for readers, not auditors. NEVER_MERGE still
+    governs the roster; only the display moved.
+  * Security lookup: "Last Change Date" dropped, and "none
+    since 2006" became a dash. That phrase was doing two jobs
+    badly — it is not a change and it is not a date. The dash
+    matches the mark already used for a quiet market in
+    section 1.
+
+THE THING I WILL NOT DECIDE ALONE. Removing section 6 took the
+"Tickered" column with it, and that column was the LAST place
+on the site showing that 17% (Taiwan) to 55% (Australia) of
+change rows have no ticker. The status strip that used to carry
+it went at c-214.
+
+That fact is why the roster and the lookup count a different
+population from the timeline and the figures. Nothing on the
+page now says so. It is PARKED P8 with a one-line caption as my
+recommendation — not applied, because Bill has now removed this
+number twice, which reads as a preference rather than an
+oversight, and re-adding it uninvited would be me overruling
+him on his own page.
+
+Sections now 1-5. pytest 597 green, page_lint clean.
+
+
+## c-217 — selector into section 2; and Bill audited my chart
+
+THREE FIXES
+  * the market selector moved INSIDE section 2. Section 1 is
+    all-markets by design, so a control sitting above it
+    implied it filtered the strip — which it never did.
+  * dropdown labels via format_func: "Hong Kong" and "New
+    Zealand" on screen, the unspaced KEY returned to the code,
+    because the key joins to markets.py and every data file.
+  * the x-axis label was r[3:], turning "Feb06" into "06" —
+    not a year, not a review, and ambiguous with a day of the
+    month. Full four-digit year now, and the lead states that
+    the tick sits on that year's February review.
+
+AND THE QUESTION I SHOULD HAVE BEEN ASKED EARLIER. Bill: "I
+don't understand why we add 'old rules' and 'every quarter is a
+full review'."
+
+The annotation marks the February-2023 methodology break, and
+it exists because without it the chart reads as noise: the left
+half is tall May/Nov bars beside near-empty Feb/Aug ones, the
+right half is four similar quarters, and a reader who does not
+know why will assume the data is wrong.
+
+BUT I CHECKED WHETHER WE HAD EARNED THE CLAIM, and we had not.
+Nothing in docs/ cited MSCI for it. Our own numbers support the
+SHIFT — pre-2023 May/Nov 117 vs Feb/Aug 13, post-2023 81 vs 73,
+and the findings sweep put it at 8.7x — but the SHIFT is
+measured while "MSCI changed the method" was an inference I had
+written on the page as fact.
+
+Verified: MSCI moved the Global Investable Market Indexes to a
+QUARTERLY COMPREHENSIVE INDEX REVIEW schedule from the February
+2023 review, after a market consultation, applying the May/Nov
+maintenance methodology to February and August. So the claim
+holds — but it held by luck rather than by process, and the
+expander now says where it comes from.
+
+pytest 597 green, page_lint clean, sections [1..6].
+
+
+## c-216 — "tenure" retired, and two silent bugs behind it
+
+Bill: change "tenure", match the heatmap font, make the section
+3 table full width, and section 3 is followed by section 5.
+
+WORDING. "Tenure" is HR language for what is simply a count of
+years, so the lead now reads "by weight and years in the
+index", the caption "Shade = years in the index", and the
+colour bar "Years in index". Added to the spec so it does not
+come back.
+
+THE FONT WAS A REAL BUG, not a preference. design.chart() sets
+the LAYOUT font, but a treemap draws its tile labels from the
+TRACE — so the largest text on the page was the only text on
+the site not in Inter, and no amount of theming the layout
+would have fixed it. Set on the trace now.
+
+THE TABLE WIDTH RULE HAD NEVER APPLIED. pandas' Styler scopes
+every selector under the table's own id, so a selector of
+"table" compiles to "#T_xxx table" — a DESCENDANT table, of
+which there is none. The rule matched nothing, silently, since
+whenever it was written; the table sized to its content, which
+is why three columns sat in a narrow strip on a 1120px page.
+Width is a table ATTRIBUTE now, and the name column takes 55%
+and reads left while the numbers stay right.
+
+THE NUMBERING GAP WAS THE DEAD SECTION 4. The Membership time
+machine holds number 4 and has never rendered — _time_machine()
+is defined and never called (PARKED P6). The lint has printed
+it as a KNOWN GAP on every run since c-211, which was enough
+for me and not enough for the reader: a gap the lint tolerates
+is still a gap the reader sees, and Bill read it as a mistake
+because it looks exactly like one.
+
+Sections now run 1-6 with nothing missing. The time machine
+moved to 9 — outside the visible sequence — so restoring it
+later takes the next free number instead of reopening a hole in
+the middle. Spec and lint updated together.
+
+pytest 597 green, page_lint clean, sections on screen [1,2,3,
+4,5,6], no "tenure" anywhere on the page.
+
+
+## c-215 — section 2 fixed, and I destroyed a file doing it
+
+ALL SIX CHANGES SHIPPED
+  * "Every review since 2006" -> "Index Review History"
+  * y axis "companies" -> "Number of index changes"
+  * x axis: 82 labels at 60 degrees became an unreadable grey
+    smear. Now ONE PER YEAR at 0 degrees, plus an axis title.
+    Every bar stays; the exact review is on the hover.
+  * ZOOM WAS A ONE-WAY DOOR. Plotly still zooms on drag with
+    the toolbar hidden, so a reader could zoom in and have no
+    control to get back out — the chart stayed stuck until a
+    rerun. design.chart() gains zoom=True: a minimal toolbar
+    with zoom, pan and reset, and double-click to reset.
+  * lead paraphrased to name the axes explicitly
+  * "Busiest review" and "Total changes" removed; four figures
+    now, median AND mean for each side, each its own card. The
+    pair is the point — this distribution is skewed by the
+    pre-2023 rebuilds, so mean above median IS the signal, and
+    burying the mean in small type hid the comparison.
+
+I DESTROYED views/history_explorer.py AND RECOVERED IT.
+
+Doing the layout edit by script, I computed a slice with
+    s[s.index(A):s.index(B)]
+where B occurred EARLIER in the file than A — `design.chart(fig)`
+appears in _seasonality long before the section-2 layout. Python
+returns an empty string for a reversed slice rather than
+raising, so the replacement became s.replace("", new_text),
+which inserts the text between EVERY CHARACTER of the file.
+
+46,977 characters became 49,138,987. 46,978 copies of one
+block. The file was gone.
+
+RECOVERY, and why it worked: the corruption is deterministic.
+`"".replace("", X)` produces X + c0 + X + c1 + ... so the
+original is exactly the corrupt file with every copy of X
+removed. "".join(s.split(X)) returned 46,977 characters —
+byte-for-byte the original, syntax clean, tests green.
+
+THE LESSON, which is the same one as c-206: I used an
+unanchored, unverified bulk operation on a file I could not
+afford to lose. The Edit tool fails loudly on an ambiguous or
+missing anchor; s.index()/replace() fails silently and
+catastrophically. Every edit after this one in this session
+used anchored Edit calls.
+
+THE LINT CAUGHT THE RETITLE, correctly — the spec still named
+"Every review since 2006". Spec and lint updated together,
+because a lint that disagrees with the spec is worse than
+neither.
+
+pytest 597 green, page_lint clean.
+
+
+## c-214 — snapshot redesigned; four removals; a duplicate found
+
+Bill: redesign the first snapshot, full country names, hover to
+see the changes, dash for no change, and remove four pieces of
+text.
+
+THE SNAPSHOT. Twelve three-letter codes in one row became a
+ruled grid of full country names. The abbreviation was not just
+terse, it was WRONG: "IND" meant both India and Indonesia, two
+cells apart, with no way to tell them apart.
+
+Hovering a market now opens a card listing the actual
+securities MSCI moved at that review, capped at eight per side.
+The figures answer "how much"; the hover answers "which names"
+and costs no vertical space until asked. Absolute positioning,
+so it adds nothing to layout height.
+
+A dash rather than a zero for a quiet market, as asked — and it
+is also the more accurate mark. A market MSCI did not touch did
+not score zero; it was not part of that review at all.
+
+REMOVED as requested: the hero subtitle, the sidebar caption,
+and the status strip on this page.
+
+THE STATUS STRIP CARRIED SOMETHING, and I checked before
+deleting it. It held the ticker-coverage disclosure from
+BACKLOG 4 — the fact that 17-55% of rows per market have no
+ticker, which is why ticker-keyed views and count-based views
+disagree. Section 7's scoreboard already has a "Tickered"
+column per market, so the disclosure survives. Dropping the
+number without confirming that would have been a quiet
+regression of a data-honesty feature.
+
+TWO SECTION ONES. The new strip and the old per-market "Most
+recent change" block both rendered as "Section 1", answering
+the same question — one for every market, one for the selected
+market. I removed the older one; its quiet-review statistic
+moved into section 2 rather than going with it. What is
+genuinely lost is a list of names that survives a screenshot,
+since hover does not — PARKED P7.
+
+THE LINT, three encounters this session, all correct:
+  * it reported section 1 MISSING, because its pattern required
+    a bare quote after the number and the new title is an
+    f-string. Right call, wrong reason.
+  * it did NOT catch the duplicate numbering — order was still
+    sorted, both sections existed, both rendered. Added a
+    uniqueness check.
+
+pytest 597 green, page_lint clean, three markets render with
+zero exceptions.
+
+
+## c-213 — editorial direction, chosen from three mockups
+
+Bill picked B (editorial) over A (institutional navy) and C
+(minimal mono), applied site-wide.
+
+WHY IT FITS, beyond taste. This site is a reference document
+that happens to be interactive — it explains how a review
+works, records what MSCI did since 2006, and states what the
+data cannot support. That is a research note, not a blotter,
+and research notes have settled typographic conventions: serif
+for reading, sans for data, a warm ground, rules instead of
+boxes, colour used rarely enough to still mean something.
+
+The other two were rejected on grounds, not preference: A looks
+like every internal bank tool, and C reduces colour to status
+dots, which would have discarded the add-green / delete-red
+pairing that does real work on every page.
+
+THE DISCIPLINE THAT KEEPS IT FROM GOING DECORATIVE
+  * serif for HEADINGS ONLY. Every number, table, ticker and
+    control stays sans — tabular data in a serif is harder to
+    scan and this is still a data site.
+  * colour stays functional. Warm ground and rules are the only
+    purely aesthetic moves.
+  * tabular numerals survive, as through every revision.
+
+CHANGED: paper #fdfaf6 ground; Source Serif 4 headings and
+figures; Inter for data; warm rule palette; the status strip
+became a masthead rule; statistic cards became figures divided
+by rules; change rows became a ruled list; charts sit ON the
+paper rather than on a white card pasted over it. Nine figures
+re-themed across four pages, plus 13 hardcoded cool-grey series
+colours moved onto tokens.
+
+I ALSO TOLD BILL SOMETHING HE COULD NOT SEE FROM THE MOCKUP:
+it renders at 680px and the real page is 1120px, and serif type
+needs line length to work. Judging B from a swatch would have
+undersold it.
+
+THE LINT CAUGHT ITSELF A THIRD TIME, and this time correctly
+and immediately. The section eyebrow now reads "Section 2"
+rather than "2", so the regex `class='n'>(\d+)` matched
+nothing and five sections were reported as never reaching the
+screen. That is the RIGHT failure: the markup it inspects
+changed and it said so, rather than matching nothing and
+reporting clean — which is exactly what the c-209 and c-211
+versions of this bug did.
+
+pytest 597 green, page_lint clean, four pages render with zero
+exceptions.
+
+
+## c-212 — "too basic" is not a spacing problem
+
+Bill: *"the current website design is a little too basic. Is
+the CSS file that we should reference? I'm not a pro."*
+
+Yes — views/design.py is the file, and it is the only one. But
+"basic" is a DIFFERENT complaint from c-211's "too crowded",
+and spacing was the answer to that one, not this one. A page
+can be perfectly spaced and still look like a school project.
+
+DIAGNOSED BY MEASUREMENT, not by taste. Four gaps, all real:
+
+  1. NO TYPEFACE. Four font-family declarations in the file,
+     none of them loading a font — everything rendered in
+     whatever the browser picked. The single largest gap
+     between "basic" and "designed", and the cheapest to close.
+  2. NO SCALE. THIRTY-PLUS arbitrary spacing values in one
+     stylesheet — .55, .75, .85, 1.15, 1.4, 3.2rem — each
+     chosen alone. IBM Carbon: tokens are "multiples of two,
+     four, and eight" and deviating "should be avoided whenever
+     possible". Values from a scale read as deliberate even to
+     someone who could not say why.
+  3. NO SURFACE DEPTH. White cards on a white page with one
+     grey border, so nothing sat on anything.
+  4. FOUR DEFAULT PLOTLY CHARTS. The loudest signal on the
+     page, because a chart is the biggest object on screen and
+     everyone has seen the default.
+
+REFERENCES, chosen because they are public and inspectable —
+unlike Bloomberg, which I could not verify last time either:
+  IBM Carbon      spacing scale, type tokens, layering
+  FT Chart Doctor chart conventions from a newsroom that
+                  publishes financial charts daily
+
+WHAT CHANGED
+  * Inter + JetBrains Mono, loaded from Google Fonts
+  * an 8-step spacing scale; every margin and padding in the
+    file now comes from it and nowhere else
+  * a 6-step neutral ramp replacing two greys, and a tinted
+    page behind white cards
+  * design.chart(fig) — ONE plotly theme, applied to all NINE
+    figures across the four live pages. Inter, our colourway,
+    hairline axes, no mode bar, styled hover
+  * meaning in the ornament: statistic cards take a 2px top
+    border in the action colour, change rows a 3px left edge,
+    so a column reads as two groups without a legend
+  * hover transitions on cards and rows
+
+The APAC strip had its own greys and radii — which is how a
+design system quietly stops being one — and is now on the
+tokens.
+
+pytest 597 green, page_lint clean, all four live pages render
+with zero exceptions.
+
+
+## c-211 — density reversed: calm, not dense
+
+Bill, after seeing c-207 built:
+
+    "It feels to me that the website has too much information
+     going on... I would rather make each section interesting,
+     keep information less dense, and let the user scroll down
+     to check for further information."
+
+He is right, and the mistake is worth naming precisely. Density
+is correct for a tool read in GLANCES by someone who already
+knows what they are looking for. These pages are BROWSED — the
+reader is discovering what exists. To that reader a dense
+screen reads as work rather than as an invitation. I took a
+Bloomberg/Koyfin reference and applied it without asking which
+mode the page is in, and Bill approved the direction in the
+abstract before either of us had seen it on real content.
+
+SPEC UPDATED FIRST, then the code — the spec is supposed to be
+the authority, so leaving it saying "desk density" while
+building the opposite would have made it worthless.
+
+WHAT MOVED (old -> new):
+  element gap        .55rem -> 1.15rem   the single biggest
+                     contributor, because it applies between
+                     EVERY element
+  section spacing    1.3rem -> 3.2rem    what makes a section
+                     feel like its own field
+  statistic cells    flush hairline strip -> separate cards
+                     with .75rem gaps; four numbers stop
+                     reading as a table
+  change rows        .22rem pad, hairline -> .5rem pad, bordered
+  APAC strip         12 flush cells -> wrapping cards, quiet
+                     markets greyed instead of shouting a zero
+  tables             420px, 4px cell padding -> 330px, 9px
+  page width         1500px -> 1180px
+
+WHAT SURVIVES: tabular numerals (legibility, not density), the
+palette, the status strip, one design system.
+
+CONTENT UNCHANGED, as instructed. Nothing removed, merged or
+hidden.
+
+AND THE LINT CAUGHT ITSELF AGAIN — SAME BLIND SPOT, SECOND
+INSTANCE. Rendering the page to count sections showed
+[1,2,3,5,6,7]. No section 4. `_time_machine()` is defined,
+contains its own `_sect(4, ...)`, reads membership_history.json,
+and is NEVER CALLED — the call site is a bare comment. Dead
+since before the lint existed, and the lint reported CLEAN over
+it twice because it checked `_sect()` calls in the SOURCE
+rather than what reaches the screen.
+
+That is precisely the bug I fixed in this file at c-209, in a
+different place: I checked the artefact that was easy to read
+instead of the thing I cared about. The lint now verifies
+PRESENCE as well as order, and section 4 is recorded as a
+KNOWN GAP printed on every run — restoring it is a content
+change, which Bill has deferred, so it is PARKED P6 rather
+than silently fixed.
+
+pytest 597 green, page_lint clean with one declared gap.
+
+
+## c-210 — backlog worked to empty, unsupervised
+
+Items 3-9. No stops; two decisions went to PARKED.md instead.
+
+  3 leads   five section leads cut from 71-178 chars to 43-57.
+            The spec says minimal and the page was explaining
+            things its reader already knows.
+  4 tickers 1,534 of 4,403 rows carry no ticker — 17% in Taiwan
+            up to 55% in Australia. Every ticker-keyed view
+            (roster, lookup, collision audit) sees only the
+            tickered rows while the timeline and counts see all
+            of them. Two denominators on one screen with
+            nothing saying so. Now stated in the status strip,
+            amber below 80%.
+  5 order   seasonality moved from slot 2 to slot 7. It had the
+            second-most valuable position on the page for a
+            question almost nobody arrives with.
+  6 weights the constituent table is out of its expander. It IS
+            section 3 of the spec — the thing Bill meant by
+            "breakdown by company weight" — and a first-class
+            section does not hide behind a click.
+  7 compare new section 7: all 13 markets, changes, skew,
+            busiest review, quiet rate, ticker coverage. The
+            PHILIPPINES IS INCLUDED here and tagged, because
+            the exclusion is about the forward pipeline having
+            no price source, and that reason does not apply to
+            counting what MSCI already did.
+  8 headers already clean.
+  9 findings scripts/findings_sweep.py, bar registered before
+            looking: n>=30, effect >=1.3x, must hold in BOTH
+            halves split at the median review.
+
+THE SWEEP CAUGHT A FLAW IN ITSELF, which is the part worth
+recording. First run: 17 survived, 0 REJECTED. A bar that
+rejects nothing is not a strict bar, it is a bar that never
+fires — so I looked at why.
+
+I was applying the effect-size gate BEFORE the stability test.
+Anything with a modest full-sample ratio was dropped as "too
+small" before it could be tested — and a modest full-sample
+ratio is exactly what two opposing eras produce when they
+cancel. Hong Kong is the case: 1.16 early, 0.47 late, a
+complete reversal, 0.81 overall, silently filtered as
+uninteresting.
+
+Stability is now tested FIRST on everything meeting n, and
+effect size only decides whether a STABLE finding earns a
+sentence. Result: 17 survived, 4 rejected — Hong Kong,
+Indonesia, Korea and the Philippines all REVERSE direction
+across the split.
+
+Per PAGE_SPEC section 5 none of this is on the page. It is in
+docs/CANDIDATE_FINDINGS.md for Bill.
+
+PARKED (P4, P5): the 17 findings are really two tables
+pretending to be prose, and the four REVERSING markets are
+arguably the most interesting thing in the sweep — four APAC
+markets flipping from net-adding to net-deleting in one decade.
+I can say the sign flipped; I cannot yet say whether it is EM
+index expansion or genuine shrinkage, and the why is what makes
+it a finding rather than an artefact of MSCI's own coverage
+changes. Recommendation: investigate before promoting.
+
+pytest 597 green, page_lint clean.
+
+
+## c-209 — the machinery for working without Bill
+
+Bill: build a plan that lets me improve the site iteratively
+without stopping to ask.
+
+The obstacle was never effort, it was JUDGEMENT — every stop is
+a choice that depends on his taste and that I cannot check. So
+the whole design converts taste into something checkable.
+
+FOUR ARTEFACTS
+  docs/PAGE_SPEC_review_db.md  reader, job, priority order,
+      voice, non-goals, mechanical acceptance checks. Approved
+      once; after that it is the authority.
+  docs/BACKLOG_review_db.md    ordered, each item with a DONE a
+      machine can evaluate.
+  docs/PARKED.md               THE KEY PIECE. A decision that
+      is genuinely Bill's gets written here with a
+      recommendation; I skip the item and continue. Never stop,
+      never guess.
+  session summary              every judgement call, as now. He
+      audits outcomes instead of approving decisions.
+
+TWO MISREADINGS OF MINE, BOTH CAUGHT BY ASKING
+  * "breakdown by company weight" — I assumed a historical
+    weight cut, checked the data, found the changes DB has no
+    weight column at all, and built a whole question around
+    whether to harvest it. He meant the EXISTING "who is in the
+    index right now" view. Cost: one question. Had I not asked,
+    it would have cost a harvester.
+  * I had offered "assert findings with n and method". He wants
+    data presented and findings brought to HIM. That is the
+    safer default anyway — an asserted finding is a claim he
+    would have to defend in his interview, not me. Findings now
+    accumulate in docs/CANDIDATE_FINDINGS.md.
+
+HIS ANSWERS, recorded because they are the spec:
+  reader   a CLSA interviewer who is himself a PT trader — so
+           useful beats polished; when they conflict, useful
+           wins
+  job      informational. No prediction, no flow analysis. The
+           edge is ORGANISATION, not exclusive data
+  lead     latest review across all 13 markets, compact, then
+           the market timeline
+  voice    minimal text
+  guardrail  never delete or overwrite harvested data
+
+FIRST TWO BACKLOG ITEMS SHIPPED, to prove the loop runs:
+  1. the all-markets latest-review strip now leads the page —
+     one row, 12 markets, add/delete only, ~70px
+  2. scripts/page_lint.py enforces the spec mechanically
+
+AND THE LINT IMMEDIATELY CAUGHT ITSELF. Its first version read
+_sect() calls in FILE order and reported [3, 4, 2, 5, 6] as
+"out of order" — but sections 3 and 4 live inside helper
+functions that render() calls later, so source order says
+nothing about what a reader sees. It now renders the page
+through AppTest and reads the real order. A lint that is wrong
+about the thing it exists to check is worse than no lint.
+
+pytest 597 green, page_lint clean.
+
+
+## c-208 — the run never connected, and I blamed the ports
+
+Bill: "can we conclude Taiwan is collected?" No. That run
+fetched ZERO windows — it never reached TWS.
+
+    Error 326: Unable to connect as the client id is already
+    in use. Retry with a unique client id.
+    ...
+    no TWS/Gateway on (7497, 7496, 4001, 4002)
+
+TWS was running and listening the entire time. clientId 95 was
+held by a previous session, `_connect` caught the 326, moved to
+the NEXT PORT, failed identically, exhausted the list and then
+printed a diagnosis of something that was never wrong. Bill
+would reasonably have gone looking at firewalls.
+
+Fixed in both IB scripts: the client id is now RANDOM per run,
+so a stale session cannot block a new one, and 326 is
+recognised so the message names the real cause and the remedy.
+
+TAIWAN'S ACTUAL STATE: 45/50 windows, and the gap is not spread
+evenly.
+
+    May23   0/2   <- the ENTIRE earliest review, empty
+    Aug23   1/2
+    May24   4/5
+    Nov24   2/3
+    everything else complete
+
+The May-2023 pair is the data my c-206 refetch destroyed. It is
+the review closest to IB's Taiwan floor, so of all the windows
+to lose it is the least replaceable — and it is still
+retryable, which is why `fetch Taiwan` still lists 2 to do.
+
+The other three are TPEx names announced before the TPEx floor
+of 2025-11-21. No re-run fixes those; only another vendor does.
+
+ALSO CORRECTED, A METRIC OF MY OWN THAT READ AS A DISASTER.
+`audit` reported "full 45d pre-announcement: 7 of 45". The
+window is requested 45 CALENDAR days before the announcement
+and the first bar almost always lands a day or two later
+because the boundary falls on a weekend — so a complete window
+scores 43 and fails a ">= 45" test. What the analysis consumes
+is SESSIONS, and the target was 30. Measured properly: median
+29 sessions, which is the target, not a shortfall.
+
+pytest 597 green.
+
+
+## c-207 — one design system, desk density, every page
+
+Bill asked for a reference tool to aim at. What I could verify:
+Koyfin (closest modern web analogue, positions against
+Bloomberg and FactSet), OpenBB Workspace (the only one whose
+design is fully inspectable — widgets on dashboards), IBKR's
+public TWS layout library. What I could NOT verify and said so:
+Bloomberg's own function pages, and any index-REBALANCE tool
+specifically. The reference is "desk research tool", not "desk
+rebalance tool".
+
+The convergent conventions matter more than any one product:
+  density over whitespace, tabular numerals, a persistent
+  status strip, and colour reserved for direction.
+
+Measured against that, our pages were a well-made MARKETING
+layout applied to desk content — the Review Database spent
+~380px of gradient hero before the first company name.
+
+Bill's calls: LIGHT + dense (not a dark terminal — it needs a
+forced Streamlit theme and punishes light-mode users), and ALL
+PAGES at once.
+
+views/design.py is now the single source: CSS plus status(),
+stats(), sect() and rows(). Injected once from app.py, so every
+page inherits the density and the palette without importing
+anything. The two page-local stylesheets are deleted;
+walkthrough.py keeps only the numbered step header, which is
+unique to it.
+
+WHAT CHANGED ON SCREEN
+  * gradient heroes -> one-line title + a monospace STATUS
+    STRIP carrying market, span, row count, last review and
+    data coverage. On the window study that strip says
+    "TW DELISTED-SAFE · APAC SURVIVORS-ONLY" in amber, which
+    changes the meaning of every number under it and was
+    previously buried in a caption;
+  * statistic cards -> one flush row, hairline-separated, with
+    add/delete coloured;
+  * pill rows -> dense table rows, ~22px each instead of ~44px;
+  * tabular numerals forced on every metric, table and
+    dataframe, so columns of numbers actually line up;
+  * Streamlit's 1rem inter-element gap cut to .55rem, which is
+    the difference between four visible rows and eight.
+
+pytest 597 green. The page smoke tests were updated to assert
+the status strip rather than the hero — they were pinning the
+old design, and a test that pins what you just deleted is worse
+than no test.
+
+
+## c-206 — my refetch destroyed 5,390 bars. No, Taiwan is not
+## good to go.
+
+Bill ran `refetch Taiwan apply` and 3443 and 3231 went from
+2,695 bars EACH to zero. Two bugs of mine, compounding.
+
+1. THE BIGGER CHUNK MADE FAILURE ALL-OR-NOTHING. `tune`
+   measured chunk_days = 120, so an entire window became ONE
+   request. The May-2023 window is 80 days ending 2023-07-15
+   and reaching back to Taiwan's 2023-04-26 floor — IB does not
+   truncate a request that crosses its boundary, it returns
+   nothing. The old 30-day walk lost only its third chunk and
+   kept 2,695 bars; the single 80-day ask lost everything.
+
+   Why it fails at the floor at all: the venue edge was
+   measured on 1301/2317/2330, and c-204 already proved with
+   Australia's CSL that an individual name can start later than
+   its venue. A window clamped to the venue edge can sit before
+   a particular stock's own first bar.
+
+   FIX: an empty chunk is HALVED and retried, recursively, down
+   to ~a week. Whatever exists comes back; only the genuinely
+   absent part is lost. Extra requests land exactly where data
+   is scarce and nowhere else.
+
+2. REFETCH DELETED BEFORE IT KNEW THE REPLACEMENT WAS BETTER.
+   It cleared the rows, fetched, and wrote whatever came back —
+   including nothing. The only evidence those bars had ever
+   existed was Bill's console scrollback.
+
+   FIX: the cleared records are held in memory, and any window
+   whose re-fetch returns FEWER bars than the original is
+   rolled back with the reason printed. A cleanup step that can
+   end with less data than it started with must be able to undo
+   itself.
+
+Also: windows written off before the split-retry existed are no
+longer treated as settled. They carry `split_tried`, so a
+`fetch` re-attempts them once — except `venue_no_history`,
+which splitting cannot fix.
+
+STATE NOW: Taiwan 45/50 with bars, down from 47 before the
+refetch. The two lost windows are the ONLY May-2023 windows in
+the sample, so the loss is concentrated on the earliest review
+IB can serve. `fetch Taiwan` will re-attempt exactly those two.
+
+WHAT I SHOULD HAVE DONE: run refetch on ONE window first and
+compared before/after. I had already written that the venue
+edge is a ceiling rather than a per-name guarantee — c-204,
+same day — and then built a destructive operation that assumed
+the opposite.
+
+pytest 597 green (6 new).
+
+
+## c-205 — China back in, and into the daily set too
+
+Bill: "why are we fetching ex-China?"
+
+Because HE said to skip it, in the c-199 question — and he has
+now reversed that, so it goes back in. I should have surfaced
+the reversal cost rather than carrying his old answer forward
+into a command line without re-checking it.
+
+Both reasons I gave for skipping have since been addressed:
+  * the venue routing is now per LISTING (_china_venue), not
+    everything through Stock Connect Shanghai;
+  * China now HAS a daily counterpart, because this change adds
+    it there too.
+
+CHINA IN THE DAILY HARVEST. It was the one MSCI APAC market
+with no daily coverage at all — 1,431 movers, the largest
+sample in the database, missing from the website's cross-market
+comparison entirely, and the 5-minute and daily datasets
+covering different market lists. Yahoo names the venues
+differently from IBKR (".SS" / ".SZ" / ".HK") and, unlike IBKR,
+DOES want the HK code zero-padded — the exact opposite
+convention to the one that broke Hong Kong in c-204, in the
+same codebase, four hours apart.
+
+HONG KONG RE-MEASURED after the padding fix: 5m begins
+2007-04-30, all three probes agreeing to the day. That was the
+last inconclusive venue, so every floor now comes from the
+boundary probe rather than the older single-symbol bisection.
+
+SCOPE, with China and the real HK floor:
+
+    Japan      356    China     1,416    India     222
+    Korea      158    Australia    64    HongKong   55
+    Taiwan      46    Singapore    20
+    TOTAL    2,337 windows, 2,337 requests
+
+Hong Kong gained 19 windows from its own floor and China gained
+83, because its 291 HK-listed lines now clamp to 2007-04-30
+instead of the Shanghai floor.
+
+pytest 591 green.
+
+
+## c-204 — the boundary result, and the HK bug it caught
+
+MEASURED FLOORS (3 probes each, walked to 1998, confirmed from
+both sides):
+
+    Japan       2004-03-12    Korea      2004-05-17
+    Australia   2004-05-06    India      2008-06-11
+    Singapore   2011-08-27    China_SH   2014-11-14
+    China_SZ    2016-12-05    Taiwan     2004? no: 2023-04-26
+    Taiwan_TPEx 2025-11-19    HongKong   INCONCLUSIVE
+
+Three developed venues land within ten weeks of each other in
+2004, which reads less like three coincidences and more like
+IBKR's intraday archive itself beginning there. Everything
+after 2004 is IB adding markets over time, and Taiwan at 2023
+is not the pattern I assumed in c-193 — it is the outlier by
+nineteen years.
+
+HONG KONG: MY BUG, CAUGHT BEFORE THE HARVEST. All three probes
+returned NO CONTRACT on 0005 / 0941 / 0700. IB wants the BARE
+number on SEHK; Yahoo wants four digits ("0700.HK"). I carried
+the Yahoo convention into the IB code, and the same padding
+sits in ib_5m_events._con and _china_venue — so it would have
+failed EVERY Hong Kong window (36 of them) plus the 296
+HK-listed China names, none of which have been fetched yet.
+Pure luck that the probe exposed it rather than the harvest.
+Fixed in all three places.
+
+AUSTRALIA'S 1275-DAY SPREAD, and a claim of mine it disproves.
+BHP and CBA both start 2004-05-06; CSL starts 2007-11-02. My
+verdict text said the later probes are listing dates. CSL
+listed in 1994. So per-symbol coverage varies for reasons that
+are NOT listing date, and the venue edge is a CEILING on
+coverage rather than a promise about any individual name.
+Wording corrected, and the test that pinned the old claim now
+pins the new one.
+
+WIRING. The boundary supersedes `edges` everywhere, and China
+now resolves per venue — Shenzhen 2016-12-05, Shanghai
+2014-11-14, HK lines to the SEHK floor. `plan` prints the
+SOURCE of each floor so an old single-symbol answer cannot
+masquerade as a measured one.
+
+REACHABLE AFTER THE MEASUREMENT (movers with tickers whose
+announcement falls after the floor):
+
+    Japan      356/356   Korea     158/158   Australia  64/64
+    China    1,333/1,431 India     222/246   Singapore  20/32
+    HongKong    36/57*   Taiwan     46/259
+    * pending the HK re-run; 88 HK-listed China names are also
+      being dropped against the wrong floor until then.
+
+Taiwan losing 213 of 259 is the real cost, and it lands
+entirely on the market Bill cares most about — the 5-minute
+Taiwan study is 2023+ and cannot be otherwise from IBKR.
+
+pytest 591 green.
+
+
+## c-203 — the Review Database page, redesigned to match
+
+Bill: make this page as engaging as the Taiwan prediction page.
+
+ONE DESIGN LANGUAGE. The two pages share a sidebar and should
+not look like two products, so the navy gradient hero, the
+green/red add-delete pair, the card and pill shapes and the
+section rule are all lifted from views/walkthrough.py.
+
+THE STRUCTURAL CHANGE, which matters more than the styling. The
+page opened on a market selector, a review-type radio, and four
+summary statistics. Nobody arrives at an index-change database
+wanting a median. They arrive wanting to know WHAT JUST
+HAPPENED. So the most recent review that actually moved this
+market now leads — its real names, as ADD/DEL pills in the same
+row shape the prediction page uses for its call — and the
+aggregates follow underneath.
+
+THE CHART NOW EXPLAINS ITSELF. The single most important fact
+in twenty years of this data is that MSCI changed method in
+February 2023: before it, Feb/Aug reviews were nearly empty and
+May/Nov rebuilt the index; after it all four quarters are
+alike. That fact was buried in an expander. It is now drawn on
+the chart — shaded pre-2023 region, dotted divider, and a label
+reading "◀ old rules │ every quarter is a full review ▶". A
+reader who never opens the expander still sees why the left
+half of the chart looks nothing like the right, and can see
+that any average straddling the line is a blend of two regimes.
+
+Also: unified hover so one tooltip covers both series,
+seasonality promoted from a bare table to a grouped bar chart
+with the table kept beneath it, numbered section headers, and
+leads under each heading saying what the section is for.
+
+A REAL SMOKE TEST, finally. Every existing test on this page
+parses the source or calls a helper — none execute render(), so
+a broken f-string in the HTML or a market with a different data
+shape would have shipped green. The new tests drive the actual
+Streamlit script through AppTest and assert on what reaches the
+browser, across Japan (558 changes), NewZealand (27) and China
+(1,431, different ticker shape) — the ends that break layout
+code.
+
+Which immediately caught a bug in the TESTS. Several other
+tests import views.* without a display by putting a bare
+ModuleType into sys.modules["streamlit"]. Harmless for them,
+fatal here — `streamlit.testing` cannot be imported from a
+stub — and it only fails when the whole suite runs in one
+process, i.e. exactly when nobody is watching. The fixture now
+drops the stub and reloads the real package rather than
+depending on file order.
+
+pytest 591 green (11 new).
+
+
+## c-202 — the ticker-collision audit; 28 changes were missing
+
+Bill: rename the page, fix two labels, and "are all the
+duplicate-ticker cases handled properly?"
+
+RENAMES. Sidebar and page title both "MSCI Index Review
+Database". Era lines now "Before 2023" / "Since 2023". Chart
+traces renamed "Addition"/"Deletion", which fixes the hover and
+the legend together since plotly takes both from `name`.
+
+THE AUDIT, which was the real question. 25 tickers in the
+database carry more than one MSCI spelling. Reading all 25:
+
+  23 are genuine renames or truncations and merge correctly —
+     IDFC BANK -> IDFC FIRST BANK, TMB BANK -> TMBTHANACHART,
+     SUNTEC REAL ESTATE INV -> SUNTEC REIT, and so on.
+
+  2 are NOT, and were being merged into companies that do not
+     exist:
+       India ENRIN — SIEMENS INDIA and SIEMENS ENERGY INDIA are
+         separate listed companies after the 2025 demerger. The
+         ticker is also wrong for both (NSE has SIEMENS and
+         SIEMENSENRG), which is why both India window fetches
+         for ENRIN returned nothing.
+       China 000596 — ANHUI GUJING A and ANHUI GUJING
+         DISTILLER B are different SHARE CLASSES; the A line is
+         000596, the B line is 200596. The B row carries the A
+         ticker.
+
+  AND A DEFECT IN ALL 25. The merge kept whichever spelling had
+     more moves and DISCARDED the other outright:
+         if r["moves"] > a["moves"]: a.update(... "history")
+     Measured: every one of the 25 lost history, 28 index
+     changes vanished from the timelines this page displays.
+     IDFC is the clean illustration — ADD Nov16, DEL May18 and
+     ADD Aug23 are one company across a rename, and the row
+     showed only the Aug23 leg with Moves = 1. The entire point
+     of collapsing on ticker is to REUNITE a split history, so
+     discarding half of it defeats the feature.
+
+Histories are now unioned and re-sorted. Sorting needed its own
+key: reviews are named MonYY, so plain string order puts Aug
+before Feb before May before Nov within a year.
+
+The two exceptions live in NEVER_MERGE with citable reasons and
+render as separate rows marked with a warning. A new expander,
+"Securities sharing a ticker — how each was handled", lists
+every collision in the selected market with its disposition, so
+this question is answerable from the page rather than from me.
+Both bad tickers are logged as OPEN_ITEMS R9 — the display is
+now honest, the underlying data is still wrong.
+
+pytest 580 green (7 new, including one that fails if a
+NEVER_MERGE entry ever stops corresponding to a real
+collision).
+
+
+## c-201 — measuring IBKR's 5m floor properly (and it is IBKR's)
+
+Japan came back clean: `2026-08-01 DATA` at the present day,
+where a history boundary cannot be the explanation. The
+subscription was the blocker, my c-190 read of Error 162 was
+right, and JPY 3,000 buys 278 windows — the second-largest
+sample after China.
+
+TERMINOLOGY, because it matters for the failure modes. Bill
+wrote "how far back does MSCI provide 5 minute bar data". MSCI
+sells no price history at all — it publishes the index changes.
+Every bar here comes from IBKR, Yahoo or an exchange's own
+day-files. An MSCI gap means we do not know an event happened;
+an IBKR gap means we cannot see how it traded. Different
+problems, different fixes.
+
+WHY A NEW SCRIPT RATHER THAN TRUSTING `edges`. The existing
+measurement has three weaknesses, each able to produce a
+confident wrong answer:
+
+  1. ONE SYMBOL PER MARKET conflates the STOCK's history with
+     the VENDOR's. If Toyota returns nothing before 2010 that
+     is either IBKR's floor or Toyota's record. Three probes of
+     different listing vintages separate them: agreement means
+     a vendor floor, disagreement means the later ones are
+     listing dates.
+  2. THE FLOOR WAS OUR OWN PARAMETER. Five markets reported
+     "reaches at least 2010-01-01", which measured where we
+     stopped looking. That artifact then became a real
+     constraint, because jobs() drops reviews announced before
+     the recorded edge — silently excluding 2006-2009 movers
+     (Japan 78, India 34, Korea 33, HK 21, AU 7) while Bill had
+     asked to fetch back to whatever exists. The new probe has
+     no fixed floor: it walks back in doubling steps to 1998
+     until something actually fails, and if nothing does it says
+     "this is OUR limit, not IBKR's" rather than publishing the
+     search bound as a finding.
+  3. NO CONFIRMATION. A bisection returns a date whether or not
+     it means anything. The edge is now re-tested from both
+     sides — no bars 20 days earlier, bars 20 days later — and
+     an edge failing its own check is recorded UNCONFIRMED.
+
+Also: 10-day probe windows, not 1 (Lunar New Year, Golden Week
+and Diwali all look like an absent archive through a one-day
+hole), raw IBKR error text captured at the boundary (near its
+edge IBKR says "No market data permissions", further back "HMDS
+query returned no data" — the first reads like entitlement and
+is not), and VENUES rather than markets, since Taiwan's two
+boards sit 2.5 years apart and MSCI China spans three.
+
+STATUS at the time of writing: 47 of 2,107 windows have 5m
+bars — 2.2%, or 6.1% excluding China. Only Taiwan is fetched.
+Worth noting before anything is pooled: Japan is 86 ADD / 192
+DEL and India is 157 ADD / 55 DEL, so those two will pull an
+aggregate in opposite directions for structural reasons rather
+than behavioural ones.
+
+pytest 573 green (10 new).
+
+
+## c-200 — one timeout killed the run; and two bugs behind it
+
+`py scripts\apac_event_days.py all` died after "India May26:
+8/8" with a ReadTimeout from nsearchives.nseindia.com. Four
+problems, three of them structural.
+
+1. NO RETRY. A single flaky socket on one NSE day-file raised
+   straight out. `_get()` now retries 4x with backoff and a 60 s
+   timeout.
+
+2. NO STAGE ISOLATION, AND THE WORST POSSIBLE ORDER. harvest_in()
+   ran FIRST and harvest_all had no try/except, so India — the
+   slowest and most network-fragile stage — took the ten Yahoo
+   markets down with it before they started. Yahoo now runs
+   first, every stage is caught, and the run ends with a list of
+   what did not complete instead of a stack trace.
+
+3. A BUG I SHIPPED IN c-198. The pre-2024-07-08 bhavcopy branch
+   returned (close, volume) only — 2 fields. c-198 then added a
+   cache rule invalidating any row shorter than 5 fields, to
+   force the OHLC upgrade through. Together: every pre-2024 day
+   is invalidated, re-fetched, comes back 2-wide, cached, and
+   invalidated again next run. An infinite re-download that
+   could never converge and never gain OHLC. The old zip has the
+   columns all along — SYMBOL,SERIES,OPEN,HIGH,LOW,CLOSE,LAST,
+   PREVCLOSE,TOTTRDQTY, so 2/3/4/5/8 — they were simply not
+   being read. India now gets OHLC across its whole history.
+
+4. THE CACHE DID NOT REMEMBER WHAT IT WAS ASKED FOR (pre-
+   existing, found while fixing 3). Each day is stored filtered
+   to the movers of the review that fetched it, for file size.
+   But a window is ~108 days and reviews are ~90 days apart, so
+   CONSECUTIVE WINDOWS OVERLAP by two to three weeks — and on
+   shared dates the later review read a day filtered to the
+   earlier review's symbols. Its own names were absent, and
+   absent is indistinguishable from "did not trade". Days now
+   carry `_ask`, the symbol list they were filtered for, so a
+   mismatch is a cache miss instead of a silent gap.
+
+Also: a failed review no longer writes partial windows. A
+half-filled window that looks complete is worse than an absent
+one.
+
+All 1,395 cached India days re-fetch (none carry `_ask`), so
+this run is slow. It is also the first India harvest that will
+actually produce the 45-day window and OHLC.
+
+pytest 563 green (6 new).
+
+
+## c-199 — Taiwan is the OUTLIER, not the pattern
+
+`edges` finished. It contradicts the assumption the whole 5m
+plan was built on.
+
+    HongKong   >= 2010 (hit our search floor)   36 events
+    Korea      >= 2010                         125
+    Australia  >= 2010                          57
+    India      >= 2010                         212
+    Singapore  2011-08-26                       20
+    China      2014-11-15                    1,333
+    Taiwan     2023-04-26                       46   <- the only
+    Taiwan_TPEx 2025-11-21                            limited one
+
+I told Bill Taiwan's 2023 floor was probably the shape of every
+market and scoped six hours to sixteen hours of fetching around
+it. Four markets reach our 2010 SEARCH floor, meaning their
+real coverage starts earlier than we looked. Only Taiwan is
+edge-limited, and I had generalised from the one market I had
+measured.
+
+Combined with c-197's pacing (0.15 s, 120-day chunks, 8-way
+concurrent — every ladder bottomed out clean), a window is now
+ONE request and the whole non-China job is 496 requests.
+
+WHAT WE ACTUALLY HELD: 50 of 1,829 windows. Bill was right that
+almost nothing had been collected.
+
+BILL'S THREE CALLS, and one fact I did not have when I asked:
+  China      skip for now — no daily counterpart, and IB reaches
+             A-shares via SEHKNTL (Northbound), a different
+             market structure. Bare `fetch` now excludes it;
+             still fetchable by name.
+  Date floor fetch back to each edge, treat pre-2015 equally.
+  Japan      test before paying.
+
+THE FACT I MISSED WHEN FRAMING THE DATE QUESTION.
+msci_tw_events.json holds 34 reviews and every one is 2015 or
+later — there are no pre-2015 announcement dates on file at
+all. So pre-2015 is not "a registry date we chose to distrust",
+it is TWO estimates stacked: eff from eff_date_est (month-end,
+the column name admits it) and ann from eff-13 business days.
+My question described one estimate. It is two. The harvest
+treats them equally as asked, and stamps `date_src` on every
+window so the distinction survives into the analysis.
+
+That adds 107 pre-2015 windows across the six markets (HK 16,
+KR 23, AU 21, IN 46, SG 1, TW 0).
+
+JAPAN. The c-190 read of Error 162 as "no TSE subscription" was
+not safe: 162 is ALSO what IB returns when a request reaches
+past its history floor — proved on Taiwan in c-195. The two are
+identical in the log and mean opposite things for a JPY 3,000
+decision. `edges Japan` separates them: no bars at the PRESENT
+DAY is entitlement; bars now but not earlier is a boundary.
+
+pytest 547 green.
+
+
+## c-198 — one yfinance default ate ~50 windows in silence
+
+Korea went 76 -> 100/102 on the .KQ fix. Reviewing what was
+still missing found a bigger, quieter bug.
+
+THE TELL, straight from Bill's console: every failing review
+printed "0/1". Every review with two or more movers succeeded
+completely. Counting the stored files: 55 empty windows sit in
+ONE-SYMBOL reviews, 11 in multi-symbol reviews. That is not a
+data problem, it is a batch-size problem.
+
+THE CAUSE, from yfinance 1.5.1's own docstring:
+
+    multi_level_index: bool
+        Optional. Always return a MultiIndex DataFrame?
+        Default is True
+
+download() returns MultiIndex columns EVEN FOR A SINGLE
+TICKER. The parse was:
+
+    sub = px[sym] if len(syms) > 1 else px
+    sub.dropna(subset=["Close"])
+
+so a one-symbol batch kept the ticker level, "Close" was not a
+column, dropna raised KeyError, and a bare
+`except Exception: rows = []` swallowed it. The window was
+written empty and NOTHING was printed — no Yahoo error, no
+traceback, just "0/1".
+
+The names it silently lost are not obscure: REECE, QANTAS,
+METCASH, ARISTOCRAT, BLUESCOPE, LENDLEASE, CATHAY PACIFIC,
+HANG LUNG, SWIRE PROPERTIES, UOL, SUNTEC, SATS, GENTING
+SINGAPORE, TOP GLOVE, SUNWAY, RENESAS, MITSUI OSK, KAWASAKI
+KISEN, INDOFOOD, VALE INDONESIA. All trading, all on Yahoo.
+
+This is the third time this session that a bare `except` or an
+empty return has turned a fixable bug into an apparent data
+limit — the same shape as the ib_async error blindness (c-191)
+and the survivorship claim (c-194). `_rows()` now returns
+(rows, reason) and the reason is stored on the window as
+`parse_error`.
+
+THE REMAINING 11, which are genuine ticker problems, now fixed
+by rule rather than by hand:
+  Thailand    TTB-R, IRPC-R are NVDR lines; Yahoo has the
+              ORDINARY share. Strip "-R".
+  NewZealand  MCY040, IFT340 are BOND tickers that leaked into
+              the changes DB. The equities are MCY and IFT.
+              Strip the trailing digits.
+  Singapore   GRAB is NASDAQ-listed — MSCI Singapore holds it
+              on DOMICILE, so ".SI" was never going to resolve.
+  HongKong    FUTU is a US ADR, same reason. It had also been
+              stamped confirmed_delisted by the register sweep,
+              which was right about the venue and wrong about
+              the company; the stamp is now cleared for known
+              foreign primary listings.
+
+AND INDIA, found while verifying: it skipped on PRESENCE, not
+coverage — `if all(key in windows): continue`, with no _short
+test. So the 45-day window and the OHLC upgrade never reached
+it. Bill's run printed "India done: 157/166" with no per-review
+lines because every review was skipped. India still holds 17
+pre-announcement sessions and close-only rows while every Yahoo
+market now has 30 and full OHLC — which would have made the one
+DELISTED-SAFE market quietly incomparable with the rest in
+exactly the study that compares them. 166/166 windows now
+re-fetch, and 1,315 of 1,367 cached bhavcopy days are
+invalidated because they hold 2-element rows.
+
+pytest 547 green (12 new, building both frame shapes by hand so
+the parse is pinned regardless of what yfinance does next).
+
+
+## c-197b — TPEx has data. I read two failures and stopped.
+
+The completed Taiwan run: 50 windows stored, 47 with bars.
+Reviewing the three gaps overturned what I told Bill one turn
+earlier.
+
+I said: "IB carries the TPEx contract but serves no history for
+that venue. Not retryable." The same file contains:
+
+    6223 MPI      May26  TPEX  3,834 bars  full window
+    5274 ASPEED   Nov25  TPEX  1,890 bars  from 2025-11-19
+    3293 IGS      Nov24  TPEX      0 bars
+    4966 Parade   May24  TPEX      0 bars
+
+TPEx is not empty. It has a MUCH LATER EDGE — TWSE reaches
+2023-04-27, TPEx starts somewhere near late 2025. I generalised
+from the two failures I saw in the live console and never
+checked the two successes sitting in the same output. Same
+error shape as the survivorship claim in c-194: a confident
+negative from a partial view.
+
+Consequences fixed:
+  * `_edge_for_code()` — the edge is per VENUE, not per market.
+    A TPEx name and a TWSE name in one review do not share a
+    history floor. Reads the TPEx edge once `edges Taiwan_TPEx`
+    measures it.
+  * PROBE gains "Taiwan_TPEx" (probe symbol 5274, the name that
+    proved TPEx data exists).
+  * `audit` reports coverage BY VENUE, because a board-level
+    gap is a sampling problem invisible in a market-level count.
+
+CLASSIFYING THE THREE GAPS, which was Bill's actual question —
+re-fetch what we broke, skip what IB does not have:
+
+  RE-FETCH (our bug)
+    3443 GLOBAL UNICHIP  May23  2,695 bars from 2023-05-05
+    3231 WISTRON         May23  2,695 bars from 2023-05-05
+      Both ask from 2023-04-27. Written by the pre-c-195
+      unclamped walk, which dropped its first chunk — so the
+      ONLY two May-2023 windows are missing six pre-
+      announcement sessions, and their "pre=14d" label was
+      counting days we do not hold.
+    3105 WIN SEMI        Aug23  0 bars, "no contract"
+      Recorded before the blank-exchange fallback existed, so
+      the verdict itself is untrustworthy.
+
+  KEEP (IB's limit, not ours)
+    4966 Parade, 3293 IGS — resolved, IB served nothing.
+    5274 ASPEED — starts 59 days late, but on TPEx, which is
+      the venue edge.
+
+`refetch MARKET [apply]` prints this classification and clears
+only the bugged records. Dry run by default. Clearing a settled
+IB limit would buy the same answer again and make a known fact
+look unresolved.
+
+pytest 535 green.
+
+
+## c-197 — I paced against the wrong rule, and it cost 15x
+
+Bill asked whether the harvest could go faster and offered to
+pay for it. Neither was needed: the slowness was my error.
+
+I set 11 s between requests from IB's "no more than 60 requests
+within any ten minute period". That rule is real. It is also,
+per the same documentation page, a limitation on PACING
+VIOLATIONS FOR SMALL BARS (30 SECS OR LESS), and the footnote
+says:
+
+  "At this time Historical Data Limitations for barSize =
+   '1 mins' and greater have been lifted."
+
+We request FIVE-MINUTE bars. The hard cap never applied to us.
+What remains is an unpublished soft throttle. I read the
+heading and stopped.
+
+MEASURED, not argued. `tune` walks the interval down firing
+real requests. Bill's first run: 12/12 clean at every rung from
+8 s to 0.5 s — the ladder bottomed out without ever finding
+IB's limit. Recorded 0.75 s (1.5x margin). Taiwan's 198
+requests: 36 minutes -> 2.5.
+
+Three things added because one measurement is not enough:
+  * the ladder now extends to 0.25 s and 0.1 s, since the old
+    floor was OUR floor, not IB's;
+  * a 40-request SOAK confirms the winner holds at length. A
+    12-request burst is not what IB throttles — its warning is
+    about "requesting large amounts of historical data", and a
+    harvest is ~200 requests. If the soak fails the rate backs
+    off two rungs and says so;
+  * chunk size and concurrency are measured too. IB documents
+    50 simultaneous open historical requests as the ceiling, so
+    concurrency is expected, not a trick — a window is ~4
+    chunks and firing them together collapses four serial waits
+    into one. Both default to the old conservative values until
+    measured.
+
+Projected on Bill's measured 0.75 s: 30d/sequential 2.5 min ->
+90d chunks 1.2 min -> 4-way concurrent 0.3 min.
+
+AND MONEY WOULD NOT HAVE HELPED. Same page: the limits "apply
+to all our clients and it is not possible to overcome them."
+There is no faster tier. The things worth paying for are
+coverage gaps IB cannot sell — TPEx, delisted names, pre-2023.
+
+A REAL DATA-LOSS MODE REMOVED WITH THE REWRITE. The chunk loop
+used to `break` on the first empty response. That existed to
+stop walking past IB's history floor, which the c-195 clamp
+already guarantees — but it also meant one transient empty
+chunk silently discarded every older chunk behind it. Chunks
+are now fired as a set and assembled from whatever returns.
+
+Also: empty windows now carry `empty_reason`
+(venue_no_history / before_edge / no_contract / unexplained),
+and `fetch` prints a coverage audit when it finishes. Three
+different causes had been rendering as an identical `px: []`.
+
+pytest 535 green (6 new chunk-tiling tests).
+
+
+## c-196 — APAC subtab, and two silent no-ops I shipped
+
+Bill: build the rebalance-window study for every APAC market, as
+a SUBTAB under Announcement -> Effective, not a new sidebar page.
+
+DATA CHECK FIRST, because the answer is a qualified yes. 590
+priced windows across 10 markets, 2015+, every one carrying a
+registry announcement date. Enough for the chart and, for six
+markets, for medians. NOT enough for four: New Zealand has 5
+windows, Hong Kong 10 (with exactly ONE addition in the entire
+sample), Singapore 12, Australia 25 at the margin. MIN_N = 20
+now gates aggregation — thin markets still draw their
+individual paths, because a path is worth seeing, but no median
+is printed for a sample that cannot carry one.
+
+TWO NO-OPS FOUND WHILE CHECKING, both mine.
+
+1. `py scripts\apac_event_days.py` with no argument ran
+   `status()` — it PRINTED a table and harvested nothing, while
+   looking exactly like a completed run. I put that exact
+   command in Bill's queue twice and told him it re-harvested
+   every market. It never did. The evidence is on disk: every
+   stored window still carries ~17 pre-announcement sessions
+   and close-only rows, i.e. the pre-c-192 shape. The 45-day
+   window and the OHLC upgrade have never actually run.
+   Default is now `all`; `status` says "STATUS ONLY — no data
+   fetched" and flags each market's window shape as current or
+   STALE.
+
+2. The Taiwan page imported `filter_windows` (the 2015 floor)
+   and never called it. 179 windows on file, 135 after the
+   floor — so the page was rendering 44 windows whose day-0 was
+   ESTIMATED as effective-10-business-days and measured three
+   sessions late, underneath a caption that told the reader the
+   sample was 2015 onwards. Bill asked for that floor twice. It
+   reached the harvester and the APAC path; it never reached
+   the page that advertises it hardest. An unused import is not
+   a partial implementation — it reads as done and behaves as
+   absent.
+
+THE TAB. `_curves()` is now shared by both tabs, so Taiwan and
+APAC cannot drift apart in how they draw day 0 or the effective
+marker. The APAC tab leads with a coverage table stating, per
+market, window count, ADD/DEL split, reviews, first year,
+pre-announcement sessions, survivorship, and whether the sample
+is aggregated at all — before any number is shown.
+
+pytest 529 green (5 new, two of them regression tests for the
+no-ops above).
+
+
+## c-195 — the same bug in two harvesters: one board per market
+
+Bill's IB run threw three messages. Only two were real, and
+neither was what the text said.
+
+1. "API connection failed: ConnectionRefusedError" — NOISE.
+   `_connect` walks the port ladder 7497 (paper) -> 7496 (live).
+   The refusal is the paper port being closed. The next line
+   says "connected 127.0.0.1:7496". Nothing to fix.
+
+2. "Error 162: No market data permissions for TAI STK" on 3443
+   and 3231, both at 2023-05-16 — NOT AN ENTITLEMENT PROBLEM.
+   These are the two May-2023 additions. Their window is clamped
+   to Taiwan's 5m edge (2023-04-27). Walking back in fixed
+   30-day chunks from 2023-07-15 lands on 2023-05-16, and a
+   "30 D" ask from there reaches 2023-04-16 — eleven days before
+   IB holds any 5m data. IB does not truncate such a request; it
+   returns nothing, and near the boundary it words the refusal
+   as a permissions error. That other windows in the same run
+   succeeded on the same subscription is the proof: entitlement
+   does not vary by date.
+
+   The damage was SILENT. The loop broke on the empty chunk, so
+   2023-04-27..2023-05-16 was dropped — the whole pre-
+   announcement stretch — while `pre_ann_days` still advertised
+   14 days of it. Two fixes: the last chunk is clamped to the
+   window start (`span = min(CHUNK_DAYS, (cur - a).days)`), and
+   the coverage labels are now computed from the FIRST BAR HELD
+   rather than the date requested. A window with no pre-
+   announcement bars now says so.
+
+3. "Error 200: no security definition" on 3105 — A REAL BUG, and
+   Bill's instinct about naming was right. 3105 is Win
+   Semiconductors, and our own file says
+   `tw_mieu_universe.json -> 3105 -> "mkt": "tpex"`. EXCH pins
+   every Taiwan name to "TWSE". Taiwan has TWO boards and the
+   map named one, so every TPEx mover was unreachable — 13 in
+   the event set, 5 of them inside the 5m era, including the
+   Aug-23 Win Semi deletion and Parade, Phison and eMemory.
+   `_con` now falls back to a blank-exchange lookup and lets IB
+   report what it carries, recording the venue that resolved.
+
+THE SAME MISTAKE, IN THE DAILY HARVESTER. Korea's 26 unpriced
+movers are not delistings — the register run named Alteogen,
+Ecopro, JYP, Celltrion Pharm and CJ ENM, all trading. What they
+share is KOSDAQ, and `apac_event_days.py` forced ".KS" (KOSPI)
+on every Korean code. Added ALT_SUFFIX + a second-venue retry
+pass. `ALT_SUFFIX` is deliberately Korea-only: guessing a second
+board for a single-board market would manufacture false
+recoveries.
+
+Two harvesters, written days apart, both assumed one venue per
+country. Worth checking the rest of the maps for the same shape.
+
+pytest 524 green.
+
+
+## c-188 — announcement->effective study floored at 2015
+
+Bill: limit the rebalance-window analysis to 2015 onwards.
+
+WHY THIS IS THE RIGHT CUT rather than merely a shorter one. The
+179 Taiwan windows had two pedigrees:
+    2015+      135 windows, announcement date from MSCI's
+               REGISTRY — measured.
+    2010-2014   44 windows, announcement date ESTIMATED as
+               effective - 10 business days.
+c-186 measured the true gap against the 34 real announcements:
+median 13 business days (mean 13.2, range 12-17). The estimator
+used 10, placing day-0 THREE SESSIONS LATE — and day-0 is the
+baseline the study defines as zero cumulative return, so part of
+the announcement reaction was sitting inside the baseline.
+
+So the 2015 floor removes exactly the windows whose day-0 was
+inferred. What remains is measured end to end. 135 windows,
+57 ADD / 78 DEL, 2015-2026. The APAC files were already 2015+
+and are unaffected (verified: no market loses a window).
+
+IMPLEMENTATION: scripts/study_window.py holds FLOOR and the
+reason string; every consumer filters at READ time —
+event_window_analyze, analog_matcher, event_conditional_study,
+liquidity_qa, strategist_study, apac_persona_study (era buckets
+lose "2010-14"), and views/event_window_study. The harvester's
+own floor moved 2010 -> 2015 so it stops building them.
+
+The raw windows are NOT deleted. Filtering at read time means
+moving the floor is one edit and needs no re-harvest — and the
+pre-2015 data stays available if we ever get real announcement
+dates for it.
+
+COST, stated plainly: 44 of 179 windows (25%) and the 2010-14
+era bucket. Statements about the trade before 2015 are now out
+of scope rather than weakly supported.
+
+Suite 524 green.
+
+## c-182 — ATVR from dailies; and a correction to my estimate
+
+WHY THE TAIWAN ATVR TEST WAS INCOMPLETE. Three causes, only
+one of them a problem:
+  1. SCOPE BY DESIGN. 604 names harvested, not 1,955 — you
+     only need liquidity for names surviving the size screen.
+     Not an error.
+  2. TPEx HAS NO MONTHLY ENDPOINT. TWSE serves FMSRFK (one
+     call per stock per year of monthly turnover); TPEx serves
+     nothing equivalent. 138 of 604 came back NOT_EVALUATED,
+     and 72 TPEx names reached the 398-name MIEU untested.
+  3. Six of the rest lacked the >=6 months needed for a median.
+So the liquidity screen dropped ZERO names — but a fifth of
+the MIEU survivors were never actually tested.
+
+DOES IT MATTER? Measured, not assumed. ATVR = 12 x median
+monthly turnover / FIF, and FIF <= 1, so the undivided figure
+is a strict LOWER BOUND. For MIEU survivors with data:
+    min 11% | p5 27% | MEDIAN 164% | below the 15% bar: 4/323
+Taiwan's median liquidity is ~11x the threshold. §2.2.5 does
+not bind for any name large enough to sit near the cutoff.
+
+THE UNCOMFORTABLE PART: the 72 unmeasured names are TPEx, the
+LESS liquid board. The measured distribution is TWSE, so it
+cannot simply be extrapolated onto them.
+
+A CORRECTION TO MY OWN ESTIMATE, recorded because it was
+wrong. I told Bill the fix was "an hour against data already
+on disk". It is not:
+  - data/tw_history/quotes.json is TWSE-ONLY (1,367 codes,
+    ZERO TPEx) with partial months (202604 = one day).
+  - data/tw_universe_pit.json has close and shares but no
+    volume, and only 9 dates.
+The daily volume is reachable — BOTH boards publish 成交股數 on
+the endpoints we already call for prices, we simply never read
+that column — but it needs a HARVEST of ~245 trading days x 2
+boards, not arithmetic over existing files. Measured rate:
+~6 s/day, so roughly 25 minutes.
+
+NEW scripts/tw_atvr_daily.py. Parsers verified on live data:
+TWSE 1,081 names/day, TPEx 875/day, and ALL 72 TPEx MIEU names
+covered. Harvest is resumable (30 days cached so far). Formula
+matches tw_atvr.py exactly so the two are comparable, which
+buys a free accuracy test: `validate()` recomputes ATVR for
+TWSE names that already have an FMSRFK figure and compares.
+The TPEx numbers are only trustworthy if the TWSE ones
+reproduce, so that check gates everything else.
+
+REMAINING: Bill runs `py scripts\tw_atvr_daily.py harvest`
+(~25 min, resumable), then `validate`, then `compute`.
+
+Suite green.
+
+## c-179 — member-count audit + the Taiwan engine is CLEAN
+
+Bill asked two questions. The second one mattered more.
+
+Q: "Is the missing-share-count problem prevalent in Taiwan? Did
+our prediction engine make the same mistake at the screening
+stage?"
+
+A: NO, and the evidence is unambiguous. The Taiwan PIT
+universe at the 2026-07-20 cutoff holds 1,955 rows —
+1,081 TWSE + 874 TPEx — and:
+    rows without a share count : 0
+    rows without a market cap  : 0
+Because tw_universe_pit.py takes shares from TWSE MI_QFIIS
+(NumberOfSharesIssued), the EXCHANGE's own filing, never from
+Yahoo. The Australia/China hole is a Yahoo-coverage defect and
+it does not touch the Taiwan engine. Nothing to re-run and no
+correction to the Aug-26 call on this count.
+
+The only two MSCI "members" absent from the Taiwan universe are
+1602 and 2418 — and the exchange register says both are
+DELISTED. They are stale lines in the EWT holdings file, not
+missing data.
+
+Q: "Check factsheet constituent counts against our member
+counts for the other APAC markets."
+
+9 of 12 match exactly (Australia 47, China 576, Hong Kong 25,
+India 165, Indonesia 11, Japan 168, Malaysia 21, Singapore 16,
+Thailand 18). Three differ:
+  Taiwan +2  stale delisted lines (1602, 2418)
+  Korea  +1  preferred-share lines (Samsung pref 005935,
+             Hyundai pref 005385/005387) — a convention
+             difference, not an error
+  NewZealand  no factsheet count parsed; runs on ENZL's 5,
+             unverified — the one genuinely open case
+Cutoffs are already insulated for the first two because
+derive_cutoff prefers the factsheet count (c-177).
+
+Registered as R8. Suite 524 green.
+
+## c-175 — Taiwan names finished; the counter was lying
+
+Bill re-ran yahoo_names.py Taiwan and got "172/191, +0 this
+run" — which looked like 19 stuck names. Two separate things
+were going on and only one was a real gap.
+
+THE COUNTER WAS UNDERSTATING. It credited a name only if the
+EXACT symbol was cached, but the c-170 variants deliberately
+resolve under a DIFFERENT spelling: TPEx names land as .TWO,
+China ADRs as a bare symbol, HK codes zero-padded. So every
+name the variant logic fixed was still being reported missing.
+Counter is now variant-aware. Taiwan reads 186/191, which was
+already true before this run — nothing new was fetched, the
+number was simply wrong.
+
+THE REAL REMAINDER IS 5, AND ALL 5 ARE DEAD. Checked against
+the exchanges' own live register (TWSE t187ap03_L + TPEx
+mopsfin_t187ap03_O, 1,983 codes): 1602, 2418, 2448, 3682 and
+5264 are absent. Of the 5, two have identifiable events —
+2448 is Epistar, folded into Ennostar; 3682 is APT Telecom,
+merged into Far EasTone. The other three are recorded on the
+register evidence alone rather than a guessed event.
+
+They are now in a DEAD set and skipped, so they stop consuming
+a request every run and stop dragging the reported rate down.
+Output now says "186/191 names resolved (+0 this run, 5
+known-delisted skipped)" — which distinguishes "we failed" from
+"there is nothing to fetch". That distinction is the whole
+point; a permanently-stuck counter trains you to ignore it.
+
+STILL TO DO: the same live-register sweep for the other
+markets, to separate their genuine gaps from dead codes.
+Malaysia's 5 (AMBANK, MAXIS, SDG, SWB, TM) are a different
+problem — they are LIVE names needing a verified hand map,
+like Singapore's.
+
+Suite 524 green.
+
+## c-173/174 — cutoff ordering bug, Thai DR leak, PH removed
+
+ORDERING BUG, caught by running the full country check. The
+seed cutoff is the cap at rank N, so foreign cross-listings
+sitting in the top N inflate it mechanically — and
+derive_cutoff was ignoring the country flags entirely. Fixed;
+the effect was not marginal:
+    New Zealand  $8.73B -> $5.74B  (-34%)
+    Singapore   $10.51B -> $5.61B  (-47%)
+NZ now validates cleanly: cutoff $5.74B against a smallest
+member of $5.73B.
+
+THEN THE FIX NEEDED A FIX. Taiwan flagged Zhen Ding (4958) and
+Silergy (6415) as Cayman-incorporated — and both are in MSCI
+Taiwan today. Excluding them would have been the same class of
+error the flag-don't-drop policy exists to prevent. Rule now:
+NEVER exclude a name MSCI currently holds. A flagged member is
+evidence the flag is a false positive, not evidence the member
+is foreign. Hong Kong is the mirror case — Tencent and Alibaba
+flag as China AND are not MSCI HK members, so they are
+correctly excluded.
+Also fixed: HK member codes are stored unpadded ("1", "12")
+against our "0001.HK", so member matching was failing 18 of 25.
+
+THAI DR LEAK. My DR pattern was [A-Z]{2,5} and missed six
+longer tickers the country check surfaced — ITOCHU19 ($92.1B,
+near the top of Thailand), XIAOMI80, CHHONGQ19, JDHEAL19,
+TENCENT11, SINGTEL80. Widened to {2,9}. Worth noting the two
+checks are catching each other's misses, which is the point of
+having both.
+
+PHILIPPINES REMOVED, reversibly. Confirmed no data source:
+v7/quote echoes every PSE symbol back with ALL fields null; v8
+chart returns a shell with no price and no close series;
+screener region "ph" totals 0. No market cap means no size
+screen means no prediction. New scripts/markets.py holds the
+exclusion WITH the evidence; the UI filters it out. The
+review HISTORY stays in the database untouched — scrubbing it
+would corrupt the APAC-wide seasonality and churn statistics
+and could not be rebuilt.
+
+Suite 524 green. Open items registered in docs/OPEN_ITEMS.md.
+
+## c-172 — India NSE recovery + the cross-listing check
+
+INDIA — A CORRECTION TO MY OWN FIX. I said "MSCI India prices
+off the NSE line, so NSE wins and the BSE duplicate is
+dropped." The rule is right about MSCI and unsupportable on
+this data: Yahoo does NOT populate marketCap on .NS symbols.
+RELIANCE.NS returns a full quote with price, volume, PE — and
+no marketCap and no sharesOutstanding. The cap lives on the
+.BO line. Probing 200 recovered NSE symbols returned 72 quotes
+and ZERO with a market cap.
+
+So the recovery pass keeps only the 12 NSE lines that do carry
+a cap, and 277 names stay on their BSE line. That is
+acceptable for a SIZE screen — market cap is a company-level
+figure and the NSE/BSE prices of the same security differ by
+basis points — but it is a labelled fallback, not the intended
+source. BSE-duplicate removals: 1,161.
+
+CROSS-LISTING CHECK — new scripts/apac_country_check.py.
+Yahoo's quoteSummary.assetProfile.country, one call per name,
+scoped to names above 35% of the seed cutoff (13 names for NZ,
+33 for SG) since only those can move the ladder.
+
+THE IMPACT IS NOT COSMETIC:
+  New Zealand  cutoff $8.73B -> $5.74B  (-34%), 2 of the top 5
+    are Australian: Westpac $91.8B, ANZ $80.2B.
+  Singapore    cutoff $10.51B -> $5.61B (-47%), 7 of the top 16
+    flagged — HSBC $70.6B, Alibaba $60.6B, Tencent $55.1B.
+The Singapore names are SDRs that survived the relaxed
+cap-identity test in c-169, so the country check is also
+catching contamination the identity test was originally meant
+to catch, without the collateral damage that version caused.
+
+POLICY: FLAG, NEVER DROP. MSCI assigns a company to a country
+by incorporation AND primary listing with explicit special
+cases — which is why Jardine (Bermuda) sits in MSCI Singapore
+and why HK-listed mainland companies sit in MSCI China, not
+MSCI Hong Kong. Auto-excluding on incorporation would trade a
+known error for an unknown one. The flag is written into the
+size file and carried into the shortlist for the analyst.
+
+Suite 524 green.
+
+## c-170/171 — name gaps closed; page leads with the answer
+
+NAME RESOLUTION — three causes, all ours, none a missing
+company:
+  8299 (Phison) was "unresolvable" because Taiwan has TWO
+    boards and we only ever asked TWSE. TPEx names live on
+    .TWO. Added as a variant; it also recovers E Ink (8069),
+    Vanguard (5347), GlobalWafers (6488) and most of the
+    remaining Taiwan 18.
+  China's last 8 — PDD, TME, VIPS, HTHT, TAL, BZ, LEGN, YMM —
+    are US-listed ADRs. MSCI China includes them, and they
+    carry no Chinese suffix at all, so the bare symbol is the
+    right ask.
+  Malaysia has 5 left (AMBANK, MAXIS, SDG, SWB, TM). The
+    short-name search fallback resolved 14 of 19 but not
+    these. They need the same treatment Singapore got: a small
+    hand map, each code verified before it is written down.
+
+PAGE — the three changes Bill picked:
+  1. RESULTS FIRST. The Aug-26 call now sits directly under
+     the hero: additions and deletions as two columns of rows,
+     each with a probability bar, plus a collapsible
+     per-name reasoning block. The seven steps moved below
+     under "How we got there". The call is exposed through
+     story()["call"], so the view still holds no facts.
+  2. ANIMATED WALK. Step 5 plays the ladder building rank by
+     rank with a running cumulative total; green clears the
+     addition bar, red is below the deletion floor, grey is the
+     buffer. Labelled honestly as the FULL-cap sort order
+     (§2.3.3), not the float-coverage crossing — we do not hold
+     float for every name, and the caption says so rather than
+     implying more than the data supports.
+  3. PROGRESSIVE DISCLOSURE. Steps 2 and 4 keep their lead and
+     first paragraph; the three-cutoff-date reference and the
+     four-tier float stack go behind "How we do this".
+
+Suite 524 green.
+
+## c-168 — chart labels + making the page skimmable
+
+CHART: every bar in step 5 now reads "Name (ticker)". Some bars
+had only a code because MSCI names ONLY the securities it
+moved — an untouched member never appears in a change list — and
+where MSCI does name them the strings are truncated at 22 chars
+("GIGABYTE TECHNOLOGY LT"). The Yahoo cache carries the full
+legal name for every live code, so it is now preferred, MSCI's
+string is the fallback, and the code is last. One residual gap:
+8299 has no Yahoo name yet (re-run yahoo_names.py Taiwan).
+
+ENGAGEMENT (Bill: "the page is plain... too boring"):
+  - hero band with the one-sentence hook and four headline
+    numbers, so the page answers "what is this" above the fold
+  - step chips listing all seven titles at the top
+  - numbered step badges instead of plain subheaders
+  - the FIRST line of each step is now styled as a lead. That
+    is not decoration: the story generator already writes step
+    one's argument in its opening line, so a reader who skims
+    only the seven leads gets the whole method. The detail is
+    still there for whoever wants it.
+
+Deliberately NOT done yet — proposed to Bill, not built:
+progressive disclosure of the long paragraphs, a "make your own
+call" input graded against the model, an animated cutoff walk,
+and a results-first layout. Each changes the information
+architecture, so they wait for a decision.
+
+Suite 524 green.
+
+## c-166 — the cutoff is now DERIVED, and for every market
+
+Bill: "Are we only running cutoff estimate for Japan? Why not
+for the rest?" Correct on both counts, and the second fault was
+worse than the first: `shortlist Japan 5.0` took the cutoff as a
+HAND-TYPED number, in a project whose whole claim is that no
+figure on screen is typed by hand.
+
+FIX: derive_cutoff(market), two anchors from data already held.
+  COUNT anchor (the seed) — MSCI publishes each country index's
+    constituent count; §2.3.3 uses the Segment Number of
+    Companies to maintain the index over time, so the full cap
+    at rank N in the size-ranked universe approximates the
+    Market Size-Segment Cutoff. Same anchor the Taiwan call used
+    at rank 77.
+  MEMBERSHIP anchor (cross-check only) — the smallest current
+    member's cap. Circular if used as THE cutoff: defined that
+    way it is by construction <= every member, and the Taiwan
+    control returned zero deletions. Reported, never used.
+`shortlist` with no argument now runs every harvested market.
+
+Derived, no hand input:
+  Japan     $8.36B (rank 168) | smallest member $5.38B (167/168)
+  Singapore $10.51B (rank 16) | $7.80B (8/16)
+  Thailand  $9.41B (rank 18)  | $3.99B (18/18)
+  Malaysia  $6.24B (rank 21)  | $6.52B (1/21)
+Japan is the reassuring one: the count anchor sits ABOVE the
+smallest member, which is what a universe containing
+non-members should give.
+
+A ZERO THAT WAS NOT A ZERO: the first run printed "smallest
+member $0.00B" for Malaysia and Thailand. Nothing had matched —
+the cross-check was empty and rendered its emptiness as a
+number, which reads like a real reading of a very small
+company. Now it prints UNMATCHED with the match rate beside it.
+Thailand went 0/18 -> 18/18 once the ".R" NVDR suffix was
+stripped.
+
+OPEN, not fixed: Malaysia still matches 1/21. Its members are
+Bursa SHORT NAMES ("AMBANK", "CIMB") — not codes, not MSCI
+security strings — so neither the size file nor the c-165 name
+map keys on them, and the apac_members `names` bridge did not
+resolve them either. The Malaysian CUTOFF is unaffected (it
+comes from the count anchor); only the cross-check is blind
+there. Registered rather than papered over.
+
+Suite 524 green.
+
+## c-165 — stage-1 size harvester + the three ticker maps
+
+Bill's staging, which is the right one: fetch ONLY market cap
+for the whole universe, cut, then fetch the expensive
+attributes for the shortlist alone.
+
+NEW scripts/apac_size_harvest.py — crumbed Yahoo session,
+universe from the exchange master where one exists (JP, TW)
+else the cap-ranked screener, 400 symbols per quote call,
+USD-converted, ranked, written to data/apac_size/<Market>.json.
+`shortlist(market, cutoff)` writes the [0.5x, 2.0x] band to
+data/apac_shortlist/ as the stage-2 handoff.
+
+FOUR CONTAMINATION TRAPS, all found by running it, not by
+reading docs. Each would have corrupted the size ranking:
+  1. SGX SDRs. HBND.SI ("Bank of China") ranked FIRST in
+     Singapore at $215B, above DBS. Yahoo gives the SDR the
+     PARENT's market cap. Caught by the CAP IDENTITY test:
+     for a real listing marketCap == price x shares; the SDR
+     came back at 3.85x. Name patterns missed it entirely.
+  2. Thai DRs. NVDA80.BK, KO80.BK — these PASS the identity
+     test (Yahoo carries the parent's shares too), so they need
+     the local convention: TICKER+ratio digits, and no "Public
+     Company" in the name, which every genuine Thai listco has.
+     55 dropped.
+  3. SET NVDR lines. DELTA-R.BK is the same company as
+     DELTA.BK with the same cap — 581 duplicate lines, and the
+     NVDR ranked first in Thailand before the filter.
+  4. Screener over-count. Taiwan region returns 19,535 rows
+     against 1,955 real listings. So the screener is used only
+     where no exchange master exists.
+After the filters: SG tops at DBS $169.9B, TH at DELTA $99.0B,
+MY at Maybank $31.6B. All three now look right.
+
+NEW scripts/apac_ticker_maps.py — the three markets Yahoo
+symbol-lookup cannot reach, and they are three DIFFERENT
+problems:
+  Malaysia  needs Bursa's numeric code (MAYBANK -> 1155)
+  Singapore needs SGX's alphanumeric code (CICT -> C38U)
+  Philippines has Yahoo PRICES but no NAMES — search returns
+            nothing and screener region "ph" totals ZERO. Names
+            come from PSE Edge autocomplete, swept a-z: 202
+            companies, now merged into yahoo_names.json.
+92 MSCI names mapped. Matching uses the c-161 discipline (head
+token must match; two shared tokens or a rare head; ties
+refused). The unmatched residue is dominated by dead names —
+Chartered Semiconductor, CapitaCommercial Trust, DiGi.Com —
+which is the expected shape, not a failure.
+
+WEBSITE: step 7 of the walkthrough now states the limit Bill
+accepted — Taiwan and India are delisted-safe from archival
+day-files; every other market is Yahoo survivors, so the
+forward call is real but there is no measured hit rate yet.
+
+Suite 524 green.
+
+## c-162 — walkthrough page rebuilt for the desk
+
+v1 design SAVED intact at backup/walkthrough_v1_20260808/
+(walkthrough.py, walkthrough_story.py, walkthrough_export.py).
+Restore by copying the three files back.
+
+Page is now "Predict MSCI Index Changes - Taiwan". Removed:
+market selector, example selector, the "no finance background"
+caption, the learning/live mode banner, "Top 10 combined", and
+every "For the desk" / "what this step can get wrong" block.
+The desk content moved INTO the main text — there is no second
+audience to write down to any more.
+
+"Photograph" retired throughout in favour of MSCI's own term,
+Price Cutoff Date. Step 2 is now "The review prices off an
+undisclosed cutoff date" and carries the citation Bill asked
+for: GIMI May-2026 §3.1.9 "Date of Data Used for Index
+Reviews", p.48 — THREE cutoffs, not one (Equity Universe, last
+b-day of May for an Aug review; Liquidity, last b-day of June;
+Price, any one of the last 10 b-days of July), plus fn28
+(prepone) and fn29 (>80% ACWI business day) and the carve-out
+letting MSCI decline a migration on fraud/takeover/suspension.
+
+CONTRACT CHANGE, recorded not buried: the per-step honesty box
+was a house rule and a test enforced it. Removing it at Bill's
+instruction does not drop the honesty requirement — it moves
+it. The limits are consolidated into step 7, and the test was
+rewritten to assert step 7 names discretion, float, off-cycle
+exits and blind spots. Registered assumptions (band ceiling as
+binding cutoff; the empirical first-day-of-window prior) stay
+visible in the main text.
+
+BUG THE TESTS CAUGHT: the HTML exporter escaped the story text
+wholesale, so the new markdown printed literal ** and - in the
+saved file. Added a small inline renderer (bold/italic/link/
+bullet, escaped first). Also corrected the self-containment
+test — it banned any "https://", which would have banned a
+plain hyperlink; it now bans fetched RESOURCES (script, cdn,
+iframe, remote link/img/source) which is what it always meant.
+
+Suite 524 green.
+
+## c-161 — the 33 ticker-less Taiwan names, closed by hand
+
+Bill: "Let's resolve these remaining names by hand."
+
+RESULT: 33/33 accounted. 19 map to a live ticker, 14 are
+labelled Delisted with a recorded event. Zero left blank.
+
+THE FINDING THAT MATTERED: 9 of the names I had been treating
+as delisted are RENAMES — the listing never left, MSCI's
+twenty-year-old string just stopped matching anything.
+  Eternal Chemical    -> 1717 Eternal Materials
+  Inventec Appliances -> 3005 Getac Holdings
+  Waterland Financial -> 2889 IBF Financial Holdings
+  Yuen Foong Yu Paper -> 1907 YFY Inc
+  Zyxel Communications-> 3704 Zyxel Group
+  Prime View Int'l    -> 8069 E Ink Holdings
+  Farglory, Sino-American Silicon, MiTAC (2315 -> 3706 at the
+  2013 holdco conversion) likewise still trade.
+Prime View is the self-caught one: it was sitting in my own
+curated delisted register with a cited event. The register
+check overturned it. Cited does not mean correct.
+
+THE EVIDENCE, replacing the failed matchers:
+  1. FORWARD Yahoo probe by code (no matching to get wrong).
+  2. The exchanges' own live listed register — TWSE
+     openapi t187ap03_L + TPEx mopsfin_t187ap03_O, 1,983
+     codes. ABSENCE from that register is what proves a
+     delisting: a positive statement by the exchange, not a
+     failure of our search.
+
+WHY BY HAND AT ALL: the automated route failed twice the same
+way — a thin/Chinese-language name index made the matcher
+confident and wrong (Chunghwa Picture Tubes -> Chunghwa
+TELECOM; China Life -> Mercuries Life; Yuen Foong Yu Paper ->
+YFY Consumer Products, a different listing). A wrong ticker is
+worse than a blank one because the roster merges on ticker,
+fusing two companies into one history. Twelve names did not
+justify a third matcher.
+
+NEW: scripts/tw_hand_resolve.py (the map, with the evidence
+for each name, re-runnable). Suite 524 green.
+
 # Session Summary — 2026-07-08
+
+## Session 9i continued-157 (2026-08-08) — Index Changes Database page finished
+- Security Lookup: Title Case columns, 'aka' dropped.
+- **Churn leaderboard rebuilt on the DEDUPED roster**, not the
+  raw change list — a company split across two MSCI spellings
+  previously showed two half-histories and neither ranked
+  correctly. Now one row per ticker with the merged history.
+- Removed: the reconstructed index-size chart and the
+  "Reconstruct membership after review" picker (the
+  _time_machine call; function kept in the file, unused).
+- Individual Review Study: title cased, caption cut to "Pick a
+  period to see index changes.", the PDF link moved BELOW the
+  table, Action values now read Addition/Deletion, 'code' ->
+  'Ticker', All-APAC columns Addition/Deletion with a Market
+  index, CSV button now names the market.
+- SAIR/QIR expander closing line shortened per Bill.
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-156 (2026-08-08) — SITE POLISH: one row per ticker, canonical names, page order
+- **Duplicate securities fixed at the root.** MSCI has spelled
+  the same company several ways across 20 years of change
+  lists ("ACCTON TECHNOLOGY CORP" 2007 vs "Accton Technology"
+  in the current constituent file), so the Security Lookup
+  showed two rows for ticker 2345 with different histories.
+  The TICKER is the stable identity; the name is not.
+  Roster rows are now collapsed on ticker: histories merge,
+  the richest record wins each field, MSCI's spellings are
+  preserved in "aka".
+- **scripts/yahoo_names.py** — canonical ticker -> name cache
+  via Yahoo's search endpoint (no crumb, not throttled like
+  get_info; ~0.3s/name, resumable, failures never cached).
+  Taiwan: 172/191 resolved. A second pass was needed after
+  the first missed TSMC — a company that has NEVER changed
+  never appears in the changes DB, so the harvest had to
+  include CURRENT members too, i.e. exactly the largest names.
+- Search example placeholder now shows the market's largest
+  constituent with its Yahoo full name ("Taiwan Semiconductor
+  Manufacturing Company Limited, 2330") instead of a
+  hard-coded first word.
+- Page order: Index Changes Database is now the first tab.
+  Status-reconciliation note removed. Churn expander renamed
+  "Most Frequently Reclassified Securities".
+- Terminal follow-up for Bill: `py scripts\yahoo_names.py`
+  (all markets) to build the name cache beyond Taiwan —
+  resumable, re-run to fill gaps.
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-152 (2026-08-08) — THE WINDOW STUDY RUN FOR ALL APAC MARKETS
+- scripts/apac_persona_study.py -> data/apac_persona_study.json.
+  The Taiwan announcement->effective study, same metric
+  definitions, run market by market: tracker (P1-P4), hedge
+  fund (H1-H6) on 746 windows across 11 markets.
+- **RESULT — the effect is real everywhere but the size
+  ranks inversely with market efficiency.** ADD alpha
+  (day1->E-1, median): HK +14.9% (n=10), TH +9.1%, ID +8.6%,
+  AU +5.0%, JP +3.8%, TW +3.5%, MY +1.5%, KR +1.2%, IN +0.9%,
+  NZ -3.1% (n=5), SG -7.0% (n=12). The deep, heavily-arbed
+  markets (IN, KR) pay least; the thin frontier-ish ones pay
+  most — consistent with the elasticity story.
+- Effective-day volume 8.6x-47x ADV; capture (share of the
+  move left after day 1) is 0.67-0.94 everywhere, so the
+  latecomer still eats most of it in every market.
+- **HONEST LIMITS PRINTED PER MARKET, not averaged away:**
+  (1) only TW and IN are DELISTED-SAFE; the other nine are
+  Yahoo survivors, so every DEL figure there is biased toward
+  names that lived — which is why AU shows DEL alpha +4.0%
+  and a 13% hit rate (nonsense produced by survivorship, and
+  labelled as such). (2) The Taiwan CONDITIONALS
+  (accumulation-vs-froth, borrow crowding, excess-vs-tide)
+  cannot run elsewhere: they need per-name foreign-net and
+  borrow series that exist only for TW (AU has ASIC shorts
+  only; KR/TH harvesters pending). Emitted as NEEDS with the
+  named harvester rather than skipped.
+  (3) Only TW/IN/JP/KR have n>=70 — the rest are too thin for
+  conditional tables even once flows arrive.
+  (4) Philippines INSUFFICIENT (0 windows — no price source).
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-150 (2026-08-08) — TAIWAN CALL v2 DECLARED (supersedes 08-07; the 08-07 list still grades as declared)
+- scripts/tw_aug26_predict.py -> data/aug26_tw_call_v2.json.
+  Inputs refreshed: MIEU at 20260731 (398 cos, $3,609B),
+  ATVR now MEASURED for 466 TWSE names, MSCI's own FIFs 77/77.
+  Cutoff $6.75B (rank 77 under §2.3.3 count stability); add
+  bar $10.13B; incumbent floor $4.50B; raw 85% crossing rank
+  52 at $11.22B reported as the alternative scenario.
+- **TWO REAL BUGS CAUGHT BY THIS RUN:**
+  (1) Members MISSING from the MIEU were silently dropped —
+  hiding a deletion. Wan Hai 2615 fails §2.2.8 foreign room
+  (10.8%) for INCLUSION, but §2.3.6.2 says an EXISTING
+  constituent with low room is NOT deleted: it gets a weight
+  ADJUSTMENT FACTOR (0.5 for room 7.5-15%, deletion only
+  below 3.75%). MSCI's FIF for Wan Hai is 0.251 = exactly
+  half of 0.502 — the factor is already in their number. The
+  name is now re-admitted and judged on the float-cap test
+  (assessed BEFORE the factor, per §2.3.6.2): float cap
+  $1.84B vs the $2.25B constituent gate -> DELETE, p=0.72.
+  (2) Displacement double-counted: a rule-breach deletion
+  already frees a slot, so the first run produced 9 deletions
+  for 8 additions (net 76). Fixed: 8 adds / 8 dels, net 77.
+- **THE CALL (declared 2026-08-08):** ADD 2408 Nanya Tech
+  (5.11x), 8046 Nan Ya PCB (2.72x), 2344 Winbond (2.68x),
+  8299 Phison (1.66x), 3189 Kinsus (1.53x), 6274 Taiflex
+  (1.50x) — all guaranteed zone p=0.53-0.62; queue names 6770
+  Powerchip (1.17x) and 3036 WT Micro (1.14x) at p=0.33.
+  DELETE 2615 Wan Hai p=0.72 (float gate, MSCI's own FIF),
+  then displacement p=0.47 each: 6919 Caliway, 2834 Taiwan
+  Business Bank, 2609 Yang Ming, 1101 Taiwan Cement, 3529
+  eMemory, 5871 Chailease, 3533 Lotes.
+- CHANGES vs the 08-07 declaration: 6505 no longer appears
+  (was float-blocked); 6770 and 3036 enter the queue; 3533
+  Lotes joins the displacement tail; 8069 E Ink drops out
+  after the count fix. Both declarations grade Aug-11/12.
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-149 (2026-08-08) — Q84 confirmed the method; universe build plan + the SMALL CAP unlock
+- Q84: Bill restated the engine's logic from walk_display.html
+  (rank by FULL cap, accumulate FLOAT cap to the coverage
+  point). Confirmed VERBATIM against §2.3.3. Three
+  refinements recorded: it is 85% not 90% (the +-5% is the
+  tolerance the RESULT may land in); coverage is of the MIEU
+  not the whole market, and the crossing company's FULL cap
+  is the cutoff while the accumulator is FLOAT cap; and
+  additions are not "everything above the cutoff" (§3.1.5
+  1.0x/1.5x + queue, §3.1.4.2 2/3 incumbency relief — which
+  is why walk_display shows 77 members vs 67 above ceiling).
+  All seven §2.2 screens verified clause by clause.
+- **DISCOVERY (c-149): MSCI's constituents tool serves 1,246
+  indexes, not just the Standard country set.** Probed the
+  dropdown via Chrome: EM SMALL CAP 655061 (TW KR IN ID MY TH
+  PH CN), EAFE SMALL CAP 106232 (JP AU HK SG NZ), AC FAR EAST
+  ex JP SMALL CAP 655042, EM/EAFE IMI 664220/664152, plus
+  single-country JAPAN/SINGAPORE/INDIA SMALL CAP and
+  JAPAN/SINGAPORE/THAILAND/PHILIPPINES IMI.
+  **A Standard addition almost always migrates UP from Small
+  Cap, and Small Cap membership already means every §2.2
+  screen passed — so these lists ARE the addition candidate
+  pool, with weights, meaning their FIFs are recoverable by
+  the same inversion.** Caveats registered: regional lists
+  are country-MIXED (need a name->country step) and are
+  themselves ~2 months delayed (the blind band remains).
+- docs/APAC_UNIVERSE_BUILD_PLAN.md — per-market source table
+  (TW built; IN adapter exists; KR/ID/TH/MY/CN terminal-only;
+  AU/HK/SG/NZ sandbox-reachable; PH needs a non-Yahoo price
+  source) + the honest completeness audit.
+- **Answer to "will we then have everything?": yes except
+  two named items** — §2.2.8 foreign room (only binds in FOL
+  markets; TW covered by MI_QFIIS, TH/ID/IN/PH not) and
+  §2.2.9 financial reporting (NOT_EVALUATED, as in Taiwan).
+  Plus two limits no data removes: the blind band (~2 TW Aug
+  changes/decade originate below the visible floor) and
+  §2.3.3 count flex, priced as a haircut.
+- Build order registered: India -> Korea -> Japan -> AU/HK/SG
+  -> TH/ID/MY -> China -> Philippines. Bill runs git.
+
+## Session 9i continued-148 (2026-08-08) — HARVESTER HARDENED + the calibration was wrong (caught by Indonesia)
+- Bill asked for the member-FIF harvest code. It existed but
+  was not terminal-ready. Fixed: per-name progress printing,
+  throttle backoff (pause at 5/10 consecutive failures, stop
+  at 18 with THROTTLED + resume instructions), auto-publish
+  per market, `all` driver + `status` coverage table, and a
+  per-market OVERRIDES table (Singapore seeded: OCBC O39,
+  STE S63, CICT C38U, CLAR A17U, plus US lines SE/GRAB ->
+  coverage 8/16 to 13/16, unmapped now empty).
+- **BUG (real): failed share lookups were CACHED AS NULL**, so
+  re-runs skipped exactly the names that had failed. Failures
+  are no longer cached — resumability now actually works.
+- **CALIBRATION WAS WRONG — caught by Indonesia.** Grid-snap
+  landed on a wrong MULTIPLE: state-owned banks at 0.775,
+  GOTO at 1.617 (impossible). With 10-20 names the 2.5% grid
+  is too dense to identify the constant. Two fixes: FIF > 1.02
+  is now INFEASIBLE (not penalised), and the primary
+  calibration is now an ANCHOR on the published Jul-31 index
+  float cap rolled back to the weights' date by the
+  membership's own float-cap-weighted USD return:
+  IdxCap(Jun-1) = IdxCap(Jul-31)/R, c = IdxCap/100. Grid-snap
+  demoted to VALIDATION.
+- Indonesia after the fix, vs public ownership: Astra 0.398
+  (Jardine 50.1%), Barito 0.201 (Prajogo ~71%), United
+  Tractors 0.341 (Astra 59.5%), BBCA 0.394 (Djarum ~55%),
+  CPIN 0.368 (parent ~55%) — every name lands where the
+  register implies. Taiwan control unaffected (33.27 vs
+  33.314).
+- **CORRECTION recorded:** the Singapore FIFs published in
+  c-144 (DBS 0.649, SingTel 0.404...) were grid-snap output
+  and are SUPERSEDED — DBS 0.718, OCBC 0.720, UOB 0.723,
+  SingTel 0.448, SIA 0.470, Wilmar 0.253, Sembcorp 0.496.
+- Also added: infeasible-outlier drop (one bad share count no
+  longer kills a market — the binding name is excluded and
+  labelled, e.g. GOTO before the anchor fix).
+- Status now: TW 77/77, ID 10/11, SG 13/16, NZ 5/5 done;
+  KR/AU/HK/MY/TH/IN/JP/CN pending Bill's terminal.
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-147 (2026-08-08) — THE APAC PREDICTION ATTEMPT: three falsifications, one surviving call
+- Built scripts/apac_review_predict.py to walk GIMI per market
+  with PRE-REGISTERED probabilities (declared before Aug-11,
+  graded after): del_float_gate .85, del_deep .85,
+  del_below_buffer .70, del_proximity .35, add_guaranteed .85,
+  add_queue .45; multiplicative haircuts for cutoff proxying,
+  count-flex and partial maps.
+- **Falsification 1 — cutoff proxy.** Setting cutoff = full
+  cap of the smallest member makes the cutoff <= every member
+  BY CONSTRUCTION; Taiwan control returned ZERO deletions
+  against our known 6-name declared list. Replaced with the
+  engine-measured cutoff (TW) / factsheet corridor (others).
+- **Falsification 2 — channel coverage.** Re-testing Taiwan at
+  the true $6.73B cutoff: only Wan Hai (float gate) is a FLOOR
+  breach. The other 5 declared deletions are DISPLACEMENT —
+  members pushed out when additions take their slots under
+  count stability. Displacement needs the addition side, i.e.
+  the universe. So member-only data covers ONE of the two
+  deletion channels; that limit now prints in every output.
+- **Falsification 3 — the corridor is global, not per-market.**
+  The factsheet-implied corridor flagged Fisher & Paykel —
+  NEW ZEALAND'S LARGEST MEMBER — as a deletion, and 3/8
+  Singapore members. Added a SANITY GATE: refuse to publish a
+  screen that flags a top-quartile member or >20% of the
+  membership. NZ and SG now return NO_CALL with the reason and
+  the suppressed list, instead of junk.
+- **NET RESULT (honest):** the only APAC call this cycle is
+  TAIWAN — 2615 Wan Hai DELETE p=0.72 (float gate, consistent
+  with the declared shortlist), 6919 Caliway p=0.30
+  (proximity). All other markets NO_CALL/NO_DATA with the
+  specific blocker named. Additions everywhere except Taiwan:
+  NO_CALL (non-members are invisible without a universe).
+- Bill's non-member Yahoo-float instruction is implemented in
+  spirit but blocked upstream: Yahoo can price a candidate
+  once we can NAME it; naming requires the listed universe.
+  Post-Aug build order: KR/IN/JP bulk day-files first.
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-146 (2026-08-08) — PH diagnosed (not a bug), and the honest scope of "predict all APAC"
+- Bill's terminal run returned Philippines INSUFFICIENT with
+  n_scored 0. Diagnosed: **Yahoo has NO Philippine coverage**
+  — every .PS symbol (AC/BDO/SM/ALI/ICT) resolves to the
+  empty "YHD" venue, null price, null currency; .PH does not
+  exist. Matches the earlier registered "PH Yahoo has
+  nothing". Not fixable in code.
+- Fixed the REPORTING instead: status now carries `why`
+  (NO_PRICE_SOURCE) + names_missing_price vs
+  names_missing_shares, so a failed market says which input
+  died. Added YAHOO_OK venue map from a live probe of all 13
+  markets — 12 verified good (.AX ASX, .HK HKG, .NS NSI,
+  .JK JKT, .T JPX, .KS KSC, .KL KLS, .NZ NZE, .SI SES,
+  .BK SET, .TW, .SS/.SZ), PH the sole hole.
+- **SCOPE CORRECTION recorded (docs Part 3):** the inversion
+  recovers FIFs for CURRENT MEMBERS ONLY — it inverts
+  published weights, and a non-member has no weight. That is
+  the DELETION side. ADDITIONS need per-market full listed
+  universes + non-member floats + ATVR/foreign room, which
+  for Taiwan took a dedicated TWSE bulk-day-file harvester.
+  No equivalent exists for the other 12 markets and the
+  announcement is Aug-11 -> **this cycle: Taiwan full
+  prediction; other APAC = member-side deletion screening
+  only.** Universe building is a post-Aug project (KR/IN/JP
+  first — they publish bulk day-files).
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-145 (2026-08-08) — CORRECTION: the Jun-1 index float cap was SOLVED, not published
+- Bill asked where the $3,331.4B came from. Traced: it was
+  never on a June factsheet (our archive holds only Jul-31,
+  $3,183.0B). It was derived in c-126b by FIF-CONSTANCY
+  CALIBRATION — assume each Jul-31 factsheet anchor's FIF
+  unchanged, solve IdxCap(Jun-1) = FIF_Jul31 x cap_Jun1 /
+  weight. Ten anchors -> 3331.0..3331.8, spread 0.026%.
+- **I had described it in-session as read off a June
+  factsheet. Corrected openly (QA Q83), not edited away.**
+- Important consequence recorded: **Q80's top-10 "exact
+  match" is true by construction**, since IdxCap was
+  calibrated on exactly those ten FIFs. It shows internal
+  consistency (and that the 17-name hand map is clean), NOT
+  independent validation.
+- The independent evidence is: (1) the 67 NON-anchor members
+  landing on MSCI's 2.5% grid, (2) grid-snap (c-144)
+  recovering c = 33.27 vs 33.314 without using anchors or
+  any index float cap, (3) the 006203 fund check (Q82).
+  The number stands; the reasoning behind it is now stated
+  accurately. Bill runs git.
+
+## Session 9i continued-144 (2026-08-08) — GRID-SNAP FIF RECOVERY for all APAC markets + the local-tracker survey
+- **Method upgrade (removes the date-matched index float cap
+  requirement):** FIF_i = c_m x weight_i / full_cap_i, with
+  c_m chosen to MINIMIZE distance to MSCI's 2.5% rounding
+  grid (Appendix VI). **Control on Taiwan: recovered
+  c = 33.27 vs true 33.314 (0.13%), median FIF error 0.0010
+  over 77 names — without being told the index float cap.**
+  Grid-clustering doubles as per-market QC: no cluster =>
+  FAILED, not published.
+- scripts/apac_fif_inversion.py (resumable, cached; ticker
+  map from apac_members fund names + prefix_match).
+- PUBLISHED: **New Zealand 5/5 on grid** (FPH 1.00, AIA 1.00,
+  Infratil 0.90, Contact 0.875, Meridian 0.50 — Meridian is
+  ~51% Crown-held, exactly right) via the factsheet route
+  since the whole NZ index IS the top-10 list; **Singapore
+  8/16, 100% on grid** (DBS 0.649, SingTel 0.404, SIA 0.425,
+  Wilmar 0.229 — Temasek stakes land where known).
+- BUG CAUGHT AND FIXED: first run used 2025 epoch windows ->
+  full caps priced a year early. Detected because NZ returned
+  FIFs > 1.0 (impossible values are the cheapest detector).
+  Stale close/fx cache purged, re-run clean.
+- Remaining 10 markets = throughput, not method: ~1,130
+  names x Yahoo get_info (~60/session throttle) + a per-market
+  OVERRIDES pass like Taiwan's 17-name fix. Terminal queue:
+  `py scripts\apac_fif_inversion.py market <Market>`,
+  re-runnable.
+- **Local-tracker survey (docs/APAC_FIF_AND_LOCAL_TRACKERS
+  .md):** plain-index local funds exist ONLY where domestic
+  demand funds them — TW Yuanta 006203 (validated Q82), KR
+  Samsung KODEX MSCI Korea 156080, IN Kotak MSCI India.
+  Japan/Australia/HK/MY/TH/ID/PH: none (local investors buy
+  TOPIX/ASX200/STI instead). Use = freshness overlay only,
+  never the FIF source; per GIMI §3.2.3 only above-threshold
+  events move index+fund, so a holdings jump between MSCI
+  publications is the earliest public FIF-change signal.
+  Registered next: run the Q82 two-line check on KODEX and
+  Kotak before the Aug review.
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-143 (2026-08-08) — FIF VINTAGE VALIDATED THREE WAYS: the Jun-1 inversion is safe for the Aug prediction
+- Q80: Jul-31 factsheet-implied FIF vs Jun-1 weights-
+  inversion, top-10 — EXACT match to the 3rd decimal on all
+  10 (two independent MSCI publications, two dates, two
+  derivations). reports/fif_factsheet_vs_weights.csv.
+- Q81 (rulebook): the FIF that governs the Aug-26 review is
+  the one in force at the PRICE CUTOFF DATE — one
+  undisclosed day in the last 10 b-days of July (§3.1.9);
+  FIF changes before it enter the review, after it are
+  postponed (§3.1.7, escape hatch to T-3). 006203 is a
+  full-replication tracker with no schedule of its own — it
+  can only ECHO implemented index changes (~T+1), never
+  front-run MSCI (§3.2.3 two-regime implementation).
+- Q82: Yuanta 006203 live holdings scraped via Chrome
+  (Trade Date Aug-7, 77 names + QUANTITIES;
+  data/yuanta_006203_holdings.json). Fund weights vs Jun-1
+  MSCI weights price-rolled to Jul-31: median |diff|
+  0.022pp, p90 0.12pp — the fund is the Jun-1 composition
+  moved by prices alone; TSMC's -1.85pp gap is the fund's
+  1.04% futures sleeve, not index information. Quantity
+  hold-ratio FIF: median 1.9pp, tail = creation-basket
+  rounding on micro positions.
+- **VERDICT: Jun-1 weights-inversion FIFs validated for the
+  Aug-26 prediction** — factsheet identity (Jul-31) + live
+  fund continuity (Aug-7) bracket the price-cutoff window;
+  no implemented FIF change anywhere in the membership.
+  Caveats recorded in Q82. Bill runs git.
+
+## Session 9i continued-142 (2026-08-08) — CAPPED-FUND SURVEY: why the fund route fails abroad, and the local exception
+- Q79 recorded. EWT = 25/50 (US RIC tax rules); ITWN =
+  20/35 SINCE 2020-02 (UCITS limits; tracked the plain
+  index before). TSMC's ~55% breaks both regimes — no US/EU
+  fund can hold plain-index weights. MSCI's plain country
+  index itself is UNCAPPED (our harvest shows TSMC 54.78%;
+  capped families are separate downstream products; GIMI
+  universe math runs on full caps).
+- NOT universal: locally-domiciled Yuanta MSCI Taiwan
+  (006203.TW) tracks the PLAIN index (TSMC 54.88%) with
+  daily holdings disclosure — registered as the freshness
+  overlay candidate, to be validated with the Q78 hold-ratio
+  method before trust. Concentration is the trigger: KR
+  (EWY 25/50) same disease; IN/JP fund holdings usable.
+- Verdict: MSCI official-weights inversion stays primary
+  for FIF; Bill's argument confirmed for US/EU funds and
+  sharpened with the local exception. Bill runs git.
+
+## Session 9i continued-141 (2026-08-08) — EWT vs WEIGHTS-INVERSION FIF TABLE: a measured negative result
+- Bill asked for the head-to-head: fund-derived FIFs (EWT
+  holdings) vs weights-inversion FIFs. Data acquired live:
+  the iShares CSV endpoint is JS-built, but the DOM carries
+  a clean route — /us/products/239686/ishares-msci-taiwan-
+  etf/latest-holdings.csv (found via Chrome; fetches fine
+  from the sandbox). Holdings as of Aug-06; all 77 members
+  held.
+- scripts/ewt_fif_compare.py — hold-ratio method
+  (shares_held/shares_out = c x FIF, c calibrated on sub-5%
+  names, cap cohort excluded + flagged).
+- **VERDICT — the fund route fails for FIF LEVELS:** clean
+  names median |gap| 19.1pp, p90 34.7pp, only 5.3% within
+  one grid step; impossible FIFs >1.0 appear (2834 at
+  1.246). Cause: 25/50 capping redistributes ~34% of the
+  index (TSMC 54.8% natural -> 21% held), and the 5%/50%
+  aggregate constraint makes redistribution non-proportional
+  — contaminating every name, so no single calibration
+  undoes it. TSMC reads 0.16 vs true 0.95.
+- Kept: EWT deltas as a T-1 freshness tell (levels no,
+  changes maybe); plain-index UCITS tracker as the clean
+  retest (UK site geo-gated the sandbox — terminal
+  follow-up). Weights inversion (77/77 on-grid, c-140)
+  stays the float-stack tier-2 source.
+- Artifacts: reports/ewt_fif_compare.csv (77-row table),
+  data/ewt_fif_compare.json, QA Q78. Bill runs git.
+
+## Session 9i continued-140 (2026-08-08) — WEIGHTS INVERSION COMPLETED: 77/77 members, all on MSCI's grid
+- Bill asked why FIF coverage was 60/77 and whether the
+  constituents page misses names (proposing EWT holdings as
+  a fallback). Finding: the page (index code 915800, the
+  ESMA tool) has ALL 77, weights sum 100.000% — the gap was
+  our name->ticker prefix matcher failing on 17 MSCI
+  abbreviations INCLUDING TSMC (54.78% weight!), Hon Hai,
+  UMC, Chunghwa.
+- scripts/tw_fif_inversion.py — the inversion as a
+  reproducible script with the 17-name hand map.
+  **Result: 77/77 mapped, ALL 77 recovered FIFs within
+  <=1pp of MSCI's 2.5% rounding grid** (TSMC 0.952->0.95,
+  Hon Hai 0.873->0.875, UMC 0.902->0.90) — the strongest
+  self-validation yet. tw_member_fifs_weights.json
+  regenerated (now with grid_dist per name + unmapped
+  ledger, currently empty).
+- MIEU 20260731 rebuilt on the fuller tier-2: 398 companies,
+  $3,609B universe float (in band), crossing unchanged —
+  the 17 upgraded names were mostly already tier-1/Yahoo-
+  accurate; the improvement is precision at the top, not a
+  shortlist change. Declared Aug-26 call untouched.
+- EWT idea assessed + registered (QA Q77): EWT tracks the
+  25/50 CAPPED index -> weight inversion is wrong for capped
+  names; the clean route is shares_held/shares_out = const x
+  FIF, calibrated on known names. Real value = FRESHNESS
+  (daily T-1 holdings vs the ~2-month ESMA delay). Data
+  route registered, not built.
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-139 (2026-08-08) — FLOAT POLICY LOCKED for the Aug-26 prediction + walkthrough regenerated
+- Bill asked to confirm "Yahoo as the float source". Corrected
+  and confirmed: Yahoo is TIER 3 of the stack, not tier 1 —
+  the best PUBLIC source (2.7% median error) but beatable by
+  MSCI's own numbers where we hold them. **The locked policy
+  stack (float_stack, tw_walk_display):**
+    1. factsheet-implied FIF (top-10, exact, same-date)
+    2. NEW TIER (c-139): MSCI's own member FIFs from the
+       weights inversion — 60 members on MSCI's rounding
+       grid; upgraded 53 names off Yahoo/TDCC (median
+       |yahoo−MSCI| = 2.3pp on exactly those names)
+    3. Yahoo floatShares/sharesOutstanding (~490 names)
+    4. TDCC bracket float x measured calibration (~1,460
+       tail names; scale 1.066 at 07-31, n_overlap 498)
+  MISSING-DATA POLICY: no bare defaults were needed at
+  07-31 (0 names); if a verdict FLIPS between adjacent
+  tiers the name is labeled BORDERLINE, not called — the
+  registered no-call rule applied to floats.
+- MIEU rebuilt at 20260731 with the upgraded stack: 398
+  companies, universe float $3,612B (inside the $3,537-3,979B
+  target band), raw 85% crossing rank 52 at $11.2B — the
+  count-stability rule (rank-77 cutoff) still governs, the
+  raw crossing is reported for transparency.
+- The DECLARED shortlist (2026-08-05/07, aug26_cutoff_calc)
+  is UNTOUCHED — it grades against Aug-12 as declared; the
+  float upgrade improves the universe view, not the frozen
+  call.
+- Walkthrough regenerated: reports/walkthrough_Taiwan_
+  Aug26.html (7 steps, live mode ends on the declared call);
+  step-4 desk layer rewritten to carry the c-139 float
+  policy + per-tier counts, replacing the stale v2
+  description.
+- **Suite: 524 passed.** Bill runs git.
+
+## Session 9i continued-138 (2026-08-08) — THE REBALANCE AGENT: analyst-driven -> agent-driven
+- Bill's design shift: stop the ask-answer-ask loop; an
+  expert agent runs the cycle itself — checks the situation,
+  dispatches fetches, runs analyses, consults subagents,
+  writes the client note daily.
+- **scripts/agent_tools.py** — the deterministic tool layer
+  (numbers ONLY come from here): data_status (phase/day-
+  offset/freshness), fetch_daily (terminal-gated; returns
+  DISPATCH command in sandbox), name_snapshot (cum return +
+  percentiles vs the 157-window history at same day-offset),
+  crowding_read (routes each name into its conditional
+  bucket: accumulation/froth/cold for adds, light/mid/
+  crowded-short for dels, with that bucket's history),
+  find_analogs, result_block (the study library), save_note
+  (append-only reports/). All CLI-usable too.
+- **scripts/rebalance_agent.py** — the orchestrator:
+  sonnet-4-5 tool-use loop, honesty contract in the system
+  prompt (numbers only from tools; NO_DATA -> name the
+  fetch, never interpolate; abnormal -> FLAG FOR ANALYST;
+  tool audit log appended to every saved note). Subagents
+  via consult tool: flow-analyst / positioning-analyst /
+  client-writer (role prompts; briefed with tool outputs,
+  cannot call tools). Modes: daily | ask "..." | offline —
+  offline is the no-API fallback that runs the full
+  deterministic pipeline and emits the mechanical note, so
+  the automation never depends on a key.
+- The offline dry-run immediately caught a real bug: the
+  Aug-8 pull had saved an EMPTY day (holiday/weekend/
+  too-early), which the already-pulled guard would then
+  never retry. Fixed both layers: pull refuses to save
+  empty days; data_status counts only non-empty days.
+  Empty day removed from the ledger; status now honestly
+  reads 1 day pulled / STALE.
+- tests/test_rebalance_agent.py (7 tests, no API calls);
+  found+fixed result_block("") reading the data DIR.
+  **Suite: 524 passed.**
+- Bill's terminal from Aug-12: schedule
+  `py scripts\rebalance_agent.py daily` weekdays ~15:00
+  Taipei (needs ANTHROPIC_API_KEY; without it the same
+  command degrades to the mechanical note). Bill runs git.
+
+## Session 9i continued-137 (2026-08-08) — THE CLIENT-CALL BANK: what trackers and HFs actually ask the desk
+- docs/CLIENT_CALL_QUESTION_BANK.md — 21 questions framed as
+  phone calls, not research: trackers ask about FILLS
+  (limit-lock, crossing, leakage, foreign room, weight-change
+  trades), HFs ask about EDGE/CAPACITY/PAIN (crowding
+  percentile, capacity inversion, recall risk, max squeeze,
+  guaranteed close, APAC diversification, regime kill).
+  New status tag [DESK] = needs CLSA internal exhaust —
+  interview ammunition, not a gap.
+- **Two answered on the spot (tw_event_windows.json):**
+  (1) LIMIT-LOCK: adds have NEVER near-locked the daily
+  limit on effective day (0/64); deletions near-lock 9.7%
+  (9/93) — MOC fill risk is a SELL-side-only, 1-in-10 event;
+  (2) E−1 volume is only 28% (ADD) / 12% (DEL) of E volume —
+  price moves early, but the VOLUME mass waits for the print.
+- Registered next compute batch in value order: H12
+  cross-market alpha correlation -> T8 QCIR weight-change
+  drift (the unstudied 80% of tracker flow) -> D2
+  regime-break table (2015 limit widen / 2020 microstructure)
+  -> H10 del-side MAE.
+- No code changes; suite untouched at 517. Bill runs git.
+
+## Session 9i continued-136 (2026-08-08) — Bill's five builds: chat page, analog matcher, datasets map, literature test, findings page
+- **ANALOG MATCHER (Bill's idea, assessed SOUND):**
+  scripts/analog_matcher.py — "tech add, +5% at day 7: find
+  similar cases." It IS the empirical conditional
+  distribution (the nonparametric cousin of our tercile
+  tables). Three hazards handled: dimensionality (match on
+  action + exact day-offset + |cum-return| + optional sector
+  ONLY), small-n overconfidence (named analog LIST first,
+  medians second), regime leakage (years shown). Bill's
+  example query -> 8 analogs (Gigabyte Aug-23, Unimicron
+  Nov-20, ...), read: flat to E-1 (+0.1%), eff -0.5%,
+  revert5 -6.0% — the +5%-at-day-7 tech add has already
+  eaten its window and carries post-E give-back risk.
+- **CHAT PAGE:** views/ask.py — Claude (sonnet-4-5) over our
+  result JSONs (~40KB context: ledger, playbooks, persona,
+  conditional, strategist, Q-bank). Answers cite the result
+  block; the analog matcher is exposed as a TOOL the model
+  calls. Key via ANTHROPIC_API_KEY or sidebar. No code exec,
+  no invention outside context (system prompt enforces
+  no-call).
+- **FINDINGS PAGE:** views/findings.py — the visual digest:
+  auction hero metrics (79% share / ~0 jump / 7.6% p95
+  tail), volume U-profile chart, era inverted-U path,
+  decision tables (hot-start, attribution, borrow),
+  Q31 x-table, INTERACTIVE analog matcher, and the honesty
+  panel (the six negative results, displayed not hidden).
+  Both pages wired into app.py (now 5 pages).
+- **DATASETS MAP:** docs/TW_DATASETS_BRAINSTORM.md — 10
+  candidates ranked by value/cost with why + extraction
+  route. Build order: odd-lot (pure retail gauge) -> TAIFEX
+  SSF OI (the other pre-positioning venue) -> broker-branch
+  chips for the 12 shortlist names (who is buying) -> TDCC
+  weekly cron (holder migration). Gated: TEJ ticks, MSCI PAF.
+- **LITERATURE TEST (PART V of the playbook):** three claims
+  from the index-effect literature re-run on our windows.
+  L1: TW shows the MODERN result (both sides largely
+  permanent: ADD keeps 60% of +5.6% at E+20, DEL keeps 78%)
+  — not the classic CNS-2004 asymmetry. L2: elasticity
+  median 0.0418 window return per ADV-day of foreign buying
+  (n=36) — the sizing formula for Aug-26. L3: no monotone
+  decay; era path is an inverted U — the trade is CROWDING
+  (moving earlier), not disappearing. Three new open
+  questions registered (yearly elasticity, borrow-cost vs
+  permanence, provider-discretion risk).
+- tests/test_analog_matcher.py (5 tests: sorted-by-distance,
+  no-lookahead, sector filter, years exposure, view syntax).
+  **Suite: 517 passed.**
+- Bill runs git. Next: Aug-11 announcement -> grade the
+  declared shortlist + run the live loop daily.
+
+## Session 9i continued-135 (2026-08-08) — THE Q-BATCH: 24 questions answered + Bill's auction question (the best number yet)
+- scripts/liquidity_qa.py -> data/liquidity_qa_tw.json. All
+  NOW-questions from the bank computed on 157 windows +
+  flows; 7 deferred with reasons in the output.
+- **BILL'S AUCTION QUESTION (via ib_bars 13:25 vs 13:30,
+  2023+ events): the effective-day close auction takes 79%
+  of the day's volume (median; 91% p90) yet the price jump
+  close-vs-13:25 is ~ZERO (adds -0.3%, dels 0.0%, n=14/26).**
+  The most feared print is enormous in size and tiny in
+  median impact — supply meets demand IN the auction at
+  equilibrium. Dispersion, not median, is the risk (Q32 p25
+  -1.3%/p75 +3.3%; Q33 p95 7.6% high-demand).
+- **Q31 REFRAMES THE TRACKER VERDICT (c-130 corrected):** in
+  EXPECTED-COST terms, early execution WINS — buying evenly
+  day1..E-1 beats the eventual close by 3.2% (the drift means
+  the close is the top). The close is for ZERO TRACKING
+  ERROR, not for cost: the honest client line is "the close
+  costs ~3.2% vs the window average — that is the price of
+  zero TE." Linear in x (0.8% per 25% tranche).
+- **Q23 flow momentum corr 0.766** — early foreign footprints
+  strongly forecast later flow (order-splitting confirmed):
+  day-3 flow projects the window; prime live-monitor signal.
+- **Q2: churn vs migration** — median |net|/gross only 4.4%
+  (mostly churn!), but high-migration adds revert -2.0% vs
+  churn-adds -7.4%: ownership migration STICKS, churn
+  round-trips. New conditioner.
+- **Q1 counterparties on E**: foreign +4.1% of ADD volume /
+  -5.1% of DEL; retail margin takes the OTHER side (sells
+  adds, buys dels). Q17: when retail AND institutional
+  shorts agree on a del, it falls 5x more (-3.3% vs -0.7%).
+- Q6 U-profile confirmed (mid-window trough ~1.2x, E-1 1.9x,
+  E 12.3x); Q10 hangover median 2 days (p90 12); Q22 NO
+  market drain (ex-mover foreign activity 1.23x HIGHER on E).
+- NEGATIVE RESULTS SHIPPED: Q8 no era compression of the
+  volume profile; Q13 no elasticity kink (TW close is deep);
+  Q24 build SPEED adds nothing over level; Q27 scissors NOT
+  confirmed (no monotone vol-up/drift-down).
+- Q25 engine join: EXPLAINED dels -1.2%/+1.3% bounce;
+  NOT-EXPLAINED dels went UP +8.0% then -5.1% (n=4 — the
+  engine's surprises were the market's too; tiny n, flagged).
+  Q29 Nov-post-2023 -7.2% vs +19.6% = the Nov-25 risk-off
+  cluster, small-n artifact, flagged not quoted.
+
+## Session 9i continued-134 (2026-08-08) — THE LIQUIDITY QUESTION BANK: 34 strategist questions, 24 answerable now
+- Bill's brief: generate the questions myself, from the
+  index-strategist seat, on rebalance-window LIQUIDITY.
+  Wrote docs/LIQUIDITY_QUESTION_BANK.md — 34 questions in 8
+  families, each with WHY it matters + data status
+  ([NOW]=24, [NEEDS: x]=10). The bank is the living work
+  queue for future autonomous sessions.
+- Families: A liquidity sources (who's the other side of the
+  close; new money vs churn; add<->del rotation; futures-side
+  provision; ETF creation timing), B window timing (volume
+  profile shape; E-1 as the arb exit day; era compression;
+  close-auction share; hangover length), C name-level stress
+  (demand/FLOAT-turnover as the better stress ratio; retail-
+  ownership conditioning; the elasticity KINK), D the borrow
+  SYSTEM (supply-capped builds; unwind speed; retail-vs-
+  institutional short battle; recall-squeeze signature), E
+  spillovers (peer sympathy fades; sector rotation; ADR
+  spread as crowding gauge; market-wide drain on effective
+  days), F feedback (flow momentum; build SPEED vs level;
+  **Q25 the marquee join: does OUR engine's ex-ante
+  surprise-vs-consensus classification price into windows** —
+  the direct monetization test of the prediction half), G
+  regime/structure (the passive-AUM-up/drift-down scissors;
+  the 2020 auction-reform break; Nov-habit persistence;
+  vol-scaled elasticity), H desk mechanics (the optimal
+  early/close split x backtest -> THE client table; the fair
+  price of a guaranteed cross; p95 slippage; stagger-vs-
+  correlate on multi-name events).
+- Working rules encoded: NOW-batch first, n + era-split +
+  honesty label per answer, negative results ship, statuses
+  updated in place.
+
+## Session 9i continued-133 (2026-08-08) — THE STRATEGIST LAYER: regime/sector/tide conditioning; the strongest separator yet
+- Bill's brief: think like the desk strategist on the client
+  call ("how do we trade these on effective? what flows are
+  you seeing?"), self-generate the questions, answer from
+  data. Built scripts/strategist_study.py ->
+  data/strategist_tw.json + PERSONA_PLAYBOOK Part IV. New
+  data: ^TWII daily (ONE Yahoo chart call, cached
+  twii_daily.json) + TWSE/TPEx industry map (one call each,
+  tw_industry_map.json); sector tides + market-wide foreign
+  appetite computed from t86 LOCALLY (it carries every name).
+- **S1 REGIME: the add alpha is regime-INVARIANT once
+  market-adjusted (~2-3% excess in all three tape terciles)**
+  — risk-on's fat +7.0% raw was mostly beta; risk-off's weak
+  +1.5% raw hid intact +3.0% excess. Client answer: in a
+  selloff, hedge the tape, keep the name. Risk-off adds
+  revert hardest (-4.4%) -> fade-the-close best in bad tapes.
+- **S2 SECTOR: the TW add effect is substantially TECH**
+  (n=37: +3.8% excess, -5.1% revert) — TRADITIONAL adds are
+  ~zero excess (+0.2%). Sector picks the playbook page.
+- **S3 THE HEADLINE: flow vs the SECTOR'S OWN TIDE separates
+  5x** — Bill's proposed indicator, confirmed: name-flow z
+  above sector median -> +9.8% window vs +2.1% below
+  (n=15/16). The strongest single conditioner in the project;
+  dashboard indicator #1.
+- S4 surprise held loosely: adds during market-wide foreign
+  SELLING did better (+9.5% vs +4.9%) — scarce-buying-
+  stands-out hypothesis, era-confounded, flagged not quoted.
+- S5 CASE CARDS: Caliway Aug-25 +50.4% (no institutional
+  signature -> DELETED two reviews later — the parabolic-add
+  lesson); Wistron May-23 +39.6% (mostly AI-tape beta);
+  Walsin May-18 +35.3% in a flat tape (the clean specimen);
+  Teco/Jentech -17% (the un-hedged strategy dies in risk-off
+  windows).
+- CLIENT DASHBOARD spec (7 indicators) written into the
+  playbook; replication procedure for other markets in the
+  script docstring (index series 1 call + exchange industry
+  map + a market-wide flow series per market).
+
+## Session 9i continued-132 (2026-08-08) — THE CONDITIONAL STUDY: averages replaced with decision tables; two intuitions overturned
+- Bill rejected the averages-only playbook (correctly). Built
+  scripts/event_conditional_study.py -> data/
+  event_conditional_tw.json + PERSONA_PLAYBOOK Part III:
+  conditional tables with mechanism attribution from the
+  three separately-labeled TW flows (t86=institutions,
+  margin=retail leverage, SBL=shorts). 157 windows; flows
+  2015+; correlational, stated.
+- **A. Bill's question ("is early strength pre-positioning?")
+  ANSWERED: early strength per se is NOT the HF signature —
+  early strength WITH concurrent foreign buying is.** The
+  institutional pattern is the MID early bucket: heavy
+  foreign accumulation (+0.069 ADV) + controlled grind ->
+  best continuation (+6.9%) with modest reversion. STRONG
+  early pops with FLAT foreign flow run hotter (+8.8% more
+  among the not-foreign-led) and round-trip almost entirely
+  (-7.4% by E+5) — the best fade-the-close candidates.
+  Margin medians flat -> "retail vs idiosyncratic" not
+  separable at the median (honest limit).
+- **B. INTUITION OVERTURNED #1: "it already moved" is a
+  reason to ENTER.** Hot day-5 starts (>+4.2%) deliver +6.7%
+  MORE drift (window total +15.5%); cold starts never wake
+  (+0.2% remaining). Momentum, not exhaustion.
+- **C. INTUITION OVERTURNED #2: the del-fade "earns nothing"
+  average hides the one cell that pays.** Pre-announcement
+  borrow build >1.28x -> window -3.8% AND revert +3.3% (the
+  cover). Buy-the-close works ONLY on crowded-short
+  deletions. In-window build monotone: light -0.1% / mid
+  -2.2% / crowded -2.8%.
+- D: large-ADV adds show +15% windows but confounded with the
+  2019-22 semi era (flagged). **E: the pod's risk shape —
+  median MAE -2.2% but p10 -9.7%**: one add-long in ten sits
+  through ~10% drawdown before collecting; size to the p10.
+  F: big reviews (>=6 names) run HOTTER (+5.7% vs +3.2%) —
+  no capital dilution.
+
+## Session 9i continued-131 (2026-08-08) — Bill's terminal run graded: 179 windows, the live loop fixed for TPEx, KRX one copy-paste away
+- Bill ran the three commands; all outputs diagnosed:
+  1. tw_event_window harvest = SUCCESS BEYOND the sandbox run
+     — extended into 2010-2014 (EST announcement dates): 179
+     windows total. The '0 days' rows are the known TPEx
+     names, cached as pending, not errors.
+  2. live pull 12/17 = the same TPEx gap on the SHORTLIST
+     (8299/6274/3529/3293/8069) — FIXED: pull now also hits
+     the TPEx daily bulk endpoint (closes+volume; TPEx
+     foreign/borrow flows registered).
+  3. report 'insufficient data' = arithmetic, not a bug (1
+     day pulled, cum return needs 2) — message now says so.
+  4. KRX LOGOUT = the designed fallback; exact DevTools
+     bld-copy instructions given to Bill.
+- Analyzers + persona study RERUN on the fuller sample (157
+  TW windows analyzed): add drift +3.3% unchanged, capture
+  0.86, fade-the-close +2.4% @ 69% (2010-14 fades less), and
+  the era decay is now an INVERTED U: +2.2% (10-14) -> +4.9%
+  (15-18) -> +7.6% (19-22) -> +2.9% (23-26) — the trade grew
+  for a decade before crowding; persona era buckets extended
+  to 2010-14. PERSONA_PLAYBOOK updated with superseding
+  numbers. Suite 512 green.
+
+## Session 9i continued-130 (2026-08-08) — THE THREE-PERSONA STUDY: tracker / hedge fund / agency desk, answered on 115 TW windows
+- docs/PERSONA_PLAYBOOK.md + scripts/persona_study.py ->
+  data/persona_study_tw.json. Each persona's objective,
+  decision, question list, and the MEASURED answer.
+- **TRACKER (P1-P4)**: trading AT the close costs ~NOTHING in
+  the TW median (adds eff-day -0.08%, and the close was
+  slightly CHEAPER than E-1) while pre-trading costs the
+  +3.3% drift; effective-day volume 12.7x ADV (p90 38x).
+  VERDICT: full-close execution wins; carve out only extreme
+  demand/ADV names.
+- **HEDGE FUND (H1-H6)**: total add alpha day0->E-1 = +4.9%
+  median, 70% hit rate; **capture 0.83 — day-1 entry is NOT
+  too late** (83% of the move comes after day 1); exit E-1
+  (holding into the close = -0.08% at 48% = coin);
+  **the fade-the-close SECOND trade is as good as the first:
+  short adds at E close, cover E+5 = +3.5% at 72% hit** —
+  while fading dels earns NOTHING (+0.2%, 51%): add pressure
+  is temporary, del repricing is permanent. ERA DECAY
+  measured: add alpha +4.9% (15-18) -> +7.6% (19-22) ->
+  +2.9% (23-26) — crowding real, trade not dead.
+  FRONT-RUNNING confirmed: adds +3.8% in the 25d BEFORE
+  day 0, del borrow builds to 1.20x pre-announcement.
+- **AGENCY DESK (C1-C5)**: client table = close ~-0.1% vs
+  early +3.3% (advice: take the close); arbs DO provide the
+  close liquidity (drift-then-flat signature); post-eff
+  advice quotable ("adds give back ~3.5% within a week, 7 of
+  10; dels don't bounce"). TWO HONEST NEGATIVES: C1 progress
+  ratio (0.0125, n=22) FLAGGED as a units/AUM artifact — not
+  reported as a finding, Piece B resolves it; C4 the crude
+  PRE score does NOT separate effective-day outcomes
+  (-0.20% vs -0.24% across terciles) — registered, better
+  crowding features queued.
+- ADDITIONAL DATA mapped + files: scripts/etf_flows_harvest
+  .py (iShares NAV/shares history; the ajax id is JS-built —
+  ONE DevTools copy unlocks all 13 funds, instructions in
+  the docstring); kr_flow/th_nvdr already written; J-Quants
+  post-signup; PH prices + close-auction endpoint + pre-2015
+  ann dates registered.
+- Suite 512 green.
+
+## Session 9i continued-129 (2026-08-07) — THE FRAMEWORK GOES APAC-WIDE: 704 windows, 11 markets, survivorship SOLVED where day-files exist
+- The autonomous block Bill authorized: apply the
+  announcement->effective framework to every APAC market.
+  DESIGN KEY: the DAY-FILE principle beats survivorship —
+  per-stock APIs die with the listing, daily all-stock files
+  do not.
+- PROBES FIRST (contract honored): NSE bhavcopy VERIFIED both
+  eras (old cm*.zip + new sec_bhavdata_full) ✓; ASIC daily
+  shorts CSV ✓; Stooq DEAD from this host (robots block) —
+  Yahoo chart endpoint (separate infra from throttled
+  get_info) = the survivor fallback.
+- **scripts/apac_event_days.py**: shared engine (global
+  announcement calendar from the TW registry — MSCI announces
+  all markets in ONE Geneva release), IN day-file adapter,
+  batched-Yahoo adapter, KR/ID stubs that raise with
+  instructions. **India: 157/166 windows, DELISTED-SAFE.**
+  Yahoo survivors: JP 199/202, KR 76/102, ID 44/53, TH 33/41,
+  MY 29/37, AU 25/36, SG 12/19, HK 10/20, NZ 5/13,
+  **PH 0/14 — Yahoo carries NO PSE prices** (matches the
+  fundamentals finding).
+- **scripts/au_shorts_harvest.py**: ASIC per-stock short
+  positions for AU event windows (CSV parse fix: 5 columns
+  rsplit-4; product names contain commas). 16/23 series;
+  pre-2022 files use a different URL pattern (registered).
+- **scripts/kr_flow_harvest.py + th_nvdr_harvest.py** written
+  for Bill's terminal (KRX ritual + bld-string fallback
+  instructions; SET session ritual + NVDR endpoint probe).
+- **scripts/apac_event_analyze.py -> apac_event_playbooks
+  .json**: 704 windows analyzed across 11 markets. THE
+  CROSS-MARKET REGULARITY: **ADD drift is positive in 9 of 11
+  markets** (TW +3.3%, JP +1.9%, IN +1.4%, KR +1.6%, TH
+  +6.1%, ID +3.0%, AU +2.6%); TW/KR/MY/ID revert most of it
+  by E+5 (TW -3.5%, KR -5.3%, MY -4.1%) while IN/JP barely
+  revert — the add trade ROUND-TRIPS in the crowded
+  Asia-Pac names but STICKS in India/Japan. DEL side is
+  messier and survivorship-biased outside TW/IN (labeled on
+  every output). India labels: 33 CLEAN-DRIFT vs 4
+  FRONT-RUN-FADE of 120 adds — the least crowded major
+  market by this measure.
+- Page 5: market selector (12 markets) with per-market
+  survivorship banners; flow overlays guarded TW-only until
+  KR/TH land. tests/test_apac_event_windows.py (5) pins the
+  shared calendar, India delisted-safety, playbook coverage,
+  and the ADD-drift-positive regularity. Suite 512 green.
+- STATUS TABLE: analyzed-now = TW/IN (delisted-safe) + JP/KR/
+  ID/TH/MY/AU/SG/HK/NZ (survivors, labeled); terminal-gated =
+  KR flows, TH NVDR, ID day-files, J-Quants JP; gapped = PH
+  prices (PSE archive route needed), pre-2022 ASIC pattern,
+  pre-2015 announcement dates.
+
+## Session 9i continued-128 (2026-08-07) — THE FRAMEWORK BUILT AND FED: 133 windows, 115 analyzed, the playbook exists
+- Bill away 2h, autonomy block. SIDE TASK done: Cutoff
+  Framework + Reconstruction (PIT) pages HIDDEN from the
+  sidebar (code intact, restore = re-add to the radio list;
+  pinned in test_hidden_pages_stay_hidden).
+- **docs/EVENT_WINDOW_FRAMEWORK.md** — the 7-step process:
+  (0) conventions incl. the Geneva-timing day-0 rule, (1)
+  demand in ADV-multiples, (2) flow decomposition w/
+  progress(t) = cum foreign net / expected demand, (3) price
+  metrics (gap1/drift/eff/revert/capture), (4) crowding
+  scores PRE/PROG/SQZ w/ REGISTERED thresholds, (5) window
+  labels (CLEAN-DRIFT/FRONT-RUN-FADE/SQUEEZE/QUIET), (6)
+  playbook aggregates, (7) the live loop.
+- **HARVEST COMPLETE 2015->2026**: 133 windows (34 reviews,
+  every registry event Feb15-May26), delisted-safe, ~2h of
+  throttle-paced TWSE pulls. 18 empty = TPEx names (endpoint
+  pending). OPS lessons: pgrep/pkill patterns match their own
+  bash wrapper in the sandbox (use ps aux | grep [t]...);
+  duplicate harvesters clobber the shared cache
+  (read-modify-write) — one writer per cache, enforced by
+  hand.
+- **scripts/event_window_analyze.py**: 115 windows analyzed.
+  Playbook (raw returns; 0050 proxy paused to keep TWSE to
+  one consumer): ADD gap1 +1.4%, drift +3.3%, eff -0.1%,
+  revert5 **-3.5%** (the add round-trips!); DEL gap1 -0.7%,
+  drift -1.3%, eff-day -1.3%, revert5 +0.2%; labels: 18
+  CLEAN-DRIFT / 10 SQUEEZE among 69 DELs. Constants
+  REGISTERED pre-grading (AUM $180B, PRE 5%, SQZ 1.30).
+- **scripts/event_window_live.py**: the Aug-26 daily loop
+  (pull/report, bulk endpoints, appends
+  data/aug26_live_ledger.json; shortlist embedded incl.
+  BLOCKED 6505 + bubble names; Bill's terminal from Aug-12).
+- Page 5 playbook section + per-window table + eff-day
+  markers: EXACT vline when one window/review shown, MEDIAN
+  offset with range label when many (offsets differ 9-14
+  sessions across reviews — Bill asked, now explained on the
+  chart itself).
+- **PART II decomposition written** (the liquidity-model
+  goal, broken for autonomous execution): A ground truth of
+  effective-day prints -> B AUM fitted per era (replaces the
+  $180B constant) -> C pre-positioning ledger
+  (inventory/demand per day) -> D close-liquidity predictor
+  (median-path table first, walk-forward MAPE) -> E ranked
+  new data (per-stock close-auction history, EWT SO series,
+  TAIFEX SSF OI). Autonomy contract: run A->B->C->D, halt on
+  anomaly, acquisition proposed never assumed.
+- Suite 507 green (6 new pins).
+
+## Session 9i continued-127 (2026-08-07) — THE ANNOUNCEMENT->EFFECTIVE STUDY (page 5) + the Aug-26 shortlist declared
+- (c-126b, same day) THE WEIGHTS INVERSION: official
+  constituents weights x index float cap / our full caps =
+  **MSCI's own FIF for every member**. Jun-01-aligned with the
+  FIF-constancy calibration (IdxCap Jun-01 = $3,331B, anchor
+  spread 0.1%, anchors reproduce at 0.0%): extracted FIFs land
+  ON MSCI's rounding grid (Wan Hai 0.251, Eva Air 0.501,
+  President Chain 0.501, eMemory 0.852). 60/77 mapped (17 =
+  mapping debt). data/tw_member_fifs_weights.json. This
+  CONFINES the "inferior float" problem to add candidates
+  only.
+- **AUG-26 SHORTLIST DECLARED (Aug-7, grades Aug-11/12)**,
+  corrected engine end-to-end: Jul-20 prices, count-stability
+  check (rank-77 cap $6.73B INSIDE size range + 88.2%
+  coverage -> count HOLDS 77), buffers off the rank-77 cutoff.
+  ADDS: 2408/8046/2344 strong + 8299/3189/6274 (all >1.5x,
+  gate PASS); 6505 FLOAT-BLOCKED again (FIF 0.12); queue
+  names not called (no slots). DELS: 2615 Wan Hai (float
+  gate, MSCI's own FIF 0.25) + displaced 6919/2609/3529/2834/
+  1101. Bubble: 3293/8069/2356/5871. Consistent with the
+  Aug-5 shadow call.
+- **PAGE 5 BUILT: Announcement -> Effective** (Bill's next
+  stage). TIMING CONVENTION pinned: Geneva announces ~23:00
+  CET = ~05:00 Taipei NEXT morning -> day 0 = announcement
+  date's Taipei close (pre-news baseline, cum ret := 0), day
+  1 = first reaction session. One-day error here contaminates
+  the baseline.
+- COVERAGE MEASURED: TWSE STOCK_DAY serves DELISTED names
+  (Inotera ✓, old-ASE ✓) — the 2006 hope is FALSE though:
+  archive floor is **2010-01-04** -> full fidelity 2010-2026,
+  pre-2010 survivors-only (registered). Announcement dates:
+  exact 2015+ (registry 'ann'), 2010-2014 = eff-10bd EST.
+  Tickers: 100% 2015+, 70% 2010-2014.
+- FLOW OVERLAYS NEED NO HARVEST: sbl_history (borrow),
+  t86_history (foreign net), margin_history already cover
+  2015-2026 per stock per day (3,024 days).
+- scripts/tw_event_window.py (resumable, delisted-safe,
+  2.2s pacing) + views/event_window_study.py: cumulative
+  returns benchmarked 0 at day 0 w/ filters (ADD/DEL, era,
+  single review) + effective-day marker; crowding overlays
+  (cum foreign net buy, borrow indexed to day 0, volume vs
+  pre-ann avg); PRE-POSITIONING LENS (25d before day 0 —
+  drift/borrow build before announcement = front-running
+  fingerprint). May26+Nov25 harvested from sandbox (21
+  windows; 6223=TPEx pending endpoint); rest of 2010-2026 on
+  Bill's terminal: py scripts\\tw_event_window.py harvest
+- Suite 501 green.
+
+## Session 9i continued-124 (2026-08-07) — THE APAC FIF COMPARISON: Yahoo works where nothing structural binds; the failures are the RULEBOOK, not the float
+- Bill's ask: repeat the TW factsheet-implied method for every
+  APAC market, survey per-market sources, and grade our floats
+  vs MSCI's. Built scripts/apac_fif_compare.py (parse ->
+  map -> harvest -> report, each stage resumable).
+- PARSE: all 13 July-2026 factsheets' TOP-10 blocks extracted
+  (the -layout column interleave needed last-match-per-line +
+  wide-gap splitting; NZ has 5 constituents). VALIDATION: the
+  TW rows sum to $2,443.2B = the factsheet's own printed
+  total.
+- HARVEST: Yahoo caps+floats for the mapped symbols; throttled
+  at 56/96 (same ~60-call ceiling as c-122) -> MY/NZ/PH/SG/TH
+  pending, RESUMABLE on Bill's terminal:
+      py scripts\\apac_fif_compare.py harvest
+      py scripts\\apac_fif_compare.py report
+- **SCOREBOARD (median |err| vs implied FIF)**: AU 0.8%,
+  JP 4.8%, HK 5.9%, ID 9.7%, CN 14.3% (n=3), KR 14.6%,
+  IN 32.1%. TW 2.7% from c-121.
+- **THE FINDING: the failures are not float errors.**
+  - INDIA: Yahoo is RIGHT about the float (~1.0, no promoter
+    block) and wrong about the FIF because **FIF = min(float,
+    FOL adjustment)** — Indian foreign-ownership limits bind
+    the biggest names (HDFC implied 0.753, ICICI 0.743,
+    L&T 0.477). Fix = NSDL FPI-limit data, not better float.
+  - KOREA: Samsung PREF implied 0.136 = OUR artifact (Yahoo
+    returns the company cap for the pref line); Hyundai Motor
+    0.496 vs Yahoo 0.955 = REAL Yahoo failure (chaebol
+    cross-holdings counted as float).
+  - AUSTRALIA: RIO implied 0.219 = DLC artifact (Yahoo cap =
+    global group, MSCI holds the AU line).
+- Per-market overlay table added to the spec (§3d): India
+  needs FOL/headroom, Korea needs pref+cross-holding
+  handling, China share classes (done c-113), AU DLCs;
+  JP/HK/ID/SG/TH show no structural overlay so far.
+- Artifacts: data/apac_factsheet_top10.json,
+  apac_fif_yahoo_cache.json (resumable),
+  apac_fif_compare.json.
+- **c-124b (same day): COMPLETED all 13 markets** after fixing
+  the symbol maps (~35 mega-cap OVERRIDES; Thailand NVDR .R ->
+  .BK; Malaysia needs NUMERIC Bursa codes, mnemonics dead).
+  Final scoreboard (median |err|): AU 1.1, SG 2.6, NZ 4.4,
+  JP 4.6, HK 5.3, TW 6.1, ID 8.8, KR 13.7, MY 14.1, CN 22.8,
+  TH 23.0, IN 32.1, **PH: Yahoo serves NO PSE fundamentals at
+  all** (source = PSE EDGE Public Ownership Reports).
+- **THAILAND JOINS INDIA in the FOL-bound class** — every error
+  positive (+19..98%): PTT implied 0.347 vs float 0.459, Gulf
+  0.247 vs 0.488 — Thai foreign limits + NVDR cap the FIF
+  below the float. **CHINA's 22.8% is OUR denominator
+  artifact**: H-share lines (ICBC implied 0.192, BOC 0.219 vs
+  Yahoo ~1.0) — Yahoo caps are company-wide (A+H) while
+  MSCI's line is H-only; fix = per-class share counts, not
+  floats. **MALAYSIA is bimodal**: half near-exact, half
+  GLC-bound (Maybank +102%, IHH +81% — Khazanah/PNB/EPF are
+  strategic to MSCI, float to Yahoo).
+- Spec §3d rewritten with the full 13-market table + per-market
+  overlay column.
+
+## Session 9i continued-125 (2026-08-07) — ALTERNATIVE FLOAT SOURCES, tested where reachable
+- Bill: for markets >5% error, find alternative float sources
+  and grade them vs the implied FIFs. Results:
+- **CHINA/KOREA NEED NO NEW SOURCE** — the fix was inside
+  Yahoo all along: `sharesOutstanding` is the PER-LINE class
+  count (verified against known values: ICBC H 86.79B ✓,
+  Samsung pref 0.80B ✓) while marketCap/floatShares are
+  company-wide. Rebuilding line caps as price x line shares:
+  ICBC H implied 0.789, BOC H 0.843, Ping An H 0.898, Samsung
+  pref ~1.0 (1.12 incl. week drift) — and **CCB H 0.367 which
+  is REAL (Huijin's stake sits in the H line)**, recovered
+  correctly. data/apac_line_fix.json. Ex-artifact China Yahoo
+  err: 13.1% (n=6).
+- **PHILIPPINES SOLVED — PSE EDGE publishes Free Float
+  Level(%) AND the FOL per company** (stockData.do). Harvested
+  all 10: raw float median |err| 21.9% -> **min(float, FOL) =
+  12.2%** — the rulebook's own overlay halves the error, and
+  the residual outliers (SM Investments, Meralco B) match the
+  foreign-room x0.5 adjustment cases. data/ph_pse_float.json.
+- **BOT-BLOCKED from the sandbox (403), registered as
+  browser/terminal tasks**: SET Thailand (publishes float% +
+  foreign room — expected to close most of TH's 23% by the
+  India/PH analogy), NSE/NSDL India (FPI headroom), IDX
+  Indonesia (float in the stock list), KRX floating ratio
+  (session-gated: LOGOUT).
+- Malaysia: no bulk source — the overlay is a ~10-name manual
+  GLC-stake table; the bimodal split already isolates which
+  names need it.
+- All appended to data/apac_fif_compare.json under
+  `alternative_sources`.
+
+## Session 9i continued-126 (2026-08-07) — Thailand graded (11.3%), NSE fix, the MY classifier, and the ROLLOUT VERDICT
+- Bill ran `th` on his terminal: all 12 SET names landed with
+  float% AND FOL. Graded via the mounted file: **min(SET
+  float, FOL) = 11.3% median |err| vs Yahoo's 23.0%** —
+  halved, the same overlay math as PH. REFINEMENT REGISTERED:
+  the min-rule OVER-corrects NVDR-accessible names (BDMS
+  implied 0.638 vs FOL 0.30; SCC 0.582 vs 0.25 — foreigners
+  reach them through NVDRs, which MSCI counts). The Thai
+  estimator needs three branches: FOL-capped, float-bound
+  (NVDR), room-adjusted.
+- Bill's `in` run failed all 10 with JSONDecodeError —
+  diagnosed as NSE's brotli encoding + missing per-symbol
+  Referer + unencoded 'M&M'. Patched (gzip-only negotiation,
+  per-symbol warm-up, quote(), BLOCKED detector that names
+  the failure mode). Also re-stated: NSE is the OPTIONAL half
+  — NSDL's company-wise FPI limit table is the binding input
+  and is a 2-minute manual download.
+- Malaysia automation designed + built (scripts/
+  my_float_glic.py): the CALIBRATED GLIC CLASSIFIER — parse
+  each AR's mandatory "Analysis of Shareholdings" via Bursa's
+  API (cloudscraper), classify holders (Khazanah/PNB/EPF/
+  KWAP/LTAT/founders), float = 1 - strategic, and GRID-SEARCH
+  the class inclusion flags against the 10 implied FIFs
+  (dry-run shows the EPF flag alone moves Maybank 0.437-0.583
+  around the 0.485 answer). Fitted model, labelled as such.
+  Secondary route: harvest the 5 GLICs' own portfolios (5
+  documents, partial coverage) as cross-check.
+- Spec §3e: the full scoreboard + the ROLLOUT VERDICT table —
+  GO on Yahoo alone: JP/AU/HK/SG/NZ/ID (+KR with caution, TH
+  and PH on their exchange overlays); HOLD: MY (classifier),
+  IN (NSDL), CN (own build). Order: JP,AU,HK,SG -> KR,TH,ID
+  -> NZ,PH -> MY,IN,CN.
+
+## Session 9i continued-123 (2026-08-07) — THE FULL §2.2 SCREEN CHAIN (Bill's proposal, built): rank 74 vs true 77
+- Bill proposed exactly the right construction: build the MIEU
+  with ALL SEVEN §2.2 screens, then best-float every qualified
+  name, then walk to the rank. Built as
+  scripts/tw_mieu_build.py + scripts/tw_atvr.py.
+- NEW DATA CONFIRMED: TWSE t187ap03_L carries 上市日期
+  (listing date) and TPEx DateOfListing -> §2.2.7 length of
+  trading is implementable; TWSE FMSRFK gives ONE call = one
+  YEAR of monthly traded value + 週轉率 (turnover%) per stock
+  -> §2.2.5 ATVR = 12 x median(monthly turnover)/ff. TPEx has
+  NO per-stock monthly endpoint (probed 6 candidates +
+  openapi catalogue — registered gap): TPEx names labeled
+  NOT_EVALUATED, never silently passed.
+- SCREEN CHAIN RESULT at 20260420 (liquidity partially
+  evaluated): listed 1,948 -> size drops 1,487, float-cap 24,
+  FIF 1, trading-age 2, foreign-room 1 -> **MIEU 433
+  companies, float $3,184B, 85% crossing rank 74 = 2337 at
+  $7.55B** (target: rank 77, $5.19B). The screens beyond size
+  barely move TW — the honest finding is that §2.2's
+  non-size screens bind almost nobody in a market this liquid;
+  the remaining rank gap is float, and the remaining DOLLAR
+  gap is concentrated caps around the crossing.
+- Screen accounting contract pinned in tests/test_tw_mieu.py
+  (4): every screen fires-with-data or is DECLARED
+  not-evaluated; walk sorted by full cap and cumulated on
+  float; sources tiered with calibration metadata riding
+  along. Suite 501 green.
+- OPS: TWSE rate-limited the sandbox IP after the day's bulk
+  pulls (FMSRFK starves at any pacing; fresh single calls
+  succeed — burst-limiter signature). ATVR harvest is
+  RESUMABLE and handed to Bill's terminal:
+      py scripts\\tw_atvr.py run          (~40 min, 466 names)
+      py scripts\\tw_float_yahoo.py run 500   (extend Yahoo)
+      py scripts\\tw_mieu_build.py 20260420   (rebuild + rank)
+  Then the same for 20260720/21/22 to carry the Aug-26 band.
+- IB probe follow-ups from Bill's live run recorded (c-123):
+  Error 10358 = reqFundamentalData refused/deprecated -> IB
+  float route CLOSED (verdict recorded, not chased); Error 162
+  on historical = probe patched to reqMarketDataType(1) per
+  ib_harvest's own lesson; arbitration = ib_harvest verify.
+
+## Session 9i continued-122 (2026-08-07) — THE WALK, on real float: rank 62 -> 75 vs a true 77
+- Bill challenged the flat-tail rows in the c-120 table: why
+  assume float when we hold data? Correct challenge. Those
+  rows were SENSITIVITY PROBES to bound the tail's influence,
+  never a proposed method — and the answer is to use the real
+  stack, which is what this session built.
+- scripts/tw_float_yahoo.py: Yahoo floatShares for the largest
+  names, resumable. **Yahoo hard-throttled the sandbox at 60
+  of 300** — the remaining ~240 are a task for Bill's terminal
+  (one machine per API, the standing rule).
+- **The 60 names were enough to CALIBRATE.** On the overlap,
+  Yahoo median ff 0.750 vs TDCC 0.642 — **TDCC runs 16% low**,
+  systematically, because bracket 15 counts large domestic
+  institutions as strategic when MSCI counts them as float.
+  So tier 3 became TDCC x the MEASURED ratio, not a chosen
+  constant. Float stack now: factsheet-implied (top 10, exact)
+  > Yahoo (2.7% median err) > TDCC-calibrated > 0.55 default.
+- **RESULT: the 85% crossing moved from rank 62 to rank 75
+  against a true 77.** Universe float $3,104B -> $3,188B (the
+  factsheet implies ~$3,745B at exactly 85% coverage, with a
+  $3,537-3,979B band since §2.3.1 sets 85%±5%).
+- **The two remaining gaps have DIFFERENT causes** and the
+  walk now says so: the RANK is set by float estimates and is
+  nearly closed; the DOLLAR cutoff is still high ($7.55B vs
+  $5.19B) because we have applied only the two SIZE screens
+  (§2.2.3/§2.2.4) — not liquidity/ATVR, the
+  ineligible-securities list, or the foreign-room floor. Every
+  name MSCI drops that we keep pushes our rank-N company up
+  the cap ladder.
+- scripts/tw_walk_display.py -> reports/tw_walk_20260420.html
+  (28KB, self-contained, NOT wired into the site per Bill):
+  the six rulebook steps with counts at each stage, the four
+  numbers the cutoff then decides (delete floor 2/3x,
+  migration bar 1.5x, float gate 50%), a float-PROVENANCE
+  table (companies + share of universe float + measured
+  accuracy per source), and the rank-by-rank walk with the
+  crossing row highlighted. Copied to the workspace root.
+- Suite 497 green.
+
+## Session 9i continued-121 (2026-08-07) — FLOAT SOURCES GRADED: Yahoo 2.7% vs TDCC 16.3%; Bill's memory was right
+- Bill asked which source we are actually using and how it
+  compares. Graded BOTH against the factsheet-implied FIFs
+  (top 10, the identity that ties to $0.01B):
+  **median absolute error — Yahoo 2.7%, TDCC proxy 16.3%.**
+  Yahoo is 6x better; 8 of 10 within 4%. Bill's recollection
+  that a Yahoo series matched MSCI closely is CONFIRMED.
+- Clarification for the record: the **c-120 harvest uses TDCC**
+  (exchange/depository), NOT Yahoo. The two stacks coexisted
+  and the new one silently picked the worse source for the
+  large caps.
+- TDCC's failure is SYSTEMATIC, not noise: worst cases are
+  **financials — Fubon -43%, CTBC -35%** — because bracket 15
+  lumps big domestic institutions in with strategic holders,
+  and MSCI counts those as float. Yahoo's worst is Delta -20%
+  (vendor estimate, can be badly wrong on one name).
+- **ARCHITECTURE SETTLED** (and it matches what §4b's
+  sensitivity analysis prescribed independently): factsheet-
+  implied for the top 10 (exact, free, TSMC alone ~49% of TW
+  float) -> Yahoo for the remaining large caps (2.7%, the band
+  where float error still moves the crossing) -> TDCC for the
+  tail (only the aggregate matters; independent errors average
+  out, sd 30%/name -> 2.7% aggregate).
+- **$5.19B cutoff derivation nailed down**: it is OUR full cap
+  for **2834 Taiwan Business Bank** at 2026-04-20 (price x
+  shares / FX 31.626), the smallest company that SURVIVED
+  May-26 (deletions ran $3.48-4.76B, next survivors 5.24,
+  5.29, 5.53). §2.3.4 makes the cutoff company the smallest
+  constituent, so the cutoff is read off the index rather than
+  computed. Corroborated by the float gate: 50% x 5.19 =
+  $2.60B, existing-constituent relief 2/3 -> $1.73B, and the
+  factsheet's smallest constituent float cap $1.84B clears it
+  (it would FAIL the $2.49B implied by a $7.47B cutoff).
+- **§2.3.1 found — the 85% is a TARGET RANGE, not an
+  identity**: "Standard Index: 85% +/- 5%" (p.23). So
+  $3,183.0B / 0.85 = $3,745B is the MIDPOINT; the true MIEU
+  float lies in **$3,537B (at 90% coverage) to $3,979B (at
+  80%)**. Our harvested screened universe currently sums to
+  $2,894B (TDCC) / $3,294B (tail 0.75) — 12-23% short, which
+  is the float-source defect above, not a universe defect.
+- Spec updated: new §3c (the graded comparison + the hybrid
+  architecture).
+
+## Session 9i continued-120 (2026-08-07) — THE FULL TW UNIVERSE, POINT-IN-TIME: 148 names -> 1,955, and the implied-FIF identity TIES EXACTLY
+- **scripts/tw_universe_pit.py** — the universe-completeness
+  gap (the c-116 backtest's biggest measured error) closed with
+  FOUR free bulk feeds, ~4 calls per date, no per-name scraping:
+  TWSE MI_INDEX (every close on the date), TWSE MI_QFIIS (**PIT
+  shares outstanding + foreign holding % + the Foreign
+  Ownership Limit**, all dated — this is what made shares
+  point-in-time for the first time), TPEx otc (closes AND
+  shares together), TDCC opendata 1-5 (dispersion for 4,019
+  securities).
+- Harvested 20260420 (the May-26 price cutoff) + 20260720/21/22
+  and 20260731 (the factsheet date). **1,948-1,961 companies
+  per date** (~1,080 TWSE + ~875 TPEx), float data on >99%.
+  Was 148. Resumable + incremental saves after a first run hung
+  on TWSE throttling (fixed: retries w/ backoff, flush=True,
+  per-date writes).
+- **THE IDENTITY CHECK PASSES EXACTLY.** Bill's method — MSCI's
+  published top-10 float caps / our full caps = implied FIF —
+  reproduces the factsheet's own top-10 total: **$2,443.21B vs
+  $2,443.20B**. That ties only if price x shares / FX is right,
+  so it validates the whole input chain before any float
+  judgement. TSMC implied FIF **0.952**, consistent with the
+  ~6% government stake and MSCI's 2.5% rounding grid.
+- **TDCC proxy graded against MSCI-implied FIF**: median -4%,
+  but the worst cases are FINANCIALS — Fubon -48%, CTBC -36%
+  (bracket 15 lumps domestic institutions in with strategic
+  holders). ASE +31%, UMC -30%. Per-name noisy, sector-biased.
+- **§2.3.3 run properly for the first time** (sort by FULL cap,
+  cumulate FLOAT-adj, clip to range) against the published
+  answer (rank 77, cutoff $5.19B, universe float ~$3,745B):
+  | float assumption | universe | rank | cutoff |
+  | TDCC proxy | 424 | 69 | $8.06B |
+  | + factsheet FIFs top-10 | 424 | 63 | $8.77B |
+  | + tail flat 0.55 | 461 | 60 | $9.27B |
+  | + tail flat 0.75 | 461 | **79** | $6.90B |
+  | + tail flat 0.85 | 461 | 86 | $6.13B |
+  The truth (77) sits INSIDE the range the float assumptions
+  span, and the TAIL assumption dominates the rank — the c-118
+  size-correlated-bias prediction, confirmed on real data.
+- Residual gap identified: 97 companies clear $5.19B in our
+  universe vs 83 MSCI Standard members pre-review. The 21
+  non-members are add candidates (2408 $20.3B, 8046, 2344,
+  6223=MPI which WAS added) plus float-gate failures (6505
+  Formosa Petrochemical: FIF 0.12 -> float cap $2.0B vs the
+  $2.60B gate). So the remaining work is the §2.2 screens we
+  have not applied (liquidity/ATVR, ineligible securities,
+  foreign room) and the Standard float gate — NOT the universe.
+- scripts/tw_cutoff_calibrate.py + data/tw_cutoff_calibration
+  .json capture it reproducibly. tests/test_tw_universe_pit.py
+  (5) pins the identity check, PIT-ness of inputs, the
+  proxy-bias negative result, and that no scenario is declared
+  correct — the truth must merely be bracketed. Suite 497.
+- REMAINING: 6 July dates (23,24,27,28,29,30) still to harvest
+  for the full date-uncertainty band; TWSE throttles, so run
+  them in small batches.
+
+## Session 9i continued-119 (2026-08-07) — THE FACTSHEET ARBITRATES: cutoff is ~$5.2B, the COUNT is primary, and SAIR/QIR was abolished in Feb-2023
+- Bill supplied the **Jul-31-2026 TW factsheet**. Besides the
+  top-10 float caps it publishes: 77 constituents, index
+  float-adj cap **$3,183.0B**, largest $1,848.5B (TSMC),
+  **smallest constituent $1.84B**, average $41.3B, median
+  $10.4B. Those are four independent validation anchors we
+  were not using.
+- **c-117's cutoff inference (~$7.47B) was WRONG** and the
+  smallest-constituent number proves it. Float gate = 50% x
+  cutoff with 2/3 relief for existing constituents
+  (§2.3.6.1/§3.1.6.2): at $7.47B the relief threshold is
+  $2.49B and the smallest constituent ($1.84B) FAILS — it
+  could not be in the index. At **$5.19B** (the smallest
+  survivor's FULL cap) the threshold is $1.73B and it PASSES.
+  $5.19B is also what §2.3.3/§2.3.4 imply directly: the
+  85%-coverage company DEFINES the cutoff and its rank IS the
+  Segment Number of Companies, so **the cutoff company is the
+  smallest constituent** — readable straight off the index.
+- **THE BIG REFRAME: deletions were COUNT-driven, not
+  buffer-driven.** With cutoff $5.19B the lower buffer is
+  $3.46B, yet all seven May-26 deletions measured $3.48-4.76B
+  — ABOVE it. They were squeezed because the Segment Number of
+  Companies fell (§3.1.5 "until the Segment Number of
+  Companies is achieved"). **The count is primary; buffers
+  govern who fills the marginal slots.** The right question is
+  not "whose cap fell below a threshold" but "how many slots
+  are there, and who is below the line when the music stops".
+- **SAIR vs QIR ANSWERED from Appendix XX p.148-149**: they
+  DID have different rules — SAIRs were comprehensive, QIRs
+  "aimed to capture significant market driven changes" only —
+  and **the distinction was ABOLISHED at the Feb-2023 review**,
+  replaced by the Quarterly Comprehensive Index Review (QCIR),
+  which "employs the index maintenance methodology of an SAIR
+  across each of the quarterly Index Reviews"; FIF/NOS fully
+  reviewed every quarter from May-2023.
+- Our DB confirms it: APAC avg changes per review, QIR vs
+  SAIR, **12.7 vs 117.3 pre-2023 (9x) -> 72.9 vs 81.3 after
+  (1.1x)**. History Explorer caption corrected — "SAIRs carry
+  the breadth" is dead for post-2023 data. Trading
+  consequence: **Aug-2026 is a FULL comprehensive review.**
+- Also confirmed Bill's factsheet-implied-FIF method is sound
+  but needs two fixes to his proposed calculation: sort by
+  **FULL** cap (not float cap) per §2.3.3, and shortlist on
+  **FULL** cap vs the buffers — float-adj cap enters only the
+  coverage sum and the separate 50% gate.
+- Bulk PIT data confirmed reachable in 5 calls: TWSE MI_INDEX
+  (all closes at 2026-07-20), TWSE OpenAPI t187ap03_L (shares
+  outstanding), TPEx dated daily quotes, TDCC bulk dispersion
+  (all stocks). The universe-completeness gap can close today.
+- Spec updated: §3b (cutoff correction + count primacy), §4d
+  (SAIR/QIR with the rulebook quotes and our data).
+
+## Session 9i continued-118 (2026-08-07) — CORRECTION: historical free float IS published; and float error matters less than assumed (but differently)
+- Bill challenged the c-116 audit line "historical float is not
+  published by anyone". **He was right to. The claim was wrong**
+  and is corrected in the spec, not quietly edited away.
+  Ownership disclosure is a listing requirement across APAC and
+  most of it is public and dated. The TRUE statement is
+  narrower: nobody publishes MSCI's FIF, and nobody publishes a
+  ready-made back-history in one file.
+- Survey (sources in the spec): **Japan A** — JPX publishes the
+  TOPIX Free-Float Weight per constituent monthly (an actual
+  published float factor, free-float regime since 2005-06);
+  **India A** — SEBI-mandated quarterly shareholding pattern on
+  NSE/BSE; **Thailand A-** and **Philippines A-** — SET
+  publishes free float % as a listing requirement, PSE Public
+  Ownership Reports on EDGE; **Taiwan B** — TDCC weekly
+  shareholding-dispersion table per stock (data.gov.tw 11452 +
+  OpenAPI) since 2007 BUT the portal retains only ~1 year, so
+  the history must be accumulated forward (we already snapshot
+  it weekly: `tdcc_archive`); HK/Korea B; MY/ID/SG/AU/NZ C.
+- **MEASURED the sensitivity rather than asserting it.** The
+  cutoff is a COVERAGE RANK, so it is scale-invariant: on the
+  148-name TW vintage universe at the May-26 price date,
+  scaling EVERY float by 0.6 or 0.8 moved the crossing by
+  ZERO. Unbiased per-name noise at sd 10% left the median
+  unchanged. What DOES move it is **size-correlated bias**:
+  large-cap float -10% vs the tail moved the crossing -9%,
+  -20% moved it -12%.
+- Consequence, and it changes the roadmap: chasing float
+  precision name-by-name has lower value than it appeared;
+  getting the CROSS-SECTIONAL SHAPE right (large-cap floats
+  relative to the tail) is what matters for the cutoff. Our
+  current stack — researched FIFs on top-10, a 0.55 default on
+  the tail — is exactly the correlated error that biases it.
+- BUT the float GATE (§2.3.6.1) is the opposite case: it tests
+  one security's own float against 50% of the cutoff, so there
+  the LEVEL matters directly. That is where Formosa
+  Petrochemical (FIF ~0.12) and Nanya (~0.46) live — the
+  above-floor deletions the backtest could not explain.
+- Spec updated: docs/MSCI_SIZE_SEGMENT_SPEC.md §4b (the
+  sensitivity table) and §4 (the APAC float-source survey with
+  grades + three routes).
+- **THEN Bill asked the right follow-up: would PIT float for
+  every stock actually reproduce MSCI? Measured answer: NO,
+  and float is not even the binding constraint.** New spec
+  §4c, three gaps in measured order:
+  1. **UNIVERSE COMPLETENESS (biggest).** At the implied $7.5B
+     cutoff our 148-name universe has accumulated 94.6% of its
+     float; MSCI accumulates 85% there. So MSCI's universe
+     holds **1.11x our float mass — ~$310B of float in names
+     we never see.** EU Min Size May-26 = $537M and TW has
+     several hundred companies above it; we carry 148, only 43
+     under $3B. Perfect float on a universe missing a tenth of
+     the market cannot converge — the denominator is wrong
+     before float is applied. Cheapest large lever: needs a
+     market-wide cap list + the §2.2 screens, not filings
+     research.
+  2. **DEFINITION.** Appendix VI p.97 — **"MSCI's estimation of
+     free float is based solely on publicly available
+     shareholder information"**. No private-data moat; MSCI
+     uses the same disclosures we surveyed. Residual gap is
+     definitional/operational: strategic vs non-strategic
+     classification (in a SEPARATE doc, "MSCI Free Float Data
+     Methodology"), the FOL cap `min(float, FOL)`, and
+     ROUNDING — FIF rounds to nearest 2.5% above 25% float,
+     0.5% between 5-25%, 0.1% below 5%. That rounding means
+     above 25% float MSCI itself discards any precision finer
+     than ~1% — reinforcing §4b's "shape not decimals".
+  3. **CONTINUITY.** §2.3.3: cutoffs updated at reviews
+     "additionally taking into account index stability and
+     continuity rules"; Appendix X rank-anchors the GMSR. Even
+     perfect inputs reproduce the UNCONSTRAINED crossing, not
+     necessarily MSCI's published cutoff. Plus §3.1.9
+     discretion.
+
+## Session 9i continued-117 (2026-08-07) — THE RULEBOOK READ PROPERLY: our cutoff was the wrong number entirely
+- Bill uploaded the May-2026 GIMI book and asked for the exact
+  definitions. Root cause of the c-116 addition failure found,
+  and it is bigger than the add bar: **we were hanging the
+  buffers off the RANGE CEILING instead of the Market
+  Size-Segment Cutoff.**
+- §2.3.2 p.24: range = **0.5x to 1.15x** the GMSR (EM Standard
+  May-26 = $3.94-9.06B ✓ we had this right). §2.3.3 p.26: the
+  CUTOFF is computed PER MARKET — sort the Market Investable
+  Equity Universe by full cap, cumulate FLOAT-ADJUSTED cap,
+  take the full cap of the company at 85% coverage; if inside
+  the range that IS the cutoff and its rank is the Segment
+  Number of Companies; if outside, flex the COUNT.
+- §3.1.5.1 p.43: buffers are **2/3 and 1.5 times the CUTOFF**
+  (fn24: 0.5x/1.8x at light rebalancings). §3.1.5 p.42 gives
+  the addition PRIORITY LIST — there is no single add bar:
+  newly-investable needs >= 1.0x cutoff; Small-Cap migration
+  needs > 1.5x; between them is a QUEUE filled largest-first
+  until the Segment Number of Companies is met.
+- §2.3.6.1 p.30: float gate = float cap >= **50% of the
+  CUTOFF** (1.8x if FIF<0.15); §3.1.6.2 p.44 gives existing
+  constituents 2/3 relief. §3.1.9 p.48: the Price Cutoff Date
+  governs **price, FIF, NOS AND foreign room** — so PIT float
+  is required, not optional.
+- **EMPIRICAL CONFIRMATION (May-26 TW).** At the disclosed
+  2026-04-20 cutoff the 7 deletions ($3.48-4.76B) and the
+  survivors ($5.19B+) are PERFECTLY SEPARABLE. So 2/3 x cutoff
+  lies in ($4.76, $5.19) => **cutoff ~= $7.5B**, inside the
+  range — not the $9.06B ceiling we assumed. Under the
+  corrected cutoff May-26 scores **7 hits / 0 misses / 0 FALSE
+  ALARMS** (engine today: 7/0/8). The 8 false alarms were
+  precisely the names between the true and assumed floors.
+  MPI Corp, the sole addition, = 2.13x the inferred cutoff ✓.
+- Across the 8 cleanly-separable reviews: **16/16 additions
+  clear 1.0x the inferred cutoff, only 8/16 clear 1.5x** —
+  exactly the two-path structure of §3.1.5.
+- Separability audit (22 reviews with deletions): 8 SEPARABLE
+  (incl. every recent well-data'd one); early-year overlaps
+  are OUR artifacts (sub-$1B "members" 3296/8046/5269/4743 =
+  vintage/membership junk); Feb24/Aug24/Feb25/Feb26 overlaps
+  are the genuine float cases (Formosa Petrochemical $19.28B
+  deleted with 76 survivors below it).
+- **THE REFRAME**: precision is not limited by the RULE, it is
+  limited by our CUTOFF ESTIMATE. A fixed multiple of the
+  ceiling cannot fix it (grid tested — just trades recall for
+  precision as before) because the true cutoff moves inside
+  the range each period (0.56-0.82 x ceiling in clean cases).
+  The cutoff must be COMPUTED (§2.3.3) — which needs
+  universe-wide PIT free float, the same D-grade input, now
+  shown to set the threshold itself rather than break ties.
+- Written up in **docs/MSCI_SIZE_SEGMENT_SPEC.md** (every rule
+  with section + page, the corrected engine spec, the PIT data
+  feasibility table, and the two routes out: empirical cutoff
+  estimation now vs MOPS PIT float rebuild later).
+
+## Session 9i continued-116 (2026-08-07) — FULL TW BACKTEST 2018-2026: the add bar is WRONG, and we can prove it
+- Batch rerun on the repaired DB: 32/34 reviews scored (Feb18,
+  Feb23 have no matchable edition — excluded, not guessed).
+- **DELETIONS: recall 85% (45/53), precision 8% (533 FA).**
+  Sensitivity sweep proves threshold tuning CANNOT fix it —
+  floor x0.6 lifts precision only 8%->19% while recall
+  collapses to 40%. The curve is flat: the at-risk set is
+  genuinely large, so the missing ingredient is a RANKING
+  signal inside the pool, not a better cut.
+- **ADDITIONS: the engine grades none — built the grader.**
+  All 41 coded adds have vintage data, so recall is exact.
+  Result: **2% (1/41)**. Diagnosis: the 1.5x-ceiling add bar is
+  MIS-SPECIFIED. Real adds cluster at median 0.95x the CEILING
+  — 93% clear the floor, 44% clear the ceiling, 2% clear 1.5x.
+  Sweep: at 0.8x ceiling recall 2%->58% AND precision 5%->34%
+  — BOTH metrics improving is the signature of a wrong rule,
+  not a mistuned threshold. (Likely root cause: most adds are
+  Small-Cap segment migrations with their own buffer rules,
+  which we never modelled.)
+- **FALSE ALARMS RE-READ: 80% (424/533) were deleted at a
+  LATER review**, median lag 10.5 reviews (~2.6 yrs). They
+  were early, not wrong. The pool is a genuine at-risk
+  register with NO timing model.
+- **MISS TAXONOMY — two distinct failure modes**: 3 of 8 are
+  MEMBERSHIP GAPS (cap WAS below floor; the name was missing
+  from the reverse-rolled membership so never entered the
+  pool — free wins, a data fix); 5 are ABOVE-FLOOR deletions
+  (Formosa Petrochemical at 4.5x floor, Nanya 1.8x, MOMO
+  1.9x). Full size cannot explain those — float is the
+  suspect.
+- **AND WE CANNOT TEST IT**: float data exists for only 5 of
+  45 historically deleted names (11%). Declared UNTESTABLE
+  rather than hand-waved — the top DATA gap, not a modelling
+  gap.
+- Feature tests, incl. a NEGATIVE result kept: persistence
+  (consecutive reviews below floor) has ZERO discriminating
+  power (median 3 for both deleted and FA) — the most
+  intuitive feature, and it fails. Depth DOES work (0.62x vs
+  0.79x) but alone only doubles precision.
+- PERF: memoized the vintage cache + PIT membership — the
+  sweeps went from >6 min (timing out) to 5.6s.
+- Deliverable: reports/backtest_taiwan_2018_2026.html (33KB,
+  self-contained, 8 sections) — headline scorecard, per-review
+  table, PR curve SVG for both sides, add-bar defect, error
+  taxonomy, 7-input DATA AUDIT with A-D reliability grades,
+  6 difficulties encountered, 8 unmodelled special cases,
+  6 ranked engine improvements. Also copied to the workspace
+  root for Bill.
+- tests/test_backtest.py (6): headline ties to the
+  reconstructions; the add-bar defect must be MEASURED (both
+  metrics improve) not asserted; taxonomy separates the two
+  miss classes; the negative persistence result must survive;
+  the float gap must stay declared untestable; report
+  self-contained AND carrying the unflattering numbers.
+  Suite 492 green.
+
+## Session 9i continued-115 (2026-08-07) — THE PLAIN-ENGLISH WALKTHROUGH (generated, not written)
+- Bill's brief: a walkthrough of the PIT prediction that a
+  non-finance reader can follow, to be reused for every APAC
+  market. Design decisions confirmed with him: page + HTML
+  export, teach on May-26 then apply to Aug-26, ONE interactive
+  lever, audience = non-finance reader AND the CLSA desk.
+- THE ARCHITECTURAL CHOICE: the story is GENERATED from the
+  engine, never written as prose. scripts/walkthrough_story.py
+  `story(market, review)` reads data/reconstruct/TW_*.json (or
+  aug26_cutoff_calc.json in live mode) and returns 7 steps with
+  every figure interpolated. Consequences: the narrative cannot
+  drift from the code, and a new market needs ZERO new writing
+  — only its reconstruction. This is what makes it scale to 13.
+- TWO LAYERS per step (both audiences in one document): `plain`
+  = zero jargon, terms defined on first use; `desk` = rulebook
+  citations (§3.1.9 price-cutoff window, §2.3.2.1 GMSR, §2.3.3),
+  error bars, edge; plus `honesty` = what this step can get
+  wrong, always visible, never collapsed.
+- The 7 steps: (1) what's decided + why money must move
+  (77 names, TSMC 54.8%), (2) the photograph is taken before
+  anyone sees it (Apr-20 disclosed; 10 possible days), (3) how
+  big is big enough ($15.75B global -> $3.94-9.06B band ->
+  floor $6.04B / bar $13.59B), (4) measuring at the frozen
+  instant (vintage px x shares / FX 31.626), (5) draw the two
+  lines + THE LEVER, (6) scoreboard 7/7 caught, 8 false alarms
+  — reframed correctly as MSCI's discretion MEASURED, i.e. the
+  model's learning target, (7) what we still cannot know.
+- THE LEVER (step 5): drag the size threshold, watch names
+  cross, and the metrics update live — captured removals vs
+  wrongly-flagged. Deliberately shows there is NO right
+  setting; the trade-off IS the problem. Chart scoped to the
+  DECISION ZONE ($3.5-15.9B, 27 names) — including TSMC at
+  $1.66tn would compress every borderline name to one pixel.
+- views/walkthrough.py = page 4 (sidebar now points newcomers
+  there first); scripts/walkthrough_export.py writes a
+  SELF-CONTAINED .html (inline CSS + hand-built SVG chart, no
+  scripts, no CDN, ~21KB) — reports/walkthrough_Taiwan_{May26,
+  Aug26}.html. Export button on the page too.
+- tests/test_walkthrough.py (6): every headline number must
+  EQUAL the engine's output (keys, fx, floor/bar, grading);
+  step shape + honesty contract; live mode must declare before
+  the answer and never claim a scoreboard; a REGEX GUARD that
+  no '$<number>B' literal appears unintepolated in prose (the
+  generation promise, enforced); export self-containment.
+  Suite 486 green.
+- Next for this thread: point `story()` at other markets as
+  their reconstructions land (engine is TW-only today — the
+  page's market selector is honest about it).
+
+## Session 9i continued-114 (2026-08-07) — MSCI DOES PUBLISH CONSTITUENTS; weights captured; the membership TIME MACHINE (2006→)
+- FACT-CHECK (Bill's hypothesis was that MSCI doesn't publish
+  members): they DO — msci.com/constituents, the ESMA-mandated
+  Index Constituents tool. Two hard limits: ~2-MONTH DELAY (today
+  it serves "As Of 01 Jun 2026" = the MAY-26 membership, so it
+  can never front-run a live review — the ETF census stays
+  primary for Aug-26) and NAMES + WEIGHTS ONLY (no tickers /
+  shares / float). NEW ZEALAND is not offered = registered gap.
+- scripts/msci_constituents.py: found the tool's own XHR
+  (/c/portal/layout?...p_p_resource_id=<INDEX_CODE>) returning
+  clean JSON, works headless; INDEX_CODES read from the tool's
+  <select>. Harvested 12 markets w/ CLOSING WEIGHTS (the
+  project's first real weight data) + weight-sum gate (all
+  100.000%). `compare` cross-checks vs the iShares census using
+  the c-113 prefix_match (bidirectional — MSCI abbreviates hard:
+  'VANGUARD INTL SC' = VANGUARD INTERNATIONAL SEMICONDUCT).
+- **THREE-SOURCE VALIDATION**: constituents tool == July-2026
+  FACTSHEET "Number of Constituents" == our ETF census, in
+  ALL 13 markets (AU 47, CN 576, HK 25, IN 165, ID 11, JP 168,
+  KR 77, MY 21, NZ 5, PH 10, SG 16, TW 77, TH 18). Three
+  separate MSCI artifacts agree. TW census was 79 — the
+  official list ARBITRATES: 1602/2418 (anchor-only, EWT-held
+  but not index) are NOT Standard members.
+- scripts/membership_history.py — the TIME MACHINE. Bill's
+  route A (historical fund holdings) ASSESSED and rejected as
+  the spine (iShares publishes only LATEST holdings; an ETF's
+  book is a portfolio, not the index) — kept as cross-check.
+  Route B IMPLEMENTED: reverse-roll from MSCI's OWN dated list
+  back to Feb-2006, one review at a time, through the
+  count-validated changes DB. TW 77 (May26) -> 101 (Feb06);
+  JP 168 -> 390; CN 576 -> 221.
+- ERROR MODEL published, not hidden: off-cycle exits/adds never
+  appear in review lists, so the roll UNDERCOUNTS by the number
+  of off-cycle names already added at that point — reported as
+  an uncertainty BAND per review and drawn as the shaded region.
+- HALT #1 (gate 1, anchor collision): India anchor had 164 keys
+  for 165 published names — `_key` was blanket-stripping
+  parentheses and merging VEDANTA with VEDANTA (DETACHED), the
+  demerged line (a separate index security). Fixed: strip only
+  recognized country/vintage markers. Gate now compares anchor
+  keys to the factsheet count and halts on any collision.
+- **INTERNAL CROSS-VALIDATION**: the ADDs the reverse-roll
+  cannot undo are 92-100% exactly the names c-113's off-cycle
+  audit independently classified (TW 11/12, AU 23/23, KR 34/38)
+  — two pipelines built for different purposes naming the same
+  securities.
+- views/history_explorer.py: new "Who is in the index right
+  now" — WEIGHT TREEMAP (area = MSCI closing weight, shade =
+  tenure from the reverse-roll) + concentration KPIs (TSMC
+  alone = 54.8% of Taiwan, top-10 = 77.3%, HHI 3,094) + full
+  weighted list; and "Membership time machine (2006→)" —
+  reconstructed index-size curve with the off-cycle band,
+  per-review roster picker with vs-prior diff and CSV export.
+- tests/test_membership_history.py pinned (identity
+  parentheticals, weight completeness, three-source agreement,
+  anchor gate, off-cycle cross-validation). Suite 480 green.
+
+## Session 9i continued-113 (2026-08-07) — OFF-CYCLE VERIFICATION COMPLETE (466 classified; the EO-13959 sanctions cluster found)
+- Bill's ticker_backfill run confirmed stable (0 need Yahoo;
+  1,792/2,849 = 63%; nulls = Yahoo-forgotten dead names).
+  DB rebuilt with the map; TW registry green.
+- offcycle_verify.py gained `audit` (the c-111 ad-hoc census
+  is now reproducible) and `classify` subcommands. Audit on
+  the ticker-joined DB: 1,080 -> 496 candidates; every one of
+  the 377 vanished was verified as a CURRENT MEMBER matched
+  via ticker (APA GROUP, CHINA MERCHANTS BANK H...) — the
+  name-variant false positives Bill's ticker-first design
+  targeted. Zero dropped for any other reason.
+- HALT #1 (probe): all probed names came back STILL-TRADING,
+  0 DELISTED. Control probes (TWTR/ATVI dead ✓, 2330.TW live
+  ✓) cleared the mechanism — it's SELECTION BIAS: Yahoo-search
+  tickers only exist for live names, so dead names stay
+  UNPROBEABLE by construction. Recorded, not patched over.
+- HALT #2 (China): PING AN INS A flagged as an exit — absurd.
+  Root causes, all fixed in ticker_backfill.py: (1) Yahoo
+  search resolved A-lines to WRONG VENUES ('AIR CHINA A' ->
+  0753.HK = the H line; 70 nulled by new `fix-china`); (2)
+  fund/index codes passed as equities (510590.SS ETF for PING
+  AN A) -> _EQUITY_PFX code-range gate; (3) member names
+  truncate at ~30 chars and DROP the class letter -> tier A2
+  `prefix_match` (token-prefix subsequence, MSCI-truncation-
+  aware: 'MERCH SEC' matches MERCHANTS SECURITIES, never
+  BANK) with dropped-class retry + venue validator to split
+  the A/H twins (601318 vs 2318). CORRECTION RECORDED: first
+  fix-china pass wrongly nulled XIAOMI CORP B (1810.HK) — B
+  is ambiguous in MSCI naming (HK Class B vs onshore B);
+  rule corrected, mapping restored via tier A2. +62 tickers
+  recovered incl. HON PRECISION -> 7769 (the Feb-26 registry
+  gap name). Venue-aware member matching (HK codes stored
+  zero-stripped: '0914.HK' = '914') fixed in BOTH
+  offcycle_verify.audit and the history_explorer roster.
+- FINAL STATE (offcycle_exit_classified.csv): 466 candidates
+  = 391 UNPROBEABLE (no live ticker — consistent with genuine
+  delisting, NOT positively confirmed) + 75 STILL-TRADING.
+  Of the 75: 11 tagged EO-13959-pattern — MSCI's OWN
+  documented off-cycle sanction deletions (waves at close of
+  Jan 5/8/26 + Jul 26, 2021: SMIC, HIKVISION, CRRC, DAWNING,
+  SPACESAT, AVIC names...; press release 02241939950).
+  HIKVISION is the flagship confirm: correct ticker
+  002415.SZ, still trading, genuinely out — a REAL off-cycle
+  exit the audit was built to find. 10 known entity-splits
+  (DEL exists under unresolved variant: GUNGHO ENTMT, BGF
+  RETAIL (NEW), KASIKORNBANK FGN...); ~54 residual -> L4
+  queue (suspension/scandal candidates: KANGMEI, BRILLIANCE,
+  HAINAN AIR, ARTGO inclusion-reversal).
+- Pinned tests/test_offcycle_verify.py (class/venue rules,
+  prefix_match truncation + twin disambiguation, audit end
+  state, Hikvision EO tag). Suite 475 green.
+- Bill's terminal: optional `py scripts\ticker_backfill.py
+  run` re-run picks up tier A2 for other markets' nulls (all
+  local, no Yahoo needed for the A2 tier).
+
+## Session 9i continued-112 (2026-08-06) — THE 21-CELL PARSE REPAIR: ZERO MISMATCHES (DB = MSCI's own counts everywhere)
+- scripts/parse_repair.py: per-cell constrained repair (the
+  c-109 lesson honored — patch layer, parser untouched).
+  Three tiers: A geometric (page-aware clustering; fixed the
+  big truncations incl. May08 JP +9/-53), B zero-side
+  (official 0 adds -> all names DEL: May21 JP 0/29 etc.), C
+  reading-order (totals match, split wrong -> first
+  official_adds in reading order = ADDs). TIER-C
+  SELF-VALIDATED: Feb25 JP add = TOKYO METRO (the real
+  Oct-24 IPO added at that QIR ✓). Final blocker = the EMEA
+  region BANNER bleeding into China sections (last APAC
+  block) -> banner blacklist -> 21/21 REPAIRED, 0 unresolved.
+- Patch layer wired into changes_db.build (drop cell rows,
+  insert patch rows); rebuild: 4,403 rows, TW registry green,
+  validate_counts: **590 cells, 0 MISMATCHES** — the DB now
+  agrees with MSCI's own tables everywhere, 2006-2026.
+- Off-cycle audit regenerated on the repaired DB: 1,080
+  candidates (was 1,171; Japan halved 145->67 — the phantom
+  off-cycle exits from mis-columned dels are gone);
+  PARSE-ARTIFACT bucket = ZERO by construction; verify cache
+  reset. Remaining verification = ticker backfill +
+  offcycle_verify run (unchanged). Pinned
+  test_changes_db_counts_clean (0 mismatches, 21 patches,
+  TOKYO METRO). Suite 472 green.
+
+## Session 9i continued-111 (2026-08-06) — OFF-CYCLE-EXIT VERIFICATION STATUS (partial; pipeline complete)
+- User asked: did we verify ALL off-cycle-exit rows? HONEST
+  ANSWER: NO — pipeline built, execution partial. Census:
+  1,171 raw-name candidates (data/offcycle_exit_audit.csv —
+  an UPPER bound; raw strings, canonical/ticker merging
+  reduces it). Classifier (scripts/offcycle_verify.py,
+  resumable, 4 buckets): 155 PARSE-ARTIFACT (touch the 21
+  defective cells -> resolved by the parse repair), 405
+  UNPROBEABLE (await ticker backfill), 10 probed so far = ALL
+  STILL-TRADING suspects (mostly entity-resolution residuals:
+  deleted later under variant spellings — interpretation
+  caveat noted; numeric-ticker suffix-guessing can also
+  false-positive), ~600 pending probe.
+- COMPLETION PATH (all registered): (1) per-cell parse repair
+  of the 21 defective cells; (2) Bill's ticker_backfill run;
+  (3) py scripts\\offcycle_verify.py run (resumable, ~10-15
+  min after backfill); then every row carries PARSE-ARTIFACT /
+  STILL-TRADING(suspect->L4/manual) / DELISTED(confirmed) /
+  UNPROBEABLE. Probe tooling learned: stored tickers lack
+  market suffixes -> suffix reconstruction added.
+
+## Session 9i continued-110 (2026-08-06) — THE PIT RECONSTRUCTION ENGINE + TAB (Phases 2+4; the first full backtest with answer keys)
+- Built scripts/review_reconstruct.py: per review, ACTUAL
+  edition-mined keys (GMSR/EM-range/DISCLOSED price date),
+  PIT caps at that date's monthly FX, PIT membership
+  reverse-rolled from the validated changes DB; frontiers =
+  EM-ceiling convention (TW corridor-binding, labeled).
+  Verdicts per move + grading (pool-below-floor vs actual
+  dels: hits/misses/false alarms). Honesty labels in every
+  output (current-vintage floats, half-bar skipped, 2 known
+  off-cycle noise cases, pre-2023 QIRs on prevailing SAIR
+  keys).
+- BATCH 2018->May26 (the first PIT backtest with answer
+  keys): deletion capture ~83% (e.g. Nov25 7H/0M, May26 7H/0M,
+  May26 8/8 moves explained); FALSE ALARMS high (6-25/review;
+  May25 25FA w/ 0 moves) = MSCI's buffers/discretion MEASURED
+  — the exact gap the prediction model must learn; QIR del
+  misses (2408 Feb25 above-floor deletion) = rank-based QIR
+  migration rules our floor model approximates (registered
+  refinement).
+- New tab "Review Reconstruction (PIT)" (views/
+  reconstruction.py): backtest table + capture metrics up top,
+  per-review keys header (actual GMSR / disclosed date / FX),
+  verdicts, grading, below-floor pool expander. Pinned
+  test_review_reconstruction. Suite 471 green.
+
+## Session 9i continued-109 (2026-08-06) — OFF-CYCLE-EXIT VERIFICATION: the count-table validator (user question)
+- User: can we systematically verify "OUT — off-cycle exit
+  (est.)" rows vs omitted reviews? TWO checks designed: (1)
+  COUNT-TABLE VALIDATION — MSCI's own per-country add/del
+  tables in every list, asserted against our parsed rows: 590
+  cells checked, 21 MISMATCHES (3.6%) found + enumerated
+  (data/changes_db_validation.json; validate_counts() now a
+  permanent instrument in changes_db.py). Signature patterns:
+  page-wrapped sections (May21 JP official +0/-29 vs parsed
+  +28/-18 = deletions-only continuation pages left-aligned ->
+  dels read as adds; May08 JP -53 vs -23 = page-break
+  truncation). These defects EXPLAIN phantom off-cycle-exit
+  labels. (2) TRADING-STATUS probe (real off-cycle exits are
+  delistings -> no live quote; still-trading + off-cycle label
+  = suspect) — runs after Bill's ticker backfill.
+- REPAIR ATTEMPT REGRESSED: page-aware parser rewrite -> 93
+  mismatches (systematic +1-ADD bug) -> REVERTED per the halt
+  rule to the known-21 state; TW validation + suite green
+  (4,403 rows). Lesson recorded: measure first (the validator),
+  repair per-cell carefully next session, never thrash.
+
+## Session 9i continued-108 (2026-08-06) — RESUME HALTED AGAIN: THE FX SAGA (Q67's fix was circular; live series wins)
+- Phase-2 resume's FIRST input (PIT FX via TWD=X) contradicted
+  Q67's 29.5: live series Jul-26 ≈ 32.2-32.4. Audit exposed
+  the circularity (factsheet-implied 29.3 assumed a FIF that
+  was computed AT 29.5). Independent break: TSMC holder facts
+  -> FIF 0.95 -> FX 32.05 ✓ live. ORIGINAL 32.5 was ~right.
+- FIX SWEEP: fx_twd_history.json = single source (monthly,
+  live); walk/ladder/census all -> 32.214. Walk: D $3,811B,
+  gap +1.8% (BEST agreement yet — corroborates); crossing 57 @
+  $11.07B; corridor binds in base+ff0.40 but ff0.70 crossing
+  $7.44B falls INSIDE -> binding now FRAME-SENSITIVE at the
+  high-float end (stated). Pool BACK TO SIX at 7/31+FX32.2:
+  6919/2834/2609/1101/3529/5871 (Q67 five-name pool
+  superseded; 3533 nearest at 6.48). Adds unchanged (2408
+  34.7 = 2.45x bar, STRONG intact; 6505 float-blocked).
+- Q71 recorded (circularity confessed; lesson: circular
+  validation is invisible until an independent input
+  contradicts — the halt gate did its job). Suite 470 green.
+  Phase 2 reconstruction + China anomaly run CONTINUE NEXT
+  (PIT FX now trustworthy).
+
+## Session 9i continued-107 (2026-08-06) — ENTITY RESOLUTION: canonical names + TICKER-FIRST (user design)
+- User caught duplicate entities (FUTU HOLDINGS A ADR vs the
+  member's FUTU HOLDINGS ADR). Built CANONICAL-KEY resolution:
+  abbrev expansion (HLDG->HOLDING etc.) + trailing generic
+  token drop (CO/LTD/CORP/ADR/...) + parenthetical strip;
+  CHINA KEEPS share-class letters (A/H = separate securities —
+  the collision gate flagged 40+ dual-listed pairs as proof);
+  conservative merges (~15 region-wide incl. NANYA ± CORP,
+  WHARF ± (HK)); new "aka" column shows variants.
+- User then proposed TICKER-FIRST dedup (exhaustive ticker
+  resolution; empty only if delisted; same ticker => same
+  company). Assessed FEASIBLE with 3 caveats: asymmetric
+  coverage (empties concentrate in delisted names — canon
+  stays the fallback tier), wrong-ticker false merges (guard:
+  suffix + name-sim checks; low-sim merges -> review queue),
+  ticker granularity handles China A/H for free. IMPLEMENTED:
+  roster keys = T:<ticker> when resolved else canon(name);
+  member matching ticker-aware. Guard run on partial coverage
+  found ONE low-sim merge — a TRUE one (9107.T: KAWASAKI KISEN
+  KAISHA + truncated "KAISHA" variant — the ticker method
+  catching what names never could). Upgrades automatically
+  when Bill's ticker_backfill run + changes_db rebuild land.
+  Suite 470 green.
+
+## Session 9i continued-106 (2026-08-06) — EDITIONS COMPLETE FOR SCOPE + "None" PARSER BUG (user-caught #2)
+- USER-CAUGHT PARSER BUG: "HANG LUNG GROUP   None" rows —
+  page-break column shift + literal "None" placeholder glued
+  into names; 6 rows affected, HALF with WRONG actions (May16
+  MY "None BUMI" was really DEL BUMI ARMADA — verified vs
+  MSCI's own count tables). FIX: token-aware None handling
+  (None's side identifies the empty column). Rebuild: 4,403
+  rows, 0 glued, all six corrected, TW validation green.
+- Edition gaps CLOSED for the scope: the "missing" 2019-20
+  books exist under MIXED naming (Feb19/Aug19/Nov19/Feb20 kept
+  the old name; +6 modern off-quarter editions) -> 46 editions
+  archived, mine 46/46 GMSRs + disclosed price dates, ALL
+  GATES GREEN (G3 corrected to [4,25] + EM-range==GMSRx
+  [0.25,0.575] consistency). Nov-2019 answer key recovered
+  (6.13 / Oct-18-2019).
+- SCOPE user-corrected: Feb-2018 -> May-2026 (post-hole);
+  2008-14 backward extension optional (books exist); 2015-17
+  Wayback attempt blocked from sandbox (API non-JSON) —
+  browser-side registered. 'none since 2015' label -> 2006.
+  Suite 470 green.
+
+## Session 9i continued-105 (2026-08-06) — ROADMAP BUILD HALTED-BY-DESIGN + WAN HAI ANOMALY (user-caught #2)
+- ROADMAP P1 built: gimi_editions.py — 36 modern-era editions
+  harvested+mined (GMSR + DISCLOSED price date per review; G1
+  gate passed: May2026 = 15.75/Apr-20). BUILD HALTED at G3 as
+  instructed: Aug2018 GMSR 6.37 outside my [8,25] gate — the
+  gate was wrong, not the data (GMSR tripled 5.60->15.75 since
+  2020; EM ranges = GMSR x [0.25,0.575] to the cent).
+  DISCOVERIES: (a) MSCI picks the price date on the FIRST 1-2
+  business days of the 10-day window in ~all 23 disclosed
+  cases -> Aug-26 price date ≈ Jul 20-21 (strong prior!);
+  (b) quarterly GMSR recalc only from Feb-2023 editions (QIRs
+  carried stale SAIR values before) = datable rule change.
+  Awaiting user "resume" for the G3 fix.
+- Edition reach probed: 40 MORE editions 2008-2014 (old
+  naming); 2007 = pre-GIMI (structural floor); 2015-17 = a
+  naming-scheme hole (Wayback fallback registered). Review
+  Study SCOPE set by user: Feb-2008 -> May-2026 (no rulebook,
+  no reconstruction).
+- USER-CAUGHT INCONSISTENCY (Wan Hai IN w/ last=DEL Nov15):
+  investigation found TWO bugs + ONE genuine anomaly: (1)
+  roster "current member" matching used the ANCHOR-UNION names
+  (IMI supersets for ID/PH/NZ) -> fixed to strict
+  standard_members (census had shown impossible 13-of-11 in
+  ID); (2) new roster status "IN — re-entry not in review
+  record (off-cycle, est.)"; (3) STRICT census across 13
+  markets -> exactly TWO genuine cases: TW WAN HAI (re-entry
+  mechanism UNRESOLVED — L4 card stub, agent research queued)
+  and IN HDFC BANK (probable merger corporate-event
+  continuation). Cosmetics: churn title trimmed; churn history
+  now carries review labels (ADD Nov13 -> DEL May18 format).
+  Suite 470 green.
+
+## Session 9i continued-104 (2026-08-06) — ROSTER VIEW + ARCHIVE EXTENDED TO 2006 (81 reviews)
+- Security lookup redesigned into the ROSTER: every company
+  ever in the market's index — changed names + never-changed
+  incumbents — with status / last change + date / moves / full
+  history column (Streamlit tables lack per-cell hover; the
+  always-visible history column carries it; Plotly-table hover
+  = optional later). KPI strip: ever-in / currently-IN / OUT.
+- Smoke test CAUGHT an inference flaw: last=ADD ≠ still-IN
+  (off-cycle M&A/delisting exits — GIMI Early Deletions —
+  never appear in review lists; TW showed 102 "IN" vs ~77
+  real). FIX: status reconciled vs the current member list;
+  new label "OUT — off-cycle exit (est.)"; caption explains.
+- SIDETASK (how far back?): probed the public URL pattern —
+  STPublicLists exist back to **Feb-2006** (Aug05- 404).
+  Downloaded all 36 missing 2006-2014 lists; DB rebuilt:
+  4,406 rows, 81 reviews, 13 markets; TW validation scoped to
+  the registry era (2015+, still exact). UI era labels ->
+  2006; test updated INTENTIONALLY. Suite 470 green.
+- Honest limits recorded: pre-2006 = licensed/academic only
+  (inception member lists, e.g. 1990s MSCI China, are NOT
+  public); PIT membership pre-2015 NOT derivable by
+  reverse-rolling review lists alone (off-cycle exits
+  invisible — the same flaw the roster fix addressed).
 
 ## Session 9i continued-103 (2026-08-06) — INDIVIDUAL REVIEW STUDY: design + roadmap (drill-down redesigned)
 - Section renamed "Individual review study" (Phase 0 done).

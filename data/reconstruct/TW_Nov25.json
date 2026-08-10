@@ -1,0 +1,172 @@
+{
+ "market": "Taiwan",
+ "review": "Nov25",
+ "keys": {
+  "gmsr_dm": 14.31,
+  "em_range": [
+   3.58,
+   8.23
+  ],
+  "ceiling": 8.23,
+  "floor": 5.487,
+  "bar": 12.345,
+  "price_date": "2025-10-15",
+  "source": "Nov2025"
+ },
+ "fx_used": 30.731,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "5274",
+   "security": "ASPEED TECHNOLOGY",
+   "action": "ADD",
+   "pit_cap_busd": 6.77,
+   "verdict": "NOT-EXPLAINED: 6.77B well below bar"
+  },
+  {
+   "code": "3665",
+   "security": "BIZLINK HOLDING",
+   "action": "ADD",
+   "pit_cap_busd": 7.48,
+   "verdict": "NOT-EXPLAINED: 7.48B well below bar"
+  },
+  {
+   "code": "2360",
+   "security": "CHROMA ATE",
+   "action": "ADD",
+   "pit_cap_busd": 9.51,
+   "verdict": "NOT-EXPLAINED: 9.51B well below bar"
+  },
+  {
+   "code": "2368",
+   "security": "GOLD CIRCUIT ELECTRONICS",
+   "action": "ADD",
+   "pit_cap_busd": 6.61,
+   "verdict": "NOT-EXPLAINED: 6.61B well below bar"
+  },
+  {
+   "code": "2449",
+   "security": "KING YUAN ELECTRONICS CO",
+   "action": "ADD",
+   "pit_cap_busd": 6.6,
+   "verdict": "NOT-EXPLAINED: 6.60B well below bar"
+  },
+  {
+   "code": "1504",
+   "security": "TECO ELECTRIC & MACH",
+   "action": "ADD",
+   "pit_cap_busd": 8.35,
+   "verdict": "NOT-EXPLAINED: 8.35B well below bar"
+  },
+  {
+   "code": "2353",
+   "security": "ACER",
+   "action": "DEL",
+   "pit_cap_busd": 3.02,
+   "verdict": "EXPLAINED: 3.02B is 45% below the 5.487B floor"
+  },
+  {
+   "code": "2409",
+   "security": "AUO CORP",
+   "action": "DEL",
+   "pit_cap_busd": 3.23,
+   "verdict": "EXPLAINED: 3.23B is 41% below the 5.487B floor"
+  },
+  {
+   "code": "2377",
+   "security": "MICRO-STAR INTERNATIONAL",
+   "action": "DEL",
+   "pit_cap_busd": 3.0,
+   "verdict": "EXPLAINED: 3.00B is 45% below the 5.487B floor"
+  },
+  {
+   "code": "6415",
+   "security": "SILERGY CORP",
+   "action": "DEL",
+   "pit_cap_busd": 2.94,
+   "verdict": "EXPLAINED: 2.94B is 46% below the 5.487B floor"
+  },
+  {
+   "code": "2347",
+   "security": "SYNNEX TECHNOLOGY INTL",
+   "action": "DEL",
+   "pit_cap_busd": 3.22,
+   "verdict": "EXPLAINED: 3.22B is 41% below the 5.487B floor"
+  },
+  {
+   "code": "6409",
+   "security": "VOLTRONIC POWER TECH",
+   "action": "DEL",
+   "pit_cap_busd": 3.05,
+   "verdict": "EXPLAINED: 3.05B is 44% below the 5.487B floor"
+  },
+  {
+   "code": "3702",
+   "security": "WPG HOLDINGS CO",
+   "action": "DEL",
+   "pit_cap_busd": 3.52,
+   "verdict": "EXPLAINED: 3.52B is 36% below the 5.487B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "6415": 2.94,
+   "2353": 3.02,
+   "2834": 4.92,
+   "1102": 4.24,
+   "2324": 4.54,
+   "9910": 4.26,
+   "3481": 3.8,
+   "1326": 5.45,
+   "2347": 3.22,
+   "2356": 5.07,
+   "8464": 3.8,
+   "3529": 4.84,
+   "3533": 5.18,
+   "2105": 3.69,
+   "2409": 3.23,
+   "3702": 3.52,
+   "2474": 3.59,
+   "4958": 4.54,
+   "6409": 3.05,
+   "2633": 5.0,
+   "1402": 4.76,
+   "1476": 3.92,
+   "2377": 3.0,
+   "2610": 4.09
+  },
+  "hits": [
+   "2347",
+   "2353",
+   "2377",
+   "2409",
+   "3702",
+   "6409",
+   "6415"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1102",
+   "1326",
+   "1402",
+   "1476",
+   "2105",
+   "2324",
+   "2356",
+   "2474",
+   "2610",
+   "2633",
+   "2834",
+   "3481",
+   "3529",
+   "3533",
+   "4958",
+   "8464",
+   "9910"
+  ]
+ }
+}

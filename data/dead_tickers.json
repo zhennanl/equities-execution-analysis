@@ -1,0 +1,17 @@
+{
+ "India": {
+  "532483.NS": "no Yahoo data and no reachable exchange register \u2014 WEAK evidence",
+  "534091.NS": "no Yahoo data and no reachable exchange register \u2014 WEAK evidence",
+  "SHFL.NS": "no Yahoo data and no reachable exchange register \u2014 WEAK evidence"
+ },
+ "Indonesia": {
+  "WSKT.JK": "no Yahoo data and no reachable exchange register \u2014 WEAK evidence"
+ },
+ "Taiwan": {
+  "1602.TW": "absent from TWSE t187ap03_L + TPEx mopsfin_t187ap03_O",
+  "2418.TW": "absent from TWSE t187ap03_L + TPEx mopsfin_t187ap03_O",
+  "2448.TW": "absent from TWSE t187ap03_L + TPEx mopsfin_t187ap03_O",
+  "3682.TW": "absent from TWSE t187ap03_L + TPEx mopsfin_t187ap03_O",
+  "5264.TW": "absent from TWSE t187ap03_L + TPEx mopsfin_t187ap03_O"
+ }
+}

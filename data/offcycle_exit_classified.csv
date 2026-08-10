@@ -1,0 +1,467 @@
+market,security,last_add,ticker,touches_defective_cell,bucket,note
+Australia,AFTERPAY,May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,ALUMINA,May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,ARROW ENERGY,May09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,CAMPBELL BROTHERS,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,CARSALES.COM.AU,Nov23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,CENTRO RETAIL AUSTRALIA,May12,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,DUET GROUP,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,ENERGY RESOURCES OF AUST                  MACQUARIE OFFIC,May09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,FLIGHT CENTRE,Nov12,FLT.AX,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Australia,FORTESCUE METALS GROUP,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,MACARTHUR COAL,May10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,MACQUARIE OFFICE TRUST,Feb06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,OIL SEARCH,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,OXIANA,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,PALADIN RESOURCES (AU),May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,PATTINSON (WASHINGTON),Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,PLATINUM ASSET MGT,Feb15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,QUEENSLAND GAS COMPANY,Nov08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,SEVEN GROUP HOLDINGS,Feb24,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,SIMS GROUP,Feb08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,SP AUSNET,Feb09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,ST GEORGE BANK,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Australia,ZINIFEX,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,21VIANET GROUP A ADR,Feb21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,360 DIGITECH ADR A,May21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,51JOB ADR,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,58.COM ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,A-LIVING SERVICES CO H,Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,AAC TECHNOLOGIES HLDG CN,Nov13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,AEROSPACE TIMES A (HK-C),Nov19,600879.SS,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,AGRI BANK OF CN A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,AISINO CO A (HK-C),May18,600271.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,ARTGO HOLDINGS,Nov19,3313.HK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,AUTEK CHINA A (HK-C),Nov19,300595.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,AVIC AIRCRAFT A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,AVIC AVIATION HI A(HK-C),Feb21,600862.SS,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,AVIC CAPITAL CO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,AVIC ELECMECH A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,AVIC JONHON OPTR A(HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,AVIC SHENYANG A (HK-C),Aug18,600760.SS,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,BAIDU ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BANK OF CHINA A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BANK OF GUIYANG A (HK-C),May18,601997.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,BEIGENE ADR (CN),Nov20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BEIJING CAPITAL A (HK-C),May18,600008.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,BEIJING KUNLUN A (HK-C),May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BEIJING NEW BLDG A(HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BEIJING ORIENT A (HK-C),May18,002271.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,BELLE INT'L HLDGS(CN),May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BILIBILI ADR Z,May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BLUEFOCUS INTG A (HK-C),Feb26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BOC INTL A (HK-C),May21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BOSIDENG INTL HLDGS,Aug19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BRILLIANCE CHINA AUTO,Nov23,1114.HK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,BYD CO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,BYD ELECTRONIC INTL,Nov17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHANGSHA ZOOMLION H,Feb11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA AGRI HOLDINGS,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA AVIONICS A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA CITIC BK A (HK-C),Aug25,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA CNR CORP H,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA COMMU CON A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA CONST BK A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA CSSC HLDG A (HK-C),May21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA ENER ENGR A (HK-C),Feb22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA EVERBRIGHT INT'L,May13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA GEZHOUBA A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA GOLD INTL RES (CN),Nov25,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA GRAND AUTO A(HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA HAINAN RUB A(HK-C),May18,601118.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,CHINA HUARONG AST MGMT H,Nov16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA INSURANCE INT' L,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA INTL CPTL A (HK-C),Feb21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA INTL CPTL CORP H,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA INTL TRVL A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA INV FUND INTL (CN),Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA LIFE INS A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA LODGING GRP ADR,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA MERCH BK A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA MINMETALS A (HK-C),Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA NAT BUILDING MAT H,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA NAT'L A (HK-C),Nov22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA NATL CHEM A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA NATL NUCL A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA NATNL MATERIAL   H,Nov10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA NETCOM GROUP,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA OILFIELD SVCS H,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA POWER INTL,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA RAIL CONST A(HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA RAIL GRP A (HK-C),Aug19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA RAIL HI TE A(HK-C),Nov19,600528.SS,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,CHINA REFORM A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA SHINEWAY PHARM GRP,May10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA SHIPB IND A (HK-C),Nov18,600482.SS,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,CHINA SHIPBLDG A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA SPACESAT A (HK-C),May18,600118.SS,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,CHINA STH AIRL A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA UNICOM,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA UTD NETWK A (HK-C),Aug21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA VANKE CO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA VANKE CO B,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHINA ZHENGTONG AUTO SER              CHINA,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CHONGQING CHANG A (HK-C),May18,001296.SZ,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,CHOW TAI FOOK (CN),Nov22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CNPC HONG KONG,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,COSCO SHIP HLDG A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,COSCO SHIPPING ENERGY H,May26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,COSCO SHIPPING HLDGS H,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CSC FINANCIAL A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,CTRIP COM INTL ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,DA AN GENE CO A (HK-C),May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,DAH CHONG HONG (CN)                   CHINA,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,DALI FOODS GROUP CO,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,DALIAN WANDA COMM PROP H,May15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,DAPHNE INTL HOLDINGS(CN)              CHINA,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,DATANG INTL PWR A (HK-C),Nov22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,DAWNING INFO A (HK-C),Nov21,603019.SS,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,DONGFANG ELE MACH H,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,DONGFANG ELECTR A (HK-C),Nov18,000682.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,DONGFENG MOTOR GROUP H,Nov25,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,EVER SUNSHINE LIFESTYLE,Feb21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,EVERGRANDE REAL ESTATE,Nov10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FAR EAST HORIZON                      GREEN,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FOSUN INT'L(CN),May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FOUNDER TECH GRP A(HK-C),Feb26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FOXCONN INDL A (HK-C),Feb19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FRANSHION PROPERTIES,Aug09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FUJIAN ANJOY A (HK-C),Nov20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FUSHAN INT'L ENERGY(CN),Aug09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FUTURE LAND DEVELOPMENT,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,FUYAO GLASS IND GRP H,Nov16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,GCL POLY ENERGY,May21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,GDS HOLDINGS A ADR,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,GIGA DEVICE SC A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,GLODON CO A (HK-C),Nov19,002410.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,GONGNIU GROUP A (HK-C),Aug23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,GSX TECHEDU A ADR,May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,GUOTAI JUNAN SE A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,GUOXUAN HI TECH A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HAIER ELCTRNCS GRP(CN)                HIDIL,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HAINAN AIRLINES A (HK-C),May23,900945.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,HAITIAN INTL HLDGS,Nov13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HANERGY SOLAR GROUP,Nov13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HANG ZHOU GREAT A (HK-C),Aug23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HANGZHOU HIKVIS A (HK-C),May18,002415.SZ,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,HANGZHOU STEAM TURBINE B,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HANS LASER TECH A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HEILAN HOME A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HENGAN INT'L GROUP CO,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HENGTEN NETWORKS (CN),May21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HESTEEL CO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HIDILI INDUSTRY INTL DEV,Aug09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HONGFA TECH A (HK-C),Nov19,600885.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,HUA HONG SC (CN),Aug18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HUAAN SECURITIES A(HK-C),May18,600909.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,HUADIAN POWER INT'L H,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HUANENG RENEWABLES H,May15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HUATAI SEC CO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HUAXIA BANK A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,HUMANWELL HEALTH A(HK-C),Nov20,600079.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,HUNAN VALIN A (HK-C),Nov19,001208.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,HUTCHISON CHINA ADR,Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ICBC A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,INGENIC SC A (HK-C),Nov20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,INNER MONGOLIA X A(HK-C),Nov25,603230.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,INSPUR ELECTRS A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,INTIME DEPARTMENT STORE,May11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,JD.COM ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,JIANGSU CHANGJI A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,JIANGXI GANFENG A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,JIHUA GROUP A (HK-C),May18,601718.SS,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,JINYU BIO TECH A (HK-C),Nov19,600201.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,KANGDE XIN COMP A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,KANGMEI PHARMA A (HK-C),May18,600518.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,KANZHUN A ADR,Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,KINGBOARD CHEM HLDG (CN),Nov17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,KINGBOARD CHEM. HOLD(CN),May09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,KINGDEE INTL SOFTWARE,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,KNGBRD LAMNTS HLDG (CN),May26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,KOOLEARN TECHNOLOGY HLDG,Nov22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,KWG PPTY HLDG,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,LAOBAIXING PHAR A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,LEGEND BIOTECH CORP ADR,Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,LI AUTO ADR,Feb21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,LIAONING CHENG A (HK-C),May18,688739.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,LOGAN PROPERTY HOLDINGS,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,LOMON BILLIONS A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,LONGFOR PROPERTIES CO,May10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,MATERIALS IND A (HK-C),Nov19,000909.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,MEITUAN DIANPING B,Feb19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,MIDEA GROUP CO A (HK-C),Feb24,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,MINISO GROUP HLDG ADR A,Feb23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,MOMO A ADR,May17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,MUYUAN FOODSTUFF A(HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,NANYANG TOPSEC A (HK-C),May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,NAURA TECH GRP A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,NETDRAGON WEBSOFT,May08,0777.HK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,NETEASE COM ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,NEW ORIENTAL EDUCAT ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,NEW WRLD CHNA LND(CN),Nov13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,NINGBO ZHOUSHAN A (HK-C),Aug19,601018.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,NIO A ADR,May19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,O FILM TECH CO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ORIENT OVERSEAS (CN),May22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ORIENT SEC CO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,PACIFIC SEC A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,PEOPLE'S INS A (HK-C),Feb20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,PETROCHINA CO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,PINDUODUO ADR A,Feb19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,POLY HNG KNG INVST(CN),Nov09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,POLY PROPERTY DEVLPT H,May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,POLY REAL EST A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,QIAQIA FOOD CO A (HK-C),May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,QIHOO 360 TECH A ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,QINGDAO HAIER A (HK-C),May18,688139.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,QUNAR CAYMAN ISLANDS ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,RLX TECHNOLOGY ADR,Feb23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SDIC POWER HLDGS A(HK-C),May23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SERES GROUP CO A (HK-C),May23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHANDONG GOLD A (HK-C),May18,603586.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SHANDONG HONT A (HK-C),Feb26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHANDONG SINOC A (HK-C),Nov19,300285.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SHANDONG WEIGAO GP MED H,May09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHANGHAI BAILIAN A(HK-C),May21,600827.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SHANGHAI BAOSIG A (HK-C),Nov19,900926.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SHANGHAI ELECT A (HK-C),Nov25,688660.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SHANGHAI INTL AI A(HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHANGHAI JAHWA A (HK-C),Nov19,600315.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SHANGHAI LUJIA. B SS(USD,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHANGHAI PHARM H                      KWG P,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHANGHAI PUDONG A (HK-C),May18,600284.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SHANGHAI ZHENHUA PORT- B,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHANXI XISHAN A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHENGYI ELECTS A (HK-C),Nov25,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHENZHEN A (HK-C),Feb26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHENZHEN EVENWIN A(HK-C),Nov25,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHENZHEN GREEN A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHENZHEN HUIDING A(HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SHIMAO PROPERTY HLDGS,Nov06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SIEYUAN ELECTRIC A(HK-C),Nov21,002028.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SINA CORP,Nov16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SINO-OCEAN LAND HLDGS,May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SINOCHEM HONG KONG,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SMIC,Nov14,0981.HK,False,STILL-TRADING (suspect),EO-13959-pattern: matches MSCI's documented 2021 sanction-deletion waves (TO_VERIFY per name)
+China,SOUFUN HOLDINGS ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SUN ART RETAIL GROUP                  LI NI,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SUNAC CHINA HOLDINGS,May15,1918.HK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SUNING.COM CO A (HK-C),May18,002024.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SUNWODA ELECTRS A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,SUZHOU A (HK-C),May26,002081.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,SUZHOU TA&A A (HK-C),Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,TASLY PHARMA A (HK-C),May18,600535.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,TCL CORP A (HK-C),Aug18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,TEBIAN ELEC APP A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,TENCENT HOLDINGS LIM(CN),May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,TENCENT MUSIC ENT A ADR,Feb19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,TIANJIN ZHONHUA A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,TINGYI HOLDING CORP(CN),May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,TONGHUA DONGBAO A (HK-C),May18,600867.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,TSINGHUA UNISPL A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,TUS SOUND ENV A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,VENUSTECH GROUP A (HK-C),Nov19,002439.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,VINDA INTL HOLDINGS(CN),May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,VIPSHOP HOLDINGS ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,WANGFUJING GRP A (HK-C),Nov20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,WANHUA CHEM GRP A (HK-C),Aug19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,WESTONE INFO IND A(HK-C),Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,WILL SC A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,WINGTECH TECH A (HK-C),Feb20,600745.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,WONDERS INFO CO A (HK-C),May20,300168.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,WUHU SHUNRONG A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,WUXI LEAD INTG A (HK-C),May19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,WUXI SHANGJI A (HK-C),May21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,XIAOMI CORP B,Feb19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,XINAO GAS HOLDINGS,Nov09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,XINHU ZHONGBAO A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,XINJIANG GOLDW A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,YANGTZE OPTICAL A (HK-C),May26,688143.SS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,YANZHOU COAL A (HK-C),May19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,YINGDE GASES GROUP CO                 MAANS,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,YINTAI RESOURCE A (HK-C),Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,YOUKU TUDOU ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,YOUNGOR GROUP A (HK-C),May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,YTO EXPRESS GRP A (HK-C),Nov20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,YUZHOU PROPERTIES CO,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,YY INC ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ZHEJIANG CHINA A (HK-C),May21,301077.SZ,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+China,ZHEJIANG SATEL A (HK-C),May21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ZHEJIANG SUPCON A (HK-C),Nov22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ZHENGZHOU YUTON A (HK-C),May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ZHONGSHENG GROUP HLDGS                SHANG,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ZHUZHOU CSR TIMES ELEC H,Nov10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+China,ZTO EXPRESS ADR A,Feb19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,CITIC INT'L FINL HLDGS,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,ESR CAYMAN,Nov20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,HENDERSON INVESTMENT,Nov07,0097.HK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+HongKong,HONGKONG LAND (USD),Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,INDL&COMM BK CHINA(ASIA),Nov10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,JARDINE MATHESON (USD),Feb16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,JARDINE STRATEGIC (USD),Feb17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,MELCO CROWN ENTMT ADR,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,WHEELOCK AND CO,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+HongKong,WING LUNG BANK,May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,ADANI ENERGY SOLUTIONS,May26,ADANIENSOL.NS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+India,ADITYA BIRLA NUVO,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,BAJAJ HLDGS & INVESTMENT,Nov22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,BHARTI INFRATEL,May15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,BOMBAY STOCK EXCHANGE,Nov24,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,CAIRN INDIA,May12,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,CENTURION BK OF PUNJAB,Feb08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,CUMMINS INDIA KIRLOSKAR,Aug23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,GMR AIRPORTS INFRA,Feb24,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,GODREJ CONSUMER PDTS,May12,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,ICICI LOMBARD GENL INS,May19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,IDEA CELLULAR,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,JINDAL STEEL & POWER,May22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,L AND T FINANCE,Feb26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,LARSEN AND TOUBRO INFO,Nov20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,M & M FIN SECS,Aug13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,MACROTECH DEVELOPERS,Nov23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,MINDTREE,Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,MOTHERSON SUMI SYSTEMS,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,MULTI CMDTY EXCH INDIA,May26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,MUNDRA PORT AND SEZ,May11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,ORACLE FINL SVCS SOFTW,Aug24,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,PIRAMAL HEALTHCARE,May10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,RELIANCE PETROLEUM,Feb08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,RURAL ELECTRIFICATION CO,May17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,SATYAM COMPUTER SERVICES,Aug09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,SESA GOA,Nov08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,STERLITE INDUSTRIES,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,TITAN INDUSTRIES,May11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,TUBE INVESTMENT (NEW),Nov22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+India,ZOMATO,Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Indonesia,ADARO ENERGY PT,Nov09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Indonesia,BANK INT'L INDONESIA,May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,AIOI INSURANCE,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,ALPS ELECTRIC CO,Aug15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,DAIHATSU MOTOR CO,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,DAINIPPON SUMITOMO PHARM,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,DON QUIJOTE CO,Nov12,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,FUJI HEAVY INDUSTRIES,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,GUNGHO ONLINE ENT,May13,3765.T,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Japan,HANSHIN ELEC. RAILWAY CO,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,HIROSHIMA BANK,Nov12,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,HITACHI HIGH-TECH,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,HITACHI METALS,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,HOSHIZAKI ELECTRIC CO,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,ITOCHU TECHNO-SOLUTIONS,May19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,JUPITER TELECOM,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,KEIHAN ELECTRIC RAILWAY,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,LINE CORP,Nov16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,MINEBEA CO,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,MIRACA HOLDINGS,Nov10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,MITSUBISHI UFJ LEASE FIN,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,MITSUBISHI UFJ NICOS CO,May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,MIZUHO TRUST & BANKING,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,MONOTARO CO                           MABUC,Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,NIHON M&A CENTER,May20,2127.T,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Japan,NIPPON PAINT CO,Nov13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,NIPPONKOA INSURANCE CO,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,NISSAN CHEMICAL IND,Nov16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,NISSAY DOWA GEN INS,Nov08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,NOMURA REAL ESTATE HLD,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,OKUMA HOLDINGS,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,PERSOL HOLDINGS CO                    HIROS,Nov17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,PIGEON CORP                           NOK C,Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,SCSK CORP,May20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,SQUARE ENIX CO,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,START TODAY,May16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,SUMCO                                 MIRAC,Nov17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,SUMITOMO TITANIUM CORP,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,WELCIA HOLDINGS CO                    TOKYO,Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Japan,YAMAGUCHI FINANCIAL GP,May08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,BGF RETAIL,Aug15,282330.KS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Korea,CELLTRION HEALTHCARE,Nov17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,CJ E&M CORPORATION,Nov15,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,CJ KOREA EXPRESS CORP,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,DACOM CORP,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,DAEWOO INT'L CORP,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,DAUM COMMUNICATIONS CORP,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,DC CHEMICAL CO,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,DONGBU INSURANCE CO,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,DOOSAN HEAVY INDUSTRIES,Nov20,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,FILA KOREA,Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,HALLAVISTEON CLIMATE,May13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,HYNIX SEMICONDUCTOR,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,HYUNDAI ENGR. & CONSTR.,Feb26,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,HYUNDAI HYSCO,May11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,ILJIN MATERIALS,Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,ING LIFE INSURANCE KOREA,Nov17,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,KOREA KUMHO PETROCHEM CO,May11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,KOREA ZINC,May06,010130.KS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Korea,KT FREETEL,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,LG HOUSEHOLD & HEAL PREF,May16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,LG INDUSTRIAL SYSTEMS CO,Aug09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,LG TELECOM,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,LIG NEX1,Aug25,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,LOTTE CHILSUNG BEVERAGE,Nov15,005300.KS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Korea,LOTTE CONFECTIONERY CO,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,MERITZ FIRE & MARINE INS,Feb22,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,MERITZ SECURITIES CO,May19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,MIRAE ASSET SEC CO LTD,May06,006805.KS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Korea,ORION CORP,Nov11,271560.KS,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Korea,POSCO CHEMTECH CO,Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,SAMSUNG ENGINEERING CO,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,STX SHIPBUILDING CO,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,TONG YANG INVEST BANK,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,VIROMED CO,May18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,WOONGJIN COWAY CO,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Korea,WOORI FINANCE HOLDINGS,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Malaysia,ALLIANCE FINANCIAL GROUP,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Malaysia,ASIATIC DEVELOPMENT,Feb08,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Malaysia,DIGI.COM,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Malaysia,MALAYSIA AIRPORTS HLDGS,May11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Malaysia,PRESS METAL ALUMINIUM,Nov17,8869.KL,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Malaysia,SUNWAY,Aug24,5263.KL,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Malaysia,UEM LAND HOLDINGS,May11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Malaysia,UEM WORLD,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Malaysia,YTL POWER INT'L,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+NewZealand,MERIDIAN ENERGY INST REC,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+NewZealand,MIGHTY RIVER POWER,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Philippines,AC ENERGY CORP,Nov21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Philippines,ICTSI INT'L CONTAINER,Nov11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Philippines,METRO PACIFIC INVEST,May13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Philippines,PNOC ENERGY DEV CORP,May07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Singapore,CAPITACOMMERCIAL TRUST,Nov12,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Singapore,GENTING INTERNATIONAL,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Singapore,GLOBAL LOGISTICS PROP,Nov10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Singapore,KEPPEL LAND,May10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Singapore,MAPLETREE COMM TRUST,Nov19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Singapore,SEA A ADR,May21,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,CHINA LIFE INSURANCE CO,May10,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,FARGLORY DEVELOPERS CO,May09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,FORMOSA INT'L HOTELS,May09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,HERMES MICROVISION,Nov12,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,INNOLUX DISPLAY,Feb07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,INOTERA MEMORIES (ATM),May14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,KGI SECURITIES CO,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,MSTAR SEMICONDUCTOR,Feb11,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,PRIME VIEW INTERNATIONAL,Aug09,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,TAIWAN COOPERATIVE BANK,Nov07,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Taiwan,VANGUARD INT'L SEMICON,May13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,AIRPORTS OF THAILAND,Nov12,AOT.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,BANGKOK DUSIT MED. SVCS,Nov12,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,BANK OF AYUDHYA,Nov07,BAY.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,BUMRUNGRAD HOSPITAL PUB,May14,BH.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,CENTRAL PATTANA PUB CO,Nov12,CPN-R.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,CHAROEN POKPHAND FOODS,Nov09,CPF.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,DELTA ELECTRONICS THAI,Nov20,DELTA.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,GLOW ENERGY,May06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,GULF ENERGY DEVELOPMENT,Nov18,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,INTOUCH HOLDINGS,May19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,KASIKORNBANK,Aug22,KBANK-R.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,MINOR INTERNATIONAL,May13,MINT.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,RATCHABURI ELECTRICITY,May19,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,RAYONG REFINERY PCL,Aug06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,ROBINSON DEPT STORE,May16,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,SHIN CORP PCL,May13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,SIAM CEMENT,May12,SCC.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,SIAM MAKRO,May23,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,THAI MILITARY BANK ORD,Nov13,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,THAI PETROCHEMICAL INDUS,Nov06,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,THAI UNION FROZEN PROD,Nov14,,False,UNPROBEABLE,no live ticker resolvable — consistent with genuine delisting (Yahoo drops dead symbols); NOT positively confirmed
+Thailand,TMBTHANACHART BANK,Aug23,TTB-R.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)
+Thailand,TRUE CORP,May13,TRUE.BK,False,STILL-TRADING (suspect),unexplained still-trading exit — L4 queue (suspension/scandal/entity-split candidates)

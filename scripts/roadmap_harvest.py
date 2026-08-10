@@ -71,7 +71,7 @@ CFG = {
 
 def watch_names():
     cache = json.loads((ROOT / "data" / "tw_vintage_cache.json")
-                       .read_text())
+                       .read_text(encoding="utf-8"))
     return {k.split("|")[1] for k in cache
             if k.startswith("sh|")}
 
@@ -89,7 +89,7 @@ def harvest(ds, limit=None):
     import requests
     cfg = CFG[ds]
     out = ROOT / "data" / cfg["out"]
-    store = json.loads(out.read_text()) if out.exists() else {}
+    store = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {}
     watch = watch_names()
     days = []
     d = START
@@ -126,7 +126,7 @@ def harvest(ds, limit=None):
             fails = 0
             if (i + 1) % 25 == 0:
                 tmp = out.with_suffix(".tmp")
-                tmp.write_text(json.dumps(store))
+                tmp.write_text(json.dumps(store), encoding="utf-8")
                 tmp.replace(out)
                 filled = sum(1 for v in store.values() if v)
                 print(f"  {i+1}/{len(todo)} ({day}) | days with "
@@ -140,7 +140,7 @@ def harvest(ds, limit=None):
                 fails = 0
         time.sleep(cfg["pace"])
     tmp = out.with_suffix(".tmp")
-    tmp.write_text(json.dumps(store))
+    tmp.write_text(json.dumps(store), encoding="utf-8")
     tmp.replace(out)
     print(f"{ds} done; {len(store)} days stored")
     if len(store) < len(days):
@@ -154,7 +154,7 @@ def taifex_capture():
     is built (queued investigation); raw capture loses nothing."""
     import requests
     out = ROOT / "data" / "taifex_daily.json"
-    store = json.loads(out.read_text()) if out.exists() else {}
+    store = json.loads(out.read_text(encoding="utf-8")) if out.exists() else {}
     day = dt.date.today().strftime("%Y%m%d")
     r = requests.get("https://openapi.taifex.com.tw/v1/"
                      "DailyMarketReportFut",
@@ -164,7 +164,7 @@ def taifex_capture():
     data = r.json()
     store[day] = data
     tmp = out.with_suffix(".tmp")
-    tmp.write_text(json.dumps(store))
+    tmp.write_text(json.dumps(store), encoding="utf-8")
     tmp.replace(out)
     print(f"taifex: captured {len(data)} contract rows for {day} "
           f"({len(store)} days archived). Schedule daily with the "
@@ -175,7 +175,7 @@ def status():
     for ds, cfg in CFG.items():
         p = ROOT / "data" / cfg["out"]
         if p.exists():
-            s = json.loads(p.read_text())
+            s = json.loads(p.read_text(encoding="utf-8"))
             filled = sorted(d for d, v in s.items() if v)
             print(f"{ds:9s} {len(s)} days "
                   + (f"({filled[0]}->{filled[-1]})" if filled
@@ -184,7 +184,7 @@ def status():
             print(f"{ds:9s} not started")
     p = ROOT / "data" / "taifex_daily.json"
     print("taifex   ",
-          f"{len(json.loads(p.read_text()))} days captured"
+          f"{len(json.loads(p.read_text(encoding='utf-8')))} days captured"
           if p.exists() else "not started")
 
 

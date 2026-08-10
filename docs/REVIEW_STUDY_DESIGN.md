@@ -100,6 +100,22 @@ edition PDF). Quiet reviews get the header only ("nothing
 crossed the frontiers — and the reconstruction agrees/"
 "disagrees").
 
+## Scope (user-corrected, c-106)
+
+**Feb-2018 -> May-2026** — after the 2015-17 edition hole.
+Reconstruction runs only where the CONTEMPORANEOUS rulebook is
+in hand; applying later methodology to earlier reviews is the
+error class this module exists to avoid. Edition coverage for
+the scope is now COMPLETE (46 editions incl. the mixed-naming
+2019-20 stragglers; every SAIR 2018-26 has its own GMSR +
+disclosed price date; pre-2023 QIRs used prevailing SAIR
+values per the discovered regime). Extensions, both optional:
+2008-2014 (books EXIST, 40 archived-probe hits — could extend
+the scope backward with rulebooks in hand) and 2015-2017
+(Wayback-recoverable; API blocked from the sandbox — browser-
+side attempt registered). 2006-07 changes remain
+Explorer-history only.
+
 ## Implementation roadmap (value order; TW first, then APAC)
 
 | Phase | Deliverable | Effort | Depends on |

@@ -42,20 +42,94 @@ def _num(x):
         return np.nan
 
 
-def parse_t86(payload: dict) -> pd.DataFrame:
-    """Parse the TWSE T86 response (EN layout: code, foreign-ex-dealer
-    B/S/net, foreign-dealer B/S/net, trust B/S/net, dealer aggregate...,
-    total-3-institution net in the LAST column)."""
-    rows = []
-    for r in payload.get("data", []):
-        code = str(r[0]).strip()
-        foreign = _num(r[3]) + _num(r[6])          # ex-dealer + dealer arms
-        trust = _num(r[9])
-        total = _num(r[-1])
-        dealer = total - foreign - trust
-        rows.append({"ticker": code, "foreign_net": foreign,
+# ── T86 layouts (c-291) ───────────────────────────────────────────────────
+#
+# THE BUG THIS REPLACES. The old parse_t86 read foreign as r[3]+r[6] and
+# trust as r[9] — correct for TODAY'S response and silently wrong for
+# every year before it. TWSE has shipped THREE column layouts:
+#
+#   11 cols  ..2016   foreign [3]           trust [6]  dealer [7]  total [10]
+#   15 cols  ~2016    foreign [3]           trust [6]  dealer [7]  total [14]
+#   18 cols  2018..   foreign [3]+[6]       trust [9]  dealer [10] total [17]
+#
+# The 18-col layout split foreign into "excluding foreign dealers" plus
+# the foreign dealers' own account, which pushed every later column right.
+# Run the modern offsets over an 11-col row and foreign becomes
+# foreign+trust and trust becomes a GROSS SELL figure. Nothing raises.
+# Nothing looks obviously wrong. The Taiwan study leans hardest on
+# 2015-2017, which is exactly the stretch the 15-col layout covers.
+#
+# WHY THE IDENTITY CHECK IS THE REAL DEFENCE. Column offsets are a guess
+# about a document; the identity foreign + trust + dealer == total is a
+# statement about the data itself. A fourth layout arriving in 2027 breaks
+# the offsets, and the identity is what turns that into a loud failure
+# instead of a quiet one. So the shape SELECTS a layout and the arithmetic
+# PROVES it — a shape we recognise whose sums do not add up is still an
+# error.
+_T86_LAYOUTS = {
+    11: {"foreign": (3,), "trust": 6, "dealer": 7, "total": 10},
+    15: {"foreign": (3,), "trust": 6, "dealer": 7, "total": 14},
+    18: {"foreign": (3, 6), "trust": 9, "dealer": 10, "total": 17},
+}
+
+
+class T86LayoutError(ValueError):
+    """An unrecognised T86 shape, or a recognised one that fails the
+    identity. Raised rather than returned so a harvest stops on the day
+    the format moves instead of banking thousands of wrong rows."""
+
+
+def parse_t86(payload: dict, tolerance: float = 1.0) -> pd.DataFrame:
+    """TWSE T86 -> per-stock net shares by investor type.
+
+    Dispatches on column count and then verifies foreign + trust + dealer
+    == total on every row. `tolerance` is in shares and exists only to
+    absorb float noise, not to paper over a real mismatch.
+    """
+    data = payload.get("data") or []
+    if not data:
+        return pd.DataFrame()
+    ncols = len(data[0])
+    lay = _T86_LAYOUTS.get(ncols)
+    if lay is None:
+        raise T86LayoutError(
+            f"unknown T86 layout: {ncols} columns. Fields: "
+            f"{payload.get('fields')}. Add it to _T86_LAYOUTS only after "
+            f"checking the identity holds.")
+    rows, bad = [], []
+    for r in data:
+        if len(r) != ncols:            # ragged row — never silently kept
+            bad.append((str(r[0]).strip(), "ragged"))
+            continue
+        foreign = sum(_num(r[i]) for i in lay["foreign"])
+        trust = _num(r[lay["trust"]])
+        dealer = _num(r[lay["dealer"]])
+        total = _num(r[lay["total"]])
+        # NaN must be tested for explicitly: `nan > tolerance` is False,
+        # so an unparseable cell would otherwise sail through the identity
+        # check and be banked as a real number. Found by the existing
+        # test_parse_t86_columns fixture, which carries a short row.
+        vals = (foreign, trust, dealer, total)
+        if any(v != v for v in vals):
+            bad.append((str(r[0]).strip(), f"unparseable cell in {vals}"))
+            continue
+        if abs(foreign + trust + dealer - total) > tolerance:
+            bad.append((str(r[0]).strip(),
+                        f"{foreign:+.0f}+{trust:+.0f}+{dealer:+.0f}"
+                        f" != {total:+.0f}"))
+            continue
+        rows.append({"ticker": str(r[0]).strip(), "foreign_net": foreign,
                      "trust_net": trust, "dealer_net": dealer,
                      "total_inst_net": total})
+    # A handful of odd rows is a data quirk; a wholesale failure means the
+    # layout moved under us and the offsets are now fiction. The budget is
+    # max(2, 1%) rather than a flat count so it stays meaningful on a
+    # four-row fixture and on a nine-hundred-row trading day alike.
+    if bad and len(bad) > max(2, 0.01 * len(data)):
+        raise T86LayoutError(
+            f"{len(bad)}/{len(data)} rows fail the identity on the "
+            f"{ncols}-column layout — the offsets no longer describe this "
+            f"response. First few: {bad[:3]}")
     return pd.DataFrame(rows)
 
 

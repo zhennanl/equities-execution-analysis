@@ -203,7 +203,7 @@ def main():
                          "t_move_bps": p["t_move_bps"],
                          "post_reversal_bps": p["reversal_bps"]})
     rev = reversal_grade(pd.DataFrame(rev_rows))
-    cache = json.loads(Path("data/event_flow_study.json").read_text())
+    cache = json.loads(Path("data/event_flow_study.json").read_text(encoding="utf-8"))
     priors = update_priors(dict(cache), [
         {"provider": "MSCI", "side": "Sell",
          "t_mult": round(float(r["t_mult"]), 1),

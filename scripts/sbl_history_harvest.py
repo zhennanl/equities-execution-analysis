@@ -5,6 +5,25 @@ hold securities-lending balances only from Apr-2026. Source:
 TWSE's own TWT93U day-file (verified live: serves 2015+ with a
 stable 14-field format; ~900-1,300 rows/day, all listed names).
 
+c-226 CORRECTION — TWSE PUBLISHES TWT93U FROM 2005-07-01.
+Its own page says so: 「本資訊自民國94年7月1日起開始提供」
+(https://www.twse.com.tw/zh/trading/margin/twt93u.html). Ten
+years deeper than our START below, which is a CHOICE aligned
+with the MSCI key archive. Moving START earlier is additive —
+it writes new days and touches no stored ones — but it is
+Bill's call, not mine.
+
+c-225 (superseded, kept for the trail) — 2015 IS OUR CONVENTION:
+Bill asked where the "TWSE only publishes SBL data since 2015"
+claim came from. It came from us, not from TWSE, and our own
+probe log contradicts it: TWT93U served 2015-01-05 (885 rows),
+2014-12-15 (884) and 2014-06-16 (870). We never binary-searched
+the floor, and TWSE publishes no start date we have found. The
+harvest starts at 2015-01-05 because that is where the MSCI key
+archive and the rest of the stack start, which is a CHOICE. Run
+`py scripts\\sbl_floor_probe.py` to replace the convention with
+a measurement.
+
 Per day we store ONLY our tracked names (vintage/event set,
 ~150): {yyyymmdd: {code: [sbl_sell_qty, sbl_balance]}} — the same
 shape as the existing live cache, so every borrow analysis reads
@@ -52,18 +71,18 @@ START, END = dt.date(2015, 1, 5), dt.date.today()
 
 def watch_names():
     cache = json.loads((ROOT / "data" / "tw_vintage_cache.json")
-                       .read_text())
+                       .read_text(encoding="utf-8"))
     return {k.split("|")[1] for k in cache
             if k.startswith("sh|")}
 
 
 def _load():
-    return json.loads(OUT.read_text()) if OUT.exists() else {}
+    return json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
 
 
 def _save(d):
     tmp = OUT.with_suffix(".tmp")
-    tmp.write_text(json.dumps(d))
+    tmp.write_text(json.dumps(d), encoding="utf-8")
     tmp.replace(OUT)
 
 

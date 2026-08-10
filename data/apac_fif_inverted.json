@@ -1,0 +1,3524 @@
+{
+ "NewZealand": {
+  "market": "NewZealand",
+  "method": "factsheet-implied (the whole 5-member index is in the top-10 list)",
+  "asof": "2026-07-31",
+  "fx_nzd_usd": 0.5875,
+  "rows": [
+   {
+    "code": "FPH",
+    "name": "FISHER & PAYKEL HEALTH",
+    "float_cap_usd_b": 14.04,
+    "full_cap_usd_b": 14.04,
+    "fif": 1.0,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "AIA",
+    "name": "AUCKLAND INTL AIRPORT",
+    "float_cap_usd_b": 8.7,
+    "full_cap_usd_b": 8.675,
+    "fif": 1.003,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "IFT",
+    "name": "INFRATIL",
+    "float_cap_usd_b": 7.81,
+    "full_cap_usd_b": 8.678,
+    "fif": 0.9,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "CEN",
+    "name": "CONTACT ENERGY",
+    "float_cap_usd_b": 5.01,
+    "full_cap_usd_b": 5.724,
+    "fif": 0.875,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "MEL",
+    "name": "MERIDIAN ENERGY",
+    "float_cap_usd_b": 4.44,
+    "full_cap_usd_b": 8.837,
+    "fif": 0.502,
+    "grid_dist": 0.002
+   }
+  ]
+ },
+ "Singapore": {
+  "market": "Singapore",
+  "weights_vintage": "2026-06-01",
+  "fx_local_usd": 0.7822828888893127,
+  "qc": {
+   "n_members": 16,
+   "n_scored": 13,
+   "calibration": "index-float-cap anchor",
+   "excluded_bad_share_count": [],
+   "calib_c": 3.495,
+   "on_grid_pct": 0.769,
+   "impossible_fif_gt_1.05": 0,
+   "unmapped": [],
+   "verdict": "PASS"
+  },
+  "rows": [
+   {
+    "code": "D05",
+    "name": "DBS GROUP HOLDINGS",
+    "weight_pct": 28.650115,
+    "full_cap_usd_b": 139.495,
+    "fif": 0.718,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "O39",
+    "name": "OCBC BANK",
+    "weight_pct": 16.937821,
+    "full_cap_usd_b": 82.191,
+    "fif": 0.72,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "SE",
+    "name": "SEA A ADR",
+    "weight_pct": 10.133395,
+    "full_cap_usd_b": 45.638,
+    "fif": 0.776,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "U11",
+    "name": "UNITED OVERSEAS BANK",
+    "weight_pct": 10.03911,
+    "full_cap_usd_b": 48.559,
+    "fif": 0.723,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "Z74",
+    "name": "SINGAPORE TELECOM",
+    "weight_pct": 7.115738,
+    "full_cap_usd_b": 55.574,
+    "fif": 0.448,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "S63",
+    "name": "SINGAPORE TECH ENGR",
+    "weight_pct": 3.928804,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "S68",
+    "name": "SINGAPORE EXCHANGE",
+    "weight_pct": 3.888703,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "BN4",
+    "name": "KEPPEL",
+    "weight_pct": 3.357104,
+    "full_cap_usd_b": 15.151,
+    "fif": 0.774,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "C38U",
+    "name": "CAPITALAND INTEGRATED",
+    "weight_pct": 3.062154,
+    "full_cap_usd_b": 13.993,
+    "fif": 0.765,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "GRAB",
+    "name": "GRAB HOLDINGS A",
+    "weight_pct": 2.434919,
+    "full_cap_usd_b": 11.519,
+    "fif": 0.739,
+    "grid_dist": 0.011
+   },
+   {
+    "code": "A17U",
+    "name": "CAPITALAND ASCENDAS REIT",
+    "weight_pct": 2.276047,
+    "full_cap_usd_b": 9.769,
+    "fif": 0.814,
+    "grid_dist": 0.011
+   },
+   {
+    "code": "C6L",
+    "name": "SINGAPORE AIRLINES",
+    "weight_pct": 2.248013,
+    "full_cap_usd_b": 16.726,
+    "fif": 0.47,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "BS6",
+    "name": "YANGZIJIANG SHIPBUILD",
+    "weight_pct": 2.079205,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "9CI",
+    "name": "CAPITALAND INVESTMENT",
+    "weight_pct": 1.315112,
+    "full_cap_usd_b": 9.922,
+    "fif": 0.463,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "F34",
+    "name": "WILMAR INTERNATIONAL",
+    "weight_pct": 1.270842,
+    "full_cap_usd_b": 17.533,
+    "fif": 0.253,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "U96",
+    "name": "SEMBCORP INDUSTRIES",
+    "weight_pct": 1.262917,
+    "full_cap_usd_b": 8.9,
+    "fif": 0.496,
+    "grid_dist": 0.004
+   }
+  ]
+ },
+ "_meta": {
+  "method": "grid-snap calibrated weights inversion (c-144)",
+  "control": "Taiwan: recovered c=33.27 vs true 33.314; median FIF err 0.0010 (n=77)",
+  "weights_vintage": "2026-06-01 (ESMA-delayed constituents tool)",
+  "full_caps": "Yahoo chart close 2026-05-29 x current shares x FX same date",
+  "status": "NZ + Singapore published; remaining markets are a Bill-terminal harvest (Yahoo get_info throttles ~60/session)"
+ },
+ "Indonesia": {
+  "market": "Indonesia",
+  "weights_vintage": "2026-06-01",
+  "fx_local_usd": 5.597850395133719e-05,
+  "qc": {
+   "n_members": 11,
+   "n_scored": 10,
+   "calibration": "index-float-cap anchor",
+   "excluded_bad_share_count": [],
+   "calib_c": 0.575,
+   "on_grid_pct": 1.0,
+   "impossible_fif_gt_1.05": 0,
+   "unmapped": [
+    [
+     "TELKOM INDONESIA",
+     12.909302
+    ]
+   ],
+   "verdict": "PASS"
+  },
+  "rows": [
+   {
+    "code": "BBCA",
+    "name": "BANK CENTRAL ASIA",
+    "weight_pct": 26.862696,
+    "full_cap_usd_b": 39.196,
+    "fif": 0.394,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "BBRI",
+    "name": "BANK RAKYAT INDONESIA",
+    "weight_pct": 17.09241,
+    "full_cap_usd_b": 24.865,
+    "fif": 0.395,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "BMRI",
+    "name": "BANK MANDIRI",
+    "weight_pct": 14.557825,
+    "full_cap_usd_b": 21.234,
+    "fif": 0.394,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "ASII",
+    "name": "ASTRA INTERNATIONAL",
+    "weight_pct": 7.738347,
+    "full_cap_usd_b": 11.173,
+    "fif": 0.398,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "BBNI",
+    "name": "BANK NEGARA INDONESIA",
+    "weight_pct": 4.616224,
+    "full_cap_usd_b": 7.717,
+    "fif": 0.344,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "GOTO",
+    "name": "GOTO GOJEK TOKOPEDIA",
+    "weight_pct": 4.269092,
+    "full_cap_usd_b": 2.984,
+    "fif": 0.823,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "BRPT",
+    "name": "BARITO PACIFIC",
+    "weight_pct": 3.56331,
+    "full_cap_usd_b": 10.177,
+    "fif": 0.201,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "BRMS",
+    "name": "BUMI RESOURCES MINERALS",
+    "weight_pct": 3.225105,
+    "full_cap_usd_b": 4.722,
+    "fif": 0.393,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "UNTR",
+    "name": "UNITED TRACTORS",
+    "weight_pct": 2.656176,
+    "full_cap_usd_b": 4.483,
+    "fif": 0.341,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "CPIN",
+    "name": "CHAROEN POKPHAND INDO",
+    "weight_pct": 2.509514,
+    "full_cap_usd_b": 3.92,
+    "fif": 0.368,
+    "grid_dist": 0.007
+   }
+  ]
+ },
+ "Korea": {
+  "market": "Korea",
+  "weights_vintage": "2026-06-01",
+  "fx_local_usd": 0.0006616951432079077,
+  "qc": {
+   "n_members": 77,
+   "n_scored": 36,
+   "calibration": "grid-snap (no factsheet cap)",
+   "excluded_bad_share_count": [],
+   "calib_c": 14.988,
+   "on_grid_pct": 0.972,
+   "impossible_fif_gt_1.05": 0,
+   "unmapped": [
+    [
+     "SAMSUNG ELECTRONICS CO",
+     35.375707
+    ],
+    [
+     "SAMSUNG ELECTRONICS PREF",
+     3.982181
+    ],
+    [
+     "SK SQUARE CO",
+     2.514403
+    ],
+    [
+     "SAMSUNG ELECTRO-MECH. CO",
+     2.434276
+    ],
+    [
+     "HYUNDAI MOTOR CO",
+     2.163342
+    ],
+    [
+     "LG ELECTRONICS (NEW)",
+     0.873098
+    ],
+    [
+     "SAMSUNG SDI CO",
+     0.854036
+    ],
+    [
+     "SAMSUNG C&T CORPORATION",
+     0.799575
+    ],
+    [
+     "SAMSUNG LIFE INSURANCE",
+     0.71086
+    ],
+    [
+     "HANA FINANCIAL HOLDINGS",
+     0.669872
+    ],
+    [
+     "POSCO HOLDINGS",
+     0.638345
+    ],
+    [
+     "SK",
+     0.516178
+    ],
+    [
+     "KT&G CORP(KOREA TOBACCO)",
+     0.368029
+    ],
+    [
+     "LG CORP (NEW)",
+     0.304791
+    ],
+    [
+     "SAMSUNG SDS CO",
+     0.303532
+    ],
+    [
+     "ECOPRO CO",
+     0.287788
+    ],
+    [
+     "KAKAO CORP",
+     0.286973
+    ],
+    [
+     "HANMI SEMICONDUCTOR CO",
+     0.257226
+    ],
+    [
+     "SK TELECOM CO",
+     0.255925
+    ],
+    [
+     "HD HYUNDAI",
+     0.25256
+    ],
+    [
+     "ECOPROBM",
+     0.241389
+    ],
+    [
+     "APR CORP",
+     0.224935
+    ],
+    [
+     "HYUNDAI MOTOR CO PREF 2",
+     0.223917
+    ],
+    [
+     "KOREA INVESTMENT HLDG",
+     0.222825
+    ],
+    [
+     "HYUNDAI ENGR. & CONSTR.",
+     0.217891
+    ],
+    [
+     "KEPCO KOREA ELECT. POWER",
+     0.215095
+    ],
+    [
+     "HYUNDAI GLOVIS CO",
+     0.188958
+    ],
+    [
+     "SK INNOVATION CO",
+     0.15965
+    ],
+    [
+     "MERITZ FINANCIAL HOLDING",
+     0.155445
+    ],
+    [
+     "HYUNDAI MOTOR CO PREF",
+     0.138036
+    ],
+    [
+     "DB INSURANCE CO",
+     0.132516
+    ],
+    [
+     "SAMYANG FOODS",
+     0.104698
+    ],
+    [
+     "KOREAN AIR CO",
+     0.102946
+    ],
+    [
+     "LG DISPLAY CO",
+     0.102728
+    ],
+    [
+     "YUHAN CORP",
+     0.100774
+    ],
+    [
+     "S-OIL CORP",
+     0.095799
+    ],
+    [
+     "KAKAOBANK CORP",
+     0.080164
+    ],
+    [
+     "AMOREPACIFIC CORP (NEW)",
+     0.070547
+    ],
+    [
+     "SAMSUNG EPIS HOLDINGS CO",
+     0.065051
+    ]
+   ],
+   "verdict": "PASS"
+  },
+  "rows": [
+   {
+    "code": "000660",
+    "name": "SK HYNIX",
+    "weight_pct": 28.286801,
+    "full_cap_usd_b": 1108.51,
+    "fif": 0.382,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "105560",
+    "name": "KB FINANCIAL GROUP",
+    "weight_pct": 1.16761,
+    "full_cap_usd_b": 36.382,
+    "fif": 0.481,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "034020",
+    "name": "DOOSAN ENERBILITY",
+    "weight_pct": 1.038835,
+    "full_cap_usd_b": 42.291,
+    "fif": 0.368,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "012330",
+    "name": "HYUNDAI MOBIS",
+    "weight_pct": 0.972683,
+    "full_cap_usd_b": 44.789,
+    "fif": 0.326,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "000270",
+    "name": "KIA CORP",
+    "weight_pct": 0.86254,
+    "full_cap_usd_b": 43.411,
+    "fif": 0.298,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "055550",
+    "name": "SHINHAN FINANCIAL GROUP",
+    "weight_pct": 0.833502,
+    "full_cap_usd_b": 29.945,
+    "fif": 0.417,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "035420",
+    "name": "NAVER",
+    "weight_pct": 0.830643,
+    "full_cap_usd_b": 27.763,
+    "fif": 0.448,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "012450",
+    "name": " HANWHA AEROSPACE ",
+    "weight_pct": 0.826623,
+    "full_cap_usd_b": 36.426,
+    "fif": 0.34,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "068270",
+    "name": "CELLTRION",
+    "weight_pct": 0.599346,
+    "full_cap_usd_b": 27.155,
+    "fif": 0.331,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "267260",
+    "name": "HD HYUNDAI ELECTRIC",
+    "weight_pct": 0.541317,
+    "full_cap_usd_b": 23.697,
+    "fif": 0.342,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "329180",
+    "name": "HD HYUNDAI HEAVY IND",
+    "weight_pct": 0.466785,
+    "full_cap_usd_b": 46.729,
+    "fif": 0.15,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "373220",
+    "name": "LG ENERGY SOLUTION",
+    "weight_pct": 0.461495,
+    "full_cap_usd_b": 68.515,
+    "fif": 0.101,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "010120",
+    "name": "LS ELECTRIC",
+    "weight_pct": 0.433993,
+    "full_cap_usd_b": 23.776,
+    "fif": 0.274,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "298040",
+    "name": "HYOSUNG HEAVY INDUSTRIES",
+    "weight_pct": 0.423584,
+    "full_cap_usd_b": 21.836,
+    "fif": 0.291,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "316140",
+    "name": "WOORI FINANCIAL GROUP ",
+    "weight_pct": 0.409267,
+    "full_cap_usd_b": 14.404,
+    "fif": 0.426,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "010140",
+    "name": "SAMSUNG HEAVY INDUSTRIES",
+    "weight_pct": 0.394072,
+    "full_cap_usd_b": 15.656,
+    "fif": 0.377,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "000810",
+    "name": "SAMSUNG FIRE & MARINE",
+    "weight_pct": 0.37989,
+    "full_cap_usd_b": 18.734,
+    "fif": 0.304,
+    "grid_dist": 0.004
+   },
+   {
+    "code": "009540",
+    "name": "HD KOREA SHIPBUILDING",
+    "weight_pct": 0.372262,
+    "full_cap_usd_b": 17.945,
+    "fif": 0.311,
+    "grid_dist": 0.011
+   },
+   {
+    "code": "051910",
+    "name": "LG CHEM",
+    "weight_pct": 0.361481,
+    "full_cap_usd_b": 18.387,
+    "fif": 0.295,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "042660",
+    "name": "HANWHA OCEAN",
+    "weight_pct": 0.352508,
+    "full_cap_usd_b": 23.515,
+    "fif": 0.225,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "000150",
+    "name": "DOOSAN CORP",
+    "weight_pct": 0.347926,
+    "full_cap_usd_b": 22.695,
+    "fif": 0.23,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "207940",
+    "name": "SAMSUNG BIOLOGICS",
+    "weight_pct": 0.345367,
+    "full_cap_usd_b": 41.872,
+    "fif": 0.124,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "064350",
+    "name": "HYUNDAI ROTEM",
+    "weight_pct": 0.327489,
+    "full_cap_usd_b": 14.66,
+    "fif": 0.335,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "196170",
+    "name": "ALTEOGEN",
+    "weight_pct": 0.318479,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "006800",
+    "name": "MIRAE ASSET SECURITIES",
+    "weight_pct": 0.258407,
+    "full_cap_usd_b": 22.251,
+    "fif": 0.174,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "047810",
+    "name": "KOREA AEROSPACE IND",
+    "weight_pct": 0.249649,
+    "full_cap_usd_b": 9.481,
+    "fif": 0.395,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "079550",
+    "name": "LIG DEFENSE & AEROSPACE",
+    "weight_pct": 0.212747,
+    "full_cap_usd_b": 10.494,
+    "fif": 0.304,
+    "grid_dist": 0.004
+   },
+   {
+    "code": "272210",
+    "name": "HANWHA SYSTEMS",
+    "weight_pct": 0.16705,
+    "full_cap_usd_b": 12.052,
+    "fif": 0.208,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "003670",
+    "name": "POSCO FUTURE M",
+    "weight_pct": 0.166986,
+    "full_cap_usd_b": 13.095,
+    "fif": 0.191,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "259960",
+    "name": "KRAFTON",
+    "weight_pct": 0.153803,
+    "full_cap_usd_b": 7.52,
+    "fif": 0.307,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "028300",
+    "name": "HLB",
+    "weight_pct": 0.144122,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "352820",
+    "name": "HYBE",
+    "weight_pct": 0.110975,
+    "full_cap_usd_b": 6.013,
+    "fif": 0.277,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "024110",
+    "name": "INDUSTRIAL BANK OF KOREA",
+    "weight_pct": 0.103953,
+    "full_cap_usd_b": 10.738,
+    "fif": 0.145,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "161390",
+    "name": "HANKOOK TIRE & TECH",
+    "weight_pct": 0.101441,
+    "full_cap_usd_b": 5.634,
+    "fif": 0.27,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "011200",
+    "name": "HMM",
+    "weight_pct": 0.096995,
+    "full_cap_usd_b": 12.177,
+    "fif": 0.119,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "005940",
+    "name": "NH INVESTMENT & SEC",
+    "weight_pct": 0.090358,
+    "full_cap_usd_b": 7.596,
+    "fif": 0.178,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "047050",
+    "name": "POSCO INTERNATIONAL",
+    "weight_pct": 0.058716,
+    "full_cap_usd_b": 6.756,
+    "fif": 0.13,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "032640",
+    "name": "LG UPLUS",
+    "weight_pct": 0.03824,
+    "full_cap_usd_b": 4.536,
+    "fif": 0.126,
+    "grid_dist": 0.001
+   }
+  ]
+ },
+ "Australia": {
+  "market": "Australia",
+  "weights_vintage": "2026-06-01",
+  "fx_local_usd": 0.7164298892021179,
+  "qc": {
+   "n_members": 47,
+   "n_scored": 41,
+   "calibration": "index-float-cap anchor",
+   "excluded_bad_share_count": [],
+   "calib_c": 14.009,
+   "on_grid_pct": 0.854,
+   "impossible_fif_gt_1.05": 0,
+   "unmapped": [
+    [
+     "BHP GROUP (AU)",
+     15.808316
+    ],
+    [
+     "RIO TINTO LTD (AU)",
+     3.49004
+    ],
+    [
+     "SOUTH 32 (AU)",
+     1.058879
+    ],
+    [
+     "INSURANCE AUSTRALIA GRP",
+     0.856012
+    ],
+    [
+     "PATTINSON WASHINGTON NEW",
+     0.730899
+    ],
+    [
+     "XERO (AU)",
+     0.65322
+    ]
+   ],
+   "verdict": "PASS"
+  },
+  "rows": [
+   {
+    "code": "CBA",
+    "name": "COMMONWEALTH BANK OF AUS",
+    "weight_pct": 13.607052,
+    "full_cap_usd_b": 195.267,
+    "fif": 0.976,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "WBC",
+    "name": "WESTPAC BANKING",
+    "weight_pct": 6.156513,
+    "full_cap_usd_b": 87.072,
+    "fif": 0.991,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "NAB",
+    "name": "NATIONAL AUSTRALIA BANK",
+    "weight_pct": 5.707991,
+    "full_cap_usd_b": 81.193,
+    "fif": 0.985,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "ANZ",
+    "name": "ANZ GROUP HOLDINGS",
+    "weight_pct": 5.260437,
+    "full_cap_usd_b": 73.345,
+    "fif": 1.005,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "WES",
+    "name": "WESFARMERS",
+    "weight_pct": 4.508132,
+    "full_cap_usd_b": 64.377,
+    "fif": 0.981,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "MQG",
+    "name": "MACQUARIE GROUP",
+    "weight_pct": 4.2979,
+    "full_cap_usd_b": 64.925,
+    "fif": 0.927,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "GMG",
+    "name": "GOODMAN GROUP",
+    "weight_pct": 3.147836,
+    "full_cap_usd_b": 46.292,
+    "fif": 0.953,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "WDS",
+    "name": "WOODSIDE ENERGY GROUP",
+    "weight_pct": 2.903225,
+    "full_cap_usd_b": 42.508,
+    "fif": 0.957,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "TCL",
+    "name": "TRANSURBAN GROUP",
+    "weight_pct": 2.285361,
+    "full_cap_usd_b": 33.419,
+    "fif": 0.958,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "CSL",
+    "name": "CSL",
+    "weight_pct": 2.276355,
+    "full_cap_usd_b": 31.758,
+    "fif": 1.004,
+    "grid_dist": 0.004
+   },
+   {
+    "code": "WOW",
+    "name": "WOOLWORTHS GROUP",
+    "weight_pct": 2.132566,
+    "full_cap_usd_b": 30.115,
+    "fif": 0.992,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "FMG",
+    "name": "FORTESCUE",
+    "weight_pct": 1.811763,
+    "full_cap_usd_b": 49.257,
+    "fif": 0.515,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "QBE",
+    "name": "QBE INSURANCE GROUP",
+    "weight_pct": 1.673523,
+    "full_cap_usd_b": 23.655,
+    "fif": 0.991,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "COL",
+    "name": "COLES",
+    "weight_pct": 1.451925,
+    "full_cap_usd_b": 20.737,
+    "fif": 0.981,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "ALL",
+    "name": "ARISTOCRAT LEISURE",
+    "weight_pct": 1.358289,
+    "full_cap_usd_b": 21.864,
+    "fif": 0.87,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "STO",
+    "name": "SANTOS",
+    "weight_pct": 1.261373,
+    "full_cap_usd_b": 18.033,
+    "fif": 0.98,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "EVN",
+    "name": "EVOLUTION MINING",
+    "weight_pct": 1.257078,
+    "full_cap_usd_b": 18.058,
+    "fif": 0.975,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "NST",
+    "name": "NORTHERN STAR RESOURCES",
+    "weight_pct": 1.253052,
+    "full_cap_usd_b": 21.467,
+    "fif": 0.818,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "BXB",
+    "name": "BRAMBLES",
+    "weight_pct": 1.129412,
+    "full_cap_usd_b": 15.818,
+    "fif": 1.0,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "PLS",
+    "name": "PLS GROUP",
+    "weight_pct": 1.054271,
+    "full_cap_usd_b": 15.127,
+    "fif": 0.976,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "TLS",
+    "name": "TELSTRA GROUP",
+    "weight_pct": 1.010504,
+    "full_cap_usd_b": 41.179,
+    "fif": 0.344,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "SCG",
+    "name": "SCENTRE GROUP",
+    "weight_pct": 0.980441,
+    "full_cap_usd_b": 13.77,
+    "fif": 0.997,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "SUN",
+    "name": "SUNCORP GROUP",
+    "weight_pct": 0.943573,
+    "full_cap_usd_b": 13.063,
+    "fif": 1.012,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "ORG",
+    "name": "ORIGIN ENERGY",
+    "weight_pct": 0.926419,
+    "full_cap_usd_b": 13.243,
+    "fif": 0.98,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "CPU",
+    "name": "COMPUTERSHARE",
+    "weight_pct": 0.904842,
+    "full_cap_usd_b": 14.453,
+    "fif": 0.877,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "LYC",
+    "name": "LYNAS RARE EARTHS",
+    "weight_pct": 0.8421,
+    "full_cap_usd_b": 13.672,
+    "fif": 0.863,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "SIG",
+    "name": "SIGMA HEALTHCARE",
+    "weight_pct": 0.75527,
+    "full_cap_usd_b": 23.736,
+    "fif": 0.446,
+    "grid_dist": 0.004
+   },
+   {
+    "code": "APA",
+    "name": "APA GROUP",
+    "weight_pct": 0.665058,
+    "full_cap_usd_b": 9.607,
+    "fif": 0.97,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "MPL",
+    "name": "MEDIBANK PRIVATE",
+    "weight_pct": 0.645873,
+    "full_cap_usd_b": 9.254,
+    "fif": 0.978,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "TLC",
+    "name": "THE LOTTERY CORPORATION",
+    "weight_pct": 0.584054,
+    "full_cap_usd_b": 8.356,
+    "fif": 0.979,
+    "grid_dist": 0.004
+   },
+   {
+    "code": "VCX",
+    "name": "VICINITY CENTRES",
+    "weight_pct": 0.494915,
+    "full_cap_usd_b": 8.045,
+    "fif": 0.862,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "SGP",
+    "name": "STOCKLAND",
+    "weight_pct": 0.477636,
+    "full_cap_usd_b": 6.603,
+    "fif": 1.013,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "CAR",
+    "name": "CAR GROUP",
+    "weight_pct": 0.460378,
+    "full_cap_usd_b": 7.331,
+    "fif": 0.88,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "ASX",
+    "name": "ASX",
+    "weight_pct": 0.460322,
+    "full_cap_usd_b": 6.552,
+    "fif": 0.984,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "SHL",
+    "name": "SONIC HEALTHCARE",
+    "weight_pct": 0.438198,
+    "full_cap_usd_b": 6.625,
+    "fif": 0.927,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "SGH",
+    "name": "SGH",
+    "weight_pct": 0.416251,
+    "full_cap_usd_b": 11.984,
+    "fif": 0.487,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "PME",
+    "name": "PRO MEDICUS",
+    "weight_pct": 0.413298,
+    "full_cap_usd_b": 11.981,
+    "fif": 0.483,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "REA",
+    "name": "REA GROUP",
+    "weight_pct": 0.396544,
+    "full_cap_usd_b": 14.812,
+    "fif": 0.375,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "WTC",
+    "name": "WISETECH GLOBAL",
+    "weight_pct": 0.37674,
+    "full_cap_usd_b": 10.175,
+    "fif": 0.519,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "QAN",
+    "name": "QANTAS AIRWAYS",
+    "weight_pct": 0.347042,
+    "full_cap_usd_b": 9.985,
+    "fif": 0.487,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "COH",
+    "name": "COCHLEAR",
+    "weight_pct": 0.32912,
+    "full_cap_usd_b": 4.533,
+    "fif": 1.017,
+    "grid_dist": 0.008
+   }
+  ]
+ },
+ "HongKong": {
+  "market": "HongKong",
+  "weights_vintage": "2026-06-01",
+  "fx_local_usd": 0.12759985029697418,
+  "qc": {
+   "n_members": 25,
+   "n_scored": 6,
+   "calibration": "grid-snap (no factsheet cap)",
+   "excluded_bad_share_count": [],
+   "calib_c": 4.064,
+   "on_grid_pct": 1.0,
+   "impossible_fif_gt_1.05": 0,
+   "unmapped": [
+    [
+     "HONGKONG EXCH & CLEARING",
+     15.136606
+    ],
+    [
+     "TECHTRONIC INDUSTRIES CO",
+     4.942862
+    ],
+    [
+     "LINK REIT",
+     3.258372
+    ],
+    [
+     "JARDINE MATHESON (USD)",
+     2.633159
+    ],
+    [
+     "HONGKONG CHINA GAS",
+     2.513798
+    ],
+    [
+     "GALAXY ENTERTAINMENT GRP",
+     1.979038
+    ],
+    [
+     "HONGKONG LAND (USD)",
+     1.814946
+    ],
+    [
+     "SITC INTL HOLDINGS",
+     1.509198
+    ],
+    [
+     "FUTU HOLDINGS A ADR",
+     1.243382
+    ],
+    [
+     "CK INFRASTRUCTURE HLDGS",
+     1.115622
+    ]
+   ],
+   "verdict": "PASS"
+  },
+  "rows": [
+   {
+    "code": "1299",
+    "name": "AIA GROUP",
+    "weight_pct": 27.058935,
+    "full_cap_usd_b": 107.825,
+    "fif": 1.02,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "1",
+    "name": "CK HUTCHISON HOLDINGS",
+    "weight_pct": 5.834445,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "2388",
+    "name": "BOC HONG KONG HOLDINGS",
+    "weight_pct": 5.608013,
+    "full_cap_usd_b": 65.107,
+    "fif": 0.35,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "16",
+    "name": "SUN HUNG KAI PROPERTIES",
+    "weight_pct": 5.323359,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "2",
+    "name": "CLP HOLDINGS",
+    "weight_pct": 3.859939,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "1113",
+    "name": "CK ASSET HOLDINGS",
+    "weight_pct": 2.593683,
+    "full_cap_usd_b": 21.078,
+    "fif": 0.5,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "6",
+    "name": "POWER ASSETS HOLDINGS",
+    "weight_pct": 2.542536,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "288",
+    "name": "WH GROUP",
+    "weight_pct": 2.20951,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "66",
+    "name": "MTR CORP",
+    "weight_pct": 1.536434,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "83",
+    "name": "SINO LAND",
+    "weight_pct": 1.403408,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "6823",
+    "name": "HKT TRUST AND HKT",
+    "weight_pct": 1.31149,
+    "full_cap_usd_b": 11.84,
+    "fif": 0.45,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "12",
+    "name": "HENDERSON LAND DEV",
+    "weight_pct": 1.2852,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "1928",
+    "name": "SANDS CHINA",
+    "weight_pct": 1.212307,
+    "full_cap_usd_b": 16.42,
+    "fif": 0.3,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "1997",
+    "name": "WHARF REAL ESTATE INV",
+    "weight_pct": 1.158444,
+    "full_cap_usd_b": 9.414,
+    "fif": 0.5,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "19",
+    "name": "SWIRE PACIFIC A",
+    "weight_pct": 0.915314,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   }
+  ]
+ },
+ "Malaysia": {
+  "market": "Malaysia",
+  "status": "INSUFFICIENT",
+  "why": "no prices at the weights date"
+ },
+ "Thailand": {
+  "market": "Thailand",
+  "status": "INSUFFICIENT",
+  "why": "no prices at the weights date"
+ },
+ "India": {
+  "market": "India",
+  "weights_vintage": "2026-06-01",
+  "fx_local_usd": 0.010465571656823158,
+  "qc": {
+   "n_members": 165,
+   "n_scored": 138,
+   "calibration": "index-float-cap anchor",
+   "excluded_bad_share_count": [],
+   "calib_c": 13.369,
+   "on_grid_pct": 0.971,
+   "impossible_fif_gt_1.05": 0,
+   "unmapped": [
+    [
+     "ADANI PORTS AND SEZ",
+     0.724744
+    ],
+    [
+     "BOMBAY STOCK EXCHANGE",
+     0.636202
+    ],
+    [
+     "DIVI'S LABORATORIES",
+     0.613696
+    ],
+    [
+     "CUMMINS INDIA KIRLOSKAR",
+     0.58631
+    ],
+    [
+     "TATA MOTORS PASSENGER V",
+     0.555521
+    ],
+    [
+     "TATA MOTORS",
+     0.540143
+    ],
+    [
+     "VEDANTA (DETACHED)",
+     0.538628
+    ],
+    [
+     "OIL & NATURAL GAS CORP",
+     0.534312
+    ],
+    [
+     "DR REDDY'S LABORATORIES",
+     0.506544
+    ],
+    [
+     "TATA POWER CO",
+     0.49911
+    ],
+    [
+     "SUZLON ENERGY LIMITED",
+     0.434863
+    ],
+    [
+     "INDIAN HOTELS CO",
+     0.432991
+    ],
+    [
+     "BHARAT PETROLEUM CORP",
+     0.378581
+    ],
+    [
+     "VEDANTA",
+     0.361714
+    ],
+    [
+     "ICICI LOMBARD GENL INS",
+     0.33472
+    ],
+    [
+     "ONE 97 COMMUNICATIONS",
+     0.329666
+    ],
+    [
+     "GODREJ CONSUMER PRDCTS",
+     0.303498
+    ],
+    [
+     "MULTI CMDTY EXCH INDIA",
+     0.283106
+    ],
+    [
+     "FSN ECOMMERCE VENTURES",
+     0.254403
+    ],
+    [
+     "TUBE INVESTMENT (NEW)",
+     0.243463
+    ],
+    [
+     "BAJAJ HLDGS & INVESTMENT",
+     0.215033
+    ],
+    [
+     "PUNJAB NATL BANK",
+     0.186995
+    ],
+    [
+     "L AND T FINANCE",
+     0.173086
+    ],
+    [
+     "ORACLE FINL SVCS SOFTW",
+     0.170346
+    ],
+    [
+     "SBI CARDS AND PAYMENT",
+     0.112569
+    ]
+   ],
+   "verdict": "PASS"
+  },
+  "rows": [
+   {
+    "code": "HDFCBANK",
+    "name": "HDFC BANK",
+    "weight_pct": 6.631821,
+    "full_cap_usd_b": 119.773,
+    "fif": 0.74,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "RELIANCE",
+    "name": "RELIANCE INDUSTRIES",
+    "weight_pct": 6.301118,
+    "full_cap_usd_b": 186.945,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "ICICIBANK",
+    "name": "ICICI BANK",
+    "weight_pct": 5.149561,
+    "full_cap_usd_b": 93.067,
+    "fif": 0.74,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "BHARTIARTL",
+    "name": "BHARTI AIRTEL",
+    "weight_pct": 3.891606,
+    "full_cap_usd_b": 118.216,
+    "fif": 0.44,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "INFY",
+    "name": "INFOSYS",
+    "weight_pct": 2.8672,
+    "full_cap_usd_b": 50.97,
+    "fif": 0.752,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "AXISBANK",
+    "name": "AXIS BANK",
+    "weight_pct": 2.300533,
+    "full_cap_usd_b": 41.55,
+    "fif": 0.74,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "LT",
+    "name": "LARSEN & TOUBRO",
+    "weight_pct": 2.119256,
+    "full_cap_usd_b": 57.752,
+    "fif": 0.491,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "M&M",
+    "name": "MAHINDRA & MAHINDRA",
+    "weight_pct": 2.026719,
+    "full_cap_usd_b": 37.326,
+    "fif": 0.726,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "BAJFINANCE",
+    "name": "BAJAJ FINANCE",
+    "weight_pct": 1.734619,
+    "full_cap_usd_b": 57.882,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "KOTAKBANK",
+    "name": "KOTAK MAHINDRA BANK",
+    "weight_pct": 1.618406,
+    "full_cap_usd_b": 39.286,
+    "fif": 0.551,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "TCS",
+    "name": "TATA CONSULTANCY",
+    "weight_pct": 1.466062,
+    "full_cap_usd_b": 86.992,
+    "fif": 0.225,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "SBIN",
+    "name": "STATE BANK OF INDIA",
+    "weight_pct": 1.38073,
+    "full_cap_usd_b": 92.17,
+    "fif": 0.2,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "NTPC",
+    "name": "NTPC",
+    "weight_pct": 1.295341,
+    "full_cap_usd_b": 38.431,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "SUNPHARMA",
+    "name": "SUN PHARMACEUTICAL IND",
+    "weight_pct": 1.267048,
+    "full_cap_usd_b": 45.111,
+    "fif": 0.375,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "TATASTEEL",
+    "name": "TATA STEEL",
+    "weight_pct": 1.236344,
+    "full_cap_usd_b": 27.49,
+    "fif": 0.601,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "MARUTI",
+    "name": "MARUTI SUZUKI INDIA",
+    "weight_pct": 1.196484,
+    "full_cap_usd_b": 42.598,
+    "fif": 0.376,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "HINDALCO",
+    "name": "HINDALCO INDUSTRIES",
+    "weight_pct": 1.156028,
+    "full_cap_usd_b": 26.515,
+    "fif": 0.583,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "HINDUNILVR",
+    "name": "HINDUSTAN UNILEVER",
+    "weight_pct": 1.151669,
+    "full_cap_usd_b": 51.253,
+    "fif": 0.3,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "TITAN",
+    "name": "TITAN COMPANY",
+    "weight_pct": 1.120328,
+    "full_cap_usd_b": 37.362,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "BEL",
+    "name": "BHARAT ELECTRONICS",
+    "weight_pct": 1.108306,
+    "full_cap_usd_b": 31.151,
+    "fif": 0.476,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "SHFL",
+    "name": "SHRIRAM FINANCE",
+    "weight_pct": 1.016971,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "POWERGRID",
+    "name": "POWER GRID CORP OF INDIA",
+    "weight_pct": 0.938796,
+    "full_cap_usd_b": 27.853,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "ULTRACEMCO",
+    "name": "ULTRATECH CEMENT",
+    "weight_pct": 0.908089,
+    "full_cap_usd_b": 34.579,
+    "fif": 0.351,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "HCLTECH",
+    "name": "HCL TECHNOLOGIES",
+    "weight_pct": 0.826224,
+    "full_cap_usd_b": 33.842,
+    "fif": 0.326,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "ASIANPAINT",
+    "name": "ASIAN PAINTS",
+    "weight_pct": 0.791724,
+    "full_cap_usd_b": 26.41,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "EICHERMOT",
+    "name": "EICHER MOTORS",
+    "weight_pct": 0.763416,
+    "full_cap_usd_b": 20.4,
+    "fif": 0.5,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "GRASIM",
+    "name": "GRASIM INDUSTRIES",
+    "weight_pct": 0.662039,
+    "full_cap_usd_b": 22.023,
+    "fif": 0.402,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "INDIGO",
+    "name": "INTERGLOBE AVIATION",
+    "weight_pct": 0.661389,
+    "full_cap_usd_b": 18.021,
+    "fif": 0.491,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "ITC",
+    "name": "ITC",
+    "weight_pct": 0.659193,
+    "full_cap_usd_b": 36.67,
+    "fif": 0.24,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "TECHM",
+    "name": "TECH MAHINDRA",
+    "weight_pct": 0.651921,
+    "full_cap_usd_b": 14.307,
+    "fif": 0.609,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "SBILIFE",
+    "name": "SBI LIFE INSURANCE CO",
+    "weight_pct": 0.641336,
+    "full_cap_usd_b": 19.031,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "APOLLOHOSP",
+    "name": "APOLLO HOSPITALS",
+    "weight_pct": 0.639742,
+    "full_cap_usd_b": 12.202,
+    "fif": 0.701,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "NESTLEIND",
+    "name": "NESTLE INDIA",
+    "weight_pct": 0.631146,
+    "full_cap_usd_b": 28.088,
+    "fif": 0.3,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "TVSMOTOR",
+    "name": "TVS MOTOR CO",
+    "weight_pct": 0.622754,
+    "full_cap_usd_b": 16.633,
+    "fif": 0.501,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "JSWSTEEL",
+    "name": "JSW STEEL",
+    "weight_pct": 0.622725,
+    "full_cap_usd_b": 33.195,
+    "fif": 0.251,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "TRENT",
+    "name": "TRENT",
+    "weight_pct": 0.579242,
+    "full_cap_usd_b": 15.467,
+    "fif": 0.501,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "COALINDIA",
+    "name": "COAL INDIA",
+    "weight_pct": 0.57077,
+    "full_cap_usd_b": 30.481,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "ADANIPOWER",
+    "name": "ADANI POWER",
+    "weight_pct": 0.56187,
+    "full_cap_usd_b": 46.884,
+    "fif": 0.16,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "HAL",
+    "name": "HINDUSTAN AERONAUTICS",
+    "weight_pct": 0.557547,
+    "full_cap_usd_b": 29.775,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "CIPLA",
+    "name": "CIPLA",
+    "weight_pct": 0.550221,
+    "full_cap_usd_b": 11.754,
+    "fif": 0.626,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "BAJAJ-AUTO",
+    "name": "BAJAJ AUTO",
+    "weight_pct": 0.545599,
+    "full_cap_usd_b": 29.841,
+    "fif": 0.244,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "BAJAJFINSV",
+    "name": "BAJAJ FINSERV",
+    "weight_pct": 0.529634,
+    "full_cap_usd_b": 29.457,
+    "fif": 0.24,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "JIOFIN",
+    "name": "JIO FINANCIAL SERVICES",
+    "weight_pct": 0.526539,
+    "full_cap_usd_b": 16.236,
+    "fif": 0.434,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "VBL",
+    "name": "VARUN BEVERAGES",
+    "weight_pct": 0.522449,
+    "full_cap_usd_b": 18.602,
+    "fif": 0.375,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "MAXHEALTH",
+    "name": "MAX HEALTHCARE INSTITUTE",
+    "weight_pct": 0.519041,
+    "full_cap_usd_b": 9.559,
+    "fif": 0.726,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "CHOLAFIN",
+    "name": "CHOLAMANDALAM INV & FIN",
+    "weight_pct": 0.498555,
+    "full_cap_usd_b": 13.343,
+    "fif": 0.5,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "TATACONSUM",
+    "name": "TATA CONSUMER PRODUCTS",
+    "weight_pct": 0.487775,
+    "full_cap_usd_b": 11.842,
+    "fif": 0.551,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "GVT&D",
+    "name": "GE VERNOVA T&D INDIA",
+    "weight_pct": 0.477192,
+    "full_cap_usd_b": 12.742,
+    "fif": 0.501,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "ETERNAL",
+    "name": "ETERNAL",
+    "weight_pct": 0.469206,
+    "full_cap_usd_b": 23.902,
+    "fif": 0.262,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "MOTHERSON",
+    "name": "SAMVARDHANA MOTHERSON",
+    "weight_pct": 0.469157,
+    "full_cap_usd_b": 15.625,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "DMART",
+    "name": "AVENUE SUPERMARTS",
+    "weight_pct": 0.468213,
+    "full_cap_usd_b": 27.795,
+    "fif": 0.225,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "POLICYBZR",
+    "name": "PB FINTECH",
+    "weight_pct": 0.454662,
+    "full_cap_usd_b": 8.082,
+    "fif": 0.752,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "HEROMOTOCO",
+    "name": "HERO MOTOCORP",
+    "weight_pct": 0.453595,
+    "full_cap_usd_b": 10.096,
+    "fif": 0.601,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "HDFCLIFE",
+    "name": "HDFC LIFE INSURANCE CO",
+    "weight_pct": 0.446464,
+    "full_cap_usd_b": 13.333,
+    "fif": 0.448,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "CGPOWER",
+    "name": "CG POWER & INDUSTRIAL",
+    "weight_pct": 0.441652,
+    "full_cap_usd_b": 14.746,
+    "fif": 0.4,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "BRITANNIA",
+    "name": "BRITANNIA INDUSTRIES",
+    "weight_pct": 0.438213,
+    "full_cap_usd_b": 13.001,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "PFC",
+    "name": "POWER FINANCE CORP",
+    "weight_pct": 0.435739,
+    "full_cap_usd_b": 14.544,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "PERSISTENT",
+    "name": "PERSISTENT SYSTEMS",
+    "weight_pct": 0.434201,
+    "full_cap_usd_b": 8.833,
+    "fif": 0.657,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "INDUSTOWER",
+    "name": "INDUS TOWERS",
+    "weight_pct": 0.423818,
+    "full_cap_usd_b": 11.908,
+    "fif": 0.476,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "AUBANK",
+    "name": "AU SMALL FINANCE BANK",
+    "weight_pct": 0.420662,
+    "full_cap_usd_b": 7.593,
+    "fif": 0.741,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "ADANIENT",
+    "name": "ADANI ENTERPRISES",
+    "weight_pct": 0.412489,
+    "full_cap_usd_b": 41.219,
+    "fif": 0.134,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "FEDERALBNK",
+    "name": "FEDERAL BANK",
+    "weight_pct": 0.411991,
+    "full_cap_usd_b": 7.443,
+    "fif": 0.74,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "INDUSINDBK",
+    "name": "INDUSIND BANK",
+    "weight_pct": 0.407267,
+    "full_cap_usd_b": 7.348,
+    "fif": 0.741,
+    "grid_dist": 0.009
+   },
+   {
+    "code": "LUPIN",
+    "name": "LUPIN",
+    "weight_pct": 0.405486,
+    "full_cap_usd_b": 10.828,
+    "fif": 0.501,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "WIPRO",
+    "name": "WIPRO",
+    "weight_pct": 0.398811,
+    "full_cap_usd_b": 21.37,
+    "fif": 0.249,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "HDFCAMC",
+    "name": "HDFC ASSET MANAGEMENT",
+    "weight_pct": 0.393617,
+    "full_cap_usd_b": 11.689,
+    "fif": 0.45,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "POLYCAB",
+    "name": "POLYCAB INDIA",
+    "weight_pct": 0.391611,
+    "full_cap_usd_b": 14.946,
+    "fif": 0.35,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "BHEL",
+    "name": "BHARAT HEAVY ELECTRICALS",
+    "weight_pct": 0.386722,
+    "full_cap_usd_b": 14.752,
+    "fif": 0.35,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "BHARATFORG",
+    "name": "BHARAT FORGE",
+    "weight_pct": 0.360283,
+    "full_cap_usd_b": 9.62,
+    "fif": 0.501,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "FORTIS",
+    "name": "FORTIS HEALTHCARE",
+    "weight_pct": 0.357437,
+    "full_cap_usd_b": 7.342,
+    "fif": 0.651,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "POWERINDIA",
+    "name": "HITACHI ENERGY INDIA",
+    "weight_pct": 0.349555,
+    "full_cap_usd_b": 16.97,
+    "fif": 0.275,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "TORNTPHARM",
+    "name": "TORRENT PHARMACEUTICALS",
+    "weight_pct": 0.346239,
+    "full_cap_usd_b": 17.318,
+    "fif": 0.267,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "JINDALSTEL",
+    "name": "JINDAL STEEL",
+    "weight_pct": 0.338589,
+    "full_cap_usd_b": 12.883,
+    "fif": 0.351,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "MARICO",
+    "name": "MARICO",
+    "weight_pct": 0.327953,
+    "full_cap_usd_b": 10.929,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "DIXON",
+    "name": "DIXON TECHNOLOGIES INDIA",
+    "weight_pct": 0.327809,
+    "full_cap_usd_b": 7.294,
+    "fif": 0.601,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "ASHOKLEY",
+    "name": "ASHOK LEYLAND",
+    "weight_pct": 0.327585,
+    "full_cap_usd_b": 9.207,
+    "fif": 0.476,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "SOLARINDS",
+    "name": "SOLAR INDUSTRIES INDIA",
+    "weight_pct": 0.322803,
+    "full_cap_usd_b": 17.239,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "PIDILITIND",
+    "name": "PIDILITE INDUSTRIES",
+    "weight_pct": 0.319708,
+    "full_cap_usd_b": 15.522,
+    "fif": 0.275,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "RECLTD",
+    "name": "REC",
+    "weight_pct": 0.307827,
+    "full_cap_usd_b": 9.133,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "IOC",
+    "name": "INDIAN OIL CORP",
+    "weight_pct": 0.307288,
+    "full_cap_usd_b": 20.513,
+    "fif": 0.2,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "GAIL",
+    "name": "GAIL INDIA",
+    "weight_pct": 0.295379,
+    "full_cap_usd_b": 11.267,
+    "fif": 0.35,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "AUROPHARMA",
+    "name": "AUROBINDO PHARMA",
+    "weight_pct": 0.293733,
+    "full_cap_usd_b": 8.633,
+    "fif": 0.455,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "HINDPETRO",
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "weight_pct": 0.291679,
+    "full_cap_usd_b": 8.654,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "UNITDSPR",
+    "name": "UNITED SPIRITS",
+    "weight_pct": 0.284807,
+    "full_cap_usd_b": 9.28,
+    "fif": 0.41,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "IDEA",
+    "name": "VODAFONE IDEA",
+    "weight_pct": 0.284342,
+    "full_cap_usd_b": 15.818,
+    "fif": 0.24,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "SRF",
+    "name": "SRF",
+    "weight_pct": 0.281925,
+    "full_cap_usd_b": 8.364,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "DLF",
+    "name": "DLF",
+    "weight_pct": 0.281377,
+    "full_cap_usd_b": 15.027,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "NATIONALUM",
+    "name": "NATIONAL ALUMINIUM CO",
+    "weight_pct": 0.281306,
+    "full_cap_usd_b": 8.346,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "MUTHOOTFIN",
+    "name": "MUTHOOT FINANCE",
+    "weight_pct": 0.280957,
+    "full_cap_usd_b": 13.64,
+    "fif": 0.275,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "SWIGGY",
+    "name": "SWIGGY",
+    "weight_pct": 0.270202,
+    "full_cap_usd_b": 6.848,
+    "fif": 0.527,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "YESBANK",
+    "name": "YES BANK",
+    "weight_pct": 0.268852,
+    "full_cap_usd_b": 7.559,
+    "fif": 0.476,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "NAUKRI",
+    "name": "INFO EDGE (INDIA)",
+    "weight_pct": 0.267933,
+    "full_cap_usd_b": 6.806,
+    "fif": 0.526,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "PHOENIXLTD",
+    "name": "PHOENIX MILLS",
+    "weight_pct": 0.257244,
+    "full_cap_usd_b": 6.542,
+    "fif": 0.526,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "UPL",
+    "name": "UPL",
+    "weight_pct": 0.25619,
+    "full_cap_usd_b": 5.708,
+    "fif": 0.6,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "APLAPOLLO",
+    "name": "APL APOLLO TUBES",
+    "weight_pct": 0.252999,
+    "full_cap_usd_b": 5.197,
+    "fif": 0.651,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "ABB",
+    "name": "ABB INDIA",
+    "weight_pct": 0.250981,
+    "full_cap_usd_b": 15.585,
+    "fif": 0.215,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "ENRIN",
+    "name": "SIEMENS ENERGY INDIA",
+    "weight_pct": 0.24387,
+    "full_cap_usd_b": 13.855,
+    "fif": 0.235,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "IDFCFIRSTB",
+    "name": "IDFC FIRST BANK",
+    "weight_pct": 0.235421,
+    "full_cap_usd_b": 6.429,
+    "fif": 0.49,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "ENRIN",
+    "name": "SIEMENS INDIA",
+    "weight_pct": 0.227929,
+    "full_cap_usd_b": 13.855,
+    "fif": 0.22,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "MRF",
+    "name": "MRF",
+    "weight_pct": 0.227514,
+    "full_cap_usd_b": 5.523,
+    "fif": 0.551,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "NMDC",
+    "name": "NMDC",
+    "weight_pct": 0.222808,
+    "full_cap_usd_b": 8.499,
+    "fif": 0.35,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "VMM",
+    "name": "VISHAL MEGA MART",
+    "weight_pct": 0.216597,
+    "full_cap_usd_b": 5.809,
+    "fif": 0.498,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "ABCAPITAL",
+    "name": "ADITYA BIRLA CAPITAL",
+    "weight_pct": 0.216021,
+    "full_cap_usd_b": 10.038,
+    "fif": 0.288,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "MPHASIS",
+    "name": "MPHASIS",
+    "weight_pct": 0.216004,
+    "full_cap_usd_b": 4.614,
+    "fif": 0.626,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "BANKBARODA",
+    "name": "BANK OF BARODA",
+    "weight_pct": 0.214323,
+    "full_cap_usd_b": 14.307,
+    "fif": 0.2,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "LTM",
+    "name": "LTM",
+    "weight_pct": 0.209678,
+    "full_cap_usd_b": 13.019,
+    "fif": 0.215,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "WAAREEENER",
+    "name": "WAAREE ENERGIES",
+    "weight_pct": 0.209439,
+    "full_cap_usd_b": 9.321,
+    "fif": 0.3,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "SUNDARMFIN",
+    "name": "SUNDARAM FINANCE",
+    "weight_pct": 0.209235,
+    "full_cap_usd_b": 4.859,
+    "fif": 0.576,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "AMBUJACEM",
+    "name": "AMBUJA CEMENTS",
+    "weight_pct": 0.202242,
+    "full_cap_usd_b": 11.31,
+    "fif": 0.239,
+    "grid_dist": 0.011
+   },
+   {
+    "code": "GMRAIRPORT",
+    "name": "GMR AIRPORTS",
+    "weight_pct": 0.200843,
+    "full_cap_usd_b": 10.726,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "TORNTPOWER",
+    "name": "TORRENT POWER",
+    "weight_pct": 0.195239,
+    "full_cap_usd_b": 7.447,
+    "fif": 0.35,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "BOSCHLTD",
+    "name": "BOSCH",
+    "weight_pct": 0.19518,
+    "full_cap_usd_b": 11.331,
+    "fif": 0.23,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "UNIONBANK",
+    "name": "UNION BANK OF INDIA",
+    "weight_pct": 0.194524,
+    "full_cap_usd_b": 12.985,
+    "fif": 0.2,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "LODHA",
+    "name": "LODHA DEVELOPERS",
+    "weight_pct": 0.192307,
+    "full_cap_usd_b": 9.336,
+    "fif": 0.275,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "VOLTAS",
+    "name": "VOLTAS",
+    "weight_pct": 0.191106,
+    "full_cap_usd_b": 4.254,
+    "fif": 0.601,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "COLPAL",
+    "name": "COLGATE-PALMOLIVE INDIA",
+    "weight_pct": 0.190936,
+    "full_cap_usd_b": 5.665,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "MANKIND",
+    "name": "MANKIND PHARMA",
+    "weight_pct": 0.187711,
+    "full_cap_usd_b": 10.028,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "PRESTIGE",
+    "name": "PRESTIGE ESTATES PROJECT",
+    "weight_pct": 0.183435,
+    "full_cap_usd_b": 6.123,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "HAVELLS",
+    "name": "HAVELLS INDIA",
+    "weight_pct": 0.182686,
+    "full_cap_usd_b": 7.508,
+    "fif": 0.325,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "GODREJPROP",
+    "name": "GODREJ PROPERTIES",
+    "weight_pct": 0.182135,
+    "full_cap_usd_b": 5.404,
+    "fif": 0.451,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "532483",
+    "name": "CANARA BANK",
+    "weight_pct": 0.181969,
+    "full_cap_usd_b": null,
+    "fif": null,
+    "grid_dist": null
+   },
+   {
+    "code": "PAGEIND",
+    "name": "PAGE INDUSTRIES",
+    "weight_pct": 0.17901,
+    "full_cap_usd_b": 4.345,
+    "fif": 0.551,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "SUPREMEIND",
+    "name": "SUPREME INDUSTRIES",
+    "weight_pct": 0.175287,
+    "full_cap_usd_b": 4.682,
+    "fif": 0.5,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "ALKEM",
+    "name": "ALKEM LABORATORIES",
+    "weight_pct": 0.174337,
+    "full_cap_usd_b": 6.65,
+    "fif": 0.35,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "TATACOMM",
+    "name": "TATA COMMUNICATIONS",
+    "weight_pct": 0.173597,
+    "full_cap_usd_b": 5.795,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "JSWENERGY",
+    "name": "JSW ENERGY",
+    "weight_pct": 0.172799,
+    "full_cap_usd_b": 11.189,
+    "fif": 0.206,
+    "grid_dist": 0.006
+   },
+   {
+    "code": "INDIANB",
+    "name": "INDIAN BANK",
+    "weight_pct": 0.170998,
+    "full_cap_usd_b": 11.415,
+    "fif": 0.2,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "COROMANDEL",
+    "name": "COROMANDEL INTERNATIONAL",
+    "weight_pct": 0.165368,
+    "full_cap_usd_b": 5.51,
+    "fif": 0.401,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "SHREECEM",
+    "name": "SHREE CEMENT",
+    "weight_pct": 0.163019,
+    "full_cap_usd_b": 9.463,
+    "fif": 0.23,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "ZYDUSLIFE",
+    "name": "ZYDUS LIFESCIENCES",
+    "weight_pct": 0.159232,
+    "full_cap_usd_b": 11.392,
+    "fif": 0.187,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "PETRONET",
+    "name": "PETRONET LNG",
+    "weight_pct": 0.159002,
+    "full_cap_usd_b": 4.246,
+    "fif": 0.501,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "JSL",
+    "name": "JINDAL STAINLESS",
+    "weight_pct": 0.157405,
+    "full_cap_usd_b": 6.001,
+    "fif": 0.351,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "OIL",
+    "name": "OIL INDIA",
+    "weight_pct": 0.153886,
+    "full_cap_usd_b": 8.218,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "OBEROIRLTY",
+    "name": "OBEROI REALTY",
+    "weight_pct": 0.152788,
+    "full_cap_usd_b": 6.276,
+    "fif": 0.325,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "NHPC",
+    "name": "NHPC",
+    "weight_pct": 0.151972,
+    "full_cap_usd_b": 8.116,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "DABUR",
+    "name": "DABUR INDIA",
+    "weight_pct": 0.144636,
+    "full_cap_usd_b": 7.883,
+    "fif": 0.245,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "PIDILITIND",
+    "name": "PI INDUSTRIES",
+    "weight_pct": 0.144599,
+    "full_cap_usd_b": 15.522,
+    "fif": 0.125,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "ICICIPRULI",
+    "name": "ICICI PRUDENTIAL LIFE",
+    "weight_pct": 0.138779,
+    "full_cap_usd_b": 7.413,
+    "fif": 0.25,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "BALKRISIND",
+    "name": "BALKRISHNA INDUSTRIES",
+    "weight_pct": 0.123184,
+    "full_cap_usd_b": 4.386,
+    "fif": 0.376,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "ASTRAL",
+    "name": "ASTRAL",
+    "weight_pct": 0.121072,
+    "full_cap_usd_b": 4.31,
+    "fif": 0.376,
+    "grid_dist": 0.001
+   }
+  ]
+ },
+ "Japan": {
+  "market": "Japan",
+  "weights_vintage": "2026-06-01",
+  "fx_local_usd": 0.0062642511911690235,
+  "qc": {
+   "n_members": 168,
+   "n_scored": 61,
+   "calibration": "grid-snap (no factsheet cap)",
+   "excluded_bad_share_count": [],
+   "calib_c": 1.423,
+   "on_grid_pct": 0.934,
+   "impossible_fif_gt_1.05": 0,
+   "unmapped": [
+    [
+     "MITSUBISHI UFJ FIN GRP",
+     3.984497
+    ],
+    [
+     "SOFTBANK GROUP CORP",
+     3.913133
+    ],
+    [
+     "TOYOTA MOTOR CORP",
+     3.397952
+    ],
+    [
+     "SUMITOMO MITSUI FINL GRP",
+     2.629881
+    ],
+    [
+     "SONY GROUP CORP",
+     2.553641
+    ],
+    [
+     "ADVANTEST CORP",
+     2.319249
+    ],
+    [
+     "MURATA MANUFACTURING CO",
+     2.096409
+    ],
+    [
+     "FAST RETAILING CO",
+     1.896949
+    ],
+    [
+     "KEYENCE CORP",
+     1.865896
+    ],
+    [
+     "MITSUBISHI CORP",
+     1.834974
+    ],
+    [
+     "RECRUIT HOLDINGS CO",
+     1.78259
+    ],
+    [
+     "SHIN-ETSU CHEMICAL CO",
+     1.574868
+    ],
+    [
+     "MITSUI & CO",
+     1.467847
+    ],
+    [
+     "MITSUBISHI ELECTRIC CORP",
+     1.428841
+    ],
+    [
+     "ITOCHU CORP",
+     1.286575
+    ],
+    [
+     "HOYA CORP",
+     1.10417
+    ],
+    [
+     "PANASONIC HOLDINGS CORP",
+     1.034467
+    ],
+    [
+     "NINTENDO CO",
+     0.967177
+    ],
+    [
+     "TDK CORP",
+     0.959849
+    ],
+    [
+     "SUMITOMO CORP",
+     0.874959
+    ],
+    [
+     "MARUBENI CORP",
+     0.856679
+    ],
+    [
+     "ORIX CORP",
+     0.839228
+    ],
+    [
+     "SOFTBANK CORP",
+     0.767359
+    ],
+    [
+     "JAPAN POST BANK CO",
+     0.663897
+    ],
+    [
+     "NEC CORP",
+     0.661979
+    ],
+    [
+     "CHUGAI PHARMACEUTICAL CO",
+     0.635195
+    ],
+    [
+     "HONDA MOTOR CO",
+     0.627407
+    ],
+    [
+     "IBIDEN CO",
+     0.625109
+    ],
+    [
+     "OTSUKA HOLDINGS CO",
+     0.592002
+    ],
+    [
+     "AJINOMOTO CO",
+     0.567986
+    ],
+    [
+     "DAIICHI SANKYO CO",
+     0.551016
+    ],
+    [
+     "NTT CORP",
+     0.550708
+    ],
+    [
+     "KYOCERA CORP",
+     0.511092
+    ],
+    [
+     "FUJI FILM HOLDINGS CO",
+     0.46708
+    ],
+    [
+     "MITSUI FUDOSAN CO",
+     0.452538
+    ],
+    [
+     "BRIDGESTONE CORP",
+     0.45028
+    ],
+    [
+     "CANON INC",
+     0.427409
+    ],
+    [
+     "SEVEN & I HOLDINGS CO",
+     0.427363
+    ],
+    [
+     "JAPAN POST HOLDINGS CO",
+     0.423125
+    ],
+    [
+     "FURUKAWA ELECTRIC CO",
+     0.420505
+    ],
+    [
+     "RESONAC HOLDINGS CORP",
+     0.399498
+    ],
+    [
+     "EAST JAPAN RAILWAY CO",
+     0.399097
+    ],
+    [
+     "ASICS CORP",
+     0.398489
+    ],
+    [
+     "DENSO CORP",
+     0.386049
+    ],
+    [
+     "TERUMO CORP",
+     0.385682
+    ],
+    [
+     "SUZUKI MOTOR CORP",
+     0.376358
+    ],
+    [
+     "INPEX CORP",
+     0.371548
+    ],
+    [
+     "LASERTEC CORP",
+     0.368412
+    ],
+    [
+     "MITSUI KINZOKU CO",
+     0.362396
+    ],
+    [
+     "AEON CO",
+     0.360048
+    ],
+    [
+     "KAO CORP",
+     0.337981
+    ],
+    [
+     "KUBOTA CORP",
+     0.333186
+    ],
+    [
+     "NIPPON STEEL CORP",
+     0.328007
+    ],
+    [
+     "IHI CORP",
+     0.323965
+    ],
+    [
+     "EBARA CORP",
+     0.32333
+    ],
+    [
+     "CENTRAL JAPAN RAILWAY CO",
+     0.313751
+    ],
+    [
+     "SECOM CO",
+     0.312843
+    ],
+    [
+     "ORIENTAL LAND CO",
+     0.299678
+    ],
+    [
+     "NIDEC CORP",
+     0.298645
+    ],
+    [
+     "DAIFUKU CO",
+     0.279388
+    ],
+    [
+     "KAJIMA CORP",
+     0.275369
+    ],
+    [
+     "ASAHI KASEI CORP",
+     0.268178
+    ],
+    [
+     "KANSAI ELECTRIC POWER CO",
+     0.267635
+    ],
+    [
+     "SHIONOGI & CO",
+     0.26735
+    ],
+    [
+     "SUMITOMO METAL MINING CO",
+     0.266138
+    ],
+    [
+     "FUJI ELECTRIC CO",
+     0.265172
+    ],
+    [
+     "SUMITOMO REALTY & DEV CO",
+     0.259959
+    ],
+    [
+     "NITTO DENKO CORP",
+     0.255685
+    ],
+    [
+     "NIPPON YUSEN K.K",
+     0.252791
+    ],
+    [
+     "KIRIN HOLDINGS CO",
+     0.249917
+    ],
+    [
+     "OBAYASHI CORP",
+     0.243335
+    ],
+    [
+     "KONAMI GROUP CORP",
+     0.23709
+    ],
+    [
+     "OLYMPUS CORP",
+     0.236027
+    ],
+    [
+     "TAISEI CORP",
+     0.23444
+    ],
+    [
+     "CHUBU ELECTRIC POWER CO",
+     0.232159
+    ],
+    [
+     "RYOHIN KEIKAKU CO",
+     0.229266
+    ],
+    [
+     "TOKYO GAS CO",
+     0.226221
+    ],
+    [
+     "OSAKA GAS CO",
+     0.222864
+    ],
+    [
+     "SCREEN HOLDINGS CO",
+     0.204801
+    ],
+    [
+     "PAN PACIFIC INTL HLDGS",
+     0.193731
+    ],
+    [
+     "OBIC CO",
+     0.166213
+    ],
+    [
+     "MITSUBISHI CHEMICAL GRP",
+     0.16018
+    ],
+    [
+     "SUBARU CORPORATION",
+     0.155439
+    ],
+    [
+     "SHIMIZU CORP",
+     0.153305
+    ],
+    [
+     "MAKITA CORP",
+     0.143327
+    ],
+    [
+     "YAMAHA MOTOR CO",
+     0.140552
+    ],
+    [
+     "YOKOGAWA ELECTRIC CORP",
+     0.13697
+    ],
+    [
+     "LY CORPORATION",
+     0.134917
+    ],
+    [
+     "AISIN CORP",
+     0.13072
+    ],
+    [
+     "IDEMITSU KOSAN CO",
+     0.129487
+    ],
+    [
+     "SHISEIDO CO",
+     0.12908
+    ],
+    [
+     "WEST JAPAN RAILWAY CO",
+     0.127932
+    ],
+    [
+     "UNI-CHARM CORP",
+     0.123501
+    ],
+    [
+     "DAI NIPPON PRINTING CO",
+     0.122885
+    ],
+    [
+     "NITORI HOLDINGS CO",
+     0.120638
+    ],
+    [
+     "NIPPON PAINT HOLDINGS CO",
+     0.119937
+    ],
+    [
+     "EISAI CO",
+     0.11992
+    ],
+    [
+     "KAWASAKI KISEN KAISHA",
+     0.112142
+    ],
+    [
+     "SANRIO CO",
+     0.110215
+    ],
+    [
+     "NISSAN MOTOR CO",
+     0.107533
+    ],
+    [
+     "CAPCOM CO",
+     0.100932
+    ],
+    [
+     "HULIC CO (NEW)",
+     0.093871
+    ],
+    [
+     "JAPAN POST INSURANCE CO",
+     0.091931
+    ],
+    [
+     "ZENSHO HOLDINGS CO",
+     0.090226
+    ],
+    [
+     "NEXON CO",
+     0.084629
+    ],
+    [
+     "TOHO CO",
+     0.078905
+    ],
+    [
+     "KYOWA KIRIN CO",
+     0.071076
+    ]
+   ],
+   "verdict": "PASS"
+  },
+  "rows": [
+   {
+    "code": "8035",
+    "name": "TOKYO ELECTRON",
+    "weight_pct": 2.933733,
+    "full_cap_usd_b": 152.969,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "285A",
+    "name": "KIOXIA HOLDINGS",
+    "weight_pct": 2.809267,
+    "full_cap_usd_b": 265.812,
+    "fif": 0.015,
+    "grid_dist": 0.01
+   },
+   {
+    "code": "6501",
+    "name": "HITACHI",
+    "weight_pct": 2.797307,
+    "full_cap_usd_b": 142.526,
+    "fif": 0.028,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "8411",
+    "name": "MIZUHO FINANCIAL GROUP",
+    "weight_pct": 2.097245,
+    "full_cap_usd_b": 112.118,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "8766",
+    "name": "TOKIO MARINE HOLDINGS",
+    "weight_pct": 1.569175,
+    "full_cap_usd_b": 83.852,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "7011",
+    "name": "MITSUBISHI HEAVY IND",
+    "weight_pct": 1.438047,
+    "full_cap_usd_b": 74.009,
+    "fif": 0.028,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "5802",
+    "name": "SUMITOMO ELECTRIC IND",
+    "weight_pct": 1.162176,
+    "full_cap_usd_b": 63.586,
+    "fif": 0.026,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "9433",
+    "name": "KDDI",
+    "weight_pct": 0.970951,
+    "full_cap_usd_b": 61.638,
+    "fif": 0.022,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "4502",
+    "name": "TAKEDA PHARMACEUTICAL",
+    "weight_pct": 0.958431,
+    "full_cap_usd_b": 48.512,
+    "fif": 0.028,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "6723",
+    "name": "RENESAS ELECTRONICS CORP",
+    "weight_pct": 0.943147,
+    "full_cap_usd_b": 51.0,
+    "fif": 0.026,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "6954",
+    "name": "FANUC",
+    "weight_pct": 0.93067,
+    "full_cap_usd_b": 44.385,
+    "fif": 0.03,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "5803",
+    "name": "FUJIKURA",
+    "weight_pct": 0.870873,
+    "full_cap_usd_b": 47.44,
+    "fif": 0.026,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "2914",
+    "name": "JAPAN TOBACCO",
+    "weight_pct": 0.823691,
+    "full_cap_usd_b": 68.196,
+    "fif": 0.017,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "6367",
+    "name": "DAIKIN INDUSTRIES",
+    "weight_pct": 0.769252,
+    "full_cap_usd_b": 39.509,
+    "fif": 0.028,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "6702",
+    "name": "FUJITSU",
+    "weight_pct": 0.764042,
+    "full_cap_usd_b": 40.132,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "8750",
+    "name": "DAIICHI LIFE GROUP",
+    "weight_pct": 0.694017,
+    "full_cap_usd_b": 36.6,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "6301",
+    "name": "KOMATSU",
+    "weight_pct": 0.68709,
+    "full_cap_usd_b": 36.426,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "6146",
+    "name": "DISCO CORP",
+    "weight_pct": 0.68282,
+    "full_cap_usd_b": 43.622,
+    "fif": 0.022,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "8725",
+    "name": "MS&AD INSURANCE GROUP",
+    "weight_pct": 0.633303,
+    "full_cap_usd_b": 38.515,
+    "fif": 0.023,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "8630",
+    "name": "SOMPO HOLDINGS",
+    "weight_pct": 0.595773,
+    "full_cap_usd_b": 32.848,
+    "fif": 0.026,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "8015",
+    "name": "TOYOTA TSUSHO",
+    "weight_pct": 0.520472,
+    "full_cap_usd_b": 42.77,
+    "fif": 0.017,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "8308",
+    "name": "RESONA HOLDINGS",
+    "weight_pct": 0.516189,
+    "full_cap_usd_b": 28.477,
+    "fif": 0.026,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "8802",
+    "name": "MITSUBISHI ESTATE CO",
+    "weight_pct": 0.501267,
+    "full_cap_usd_b": 29.943,
+    "fif": 0.024,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "8604",
+    "name": "NOMURA HOLDINGS",
+    "weight_pct": 0.470162,
+    "full_cap_usd_b": 24.24,
+    "fif": 0.028,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "4503",
+    "name": "ASTELLAS PHARMA",
+    "weight_pct": 0.461219,
+    "full_cap_usd_b": 24.368,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "6273",
+    "name": "SMC CORP",
+    "weight_pct": 0.445646,
+    "full_cap_usd_b": 24.996,
+    "fif": 0.025,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "8309",
+    "name": "SUMITOMO MITSUI TRUST",
+    "weight_pct": 0.424383,
+    "full_cap_usd_b": 23.957,
+    "fif": 0.025,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "5020",
+    "name": "ENEOS HOLDINGS",
+    "weight_pct": 0.401412,
+    "full_cap_usd_b": 21.455,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "1925",
+    "name": "DAIWA HOUSE INDUSTRY",
+    "weight_pct": 0.29164,
+    "full_cap_usd_b": 16.244,
+    "fif": 0.026,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "7012",
+    "name": "KAWASAKI HEAVY IND",
+    "weight_pct": 0.268305,
+    "full_cap_usd_b": 15.442,
+    "fif": 0.025,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "2502",
+    "name": "ASAHI GROUP HOLDINGS",
+    "weight_pct": 0.25852,
+    "full_cap_usd_b": 13.503,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "5016",
+    "name": "JX ADVANCED METALS",
+    "weight_pct": 0.258502,
+    "full_cap_usd_b": 21.107,
+    "fif": 0.017,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "4307",
+    "name": "NOMURA RESEARCH INST",
+    "weight_pct": 0.243556,
+    "full_cap_usd_b": 17.695,
+    "fif": 0.02,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "1928",
+    "name": "SEKISUI HOUSE",
+    "weight_pct": 0.241566,
+    "full_cap_usd_b": 13.145,
+    "fif": 0.026,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "8697",
+    "name": "JAPAN EXCHANGE GROUP",
+    "weight_pct": 0.236553,
+    "full_cap_usd_b": 12.482,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "8601",
+    "name": "DAIWA SECURITIES GROUP",
+    "weight_pct": 0.231547,
+    "full_cap_usd_b": 13.039,
+    "fif": 0.025,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "7832",
+    "name": "BANDAI NAMCO HOLDINGS",
+    "weight_pct": 0.231313,
+    "full_cap_usd_b": 15.159,
+    "fif": 0.022,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "8795",
+    "name": "T&D HOLDINGS",
+    "weight_pct": 0.227743,
+    "full_cap_usd_b": 12.741,
+    "fif": 0.025,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "9104",
+    "name": "MITSUI OSK LINES",
+    "weight_pct": 0.22311,
+    "full_cap_usd_b": 11.839,
+    "fif": 0.027,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "6479",
+    "name": "MINEBEA MITSUMI",
+    "weight_pct": 0.192829,
+    "full_cap_usd_b": 11.761,
+    "fif": 0.023,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "7186",
+    "name": "YOKOHAMA FINANCIAL GROUP",
+    "weight_pct": 0.190418,
+    "full_cap_usd_b": 11.043,
+    "fif": 0.025,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "8473",
+    "name": "SBI HOLDINGS",
+    "weight_pct": 0.189939,
+    "full_cap_usd_b": 12.018,
+    "fif": 0.022,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "3402",
+    "name": "TORAY INDUSTRIES",
+    "weight_pct": 0.179744,
+    "full_cap_usd_b": 10.234,
+    "fif": 0.025,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "5201",
+    "name": "AGC",
+    "weight_pct": 0.164487,
+    "full_cap_usd_b": 10.169,
+    "fif": 0.023,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "8331",
+    "name": "CHIBA BANK",
+    "weight_pct": 0.152807,
+    "full_cap_usd_b": 9.875,
+    "fif": 0.022,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "7202",
+    "name": "ISUZU MOTORS",
+    "weight_pct": 0.146551,
+    "full_cap_usd_b": 9.635,
+    "fif": 0.022,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "7309",
+    "name": "SHIMANO",
+    "weight_pct": 0.142756,
+    "full_cap_usd_b": 8.763,
+    "fif": 0.023,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "8593",
+    "name": "MITSUBISHI HC CAPITAL",
+    "weight_pct": 0.137938,
+    "full_cap_usd_b": 11.379,
+    "fif": 0.017,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "4755",
+    "name": "RAKUTEN GROUP",
+    "weight_pct": 0.133182,
+    "full_cap_usd_b": 10.621,
+    "fif": 0.018,
+    "grid_dist": 0.007
+   },
+   {
+    "code": "4091",
+    "name": "NIPPON SANSO HOLDINGS",
+    "weight_pct": 0.127669,
+    "full_cap_usd_b": 15.485,
+    "fif": 0.012,
+    "grid_dist": 0.012
+   },
+   {
+    "code": "9042",
+    "name": "HANKYU HANSHIN HOLDINGS",
+    "weight_pct": 0.127035,
+    "full_cap_usd_b": 6.537,
+    "fif": 0.028,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "7911",
+    "name": "TOPPAN HOLDINGS",
+    "weight_pct": 0.12525,
+    "full_cap_usd_b": 7.873,
+    "fif": 0.023,
+    "grid_dist": 0.002
+   },
+   {
+    "code": "2801",
+    "name": "KIKKOMAN CORP",
+    "weight_pct": 0.116901,
+    "full_cap_usd_b": 8.384,
+    "fif": 0.02,
+    "grid_dist": 0.005
+   },
+   {
+    "code": "5411",
+    "name": "JFE HOLDINGS",
+    "weight_pct": 0.11583,
+    "full_cap_usd_b": 6.368,
+    "fif": 0.026,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "8951",
+    "name": "NIPPON BUILDING FUND",
+    "weight_pct": 0.115209,
+    "full_cap_usd_b": 6.759,
+    "fif": 0.024,
+    "grid_dist": 0.001
+   },
+   {
+    "code": "1878",
+    "name": "DAITO TRUST CONSTRUCTION",
+    "weight_pct": 0.108755,
+    "full_cap_usd_b": 6.309,
+    "fif": 0.025,
+    "grid_dist": 0.0
+   },
+   {
+    "code": "4768",
+    "name": "OTSUKA CORP",
+    "weight_pct": 0.086181,
+    "full_cap_usd_b": 7.262,
+    "fif": 0.017,
+    "grid_dist": 0.008
+   },
+   {
+    "code": "9435",
+    "name": "HIKARI TSUSHIN",
+    "weight_pct": 0.075217,
+    "full_cap_usd_b": 9.477,
+    "fif": 0.011,
+    "grid_dist": 0.011
+   },
+   {
+    "code": "9024",
+    "name": "SEIBU HOLDINGS",
+    "weight_pct": 0.068344,
+    "full_cap_usd_b": 4.455,
+    "fif": 0.022,
+    "grid_dist": 0.003
+   },
+   {
+    "code": "2587",
+    "name": "SUNTORY BEVERAGE & FOOD",
+    "weight_pct": 0.065998,
+    "full_cap_usd_b": 8.199,
+    "fif": 0.011,
+    "grid_dist": 0.011
+   },
+   {
+    "code": "9202",
+    "name": "ANA HOLDINGS",
+    "weight_pct": 0.058022,
+    "full_cap_usd_b": 7.765,
+    "fif": 0.011,
+    "grid_dist": 0.011
+   }
+  ]
+ },
+ "China": {
+  "market": "China",
+  "status": "INSUFFICIENT",
+  "why": "no prices at the weights date"
+ }
+}

@@ -51,7 +51,7 @@ ALIASES = {"1102.TW": "ASIA CEMENT CORP", "2474.TW": "CATCHER TECH CO",
 
 def fetch(n=8):
     import yfinance as yf
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     todo = [t for t, _ in TICKERS if t not in cache]
     done = 0
     for t in todo:
@@ -76,7 +76,7 @@ def fetch(n=8):
         except Exception as e:                        # noqa: BLE001
             cache[t] = {"error": str(e)[:60]}
         done += 1
-    CACHE.write_text(json.dumps(cache))
+    CACHE.write_text(json.dumps(cache), encoding="utf-8")
     left = [t for t, _ in TICKERS if t not in cache]
     print("ALL CACHED" if not left else f"{len(left)} remaining")
 
@@ -86,7 +86,7 @@ def report():
     from agents.reconstitution import (MSCIRules,
                                        parse_msci_public_list)
     from agents.review_engine import screen_market
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     rows = []
     for t, m in TICKERS:
         c = cache.get(t, {})
@@ -126,7 +126,7 @@ def report():
 
     # grade vs the OFFICIAL May list
     official = parse_msci_public_list(
-        Path("data/msci_may26_public_list.txt").read_text())["TAIWAN"]
+        Path("data/msci_may26_public_list.txt").read_text(encoding="utf-8"))["TAIWAN"]
     name_to_t = {v: k for k, v in ALIASES.items()}
     act_adds = {name_to_t.get(x) for x in official["adds"]} - {None}
     act_dels = {name_to_t.get(x) for x in official["deletes"]} - {None}

@@ -86,7 +86,7 @@ def parse(pdf_bytes):
 def main():
     import requests
     PDF_DIR.mkdir(exist_ok=True)
-    arch = json.loads(OUT.read_text()) if OUT.exists() else {}
+    arch = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     for mkt, (slug, dmem) in MARKETS.items():
         try:
             r = requests.get(BASE + slug, headers={
@@ -118,7 +118,7 @@ def main():
         except Exception as ex:                # noqa: BLE001
             print(f"{mkt:12s} FAILED: {str(ex)[:60]}")
     tmp = OUT.with_suffix(".tmp")
-    tmp.write_text(json.dumps(arch, indent=1))
+    tmp.write_text(json.dumps(arch, indent=1), encoding="utf-8")
     tmp.replace(OUT)
     print("wrote", OUT)
 

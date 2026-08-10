@@ -64,7 +64,7 @@ def _shortlist_section():
         st.warning("Shortlist cache missing — run "
                    "scripts/tday_cards_demo.py")
         return
-    blob = json.loads(p.read_text())
+    blob = json.loads(p.read_text(encoding="utf-8"))
     st.subheader("The Aug-2026 Taiwan call — and the shortlist "
                  "behind it")
     st.markdown(

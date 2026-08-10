@@ -93,7 +93,7 @@ def _months_needed():
 
 def fetch():
     from scripts.twap_vwap_moc_study import fetch_month
-    cache = json.loads(SD.read_text()) if SD.exists() else {}
+    cache = json.loads(SD.read_text(encoding="utf-8")) if SD.exists() else {}
     todo = [(c, m) for c, m in _months_needed()
             if m not in cache.get(c, {})]
     print(f"{len(todo)} code-months missing")
@@ -104,7 +104,7 @@ def fetch():
             cache.setdefault(c, {})[m] = fetch_month(c, m)
         except Exception as e:                        # noqa: BLE001
             print(" ", c, m, str(e)[:40])
-        SD.write_text(json.dumps(cache))
+        SD.write_text(json.dumps(cache), encoding="utf-8")
     print("done")
 
 
@@ -115,7 +115,7 @@ def _px(cache, code, upto, back=0):
 
 
 def classify():
-    cache = json.loads(SD.read_text())
+    cache = json.loads(SD.read_text(encoding="utf-8"))
     rows = []
     for season, ann, eff, adds, dels in EVENTS:
         a3 = (pd.Timestamp(ann) - pd.DateOffset(months=3)

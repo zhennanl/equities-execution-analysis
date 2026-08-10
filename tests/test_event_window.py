@@ -281,7 +281,7 @@ def test_tw_vintage_cache():
     p = Path("data/tw_vintage_cache.json")
     if not p.exists():
         return
-    c = json.loads(p.read_text())
+    c = json.loads(p.read_text(encoding="utf-8"))
     sh = [k for k in c if k.startswith("sh|")]
     assert len(sh) >= 100
     t = c["sh|2330"]
@@ -304,13 +304,34 @@ def test_aug26_cutoff_calc():
     p = Path("data/aug26_cutoff_calc.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     A, C = d["derivation"]["A_global"], d["derivation"]["C_cutoff"]
     assert abs(A["dm_aug_busd"] - 15.75 * 1.042) < 0.01
     assert abs(A["em_reference_busd"] - A["dm_aug_busd"] / 2) < 0.01
     lo, hi = A["em_range_busd"]
     assert lo <= C["cutoff_busd"] <= hi
-    assert abs(C["add_bar_busd"] - 1.8 * C["cutoff_busd"]) < 0.01
+    # c-273 rewrote C_cutoff to the factsheet inversion and this
+    # assertion did not follow it, so it was checking a key that
+    # no longer existed against a multiplier that was never in
+    # the rulebook. Both are fixed here rather than deleted.
+    #
+    #   key   `add_bar_busd`  ->  `addition_bar_busd`
+    #   ratio 1.8x            ->  1.5x, which is what GIMI
+    #                             §3.1.5.1 actually says. The
+    #                             1.8 was carried from an early
+    #                             reading and had a test
+    #                             defending it.
+    assert abs(C["addition_bar_busd"]
+               - 1.5 * C["cutoff_busd"]) < 0.01
+    assert abs(C["deletion_floor_busd"]
+               - (2 / 3) * C["cutoff_busd"]) < 0.01
+    # the cutoff of record is the factsheet derivation, and the
+    # two frames it replaced are named in the file so the
+    # reconciliation is auditable rather than remembered
+    assert C["crossing_rank"] == 69
+    assert "6.74" in C["supersedes"] and "11.16" in C["supersedes"]
+    blo, bhi = C["band_busd"]
+    assert blo < C["cutoff_busd"] < bhi
     adds = {a["code"]: a for a in d["add_candidates"]}
     assert adds["2408"]["verdict"].startswith("QUALIFIES")
     assert adds["2408"]["ff"] < 0.5          # real float, not 0.7
@@ -332,7 +353,7 @@ def test_mops_v2_float_adopted():
     p = Path("data/tw_float_mops_v2.json")
     if not p.exists():
         return
-    g = json.loads(p.read_text())["grading"]
+    g = json.loads(p.read_text(encoding="utf-8"))["grading"]
     assert g["mean_abs_err_v2"] <= 0.05
     assert g["mean_abs_err_v2"] < g["mean_abs_err_old"]
     for c in ("2881", "2383", "3711", "2308"):
@@ -356,7 +377,7 @@ def test_tdcc_float_null_result():
     p = Path("data/tw_float_tdcc.json")
     if not p.exists():
         return
-    g = json.loads(p.read_text())["grading"]
+    g = json.loads(p.read_text(encoding="utf-8"))["grading"]
     assert g["mean_abs_err_tdcc"] > g["mean_abs_err_old"]
     assert abs(g["residual67_old_busd"]
                - g["residual67_target_busd"]) < \
@@ -378,7 +399,7 @@ def test_aug26_gmsr_forecast():
     p = Path("data/aug26_gmsr_forecast.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert 0.9 <= d["aggregate_float_calibration"] <= 1.1
     em = d["aug_gms_reference_forecast"]["em_busd"]
     assert em[0] < em[1] < em[2]
@@ -402,7 +423,7 @@ def test_factsheet_archive():
     p = Path("data/msci_factsheet_archive.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())["2026-07"]
+    d = json.loads(p.read_text(encoding="utf-8"))["2026-07"]
     assert d["n_constituents"] == 77
     assert 3000 <= d["index_float_cap_musd"] / 1000 <= 3400
     assert 3400 <= d["implied_market_denominator_busd"] <= 4100
@@ -424,7 +445,7 @@ def test_show_the_walk():
     p = Path("data/gmsr_walk_may26.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     den = d["denominator"]
     assert abs(den["named_head"]["float_adj_b"]
                + den["modeled_body"]["float_adj_b"]
@@ -476,7 +497,7 @@ def test_constituent_viewer_data():
     p = Path("data/apac_members.json")
     if not p.exists():
         return
-    mkts = json.loads(p.read_text())["markets"]
+    mkts = json.loads(p.read_text(encoding="utf-8"))["markets"]
     for mkt, m in mkts.items():
         if "error" in m:
             continue
@@ -503,7 +524,7 @@ def test_step34_build():
     assert PLAYBOOK_SPLITS["OVERCROWDED"][2] >= 0.5   # T+1 defer
     p = Path("data/post_event_may26.json")
     if p.exists():
-        d = json.loads(p.read_text())
+        d = json.loads(p.read_text(encoding="utf-8"))
         rows = {r["code"]: r for r in d["names"]}
         for c in ("2324", "2474"):
             s = rows[c]["strategies"]
@@ -525,7 +546,7 @@ def test_step34_build():
         g["HF_PROVIDER"]["best_hindsight"] == "LINEAR_W"
     ck = Path("data/cockpit_may26.json")
     if ck.exists():
-        c = json.loads(ck.read_text())
+        c = json.loads(ck.read_text(encoding="utf-8"))
         assert len(c["cards"]) == 8
         assert all("advice" in x for x in c["cards"])
     tca = Path("docs/case_studies/TCA_LETTERS_MAY2026_TW.md")
@@ -551,7 +572,7 @@ def test_sentinels():
     assert r["status"] in ("OK", "ALERT")
     rep = Path("data/sentinel_report.json")
     if rep.exists():
-        d = json.loads(rep.read_text())
+        d = json.loads(rep.read_text(encoding="utf-8"))
         assert d["overall"] in ("OK", "CHANGED", "ALERT",
                                 "DEGRADED")
         names = {x["sentinel"] for x in d["results"]}
@@ -580,7 +601,7 @@ def test_apac_factsheet_archive():
     p = Path("data/apac_factsheet_archive.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     # c-86 INTENTIONAL: 10 -> 13 (NZ/SG/TH added for full APAC)
     assert len(d) == 13
     latest = {m: v[sorted(v)[-1]] for m, v in d.items()}
@@ -612,7 +633,7 @@ def test_preann_advisory_aug26():
     p = Path("data/preann_advisory_aug26.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     cards = {c["code"]: c for c in d["cards"]}
     assert cards["2408"]["side"] == "add"
     # c-61: point estimate replaced by multi-method RANGE
@@ -640,7 +661,7 @@ def test_case_2324_compal():
     avalanche > 200M shares."""
     import json
     from pathlib import Path
-    ev = json.loads(Path("data/msci_tw_events.json").read_text())
+    ev = json.loads(Path("data/msci_tw_events.json").read_text(encoding="utf-8"))
     assert "2324" in ev["May26"]["dels"]
     try:
         import sys
@@ -656,7 +677,7 @@ def test_case_2324_compal():
         assert 36.5 <= 36.70                       # print 36.70
         assert last_cont < 36.70                   # print ABOVE tape
     sbl = json.loads(Path("data/event_data_cache.json")
-                     .read_text())["short"]
+                     .read_text(encoding="utf-8"))["short"]
     b_t = sbl["20260529"]["2324"][1]
     b_5 = sbl["20260605"]["2324"][1]
     assert b_t - b_5 > 2.0e8                       # >200M covered
@@ -672,7 +693,7 @@ def test_perstock_flow_model():
     p = Path("data/perstock_flow_model.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert d["n"] >= 60
     assert d["corr_log"] >= 0.5
     assert d["mae_perstock"] < d["mae_const16"]
@@ -690,7 +711,7 @@ def test_liquidity_panel():
     p = Path("data/liquidity_panel_tw.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert d["n_name_events"] >= 120
     assert d["n_events"] >= 30
     b = d["buckets"]
@@ -714,7 +735,7 @@ def test_t86_history():
     p = Path("data/t86_history.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     days = sorted(x for x in d if d[x])
     assert days and days[0] <= "20150131"
     first = d[days[0]]
@@ -735,7 +756,7 @@ def test_sbl_history():
     p = Path("data/sbl_history.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     days = sorted(x for x in d if d[x])
     assert days and days[0] <= "20150131"      # reaches 2015
     first = d[days[0]]
@@ -756,7 +777,7 @@ def test_pattern_study():
     p = Path("data/pattern_study_tw.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     t = d["tests"]
     s5 = t["D5_compl_vs_tmult"]["spearman"]
     assert s5["rho"] > 0.3 and s5["perm_p"] < 0.01
@@ -781,7 +802,7 @@ def test_liquidity_v2_channels():
     p = Path("data/liquidity_forecast_v2_may26.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     n = {r["code"]: r for r in d["names"]}
     assert n["2324"]["scenario_v2"] == "SQUEEZE-RISK"
     assert n["2324"]["wrongway"] is True
@@ -808,7 +829,7 @@ def test_liquidity_forecast_may26():
     p = Path("data/liquidity_forecast_may26.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert d["asof_PIT"] < d["eff"]              # PIT frame
     n = {r["code"]: r for r in d["names"]}
     assert len(n) == 8
@@ -835,7 +856,7 @@ def test_ladder_shadow_and_foreign_room():
     from agents.reconstitution import MSCIRules, predict_msci
     p = Path("data/ladder_aug26_tw.json")
     if p.exists():
-        d = json.loads(p.read_text())
+        d = json.loads(p.read_text(encoding="utf-8"))
         assert d["n_members_priced"] >= 70
         pool = {r["code"] for r in d["delete_pool"]}
         assert {"6919", "1101"} <= pool
@@ -867,7 +888,7 @@ def test_apac_members_pipeline():
     p = Path("data/apac_members.json")
     if not p.exists():
         return
-    m = json.loads(p.read_text())["markets"]
+    m = json.loads(p.read_text(encoding="utf-8"))["markets"]
     assert len(m) == 13   # c-95 INTENTIONAL: NZ/SG/TH added
     for mkt in ("Japan", "Australia", "HongKong", "India",
                 "Malaysia"):
@@ -889,7 +910,7 @@ def test_delete_pool_validation():
     p = Path("data/delete_pool_validation.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     for season in ("May26", "Nov25"):
         s = d[season]
         assert s["dels_in_ladder"] == s["dels_official"] == 7
@@ -908,7 +929,7 @@ def test_pit_workbench_may26():
     p = Path("data/universe_workbench_tw_may26pit.json")
     if not p.exists():
         return
-    b = json.loads(p.read_text())
+    b = json.loads(p.read_text(encoding="utf-8"))
     tent = {r["code"]: r for r in b["tentative_adds"]}
     assert "6223" in tent and "ADDED" in tent["6223"]["official"]
     rows = {r["code"]: r for r in b["rows"]}
@@ -930,7 +951,7 @@ def test_universe_workbench():
     p = Path("data/universe_workbench_tw.json")
     if not p.exists():
         return
-    b = json.loads(p.read_text())
+    b = json.loads(p.read_text(encoding="utf-8"))
     t = b["thresholds"]
     assert abs(t["add_bar_usd_b"] / t["gmsr_usd_b"] - 1.8) < 0.01
     assert abs(t["floor_usd_b"] / t["gmsr_usd_b"] - 0.5) < 0.01
@@ -958,7 +979,7 @@ def test_jp_step1_upgrade():
     p = Path("data/jp_event_priors.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     v = d["verification"]
     assert v["n_total"] >= 150
     assert v["verified"] / v["n_total"] >= 0.85
@@ -980,7 +1001,7 @@ def test_post_event_pack():
     p = Path("data/post_event_may26.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     rows = [r for r in d["names"] if "note" not in r]
     assert len(rows) == 7
     for r in rows:
@@ -1005,7 +1026,7 @@ def test_tday_playbook():
     p = Path("data/tday_playbook.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert d["n_name_days"] >= 80 and d["n_events"] >= 20
     cells = d["cells"]
     ok = [c for c in cells if c["label"] == "OK"]
@@ -1028,7 +1049,7 @@ def test_window_intraday_study():
     p = Path("data/window_intraday.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert d["n_name_days"] >= 900 and d["n_events"] >= 20
     assert d["H9"]["verdict"] == "ADOPT"
     assert d["H9"]["winrate"] >= 0.9
@@ -1073,7 +1094,7 @@ def test_tday_execution_studies():
     p = Path("data/tday_execution_studies.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert d["n_rows"] >= 70
     v2 = d["violence_v2"]
     # the null now holds THREE times: n=17 (v1), n=85 (derived),
@@ -1147,7 +1168,7 @@ def test_variable_lab():
     p = Path("data/variable_lab.json")
     if not p.exists():
         return
-    r = json.loads(p.read_text())["results"]
+    r = json.loads(p.read_text(encoding="utf-8"))["results"]
     assert r["H2"]["FTSE"]["verdict"] == "ADOPT"
     assert r["H2"]["FTSE"]["mean_bps"] > 100
     assert r["H3"]["FTSE"]["verdict"] == "REJECT"        # A+3 demoted
@@ -1184,7 +1205,7 @@ def test_data_freshness_guarantee():
     assert r["status"] == "REFRESHED"
     assert "20260731" not in r["fetched_days"]        # holiday ledger
     assert r["latest"] == "20260804" and r["stale_bdays"] == 0
-    cache = json.loads(tmp.read_text())
+    cache = json.loads(tmp.read_text(encoding="utf-8"))
     assert "9999" in cache["short"]["20260803"]       # full-day store
     assert "20260731" in cache["_meta"]["no_data_days"]
     # TTL short-circuit
@@ -1225,7 +1246,7 @@ def test_pre_announcement_pack():
     p = Path("data/preann_tw.json")
     if not p.exists():
         return
-    blob = json.loads(p.read_text())
+    blob = json.loads(p.read_text(encoding="utf-8"))
     g = blob["may"]["grade"]
     assert len(g["dels_hit"]) == 7 and g["adds_hit"] == ["6223.TWO"]
     assert g["brier"] is not None and g["brier"] < 0.25   # < coinflip
@@ -1311,7 +1332,7 @@ def test_review_funnel():
     p = Path("data/funnel_tw.json")
     if not p.exists():
         return
-    blob = json.loads(p.read_text())
+    blob = json.loads(p.read_text(encoding="utf-8"))
     for run in ("validation", "prediction"):
         st = blob[run]["stages"]
         names = [s["stage"] for s in st]
@@ -1345,7 +1366,7 @@ def test_decade_stats_and_consistency():
     p = Path("data/msci_decade_stats.json")
     if not p.exists():
         return
-    s = json.loads(p.read_text())
+    s = json.loads(p.read_text(encoding="utf-8"))
     assert s["n_reviews"] == 44
     for m in ("TAIWAN", "JAPAN", "CHINA", "KOREA"):
         assert s["cadence"][m]["sair_del_share"] > 0.5   # L4, decade
@@ -1441,7 +1462,7 @@ def test_roadmap_harvest():
         p = Path("data") / fname
         if not p.exists():
             continue
-        d = json.loads(p.read_text())
+        d = json.loads(p.read_text(encoding="utf-8"))
         days = sorted(x for x in d if d[x])
         assert days and days[0] <= "20150131"
         first = d[days[0]]
@@ -1453,7 +1474,7 @@ def test_roadmap_harvest():
         assert sample["raw"][0].strip().isdigit()
     p = Path("data/taifex_daily.json")
     if p.exists():
-        d = json.loads(p.read_text())
+        d = json.loads(p.read_text(encoding="utf-8"))
         rows = next(iter(d.values()))
         assert len(rows) > 500
         assert "OpenInterest" in rows[0] and "Contract" in rows[0]
@@ -1467,7 +1488,7 @@ def test_auction_expost():
     p = Path("data/auction_expost.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert d["summary"]["n"] >= 50
     assert {"Buy", "Sell"} <= set(d["summary"])
     for r in d["rows"]:
@@ -1487,7 +1508,7 @@ def test_auction5s_history():
     p = Path("data/auction5s_history.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     days = sorted(x for x in d if d[x])
     assert days and days[0] <= "20150131"
     rows = d[days[0]]
@@ -1572,7 +1593,7 @@ def test_cutoff_walk_v2():
     p = Path("data/cutoff_walk_v2.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     b = d["base"]
     # c-100: tolerance 6 -> 8 while the census is MID-HARVEST
     # (coverage growing, body names on default floats, prices
@@ -1618,7 +1639,7 @@ def test_anticipation_clock():
     p = Path("data/anticipation_clock.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     assert d["n_del_curves"] >= 50
     assert d["n_events"] >= 25
     assert "DECLARED" in d["rule"]
@@ -1641,7 +1662,7 @@ def test_aug26_site():
     ast.parse(Path("views/aug26_review.py").read_text(
         encoding="utf-8"))
     cut = json.loads(Path("data/aug26_cutoff_calc.json")
-                     .read_text())
+                     .read_text(encoding="utf-8"))
     calls = cut["shadow_add_call"]["calls"]
     assert any(c["code"] == "2408" for c in calls)
     assert "declared" in cut["shadow_add_call"]
@@ -1664,7 +1685,7 @@ def test_framework_cutoff_page():
             "LIMIT", "OPEN"} == set(_TAG_COLOR)
     for tag in _TAG_COLOR:
         assert f'"{tag}")' in src or f"'{tag}')" in src, tag
-    assert 'MODE = "framework"' in Path("app.py").read_text()
+    assert 'MODE = "framework"' in Path("app.py").read_text(encoding="utf-8")
     # the one-template contract: cfg assembles for all 13
     from agents.market_profiles import PROFILES
     from views.framework_cutoff import market_cfg
@@ -1704,8 +1725,12 @@ def test_changes_db():
     assert df.market.nunique() == 13
     assert df.review.nunique() >= 44
     assert set(df.action) == {"ADD", "DEL"}
-    tw = df[df.market == "Taiwan"]
-    assert len(tw) == 136 and (tw.action == "DEL").sum() == 78
+    # c-104 INTENTIONAL: archive extended to Feb-2006 (81
+    # reviews); the registry-validated era is 2015+
+    tw15 = df[(df.market == "Taiwan") & (df.year >= 2015)]
+    assert len(tw15) == 136 and (tw15.action == "DEL").sum() == 78
+    assert df.review.nunique() >= 80
+    assert df.year.min() == 2006
     hit = df[(df.code == "2324") & (df.action == "DEL")]
     assert list(hit.review) == ["May26"]
     nanya = df[df.code == "2408"]
@@ -1723,11 +1748,50 @@ def test_history_explorer_page():
     from pathlib import Path
     ast.parse(Path("views/history_explorer.py").read_text(
         encoding="utf-8"))
-    src = Path("app.py").read_text()
+    src = Path("app.py").read_text(encoding="utf-8")
     assert "history_explorer" in src
-    assert "Review History Explorer" in src
+    assert "MSCI Index Review Database" in src
     if Path("data/msci_changes_db.pkl").exists():
         import pandas as pd
         df = pd.read_pickle("data/msci_changes_db.pkl")
         assert {"review", "market", "action",
                 "security"} <= set(df.columns)
+
+
+def test_review_reconstruction():
+    """Session 9i c-110: the PIT reconstruction engine — answer
+    keys map correctly, May26 reconstructs under its ACTUAL
+    rulebook keys, batch summary exists."""
+    import json
+    from pathlib import Path
+    from scripts.review_reconstruct import answer_keys
+    k = answer_keys()
+    assert k["May26"]["gmsr_dm"] == 15.75
+    assert k["May26"]["price_date"] == "2026-04-20"
+    assert k["May18"]["gmsr_dm"] == 6.37
+    assert "prevailing" in k["Feb19"]["source"]
+    p = Path("data/reconstruct/TW_May26.json")
+    if p.exists():
+        o = json.loads(p.read_text(encoding="utf-8"))
+        assert o["keys"]["floor"] == 6.04
+        assert len(o["verdicts"]) == 8
+        assert len(o["grading"]["misses"]) == 0
+    assert Path("data/reconstruct_summary.json").exists()
+
+
+def test_changes_db_counts_clean():
+    """Session 9i c-112: after the per-cell patch layer, the DB
+    matches MSCI's own count tables in ALL cells."""
+    import json
+    from pathlib import Path
+    p = Path("data/changes_db_validation.json")
+    if not p.exists():
+        return
+    v = json.loads(p.read_text(encoding="utf-8"))
+    assert v["cells_checked"] >= 580
+    assert v["n_mismatch"] == 0
+    pp = json.loads(Path("data/changes_db_patches.json")
+                    .read_text(encoding="utf-8"))
+    assert len(pp["patches"]) == 21
+    assert pp["unresolved"] == []
+    assert pp["patches"]["Feb25|Japan"]["adds"] == ["TOKYO METRO"]

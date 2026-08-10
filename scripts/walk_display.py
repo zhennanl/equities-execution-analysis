@@ -26,7 +26,7 @@ def main():
     from scripts.cutoff_walk_v2 import build
     base, rows = build()
     members = set(json.loads(
-        (ROOT / "data" / "apac_members.json").read_text())
+        (ROOT / "data" / "apac_members.json").read_text(encoding="utf-8"))
         ["markets"]["Taiwan"]["standard_members"])
     D = sum(r["float_b"] for r in rows)
     target = 0.85 * D

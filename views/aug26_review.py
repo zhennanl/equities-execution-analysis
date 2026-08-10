@@ -20,7 +20,7 @@ EFF = dt.date(2026, 8, 31)
 def _load():
     def j(name):
         p = ROOT / "data" / name
-        return json.loads(p.read_text()) if p.exists() else {}
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
     return {"cut": j("aug26_cutoff_calc.json"),
             "walk": j("cutoff_walk_v2.json"),
             "adv": j("preann_advisory_aug26.json"),

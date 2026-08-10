@@ -1,0 +1,27 @@
+{
+ "0939.HK": {
+  "line_price": 8.789999961853027,
+  "line_cap_usd_b": 269.39,
+  "line_implied_fif": 0.367
+ },
+ "1398.HK": {
+  "line_price": 7.139999866485596,
+  "line_cap_usd_b": 79.0,
+  "line_implied_fif": 0.789
+ },
+ "2318.HK": {
+  "line_price": 57.150001525878906,
+  "line_cap_usd_b": 54.26,
+  "line_implied_fif": 0.898
+ },
+ "3988.HK": {
+  "line_price": 5.230000019073486,
+  "line_cap_usd_b": 55.75,
+  "line_implied_fif": 0.843
+ },
+ "005935.KS": {
+  "line_price": 170100.0,
+  "line_cap_usd_b": 96.33,
+  "line_implied_fif": 1.116
+ }
+}

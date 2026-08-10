@@ -60,7 +60,7 @@ def fetch(date):
 
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "report"
-    cache = (json.loads(CACHE.read_text()) if CACHE.exists()
+    cache = (json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists()
              else {})
     if mode == "fetch":
         for d in [EFF] + BASE:
@@ -69,7 +69,7 @@ def main():
                 if r:
                     cache[d] = r
                     print(d, "ok")
-        CACHE.write_text(json.dumps(cache))
+        CACHE.write_text(json.dumps(cache), encoding="utf-8")
         return
 
     # ---------------- report

@@ -159,7 +159,7 @@ ACTUAL = {
 
 def fetch(n=9):
     import yfinance as yf
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     todo = [(m, t, mem) for m, lst in UNIVERSES.items()
             for t, mem in lst if t not in cache]
     done = 0
@@ -190,7 +190,7 @@ def fetch(n=9):
             cache[t] = {"error": str(e)[:50]}
             print(t, "FAIL")
         done += 1
-    CACHE.write_text(json.dumps(cache))
+    CACHE.write_text(json.dumps(cache), encoding="utf-8")
     left = [t for m, lst in UNIVERSES.items() for t, _ in lst
             if t not in cache]
     print("ALL CACHED" if not left else f"{len(left)} remaining")
@@ -214,7 +214,7 @@ def report(buffer=0.02):
     import numpy as np
     import pandas as pd
     from agents.reconstitution import MSCIRules, predict_msci
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     tot_hit_a = tot_act_a = tot_hit_d = tot_act_d = 0
     tot_fp_a = tot_fp_d = 0
     watch_hits, watch_names = 0, []

@@ -163,7 +163,7 @@ def fetch_master():
         rows = re.findall(r"<td[^>]*>([0-9]{4,6})\s+([A-Z][^<]+)</td>",
                           r.text)
     out = {c: n.strip() for c, n in rows if len(c) == 4}
-    cache.write_text(json.dumps(out, ensure_ascii=False))
+    cache.write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
     return out
 
 
@@ -213,7 +213,7 @@ def build():
                     ev["unmatched"].append(nm)
                     all_unmatched.add(nm)
         events[season] = ev
-    OUT.write_text(json.dumps(events, ensure_ascii=False, indent=1))
+    OUT.write_text(json.dumps(events, ensure_ascii=False, indent=1), encoding="utf-8")
     n_ev = sum(1 for e in events.values() if e["adds"] or e["dels"])
     n_named = sum(len(e["adds"]) + len(e["dels"])
                   for e in events.values())

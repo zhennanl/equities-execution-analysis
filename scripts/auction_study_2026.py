@@ -39,6 +39,48 @@ def _num(x):
     return float(str(x).replace(",", "")) if x not in ("", None) else 0.0
 
 
+# c-228: MI_5MINS IS NOT 5-SECOND FOR MOST OF ITS HISTORY.
+#
+# Bill remembered a real 2015 boundary in the auction data, and
+# he was right where I was wrong. TWSE serves this file from
+# 2004-10-15, but its own `notes` field, returned WITH the data,
+# says the RESOLUTION changed four times:
+#
+#   before 2011-01-16 ....... every MINUTE
+#   2011-01-16 .. 2014-02-23  every 15 seconds
+#   2014-02-24 .. 2014-12-28  every 10 seconds
+#   from 2014-12-29 ......... every 5 seconds
+#
+# The closing call runs 13:25-13:30. Five minutes at 1-minute
+# resolution is FIVE points; at 5 seconds it is sixty. The
+# indicative path through the auction — the entire object of an
+# auction study — only exists from 2014-12-29. So "the auction
+# data starts in 2015" is true in the way that matters, and my
+# c-226 conclusion that nothing here is 2015-bound was too
+# broad: I checked whether the file EXISTS and not what it
+# CONTAINS.
+#
+# This also fixes a silent bug. The old code looked up the
+# literal key "13:24:55", which only exists at 5-second
+# resolution, and returned None otherwise — so every pre-2015
+# date reported "no data" for data that is there at a coarser
+# grid. A resolution limit reported as an absence is the same
+# error as a permissions refusal recorded as a coverage fact.
+RESOLUTION = [("2014-12-29", 5), ("2014-02-24", 10),
+              ("2011-01-16", 15), ("0000-00-00", 60)]
+
+
+def mi5_resolution(date):
+    """Seconds between rows for a given YYYYMMDD. Source: the
+    `notes` TWSE returns with every MI_5MINS response."""
+    d = f"{date[:4]}-{date[4:6]}-{date[6:]}" if len(date) == 8 \
+        else str(date)
+    for since, sec in RESOLUTION:
+        if d >= since:
+            return sec
+    return 60
+
+
 def fetch_mi5(date):
     req = urllib.request.Request(
         "https://www.twse.com.tw/en/exchangeReport/MI_5MINS"
@@ -48,14 +90,27 @@ def fetch_mi5(date):
     if p.get("stat") != "OK":
         return None
     rows = {r[0]: r for r in p["data"]}
-    last_cont = rows.get("13:24:55") or rows.get("13:25:00")
-    final = rows.get("13:30:00")
+    res = mi5_resolution(date)
+    # the last row BEFORE the call starts, at whatever grid this
+    # date is on — 13:24:55 at 5s, 13:24:45 at 15s, "13:24" at
+    # 1-minute (which carries no seconds field at all)
+    last_cont = next(
+        (rows[k] for k in ("13:24:55", "13:24:50", "13:24:45",
+                           "13:25:00", "13:24", "13:25")
+         if k in rows), None)
+    final = rows.get("13:30:00") or rows.get("13:30")
     if not (last_cont and final):
         return None
     return {
         "vol_before": _num(last_cont[6]), "vol_final": _num(final[6]),
         "val_before": _num(last_cont[7]), "val_final": _num(final[7]),
-        "bid_final": _num(final[2]), "ask_final": _num(final[4])}
+        "bid_final": _num(final[2]), "ask_final": _num(final[4]),
+        # c-228: carried on every row so a mixed-resolution
+        # sample can never be pooled by accident. The auction
+        # SHARE (final minus before) survives a coarse grid; the
+        # indicative PATH through the call does not.
+        "grid_seconds": res,
+        "path_usable": res <= 5}
 
 
 def fetch_index_gap(date):
@@ -133,7 +188,7 @@ def fetch_cn(names):
 
 
 def load():
-    return json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    return json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
 
 
 def main():
@@ -147,7 +202,7 @@ def main():
                 if r:
                     mk[d] = r
                     print(d, "ok")
-        CACHE.write_text(json.dumps(cache))
+        CACHE.write_text(json.dumps(cache), encoding="utf-8")
         return
     if mode == "gaps":
         g = cache.setdefault("index_gap", {})
@@ -157,7 +212,7 @@ def main():
                 if r:
                     g[d] = r
                     print(d, r["gap_bps"], "bps")
-        CACHE.write_text(json.dumps(cache))
+        CACHE.write_text(json.dumps(cache), encoding="utf-8")
         return
     if mode == "cn":
         lo = int(sys.argv[2]) if len(sys.argv) > 2 else 0
@@ -166,7 +221,7 @@ def main():
         todo = [x for x in cn_review_names()[lo:hi]
                 if x[1] not in got]
         got.update(fetch_cn(todo))
-        CACHE.write_text(json.dumps(cache))
+        CACHE.write_text(json.dumps(cache), encoding="utf-8")
         return
     if mode == "names":
         import yfinance as yf
@@ -195,7 +250,7 @@ def main():
                     "official_close": float(dd["Close"].iloc[0])}
             nm[t] = per_day
             print(t, len(per_day), "days")
-        CACHE.write_text(json.dumps(cache))
+        CACHE.write_text(json.dumps(cache), encoding="utf-8")
         return
     # ---- report
     mk, nm = cache.get("market", {}), cache.get("names", {})

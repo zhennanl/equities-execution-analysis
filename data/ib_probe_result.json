@@ -1,0 +1,218 @@
+{
+ "asof": "2026-08-08T20:03:13",
+ "note": "MEASURED on this account. Entitlements differ by account and IB entity; re-run after any subscription change.",
+ "markets": {
+  "Taiwan": {
+   "probe_company": "TSMC",
+   "tried_exchanges": [
+    "TWSE",
+    "TAI"
+   ],
+   "contract": "2330@TWSE",
+   "TRADES_live": "275 bars",
+   "works_with": "live",
+   "first_bar": "2026-08-03 09:00:00+08:00",
+   "last_bar": "2026-08-07 13:30:00+08:00",
+   "depth_ladder": {
+    "15 Y": "empty",
+    "10 Y": "empty",
+    "5 Y": "empty",
+    "3 Y": "728 bars from 2023-08-09",
+    "2 Y": "485 bars from 2024-08-08"
+   },
+   "daily_depth_from": "2023-08-09",
+   "depth_found_at": "3 Y",
+   "depth_note": "if this equals the duration asked, the TRUE depth may be longer \u2014 the ladder stopped at the first success from the top",
+   "verdict": "OK via live data"
+  },
+  "Japan": {
+   "probe_company": "Toyota",
+   "tried_exchanges": [
+    "TSEJ",
+    "SMART"
+   ],
+   "contract": "7203@TSEJ",
+   "TRADES_live": "none (empty)",
+   "TRADES_delayed": "none (empty)",
+   "TRADES_delayed-frozen": "none (empty)",
+   "MIDPOINT_delayed": "none (empty)",
+   "verdict": "NO 5-MIN HISTORY on this account. See the error text: 354 = not subscribed, 162 = no permission for this data type or pacing."
+  },
+  "HongKong": {
+   "probe_company": "Tencent",
+   "tried_exchanges": [
+    "SEHK"
+   ],
+   "contract": "700@SEHK",
+   "TRADES_live": "340 bars",
+   "works_with": "live",
+   "first_bar": "2026-08-03 09:30:00+08:00",
+   "last_bar": "2026-08-07 16:05:00+08:00",
+   "depth_ladder": {
+    "15 Y": "3692 bars from 2011-08-12",
+    "10 Y": "2464 bars from 2016-08-10",
+    "5 Y": "1231 bars from 2021-08-09",
+    "3 Y": "738 bars from 2023-08-09",
+    "2 Y": "491 bars from 2024-08-08"
+   },
+   "daily_depth_from": "2011-08-12",
+   "depth_found_at": "15 Y",
+   "depth_note": "if this equals the duration asked, the TRUE depth may be longer \u2014 the ladder stopped at the first success from the top",
+   "verdict": "OK via live data"
+  },
+  "Korea": {
+   "probe_company": "Samsung Elec",
+   "tried_exchanges": [
+    "KSE",
+    "KRX",
+    "SMART",
+    "KSE"
+   ],
+   "contract": "005930@KRX",
+   "TRADES_live": "390 bars",
+   "works_with": "live",
+   "first_bar": "2026-08-03 09:00:00+09:00",
+   "last_bar": "2026-08-07 15:25:00+09:00",
+   "depth_ladder": {
+    "15 Y": "3677 bars from 2011-08-12",
+    "10 Y": "2444 bars from 2016-08-10",
+    "5 Y": "1216 bars from 2021-08-09",
+    "3 Y": "722 bars from 2023-08-09",
+    "2 Y": "477 bars from 2024-08-08"
+   },
+   "daily_depth_from": "2011-08-12",
+   "depth_found_at": "15 Y",
+   "depth_note": "if this equals the duration asked, the TRUE depth may be longer \u2014 the ladder stopped at the first success from the top",
+   "verdict": "OK via live data"
+  },
+  "Singapore": {
+   "probe_company": "DBS",
+   "tried_exchanges": [
+    "SGX"
+   ],
+   "contract": "D05@SGX",
+   "TRADES_live": "440 bars",
+   "works_with": "live",
+   "first_bar": "2026-08-03 09:00:00+08:00",
+   "last_bar": "2026-08-07 17:15:00+08:00",
+   "depth_ladder": {
+    "15 Y": "3757 bars from 2011-08-12",
+    "10 Y": "2510 bars from 2016-08-10",
+    "5 Y": "1256 bars from 2021-08-10",
+    "3 Y": "753 bars from 2023-08-10",
+    "2 Y": "503 bars from 2024-08-08"
+   },
+   "daily_depth_from": "2011-08-12",
+   "depth_found_at": "15 Y",
+   "depth_note": "if this equals the duration asked, the TRUE depth may be longer \u2014 the ladder stopped at the first success from the top",
+   "verdict": "OK via live data"
+  },
+  "Australia": {
+   "probe_company": "BHP",
+   "tried_exchanges": [
+    "ASX",
+    "CHIXAU"
+   ],
+   "contract": "BHP@ASX",
+   "TRADES_live": "365 bars",
+   "works_with": "live",
+   "first_bar": "2026-08-03 09:59:00+10:00",
+   "last_bar": "2026-08-07 15:55:00+10:00",
+   "depth_ladder": {
+    "15 Y": "3788 bars from 2011-08-12",
+    "10 Y": "2524 bars from 2016-08-10",
+    "5 Y": "1265 bars from 2021-08-09",
+    "3 Y": "760 bars from 2023-08-09",
+    "2 Y": "507 bars from 2024-08-08"
+   },
+   "daily_depth_from": "2011-08-12",
+   "depth_found_at": "15 Y",
+   "depth_note": "if this equals the duration asked, the TRUE depth may be longer \u2014 the ladder stopped at the first success from the top",
+   "verdict": "OK via live data"
+  },
+  "India": {
+   "probe_company": "Reliance",
+   "tried_exchanges": [
+    "NSE"
+   ],
+   "contract": "RELIANCE@NSE",
+   "TRADES_live": "375 bars",
+   "works_with": "live",
+   "first_bar": "2026-08-03 09:15:00+05:30",
+   "last_bar": "2026-08-07 15:25:00+05:30",
+   "depth_ladder": {
+    "15 Y": "3696 bars from 2011-08-12",
+    "10 Y": "2467 bars from 2016-08-10",
+    "5 Y": "1237 bars from 2021-08-09",
+    "3 Y": "740 bars from 2023-08-09",
+    "2 Y": "497 bars from 2024-08-08"
+   },
+   "daily_depth_from": "2011-08-12",
+   "depth_found_at": "15 Y",
+   "depth_note": "if this equals the duration asked, the TRUE depth may be longer \u2014 the ladder stopped at the first success from the top",
+   "verdict": "OK via live data"
+  },
+  "Thailand": {
+   "probe_company": "PTT",
+   "tried_exchanges": [
+    "SET"
+   ],
+   "contract": "NOT RESOLVED",
+   "detail": "no contract returned",
+   "verdict": "NO CONTRACT \u2014 exchange code or symbol wrong, OR no trading permission for this market"
+  },
+  "Malaysia": {
+   "probe_company": "Maybank",
+   "tried_exchanges": [
+    "BURSA",
+    "KLS"
+   ],
+   "contract": "NOT RESOLVED",
+   "detail": "no contract returned",
+   "verdict": "NO CONTRACT \u2014 exchange code or symbol wrong, OR no trading permission for this market"
+  },
+  "Indonesia": {
+   "probe_company": "Bank Central Asia",
+   "tried_exchanges": [
+    "IDX",
+    "JKT"
+   ],
+   "contract": "NOT RESOLVED",
+   "detail": "no contract returned",
+   "verdict": "NO CONTRACT \u2014 exchange code or symbol wrong, OR no trading permission for this market"
+  },
+  "NewZealand": {
+   "probe_company": "Spark NZ",
+   "tried_exchanges": [
+    "NZX",
+    "NZE"
+   ],
+   "contract": "NOT RESOLVED",
+   "detail": "no contract returned",
+   "verdict": "NO CONTRACT \u2014 exchange code or symbol wrong, OR no trading permission for this market"
+  },
+  "China": {
+   "probe_company": "Moutai / Midea",
+   "tried_exchanges": [
+    "SEHKNTL",
+    "SEHKSZSE"
+   ],
+   "contract": "600519@SEHKNTL",
+   "TRADES_live": "240 bars",
+   "works_with": "live",
+   "first_bar": "2026-08-03 09:30:00+08:00",
+   "last_bar": "2026-08-07 14:55:00+08:00",
+   "depth_ladder": {
+    "15 Y": "2736 bars from 2014-11-14",
+    "10 Y": "2330 bars from 2016-08-10",
+    "5 Y": "1170 bars from 2021-08-09",
+    "3 Y": "705 bars from 2023-08-09",
+    "2 Y": "470 bars from 2024-08-08"
+   },
+   "daily_depth_from": "2014-11-14",
+   "depth_found_at": "15 Y",
+   "depth_note": "if this equals the duration asked, the TRUE depth may be longer \u2014 the ladder stopped at the first success from the top",
+   "verdict": "OK via live data"
+  }
+ }
+}

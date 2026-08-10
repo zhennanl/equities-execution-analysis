@@ -48,7 +48,7 @@ def render():
                 for k, v in rw.NOTICE_SOURCES.items()))
         cache_path = rw.REGISTRY_PATH.parent / "reg_notices_cache.json"
         if cache_path.exists():
-            cache = json.loads(cache_path.read_text())
+            cache = json.loads(cache_path.read_text(encoding="utf-8"))
             day = sorted(cache.keys())[-1]
             tri = rw.triage_notices(cache[day]["notices"])
             basket_raw = st.text_input(

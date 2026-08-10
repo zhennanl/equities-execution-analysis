@@ -25,9 +25,9 @@ import numpy as np                                     # noqa: E402
 import pandas as pd                                    # noqa: E402
 
 CACHE = json.loads((ROOT / "data" / "tw_vintage_cache.json")
-                   .read_text())
+                   .read_text(encoding="utf-8"))
 EVENTS = json.loads((ROOT / "data" / "msci_tw_events.json")
-                    .read_text())
+                    .read_text(encoding="utf-8"))
 IMG = ROOT / "docs" / "img"
 LOOKBACK = 250                                # trading days (~12m)
 SURVIVORS = ["1101", "1326", "2207", "2002"]  # cutline residents

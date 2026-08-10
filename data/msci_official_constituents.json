@@ -1,0 +1,4938 @@
+{
+ "source": "MSCI public Index Constituents tool (ESMA-mandated, ~2-month delayed)",
+ "harvested": "2026-08-07",
+ "vintage_note": "serves the LAST review whose data has aged ~2 months \u2014 verify the 'As Of' date on msci.com/constituents",
+ "not_offered": {
+  "NewZealand": "MSCI's public constituents tool does not list a NEW ZEALAND index (registered gap)"
+ },
+ "markets": {
+  "Australia": {
+   "index_code": "903600",
+   "n": 47,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "BHP GROUP (AU)",
+     "weight": 15.808316
+    },
+    {
+     "security": "COMMONWEALTH BANK OF AUS",
+     "weight": 13.607052
+    },
+    {
+     "security": "WESTPAC BANKING",
+     "weight": 6.156513
+    },
+    {
+     "security": "NATIONAL AUSTRALIA BANK",
+     "weight": 5.707991
+    },
+    {
+     "security": "ANZ GROUP HOLDINGS",
+     "weight": 5.260437
+    },
+    {
+     "security": "WESFARMERS",
+     "weight": 4.508132
+    },
+    {
+     "security": "MACQUARIE GROUP",
+     "weight": 4.2979
+    },
+    {
+     "security": "RIO TINTO LTD (AU)",
+     "weight": 3.49004
+    },
+    {
+     "security": "GOODMAN GROUP",
+     "weight": 3.147836
+    },
+    {
+     "security": "WOODSIDE ENERGY GROUP",
+     "weight": 2.903225
+    },
+    {
+     "security": "TRANSURBAN GROUP",
+     "weight": 2.285361
+    },
+    {
+     "security": "CSL",
+     "weight": 2.276355
+    },
+    {
+     "security": "WOOLWORTHS GROUP",
+     "weight": 2.132566
+    },
+    {
+     "security": "FORTESCUE",
+     "weight": 1.811763
+    },
+    {
+     "security": "QBE INSURANCE GROUP",
+     "weight": 1.673523
+    },
+    {
+     "security": "COLES",
+     "weight": 1.451925
+    },
+    {
+     "security": "ARISTOCRAT LEISURE",
+     "weight": 1.358289
+    },
+    {
+     "security": "SANTOS",
+     "weight": 1.261373
+    },
+    {
+     "security": "EVOLUTION MINING",
+     "weight": 1.257078
+    },
+    {
+     "security": "NORTHERN STAR RESOURCES",
+     "weight": 1.253052
+    },
+    {
+     "security": "BRAMBLES",
+     "weight": 1.129412
+    },
+    {
+     "security": "SOUTH 32 (AU)",
+     "weight": 1.058879
+    },
+    {
+     "security": "PLS GROUP",
+     "weight": 1.054271
+    },
+    {
+     "security": "TELSTRA GROUP",
+     "weight": 1.010504
+    },
+    {
+     "security": "SCENTRE GROUP",
+     "weight": 0.980441
+    },
+    {
+     "security": "SUNCORP GROUP",
+     "weight": 0.943573
+    },
+    {
+     "security": "ORIGIN ENERGY",
+     "weight": 0.926419
+    },
+    {
+     "security": "COMPUTERSHARE",
+     "weight": 0.904842
+    },
+    {
+     "security": "INSURANCE AUSTRALIA GRP",
+     "weight": 0.856012
+    },
+    {
+     "security": "LYNAS RARE EARTHS",
+     "weight": 0.8421
+    },
+    {
+     "security": "SIGMA HEALTHCARE",
+     "weight": 0.75527
+    },
+    {
+     "security": "PATTINSON WASHINGTON NEW",
+     "weight": 0.730899
+    },
+    {
+     "security": "APA GROUP",
+     "weight": 0.665058
+    },
+    {
+     "security": "XERO (AU)",
+     "weight": 0.65322
+    },
+    {
+     "security": "MEDIBANK PRIVATE",
+     "weight": 0.645873
+    },
+    {
+     "security": "THE LOTTERY CORPORATION",
+     "weight": 0.584054
+    },
+    {
+     "security": "VICINITY CENTRES",
+     "weight": 0.494915
+    },
+    {
+     "security": "STOCKLAND",
+     "weight": 0.477636
+    },
+    {
+     "security": "CAR GROUP",
+     "weight": 0.460378
+    },
+    {
+     "security": "ASX",
+     "weight": 0.460322
+    },
+    {
+     "security": "SONIC HEALTHCARE",
+     "weight": 0.438198
+    },
+    {
+     "security": "SGH",
+     "weight": 0.416251
+    },
+    {
+     "security": "PRO MEDICUS",
+     "weight": 0.413298
+    },
+    {
+     "security": "REA GROUP",
+     "weight": 0.396544
+    },
+    {
+     "security": "WISETECH GLOBAL",
+     "weight": 0.37674
+    },
+    {
+     "security": "QANTAS AIRWAYS",
+     "weight": 0.347042
+    },
+    {
+     "security": "COCHLEAR",
+     "weight": 0.32912
+    }
+   ]
+  },
+  "China": {
+   "index_code": "302400",
+   "n": 576,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "TENCENT HOLDINGS LI (CN)",
+     "weight": 13.359879
+    },
+    {
+     "security": "ALIBABA GRP HLDG (HK)",
+     "weight": 10.227378
+    },
+    {
+     "security": "CHINA CONSTRUCTION BK H",
+     "weight": 3.570539
+    },
+    {
+     "security": "XIAOMI CORP B",
+     "weight": 2.449402
+    },
+    {
+     "security": "ICBC H",
+     "weight": 2.153395
+    },
+    {
+     "security": "MEITUAN B",
+     "weight": 1.960184
+    },
+    {
+     "security": "PING AN INSURANCE H",
+     "weight": 1.951509
+    },
+    {
+     "security": "PDD HOLDINGS A ADR",
+     "weight": 1.931454
+    },
+    {
+     "security": "BANK OF CHINA H",
+     "weight": 1.737134
+    },
+    {
+     "security": "NETEASE",
+     "weight": 1.704007
+    },
+    {
+     "security": "BYD CO H",
+     "weight": 1.662825
+    },
+    {
+     "security": "BAIDU (HK)",
+     "weight": 1.341
+    },
+    {
+     "security": "JD.COM (HK)",
+     "weight": 1.280075
+    },
+    {
+     "security": "PETROCHINA CO H",
+     "weight": 1.145079
+    },
+    {
+     "security": "TRIP COM GROUP",
+     "weight": 1.102635
+    },
+    {
+     "security": "CHINA LIFE INSURANCE H",
+     "weight": 1.06977
+    },
+    {
+     "security": "ZIJIN MINING GROUP H",
+     "weight": 0.975986
+    },
+    {
+     "security": "LENOVO GROUP",
+     "weight": 0.934494
+    },
+    {
+     "security": "CHINA MERCHANTS BANK H",
+     "weight": 0.893061
+    },
+    {
+     "security": "CHINA SHENHUA ENERGY H",
+     "weight": 0.793695
+    },
+    {
+     "security": "AGRI BANK OF CHINA H",
+     "weight": 0.77067
+    },
+    {
+     "security": "BEONE MEDICINES (HK)",
+     "weight": 0.677781
+    },
+    {
+     "security": "CONTEMPORARY H",
+     "weight": 0.654604
+    },
+    {
+     "security": "CONTEMPORARY AMP A(HK-C)",
+     "weight": 0.640007
+    },
+    {
+     "security": "GEELY AUTOMOBILE HLDGS",
+     "weight": 0.612065
+    },
+    {
+     "security": "WUXI BIOLOGICS",
+     "weight": 0.605711
+    },
+    {
+     "security": "KUAISHOU TECHNOLOGY B",
+     "weight": 0.593325
+    },
+    {
+     "security": "INNOVENT BIOLOGICS",
+     "weight": 0.576104
+    },
+    {
+     "security": "KWEICHOW MOUTAI A (HK-C)",
+     "weight": 0.566776
+    },
+    {
+     "security": "YUM CHINA HOLDINGS(HK)",
+     "weight": 0.562158
+    },
+    {
+     "security": "HUA HONG SC (CN)",
+     "weight": 0.554149
+    },
+    {
+     "security": "CHINA RESOURCES LAND",
+     "weight": 0.51677
+    },
+    {
+     "security": "PICC PPTY & CASUALTY H",
+     "weight": 0.494904
+    },
+    {
+     "security": "CHINA PETRO & CHEM H",
+     "weight": 0.490027
+    },
+    {
+     "security": "ANTA SPORTS PRODUCTS",
+     "weight": 0.478295
+    },
+    {
+     "security": "CHINA HONGQIAO GROUP",
+     "weight": 0.458182
+    },
+    {
+     "security": "POP MART INTERNATIONAL",
+     "weight": 0.449295
+    },
+    {
+     "security": "KE HOLDINGS(HK)",
+     "weight": 0.440812
+    },
+    {
+     "security": "ZHONGJI INNO A(HK-C)",
+     "weight": 0.433924
+    },
+    {
+     "security": "XPENG (HK)",
+     "weight": 0.422304
+    },
+    {
+     "security": "CHINA PACIFIC INS GRP H",
+     "weight": 0.419171
+    },
+    {
+     "security": "YANGTZE OPTICAL FIBRE H",
+     "weight": 0.418768
+    },
+    {
+     "security": "NIO(HK)",
+     "weight": 0.394929
+    },
+    {
+     "security": "WEICHAI POWER CO H",
+     "weight": 0.387981
+    },
+    {
+     "security": "NONGFU SPRING CO H",
+     "weight": 0.381837
+    },
+    {
+     "security": "AKESO (CN)",
+     "weight": 0.371757
+    },
+    {
+     "security": "LI AUTO (HK)",
+     "weight": 0.354544
+    },
+    {
+     "security": "CMOC GROUP H",
+     "weight": 0.334842
+    },
+    {
+     "security": "ZTO EXPRESS(HK)",
+     "weight": 0.329026
+    },
+    {
+     "security": "H WORLD GROUP ADR",
+     "weight": 0.319572
+    },
+    {
+     "security": "CHINA OVERSEAS LAND &INV",
+     "weight": 0.305657
+    },
+    {
+     "security": "CSPC PHARMACEUTICAL GRP",
+     "weight": 0.304133
+    },
+    {
+     "security": "BANK OF COMMUNICATIONS H",
+     "weight": 0.289205
+    },
+    {
+     "security": "CHINA CITIC BANK H",
+     "weight": 0.284115
+    },
+    {
+     "security": "CITIC",
+     "weight": 0.281316
+    },
+    {
+     "security": "CHINA MERCH BK A (HK-C)",
+     "weight": 0.272342
+    },
+    {
+     "security": "FOXCONN INDL A (HK-C)",
+     "weight": 0.269753
+    },
+    {
+     "security": "CAMBRICON TECH A (HK-C)",
+     "weight": 0.268825
+    },
+    {
+     "security": "SUNNY OPTICAL TECH",
+     "weight": 0.26681
+    },
+    {
+     "security": "WUXI APPTEC CO H",
+     "weight": 0.260438
+    },
+    {
+     "security": "YANKUANG ENERGY GROUP H",
+     "weight": 0.252204
+    },
+    {
+     "security": "CHINA MENGNIU DAIRY CO",
+     "weight": 0.248769
+    },
+    {
+     "security": "FULL TRUCK ALLIANCE ADR",
+     "weight": 0.245952
+    },
+    {
+     "security": "SENSETIME GROUP B",
+     "weight": 0.245186
+    },
+    {
+     "security": "SINO BIOPHARMACEUTICAL",
+     "weight": 0.242331
+    },
+    {
+     "security": "KNGBRD LAMNTS HLDG (CN)",
+     "weight": 0.24047
+    },
+    {
+     "security": "CHINA YANGTZE A (HK-C)",
+     "weight": 0.23483
+    },
+    {
+     "security": "NEW ORIENTAL EDUCATION",
+     "weight": 0.233955
+    },
+    {
+     "security": "EOPTOLINK TECH A (HK-C)",
+     "weight": 0.233539
+    },
+    {
+     "security": "HAIER SMART HOME CO H",
+     "weight": 0.231212
+    },
+    {
+     "security": "NEW CHINA LIFE INS H",
+     "weight": 0.225377
+    },
+    {
+     "security": "ZIJIN GOLD INTL",
+     "weight": 0.224479
+    },
+    {
+     "security": "CHINA RESOURCES POWER",
+     "weight": 0.222921
+    },
+    {
+     "security": "PEOPLE'S INSURANCE CO H",
+     "weight": 0.221819
+    },
+    {
+     "security": "HYGON INFO TECH A (HK-C)",
+     "weight": 0.221195
+    },
+    {
+     "security": "CHINA TOWER CORP H",
+     "weight": 0.220965
+    },
+    {
+     "security": "LI NING CO",
+     "weight": 0.218718
+    },
+    {
+     "security": "ZIJIN MINING A (HK-C)",
+     "weight": 0.214953
+    },
+    {
+     "security": "TENCENT MUSIC ENT A ADR",
+     "weight": 0.212283
+    },
+    {
+     "security": "POSTAL SAVINGS BANK H",
+     "weight": 0.211576
+    },
+    {
+     "security": "JD HEALTH INTERNATIONAL",
+     "weight": 0.203069
+    },
+    {
+     "security": "ALUMINUM CORP OF CHINA H",
+     "weight": 0.202785
+    },
+    {
+     "security": "CITIC SECURITIES CO H",
+     "weight": 0.202386
+    },
+    {
+     "security": "KANZHUN A ADR",
+     "weight": 0.201264
+    },
+    {
+     "security": "PING AN INS A (HK-C)",
+     "weight": 0.19839
+    },
+    {
+     "security": "CHINA RESOURCES BEER",
+     "weight": 0.198016
+    },
+    {
+     "security": "ENN ENERGY HOLDINGS",
+     "weight": 0.196893
+    },
+    {
+     "security": "SHENZHOU INTERNATIONAL",
+     "weight": 0.195275
+    },
+    {
+     "security": "MMG",
+     "weight": 0.192775
+    },
+    {
+     "security": "HANSOH PHARMACEUTICAL",
+     "weight": 0.192572
+    },
+    {
+     "security": "AGRI BANK OF CN A (HK-C)",
+     "weight": 0.190946
+    },
+    {
+     "security": "MIDEA GROUP H",
+     "weight": 0.18793
+    },
+    {
+     "security": "GDS HOLDINGS A (HK)",
+     "weight": 0.186427
+    },
+    {
+     "security": "BILIBILI (HK)",
+     "weight": 0.17988
+    },
+    {
+     "security": "ZHAOJIN MINING IND H",
+     "weight": 0.179351
+    },
+    {
+     "security": "JIANGXI COPPER CO H",
+     "weight": 0.179212
+    },
+    {
+     "security": "AAC TECHNOLOGIES (CN)",
+     "weight": 0.179038
+    },
+    {
+     "security": "LUXSHARE PREC A (HK-C)",
+     "weight": 0.178051
+    },
+    {
+     "security": "CHINA GOLD INTL RES (CN)",
+     "weight": 0.177595
+    },
+    {
+     "security": "BYD CO A (HK-C)",
+     "weight": 0.175868
+    },
+    {
+     "security": "3SBIO",
+     "weight": 0.175366
+    },
+    {
+     "security": "COSCO SHIPPING HLDGS H ",
+     "weight": 0.173898
+    },
+    {
+     "security": "CHINA INTL CPTL CORP H",
+     "weight": 0.167904
+    },
+    {
+     "security": "FUYAO GLASS IND GRP H",
+     "weight": 0.166159
+    },
+    {
+     "security": "CGN POWER CO H",
+     "weight": 0.158937
+    },
+    {
+     "security": "ICBC A (HK-C)",
+     "weight": 0.158713
+    },
+    {
+     "security": "VIPSHOP HOLDINGS ADR",
+     "weight": 0.156537
+    },
+    {
+     "security": "TSINGTAO BREWERY H",
+     "weight": 0.156024
+    },
+    {
+     "security": "SINOTRUK (HONG KONG)",
+     "weight": 0.155256
+    },
+    {
+     "security": "GUOTAI HAITONG SEC CO H",
+     "weight": 0.154392
+    },
+    {
+     "security": "HUANENG POWER INTL H",
+     "weight": 0.153445
+    },
+    {
+     "security": "GANFENG LITHIUM GROUP H",
+     "weight": 0.152242
+    },
+    {
+     "security": "NAURA TECH GRP A (HK-C)",
+     "weight": 0.147769
+    },
+    {
+     "security": "CHINA RESOURCES MIXC",
+     "weight": 0.144768
+    },
+    {
+     "security": "CHINA TAIPING INSURANCE",
+     "weight": 0.1436
+    },
+    {
+     "security": "KUNLUN ENERGY",
+     "weight": 0.138589
+    },
+    {
+     "security": "CHINA GALAXY SEC H",
+     "weight": 0.135531
+    },
+    {
+     "security": "HORIZON ROBOTICS B",
+     "weight": 0.135207
+    },
+    {
+     "security": "INDUSTRIAL BANK A (HK-C)",
+     "weight": 0.134868
+    },
+    {
+     "security": "TAL EDUCATION GROUP ADR",
+     "weight": 0.131515
+    },
+    {
+     "security": "BANK OF COMMU A (HK-C)",
+     "weight": 0.125197
+    },
+    {
+     "security": "SUNGROW POWER A (HK-C)",
+     "weight": 0.124672
+    },
+    {
+     "security": "CHINA COAL ENERGY H",
+     "weight": 0.124472
+    },
+    {
+     "security": "GREAT WALL MOTOR H",
+     "weight": 0.122846
+    },
+    {
+     "security": "KINGDEE INTL SOFTWARE",
+     "weight": 0.122609
+    },
+    {
+     "security": "TINGYI HOLDING CORP (CN)",
+     "weight": 0.121787
+    },
+    {
+     "security": "SUZHOU DONGSHAN A (HK-C)",
+     "weight": 0.121379
+    },
+    {
+     "security": "SICHUAN KELUN BIOTECH H",
+     "weight": 0.120359
+    },
+    {
+     "security": "GUANGDONG INVESTMENT",
+     "weight": 0.116105
+    },
+    {
+     "security": "BYD ELECTRONIC INTL",
+     "weight": 0.115493
+    },
+    {
+     "security": "SUZHOU TFC A (HK-C)",
+     "weight": 0.11523
+    },
+    {
+     "security": "UBTECH ROBOTICS CORP H",
+     "weight": 0.115059
+    },
+    {
+     "security": "SHENGYI TECH A (HK-C)",
+     "weight": 0.113862
+    },
+    {
+     "security": "SINOPHARM GROUP CO H",
+     "weight": 0.113473
+    },
+    {
+     "security": "CHINA MINSHENG BANK H",
+     "weight": 0.112579
+    },
+    {
+     "security": "ANHUI CONCH CEMENT H",
+     "weight": 0.112179
+    },
+    {
+     "security": "KINGSOFT",
+     "weight": 0.112113
+    },
+    {
+     "security": "WULIANGYE YIBIN A (HK-C)",
+     "weight": 0.111893
+    },
+    {
+     "security": "CMOC GROUP A (HK-C)",
+     "weight": 0.111155
+    },
+    {
+     "security": "JD LOGISTICS",
+     "weight": 0.110531
+    },
+    {
+     "security": "SHANDONG GOLD-MINING H",
+     "weight": 0.109753
+    },
+    {
+     "security": "HAIDILAO INTL HOLDING",
+     "weight": 0.10947
+    },
+    {
+     "security": "JIANGSU HENGRUI A (HK-C)",
+     "weight": 0.1084
+    },
+    {
+     "security": "CITIC SECURITIES A(HK-C)",
+     "weight": 0.108237
+    },
+    {
+     "security": "CRRC CORP H",
+     "weight": 0.108035
+    },
+    {
+     "security": "GIGA DEVICE SC A (HK-C) ",
+     "weight": 0.108019
+    },
+    {
+     "security": "ZHEJIANG LEAPMOTOR H",
+     "weight": 0.107757
+    },
+    {
+     "security": "SHANGHAI PUDONG A (HK-C)",
+     "weight": 0.107278
+    },
+    {
+     "security": "LAOPU GOLD H",
+     "weight": 0.106626
+    },
+    {
+     "security": "J&T GLOBAL EXPRESS B",
+     "weight": 0.106175
+    },
+    {
+     "security": "HUATAI SECURITIES CO H",
+     "weight": 0.104734
+    },
+    {
+     "security": "BOSIDENG INTL HLDGS",
+     "weight": 0.103927
+    },
+    {
+     "security": "EAST MONEY INFO A (HK-C)",
+     "weight": 0.103612
+    },
+    {
+     "security": "VICTORY GIANT A (HK-C)",
+     "weight": 0.103238
+    },
+    {
+     "security": "WUXI XDC CAYMAN",
+     "weight": 0.10185
+    },
+    {
+     "security": "CHINA MERCHANTS PORT",
+     "weight": 0.099111
+    },
+    {
+     "security": "MIDEA GROUP CO A (HK-C)",
+     "weight": 0.098153
+    },
+    {
+     "security": "ZTE CORP H",
+     "weight": 0.098015
+    },
+    {
+     "security": "ALIBABA HEALTH INFO TECH",
+     "weight": 0.097804
+    },
+    {
+     "security": "CHINA NONFERROUS MINING",
+     "weight": 0.09749
+    },
+    {
+     "security": "CHINA GAS HOLDINGS",
+     "weight": 0.095941
+    },
+    {
+     "security": "CHINA CSSC HLDG A (HK-C)",
+     "weight": 0.095556
+    },
+    {
+     "security": "ORIENT OVERSEAS (CN)",
+     "weight": 0.094675
+    },
+    {
+     "security": "GCL TECHNOLOGY HOLDINGS",
+     "weight": 0.094639
+    },
+    {
+     "security": "TONGCHENG TRAVEL HLDGS",
+     "weight": 0.094236
+    },
+    {
+     "security": "INNER MONGOLIA YITAI B",
+     "weight": 0.094232
+    },
+    {
+     "security": "CHINA SHENHUA A (HK-C)",
+     "weight": 0.093031
+    },
+    {
+     "security": "PETROCHINA CO A (HK-C)",
+     "weight": 0.092842
+    },
+    {
+     "security": "MONTAGE TECH A (HK-C)",
+     "weight": 0.092039
+    },
+    {
+     "security": "CHOW TAI FOOK (CN)",
+     "weight": 0.09108
+    },
+    {
+     "security": "SHAANXI COAL IND A(HK-C)",
+     "weight": 0.089696
+    },
+    {
+     "security": "FAR EAST HORIZON",
+     "weight": 0.089604
+    },
+    {
+     "security": "SHENNAN CIRCUITS A(HK-C)",
+     "weight": 0.089456
+    },
+    {
+     "security": "COSCO SHIPPING ENERGY H",
+     "weight": 0.089452
+    },
+    {
+     "security": "HESAI GROUP",
+     "weight": 0.089205
+    },
+    {
+     "security": "CHINA RUYI HOLDINGS (CN)",
+     "weight": 0.088924
+    },
+    {
+     "security": "ADV MICRO-FABRIC A(HK-C)",
+     "weight": 0.088132
+    },
+    {
+     "security": "CHINA NATL BUILDING H",
+     "weight": 0.08799
+    },
+    {
+     "security": "SMOORE INTERNATIONAL",
+     "weight": 0.087461
+    },
+    {
+     "security": "WANT WANT CHINA HLDGS",
+     "weight": 0.0863
+    },
+    {
+     "security": "WUXI APPTEC A (HK-C)",
+     "weight": 0.085468
+    },
+    {
+     "security": "ZHUZHOU CRRC TIMES H",
+     "weight": 0.085316
+    },
+    {
+     "security": "BEIJING SHANGHAI A(HK-C)",
+     "weight": 0.084882
+    },
+    {
+     "security": "LONGFOR GROUP HOLDINGS",
+     "weight": 0.084279
+    },
+    {
+     "security": "CHINA LONGYUAN POWER H",
+     "weight": 0.083803
+    },
+    {
+     "security": "CHAOZHOU THREE A (HK-C)",
+     "weight": 0.08321
+    },
+    {
+     "security": "CHINA RESOURCES GAS GRP",
+     "weight": 0.082972
+    },
+    {
+     "security": "GF SECURITIES CO H",
+     "weight": 0.08257
+    },
+    {
+     "security": "WANHUA CHEM GRP A (HK-C)",
+     "weight": 0.082062
+    },
+    {
+     "security": "BANK OF CHINA A (HK-C)",
+     "weight": 0.081495
+    },
+    {
+     "security": "WUS PRINTED A (HK-C)",
+     "weight": 0.081477
+    },
+    {
+     "security": "BOC AVIATION",
+     "weight": 0.080164
+    },
+    {
+     "security": "WEICHAI POWER A (HK-C)",
+     "weight": 0.078841
+    },
+    {
+     "security": "BEIJING ENTERPRISES HLDG",
+     "weight": 0.077999
+    },
+    {
+     "security": "HENGAN INTL GROUP CO",
+     "weight": 0.077558
+    },
+    {
+     "security": "GUOTAI HAITONG A (HK-C)",
+     "weight": 0.077461
+    },
+    {
+     "security": "PONY AI",
+     "weight": 0.077241
+    },
+    {
+     "security": "CHINA PACIFIC A (HK-C)",
+     "weight": 0.075748
+    },
+    {
+     "security": "CHINA CONST BK A (HK-C)",
+     "weight": 0.073794
+    },
+    {
+     "security": "PING AN BANK CO A (HK-C)",
+     "weight": 0.073707
+    },
+    {
+     "security": "SHENZHEN LONGSYS A(HK-C)",
+     "weight": 0.073269
+    },
+    {
+     "security": "REMEGEN CO H",
+     "weight": 0.073212
+    },
+    {
+     "security": "GENSCRIPT BIOTECH",
+     "weight": 0.072915
+    },
+    {
+     "security": "CHINA OILFIELD SVCS H",
+     "weight": 0.072526
+    },
+    {
+     "security": "C&D INTERNATIONAL INV",
+     "weight": 0.072389
+    },
+    {
+     "security": "BANK OF JIANGSU A (HK-C)",
+     "weight": 0.072238
+    },
+    {
+     "security": "LENS TECHNOLOGY A (HK-C)",
+     "weight": 0.071952
+    },
+    {
+     "security": "BANK OF NINGBO A (HK-C)",
+     "weight": 0.071684
+    },
+    {
+     "security": "MUYUAN FOODS GRP A(HK-C)",
+     "weight": 0.071402
+    },
+    {
+     "security": "LEGEND BIOTECH CORP ADR",
+     "weight": 0.071374
+    },
+    {
+     "security": "CHINA RAILWAY GROUP H",
+     "weight": 0.071182
+    },
+    {
+     "security": "NARI TECHNOLOGY A (HK-C)",
+     "weight": 0.070005
+    },
+    {
+     "security": "CHINA POWER INTL",
+     "weight": 0.069966
+    },
+    {
+     "security": "CHINA STATE CON A (HK-C)",
+     "weight": 0.06926
+    },
+    {
+     "security": "AVARY HOLDING A (HK-C)",
+     "weight": 0.06899
+    },
+    {
+     "security": "CHONGQING RURAL COMM H",
+     "weight": 0.068014
+    },
+    {
+     "security": "XTALPI HOLDINGS",
+     "weight": 0.067989
+    },
+    {
+     "security": "BOE TECH GROUP A (HK-C)",
+     "weight": 0.067338
+    },
+    {
+     "security": "YADEA GROUP HOLDINGS",
+     "weight": 0.065497
+    },
+    {
+     "security": "CHINA NATL NUCL A (HK-C)",
+     "weight": 0.065254
+    },
+    {
+     "security": "COSCO SHIP HLDG A (HK-C)",
+     "weight": 0.064484
+    },
+    {
+     "security": "HENGTONG OPTIC A (HK-C)",
+     "weight": 0.064406
+    },
+    {
+     "security": "HAITIAN INTL HLDGS",
+     "weight": 0.062975
+    },
+    {
+     "security": "SHENZHEN MINDRAY A(HK-C)",
+     "weight": 0.062614
+    },
+    {
+     "security": "NINGXIA BAOFENG A HK-C",
+     "weight": 0.062423
+    },
+    {
+     "security": "GIANT BIOGENE HOLDING",
+     "weight": 0.062279
+    },
+    {
+     "security": "XINYI SOLAR HLDGS (CN)",
+     "weight": 0.061655
+    },
+    {
+     "security": "CHINA NORTHERN A (HK-C)",
+     "weight": 0.059795
+    },
+    {
+     "security": "HITHINK ROYAL A (HK-C)",
+     "weight": 0.059532
+    },
+    {
+     "security": "INNER MONGOL YIL A(HK-C)",
+     "weight": 0.059023
+    },
+    {
+     "security": "S F HOLDING A (HK-C)",
+     "weight": 0.05827
+    },
+    {
+     "security": "FOSHAN HAITIAN A (HK-C)",
+     "weight": 0.057188
+    },
+    {
+     "security": "PIOTECH A (HK-C)",
+     "weight": 0.056993
+    },
+    {
+     "security": "ACCELINK TECH A (HK-C)",
+     "weight": 0.056956
+    },
+    {
+     "security": "MINISO GROUP (HK)",
+     "weight": 0.056387
+    },
+    {
+     "security": "CHINA FEIHE",
+     "weight": 0.055907
+    },
+    {
+     "security": "QINGHAI SALT LAK A(HK-C)",
+     "weight": 0.055558
+    },
+    {
+     "security": "SHANXI XINGHUAC A (HK-C)",
+     "weight": 0.054022
+    },
+    {
+     "security": "CHINA JUSHI CO A (HK-C)",
+     "weight": 0.053015
+    },
+    {
+     "security": "SANY HEAVY IND A (HK-C)",
+     "weight": 0.052923
+    },
+    {
+     "security": "POSTAL SAVINGS A (HK-C)",
+     "weight": 0.052172
+    },
+    {
+     "security": "YANTAI JEREH OIL A(HK-C)",
+     "weight": 0.052015
+    },
+    {
+     "security": "JIANGSU HENGLI A (HK-C)",
+     "weight": 0.051575
+    },
+    {
+     "security": "ALUMINUM CORP A (HK-C)",
+     "weight": 0.051547
+    },
+    {
+     "security": "CHINA EVERBRIGHT A(HK-C)",
+     "weight": 0.05036
+    },
+    {
+     "security": "NINGBO DEYE TECH A(HK-C)",
+     "weight": 0.050157
+    },
+    {
+     "security": "CHINA TUNGSTEN A (HK-C)",
+     "weight": 0.049753
+    },
+    {
+     "security": "HUAGONG TECH A (HK-C)",
+     "weight": 0.049717
+    },
+    {
+     "security": "BIWIN STORAGE A (HK-C)",
+     "weight": 0.04963
+    },
+    {
+     "security": "CHINA PETRO & CH A(HK-C)",
+     "weight": 0.04905
+    },
+    {
+     "security": "ZTE CORP A (HK-C)",
+     "weight": 0.048862
+    },
+    {
+     "security": "CRRC CORP A (HK-C)",
+     "weight": 0.048597
+    },
+    {
+     "security": "BANK OF NANJING A (HK-C)",
+     "weight": 0.047984
+    },
+    {
+     "security": "CHINA UTD NETWK A (HK-C)",
+     "weight": 0.047542
+    },
+    {
+     "security": "EVE ENERGY A (HK-C)",
+     "weight": 0.047106
+    },
+    {
+     "security": "SHENZHEN A (HK-C)",
+     "weight": 0.046836
+    },
+    {
+     "security": "HUATAI SEC CO A (HK-C)",
+     "weight": 0.046799
+    },
+    {
+     "security": "JCET GROUP CO A (HK-C)",
+     "weight": 0.046784
+    },
+    {
+     "security": "JIANGSU ZHONG TE A(HK-C)",
+     "weight": 0.046461
+    },
+    {
+     "security": "RANGE INTEL A (HK-C)",
+     "weight": 0.046423
+    },
+    {
+     "security": "YUANJIE SEMICON A (HK-C)",
+     "weight": 0.046233
+    },
+    {
+     "security": "TEBIAN ELEC APP A (HK-C)",
+     "weight": 0.046206
+    },
+    {
+     "security": "LUZHOU LAOJIAO A (HK-C)",
+     "weight": 0.045987
+    },
+    {
+     "security": "HAIER SMART HOME A(HK-C)",
+     "weight": 0.045555
+    },
+    {
+     "security": "BANK OF SHANGHAI A(HK-C)",
+     "weight": 0.045473
+    },
+    {
+     "security": "BAOSHAN IRON A (HK-C)",
+     "weight": 0.045469
+    },
+    {
+     "security": "YANKUANG ENERGY A (HK-C)",
+     "weight": 0.045292
+    },
+    {
+     "security": "SERES GROUP CO A (HK-C)",
+     "weight": 0.04521
+    },
+    {
+     "security": "HANGZHOU CHANG A (HK-C)",
+     "weight": 0.044649
+    },
+    {
+     "security": "CHINA MINSHENG A (HK-C)",
+     "weight": 0.043998
+    },
+    {
+     "security": "CHINA MERCH SEC A (HK-C)",
+     "weight": 0.043914
+    },
+    {
+     "security": "CHINA MERCH ENER A(HK-C)",
+     "weight": 0.043337
+    },
+    {
+     "security": "CHINA THREE GOR A (HK-C)",
+     "weight": 0.043274
+    },
+    {
+     "security": "NEW CHINA LIFE A (HK-C)",
+     "weight": 0.042343
+    },
+    {
+     "security": "YANGTZE OPTICAL A (HK-C)",
+     "weight": 0.041745
+    },
+    {
+     "security": "VERISILICON MIC A (HK-C)",
+     "weight": 0.041313
+    },
+    {
+     "security": "ZANGGE MINING A (HK-C)",
+     "weight": 0.04127
+    },
+    {
+     "security": "BEIJING KINGSOFT A(HK-C)",
+     "weight": 0.041012
+    },
+    {
+     "security": "BANK OF HANGZHOU A(HK-C)",
+     "weight": 0.041011
+    },
+    {
+     "security": "XCMG CONST MACH A (HK-C)",
+     "weight": 0.039832
+    },
+    {
+     "security": "SHARETRONIC DATA (HK-C)",
+     "weight": 0.039599
+    },
+    {
+     "security": "CHINA TOURISM A (HK-C)",
+     "weight": 0.039596
+    },
+    {
+     "security": "IFLYTEK CO A (HK-C)",
+     "weight": 0.039259
+    },
+    {
+     "security": "GANFENG LITHIUM A (HK-C)",
+     "weight": 0.038958
+    },
+    {
+     "security": "GF SECURITIES A (HK-C)",
+     "weight": 0.038768
+    },
+    {
+     "security": "ZHEJIANG CENTURY A(HK-C)",
+     "weight": 0.038745
+    },
+    {
+     "security": "OMNIVISION INTGR A(HK-C)",
+     "weight": 0.038579
+    },
+    {
+     "security": "AECC AVIATION A (HK-C)",
+     "weight": 0.03825
+    },
+    {
+     "security": "GREE ELECT APPL A (HK-C)",
+     "weight": 0.037836
+    },
+    {
+     "security": "LINGYI ITECH A (HK-C)",
+     "weight": 0.037809
+    },
+    {
+     "security": "ZHONGJIN GOLD A (HK-C)",
+     "weight": 0.037793
+    },
+    {
+     "security": "BANK OF BEIJING A (HK-C)",
+     "weight": 0.037777
+    },
+    {
+     "security": "DONGFANG ELECTR A (HK-C)",
+     "weight": 0.037214
+    },
+    {
+     "security": "GUANGDONG HEC A (HK-C)",
+     "weight": 0.037184
+    },
+    {
+     "security": "SINOMA SCIENCE A (HK-C)",
+     "weight": 0.037141
+    },
+    {
+     "security": "INNER MONGOL BAO A(HK-C)",
+     "weight": 0.037095
+    },
+    {
+     "security": "SDIC POWER HLDGS A(HK-C)",
+     "weight": 0.036795
+    },
+    {
+     "security": "NINGBO TUOPU A (HK-C)",
+     "weight": 0.036745
+    },
+    {
+     "security": "SHANDONG GOLD A (HK-C)",
+     "weight": 0.036738
+    },
+    {
+     "security": "GUANGZHOU TINCI A (HK-C)",
+     "weight": 0.036445
+    },
+    {
+     "security": "RONGSHENG PETRO A (HK-C)",
+     "weight": 0.036394
+    },
+    {
+     "security": "CSC FINANCIAL A (HK-C)",
+     "weight": 0.036368
+    },
+    {
+     "security": "DAQIN RAILWAY A (HK-C)",
+     "weight": 0.036346
+    },
+    {
+     "security": "FUYAO GROUP A (HK-C)",
+     "weight": 0.036328
+    },
+    {
+     "security": "LONGI GREEN ENER A(HK-C)",
+     "weight": 0.035828
+    },
+    {
+     "security": "SHANGHAI ELEC A (HK-C)",
+     "weight": 0.035752
+    },
+    {
+     "security": "EASTROC BEVERAGE A(HK-C)",
+     "weight": 0.035582
+    },
+    {
+     "security": "HENGLI PETROCHEM A(HK-C)",
+     "weight": 0.035284
+    },
+    {
+     "security": "CHINA ENER ENGR A (HK-C)",
+     "weight": 0.035177
+    },
+    {
+     "security": "ZHEJIANG HUAYOU A (HK-C)",
+     "weight": 0.035057
+    },
+    {
+     "security": "SHENZHEN INOVANC A(HK-C)",
+     "weight": 0.034852
+    },
+    {
+     "security": "SAIC MOTOR CORP A (HK-C)",
+     "weight": 0.034764
+    },
+    {
+     "security": "YUNNAN ALUMINIUM A(HK-C)",
+     "weight": 0.034649
+    },
+    {
+     "security": "ROBOTECHNIK INT A (HK-C)",
+     "weight": 0.034522
+    },
+    {
+     "security": "SHENWAN HONGY A (HK-C)",
+     "weight": 0.034503
+    },
+    {
+     "security": "HUAQIN TECH A (HK-C)",
+     "weight": 0.034238
+    },
+    {
+     "security": "CHINA INTL CPTL A (HK-C)",
+     "weight": 0.034201
+    },
+    {
+     "security": "CHINA RAIL GRP A (HK-C)",
+     "weight": 0.034114
+    },
+    {
+     "security": "ZHEJIANG JUHUA A (HK-C)",
+     "weight": 0.033888
+    },
+    {
+     "security": "SHANGHAI UNITED A (HK-C)",
+     "weight": 0.033425
+    },
+    {
+     "security": "INSPUR ELECTRS A (HK-C)",
+     "weight": 0.032551
+    },
+    {
+     "security": "GOERTEK A (HK-C)",
+     "weight": 0.032472
+    },
+    {
+     "security": "GD POWER DEV CO A (HK-C)",
+     "weight": 0.032361
+    },
+    {
+     "security": "TONGFU MICROELEC A(HK-C)",
+     "weight": 0.032198
+    },
+    {
+     "security": "POWER CONSTR A (HK-C)",
+     "weight": 0.032089
+    },
+    {
+     "security": "TIANQI LITHIUM A (HK-C)",
+     "weight": 0.031736
+    },
+    {
+     "security": "ZHEJIANG NHU CO A (HK-C)",
+     "weight": 0.031706
+    },
+    {
+     "security": "TCL TECHNOLOGY A (HK-C)",
+     "weight": 0.031631
+    },
+    {
+     "security": "TONGLING NONFER A (HK-C)",
+     "weight": 0.031606
+    },
+    {
+     "security": "HUA HONG SEMI A (HK-C)",
+     "weight": 0.031411
+    },
+    {
+     "security": "CHINA CITIC BK A (HK-C)",
+     "weight": 0.031402
+    },
+    {
+     "security": "WENS FOODSTUFF A (HK-C)",
+     "weight": 0.031344
+    },
+    {
+     "security": "JIANGXI COPPER A (HK-C)",
+     "weight": 0.030955
+    },
+    {
+     "security": "HUAXIA BANK A (HK-C)",
+     "weight": 0.030814
+    },
+    {
+     "security": "YUNNAN BAIYAO A (HK-C)",
+     "weight": 0.030721
+    },
+    {
+     "security": "SHENZHEN SUNWAY A (HK-C)",
+     "weight": 0.030607
+    },
+    {
+     "security": "CHINA XD ELEC A (HK-C)",
+     "weight": 0.030116
+    },
+    {
+     "security": "CHINA RES MICRO A (HK-C)",
+     "weight": 0.030112
+    },
+    {
+     "security": "HWATSING TECH A (HK-C)",
+     "weight": 0.029908
+    },
+    {
+     "security": "DATANG INTL PWR A (HK-C)",
+     "weight": 0.029882
+    },
+    {
+     "security": "HUANENG POWER A (HK-C)",
+     "weight": 0.029677
+    },
+    {
+     "security": "AIER EYE HOSP A(HK-C)",
+     "weight": 0.02965
+    },
+    {
+     "security": "NATIONAL SILICON A(HK-C)",
+     "weight": 0.029561
+    },
+    {
+     "security": "SHENGYI ELECTS A (HK-C)",
+     "weight": 0.029466
+    },
+    {
+     "security": "NEXCHIP SEMICON A (HK-C)",
+     "weight": 0.029439
+    },
+    {
+     "security": "XIAMEN TUNGSTEN A (HK-C)",
+     "weight": 0.028997
+    },
+    {
+     "security": "SHANGHAI RURAL A (HK-C)",
+     "weight": 0.028798
+    },
+    {
+     "security": "SHENZHEN ENVI A (HK-C)",
+     "weight": 0.028757
+    },
+    {
+     "security": "ZHEJIANG SANHUA A (HK-C)",
+     "weight": 0.028739
+    },
+    {
+     "security": "KUANG-CHI TECH A (HK-C)",
+     "weight": 0.028601
+    },
+    {
+     "security": "ANHUI JIANGHUAI A (HK-C)",
+     "weight": 0.028497
+    },
+    {
+     "security": "CHINA MERCH SHEK A(HK-C)",
+     "weight": 0.028355
+    },
+    {
+     "security": "FOCUS MEDIA A (HK-C)",
+     "weight": 0.02835
+    },
+    {
+     "security": "CHINA GALAXY SEC A(HK-C)",
+     "weight": 0.02834
+    },
+    {
+     "security": "ANHUI CONCH A (HK-C)",
+     "weight": 0.028075
+    },
+    {
+     "security": "GOLDWIND SCIENCE A(HK-C)",
+     "weight": 0.027974
+    },
+    {
+     "security": "GUANGDONG HAID A (HK-C)",
+     "weight": 0.027922
+    },
+    {
+     "security": "JIANGSU EASTERN A (HK-C)",
+     "weight": 0.027875
+    },
+    {
+     "security": "BANK OF CHENGDU A (HK-C)",
+     "weight": 0.027758
+    },
+    {
+     "security": "UNIVERSAL SCIEN A (HK-C)",
+     "weight": 0.027756
+    },
+    {
+     "security": "SATELLITE CHEM CO (HK-C)",
+     "weight": 0.02772
+    },
+    {
+     "security": "UNISPLENDOUR CO A (HK-C)",
+     "weight": 0.027518
+    },
+    {
+     "security": "HENAN SHUANGHUI A (HK-C)",
+     "weight": 0.027473
+    },
+    {
+     "security": "COSCO SHIP ENER A (HK-C)",
+     "weight": 0.027089
+    },
+    {
+     "security": "SHENZHEN MEGMEET A(HK-C)",
+     "weight": 0.026915
+    },
+    {
+     "security": "ZHANGZHOU PIENTZ A(HK-C)",
+     "weight": 0.026879
+    },
+    {
+     "security": "SHANNON SEMI A (HK-C)",
+     "weight": 0.026845
+    },
+    {
+     "security": "SICHUAN CHUANT A (HK-C)",
+     "weight": 0.026517
+    },
+    {
+     "security": "ROCKCHIP ELECT A (HK-C)",
+     "weight": 0.026285
+    },
+    {
+     "security": "SANAN OPTOELEC A (HK-C)",
+     "weight": 0.026139
+    },
+    {
+     "security": "CHINA LIFE INS A (HK-C)",
+     "weight": 0.025777
+    },
+    {
+     "security": "WESTERN MINING A (HK-C)",
+     "weight": 0.025407
+    },
+    {
+     "security": "360 SECURITY  A (HK-C)",
+     "weight": 0.0254
+    },
+    {
+     "security": "CHINA EAST AIR A (HK-C)",
+     "weight": 0.025183
+    },
+    {
+     "security": "YUTONG BUS CO A (HK-C)",
+     "weight": 0.024997
+    },
+    {
+     "security": "INNER MONGOLIA D A(HK-C)",
+     "weight": 0.024937
+    },
+    {
+     "security": "HUNAN YUNENG A (HK-C)",
+     "weight": 0.024794
+    },
+    {
+     "security": "SHENZHEN TRANSSI A(HK-C)",
+     "weight": 0.024667
+    },
+    {
+     "security": "ZHEJIANG CHINA A (HK-C)",
+     "weight": 0.024561
+    },
+    {
+     "security": "SKYVERSE TECH A (HK-C)",
+     "weight": 0.024518
+    },
+    {
+     "security": "SHENZHEN KINWONG A(HK-C)",
+     "weight": 0.024505
+    },
+    {
+     "security": "CANMAX TECH A (HK-C)",
+     "weight": 0.024364
+    },
+    {
+     "security": "INNER MONGOLIA X A(HK-C)",
+     "weight": 0.024356
+    },
+    {
+     "security": "SUPCON TECH A (HK-C)",
+     "weight": 0.024188
+    },
+    {
+     "security": "INGENIC SC A (HK-C)",
+     "weight": 0.024033
+    },
+    {
+     "security": "ORIENT SEC CO A (HK-C)",
+     "weight": 0.024008
+    },
+    {
+     "security": "ADVANCED FIBER A(HK-C)",
+     "weight": 0.023996
+    },
+    {
+     "security": "TIANSHAN ALUM A (HK-C)",
+     "weight": 0.023931
+    },
+    {
+     "security": "POLY DEV & HLDGS A(HK-C)",
+     "weight": 0.023746
+    },
+    {
+     "security": "JIANGSU YANGHE A (HK-C)",
+     "weight": 0.023735
+    },
+    {
+     "security": "JINDUICHENG MOL A (HK-C)",
+     "weight": 0.023715
+    },
+    {
+     "security": "AIR CHINA A (HK-C)",
+     "weight": 0.023652
+    },
+    {
+     "security": "HENAN SHENHUO A (HK-C)",
+     "weight": 0.023512
+    },
+    {
+     "security": "YUNNAN ENER NEW A (HK-C)",
+     "weight": 0.023434
+    },
+    {
+     "security": "SUZHOU MAXWELL A (HK-C)",
+     "weight": 0.023414
+    },
+    {
+     "security": "ACM RESEARCH A (HK-C)",
+     "weight": 0.023207
+    },
+    {
+     "security": "CHONGQING CHANG A (HK-C)",
+     "weight": 0.023069
+    },
+    {
+     "security": "HENAN SHIJIA (HK-C)",
+     "weight": 0.022853
+    },
+    {
+     "security": "JIANGSU ETERN A (HK-C)",
+     "weight": 0.022793
+    },
+    {
+     "security": "CHINA ZHESHANG A (HK-C)",
+     "weight": 0.022784
+    },
+    {
+     "security": "ANKER INNOV A (HK-C)",
+     "weight": 0.022734
+    },
+    {
+     "security": "SUZHOU CENTEC A (HK-C)",
+     "weight": 0.022704
+    },
+    {
+     "security": "SG MICRO A (HK-C)",
+     "weight": 0.02266
+    },
+    {
+     "security": "SHANGHAI PUTAIL A (HK-C)",
+     "weight": 0.02266
+    },
+    {
+     "security": "TONGWEI CO A (HK-C)",
+     "weight": 0.022607
+    },
+    {
+     "security": "HAINAN AIRLINES A (HK-C)",
+     "weight": 0.022508
+    },
+    {
+     "security": "UNIGROUP GUOXIN A (HK-C)",
+     "weight": 0.022466
+    },
+    {
+     "security": "DELTON TECHN A (HK-C)",
+     "weight": 0.022391
+    },
+    {
+     "security": "PEOPLE'S INS A (HK-C)",
+     "weight": 0.022377
+    },
+    {
+     "security": "YUNNAN TIN CO A (HK-C)",
+     "weight": 0.022326
+    },
+    {
+     "security": "FIBERHOME TELECO A(HK-C)",
+     "weight": 0.022319
+    },
+    {
+     "security": "BLUEFOCUS INTG A (HK-C)",
+     "weight": 0.022284
+    },
+    {
+     "security": "ZHEJIANG ZHENENG A(HK-C)",
+     "weight": 0.022251
+    },
+    {
+     "security": "UNITED NOVA TECH A(HK-C)",
+     "weight": 0.02222
+    },
+    {
+     "security": "EVERPROX TECH A (HK-C)",
+     "weight": 0.022102
+    },
+    {
+     "security": "YTO EXPRESS GRP A (HK-C)",
+     "weight": 0.022037
+    },
+    {
+     "security": "SHANDONG HONGQIA A(HK-C)",
+     "weight": 0.022025
+    },
+    {
+     "security": "SHANDONG HUALU  A (HK-C)",
+     "weight": 0.021866
+    },
+    {
+     "security": "ZHEJIANG CHINT A (HK-C)",
+     "weight": 0.02185
+    },
+    {
+     "security": "SHANJIN INTL A (HK-C)",
+     "weight": 0.021784
+    },
+    {
+     "security": "WOLONG ELECTRIC A (HK-C)",
+     "weight": 0.021697
+    },
+    {
+     "security": "ZHEJIANG JINGSH A (HK-C)",
+     "weight": 0.021565
+    },
+    {
+     "security": "CNPC CAPITAL A (HK-C)",
+     "weight": 0.021231
+    },
+    {
+     "security": "SHANDONG HIMILE A (HK-C)",
+     "weight": 0.021087
+    },
+    {
+     "security": "CHINA STH AIRL A (HK-C)",
+     "weight": 0.021076
+    },
+    {
+     "security": "HUBEI FEILIHUA A (HK-C)",
+     "weight": 0.021017
+    },
+    {
+     "security": "SICHUAN HUAFENG A (HK-C)",
+     "weight": 0.020877
+    },
+    {
+     "security": "SHANDONG NANSHAN A(HK-C)",
+     "weight": 0.020836
+    },
+    {
+     "security": "HUIZHOU DESAY SV A(HK-C)",
+     "weight": 0.020811
+    },
+    {
+     "security": "TIANSHUI HUATIA A (HK-C)",
+     "weight": 0.020805
+    },
+    {
+     "security": "SUZHOU A (HK-C)",
+     "weight": 0.020714
+    },
+    {
+     "security": "CHINA GREATWALL A (HK-C)",
+     "weight": 0.020602
+    },
+    {
+     "security": "JINKO SOLAR A (HK-C)",
+     "weight": 0.020549
+    },
+    {
+     "security": "GOTION HIGH TECH A(HK-C)",
+     "weight": 0.020426
+    },
+    {
+     "security": "CHONGQING RURAL A (HK-C)",
+     "weight": 0.020417
+    },
+    {
+     "security": "GUOSEN SEC CO A (HK-C)",
+     "weight": 0.020358
+    },
+    {
+     "security": "HUADIAN POWER A (HK-C)",
+     "weight": 0.020244
+    },
+    {
+     "security": "SHANGHAI ELECT A (HK-C)",
+     "weight": 0.020076
+    },
+    {
+     "security": "SICHUAN KELUN A (HK-C)",
+     "weight": 0.019998
+    },
+    {
+     "security": "LOONGSON TECH A (HK-C)",
+     "weight": 0.019988
+    },
+    {
+     "security": "DAZHONG MINING A (HK-C)",
+     "weight": 0.019954
+    },
+    {
+     "security": "MAXSCEND A (HK-C)",
+     "weight": 0.019941
+    },
+    {
+     "security": "EMPYREAN TECH A (HK-C)",
+     "weight": 0.019934
+    },
+    {
+     "security": "YUNNAN YUNTIANH A (HK-C)",
+     "weight": 0.019537
+    },
+    {
+     "security": "KUNLUN TECH CO A (HK-C)",
+     "weight": 0.019519
+    },
+    {
+     "security": "QUANTUMCTEK A (HK-C)",
+     "weight": 0.019444
+    },
+    {
+     "security": "RAYTRON TECH A (HK-C)",
+     "weight": 0.019419
+    },
+    {
+     "security": "EVERBRIGHT SEC A (HK-C)",
+     "weight": 0.019334
+    },
+    {
+     "security": "FOUNDER SEC A (HK-C)",
+     "weight": 0.019318
+    },
+    {
+     "security": "CHIFENG JILONG  A (HK-C)",
+     "weight": 0.019264
+    },
+    {
+     "security": "BEIJING COMPASS A (HK-C)",
+     "weight": 0.019205
+    },
+    {
+     "security": "DOSILICON A (HK-C)",
+     "weight": 0.019186
+    },
+    {
+     "security": "ZHEJIANG DAHUA A (HK-C)",
+     "weight": 0.01914
+    },
+    {
+     "security": "WUHAN GUIDE INF A (HK-C)",
+     "weight": 0.019129
+    },
+    {
+     "security": "SICHUAN ROAD A (HK-C)",
+     "weight": 0.019091
+    },
+    {
+     "security": "HANGZHOU SILAN A (HK-C)",
+     "weight": 0.018863
+    },
+    {
+     "security": "HUAYU AUTO SYS A (HK-C)",
+     "weight": 0.018501
+    },
+    {
+     "security": "FOUNDER TECH GRP A(HK-C)",
+     "weight": 0.018359
+    },
+    {
+     "security": "SICHUAN BIOKIN A (HK-C)",
+     "weight": 0.018249
+    },
+    {
+     "security": "SHENERGY CO A (HK-C)",
+     "weight": 0.018199
+    },
+    {
+     "security": "SHANXI LUAN ENV A (HK-C)",
+     "weight": 0.018195
+    },
+    {
+     "security": "ZHANGJIANG HI A (HK-C)",
+     "weight": 0.01808
+    },
+    {
+     "security": "CICT MOBILE COM A (HK-C)",
+     "weight": 0.018042
+    },
+    {
+     "security": "CHINA RARE EARTH A(HK-C)",
+     "weight": 0.017916
+    },
+    {
+     "security": "ZOOMLION HEAVY A (HK-C)",
+     "weight": 0.017706
+    },
+    {
+     "security": "HUADONG MEDICINE A(HK-C)",
+     "weight": 0.017613
+    },
+    {
+     "security": "CHINA MERCH EXP A (HK-C)",
+     "weight": 0.017578
+    },
+    {
+     "security": "METALLURGICAL A (HK-C)",
+     "weight": 0.017461
+    },
+    {
+     "security": "HUAFON CHEMICAL A(HK-C)",
+     "weight": 0.017442
+    },
+    {
+     "security": "SANGFOR TECH A(HK-C)",
+     "weight": 0.017426
+    },
+    {
+     "security": "GIANT NETWORK A (HK-C)",
+     "weight": 0.017308
+    },
+    {
+     "security": "WANXIANG QIANCH A (HK-C)",
+     "weight": 0.017267
+    },
+    {
+     "security": "INDUSTRIAL SEC A (HK-C)",
+     "weight": 0.017221
+    },
+    {
+     "security": "CHONGQING AFARI A (HK-C)",
+     "weight": 0.016984
+    },
+    {
+     "security": "SHANGHAI FOSUN A (HK-C)",
+     "weight": 0.016832
+    },
+    {
+     "security": "CNGR ADVANCED A (HK-C)",
+     "weight": 0.016825
+    },
+    {
+     "security": "YEALINK NETWORK A (HK-C)",
+     "weight": 0.016701
+    },
+    {
+     "security": "ENN NATURAL GAS A (HK-C)",
+     "weight": 0.016619
+    },
+    {
+     "security": "SHENZHEN KEDALI A (HK-C)",
+     "weight": 0.016582
+    },
+    {
+     "security": "CHINA NATL CHEM A (HK-C)",
+     "weight": 0.016546
+    },
+    {
+     "security": "SPRING AIRLINES A (HK-C)",
+     "weight": 0.016358
+    },
+    {
+     "security": "CSI SOLAR A (HK-C)",
+     "weight": 0.016355
+    },
+    {
+     "security": "ANJI MICRO TECH A (HK-C)",
+     "weight": 0.016208
+    },
+    {
+     "security": "HUNDSUN TECH A (HK-C)",
+     "weight": 0.016132
+    },
+    {
+     "security": "GUOCHENG MINING A (HK-C)",
+     "weight": 0.0161
+    },
+    {
+     "security": "DAJIN HEAVY IND A (HK-C)",
+     "weight": 0.016068
+    },
+    {
+     "security": "GUOLIAN MINSHENG A(HK-C)",
+     "weight": 0.016057
+    },
+    {
+     "security": "SHANGHAI PHARMA A (HK-C)",
+     "weight": 0.015848
+    },
+    {
+     "security": "HANGZHOU FIRST A (HK-C)",
+     "weight": 0.015724
+    },
+    {
+     "security": "KINGFA SCI & TEC A(HK-C)",
+     "weight": 0.01548
+    },
+    {
+     "security": "SHENZHEN EVENWIN A(HK-C)",
+     "weight": 0.015436
+    },
+    {
+     "security": "SHANGHAI BOCHU A (HK-C)",
+     "weight": 0.015413
+    },
+    {
+     "security": "37 INTERACTIVE A (HK-C)",
+     "weight": 0.015253
+    },
+    {
+     "security": "HAISCO PHARMA A (HK-C)",
+     "weight": 0.015199
+    },
+    {
+     "security": "CHANGJIANG SEC A (HK-C)",
+     "weight": 0.015194
+    },
+    {
+     "security": "INNER MONGOL JUN A(HK-C)",
+     "weight": 0.015193
+    },
+    {
+     "security": "SHANGHAI BAOSIG A (HK-C)",
+     "weight": 0.015181
+    },
+    {
+     "security": "SINOMINE RESOURCE A HK-C",
+     "weight": 0.015168
+    },
+    {
+     "security": "WESTERN SUPERCON A(HK-C)",
+     "weight": 0.015115
+    },
+    {
+     "security": "SHANGHAI STONEHI A(HK-C)",
+     "weight": 0.01511
+    },
+    {
+     "security": "TSINGTAO BREWER A (HK-C)",
+     "weight": 0.015065
+    },
+    {
+     "security": "ZHESHANG SEC A (HK-C)",
+     "weight": 0.01489
+    },
+    {
+     "security": "DONGXING SEC CO A (HK-C)",
+     "weight": 0.014836
+    },
+    {
+     "security": "BAIYIN NONFER A (HK-C)",
+     "weight": 0.014732
+    },
+    {
+     "security": "AMLOGIC SHANGHAI A(HK-C)",
+     "weight": 0.014716
+    },
+    {
+     "security": "SUNWODA ELECTRS A (HK-C)",
+     "weight": 0.014564
+    },
+    {
+     "security": "SAILUN GROUP CO A (HK-C)",
+     "weight": 0.014398
+    },
+    {
+     "security": "SDIC CAPITAL CO A (HK-C)",
+     "weight": 0.014341
+    },
+    {
+     "security": "SHANXI COKING A(HK-C)",
+     "weight": 0.014323
+    },
+    {
+     "security": "LEO GROUP CO A (HK-C)",
+     "weight": 0.014276
+    },
+    {
+     "security": "ISOFTSTONE INFO A (HK-C)",
+     "weight": 0.014185
+    },
+    {
+     "security": "REMEGEN A (HK-C)",
+     "weight": 0.014176
+    },
+    {
+     "security": "ZHUZHOU CRRC A (HK-C)",
+     "weight": 0.01415
+    },
+    {
+     "security": "CHINA RES SANJIU A(HK-C)",
+     "weight": 0.014103
+    },
+    {
+     "security": "WINTIME ENERGY A (HK-C)",
+     "weight": 0.0141
+    },
+    {
+     "security": "SHANGHAI ALLIST A (HK-C)",
+     "weight": 0.013874
+    },
+    {
+     "security": "ZHONGTAI SEC A(HK-C)",
+     "weight": 0.013797
+    },
+    {
+     "security": "BEIJING NEW BLDG A(HK-C)",
+     "weight": 0.013678
+    },
+    {
+     "security": "SOOCHOW SEC A (HK-C)",
+     "weight": 0.013634
+    },
+    {
+     "security": "SHENZHEN GREEN A (HK-C)",
+     "weight": 0.013634
+    },
+    {
+     "security": "BAIC BLUEPARK A (HK-C)",
+     "weight": 0.013489
+    },
+    {
+     "security": "YONYOU NETWORK A (HK-C)",
+     "weight": 0.013474
+    },
+    {
+     "security": "SHANDONG SUN A (HK-C)",
+     "weight": 0.013473
+    },
+    {
+     "security": "BANK OF CHANGSHA A(HK-C)",
+     "weight": 0.013468
+    },
+    {
+     "security": "GUANGZHOU HAIGE A (HK-C)",
+     "weight": 0.013449
+    },
+    {
+     "security": "ANHUI GUJING A (HK-C)",
+     "weight": 0.0134
+    },
+    {
+     "security": "TCL ZHONGHUAN A (HK-C)",
+     "weight": 0.013358
+    },
+    {
+     "security": "XINJIANG DAQO A (HK-C)",
+     "weight": 0.013286
+    },
+    {
+     "security": "CITIC PACIFIC A (HK-C)",
+     "weight": 0.013099
+    },
+    {
+     "security": "GEOVIS TECHNO A (HK-C)",
+     "weight": 0.013092
+    },
+    {
+     "security": "BEIJING ENLIGHT A (HK-C)",
+     "weight": 0.013079
+    },
+    {
+     "security": "CHENGTUN MINING A (HK-C)",
+     "weight": 0.013031
+    },
+    {
+     "security": "GUOBO ELEC A (HK-C)",
+     "weight": 0.012961
+    },
+    {
+     "security": "BANK OF SUZHOU A (HK-C)",
+     "weight": 0.012824
+    },
+    {
+     "security": "SHENZHEN NEW IN A (HK-C)",
+     "weight": 0.012646
+    },
+    {
+     "security": "ZHEJIANG LONGSH A (HK-C)",
+     "weight": 0.012638
+    },
+    {
+     "security": "SHENZHEN SALUBR A (HK-C)",
+     "weight": 0.012637
+    },
+    {
+     "security": "HAINAN AIRPORT A (HK-C)",
+     "weight": 0.012636
+    },
+    {
+     "security": "CAITONG SEC A (HK-C)",
+     "weight": 0.012614
+    },
+    {
+     "security": "PHARMARON A (HK-C)",
+     "weight": 0.012529
+    },
+    {
+     "security": "NINGBO ORIENT A (HK-C)",
+     "weight": 0.012515
+    },
+    {
+     "security": "CHANGZHOU XINGYU A(HK-C)",
+     "weight": 0.012489
+    },
+    {
+     "security": "HEBEI CHANGSHAN A (HK-C)",
+     "weight": 0.012451
+    },
+    {
+     "security": "NEW HOPE LIUHE A (HK-C)",
+     "weight": 0.012356
+    },
+    {
+     "security": "CHINA NAT'L A (HK-C)",
+     "weight": 0.01235
+    },
+    {
+     "security": "BEIJING TONGREN A (HK-C)",
+     "weight": 0.012342
+    },
+    {
+     "security": "TRINA SOLAR A (HK-C)",
+     "weight": 0.012282
+    },
+    {
+     "security": "SHANGHAI RAAS A (HK-C)",
+     "weight": 0.012182
+    },
+    {
+     "security": "JL MAG RARE A (HK-C)",
+     "weight": 0.012132
+    },
+    {
+     "security": "LB GROUP CO A (HK-C)",
+     "weight": 0.011989
+    },
+    {
+     "security": "ECOVACS ROBOTIC A (HK-C)",
+     "weight": 0.011923
+    },
+    {
+     "security": "KINGNET NETWORK A (HK-C)",
+     "weight": 0.011873
+    },
+    {
+     "security": "HOSHINE SILICON A (HK-C)",
+     "weight": 0.011825
+    },
+    {
+     "security": "CHINA GREAT SEC A (HK-C)",
+     "weight": 0.01174
+    },
+    {
+     "security": "TIANFENG SEC A(HK-C)",
+     "weight": 0.011698
+    },
+    {
+     "security": "CHINA VANKE CO A (HK-C)",
+     "weight": 0.011662
+    },
+    {
+     "security": "SICHUAN CHANGHON A(HK-C)",
+     "weight": 0.011646
+    },
+    {
+     "security": "MANGO EXCELLENT A (HK-C)",
+     "weight": 0.011573
+    },
+    {
+     "security": "YONGHUI SUPERST A (HK-C)",
+     "weight": 0.01151
+    },
+    {
+     "security": "BEIJING WANTAI A (HK-C)",
+     "weight": 0.011393
+    },
+    {
+     "security": "CHONGQING ZHIFEI A(HK-C)",
+     "weight": 0.011334
+    },
+    {
+     "security": "ANGEL YEAST CO A (HK-C)",
+     "weight": 0.01102
+    },
+    {
+     "security": "BOC INTL A (HK-C)",
+     "weight": 0.010916
+    },
+    {
+     "security": "IMEIK TECHNOLOGY A(HK-C)",
+     "weight": 0.010913
+    },
+    {
+     "security": "ZHEJIANG WEIMIN A (HK-C)",
+     "weight": 0.010887
+    },
+    {
+     "security": "GUOYUAN SEC CO A (HK-C)",
+     "weight": 0.010843
+    },
+    {
+     "security": "CCOOP GROUP A (HK-C)",
+     "weight": 0.010797
+    },
+    {
+     "security": "SHANGHAI INTL AI A(HK-C)",
+     "weight": 0.010681
+    },
+    {
+     "security": "CSPC INNOVATION A (HK-C)",
+     "weight": 0.010497
+    },
+    {
+     "security": "JA SOLAR TECH A (HK-C)",
+     "weight": 0.010363
+    },
+    {
+     "security": "CHANGCHUN HIGH A (HK-C)",
+     "weight": 0.010313
+    },
+    {
+     "security": "GUANGZHOU AUTO A (HK-C)",
+     "weight": 0.010251
+    },
+    {
+     "security": "APT MEDICAL A (HK-C)",
+     "weight": 0.009972
+    },
+    {
+     "security": "HUNAN VALIN A (HK-C)",
+     "weight": 0.009663
+    },
+    {
+     "security": "NINGBO SANXING  A (HK-C)",
+     "weight": 0.008018
+    },
+    {
+     "security": "HANGZHOU TIGER A (HK-C)",
+     "weight": 0.005029
+    }
+   ]
+  },
+  "HongKong": {
+   "index_code": "934400",
+   "n": 25,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "AIA GROUP",
+     "weight": 27.058935
+    },
+    {
+     "security": "HONGKONG EXCH & CLEARING",
+     "weight": 15.136606
+    },
+    {
+     "security": "CK HUTCHISON HOLDINGS",
+     "weight": 5.834445
+    },
+    {
+     "security": "BOC HONG KONG HOLDINGS",
+     "weight": 5.608013
+    },
+    {
+     "security": "SUN HUNG KAI PROPERTIES",
+     "weight": 5.323359
+    },
+    {
+     "security": "TECHTRONIC INDUSTRIES CO",
+     "weight": 4.942862
+    },
+    {
+     "security": "CLP HOLDINGS",
+     "weight": 3.859939
+    },
+    {
+     "security": "LINK REIT",
+     "weight": 3.258372
+    },
+    {
+     "security": "JARDINE MATHESON (USD)",
+     "weight": 2.633159
+    },
+    {
+     "security": "CK ASSET HOLDINGS",
+     "weight": 2.593683
+    },
+    {
+     "security": "POWER ASSETS HOLDINGS",
+     "weight": 2.542536
+    },
+    {
+     "security": "HONGKONG CHINA GAS",
+     "weight": 2.513798
+    },
+    {
+     "security": "WH GROUP",
+     "weight": 2.20951
+    },
+    {
+     "security": "GALAXY ENTERTAINMENT GRP",
+     "weight": 1.979038
+    },
+    {
+     "security": "HONGKONG LAND (USD)",
+     "weight": 1.814946
+    },
+    {
+     "security": "MTR CORP",
+     "weight": 1.536434
+    },
+    {
+     "security": "SITC INTL HOLDINGS",
+     "weight": 1.509198
+    },
+    {
+     "security": "SINO LAND",
+     "weight": 1.403408
+    },
+    {
+     "security": "HKT TRUST AND HKT",
+     "weight": 1.31149
+    },
+    {
+     "security": "HENDERSON LAND DEV",
+     "weight": 1.2852
+    },
+    {
+     "security": "FUTU HOLDINGS A ADR",
+     "weight": 1.243382
+    },
+    {
+     "security": "SANDS CHINA",
+     "weight": 1.212307
+    },
+    {
+     "security": "WHARF REAL ESTATE INV",
+     "weight": 1.158444
+    },
+    {
+     "security": "CK INFRASTRUCTURE HLDGS",
+     "weight": 1.115622
+    },
+    {
+     "security": "SWIRE PACIFIC A",
+     "weight": 0.915314
+    }
+   ]
+  },
+  "India": {
+   "index_code": "935600",
+   "n": 165,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "HDFC BANK",
+     "weight": 6.631821
+    },
+    {
+     "security": "RELIANCE INDUSTRIES",
+     "weight": 6.301118
+    },
+    {
+     "security": "ICICI BANK",
+     "weight": 5.149561
+    },
+    {
+     "security": "BHARTI AIRTEL",
+     "weight": 3.891606
+    },
+    {
+     "security": "INFOSYS",
+     "weight": 2.8672
+    },
+    {
+     "security": "AXIS BANK",
+     "weight": 2.300533
+    },
+    {
+     "security": "LARSEN & TOUBRO",
+     "weight": 2.119256
+    },
+    {
+     "security": "MAHINDRA & MAHINDRA",
+     "weight": 2.026719
+    },
+    {
+     "security": "BAJAJ FINANCE",
+     "weight": 1.734619
+    },
+    {
+     "security": "KOTAK MAHINDRA BANK",
+     "weight": 1.618406
+    },
+    {
+     "security": "TATA CONSULTANCY",
+     "weight": 1.466062
+    },
+    {
+     "security": "STATE BANK OF INDIA",
+     "weight": 1.38073
+    },
+    {
+     "security": "NTPC",
+     "weight": 1.295341
+    },
+    {
+     "security": "SUN PHARMACEUTICAL IND",
+     "weight": 1.267048
+    },
+    {
+     "security": "TATA STEEL",
+     "weight": 1.236344
+    },
+    {
+     "security": "MARUTI SUZUKI INDIA",
+     "weight": 1.196484
+    },
+    {
+     "security": "HINDALCO INDUSTRIES",
+     "weight": 1.156028
+    },
+    {
+     "security": "HINDUSTAN UNILEVER",
+     "weight": 1.151669
+    },
+    {
+     "security": "TITAN COMPANY",
+     "weight": 1.120328
+    },
+    {
+     "security": "BHARAT ELECTRONICS",
+     "weight": 1.108306
+    },
+    {
+     "security": "SHRIRAM FINANCE",
+     "weight": 1.016971
+    },
+    {
+     "security": "POWER GRID CORP OF INDIA",
+     "weight": 0.938796
+    },
+    {
+     "security": "ULTRATECH CEMENT",
+     "weight": 0.908089
+    },
+    {
+     "security": "HCL TECHNOLOGIES",
+     "weight": 0.826224
+    },
+    {
+     "security": "ASIAN PAINTS",
+     "weight": 0.791724
+    },
+    {
+     "security": "EICHER MOTORS",
+     "weight": 0.763416
+    },
+    {
+     "security": "ADANI PORTS AND SEZ",
+     "weight": 0.724744
+    },
+    {
+     "security": "GRASIM INDUSTRIES",
+     "weight": 0.662039
+    },
+    {
+     "security": "INTERGLOBE AVIATION",
+     "weight": 0.661389
+    },
+    {
+     "security": "ITC",
+     "weight": 0.659193
+    },
+    {
+     "security": "TECH MAHINDRA",
+     "weight": 0.651921
+    },
+    {
+     "security": "SBI LIFE INSURANCE CO",
+     "weight": 0.641336
+    },
+    {
+     "security": "APOLLO HOSPITALS",
+     "weight": 0.639742
+    },
+    {
+     "security": "BOMBAY STOCK EXCHANGE",
+     "weight": 0.636202
+    },
+    {
+     "security": "NESTLE INDIA",
+     "weight": 0.631146
+    },
+    {
+     "security": "TVS MOTOR CO",
+     "weight": 0.622754
+    },
+    {
+     "security": "JSW STEEL",
+     "weight": 0.622725
+    },
+    {
+     "security": "DIVI'S LABORATORIES",
+     "weight": 0.613696
+    },
+    {
+     "security": "CUMMINS INDIA KIRLOSKAR",
+     "weight": 0.58631
+    },
+    {
+     "security": "TRENT",
+     "weight": 0.579242
+    },
+    {
+     "security": "COAL INDIA",
+     "weight": 0.57077
+    },
+    {
+     "security": "ADANI POWER",
+     "weight": 0.56187
+    },
+    {
+     "security": "HINDUSTAN AERONAUTICS",
+     "weight": 0.557547
+    },
+    {
+     "security": "TATA MOTORS PASSENGER V",
+     "weight": 0.555521
+    },
+    {
+     "security": "CIPLA",
+     "weight": 0.550221
+    },
+    {
+     "security": "BAJAJ AUTO",
+     "weight": 0.545599
+    },
+    {
+     "security": "TATA MOTORS",
+     "weight": 0.540143
+    },
+    {
+     "security": "VEDANTA (DETACHED)",
+     "weight": 0.538628
+    },
+    {
+     "security": "OIL & NATURAL GAS CORP",
+     "weight": 0.534312
+    },
+    {
+     "security": "BAJAJ FINSERV",
+     "weight": 0.529634
+    },
+    {
+     "security": "JIO FINANCIAL SERVICES",
+     "weight": 0.526539
+    },
+    {
+     "security": "VARUN BEVERAGES",
+     "weight": 0.522449
+    },
+    {
+     "security": "MAX HEALTHCARE INSTITUTE",
+     "weight": 0.519041
+    },
+    {
+     "security": "DR REDDY'S LABORATORIES",
+     "weight": 0.506544
+    },
+    {
+     "security": "TATA POWER CO",
+     "weight": 0.49911
+    },
+    {
+     "security": "CHOLAMANDALAM INV & FIN",
+     "weight": 0.498555
+    },
+    {
+     "security": "TATA CONSUMER PRODUCTS",
+     "weight": 0.487775
+    },
+    {
+     "security": "GE VERNOVA T&D INDIA",
+     "weight": 0.477192
+    },
+    {
+     "security": "ETERNAL",
+     "weight": 0.469206
+    },
+    {
+     "security": "SAMVARDHANA MOTHERSON",
+     "weight": 0.469157
+    },
+    {
+     "security": "AVENUE SUPERMARTS",
+     "weight": 0.468213
+    },
+    {
+     "security": "PB FINTECH",
+     "weight": 0.454662
+    },
+    {
+     "security": "HERO MOTOCORP",
+     "weight": 0.453595
+    },
+    {
+     "security": "HDFC LIFE INSURANCE CO",
+     "weight": 0.446464
+    },
+    {
+     "security": "CG POWER & INDUSTRIAL",
+     "weight": 0.441652
+    },
+    {
+     "security": "BRITANNIA INDUSTRIES",
+     "weight": 0.438213
+    },
+    {
+     "security": "POWER FINANCE CORP",
+     "weight": 0.435739
+    },
+    {
+     "security": "SUZLON ENERGY LIMITED",
+     "weight": 0.434863
+    },
+    {
+     "security": "PERSISTENT SYSTEMS",
+     "weight": 0.434201
+    },
+    {
+     "security": "INDIAN HOTELS CO",
+     "weight": 0.432991
+    },
+    {
+     "security": "INDUS TOWERS",
+     "weight": 0.423818
+    },
+    {
+     "security": "AU SMALL FINANCE BANK",
+     "weight": 0.420662
+    },
+    {
+     "security": "ADANI ENTERPRISES",
+     "weight": 0.412489
+    },
+    {
+     "security": "FEDERAL BANK",
+     "weight": 0.411991
+    },
+    {
+     "security": "INDUSIND BANK",
+     "weight": 0.407267
+    },
+    {
+     "security": "LUPIN",
+     "weight": 0.405486
+    },
+    {
+     "security": "WIPRO",
+     "weight": 0.398811
+    },
+    {
+     "security": "HDFC ASSET MANAGEMENT",
+     "weight": 0.393617
+    },
+    {
+     "security": "POLYCAB INDIA",
+     "weight": 0.391611
+    },
+    {
+     "security": "BHARAT HEAVY ELECTRICALS",
+     "weight": 0.386722
+    },
+    {
+     "security": "BHARAT PETROLEUM CORP",
+     "weight": 0.378581
+    },
+    {
+     "security": "VEDANTA",
+     "weight": 0.361714
+    },
+    {
+     "security": "BHARAT FORGE",
+     "weight": 0.360283
+    },
+    {
+     "security": "FORTIS HEALTHCARE",
+     "weight": 0.357437
+    },
+    {
+     "security": "HITACHI ENERGY INDIA",
+     "weight": 0.349555
+    },
+    {
+     "security": "TORRENT PHARMACEUTICALS",
+     "weight": 0.346239
+    },
+    {
+     "security": "JINDAL STEEL",
+     "weight": 0.338589
+    },
+    {
+     "security": "ICICI LOMBARD GENL INS",
+     "weight": 0.33472
+    },
+    {
+     "security": "ONE 97 COMMUNICATIONS",
+     "weight": 0.329666
+    },
+    {
+     "security": "MARICO",
+     "weight": 0.327953
+    },
+    {
+     "security": "DIXON TECHNOLOGIES INDIA",
+     "weight": 0.327809
+    },
+    {
+     "security": "ASHOK LEYLAND",
+     "weight": 0.327585
+    },
+    {
+     "security": "SOLAR INDUSTRIES INDIA",
+     "weight": 0.322803
+    },
+    {
+     "security": "PIDILITE INDUSTRIES",
+     "weight": 0.319708
+    },
+    {
+     "security": "REC",
+     "weight": 0.307827
+    },
+    {
+     "security": "INDIAN OIL CORP",
+     "weight": 0.307288
+    },
+    {
+     "security": "GODREJ CONSUMER PRDCTS",
+     "weight": 0.303498
+    },
+    {
+     "security": "GAIL INDIA",
+     "weight": 0.295379
+    },
+    {
+     "security": "AUROBINDO PHARMA",
+     "weight": 0.293733
+    },
+    {
+     "security": "HINDUSTAN PETROLEUM CORP",
+     "weight": 0.291679
+    },
+    {
+     "security": "UNITED SPIRITS",
+     "weight": 0.284807
+    },
+    {
+     "security": "VODAFONE IDEA",
+     "weight": 0.284342
+    },
+    {
+     "security": "MULTI CMDTY EXCH INDIA",
+     "weight": 0.283106
+    },
+    {
+     "security": "SRF",
+     "weight": 0.281925
+    },
+    {
+     "security": "DLF",
+     "weight": 0.281377
+    },
+    {
+     "security": "NATIONAL ALUMINIUM CO",
+     "weight": 0.281306
+    },
+    {
+     "security": "MUTHOOT FINANCE",
+     "weight": 0.280957
+    },
+    {
+     "security": "SWIGGY",
+     "weight": 0.270202
+    },
+    {
+     "security": "YES BANK",
+     "weight": 0.268852
+    },
+    {
+     "security": "INFO EDGE (INDIA)",
+     "weight": 0.267933
+    },
+    {
+     "security": "PHOENIX MILLS",
+     "weight": 0.257244
+    },
+    {
+     "security": "UPL",
+     "weight": 0.25619
+    },
+    {
+     "security": "FSN ECOMMERCE VENTURES",
+     "weight": 0.254403
+    },
+    {
+     "security": "APL APOLLO TUBES",
+     "weight": 0.252999
+    },
+    {
+     "security": "ABB INDIA",
+     "weight": 0.250981
+    },
+    {
+     "security": "SIEMENS ENERGY INDIA",
+     "weight": 0.24387
+    },
+    {
+     "security": "TUBE INVESTMENT (NEW)",
+     "weight": 0.243463
+    },
+    {
+     "security": "IDFC FIRST BANK",
+     "weight": 0.235421
+    },
+    {
+     "security": "SIEMENS INDIA",
+     "weight": 0.227929
+    },
+    {
+     "security": "MRF",
+     "weight": 0.227514
+    },
+    {
+     "security": "NMDC",
+     "weight": 0.222808
+    },
+    {
+     "security": "VISHAL MEGA MART",
+     "weight": 0.216597
+    },
+    {
+     "security": "ADITYA BIRLA CAPITAL",
+     "weight": 0.216021
+    },
+    {
+     "security": "MPHASIS",
+     "weight": 0.216004
+    },
+    {
+     "security": "BAJAJ HLDGS & INVESTMENT",
+     "weight": 0.215033
+    },
+    {
+     "security": "BANK OF BARODA",
+     "weight": 0.214323
+    },
+    {
+     "security": "LTM",
+     "weight": 0.209678
+    },
+    {
+     "security": "WAAREE ENERGIES",
+     "weight": 0.209439
+    },
+    {
+     "security": "SUNDARAM FINANCE",
+     "weight": 0.209235
+    },
+    {
+     "security": "AMBUJA CEMENTS",
+     "weight": 0.202242
+    },
+    {
+     "security": "GMR AIRPORTS",
+     "weight": 0.200843
+    },
+    {
+     "security": "TORRENT POWER",
+     "weight": 0.195239
+    },
+    {
+     "security": "BOSCH",
+     "weight": 0.19518
+    },
+    {
+     "security": "UNION BANK OF INDIA",
+     "weight": 0.194524
+    },
+    {
+     "security": "LODHA DEVELOPERS",
+     "weight": 0.192307
+    },
+    {
+     "security": "VOLTAS",
+     "weight": 0.191106
+    },
+    {
+     "security": "COLGATE-PALMOLIVE INDIA",
+     "weight": 0.190936
+    },
+    {
+     "security": "MANKIND PHARMA",
+     "weight": 0.187711
+    },
+    {
+     "security": "PUNJAB NATL BANK",
+     "weight": 0.186995
+    },
+    {
+     "security": "PRESTIGE ESTATES PROJECT",
+     "weight": 0.183435
+    },
+    {
+     "security": "HAVELLS INDIA",
+     "weight": 0.182686
+    },
+    {
+     "security": "GODREJ PROPERTIES",
+     "weight": 0.182135
+    },
+    {
+     "security": "CANARA BANK",
+     "weight": 0.181969
+    },
+    {
+     "security": "PAGE INDUSTRIES",
+     "weight": 0.17901
+    },
+    {
+     "security": "SUPREME INDUSTRIES",
+     "weight": 0.175287
+    },
+    {
+     "security": "ALKEM LABORATORIES",
+     "weight": 0.174337
+    },
+    {
+     "security": "TATA COMMUNICATIONS",
+     "weight": 0.173597
+    },
+    {
+     "security": "L AND T FINANCE",
+     "weight": 0.173086
+    },
+    {
+     "security": "JSW ENERGY",
+     "weight": 0.172799
+    },
+    {
+     "security": "INDIAN BANK",
+     "weight": 0.170998
+    },
+    {
+     "security": "ORACLE FINL SVCS SOFTW",
+     "weight": 0.170346
+    },
+    {
+     "security": "COROMANDEL INTERNATIONAL",
+     "weight": 0.165368
+    },
+    {
+     "security": "SHREE CEMENT",
+     "weight": 0.163019
+    },
+    {
+     "security": "ZYDUS LIFESCIENCES",
+     "weight": 0.159232
+    },
+    {
+     "security": "PETRONET LNG",
+     "weight": 0.159002
+    },
+    {
+     "security": "JINDAL STAINLESS",
+     "weight": 0.157405
+    },
+    {
+     "security": "OIL INDIA",
+     "weight": 0.153886
+    },
+    {
+     "security": "OBEROI REALTY",
+     "weight": 0.152788
+    },
+    {
+     "security": "NHPC",
+     "weight": 0.151972
+    },
+    {
+     "security": "DABUR INDIA",
+     "weight": 0.144636
+    },
+    {
+     "security": "PI INDUSTRIES",
+     "weight": 0.144599
+    },
+    {
+     "security": "ICICI PRUDENTIAL LIFE",
+     "weight": 0.138779
+    },
+    {
+     "security": "BALKRISHNA INDUSTRIES",
+     "weight": 0.123184
+    },
+    {
+     "security": "ASTRAL",
+     "weight": 0.121072
+    },
+    {
+     "security": "SBI CARDS AND PAYMENT",
+     "weight": 0.112569
+    }
+   ]
+  },
+  "Indonesia": {
+   "index_code": "105767",
+   "n": 11,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "BANK CENTRAL ASIA",
+     "weight": 26.862696
+    },
+    {
+     "security": "BANK RAKYAT INDONESIA",
+     "weight": 17.09241
+    },
+    {
+     "security": "BANK MANDIRI",
+     "weight": 14.557825
+    },
+    {
+     "security": "TELKOM INDONESIA",
+     "weight": 12.909302
+    },
+    {
+     "security": "ASTRA INTERNATIONAL",
+     "weight": 7.738347
+    },
+    {
+     "security": "BANK NEGARA INDONESIA",
+     "weight": 4.616224
+    },
+    {
+     "security": "GOTO GOJEK TOKOPEDIA",
+     "weight": 4.269092
+    },
+    {
+     "security": "BARITO PACIFIC",
+     "weight": 3.56331
+    },
+    {
+     "security": "BUMI RESOURCES MINERALS",
+     "weight": 3.225105
+    },
+    {
+     "security": "UNITED TRACTORS",
+     "weight": 2.656176
+    },
+    {
+     "security": "CHAROEN POKPHAND INDO",
+     "weight": 2.509514
+    }
+   ]
+  },
+  "Japan": {
+   "index_code": "939200",
+   "n": 168,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "MITSUBISHI UFJ FIN GRP",
+     "weight": 3.984497
+    },
+    {
+     "security": "SOFTBANK GROUP CORP",
+     "weight": 3.913133
+    },
+    {
+     "security": "TOYOTA MOTOR CORP",
+     "weight": 3.397952
+    },
+    {
+     "security": "TOKYO ELECTRON",
+     "weight": 2.933733
+    },
+    {
+     "security": "KIOXIA HOLDINGS",
+     "weight": 2.809267
+    },
+    {
+     "security": "HITACHI",
+     "weight": 2.797307
+    },
+    {
+     "security": "SUMITOMO MITSUI FINL GRP",
+     "weight": 2.629881
+    },
+    {
+     "security": "SONY GROUP CORP",
+     "weight": 2.553641
+    },
+    {
+     "security": "ADVANTEST CORP",
+     "weight": 2.319249
+    },
+    {
+     "security": "MIZUHO FINANCIAL GROUP",
+     "weight": 2.097245
+    },
+    {
+     "security": "MURATA MANUFACTURING CO",
+     "weight": 2.096409
+    },
+    {
+     "security": "FAST RETAILING CO",
+     "weight": 1.896949
+    },
+    {
+     "security": "KEYENCE CORP",
+     "weight": 1.865896
+    },
+    {
+     "security": "MITSUBISHI CORP",
+     "weight": 1.834974
+    },
+    {
+     "security": "RECRUIT HOLDINGS CO",
+     "weight": 1.78259
+    },
+    {
+     "security": "SHIN-ETSU CHEMICAL CO",
+     "weight": 1.574868
+    },
+    {
+     "security": "TOKIO MARINE HOLDINGS",
+     "weight": 1.569175
+    },
+    {
+     "security": "MITSUI & CO",
+     "weight": 1.467847
+    },
+    {
+     "security": "MITSUBISHI HEAVY IND",
+     "weight": 1.438047
+    },
+    {
+     "security": "MITSUBISHI ELECTRIC CORP",
+     "weight": 1.428841
+    },
+    {
+     "security": "ITOCHU CORP",
+     "weight": 1.286575
+    },
+    {
+     "security": "SUMITOMO ELECTRIC IND",
+     "weight": 1.162176
+    },
+    {
+     "security": "HOYA CORP",
+     "weight": 1.10417
+    },
+    {
+     "security": "PANASONIC HOLDINGS CORP",
+     "weight": 1.034467
+    },
+    {
+     "security": "KDDI",
+     "weight": 0.970951
+    },
+    {
+     "security": "NINTENDO CO",
+     "weight": 0.967177
+    },
+    {
+     "security": "TDK CORP",
+     "weight": 0.959849
+    },
+    {
+     "security": "TAKEDA PHARMACEUTICAL",
+     "weight": 0.958431
+    },
+    {
+     "security": "RENESAS ELECTRONICS CORP",
+     "weight": 0.943147
+    },
+    {
+     "security": "FANUC",
+     "weight": 0.93067
+    },
+    {
+     "security": "SUMITOMO CORP",
+     "weight": 0.874959
+    },
+    {
+     "security": "FUJIKURA",
+     "weight": 0.870873
+    },
+    {
+     "security": "MARUBENI CORP",
+     "weight": 0.856679
+    },
+    {
+     "security": "ORIX CORP",
+     "weight": 0.839228
+    },
+    {
+     "security": "JAPAN TOBACCO",
+     "weight": 0.823691
+    },
+    {
+     "security": "DAIKIN INDUSTRIES",
+     "weight": 0.769252
+    },
+    {
+     "security": "SOFTBANK CORP",
+     "weight": 0.767359
+    },
+    {
+     "security": "FUJITSU",
+     "weight": 0.764042
+    },
+    {
+     "security": "DAIICHI LIFE GROUP",
+     "weight": 0.694017
+    },
+    {
+     "security": "KOMATSU",
+     "weight": 0.68709
+    },
+    {
+     "security": "DISCO CORP",
+     "weight": 0.68282
+    },
+    {
+     "security": "JAPAN POST BANK CO",
+     "weight": 0.663897
+    },
+    {
+     "security": "NEC CORP",
+     "weight": 0.661979
+    },
+    {
+     "security": "CHUGAI PHARMACEUTICAL CO",
+     "weight": 0.635195
+    },
+    {
+     "security": "MS&AD INSURANCE GROUP",
+     "weight": 0.633303
+    },
+    {
+     "security": "HONDA MOTOR CO",
+     "weight": 0.627407
+    },
+    {
+     "security": "IBIDEN CO",
+     "weight": 0.625109
+    },
+    {
+     "security": "SOMPO HOLDINGS",
+     "weight": 0.595773
+    },
+    {
+     "security": "OTSUKA HOLDINGS CO",
+     "weight": 0.592002
+    },
+    {
+     "security": "AJINOMOTO CO",
+     "weight": 0.567986
+    },
+    {
+     "security": "DAIICHI SANKYO CO",
+     "weight": 0.551016
+    },
+    {
+     "security": "NTT CORP",
+     "weight": 0.550708
+    },
+    {
+     "security": "TOYOTA TSUSHO",
+     "weight": 0.520472
+    },
+    {
+     "security": "RESONA HOLDINGS",
+     "weight": 0.516189
+    },
+    {
+     "security": "KYOCERA CORP",
+     "weight": 0.511092
+    },
+    {
+     "security": "MITSUBISHI ESTATE CO",
+     "weight": 0.501267
+    },
+    {
+     "security": "NOMURA HOLDINGS",
+     "weight": 0.470162
+    },
+    {
+     "security": "FUJI FILM HOLDINGS CO",
+     "weight": 0.46708
+    },
+    {
+     "security": "ASTELLAS PHARMA",
+     "weight": 0.461219
+    },
+    {
+     "security": "MITSUI FUDOSAN CO",
+     "weight": 0.452538
+    },
+    {
+     "security": "BRIDGESTONE CORP",
+     "weight": 0.45028
+    },
+    {
+     "security": "SMC CORP",
+     "weight": 0.445646
+    },
+    {
+     "security": "CANON INC",
+     "weight": 0.427409
+    },
+    {
+     "security": "SEVEN & I HOLDINGS CO",
+     "weight": 0.427363
+    },
+    {
+     "security": "SUMITOMO MITSUI TRUST",
+     "weight": 0.424383
+    },
+    {
+     "security": "JAPAN POST HOLDINGS CO",
+     "weight": 0.423125
+    },
+    {
+     "security": "FURUKAWA ELECTRIC CO",
+     "weight": 0.420505
+    },
+    {
+     "security": "ENEOS HOLDINGS",
+     "weight": 0.401412
+    },
+    {
+     "security": "RESONAC HOLDINGS CORP",
+     "weight": 0.399498
+    },
+    {
+     "security": "EAST JAPAN RAILWAY CO",
+     "weight": 0.399097
+    },
+    {
+     "security": "ASICS CORP",
+     "weight": 0.398489
+    },
+    {
+     "security": "DENSO CORP",
+     "weight": 0.386049
+    },
+    {
+     "security": "TERUMO CORP",
+     "weight": 0.385682
+    },
+    {
+     "security": "SUZUKI MOTOR CORP",
+     "weight": 0.376358
+    },
+    {
+     "security": "INPEX CORP",
+     "weight": 0.371548
+    },
+    {
+     "security": "LASERTEC CORP",
+     "weight": 0.368412
+    },
+    {
+     "security": "MITSUI KINZOKU CO",
+     "weight": 0.362396
+    },
+    {
+     "security": "AEON CO",
+     "weight": 0.360048
+    },
+    {
+     "security": "KAO CORP",
+     "weight": 0.337981
+    },
+    {
+     "security": "KUBOTA CORP",
+     "weight": 0.333186
+    },
+    {
+     "security": "NIPPON STEEL CORP",
+     "weight": 0.328007
+    },
+    {
+     "security": "IHI CORP",
+     "weight": 0.323965
+    },
+    {
+     "security": "EBARA CORP",
+     "weight": 0.32333
+    },
+    {
+     "security": "CENTRAL JAPAN RAILWAY CO",
+     "weight": 0.313751
+    },
+    {
+     "security": "SECOM CO",
+     "weight": 0.312843
+    },
+    {
+     "security": "ORIENTAL LAND CO",
+     "weight": 0.299678
+    },
+    {
+     "security": "NIDEC CORP",
+     "weight": 0.298645
+    },
+    {
+     "security": "DAIWA HOUSE INDUSTRY",
+     "weight": 0.29164
+    },
+    {
+     "security": "DAIFUKU CO",
+     "weight": 0.279388
+    },
+    {
+     "security": "KAJIMA CORP",
+     "weight": 0.275369
+    },
+    {
+     "security": "KAWASAKI HEAVY IND",
+     "weight": 0.268305
+    },
+    {
+     "security": "ASAHI KASEI CORP",
+     "weight": 0.268178
+    },
+    {
+     "security": "KANSAI ELECTRIC POWER CO",
+     "weight": 0.267635
+    },
+    {
+     "security": "SHIONOGI & CO",
+     "weight": 0.26735
+    },
+    {
+     "security": "SUMITOMO METAL MINING CO",
+     "weight": 0.266138
+    },
+    {
+     "security": "FUJI ELECTRIC CO",
+     "weight": 0.265172
+    },
+    {
+     "security": "SUMITOMO REALTY & DEV CO",
+     "weight": 0.259959
+    },
+    {
+     "security": "ASAHI GROUP HOLDINGS",
+     "weight": 0.25852
+    },
+    {
+     "security": "JX ADVANCED METALS",
+     "weight": 0.258502
+    },
+    {
+     "security": "NITTO DENKO CORP",
+     "weight": 0.255685
+    },
+    {
+     "security": "NIPPON YUSEN K.K",
+     "weight": 0.252791
+    },
+    {
+     "security": "KIRIN HOLDINGS CO",
+     "weight": 0.249917
+    },
+    {
+     "security": "NOMURA RESEARCH INST",
+     "weight": 0.243556
+    },
+    {
+     "security": "OBAYASHI CORP",
+     "weight": 0.243335
+    },
+    {
+     "security": "SEKISUI HOUSE",
+     "weight": 0.241566
+    },
+    {
+     "security": "KONAMI GROUP CORP",
+     "weight": 0.23709
+    },
+    {
+     "security": "JAPAN EXCHANGE GROUP",
+     "weight": 0.236553
+    },
+    {
+     "security": "OLYMPUS CORP",
+     "weight": 0.236027
+    },
+    {
+     "security": "TAISEI CORP",
+     "weight": 0.23444
+    },
+    {
+     "security": "CHUBU ELECTRIC POWER CO",
+     "weight": 0.232159
+    },
+    {
+     "security": "DAIWA SECURITIES GROUP",
+     "weight": 0.231547
+    },
+    {
+     "security": "BANDAI NAMCO HOLDINGS",
+     "weight": 0.231313
+    },
+    {
+     "security": "RYOHIN KEIKAKU CO",
+     "weight": 0.229266
+    },
+    {
+     "security": "T&D HOLDINGS",
+     "weight": 0.227743
+    },
+    {
+     "security": "TOKYO GAS CO",
+     "weight": 0.226221
+    },
+    {
+     "security": "MITSUI OSK LINES",
+     "weight": 0.22311
+    },
+    {
+     "security": "OSAKA GAS CO",
+     "weight": 0.222864
+    },
+    {
+     "security": "SCREEN HOLDINGS CO",
+     "weight": 0.204801
+    },
+    {
+     "security": "PAN PACIFIC INTL HLDGS",
+     "weight": 0.193731
+    },
+    {
+     "security": "MINEBEA MITSUMI",
+     "weight": 0.192829
+    },
+    {
+     "security": "YOKOHAMA FINANCIAL GROUP",
+     "weight": 0.190418
+    },
+    {
+     "security": "SBI HOLDINGS",
+     "weight": 0.189939
+    },
+    {
+     "security": "TORAY INDUSTRIES",
+     "weight": 0.179744
+    },
+    {
+     "security": "OBIC CO",
+     "weight": 0.166213
+    },
+    {
+     "security": "AGC",
+     "weight": 0.164487
+    },
+    {
+     "security": "MITSUBISHI CHEMICAL GRP",
+     "weight": 0.16018
+    },
+    {
+     "security": "SUBARU CORPORATION",
+     "weight": 0.155439
+    },
+    {
+     "security": "SHIMIZU CORP",
+     "weight": 0.153305
+    },
+    {
+     "security": "CHIBA BANK",
+     "weight": 0.152807
+    },
+    {
+     "security": "ISUZU MOTORS",
+     "weight": 0.146551
+    },
+    {
+     "security": "MAKITA CORP",
+     "weight": 0.143327
+    },
+    {
+     "security": "SHIMANO",
+     "weight": 0.142756
+    },
+    {
+     "security": "YAMAHA MOTOR CO",
+     "weight": 0.140552
+    },
+    {
+     "security": "MITSUBISHI HC CAPITAL",
+     "weight": 0.137938
+    },
+    {
+     "security": "YOKOGAWA ELECTRIC CORP",
+     "weight": 0.13697
+    },
+    {
+     "security": "LY CORPORATION",
+     "weight": 0.134917
+    },
+    {
+     "security": "RAKUTEN GROUP",
+     "weight": 0.133182
+    },
+    {
+     "security": "AISIN CORP",
+     "weight": 0.13072
+    },
+    {
+     "security": "IDEMITSU KOSAN CO",
+     "weight": 0.129487
+    },
+    {
+     "security": "SHISEIDO CO",
+     "weight": 0.12908
+    },
+    {
+     "security": "WEST JAPAN RAILWAY CO",
+     "weight": 0.127932
+    },
+    {
+     "security": "NIPPON SANSO HOLDINGS",
+     "weight": 0.127669
+    },
+    {
+     "security": "HANKYU HANSHIN HOLDINGS",
+     "weight": 0.127035
+    },
+    {
+     "security": "TOPPAN HOLDINGS",
+     "weight": 0.12525
+    },
+    {
+     "security": "UNI-CHARM CORP",
+     "weight": 0.123501
+    },
+    {
+     "security": "DAI NIPPON PRINTING CO",
+     "weight": 0.122885
+    },
+    {
+     "security": "NITORI HOLDINGS CO",
+     "weight": 0.120638
+    },
+    {
+     "security": "NIPPON PAINT HOLDINGS CO",
+     "weight": 0.119937
+    },
+    {
+     "security": "EISAI CO",
+     "weight": 0.11992
+    },
+    {
+     "security": "KIKKOMAN CORP",
+     "weight": 0.116901
+    },
+    {
+     "security": "JFE HOLDINGS",
+     "weight": 0.11583
+    },
+    {
+     "security": "NIPPON BUILDING FUND",
+     "weight": 0.115209
+    },
+    {
+     "security": "KAWASAKI KISEN KAISHA",
+     "weight": 0.112142
+    },
+    {
+     "security": "SANRIO CO",
+     "weight": 0.110215
+    },
+    {
+     "security": "DAITO TRUST CONSTRUCTION",
+     "weight": 0.108755
+    },
+    {
+     "security": "NISSAN MOTOR CO",
+     "weight": 0.107533
+    },
+    {
+     "security": "CAPCOM CO",
+     "weight": 0.100932
+    },
+    {
+     "security": "HULIC CO (NEW)",
+     "weight": 0.093871
+    },
+    {
+     "security": "JAPAN POST INSURANCE CO",
+     "weight": 0.091931
+    },
+    {
+     "security": "ZENSHO HOLDINGS CO",
+     "weight": 0.090226
+    },
+    {
+     "security": "OTSUKA CORP",
+     "weight": 0.086181
+    },
+    {
+     "security": "NEXON CO",
+     "weight": 0.084629
+    },
+    {
+     "security": "TOHO CO",
+     "weight": 0.078905
+    },
+    {
+     "security": "HIKARI TSUSHIN",
+     "weight": 0.075217
+    },
+    {
+     "security": "KYOWA KIRIN CO",
+     "weight": 0.071076
+    },
+    {
+     "security": "SEIBU HOLDINGS",
+     "weight": 0.068344
+    },
+    {
+     "security": "SUNTORY BEVERAGE & FOOD",
+     "weight": 0.065998
+    },
+    {
+     "security": "ANA HOLDINGS",
+     "weight": 0.058022
+    }
+   ]
+  },
+  "Korea": {
+   "index_code": "941000",
+   "n": 77,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "SAMSUNG ELECTRONICS CO",
+     "weight": 35.375707
+    },
+    {
+     "security": "SK HYNIX",
+     "weight": 28.286801
+    },
+    {
+     "security": "SAMSUNG ELECTRONICS PREF",
+     "weight": 3.982181
+    },
+    {
+     "security": "SK SQUARE CO",
+     "weight": 2.514403
+    },
+    {
+     "security": "SAMSUNG ELECTRO-MECH. CO",
+     "weight": 2.434276
+    },
+    {
+     "security": "HYUNDAI MOTOR CO",
+     "weight": 2.163342
+    },
+    {
+     "security": "KB FINANCIAL GROUP",
+     "weight": 1.16761
+    },
+    {
+     "security": "DOOSAN ENERBILITY",
+     "weight": 1.038835
+    },
+    {
+     "security": "HYUNDAI MOBIS",
+     "weight": 0.972683
+    },
+    {
+     "security": "LG ELECTRONICS (NEW)",
+     "weight": 0.873098
+    },
+    {
+     "security": "KIA CORP",
+     "weight": 0.86254
+    },
+    {
+     "security": "SAMSUNG SDI CO",
+     "weight": 0.854036
+    },
+    {
+     "security": "SHINHAN FINANCIAL GROUP",
+     "weight": 0.833502
+    },
+    {
+     "security": "NAVER",
+     "weight": 0.830643
+    },
+    {
+     "security": " HANWHA AEROSPACE ",
+     "weight": 0.826623
+    },
+    {
+     "security": "SAMSUNG C&T CORPORATION",
+     "weight": 0.799575
+    },
+    {
+     "security": "SAMSUNG LIFE INSURANCE",
+     "weight": 0.71086
+    },
+    {
+     "security": "HANA FINANCIAL HOLDINGS",
+     "weight": 0.669872
+    },
+    {
+     "security": "POSCO HOLDINGS",
+     "weight": 0.638345
+    },
+    {
+     "security": "CELLTRION",
+     "weight": 0.599346
+    },
+    {
+     "security": "HD HYUNDAI ELECTRIC",
+     "weight": 0.541317
+    },
+    {
+     "security": "SK",
+     "weight": 0.516178
+    },
+    {
+     "security": "HD HYUNDAI HEAVY IND",
+     "weight": 0.466785
+    },
+    {
+     "security": "LG ENERGY SOLUTION",
+     "weight": 0.461495
+    },
+    {
+     "security": "LS ELECTRIC",
+     "weight": 0.433993
+    },
+    {
+     "security": "HYOSUNG HEAVY INDUSTRIES",
+     "weight": 0.423584
+    },
+    {
+     "security": "WOORI FINANCIAL GROUP ",
+     "weight": 0.409267
+    },
+    {
+     "security": "SAMSUNG HEAVY INDUSTRIES",
+     "weight": 0.394072
+    },
+    {
+     "security": "SAMSUNG FIRE & MARINE",
+     "weight": 0.37989
+    },
+    {
+     "security": "HD KOREA SHIPBUILDING",
+     "weight": 0.372262
+    },
+    {
+     "security": "KT&G CORP(KOREA TOBACCO)",
+     "weight": 0.368029
+    },
+    {
+     "security": "LG CHEM",
+     "weight": 0.361481
+    },
+    {
+     "security": "HANWHA OCEAN",
+     "weight": 0.352508
+    },
+    {
+     "security": "DOOSAN CORP",
+     "weight": 0.347926
+    },
+    {
+     "security": "SAMSUNG BIOLOGICS",
+     "weight": 0.345367
+    },
+    {
+     "security": "HYUNDAI ROTEM",
+     "weight": 0.327489
+    },
+    {
+     "security": "ALTEOGEN",
+     "weight": 0.318479
+    },
+    {
+     "security": "LG CORP (NEW)",
+     "weight": 0.304791
+    },
+    {
+     "security": "SAMSUNG SDS CO",
+     "weight": 0.303532
+    },
+    {
+     "security": "ECOPRO CO",
+     "weight": 0.287788
+    },
+    {
+     "security": "KAKAO CORP",
+     "weight": 0.286973
+    },
+    {
+     "security": "MIRAE ASSET SECURITIES",
+     "weight": 0.258407
+    },
+    {
+     "security": "HANMI SEMICONDUCTOR CO",
+     "weight": 0.257226
+    },
+    {
+     "security": "SK TELECOM CO",
+     "weight": 0.255925
+    },
+    {
+     "security": "HD HYUNDAI",
+     "weight": 0.25256
+    },
+    {
+     "security": "KOREA AEROSPACE IND",
+     "weight": 0.249649
+    },
+    {
+     "security": "ECOPROBM",
+     "weight": 0.241389
+    },
+    {
+     "security": "APR CORP",
+     "weight": 0.224935
+    },
+    {
+     "security": "HYUNDAI MOTOR CO PREF 2",
+     "weight": 0.223917
+    },
+    {
+     "security": "KOREA INVESTMENT HLDG",
+     "weight": 0.222825
+    },
+    {
+     "security": "HYUNDAI ENGR. & CONSTR.",
+     "weight": 0.217891
+    },
+    {
+     "security": "KEPCO KOREA ELECT. POWER",
+     "weight": 0.215095
+    },
+    {
+     "security": "LIG DEFENSE & AEROSPACE",
+     "weight": 0.212747
+    },
+    {
+     "security": "HYUNDAI GLOVIS CO",
+     "weight": 0.188958
+    },
+    {
+     "security": "HANWHA SYSTEMS",
+     "weight": 0.16705
+    },
+    {
+     "security": "POSCO FUTURE M",
+     "weight": 0.166986
+    },
+    {
+     "security": "SK INNOVATION CO",
+     "weight": 0.15965
+    },
+    {
+     "security": "MERITZ FINANCIAL HOLDING",
+     "weight": 0.155445
+    },
+    {
+     "security": "KRAFTON",
+     "weight": 0.153803
+    },
+    {
+     "security": "HLB",
+     "weight": 0.144122
+    },
+    {
+     "security": "HYUNDAI MOTOR CO PREF",
+     "weight": 0.138036
+    },
+    {
+     "security": "DB INSURANCE CO",
+     "weight": 0.132516
+    },
+    {
+     "security": "HYBE",
+     "weight": 0.110975
+    },
+    {
+     "security": "SAMYANG FOODS",
+     "weight": 0.104698
+    },
+    {
+     "security": "INDUSTRIAL BANK OF KOREA",
+     "weight": 0.103953
+    },
+    {
+     "security": "KOREAN AIR CO",
+     "weight": 0.102946
+    },
+    {
+     "security": "LG DISPLAY CO",
+     "weight": 0.102728
+    },
+    {
+     "security": "HANKOOK TIRE & TECH",
+     "weight": 0.101441
+    },
+    {
+     "security": "YUHAN CORP",
+     "weight": 0.100774
+    },
+    {
+     "security": "HMM",
+     "weight": 0.096995
+    },
+    {
+     "security": "S-OIL CORP",
+     "weight": 0.095799
+    },
+    {
+     "security": "NH INVESTMENT & SEC",
+     "weight": 0.090358
+    },
+    {
+     "security": "KAKAOBANK CORP",
+     "weight": 0.080164
+    },
+    {
+     "security": "AMOREPACIFIC CORP (NEW)",
+     "weight": 0.070547
+    },
+    {
+     "security": "SAMSUNG EPIS HOLDINGS CO",
+     "weight": 0.065051
+    },
+    {
+     "security": "POSCO INTERNATIONAL",
+     "weight": 0.058716
+    },
+    {
+     "security": "LG UPLUS",
+     "weight": 0.03824
+    }
+   ]
+  },
+  "Malaysia": {
+   "index_code": "105768",
+   "n": 21,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "PUBLIC BANK",
+     "weight": 14.851931
+    },
+    {
+     "security": "MALAYAN BANKING",
+     "weight": 13.24075
+    },
+    {
+     "security": "CIMB GROUP HOLDINGS",
+     "weight": 12.689676
+    },
+    {
+     "security": "TENAGA NASIONAL",
+     "weight": 8.113441
+    },
+    {
+     "security": "PRESS METAL ALUMINIUM",
+     "weight": 7.228061
+    },
+    {
+     "security": "GAMUDA",
+     "weight": 4.605939
+    },
+    {
+     "security": "AMMB HOLDINGS",
+     "weight": 3.488773
+    },
+    {
+     "security": "IHH HEALTHCARE",
+     "weight": 3.362656
+    },
+    {
+     "security": "RHB BANK",
+     "weight": 3.29662
+    },
+    {
+     "security": "SUNWAY",
+     "weight": 3.183968
+    },
+    {
+     "security": "HONG LEONG BANK",
+     "weight": 2.941131
+    },
+    {
+     "security": "PETRONAS GAS",
+     "weight": 2.931587
+    },
+    {
+     "security": "YTL POWER INTL",
+     "weight": 2.742917
+    },
+    {
+     "security": "PETRONAS CHEMICALS GROUP",
+     "weight": 2.708374
+    },
+    {
+     "security": "SD GUTHRIE",
+     "weight": 2.610924
+    },
+    {
+     "security": "MISC BHD",
+     "weight": 2.363974
+    },
+    {
+     "security": "KUALA LUMPUR KEPONG",
+     "weight": 2.087924
+    },
+    {
+     "security": "IOI CORP",
+     "weight": 2.036962
+    },
+    {
+     "security": "CELCOMDIGI",
+     "weight": 1.937552
+    },
+    {
+     "security": "TELEKOM MALAYSIA",
+     "weight": 1.84539
+    },
+    {
+     "security": "MAXIS BHD",
+     "weight": 1.73145
+    }
+   ]
+  },
+  "Philippines": {
+   "index_code": "860800",
+   "n": 10,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "ICTSI INTL CONTAINER",
+     "weight": 38.21961
+    },
+    {
+     "security": "BDO UNIBANK",
+     "weight": 13.213458
+    },
+    {
+     "security": "SM PRIME HOLDINGS",
+     "weight": 8.830392
+    },
+    {
+     "security": "BANK OF PHIL ISLANDS",
+     "weight": 8.200913
+    },
+    {
+     "security": "SM INVESTMENTS",
+     "weight": 6.589089
+    },
+    {
+     "security": "METROPOLITAN BANK &TRUST",
+     "weight": 5.834694
+    },
+    {
+     "security": "MANILA ELECTRIC CO B",
+     "weight": 5.296253
+    },
+    {
+     "security": "AYALA CORP",
+     "weight": 5.104305
+    },
+    {
+     "security": "PLDT",
+     "weight": 4.464914
+    },
+    {
+     "security": "AYALA LAND",
+     "weight": 4.246371
+    }
+   ]
+  },
+  "Singapore": {
+   "index_code": "998100",
+   "n": 16,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "DBS GROUP HOLDINGS",
+     "weight": 28.650115
+    },
+    {
+     "security": "OCBC BANK",
+     "weight": 16.937821
+    },
+    {
+     "security": "SEA A ADR",
+     "weight": 10.133395
+    },
+    {
+     "security": "UNITED OVERSEAS BANK",
+     "weight": 10.03911
+    },
+    {
+     "security": "SINGAPORE TELECOM",
+     "weight": 7.115738
+    },
+    {
+     "security": "SINGAPORE TECH ENGR",
+     "weight": 3.928804
+    },
+    {
+     "security": "SINGAPORE EXCHANGE",
+     "weight": 3.888703
+    },
+    {
+     "security": "KEPPEL",
+     "weight": 3.357104
+    },
+    {
+     "security": "CAPITALAND INTEGRATED",
+     "weight": 3.062154
+    },
+    {
+     "security": "GRAB HOLDINGS A",
+     "weight": 2.434919
+    },
+    {
+     "security": "CAPITALAND ASCENDAS REIT",
+     "weight": 2.276047
+    },
+    {
+     "security": "SINGAPORE AIRLINES",
+     "weight": 2.248013
+    },
+    {
+     "security": "YANGZIJIANG SHIPBUILD",
+     "weight": 2.079205
+    },
+    {
+     "security": "CAPITALAND INVESTMENT",
+     "weight": 1.315112
+    },
+    {
+     "security": "WILMAR INTERNATIONAL",
+     "weight": 1.270842
+    },
+    {
+     "security": "SEMBCORP INDUSTRIES",
+     "weight": 1.262917
+    }
+   ]
+  },
+  "Taiwan": {
+   "index_code": "915800",
+   "n": 77,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "TAIWAN SEMICONDUCTOR MFG",
+     "weight": 54.780022
+    },
+    {
+     "security": "MEDIATEK INC",
+     "weight": 6.208293
+    },
+    {
+     "security": "DELTA ELECTRONICS",
+     "weight": 4.451458
+    },
+    {
+     "security": "HON HAI PRECISION IND CO",
+     "weight": 3.386069
+    },
+    {
+     "security": "ASE TECHNOLOGY HOLDING",
+     "weight": 1.892643
+    },
+    {
+     "security": "UNITED MICROELECTRONICS",
+     "weight": 1.560587
+    },
+    {
+     "security": "ELITE MATERIAL CO",
+     "weight": 1.37225
+    },
+    {
+     "security": "UNIMICRON TECHNOLOGY",
+     "weight": 1.327694
+    },
+    {
+     "security": "ACCTON TECHNOLOGY CORP",
+     "weight": 1.196832
+    },
+    {
+     "security": "YAGEO CORP",
+     "weight": 1.159694
+    },
+    {
+     "security": "CTBC FINANCIAL HOLDING",
+     "weight": 0.980732
+    },
+    {
+     "security": "QUANTA COMPUTER",
+     "weight": 0.950977
+    },
+    {
+     "security": "CHROMA ATE",
+     "weight": 0.880525
+    },
+    {
+     "security": "FUBON FINANCIAL HOLDING",
+     "weight": 0.876865
+    },
+    {
+     "security": "ASIA VITAL COMPONENTS",
+     "weight": 0.850797
+    },
+    {
+     "security": "CATHAY FINANCIAL HOLDING",
+     "weight": 0.794057
+    },
+    {
+     "security": "YUANTA FINANCIAL HOLDING",
+     "weight": 0.596132
+    },
+    {
+     "security": "HONPRECISION ",
+     "weight": 0.574524
+    },
+    {
+     "security": "WIWYNN CORPORATION",
+     "weight": 0.532246
+    },
+    {
+     "security": "ASUSTEK COMPUTER",
+     "weight": 0.528299
+    },
+    {
+     "security": "ASPEED TECHNOLOGY",
+     "weight": 0.528259
+    },
+    {
+     "security": "CHUNGHWA TELECOM CO",
+     "weight": 0.504259
+    },
+    {
+     "security": "WISTRON CORP",
+     "weight": 0.496386
+    },
+    {
+     "security": "TS FINANCIAL HOLDING CO",
+     "weight": 0.490942
+    },
+    {
+     "security": "NAN YA PLASTIC",
+     "weight": 0.482993
+    },
+    {
+     "security": "MPI CORP",
+     "weight": 0.459793
+    },
+    {
+     "security": "MEGA FINANCIAL HOLDING",
+     "weight": 0.449914
+    },
+    {
+     "security": "LITE-ON TECHNOLOGY CORP",
+     "weight": 0.436022
+    },
+    {
+     "security": "E.SUN FINANCIAL HOLDINGS",
+     "weight": 0.420251
+    },
+    {
+     "security": "GOLD CIRCUIT ELECTRONICS",
+     "weight": 0.415158
+    },
+    {
+     "security": "INNOLUX CORP",
+     "weight": 0.391445
+    },
+    {
+     "security": "ZHEN DING TECHNOLOGY",
+     "weight": 0.387764
+    },
+    {
+     "security": "GLOBAL UNICHIP CORP",
+     "weight": 0.382859
+    },
+    {
+     "security": "ALCHIP TECHNOLOGIES",
+     "weight": 0.35507
+    },
+    {
+     "security": "BIZLINK HOLDING",
+     "weight": 0.351439
+    },
+    {
+     "security": "SINOPAC HOLDINGS",
+     "weight": 0.34375
+    },
+    {
+     "security": "LARGAN PRECISION CO",
+     "weight": 0.338302
+    },
+    {
+     "security": "UNI-PRESIDENT ENT.",
+     "weight": 0.336087
+    },
+    {
+     "security": "KING YUAN ELECTRONICS CO",
+     "weight": 0.330422
+    },
+    {
+     "security": "KGI FINANCIAL HOLDING CO",
+     "weight": 0.326723
+    },
+    {
+     "security": "JENTECH PRECISION INDL",
+     "weight": 0.319207
+    },
+    {
+     "security": "FIRST FINANCIAL HLDG CO",
+     "weight": 0.291992
+    },
+    {
+     "security": "REALTEK SEMICONDUCTOR",
+     "weight": 0.281607
+    },
+    {
+     "security": "KING SLIDE WORKS CO",
+     "weight": 0.281545
+    },
+    {
+     "security": "HUA NAN FINANCIAL HLDGS",
+     "weight": 0.28058
+    },
+    {
+     "security": "NOVATEK MICROELECTRS",
+     "weight": 0.263872
+    },
+    {
+     "security": "PHARMAESSENTIA",
+     "weight": 0.258809
+    },
+    {
+     "security": "TAIWAN COPR FINL HLDG",
+     "weight": 0.23682
+    },
+    {
+     "security": "GLOBALWAFERS",
+     "weight": 0.235874
+    },
+    {
+     "security": "ADVANTECH CO",
+     "weight": 0.23246
+    },
+    {
+     "security": "EVERGREEN MARINE CORP",
+     "weight": 0.228954
+    },
+    {
+     "security": "LOTES CO",
+     "weight": 0.213174
+    },
+    {
+     "security": "CHINA STEEL CORP COMMON",
+     "weight": 0.212824
+    },
+    {
+     "security": "VANGUARD INTL SC",
+     "weight": 0.205147
+    },
+    {
+     "security": "EMEMORY TECHNOLOGY",
+     "weight": 0.196606
+    },
+    {
+     "security": "GIGABYTE TECHNOLOGY CO",
+     "weight": 0.195824
+    },
+    {
+     "security": "TAIWAN MOBILE",
+     "weight": 0.186757
+    },
+    {
+     "security": "INVENTEC CO",
+     "weight": 0.183049
+    },
+    {
+     "security": "FORMOSA PLASTIC CORP",
+     "weight": 0.180316
+    },
+    {
+     "security": "AIRTAC INTERNATIONAL",
+     "weight": 0.178453
+    },
+    {
+     "security": "PEGATRON",
+     "weight": 0.173223
+    },
+    {
+     "security": "E INK HOLDINGS",
+     "weight": 0.17137
+    },
+    {
+     "security": "FORMOSA CHEMICALS FIBRE",
+     "weight": 0.171198
+    },
+    {
+     "security": "INTL GAMES SYSTEM C",
+     "weight": 0.16369
+    },
+    {
+     "security": "FAR EASTONE TELECOM. CO",
+     "weight": 0.162042
+    },
+    {
+     "security": "CHAILEASE HOLDING",
+     "weight": 0.153411
+    },
+    {
+     "security": "TAIWAN CEMENT CORP",
+     "weight": 0.14823
+    },
+    {
+     "security": "SHANGHAI COMM & SAV BANK",
+     "weight": 0.141588
+    },
+    {
+     "security": "CHANG HWA COMMERCIAL BK",
+     "weight": 0.136313
+    },
+    {
+     "security": "HOTAI MOTOR COMPANY",
+     "weight": 0.124534
+    },
+    {
+     "security": "FORTUNE ELECTRIC CO",
+     "weight": 0.116766
+    },
+    {
+     "security": "PRESIDENT CHAIN STORE",
+     "weight": 0.111658
+    },
+    {
+     "security": "TAIWAN BUSINESS BANK",
+     "weight": 0.104053
+    },
+    {
+     "security": "EVA AIRWAYS CORP",
+     "weight": 0.096118
+    },
+    {
+     "security": "YANG MING MARINE TRANSP",
+     "weight": 0.090509
+    },
+    {
+     "security": "CALIWAY BIOPHARMA",
+     "weight": 0.086987
+    },
+    {
+     "security": "WAN HAI LINES",
+     "weight": 0.055906
+    }
+   ]
+  },
+  "Thailand": {
+   "index_code": "105769",
+   "n": 18,
+   "weight_sum": 100.0,
+   "constituents": [
+    {
+     "security": "DELTA ELECTRONICS THAI",
+     "weight": 27.924906
+    },
+    {
+     "security": "PTT",
+     "weight": 9.193005
+    },
+    {
+     "security": "ADVANCED INFO SERVICE",
+     "weight": 8.655802
+    },
+    {
+     "security": "CP ALL PCL",
+     "weight": 6.191183
+    },
+    {
+     "security": "GULF DEVELOPMENT",
+     "weight": 5.874288
+    },
+    {
+     "security": "AIRPORTS OF THAILAND",
+     "weight": 5.506101
+    },
+    {
+     "security": "BANGKOK DUSIT MED. SVCS",
+     "weight": 4.952579
+    },
+    {
+     "security": "PTT EXPLORATION & PROD",
+     "weight": 4.27508
+    },
+    {
+     "security": "SIAM CEMENT",
+     "weight": 4.146064
+    },
+    {
+     "security": "TRUE CORP (NEW)",
+     "weight": 3.628712
+    },
+    {
+     "security": "CENTRAL PATTANA PUB CO",
+     "weight": 3.304477
+    },
+    {
+     "security": "KRUNG THAI BANK",
+     "weight": 3.080047
+    },
+    {
+     "security": "KASIKORNBANK",
+     "weight": 3.020222
+    },
+    {
+     "security": "SCB X PUBLIC COMPANY",
+     "weight": 2.872083
+    },
+    {
+     "security": "BUMRUNGRAD HOSPITAL PUB",
+     "weight": 2.624394
+    },
+    {
+     "security": "CHAROEN POKPHAND FOODS",
+     "weight": 1.722104
+    },
+    {
+     "security": "MINOR INTERNATIONAL",
+     "weight": 1.618123
+    },
+    {
+     "security": "TMBTHANACHART BANK",
+     "weight": 1.41083
+    }
+   ]
+  }
+ }
+}

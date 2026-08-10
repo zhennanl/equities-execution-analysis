@@ -1,0 +1,106 @@
+{
+ "market": "Taiwan",
+ "review": "Nov19",
+ "keys": {
+  "gmsr_dm": 6.13,
+  "em_range": [
+   1.53,
+   3.52
+  ],
+  "ceiling": 3.52,
+  "floor": 2.347,
+  "bar": 5.28,
+  "price_date": "2019-10-18",
+  "source": "MSCI_Nov19_GIMIMethod"
+ },
+ "fx_used": 30.215,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "2345",
+   "security": "ACCTON TECHNOLOGY CORP",
+   "action": "ADD",
+   "pit_cap_busd": 3.5,
+   "verdict": "NOT-EXPLAINED: 3.50B well below bar"
+  },
+  {
+   "code": "6669",
+   "security": "WIWYNN CORPORATION",
+   "action": "ADD",
+   "pit_cap_busd": 2.86,
+   "verdict": "NOT-EXPLAINED: 2.86B well below bar"
+  },
+  {
+   "code": "4147",
+   "security": "TAIMED BIOLOGICS",
+   "action": "DEL",
+   "pit_cap_busd": 1.14,
+   "verdict": "EXPLAINED: 1.14B is 51% below the 2.347B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "4966": 1.51,
+   "2603": 1.96,
+   "8299": 1.82,
+   "2353": 1.82,
+   "1605": 1.65,
+   "2371": 1.32,
+   "8046": 1.1,
+   "3481": 2.3,
+   "2347": 1.98,
+   "8454": 1.19,
+   "2344": 2.32,
+   "1504": 1.7,
+   "4743": 0.33,
+   "2615": 1.31,
+   "1434": 1.94,
+   "2915": 1.36,
+   "5269": 1.06,
+   "2542": 1.77,
+   "3702": 2.06,
+   "3296": 0.05,
+   "1227": 1.85,
+   "2385": 2.26,
+   "6409": 1.83,
+   "4147": 1.14,
+   "9945": 1.51,
+   "2610": 1.65
+  },
+  "hits": [
+   "4147"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1227",
+   "1434",
+   "1504",
+   "1605",
+   "2344",
+   "2347",
+   "2353",
+   "2371",
+   "2385",
+   "2542",
+   "2603",
+   "2610",
+   "2615",
+   "2915",
+   "3296",
+   "3481",
+   "3702",
+   "4743",
+   "4966",
+   "5269",
+   "6409",
+   "8046",
+   "8299",
+   "8454",
+   "9945"
+  ]
+ }
+}

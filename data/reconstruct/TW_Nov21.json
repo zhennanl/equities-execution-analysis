@@ -1,0 +1,103 @@
+{
+ "market": "Taiwan",
+ "review": "Nov21",
+ "keys": {
+  "gmsr_dm": 9.51,
+  "em_range": [
+   2.38,
+   5.47
+  ],
+  "ceiling": 5.47,
+  "floor": 3.647,
+  "bar": 8.205,
+  "price_date": "2021-10-18",
+  "source": "Nov2021"
+ },
+ "fx_used": 27.817,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "3529",
+   "security": "EMEMORY TECHNOLOGY",
+   "action": "ADD",
+   "pit_cap_busd": 5.95,
+   "verdict": "NOT-EXPLAINED: 5.95B well below bar"
+  },
+  {
+   "code": "4966",
+   "security": "PARADE TECHNOLOGIES",
+   "action": "ADD",
+   "pit_cap_busd": 5.06,
+   "verdict": "NOT-EXPLAINED: 5.06B well below bar"
+  },
+  {
+   "code": "6409",
+   "security": "VOLTRONIC POWER TECH",
+   "action": "ADD",
+   "pit_cap_busd": 5.19,
+   "verdict": "NOT-EXPLAINED: 5.19B well below bar"
+  },
+  {
+   "code": "8299",
+   "security": "PHISON ELECTRONICS CORP",
+   "action": "DEL",
+   "pit_cap_busd": 2.51,
+   "verdict": "EXPLAINED: 2.51B is 31% below the 3.647B floor"
+  },
+  {
+   "code": "3296",
+   "security": "POWERTECH TECHNOLOGY",
+   "action": "DEL",
+   "pit_cap_busd": 0.06,
+   "verdict": "EXPLAINED: 0.06B is 98% below the 3.647B floor"
+  },
+  {
+   "code": "2492",
+   "security": "WALSIN TECHNOLOGY CORP",
+   "action": "DEL",
+   "pit_cap_busd": 2.5,
+   "verdict": "EXPLAINED: 2.50B is 32% below the 3.647B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "8299": 2.51,
+   "2353": 2.77,
+   "1605": 3.18,
+   "2347": 3.12,
+   "2356": 3.41,
+   "9904": 3.52,
+   "1504": 2.31,
+   "4743": 3.19,
+   "3702": 2.99,
+   "2492": 2.5,
+   "3296": 0.06,
+   "4958": 3.14,
+   "2354": 3.49,
+   "2610": 3.26
+  },
+  "hits": [
+   "2492",
+   "3296",
+   "8299"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1504",
+   "1605",
+   "2347",
+   "2353",
+   "2354",
+   "2356",
+   "2610",
+   "3702",
+   "4743",
+   "4958",
+   "9904"
+  ]
+ }
+}

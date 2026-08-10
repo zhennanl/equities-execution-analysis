@@ -1,0 +1,45 @@
+{
+  "_what": "Constants PUBLISHED in the MSCI GIMI methodology, kept as data so the walkthrough can quote them without typing a figure into prose. The page's standing promise is that it holds no facts; a rulebook constant is still a fact.",
+  "edition": "May 2026",
+  "edition_note": "The current edition. The equivalent Aug-2026 path does not exist on msci.com as at 2026-08-09.",
+  "url": "https://www.msci.com/eqb/methodology/meth_docs/MSCI_GIMIMethodology_May2026.pdf",
+  "worked_example_priced_at": "2026-04-20",
+  "size_reference": {
+    "_cite": "§2.3.2.1, p.24-25 — the full market capitalization of the company providing at least 85% cumulative free float-adjusted coverage of the DM Investable Equity Universe defines the Global Minimum Size Reference for DM Standard; Emerging Markets are set at one-half of it.",
+    "dm_standard_usd_m": 15748,
+    "em_standard_usd_m": 7874,
+    "dm_large_cap_usd_m": 51345,
+    "dm_imi_usd_m": 1187
+  },
+  "size_range": {
+    "_cite": "§2.3.2, p.24 — \"specifying a range of 0.5 times to 1.15 times those References\".",
+    "low_multiple": 0.5,
+    "high_multiple": 1.15,
+    "published_em_standard_busd": [3.94, 9.06],
+    "published_dm_standard_busd": [7.87, 18.11]
+  },
+  "coverage_target": {
+    "_cite": "§2.3.1, p.24 — Market Coverage Target Ranges.",
+    "large_cap_pct": 70,
+    "standard_pct": 85,
+    "imi_pct": 99
+  },
+  "buffers": {
+    "_cite": "§3.1.5.1, p.43-44 — \"the buffer zones at Index Reviews are defined with boundaries of 2/3rd of and 1.5 times the Market Size-Segment Cutoff between two size-segments\".",
+    "lower_multiple": 0.6667,
+    "upper_multiple": 1.5,
+    "light_rebalancing_lower": 0.5,
+    "light_rebalancing_upper": 1.8,
+    "_light_cite": "fn24 p.44, defined at p.107 'Potential Switch to a Light Rebalancing during Index Reviews' — a switch made by MSCI's Equity Index Committee and Index Policy Committee UNDER CONDITIONS OF MARKET STRESS, triggered by the Market Monitoring Framework over the last ten business days before the announcement. It is NOT a property of quarterly reviews."
+  },
+  "min_float_cap": {
+    "_cite": "§2.3.6.1, p.30 — where the Market Size-Segment Cutoff sits inside the Global Minimum Size Range, a security may join the Standard Index only if its free float-adjusted market capitalization is at least 50% of that cutoff.",
+    "multiple_of_cutoff": 0.5
+  },
+  "screens": {
+    "min_fif": 0.15,
+    "min_fif_cite": "§2.2.6 — Global Minimum Foreign Inclusion Factor Requirement",
+    "min_foreign_room": 0.15,
+    "min_foreign_room_cite": "§2.2.8, §2.3.6.2 — foreign room must be at least 15% of the maximum allowed"
+  }
+}

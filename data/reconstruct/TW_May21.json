@@ -1,0 +1,78 @@
+{
+ "market": "Taiwan",
+ "review": "May21",
+ "keys": {
+  "gmsr_dm": 9.37,
+  "em_range": [
+   2.34,
+   5.39
+  ],
+  "ceiling": 5.39,
+  "floor": 3.593,
+  "bar": 8.085,
+  "price_date": "2021-04-19",
+  "source": "May2021"
+ },
+ "fx_used": 27.766,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "2609",
+   "security": "YANG MING MARINE TRANSP",
+   "action": "ADD",
+   "pit_cap_busd": 5.15,
+   "verdict": "NOT-EXPLAINED: 5.15B well below bar"
+  },
+  {
+   "code": "2385",
+   "security": "CHICONY ELECTRONICS CO",
+   "action": "DEL",
+   "pit_cap_busd": 2.35,
+   "verdict": "EXPLAINED: 2.35B is 35% below the 3.593B floor"
+  },
+  {
+   "code": "2542",
+   "security": "HIGHWEALTH CONSTRUCTION",
+   "action": "DEL",
+   "pit_cap_busd": 2.06,
+   "verdict": "EXPLAINED: 2.06B is 43% below the 3.593B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "8299": 3.49,
+   "1605": 2.9,
+   "2347": 3.39,
+   "2356": 3.53,
+   "1504": 2.57,
+   "4743": 3.17,
+   "5269": 2.97,
+   "2542": 2.06,
+   "3702": 2.92,
+   "3296": 0.1,
+   "2385": 2.35,
+   "9945": 2.88
+  },
+  "hits": [
+   "2385",
+   "2542"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1504",
+   "1605",
+   "2347",
+   "2356",
+   "3296",
+   "3702",
+   "4743",
+   "5269",
+   "8299",
+   "9945"
+  ]
+ }
+}

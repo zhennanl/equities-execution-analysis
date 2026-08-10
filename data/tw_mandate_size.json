@@ -1,0 +1,51 @@
+{
+ "_what": "a conservative, source-backed estimate of the indexed mandate that must buy an MSCI Taiwan Standard addition",
+ "generated": "2026-08-10T16:36:07",
+ "msci_disclosure": {
+  "as_of": "2026-06-30",
+  "filed": "2026-07-21",
+  "etf_aum_total_usd_b": 2818.0,
+  "etf_aum_avg_usd_b": 2706.0,
+  "etf_bp_fee_period_end": 2.28,
+  "etf_aum_us_usd_b": 1319.0,
+  "etf_aum_em_ac_usd_b": 841.0,
+  "etf_aum_dm_ex_us_usd_b": 658.0,
+  "abf_etf_usd_m": 161.0,
+  "abf_non_etf_indexed_usd_m": 56.0,
+  "abf_futures_options_usd_m": 16.1,
+  "abf_total_usd_m": 233.1,
+  "sources": {
+   "release": "https://ir.msci.com/news-releases/news-release-details/msci-reports-financial-results-second-quarter-and-six-months-10",
+   "presentation": "https://ir.msci.com/static-files/65e23650-540f-4ec1-a089-9526ba54c1b9",
+   "sec_8k": "https://www.sec.gov/Archives/edgar/data/0001408198/000140819826000044/exhibit991earningsrelease-.htm"
+  }
+ },
+ "transcription_ties": {
+  "abf_components_sum": 233.1,
+  "exposure_buckets_sum": 2818.0
+ },
+ "non_etf_indexed": {
+  "etf_effective_bp_annualised": 2.38,
+  "etf_bp_disclosed_period_end": 2.28,
+  "non_etf_indexed_aum_floor_usd_b": 941.2,
+  "multiplier_floor": 0.334,
+  "why_it_is_a_floor": "Priced at the ETF fee rate. Institutional index mandates are larger, negotiated and tiered, so they pay an index provider LESS per dollar than a retail ETF does \u2014 dividing by a rate that is too high returns an AUM that is too low."
+ },
+ "taiwan": {
+  "named_etf_aum_usd_b": 471.8,
+  "disclosed_em_ac_etf_aum_usd_b": 841.0,
+  "named_share_of_disclosed_bucket": 0.561,
+  "always_buys_named_etf_usd_b": 45.02,
+  "always_buys_published_usd_b": 31.667,
+  "taiwan_dedicated_etf_usd_b": 13.352,
+  "imi_adds_if_new_usd_b": 53.86,
+  "mandate_multiplier": 1.334,
+  "estimate_always_buys_usd_b": 60.1,
+  "estimate_if_new_to_imi_usd_b": 131.9,
+  "coverage_note": "The named ETFs are 56% of the disclosed EM/All-Country ETF bucket. The remainder is NOT grossed up: it contains single-country EM ETFs \u2014 MSCI China, India, Korea, Brazil \u2014 that hold no Taiwan at all, so scaling on bucket share would credit Taiwan with money that cannot own it."
+ },
+ "reading": [
+  "Every figure is a FLOOR. The error in each step runs one way, and it is stated where the step is taken.",
+  "The ranking between candidate names is unaffected by the level \u2014 the level is a common multiplier."
+ ]
+}

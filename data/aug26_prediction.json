@@ -1,0 +1,99 @@
+{
+ "market": "Taiwan",
+ "review": "Aug-2026",
+ "generated": "2026-08-09",
+ "announcement": "2026-08-12",
+ "rebalance_close": "2026-08-31",
+ "method": "mechanical: two thresholds applied to the screened universe. No count balancing, no conviction weighting, no discretion.",
+ "thresholds_usd_b": {
+  "market_size_segment_cutoff": 7.22,
+  "addition_bar_1.5x": 10.83,
+  "deletion_floor_2_3x": 4.81,
+  "minimum_float_cap_0.5x": 3.61,
+  "band": [
+   5.89,
+   8.79
+  ],
+  "band_meaning": "cutoff at 86% and 83% assumed coverage; the factsheet says 'approximately 85%'"
+ },
+ "cutoff_derivation": {
+  "factsheet_index_float_usd_b": 3183.00839,
+  "factsheet_asof": "2026-07-31",
+  "stated_coverage": 0.85,
+  "implied_investable_market_usd_b": 3744.7,
+  "crossing_rank": 69,
+  "source": "MSCI Taiwan Index (USD) factsheet, 31 Jul 2026"
+ },
+ "universe": {
+  "screened_names": 398,
+  "priced_asof": "20260731",
+  "fx": 32.395,
+  "members_entering_review": 79,
+  "factsheet_constituents": 77
+ },
+ "additions": [
+  {
+   "code": "2408",
+   "action": "ADD",
+   "full_cap_usd_b": 34.48,
+   "float_cap_usd_b": 16.28,
+   "float_factor": 0.4722,
+   "float_source": "yahoo",
+   "board": "twse",
+   "robust_across_band": true,
+   "verdict_at_band_edges": [
+    "ADD",
+    "ADD"
+   ]
+  },
+  {
+   "code": "8046",
+   "action": "ADD",
+   "full_cap_usd_b": 18.35,
+   "float_cap_usd_b": 7.09,
+   "float_factor": 0.3864,
+   "float_source": "yahoo",
+   "board": "twse",
+   "robust_across_band": true,
+   "verdict_at_band_edges": [
+    "ADD",
+    "ADD"
+   ]
+  },
+  {
+   "code": "2344",
+   "action": "ADD",
+   "full_cap_usd_b": 18.06,
+   "float_cap_usd_b": 12.6,
+   "float_factor": 0.6977,
+   "float_source": "yahoo",
+   "board": "twse",
+   "robust_across_band": true,
+   "verdict_at_band_edges": [
+    "ADD",
+    "ADD"
+   ]
+  },
+  {
+   "code": "8299",
+   "action": "ADD",
+   "full_cap_usd_b": 11.2,
+   "float_cap_usd_b": 8.84,
+   "float_factor": 0.7898,
+   "float_source": "yahoo",
+   "board": "tpex",
+   "robust_across_band": false,
+   "verdict_at_band_edges": [
+    "ADD",
+    "OUT"
+   ]
+  }
+ ],
+ "deletions": [],
+ "limits": [
+  "Deletions for liquidity, foreign room, mergers or delistings are invisible here. This deletion list is a floor, not a complete one.",
+  "Taiwan has deleted at least one name in every review since 2015 (mean 2.3). A prediction of 0 size-driven deletion(s) is below that run rate and should be read as evidence about the cutoff, not as a forecast of a quiet review.",
+  "Additions equal deletions in only 14 of 34 Taiwan reviews; no count balancing is applied.",
+  "Float factors are Yahoo-sourced for most names; only the index top-10 come from MSCI's own arithmetic."
+ ]
+}

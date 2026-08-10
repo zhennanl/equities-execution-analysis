@@ -24,7 +24,7 @@ FIX = Path(__file__).resolve().parent / "fixtures"
 
 
 def _load_fixture_market_data() -> MarketData:
-    meta = json.load(open(FIX / "AAPL_meta.json"))
+    meta = json.load(open(FIX / "AAPL_meta.json", encoding="utf-8"))
     intraday = pd.read_parquet(FIX / "AAPL_intraday.parquet")
     daily = pd.read_parquet(FIX / "AAPL_daily.parquet")
     return MarketData(

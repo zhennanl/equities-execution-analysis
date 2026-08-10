@@ -1,0 +1,117 @@
+{
+ "India|ADANIENSOL": null,
+ "India|FEDERALBNK": null,
+ "_report_India": {
+  "APOLLOHOSP.BO": {
+   "status": "unresolved",
+   "tried": "APOLLOHOSP",
+   "ib_search": []
+  },
+  "ASIANPAINT": {
+   "status": "unresolved",
+   "tried": "ASIANPAINT",
+   "ib_search": []
+  },
+  "AUROPHARMA": {
+   "status": "unresolved",
+   "tried": "AUROPHARMA",
+   "ib_search": []
+  },
+  "BAJAJ-AUTO.NS": {
+   "status": "unresolved",
+   "tried": "BAJAJ-AUTO",
+   "ib_search": [
+    "BAJAJ-AUT/INR@NSE",
+    "BAJAJATBB/INR@CORPACT",
+    "BAJA-AUT./INR@CORPACT",
+    "/@?",
+    "/@?"
+   ]
+  },
+  "BAJFINANCE.NS": {
+   "status": "unresolved",
+   "tried": "BAJFINANCE",
+   "ib_search": []
+  },
+  "BANKBARODA": {
+   "status": "unresolved",
+   "tried": "BANKBARODA",
+   "ib_search": []
+  },
+  "BHARATFORG.BO": {
+   "status": "unresolved",
+   "tried": "BHARATFORG",
+   "ib_search": []
+  },
+  "BHARTIARTL.NS": {
+   "status": "unresolved",
+   "tried": "BHARTIARTL",
+   "ib_search": []
+  },
+  "INDUSINDBK.BO": {
+   "status": "unresolved",
+   "tried": "INDUSINDBK",
+   "ib_search": []
+  },
+  "ULTRACEMCO": {
+   "status": "unresolved",
+   "tried": "ULTRACEMCO",
+   "ib_search": []
+  },
+  "WOCKPHARMA.NS": {
+   "status": "unresolved",
+   "tried": "WOCKPHARMA",
+   "ib_search": []
+  }
+ },
+ "India|ENRIN": "SIE",
+ "India|ENRIN|seen": [
+  "SIE/INR/STK@NSE"
+ ],
+ "India|GVT&D": "GVTD",
+ "India|GVT&D|seen": [
+  "GVTD/INR/STK@NSE"
+ ],
+ "China|200625": null,
+ "China|200625|seen": [],
+ "China|001296": null,
+ "China|001296|seen": [],
+ "China|900948": null,
+ "China|900948|seen": [],
+ "China|603586": null,
+ "China|603586|seen": [],
+ "China|002010": null,
+ "China|002010|seen": [
+  "search failed: ConnectionError"
+ ],
+ "China|300142": null,
+ "China|300142|seen": [
+  "search failed: ConnectionError"
+ ],
+ "China|300017": null,
+ "China|300017|seen": [
+  "search failed: ConnectionError"
+ ],
+ "China|300498": null,
+ "China|300498|seen": [
+  "search failed: ConnectionError"
+ ],
+ "China|000909": null,
+ "China|000909|seen": [],
+ "China|900926": null,
+ "China|900926|seen": [],
+ "China|900912": null,
+ "China|900912|seen": [],
+ "China|200596": null,
+ "China|200596|seen": [],
+ "China|900945": null,
+ "China|900945|seen": [],
+ "China|600582": null,
+ "China|600582|seen": [],
+ "China|900936": null,
+ "China|900936|seen": [],
+ "China|603893": null,
+ "China|603893|seen": [],
+ "Korea|361610": null,
+ "Korea|361610|seen": []
+}

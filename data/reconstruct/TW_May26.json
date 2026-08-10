@@ -1,0 +1,119 @@
+{
+ "market": "Taiwan",
+ "review": "May26",
+ "keys": {
+  "gmsr_dm": 15.75,
+  "em_range": [
+   3.94,
+   9.06
+  ],
+  "ceiling": 9.06,
+  "floor": 6.04,
+  "bar": 13.59,
+  "price_date": "2026-04-20",
+  "source": "May2026"
+ },
+ "fx_used": 31.626,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "6223",
+   "security": "MPI CORP",
+   "action": "ADD",
+   "pit_cap_busd": 15.91,
+   "verdict": "EXPLAINED: 15.91B clears the 13.59B bar by 17%"
+  },
+  {
+   "code": "1102",
+   "security": "ASIA CEMENT CORP",
+   "action": "DEL",
+   "pit_cap_busd": 3.92,
+   "verdict": "EXPLAINED: 3.92B is 35% below the 6.04B floor"
+  },
+  {
+   "code": "2474",
+   "security": "CATCHER TECH CO",
+   "action": "DEL",
+   "pit_cap_busd": 3.67,
+   "verdict": "EXPLAINED: 3.67B is 39% below the 6.04B floor"
+  },
+  {
+   "code": "2610",
+   "security": "CHINA AIRLINES",
+   "action": "DEL",
+   "pit_cap_busd": 3.48,
+   "verdict": "EXPLAINED: 3.48B is 42% below the 6.04B floor"
+  },
+  {
+   "code": "2324",
+   "security": "COMPAL ELECTRONICS",
+   "action": "DEL",
+   "pit_cap_busd": 4.22,
+   "verdict": "EXPLAINED: 4.22B is 30% below the 6.04B floor"
+  },
+  {
+   "code": "1402",
+   "security": "FAR EASTERN NEW CENTURY",
+   "action": "DEL",
+   "pit_cap_busd": 4.43,
+   "verdict": "EXPLAINED: 4.43B is 27% below the 6.04B floor"
+  },
+  {
+   "code": "2633",
+   "security": "TAIWAN HIGH SPEED RAIL",
+   "action": "DEL",
+   "pit_cap_busd": 4.76,
+   "verdict": "EXPLAINED: 4.76B is 21% below the 6.04B floor"
+  },
+  {
+   "code": "1504",
+   "security": "TECO ELECTRIC & MACH",
+   "action": "DEL",
+   "pit_cap_busd": 4.64,
+   "verdict": "EXPLAINED: 4.64B is 23% below the 6.04B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "6919": 5.24,
+   "2618": 6.02,
+   "2834": 5.19,
+   "1102": 3.92,
+   "2324": 4.22,
+   "2356": 5.29,
+   "2376": 5.91,
+   "1504": 4.64,
+   "2609": 5.53,
+   "2474": 3.67,
+   "1101": 5.9,
+   "2633": 4.76,
+   "8069": 5.77,
+   "1402": 4.43,
+   "2610": 3.48
+  },
+  "hits": [
+   "1102",
+   "1402",
+   "1504",
+   "2324",
+   "2474",
+   "2610",
+   "2633"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1101",
+   "2356",
+   "2376",
+   "2609",
+   "2618",
+   "2834",
+   "6919",
+   "8069"
+  ]
+ }
+}

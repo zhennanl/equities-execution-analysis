@@ -43,7 +43,7 @@ def _t1_close(code, eff):
     global _VC
     if _VC is None:
         _VC = json.loads((ROOT / "data" /
-                          "tw_vintage_cache.json").read_text())
+                          "tw_vintage_cache.json").read_text(encoding="utf-8"))
     ser = _VC.get(f"px|{code}")
     if not ser:
         return None
@@ -61,7 +61,7 @@ def _official_close(code, day):
     global _SD
     if _SD is None:
         _SD = json.loads((ROOT / "data" / "tw_history" /
-                          "stock_day.json").read_text())
+                          "stock_day.json").read_text(encoding="utf-8"))
     for m in _SD.get(code, {}):
         for r in _SD[code][m]:
             if r[0] == day:
@@ -148,6 +148,6 @@ if __name__ == "__main__":
     out = {"desc": __doc__.split("\n")[0], "summary": summ,
            "rows": rows}
     (ROOT / "data" / "auction_expost.json").write_text(
-        json.dumps(out, indent=1))
+        json.dumps(out, indent=1), encoding="utf-8")
     print(json.dumps(summ, indent=2))
     print(f"rows written: {len(rows)}")

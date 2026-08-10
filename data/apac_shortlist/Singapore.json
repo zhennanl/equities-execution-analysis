@@ -1,0 +1,199 @@
+{
+ "market": "Singapore",
+ "cutoff_usd_b": 15.169,
+ "cutoff_derivation": {
+  "member_coverage": 0.5,
+  "members_unsized": 8,
+  "coverage_gate": "DO NOT PUBLISH \u2014 too many members unsized",
+  "confidence": "OK",
+  "flagged_fraction_of_checked": null,
+  "count_anchor_usd_b": 15.169,
+  "n_members": 16,
+  "n_members_source": "MSCI factsheet",
+  "country_flagged_excluded": 0,
+  "country_check_run": false,
+  "smallest_member_usd_b": 7.802,
+  "members_matched": "8/16",
+  "note": "seed only \u2014 the binding cutoff comes from the stage-2 float-coverage walk"
+ },
+ "band": [
+  0.5,
+  2.0
+ ],
+ "n": 15,
+ "of_universe": 350,
+ "next": "stage 2 \u2014 float (\u00a72.2.4/\u00a72.2.6), ATVR (\u00a72.2.5), foreign room (\u00a72.2.8) for these names only",
+ "rows": {
+  "HPAD.SI": {
+   "name": "h Ping An Ins HK SDR2to1",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 66.3149,
+    "ratio": 2.431
+   },
+   "cap_local_b": 34.8547,
+   "cap_usd_b": 27.275,
+   "shares": 7447576912,
+   "price": 4.68,
+   "exchange": "SES",
+   "rank": 9
+  },
+  "F34.SI": {
+   "name": "Wilmar Intl",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 24.5974,
+   "cap_usd_b": 19.2483,
+   "shares": 6242997806,
+   "price": 3.94,
+   "exchange": "SES",
+   "rank": 10
+  },
+  "C6L.SI": {
+   "name": "Singapore Airlines Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 23.9672,
+   "cap_usd_b": 18.7552,
+   "shares": 3153582355,
+   "price": 7.6,
+   "exchange": "SES",
+   "rank": 11
+  },
+  "Q0F.SI": {
+   "name": "IHH Healthcare Berhad",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 23.4391,
+   "cap_usd_b": 18.3419,
+   "shares": 8836153463,
+   "price": 2.58,
+   "exchange": "SES",
+   "rank": 12
+  },
+  "TPED.SI": {
+   "name": "PTT Exploration and Production Public Company Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 23.0259,
+   "cap_usd_b": 18.0186,
+   "shares": 3969985400,
+   "price": 5.8,
+   "exchange": "SES",
+   "rank": 13
+  },
+  "TKKD.SI": {
+   "name": "t Kasikorn BK TH SDR1to1",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 23.0062,
+   "cap_usd_b": 18.0031,
+   "shares": 2369327593,
+   "price": 9.71,
+   "exchange": "SES",
+   "rank": 14
+  },
+  "BN4.SI": {
+   "name": "Keppel Ltd.",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 20.1242,
+   "cap_usd_b": 15.7479,
+   "shares": 1800021509,
+   "price": 11.18,
+   "exchange": "SES",
+   "rank": 15
+  },
+  "C38U.SI": {
+   "name": "CapitaLand Integrated Commercial Trust",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 19.3842,
+   "cap_usd_b": 15.1688,
+   "shares": 7879748311,
+   "price": 2.46,
+   "exchange": "SES",
+   "rank": 16
+  },
+  "TCPD.SI": {
+   "name": "CP ALL Public Company Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 16.842,
+   "cap_usd_b": 13.1794,
+   "shares": 8911101348,
+   "price": 1.89,
+   "exchange": "SES",
+   "rank": 17
+  },
+  "9CI.SI": {
+   "name": "CapitaLand Investment Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 13.4326,
+   "cap_usd_b": 10.5115,
+   "shares": 4993531347,
+   "price": 2.69,
+   "exchange": "SES",
+   "rank": 18
+  },
+  "A17U.SI": {
+   "name": "CapitaLand Ascendas REIT",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 12.538,
+   "cap_usd_b": 9.8114,
+   "shares": 4995214537,
+   "price": 2.51,
+   "exchange": "SES",
+   "rank": 19
+  },
+  "HHZD.SI": {
+   "name": "h HorizonRobo HK SDR1to1",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 11.8031,
+   "cap_usd_b": 9.2363,
+   "shares": 12447333915,
+   "price": 0.81,
+   "exchange": "SES",
+   "rank": 20
+  },
+  "C07.SI": {
+   "name": "Jardine Cycle & Carriage Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 11.1812,
+   "cap_usd_b": 8.7497,
+   "shares": 395236288,
+   "price": 28.29,
+   "exchange": "SES",
+   "rank": 21
+  },
+  "G07.SI": {
+   "name": "Great Eastern Holdings Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 16.2378,
+    "ratio": 1.882
+   },
+   "cap_local_b": 11.0264,
+   "cap_usd_b": 8.6285,
+   "shares": 503030110,
+   "price": 21.92,
+   "exchange": "SES",
+   "rank": 22
+  },
+  "U96.SI": {
+   "name": "Sembcorp Ind",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 9.9703,
+   "cap_usd_b": 7.8021,
+   "shares": 1780414458,
+   "price": 5.6,
+   "exchange": "SES",
+   "rank": 23
+  }
+ }
+}

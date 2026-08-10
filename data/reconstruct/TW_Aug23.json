@@ -1,0 +1,63 @@
+{
+ "market": "Taiwan",
+ "review": "Aug23",
+ "keys": {
+  "gmsr_dm": 9.01,
+  "em_range": [
+   2.25,
+   5.18
+  ],
+  "ceiling": 5.18,
+  "floor": 3.453,
+  "bar": 7.77,
+  "price_date": "2023-07-18",
+  "source": "Aug2023"
+ },
+ "fx_used": 31.354,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "2376",
+   "security": "GIGABYTE TECHNOLOGY CO",
+   "action": "ADD",
+   "pit_cap_busd": 6.34,
+   "verdict": "NEAR-MISS: 6.34B is 18% below the bar"
+  },
+  {
+   "code": "3105",
+   "security": "WIN SEMICONDUCTORS",
+   "action": "DEL",
+   "pit_cap_busd": 2.36,
+   "verdict": "EXPLAINED: 2.36B is 32% below the 3.453B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "4966": 2.4,
+   "2347": 3.17,
+   "8464": 3.21,
+   "9904": 2.87,
+   "3702": 3.16,
+   "3105": 2.36,
+   "9921": 2.94,
+   "4958": 3.23
+  },
+  "hits": [
+   "3105"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "2347",
+   "3702",
+   "4958",
+   "4966",
+   "8464",
+   "9904",
+   "9921"
+  ]
+ }
+}

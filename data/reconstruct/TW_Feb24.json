@@ -1,0 +1,59 @@
+{
+ "market": "Taiwan",
+ "review": "Feb24",
+ "keys": {
+  "gmsr_dm": 8.05,
+  "em_range": [
+   2.01,
+   4.63
+  ],
+  "ceiling": 4.63,
+  "floor": 3.087,
+  "bar": 6.945,
+  "price_date": "2023-01-18",
+  "source": "Mar2023"
+ },
+ "fx_used": 30.095,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "8454",
+   "security": "MOMO.COM",
+   "action": "DEL",
+   "pit_cap_busd": 5.79,
+   "verdict": "NOT-EXPLAINED: 5.79B well above floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "3231": 2.91,
+   "4966": 2.41,
+   "3661": 2.0,
+   "2353": 2.48,
+   "2356": 3.06,
+   "2344": 2.78,
+   "1504": 2.0,
+   "2376": 2.41,
+   "3702": 2.65
+  },
+  "hits": [],
+  "misses": [
+   "8454"
+  ],
+  "false_alarms": [
+   "1504",
+   "2344",
+   "2353",
+   "2356",
+   "2376",
+   "3231",
+   "3661",
+   "3702",
+   "4966"
+  ]
+ }
+}

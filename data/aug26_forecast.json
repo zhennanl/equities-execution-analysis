@@ -1,0 +1,98 @@
+{
+ "_what": "Aug-2026 Taiwan forecast inputs",
+ "review": "Aug-2026",
+ "declared": "2026-08-09",
+ "names": {
+  "2408": {
+   "action": "ADD",
+   "prob": 0.6177,
+   "zone": "guaranteed (>1.5x)",
+   "available": true,
+   "from": "2026-07-03",
+   "to": "2026-07-31",
+   "excess_20d": -0.041401995647792234,
+   "vol_x_adv": 0.6351452228869592,
+   "foreign_net_days_adv": -0.5902759489608012,
+   "borrow_build_days_adv": 0.4568087907432886,
+   "adv_shares": 129006882.51666667,
+   "in_t86": true,
+   "in_sbl": true
+  },
+  "8046": {
+   "action": "ADD",
+   "prob": 0.6177,
+   "zone": "guaranteed (>1.5x)",
+   "available": true,
+   "from": "2026-07-03",
+   "to": "2026-07-31",
+   "excess_20d": -0.14537256797279496,
+   "vol_x_adv": 0.9352921251551526,
+   "foreign_net_days_adv": -0.984258889292706,
+   "borrow_build_days_adv": 0.05686466035933622,
+   "adv_shares": 19330951.65,
+   "in_t86": true,
+   "in_sbl": true
+  },
+  "2344": {
+   "action": "ADD",
+   "prob": 0.6177,
+   "zone": "guaranteed (>1.5x)",
+   "available": true,
+   "from": "2026-07-03",
+   "to": "2026-07-31",
+   "excess_20d": -0.2171368299192119,
+   "vol_x_adv": 0.5559869242013203,
+   "foreign_net_days_adv": -0.32883229090914545,
+   "borrow_build_days_adv": -0.08337026173715183,
+   "adv_shares": 224505220.56666666,
+   "in_t86": true,
+   "in_sbl": true
+  },
+  "8299": {
+   "action": "ADD",
+   "prob": 0.3706,
+   "zone": "guaranteed (>1.5x)",
+   "available": true,
+   "from": "2026-07-03",
+   "to": "2026-07-31",
+   "excess_20d": -0.20714692609860497,
+   "vol_x_adv": 0.5582655170885509,
+   "foreign_net_days_adv": 0.0,
+   "borrow_build_days_adv": null,
+   "adv_shares": 8566058.45,
+   "in_t86": false,
+   "in_sbl": false
+  }
+ },
+ "history": {
+  "pre": {
+   "n": 43,
+   "p25": -0.21543467636184338,
+   "p50": 0.5279035098697104,
+   "p75": 1.4053787748481885,
+   "share_buying": 0.6046511627906976
+  },
+  "ann_to_eff": {
+   "n": 43,
+   "p25": -0.056777530900462767,
+   "p50": 0.5144612202163638,
+   "p75": 1.247986706270219,
+   "share_buying": 0.6744186046511628
+  },
+  "eff_day": {
+   "n": 43,
+   "p25": 0.006530379096113857,
+   "p50": 0.20276293773650658,
+   "p75": 0.4375786011627484,
+   "share_buying": 0.7674418604651163
+  },
+  "post5": {
+   "n": 43,
+   "p25": -0.3748397540183333,
+   "p50": -0.02134990764070697,
+   "p75": 0.2600737633546999,
+   "share_buying": 0.4186046511627907
+  },
+  "_n_events": 43
+ }
+}

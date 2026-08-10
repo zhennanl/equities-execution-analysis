@@ -1,0 +1,143 @@
+{
+ "_what": "the passive tracker's three questions, per name, for the Aug-2026 MSCI Taiwan additions",
+ "generated": "2026-08-10",
+ "conditional_on": "MSCI adding the name; the probability of that is carried separately",
+ "capacity_model": {
+  "ordinary_close_share": 0.094814,
+  "effective_day_close_share": 0.790112,
+  "source": "IB 5-minute panel, Taiwan, n=43 index-mover windows",
+  "market_wide_auction_share_of_value": 0.0659793252052478,
+  "limits": [
+   "the closing-bar share is a MEDIAN across 43 index-mover windows and is applied to every name alike; a quiet name's own close may be thinner",
+   "Taiwan's 5-second auction file is market-wide, so there is no per-name auction series to check this against",
+   "the multiple is the SIZE OF THE ASK, not a slippage forecast \u2014 nothing here predicts price"
+  ]
+ },
+ "schedule_reference": {
+  "eff_close": {
+   "n": 52,
+   "median_saved": 0.0,
+   "mean_saved": 0.0,
+   "p10": 0.0,
+   "p90": 0.0,
+   "hit_rate": 0.0,
+   "tracking_error": 0.0,
+   "median_saved_net": -0.004
+  },
+  "last_four": {
+   "n": 52,
+   "median_saved": 0.00983091958246932,
+   "mean_saved": 0.01183386881227155,
+   "p10": -0.013716124913589985,
+   "p90": 0.03551184893686068,
+   "hit_rate": 0.7115384615384616,
+   "tracking_error": 0.023427349651356816,
+   "median_saved_net": 0.00583091958246932
+  },
+  "ann_plus_1": {
+   "n": 52,
+   "median_saved": 0.04956377533723613,
+   "mean_saved": 0.057103481598441384,
+   "p10": -0.06880048615653465,
+   "p90": 0.1814755982680446,
+   "hit_rate": 0.5961538461538461,
+   "tracking_error": 0.10825097917948556,
+   "median_saved_net": 0.04556377533723613
+  }
+ },
+ "watchlist": [
+  {
+   "phase": "1 \u00b7 Now, before the announcement (to 12 Aug)",
+   "question": "Is the market already positioned for this?",
+   "metric": "25-session excess return over TAIEX, and foreign net buying in days of ADV",
+   "reference": "a typical Taiwanese addition arrives having risen +7.0% (positive 73% of the time) and having drawn +0.60 ADV days of foreign buying",
+   "threshold": "below -1.5% is the bottom quartile of the sample",
+   "reading": "these four sit at the 2nd to 15th percentile \u2014 the anticipation that normally precedes an addition has not happened. That is the one genuinely unusual feature of this review and it cuts both ways: less pre-positioning to unwind, and less confirmation that the market agrees with the call.",
+   "why_it_matters": "a name the market has already bought is a name whose index demand is partly met before the print"
+  },
+  {
+   "phase": "2 \u00b7 Announcement to effective (12\u201331 Aug)",
+   "question": "Is the flow arriving, and on schedule?",
+   "metric": "cumulative foreign net buying in ADV days, against the drift accrual path",
+   "reference": "the median addition draws +0.53 ADV days over this leg and +1.04 cumulatively from 20 sessions before the announcement; half the drift has accrued by session 5 of about thirteen",
+   "threshold": "foreign buying under -0.09 ADV days by the halfway point is the bottom quartile",
+   "reading": "the drift accrues close to linearly, so no date is special and there is nothing to wait for. What IS informative is the flow: if the shares are not moving, the demand is still ahead of you and the close carries it.",
+   "why_it_matters": "the flow that has already arrived is flow that will not compete with you in the auction"
+  },
+  {
+   "phase": "3 \u00b7 The effective date (31 Aug)",
+   "question": "Did the close absorb it, and at what price?",
+   "metric": "effective-day volume as a multiple of ADV, and the close against the day's own VWAP",
+   "reference": "the median addition prints 6.6x ADV (p90 13.6x), and across markets the close lands within a third of a percent of the day's VWAP",
+   "threshold": "a print under 2.9x ADV means the flow did not arrive; over 13.6x means it arrived with company",
+   "reading": "the close is the benchmark, so executing in it is zero tracking error by definition. The measured dislocation is small \u2014 which is an argument FOR the close and against working the session.",
+   "why_it_matters": "for a tracker the effective close is not an execution choice, it is the benchmark; every alternative buys P&L with tracking error"
+  }
+ ],
+ "names": {
+  "2408": {
+   "carried": true,
+   "name": "Nanya Technology Corporation",
+   "adv_shares": 80618434.0,
+   "demand_shares": 82280389.44758104,
+   "demand_adv_days": 1.020615079766757,
+   "ordinary_close_shares": 7643756.201276,
+   "order_in_normal_closes": 10.764392175910277,
+   "order_in_effective_day_closes": 1.2917346904828138,
+   "expected_print_x_adv": 3.2546668959839744,
+   "pre_ann_excess_25d": -0.1764476994364852,
+   "pre_ann_percentile": 0.038461538461538464,
+   "prob_of_addition": 0.6177,
+   "index_weight_pct": 0.5115457115928369,
+   "capacity_rank": 2
+  },
+  "8046": {
+   "carried": true,
+   "name": "Nan Ya Printed Circuit Board Corporation",
+   "adv_shares": 17596597.0,
+   "demand_shares": 14040475.134204812,
+   "demand_adv_days": 0.7979085464197886,
+   "ordinary_close_shares": 1668403.7479579998,
+   "order_in_normal_closes": 8.41551402134483,
+   "order_in_effective_day_closes": 1.0098676471434285,
+   "expected_print_x_adv": 4.0377804802786015,
+   "pre_ann_excess_25d": -0.05183012347829352,
+   "pre_ann_percentile": 0.15384615384615385,
+   "prob_of_addition": 0.6177,
+   "index_weight_pct": 0.22276782909205153,
+   "capacity_rank": 3
+  },
+  "2344": {
+   "carried": true,
+   "name": "Winbond Electronics Corporation",
+   "adv_shares": 138671500.5,
+   "demand_shares": 176556449.01036757,
+   "demand_adv_days": 1.2731992397411722,
+   "ordinary_close_shares": 13147999.648407,
+   "order_in_normal_closes": 13.428388631859981,
+   "order_in_effective_day_closes": 1.6114161533316442,
+   "expected_print_x_adv": 3.3258590400107586,
+   "pre_ann_excess_25d": -0.3399577733131728,
+   "pre_ann_percentile": 0.019230769230769232,
+   "prob_of_addition": 0.6177,
+   "index_weight_pct": 0.39583097706566134,
+   "capacity_rank": 1
+  },
+  "8299": {
+   "carried": false,
+   "name": "Phison Electronics Corp.",
+   "adv_shares": 4721803.0,
+   "demand_shares": 9822822.532815337,
+   "demand_adv_days": 2.0803118073361673,
+   "ordinary_close_shares": 447693.029642,
+   "order_in_normal_closes": 21.94097714827101,
+   "order_in_effective_day_closes": 2.632932808685563,
+   "expected_print_x_adv": 5.1768547847071495,
+   "pre_ann_excess_25d": -0.2695866359716481,
+   "pre_ann_percentile": 0.019230769230769232,
+   "prob_of_addition": 0.3706,
+   "index_weight_pct": 0.2778196669808357,
+   "capacity_rank": null
+  }
+ }
+}

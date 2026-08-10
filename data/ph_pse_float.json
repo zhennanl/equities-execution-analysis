@@ -1,0 +1,82 @@
+{
+ "ICTSI INTL CONTAINER": {
+  "symbol": "ICT",
+  "pse_free_float": 0.509,
+  "fol": "40%",
+  "cap_usd_b": 33.16,
+  "implied_fif": 0.455,
+  "pse_err": 0.119
+ },
+ "BDO UNIBANK": {
+  "symbol": "BDO",
+  "pse_free_float": 0.442,
+  "fol": "40%",
+  "cap_usd_b": 10.79,
+  "implied_fif": 0.427,
+  "pse_err": 0.035
+ },
+ "BANK OF PHIL ISLANDS": {
+  "symbol": "BPI",
+  "pse_free_float": 0.486,
+  "fol": "40%",
+  "cap_usd_b": 8.78,
+  "implied_fif": 0.328,
+  "pse_err": 0.482
+ },
+ "SM PRIME HOLDINGS": {
+  "symbol": "SMPH",
+  "pse_free_float": 0.367,
+  "fol": "40%",
+  "cap_usd_b": 8.58,
+  "implied_fif": 0.327,
+  "pse_err": 0.122
+ },
+ "SM INVESTMENTS": {
+  "symbol": "SM",
+  "pse_free_float": 0.468,
+  "fol": "40%",
+  "cap_usd_b": 11.8,
+  "implied_fif": 0.18,
+  "pse_err": 1.6
+ },
+ "AYALA CORP": {
+  "symbol": "AC",
+  "pse_free_float": 0.512,
+  "fol": "40%",
+  "cap_usd_b": 5.02,
+  "implied_fif": 0.386,
+  "pse_err": 0.326
+ },
+ "METROPOLITAN BANK &TRUST": {
+  "symbol": "MBT",
+  "pse_free_float": 0.478,
+  "fol": "40%",
+  "cap_usd_b": 4.95,
+  "implied_fif": 0.39,
+  "pse_err": 0.226
+ },
+ "AYALA LAND": {
+  "symbol": "ALI",
+  "pse_free_float": 0.448,
+  "fol": "40%",
+  "cap_usd_b": 3.6,
+  "implied_fif": 0.439,
+  "pse_err": 0.021
+ },
+ "PLDT": {
+  "symbol": "TEL",
+  "pse_free_float": 0.421,
+  "fol": "40%",
+  "cap_usd_b": 4.33,
+  "implied_fif": 0.347,
+  "pse_err": 0.213
+ },
+ "MANILA ELECTRIC CO B": {
+  "symbol": "MER",
+  "pse_free_float": 0.261,
+  "fol": "40%",
+  "cap_usd_b": 9.17,
+  "implied_fif": 0.154,
+  "pse_err": 0.695
+ }
+}

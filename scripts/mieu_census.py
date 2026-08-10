@@ -41,12 +41,12 @@ MIN_SIZE_USD = 0.2e9          # equity-universe min size approx
 
 
 def _load():
-    return json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    return json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
 
 
 def _save(c):
     tmp = CACHE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(c))
+    tmp.write_text(json.dumps(c), encoding="utf-8")
     tmp.replace(CACHE)
 
 
@@ -283,7 +283,7 @@ def report():
                "floats": f"{len(fl)}"}}
     (ROOT / "data" / "mieu_report.json").write_text(
         json.dumps({**out, "rows_top": sorted(
-            rows, key=lambda r: -r["cap_usd_b"])[:120]}, indent=1))
+            rows, key=lambda r: -r["cap_usd_b"])[:120]}, indent=1), encoding="utf-8")
     print(json.dumps(out, indent=1))
 
 

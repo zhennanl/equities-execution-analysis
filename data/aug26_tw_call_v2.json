@@ -1,0 +1,109 @@
+{
+ "market": "Taiwan",
+ "review": "Aug-2026",
+ "declared": "2026-08-09",
+ "supersedes": "the 6.75B-cutoff call declared 2026-08-08, withdrawn with that frame (c-273)",
+ "data_asof": "20260731",
+ "cutoff_usd_b": 7.22,
+ "cutoff_rule": "MSCI Taiwan Index (USD) factsheet, 31 Jul 2026",
+ "raw_85pct_crossing": {
+  "rank": 52,
+  "code": "3481",
+  "cutoff_usd_b": 11.221
+ },
+ "addition_bar_usd_b": 10.83,
+ "incumbent_floor_usd_b": 4.81,
+ "mieu_n": 398,
+ "registered_base_rates": {
+  "add_guaranteed": 0.85,
+  "add_queue": 0.45,
+  "del_float_gate": 0.85,
+  "del_deep": 0.85,
+  "del_below_floor": 0.7,
+  "del_displaced": 0.55,
+  "del_proximity": 0.3
+ },
+ "registered_haircuts": {
+  "count_flex": 0.85,
+  "atvr_not_evaluated": 0.85,
+  "float_estimated": 0.9,
+  "blind_band": 0.95
+ },
+ "calls": [
+  {
+   "action": "ADD",
+   "code": "2408",
+   "full_cap_usd_b": 34.48,
+   "float_cap_usd_b": 16.28,
+   "fif": 0.4722,
+   "float_src": "yahoo",
+   "x_cutoff": 4.78,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.6177,
+   "name": "2408",
+   "caveats": [
+    "§2.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Its full market cap of &#36;34.48B is 4.78x the &#36;7.22B cutoff, clearing the &#36;10.83B addition bar, which §3.1.5 makes a guaranteed addition when a slot exists. Free-float cap &#36;16.28B (FIF 0.4722, yahoo) clears the §2.3.6.1 minimum of &#36;3.61B."
+  },
+  {
+   "action": "ADD",
+   "code": "8046",
+   "full_cap_usd_b": 18.35,
+   "float_cap_usd_b": 7.09,
+   "fif": 0.3864,
+   "float_src": "yahoo",
+   "x_cutoff": 2.54,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.6177,
+   "name": "8046",
+   "caveats": [
+    "§2.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Its full market cap of &#36;18.35B is 2.54x the &#36;7.22B cutoff, clearing the &#36;10.83B addition bar, which §3.1.5 makes a guaranteed addition when a slot exists. Free-float cap &#36;7.09B (FIF 0.3864, yahoo) clears the §2.3.6.1 minimum of &#36;3.61B."
+  },
+  {
+   "action": "ADD",
+   "code": "2344",
+   "full_cap_usd_b": 18.06,
+   "float_cap_usd_b": 12.6,
+   "fif": 0.6977,
+   "float_src": "yahoo",
+   "x_cutoff": 2.5,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.6177,
+   "name": "2344",
+   "caveats": [
+    "§2.3.3 count-flex risk",
+    "float from yahoo, not MSCI"
+   ],
+   "why": "Not currently in the index. Its full market cap of &#36;18.06B is 2.5x the &#36;7.22B cutoff, clearing the &#36;10.83B addition bar, which §3.1.5 makes a guaranteed addition when a slot exists. Free-float cap &#36;12.6B (FIF 0.6977, yahoo) clears the §2.3.6.1 minimum of &#36;3.61B."
+  },
+  {
+   "action": "ADD",
+   "code": "8299",
+   "full_cap_usd_b": 11.2,
+   "float_cap_usd_b": 8.84,
+   "fif": 0.7898,
+   "float_src": "yahoo",
+   "x_cutoff": 1.55,
+   "zone": "guaranteed (>1.5x)",
+   "prob": 0.3706,
+   "name": "8299",
+   "caveats": [
+    "§2.3.3 count-flex risk",
+    "float from yahoo, not MSCI",
+    "not robust across the cutoff band — the call flips at one edge"
+   ],
+   "why": "Not currently in the index. Its full market cap of &#36;11.2B is 1.55x the &#36;7.22B cutoff, clearing the &#36;10.83B addition bar, which §3.1.5 makes a guaranteed addition when a slot exists. Free-float cap &#36;8.84B (FIF 0.7898, yahoo) clears the §2.3.6.1 minimum of &#36;3.61B. The verdict does NOT hold across the cutoff band, so it is carried at a reduced probability."
+  }
+ ],
+ "limits": [
+  "Deletions for liquidity, foreign room, mergers or delistings are invisible here. This deletion list is a floor, not a complete one.",
+  "Taiwan has deleted at least one name in every review since 2015 (mean 2.3). A prediction of 0 size-driven deletion(s) is below that run rate and should be read as evidence about the cutoff, not as a forecast of a quiet review.",
+  "Additions equal deletions in only 14 of 34 Taiwan reviews; no count balancing is applied.",
+  "Float factors are Yahoo-sourced for most names; only the index top-10 come from MSCI's own arithmetic."
+ ]
+}

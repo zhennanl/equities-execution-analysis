@@ -1,0 +1,266 @@
+[
+ {
+  "review": "Feb18",
+  "note": "no answer key (2015-17 hole or out of scope)"
+ },
+ {
+  "review": "May18",
+  "moves": 2,
+  "explained": 1,
+  "del_hits": 1,
+  "del_misses": 0,
+  "false_alarms": 29
+ },
+ {
+  "review": "Aug18",
+  "moves": 0,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 0,
+  "false_alarms": 29
+ },
+ {
+  "review": "Nov18",
+  "moves": 5,
+  "explained": 4,
+  "del_hits": 4,
+  "del_misses": 0,
+  "false_alarms": 32
+ },
+ {
+  "review": "Feb19",
+  "moves": 1,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 0,
+  "false_alarms": 33
+ },
+ {
+  "review": "May19",
+  "moves": 0,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 0,
+  "false_alarms": 27
+ },
+ {
+  "review": "Aug19",
+  "moves": 0,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 0,
+  "false_alarms": 27
+ },
+ {
+  "review": "Nov19",
+  "moves": 3,
+  "explained": 1,
+  "del_hits": 1,
+  "del_misses": 0,
+  "false_alarms": 25
+ },
+ {
+  "review": "Feb20",
+  "moves": 0,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 0,
+  "false_alarms": 25
+ },
+ {
+  "review": "May20",
+  "moves": 2,
+  "explained": 1,
+  "del_hits": 1,
+  "del_misses": 0,
+  "false_alarms": 25
+ },
+ {
+  "review": "Aug20",
+  "moves": 3,
+  "explained": 2,
+  "del_hits": 2,
+  "del_misses": 0,
+  "false_alarms": 23
+ },
+ {
+  "review": "Nov20",
+  "moves": 4,
+  "explained": 2,
+  "del_hits": 1,
+  "del_misses": 1,
+  "false_alarms": 18
+ },
+ {
+  "review": "Feb21",
+  "moves": 2,
+  "explained": 1,
+  "del_hits": 1,
+  "del_misses": 0,
+  "false_alarms": 17
+ },
+ {
+  "review": "May21",
+  "moves": 3,
+  "explained": 2,
+  "del_hits": 2,
+  "del_misses": 0,
+  "false_alarms": 10
+ },
+ {
+  "review": "Aug21",
+  "moves": 2,
+  "explained": 1,
+  "del_hits": 0,
+  "del_misses": 1,
+  "false_alarms": 10
+ },
+ {
+  "review": "Nov21",
+  "moves": 6,
+  "explained": 3,
+  "del_hits": 3,
+  "del_misses": 0,
+  "false_alarms": 11
+ },
+ {
+  "review": "Feb22",
+  "moves": 2,
+  "explained": 1,
+  "del_hits": 0,
+  "del_misses": 1,
+  "false_alarms": 11
+ },
+ {
+  "review": "May22",
+  "moves": 7,
+  "explained": 3,
+  "del_hits": 3,
+  "del_misses": 0,
+  "false_alarms": 6
+ },
+ {
+  "review": "Aug22",
+  "moves": 0,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 0,
+  "false_alarms": 6
+ },
+ {
+  "review": "Nov22",
+  "moves": 3,
+  "explained": 1,
+  "del_hits": 1,
+  "del_misses": 0,
+  "false_alarms": 11
+ },
+ {
+  "review": "Feb23",
+  "note": "no answer key (2015-17 hole or out of scope)"
+ },
+ {
+  "review": "May23",
+  "moves": 2,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 0,
+  "false_alarms": 7
+ },
+ {
+  "review": "Aug23",
+  "moves": 2,
+  "explained": 1,
+  "del_hits": 1,
+  "del_misses": 0,
+  "false_alarms": 7
+ },
+ {
+  "review": "Nov23",
+  "moves": 2,
+  "explained": 1,
+  "del_hits": 1,
+  "del_misses": 0,
+  "false_alarms": 8
+ },
+ {
+  "review": "Feb24",
+  "moves": 1,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 1,
+  "false_alarms": 9
+ },
+ {
+  "review": "May24",
+  "moves": 5,
+  "explained": 3,
+  "del_hits": 3,
+  "del_misses": 0,
+  "false_alarms": 9
+ },
+ {
+  "review": "Aug24",
+  "moves": 1,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 1,
+  "false_alarms": 7
+ },
+ {
+  "review": "Nov24",
+  "moves": 3,
+  "explained": 1,
+  "del_hits": 1,
+  "del_misses": 0,
+  "false_alarms": 15
+ },
+ {
+  "review": "Feb25",
+  "moves": 4,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 2,
+  "false_alarms": 11
+ },
+ {
+  "review": "May25",
+  "moves": 0,
+  "explained": 0,
+  "del_hits": 0,
+  "del_misses": 0,
+  "false_alarms": 25
+ },
+ {
+  "review": "Aug25",
+  "moves": 4,
+  "explained": 2,
+  "del_hits": 2,
+  "del_misses": 0,
+  "false_alarms": 21
+ },
+ {
+  "review": "Nov25",
+  "moves": 13,
+  "explained": 7,
+  "del_hits": 7,
+  "del_misses": 0,
+  "false_alarms": 17
+ },
+ {
+  "review": "Feb26",
+  "moves": 5,
+  "explained": 3,
+  "del_hits": 3,
+  "del_misses": 1,
+  "false_alarms": 14
+ },
+ {
+  "review": "May26",
+  "moves": 8,
+  "explained": 8,
+  "del_hits": 7,
+  "del_misses": 0,
+  "false_alarms": 8
+ }
+]

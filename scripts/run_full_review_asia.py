@@ -34,12 +34,12 @@ def cap_refresh():
     """Session 9i: Apr-30 -> current price ratios per ticker
     (scripts/refresh_aug_caps.py). Empty dict = no refresh file."""
     p = Path("data/aug26_cap_refresh.json")
-    return json.loads(p.read_text()) if p.exists() else {}
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
 
 def post_may_universe(mkt):
     cache = json.loads(
-        Path("data/pit_may26_asia_cache.json").read_text())
+        Path("data/pit_may26_asia_cache.json").read_text(encoding="utf-8"))
     ratios = cap_refresh()
     act = ACTUAL[mkt]
     rows = []
@@ -82,7 +82,7 @@ def pit_universe(mkt):
     (historical prices) and PRE-May membership. No information from
     after the announcement enters this frame."""
     cache = json.loads(
-        Path("data/pit_may26_asia_cache.json").read_text())
+        Path("data/pit_may26_asia_cache.json").read_text(encoding="utf-8"))
     rows = []
     for t, mem in UNIVERSES[mkt]:
         c = cache.get(t, {})
@@ -186,11 +186,11 @@ def market_short_caches():
     elsewhere (see event_data.CROWDING_SOURCES). China gets the SFC HK
     file: its H-lines carry HK codes; A-lines stay uncovered."""
     tw_native = json.loads(
-        Path("data/event_data_cache.json").read_text())
+        Path("data/event_data_cache.json").read_text(encoding="utf-8"))
     asia = {}
     p = Path("data/crowding_asia_cache.json")
     if p.exists():
-        asia = json.loads(p.read_text())
+        asia = json.loads(p.read_text(encoding="utf-8"))
     hk = asia.get("HongKong")
     return {"Taiwan": merge_short_caches(tw_native,
                                          asia.get("TaiwanOTC")),
@@ -236,11 +236,11 @@ def crowding_demo(results, caches):
 
 def main():
     ledgers = [parse_msci_public_list(
-        Path(f"data/msci_{p}_public_list.txt").read_text())
+        Path(f"data/msci_{p}_public_list.txt").read_text(encoding="utf-8"))
         for p in ("feb26", "may26")]
     caches = market_short_caches()
     event_cache = json.loads(
-        Path("data/event_flow_study.json").read_text())
+        Path("data/event_flow_study.json").read_text(encoding="utf-8"))
     LEDGER_COUNTRY = {"Taiwan": "TAIWAN", "Japan": "JAPAN",
                       "Korea": "KOREA", "China": "CHINA",
                       "India": "INDIA", "Malaysia": "MALAYSIA",
@@ -269,7 +269,7 @@ def main():
         if mkt == "Japan":
             jp = Path("data/jp_event_priors.json")
             if jp.exists():
-                pri = json.loads(jp.read_text())["priors"]
+                pri = json.loads(jp.read_text(encoding="utf-8"))["priors"]
                 r["history"] = {
                     f"MSCI {side} (JP-measured)": {
                         "available": True, "median": p["median"],

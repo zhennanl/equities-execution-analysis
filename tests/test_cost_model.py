@@ -154,7 +154,7 @@ def test_build_panel_and_fit_on_fixture():
     FIX = Path(__file__).resolve().parent / "fixtures"
     if not (FIX / "AAPL_meta.json").exists():
         pytest.skip("fixture missing")
-    meta = json.load(open(FIX / "AAPL_meta.json"))
+    meta = json.load(open(FIX / "AAPL_meta.json", encoding="utf-8"))
     md = MarketData(ticker=meta["ticker"], market=meta["market"],
                     intraday=pd.read_parquet(FIX / "AAPL_intraday.parquet"),
                     daily=pd.read_parquet(FIX / "AAPL_daily.parquet"),

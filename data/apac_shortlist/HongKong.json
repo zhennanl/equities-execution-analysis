@@ -1,0 +1,532 @@
+{
+ "market": "HongKong",
+ "cutoff_usd_b": 42.332,
+ "cutoff_derivation": {
+  "member_coverage": 0.84,
+  "members_unsized": 4,
+  "coverage_gate": "DO NOT PUBLISH \u2014 too many members unsized",
+  "confidence": "OK",
+  "flagged_fraction_of_checked": null,
+  "count_anchor_usd_b": 42.332,
+  "n_members": 25,
+  "n_members_source": "MSCI factsheet",
+  "country_flagged_excluded": 0,
+  "country_check_run": false,
+  "smallest_member_usd_b": 12.417,
+  "members_matched": "7/25",
+  "note": "seed only \u2014 the binding cutoff comes from the stage-2 float-coverage walk"
+ },
+ "band": [
+  0.5,
+  2.0
+ ],
+ "n": 42,
+ "of_universe": 2088,
+ "next": "stage 2 \u2014 float (\u00a72.2.4/\u00a72.2.6), ATVR (\u00a72.2.5), foreign room (\u00a72.2.8) for these names only",
+ "rows": {
+  "9999.HK": {
+   "name": "NetEase, Inc.",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 656.8967,
+   "cap_usd_b": 83.743,
+   "shares": 3201250981,
+   "price": 205.2,
+   "exchange": "HKSE",
+   "rank": 10
+  },
+  "1398.HK": {
+   "name": "Industrial and Commercial Bank of China Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 324.4105,
+    "ratio": 4.106
+   },
+   "cap_local_b": 619.7095,
+   "cap_usd_b": 79.0023,
+   "shares": 86794044550,
+   "price": 7.14,
+   "exchange": "HKSE",
+   "rank": 11
+  },
+  "0945.HK": {
+   "name": "Manulife Financial Corporation",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 583.9922,
+   "cap_usd_b": 74.4489,
+   "shares": 1661901655,
+   "price": 351.4,
+   "exchange": "HKSE",
+   "rank": 12
+  },
+  "3690.HK": {
+   "name": "Meituan",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 569.0437,
+   "cap_usd_b": 72.5432,
+   "shares": 5592688176,
+   "price": 92.2,
+   "exchange": "HKSE",
+   "rank": 13
+  },
+  "2388.HK": {
+   "name": "BOC Hong Kong (Holdings) Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 530.7536,
+   "cap_usd_b": 67.6619,
+   "shares": 10572780266,
+   "price": 50.2,
+   "exchange": "HKSE",
+   "rank": 14
+  },
+  "0388.HK": {
+   "name": "Hong Kong Exchanges and Clearing Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 520.2752,
+   "cap_usd_b": 66.3261,
+   "shares": 1264031072,
+   "price": 411.6,
+   "exchange": "HKSE",
+   "rank": 15
+  },
+  "2888.HK": {
+   "name": "Standard Chartered PLC",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 508.5862,
+   "cap_usd_b": 64.836,
+   "shares": 2190293819,
+   "price": 232.2,
+   "exchange": "HKSE",
+   "rank": 16
+  },
+  "3988.HK": {
+   "name": "Bank of China Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 214.8302,
+    "ratio": 3.853
+   },
+   "cap_local_b": 437.3445,
+   "cap_usd_b": 55.7539,
+   "shares": 83622276395,
+   "price": 5.23,
+   "exchange": "HKSE",
+   "rank": 17
+  },
+  "2318.HK": {
+   "name": "Ping An Insurance (Group) Company of China, Ltd.",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 131.9257,
+    "ratio": 2.431
+   },
+   "cap_local_b": 425.629,
+   "cap_usd_b": 54.2603,
+   "shares": 7447576912,
+   "price": 57.15,
+   "exchange": "HKSE",
+   "rank": 18
+  },
+  "0981.HK": {
+   "name": "Semiconductor Manufacturing International Corporation",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 73.0116,
+    "ratio": 1.423
+   },
+   "cap_local_b": 402.3407,
+   "cap_usd_b": 51.2915,
+   "shares": 6014061373,
+   "price": 66.9,
+   "exchange": "HKSE",
+   "rank": 19
+  },
+  "2259.HK": {
+   "name": "Zijin Gold International Company Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 366.9261,
+   "cap_usd_b": 46.7767,
+   "shares": 2676339300,
+   "price": 137.1,
+   "exchange": "HKSE",
+   "rank": 20
+  },
+  "0992.HK": {
+   "name": "Lenovo Group Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 348.5709,
+   "cap_usd_b": 44.4368,
+   "shares": 12404659302,
+   "price": 28.1,
+   "exchange": "HKSE",
+   "rank": 21
+  },
+  "9618.HK": {
+   "name": "JD.com, Inc.",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 348.2843,
+   "cap_usd_b": 44.4002,
+   "shares": 2409875383,
+   "price": 127.5,
+   "exchange": "HKSE",
+   "rank": 22
+  },
+  "0267.HK": {
+   "name": "CITIC Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 345.8832,
+   "cap_usd_b": 44.0941,
+   "shares": 29090262630,
+   "price": 11.89,
+   "exchange": "HKSE",
+   "rank": 23
+  },
+  "0016.HK": {
+   "name": "Sun Hung Kai Properties Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 334.4038,
+   "cap_usd_b": 42.6307,
+   "shares": 2897780274,
+   "price": 115.4,
+   "exchange": "HKSE",
+   "rank": 24
+  },
+  "1211.HK": {
+   "name": "BYD Company Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 104.78,
+    "ratio": 2.475
+   },
+   "cap_local_b": 332.0585,
+   "cap_usd_b": 42.3317,
+   "shares": 3683400000,
+   "price": 90.15,
+   "exchange": "HKSE",
+   "rank": 25
+  },
+  "6160.HK": {
+   "name": "BeOne Medicines AG",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 308.8235,
+   "cap_usd_b": 39.3697,
+   "shares": 1355532838,
+   "price": 210.0,
+   "exchange": "HKSE",
+   "rank": 26
+  },
+  "9888.HK": {
+   "name": "Baidu, Inc.",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 289.801,
+   "cap_usd_b": 36.9446,
+   "shares": 2189471930,
+   "price": 106.8,
+   "exchange": "HKSE",
+   "rank": 27
+  },
+  "0001.HK": {
+   "name": "CK Hutchison Holdings Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 280.5508,
+   "cap_usd_b": 35.7654,
+   "shares": 3830044500,
+   "price": 73.25,
+   "exchange": "HKSE",
+   "rank": 28
+  },
+  "2513.HK": {
+   "name": "Z.AI Co., Ltd.",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 70.8193,
+    "ratio": 2.015
+   },
+   "cap_local_b": 275.758,
+   "cap_usd_b": 35.1544,
+   "shares": 221314605,
+   "price": 1246.0,
+   "exchange": "HKSE",
+   "rank": 29
+  },
+  "2378.HK": {
+   "name": "Prudential plc",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 269.8425,
+   "cap_usd_b": 34.4003,
+   "shares": 2487027395,
+   "price": 108.5,
+   "exchange": "HKSE",
+   "rank": 30
+  },
+  "0669.HK": {
+   "name": "Techtronic Industries Company Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 267.9122,
+   "cap_usd_b": 34.1542,
+   "shares": 1827504941,
+   "price": 146.6,
+   "exchange": "HKSE",
+   "rank": 31
+  },
+  "3328.HK": {
+   "name": "Bank of Communications Co., Ltd.",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 81.6139,
+    "ratio": 2.524
+   },
+   "cap_local_b": 253.6609,
+   "cap_usd_b": 32.3374,
+   "shares": 35011862630,
+   "price": 7.245,
+   "exchange": "HKSE",
+   "rank": 32
+  },
+  "1378.HK": {
+   "name": "China Hongqiao Group Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 237.433,
+   "cap_usd_b": 30.2686,
+   "shares": 9819397841,
+   "price": 24.18,
+   "exchange": "HKSE",
+   "rank": 33
+  },
+  "1109.HK": {
+   "name": "China Resources Land Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 234.0374,
+   "cap_usd_b": 29.8357,
+   "shares": 7130939579,
+   "price": 32.82,
+   "exchange": "HKSE",
+   "rank": 34
+  },
+  "9961.HK": {
+   "name": "Trip.com Group Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 224.9307,
+   "cap_usd_b": 28.6748,
+   "shares": 629705222,
+   "price": 357.2,
+   "exchange": "HKSE",
+   "rank": 35
+  },
+  "3968.HK": {
+   "name": "China Merchants Bank Co., Ltd.",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 156.5108,
+    "ratio": 5.493
+   },
+   "cap_local_b": 223.4851,
+   "cap_usd_b": 28.4905,
+   "shares": 4590901172,
+   "price": 48.68,
+   "exchange": "HKSE",
+   "rank": 36
+  },
+  "2899.HK": {
+   "name": "Zijin Mining Group Company Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 123.3908,
+    "ratio": 4.44
+   },
+   "cap_local_b": 217.9967,
+   "cap_usd_b": 27.7908,
+   "shares": 5988921482,
+   "price": 36.4,
+   "exchange": "HKSE",
+   "rank": 37
+  },
+  "2628.HK": {
+   "name": "China Life Insurance Company Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 103.7739,
+    "ratio": 3.798
+   },
+   "cap_local_b": 214.3058,
+   "cap_usd_b": 27.3203,
+   "shares": 7441175000,
+   "price": 28.8,
+   "exchange": "HKSE",
+   "rank": 38
+  },
+  "9633.HK": {
+   "name": "Nongfu Spring Co., Ltd.",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 60.6468,
+    "ratio": 2.234
+   },
+   "cap_local_b": 212.9664,
+   "cap_usd_b": 27.1495,
+   "shares": 5034666400,
+   "price": 42.3,
+   "exchange": "HKSE",
+   "rank": 39
+  },
+  "9992.HK": {
+   "name": "Pop Mart International Group Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 206.9515,
+   "cap_usd_b": 26.3827,
+   "shares": 1311479457,
+   "price": 157.8,
+   "exchange": "HKSE",
+   "rank": 40
+  },
+  "2020.HK": {
+   "name": "ANTA Sports Products Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 206.4022,
+   "cap_usd_b": 26.3127,
+   "shares": 2770499587,
+   "price": 74.5,
+   "exchange": "HKSE",
+   "rank": 41
+  },
+  "0857.HK": {
+   "name": "PetroChina Company Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 221.7708,
+    "ratio": 8.674
+   },
+   "cap_local_b": 200.545,
+   "cap_usd_b": 25.566,
+   "shares": 21098900000,
+   "price": 9.505,
+   "exchange": "HKSE",
+   "rank": 42
+  },
+  "3692.HK": {
+   "name": "Hansoh Pharmaceutical Group Company Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 199.5925,
+   "cap_usd_b": 25.4446,
+   "shares": 6062955423,
+   "price": 32.92,
+   "exchange": "HKSE",
+   "rank": 43
+  },
+  "0175.HK": {
+   "name": "Geely Automobile Holdings Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 198.6621,
+   "cap_usd_b": 25.326,
+   "shares": 10785128597,
+   "price": 18.42,
+   "exchange": "HKSE",
+   "rank": 44
+  },
+  "0066.HK": {
+   "name": "MTR Corporation Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 198.2324,
+   "cap_usd_b": 25.2712,
+   "shares": 6214180112,
+   "price": 31.9,
+   "exchange": "HKSE",
+   "rank": 45
+  },
+  "0002.HK": {
+   "name": "CLP Holdings Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 196.0526,
+   "cap_usd_b": 24.9933,
+   "shares": 2526450570,
+   "price": 77.6,
+   "exchange": "HKSE",
+   "rank": 46
+  },
+  "0762.HK": {
+   "name": "China Unicom (Hong Kong) Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 195.6742,
+   "cap_usd_b": 24.9451,
+   "shares": 30598000000,
+   "price": 6.395,
+   "exchange": "HKSE",
+   "rank": 47
+  },
+  "1024.HK": {
+   "name": "Kuaishou Technology",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 191.1527,
+   "cap_usd_b": 24.3687,
+   "shares": 3663821089,
+   "price": 44.18,
+   "exchange": "HKSE",
+   "rank": 48
+  },
+  "2269.HK": {
+   "name": "WuXi Biologics (Cayman) Inc.",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 188.3126,
+   "cap_usd_b": 24.0066,
+   "shares": 4106248617,
+   "price": 45.86,
+   "exchange": "HKSE",
+   "rank": 49
+  },
+  "1347.HK": {
+   "name": "Hua Hong Grace Semiconductor Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 31.278,
+    "ratio": 1.307
+   },
+   "cap_local_b": 187.7768,
+   "cap_usd_b": 23.9383,
+   "shares": 1329864193,
+   "price": 141.2,
+   "exchange": "HKSE",
+   "rank": 50
+  },
+  "1288.HK": {
+   "name": "Agricultural Bank of China Limited",
+   "cap_basis": "price x shares",
+   "identity_flag": {
+    "reported_cap_usd_b": 261.4544,
+    "ratio": 11.386
+   },
+   "cap_local_b": 180.1295,
+   "cap_usd_b": 22.9634,
+   "shares": 30738823096,
+   "price": 5.86,
+   "exchange": "HKSE",
+   "rank": 51
+  }
+ }
+}

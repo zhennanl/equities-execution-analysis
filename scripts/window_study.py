@@ -25,7 +25,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from scripts.backfill_tw_history import load as hist  # noqa
 
-KEYS = json.loads(Path("data/ftse_tw50_changes.json").read_text())
+KEYS = json.loads(Path("data/ftse_tw50_changes.json").read_text(encoding="utf-8"))
 EVENTS = ["2021-06", "2021-09", "2023-09", "2024-03",
           "2025-12", "2026-03"]
 

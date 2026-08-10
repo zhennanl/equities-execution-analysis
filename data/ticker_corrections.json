@@ -1,0 +1,368 @@
+[
+ {
+  "key": "China|MEITU",
+  "was": "3690.HK",
+  "now": "1357.HK",
+  "why": "3690.HK is Meituan; Meitu Inc is 1357.HK. Four of six windows priced against the wrong company."
+ },
+ {
+  "key": "China|ANHUI GUJING DISTILLER B",
+  "was": "000596.SZ",
+  "now": "200596.SZ",
+  "why": "000596.SZ is the A line and is already mapped to ANHUI GUJING A (HK-C); the B line is 200596.SZ."
+ },
+ {
+  "key": "Australia|BANK OF QUEENSLAND",
+  "was": "BOQPG.AX",
+  "now": "BOQ.AX",
+  "why": "BOQPG is a preference/capital-notes line; the ordinary share MSCI deleted is BOQ.AX."
+ },
+ {
+  "key": "Australia|ALS",
+  "was": "",
+  "now": "ALQ.AX",
+  "why": "recovered via openfigi \u2014 ALS LTD @AU \u2014 shared=['ALS'] extra=[]"
+ },
+ {
+  "key": "Australia|AURIZON HOLDINGS",
+  "was": "",
+  "now": "AZJ.AX",
+  "why": "recovered via yahoo-search \u2014 Aurizon Holdings Limited \u2014 shared=['AURIZO'] extra=[]"
+ },
+ {
+  "key": "Australia|MINERAL RESOURCES",
+  "was": "",
+  "now": "MIN.AX",
+  "why": "recovered via openfigi \u2014 MINERAL RESOURCES LTD @AU \u2014 shared=['MINERA', 'RESOUR'] extra=[]"
+ },
+ {
+  "key": "China|AKESO (CN)",
+  "was": "",
+  "now": "9926.HK",
+  "why": "recovered via yahoo-search \u2014 Akeso, Inc. \u2014 shared=['AKESO'] extra=[]"
+ },
+ {
+  "key": "China|AUTOHOME ADR",
+  "was": "",
+  "now": "ATHM",
+  "why": "recovered via yahoo-search \u2014 Autohome Inc. \u2014 shared=['AUTOHO'] extra=[]"
+ },
+ {
+  "key": "China|BAIDU ADR",
+  "was": "",
+  "now": "BIDU",
+  "why": "recovered via yahoo-search \u2014 Baidu, Inc. \u2014 shared=['BAIDU'] extra=[]"
+ },
+ {
+  "key": "China|BANK OF CHINA A (HK-C)",
+  "was": "",
+  "now": "601988.SS",
+  "why": "recovered via openfigi \u2014 BANK OF CHINA LTD-A @CH \u2014 shared=['BANK', 'CHINA'] extra=[]"
+ },
+ {
+  "key": "China|BAOZUN ADR",
+  "was": "",
+  "now": "BZUN",
+  "why": "recovered via yahoo-search \u2014 Baozun Inc. \u2014 shared=['BAOZUN'] extra=[]"
+ },
+ {
+  "key": "China|CHINA SUNTIEN GREEN H",
+  "was": "",
+  "now": "600956.SS",
+  "why": "recovered via yahoo-search \u2014 China Suntien Green Energy Corporation Limited \u2014 shared=['CHINA', 'GREEN', 'SUNTIE'] extra=['ENERGY']"
+ },
+ {
+  "key": "China|CHINA VANKE CO A (HK-C)",
+  "was": "",
+  "now": "000002.SS",
+  "why": "recovered via openfigi \u2014 CHINA VANKE CO LTD -A @CH \u2014 shared=['CHINA', 'VANKE'] extra=[]"
+ },
+ {
+  "key": "China|COSCO SHIPPING ENERGY H",
+  "was": "",
+  "now": "1138.HK",
+  "why": "recovered via yahoo-search \u2014 COSCO SHIPPING Energy Transportation Co., Ltd. \u2014 shared=['COSCO', 'ENERGY', 'SHIPPI'] extra=['TRANSP']"
+ },
+ {
+  "key": "China|DATANG INTL POWER H",
+  "was": "",
+  "now": "601991.SS",
+  "why": "recovered via openfigi \u2014 DATANG INTL POWER GEN CO-A @CH \u2014 shared=['DATANG', 'INTERN', 'POWER'] extra=[]"
+ },
+ {
+  "key": "China|DOUYU INTERNATIONAL ADR",
+  "was": "",
+  "now": "DOYU",
+  "why": "recovered via yahoo-search \u2014 DouYu International Holdings Limited \u2014 shared=['DOUYU', 'INTERN'] extra=[]"
+ },
+ {
+  "key": "China|FANG HOLDINGS ADR",
+  "was": "",
+  "now": "SFUNY",
+  "why": "recovered via yahoo-search \u2014 Fang Holdings Limited \u2014 shared=['FANG'] extra=[]"
+ },
+ {
+  "key": "China|FLAT GLASS GROUP A(HK-C)",
+  "was": "",
+  "now": "601865.SS",
+  "why": "recovered via openfigi \u2014 FLAT GLASS GROUP CO LTD-A @CH \u2014 shared=['FLAT', 'GLASS'] extra=[]"
+ },
+ {
+  "key": "China|FULLSHARE HOLDINGS (CN)",
+  "was": "",
+  "now": "0607.HK",
+  "why": "recovered via yahoo-search \u2014 Fullshare Holdings Limited \u2014 shared=['FULLSH'] extra=[]"
+ },
+ {
+  "key": "China|GREAT WALL MOTOR A(HK-C)",
+  "was": "",
+  "now": "601633.SS",
+  "why": "recovered via openfigi \u2014 GREAT WALL MOTOR CO LTD-A @CG \u2014 shared=['GREAT', 'MOTOR', 'WALL'] extra=[]"
+ },
+ {
+  "key": "China|HUAXIA BANK A (HK-C)",
+  "was": "",
+  "now": "600015.SS",
+  "why": "recovered via openfigi \u2014 HUAXIA BANK CO LTD-A @CH \u2014 shared=['BANK', 'HUAXIA'] extra=[]"
+ },
+ {
+  "key": "China|HUTCHMED (CHINA) ADR",
+  "was": "",
+  "now": "HCM",
+  "why": "recovered via yahoo-search \u2014 HUTCHMED (China) Limited \u2014 shared=['CHINA', 'HUTCHM'] extra=[]"
+ },
+ {
+  "key": "China|IQIYI ADR A",
+  "was": "",
+  "now": "IQ",
+  "why": "recovered via yahoo-search \u2014 iQIYI, Inc. \u2014 shared=['IQIYI'] extra=[]"
+ },
+ {
+  "key": "China|JIANGSU EXPRESSWAY CO H",
+  "was": "",
+  "now": "600377.SS",
+  "why": "recovered via yahoo-search \u2014 Jiangsu Expressway Company Limited \u2014 shared=['EXPRES', 'JIANGS'] extra=[]"
+ },
+ {
+  "key": "China|JOYY INC ADR",
+  "was": "",
+  "now": "JOYY",
+  "why": "recovered via yahoo-search \u2014 JOYY Inc. \u2014 shared=['JOYY'] extra=[]"
+ },
+ {
+  "key": "China|KINGBOARD HOLDINGS (CN)",
+  "was": "",
+  "now": "0148.HK",
+  "why": "recovered via yahoo-search \u2014 Kingboard Holdings Limited \u2014 shared=['KINGBO'] extra=[]"
+ },
+ {
+  "key": "China|LEGEND BIOTECH CORP ADR",
+  "was": "",
+  "now": "LEGN",
+  "why": "recovered via yahoo-search \u2014 Legend Biotech Corporation \u2014 shared=['BIOTEC', 'LEGEND'] extra=[]"
+ },
+ {
+  "key": "China|LI AUTO ADR",
+  "was": "",
+  "now": "LI",
+  "why": "recovered via yahoo-search \u2014 Li Auto Inc. \u2014 shared=['AUTO', 'LI'] extra=[]"
+ },
+ {
+  "key": "China|LUFAX HOLDING ADR",
+  "was": "",
+  "now": "LU",
+  "why": "recovered via yahoo-search \u2014 Lufax Holding Ltd \u2014 shared=['LUFAX'] extra=[]"
+ },
+ {
+  "key": "China|MINTH GROUP (CN)",
+  "was": "",
+  "now": "0425.HK",
+  "why": "recovered via yahoo-search \u2014 Minth Group Limited \u2014 shared=['MINTH'] extra=[]"
+ },
+ {
+  "key": "China|NEW ORIENTAL EDUCAT ADR",
+  "was": "",
+  "now": "EDU",
+  "why": "recovered via yahoo-search \u2014 New Oriental Education & Technology Group Inc. \u2014 shared=['EDUCAT', 'ORIENT'] extra=['TECHNO']"
+ },
+ {
+  "key": "China|ORIENT OVERSEAS (CN)",
+  "was": "",
+  "now": "0316.HK",
+  "why": "recovered via yahoo-search \u2014 Orient Overseas (International) Limited \u2014 shared=['ORIENT', 'OVERSE'] extra=['INTERN']"
+ },
+ {
+  "key": "China|RLX TECHNOLOGY ADR",
+  "was": "",
+  "now": "RLX",
+  "why": "recovered via yahoo-search \u2014 RLX Technology Inc. \u2014 shared=['RLX', 'TECHNO'] extra=[]"
+ },
+ {
+  "key": "China|SHANGHAI ELECTRIC GRP H",
+  "was": "",
+  "now": "601727.SS",
+  "why": "recovered via openfigi \u2014 SHANGHAI ELECTRIC GRP CO L-A @CH \u2014 shared=['ELECTR', 'SHANGH'] extra=[]"
+ },
+ {
+  "key": "China|SHENZHEN EXPRESSWAY H",
+  "was": "",
+  "now": "600548.SS",
+  "why": "recovered via yahoo-search \u2014 Shenzhen Expressway Corporation Limited \u2014 shared=['EXPRES', 'SHENZH'] extra=[]"
+ },
+ {
+  "key": "China|SINOCHEM INTL A (HK-C)",
+  "was": "",
+  "now": "600500.SS",
+  "why": "recovered via openfigi \u2014 SINOCHEM INTL CORP-A @CH \u2014 shared=['INTERN', 'SINOCH'] extra=[]"
+ },
+ {
+  "key": "China|VIPSHOP HOLDINGS ADR",
+  "was": "",
+  "now": "VIPS",
+  "why": "recovered via yahoo-search \u2014 Vipshop Holdings Limited \u2014 shared=['VIPSHO'] extra=[]"
+ },
+ {
+  "key": "China|WEIBO CORP ADR",
+  "was": "",
+  "now": "WB",
+  "why": "recovered via yahoo-search \u2014 Weibo Corporation \u2014 shared=['WEIBO'] extra=[]"
+ },
+ {
+  "key": "China|XIAOMI CORP B",
+  "was": "",
+  "now": "1810.HK",
+  "why": "recovered via yahoo-search \u2014 Xiaomi Corporation \u2014 shared=['XIAOMI'] extra=[]"
+ },
+ {
+  "key": "China|ZAI LAB ADR",
+  "was": "",
+  "now": "ZLAB",
+  "why": "recovered via yahoo-search \u2014 Zai Lab Limited \u2014 shared=['LAB', 'ZAI'] extra=[]"
+ },
+ {
+  "key": "HongKong|MINTH GROUP (HK)",
+  "was": "",
+  "now": "0425.HK",
+  "why": "recovered via yahoo-search \u2014 Minth Group Limited \u2014 shared=['MINTH'] extra=[]"
+ },
+ {
+  "key": "India|TUBE INVESTMENT (NEW)",
+  "was": "",
+  "now": "TIINDIA.BO",
+  "why": "recovered via yahoo-search \u2014 Tube Investments of India Limited \u2014 shared=['INVEST', 'TUBE'] extra=['INDIA']"
+ },
+ {
+  "key": "Indonesia|HM SAMPOERNA",
+  "was": "",
+  "now": "HMSP.JK",
+  "why": "recovered via openfigi \u2014 HM SAMPOERNA TBK PT @IJ \u2014 shared=['HM', 'SAMPOE'] extra=[]"
+ },
+ {
+  "key": "Japan|AOZORA BANK",
+  "was": "",
+  "now": "8304.T",
+  "why": "recovered via yahoo-search \u2014 Aozora Bank, Ltd. \u2014 shared=['AOZORA', 'BANK'] extra=[]"
+ },
+ {
+  "key": "Japan|JGC HOLDINGS CORP",
+  "was": "",
+  "now": "1963.T",
+  "why": "recovered via yahoo-search \u2014 JGC Holdings Corporation \u2014 shared=['JGC'] extra=[]"
+ },
+ {
+  "key": "Japan|KURARAY CO",
+  "was": "",
+  "now": "3405.T",
+  "why": "recovered via yahoo-search \u2014 Kuraray Co., Ltd. \u2014 shared=['KURARA'] extra=[]"
+ },
+ {
+  "key": "Japan|M3",
+  "was": "",
+  "now": "2413.T",
+  "why": "recovered via openfigi \u2014 M3 INC @JT \u2014 shared=['M3'] extra=[]"
+ },
+ {
+  "key": "Japan|MEIJI HOLDINGS CO",
+  "was": "",
+  "now": "2269.T",
+  "why": "recovered via yahoo-search \u2014 Meiji Holdings Co., Ltd. \u2014 shared=['MEIJI'] extra=[]"
+ },
+ {
+  "key": "Japan|SANTEN PHARMACEUTICAL CO",
+  "was": "",
+  "now": "4536.T",
+  "why": "recovered via yahoo-search \u2014 Santen Pharmaceutical Co., Ltd. \u2014 shared=['PHARMA', 'SANTEN'] extra=[]"
+ },
+ {
+  "key": "Japan|SUMITOMO PHARMA CO",
+  "was": "",
+  "now": "4506.T",
+  "why": "recovered via yahoo-search \u2014 Sumitomo Pharma Co., Ltd. \u2014 shared=['PHARMA', 'SUMITO'] extra=[]"
+ },
+ {
+  "key": "Japan|TEIJIN",
+  "was": "",
+  "now": "3401.T",
+  "why": "recovered via openfigi \u2014 TEIJIN LTD @JT \u2014 shared=['TEIJIN'] extra=[]"
+ },
+ {
+  "key": "Japan|YAKULT HONSHA CO",
+  "was": "",
+  "now": "2267.T",
+  "why": "recovered via yahoo-search \u2014 Yakult Honsha Co.,Ltd. \u2014 shared=['HONSHA', 'YAKULT'] extra=[]"
+ },
+ {
+  "key": "Korea|AMOREPAC CORP PREF (NEW)",
+  "was": "",
+  "now": "090430.KS",
+  "why": "recovered via yahoo-search \u2014 Amorepacific Corporation \u2014 shared=['AMOREP'] extra=[]"
+ },
+ {
+  "key": "Korea|DONGSUH COMPANIES",
+  "was": "",
+  "now": "026960.KS",
+  "why": "recovered via openfigi \u2014 DONGSUH COMPANIES INC @KS \u2014 shared=['COMPAN', 'DONGSU'] extra=[]"
+ },
+ {
+  "key": "Korea|HANJIN KAL CORP",
+  "was": "",
+  "now": "180640.KS",
+  "why": "recovered via openfigi \u2014 HANJIN KAL CORP @KS \u2014 shared=['HANJIN', 'KAL'] extra=[]"
+ },
+ {
+  "key": "Korea|HITE JINRO CO",
+  "was": "",
+  "now": "000087.KS",
+  "why": "recovered via openfigi \u2014 HITE JINRO @KS \u2014 shared=['HITE', 'JINRO'] extra=[]"
+ },
+ {
+  "key": "Korea|HYUNDAI DEPT STORE",
+  "was": "",
+  "now": "069960.KS",
+  "why": "recovered via openfigi \u2014 HYUNDAI DEPT STORE CO @KS \u2014 shared=['DEPT', 'HYUNDA', 'STORE'] extra=[]"
+ },
+ {
+  "key": "Korea|LG CHEM PREF",
+  "was": "",
+  "now": "051915.KS",
+  "why": "recovered via yahoo-search \u2014 LG Chem, Ltd. \u2014 shared=['CHEMIC', 'LG'] extra=[]"
+ },
+ {
+  "key": "Korea|SK CHEMICALS (NEW)",
+  "was": "",
+  "now": "285130.KS",
+  "why": "recovered via yahoo-search \u2014 SK Chemicals Co.,Ltd \u2014 shared=['CHEMIC', 'SK'] extra=[]"
+ },
+ {
+  "key": "Singapore|JARDINE CYCLE & CARRIAGE",
+  "was": "",
+  "now": "C07.SI",
+  "why": "recovered via yahoo-search \u2014 Jardine Cycle & Carriage Limited \u2014 shared=['CARRIA', 'CYCLE', 'JARDIN'] extra=[]"
+ },
+ {
+  "key": "Thailand|CP AXTRA (NEW)",
+  "was": "",
+  "now": "CPAXT.BK",
+  "why": "recovered via yahoo-search \u2014 CP Axtra Public Company Limited \u2014 shared=['AXTRA', 'CP'] extra=[]"
+ }
+]

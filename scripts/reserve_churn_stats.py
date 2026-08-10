@@ -18,7 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-KEYS = json.loads(Path("data/ftse_tw50_changes.json").read_text())
+KEYS = json.loads(Path("data/ftse_tw50_changes.json").read_text(encoding="utf-8"))
 
 
 def quarterly_series():
@@ -82,7 +82,7 @@ def main():
         "dels_observed": del_n,
         "del_readded_within_4r": round(back4 / del_n, 3)
         if del_n else None}
-    Path("data/tw50_stats.json").write_text(json.dumps(stats))
+    Path("data/tw50_stats.json").write_text(json.dumps(stats), encoding="utf-8")
     L = ["# TW50 Reserve-Conversion & Churn — Measured on a Decade "
          "of Official Keys",
          f"*Session 8z. {n} quarterly reviews {stats['span']} "

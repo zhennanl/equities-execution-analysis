@@ -1,0 +1,198 @@
+{
+ "n": 157,
+ "n_adds": 64,
+ "S1_market_regime_ADD": {
+  "cutoffs": [
+   0.0028,
+   0.018
+  ],
+  "risk_off": {
+   "n": 25,
+   "raw_total_med": 0.0154,
+   "EXCESS_total_med": 0.0295,
+   "eff_day_med": 0.0,
+   "revert5_med": -0.0443
+  },
+  "neutral": {
+   "n": 18,
+   "raw_total_med": 0.0223,
+   "EXCESS_total_med": 0.0174,
+   "eff_day_med": 0.023,
+   "revert5_med": -0.0024
+  },
+  "risk_on": {
+   "n": 21,
+   "raw_total_med": 0.0697,
+   "EXCESS_total_med": 0.017,
+   "eff_day_med": -0.0029,
+   "revert5_med": -0.0237
+  }
+ },
+ "S2_sector_ADD": {
+  "TECH": {
+   "n": 37,
+   "total_med": 0.0487,
+   "excess_med": 0.0375,
+   "revert5_med": -0.0514
+  },
+  "SHIPPING": {
+   "n": 5,
+   "total_med": 0.0485,
+   "excess_med": 0.0234,
+   "revert5_med": -0.0073
+  },
+  "TRADITIONAL": {
+   "n": 8,
+   "total_med": 0.0108,
+   "excess_med": 0.0019,
+   "revert5_med": -0.0024
+  },
+  "OTHER": {
+   "n": 10,
+   "total_med": 0.038,
+   "excess_med": 0.0021,
+   "revert5_med": -0.034
+  }
+ },
+ "S3_excess_vs_sector_ADD": {
+  "question": "is the name's foreign flow above its own sector's tide?",
+  "cutoffs": [
+   -0.011,
+   0.598
+  ],
+  "below_sector": {
+   "n": 16,
+   "total_med": 0.0206,
+   "revert5_med": -0.0268
+  },
+  "above_sector": {
+   "n": 15,
+   "total_med": 0.0979,
+   "revert5_med": -0.0433
+  }
+ },
+ "S4_market_foreign_appetite_ADD": {
+  "foreign_selling_TW": {
+   "n": 16,
+   "total_med": 0.0948
+  },
+  "foreign_buying_TW": {
+   "n": 15,
+   "total_med": 0.0487
+  }
+ },
+ "S5_case_cards": {
+  "best_adds": [
+   {
+    "rev": "Aug25",
+    "code": "6919",
+    "name": "CALIWAY BIOPHARMA",
+    "action": "ADD",
+    "year": 2025,
+    "sector": "HEALTHCARE",
+    "drift": 0.4867,
+    "eff_day": 0.0179,
+    "revert5": 0.1633,
+    "total": 0.5038,
+    "mkt_window": 0.0114,
+    "excess_total": 0.4924,
+    "flow_z": 1.4171,
+    "sector_tide": -1.036,
+    "excess_flow": 2.4531,
+    "mkt_foreign_net": 6553105.0
+   },
+   {
+    "rev": "May23",
+    "code": "3231",
+    "name": "WISTRON CORP",
+    "action": "ADD",
+    "year": 2023,
+    "sector": "TECH",
+    "drift": 0.3234,
+    "eff_day": 0.006,
+    "revert5": 0.0285,
+    "total": 0.3958,
+    "mkt_window": 0.0714,
+    "excess_total": 0.3244,
+    "flow_z": -0.3348,
+    "sector_tide": 0.3517,
+    "excess_flow": -0.6865,
+    "mkt_foreign_net": 78350174.5
+   },
+   {
+    "rev": "May18",
+    "code": "2492",
+    "name": "WALSIN TECHNOLOGY CORP",
+    "action": "ADD",
+    "year": 2018,
+    "sector": "TECH",
+    "drift": 0.232,
+    "eff_day": 0.0065,
+    "revert5": 0.0723,
+    "total": 0.3533,
+    "mkt_window": -0.012,
+    "excess_total": 0.3652,
+    "flow_z": 1.245,
+    "sector_tide": -0.0018,
+    "excess_flow": 1.2468,
+    "mkt_foreign_net": 18207964.5
+   }
+  ],
+  "worst_adds": [
+   {
+    "rev": "Nov25",
+    "code": "1504",
+    "name": "TECO ELECTRIC & MACH",
+    "action": "ADD",
+    "year": 2025,
+    "sector": "TECH",
+    "drift": -0.1822,
+    "eff_day": 0.0098,
+    "revert5": -0.085,
+    "total": -0.1712,
+    "mkt_window": -0.0463,
+    "excess_total": -0.1249,
+    "flow_z": 0.421,
+    "sector_tide": -0.1045,
+    "excess_flow": 0.5255,
+    "mkt_foreign_net": -21114143.0
+   },
+   {
+    "rev": "Nov24",
+    "code": "3653",
+    "name": "JENTECH PRECISION INDL",
+    "action": "ADD",
+    "year": 2024,
+    "sector": "TECH",
+    "drift": -0.1353,
+    "eff_day": 0.0573,
+    "revert5": 0.0903,
+    "total": -0.1629,
+    "mkt_window": -0.0396,
+    "excess_total": -0.1234,
+    "flow_z": 1.7116,
+    "sector_tide": -0.2458,
+    "excess_flow": 1.9574,
+    "mkt_foreign_net": -16274960.0
+   },
+   {
+    "rev": "May15",
+    "code": "9910",
+    "name": "FENG TAY ENTERPRISE CO",
+    "action": "ADD",
+    "year": 2015,
+    "sector": "OTHER",
+    "drift": -0.1333,
+    "eff_day": 0.0545,
+    "revert5": -0.1125,
+    "total": -0.1405,
+    "mkt_window": 0.0033,
+    "excess_total": -0.1438,
+    "flow_z": -0.0393,
+    "sector_tide": -0.4859,
+    "excess_flow": 0.4466,
+    "mkt_foreign_net": 14338190.0
+   }
+  ]
+ }
+}

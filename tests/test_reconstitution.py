@@ -231,8 +231,8 @@ def test_reconcile_real_cached_lists():
     if not (feb.exists() and may.exists()):
         import pytest
         pytest.skip("cached official lists not present")
-    ledgers = [parse_msci_public_list(feb.read_text()),
-               parse_msci_public_list(may.read_text())]
+    ledgers = [parse_msci_public_list(feb.read_text(encoding="utf-8")),
+               parse_msci_public_list(may.read_text(encoding="utf-8"))]
     v = reconcile_membership({"FENG TAY ENTERPRISE CO": True},
                              ledgers, "TAIWAN")
     assert v and v[0]["type"] == "STALE_MEMBER"

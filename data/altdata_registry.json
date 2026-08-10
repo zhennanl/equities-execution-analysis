@@ -1,0 +1,219 @@
+{
+ "Taiwan": [
+  {
+   "id": "twse_t86",
+   "type": 3,
+   "status": "HAVE",
+   "what": "Three primary institutions net buy/sell by stock, daily",
+   "url": "https://www.twse.com.tw/rwd/zh/fund/T86?date={date}&selectType=ALL&response=json",
+   "sample": {
+    "date": "20260512"
+   }
+  },
+  {
+   "id": "twse_twt38u",
+   "type": 3,
+   "status": "HAVE",
+   "what": "Foreign & investment trust net by stock",
+   "url": "https://www.twse.com.tw/en/fund/TWT38U?date={date}&response=json",
+   "sample": {
+    "date": "20260512"
+   }
+  },
+  {
+   "id": "twse_twt93u",
+   "type": 2,
+   "status": "HAVE",
+   "what": "Securities borrowing and lending balance",
+   "url": "https://www.twse.com.tw/en/exchangeReport/TWT93U?date={date}&response=json",
+   "sample": {
+    "date": "20260512"
+   }
+  },
+  {
+   "id": "twse_qfiis",
+   "type": 4,
+   "status": "HAVE",
+   "what": "Foreign shareholding ratio and foreign room",
+   "url": "https://www.twse.com.tw/rwd/zh/fund/MI_QFIIS?date={date}&selectType=ALL&response=json",
+   "sample": {
+    "date": "20260512"
+   }
+  },
+  {
+   "id": "twse_fmsrfk",
+   "type": 5,
+   "status": "HAVE",
+   "what": "Monthly turnover ratio, the ATVR input",
+   "url": "https://www.twse.com.tw/rwd/zh/afterTrading/FMSRFK?date={date}&stockNo={code}&response=json",
+   "sample": {
+    "date": "20260101",
+    "code": "2330"
+   }
+  },
+  {
+   "id": "twse_mi5mins",
+   "type": 1,
+   "status": "HAVE",
+   "what": "5-minute index series",
+   "url": "https://www.twse.com.tw/en/exchangeReport/MI_5MINS?date={date}&response=json",
+   "sample": {
+    "date": "20260512"
+   }
+  },
+  {
+   "id": "twse_mi_index_allbut",
+   "type": 6,
+   "status": "HAVE",
+   "what": "Whole-board daily quotes with high/low, used to detect a limit-locked session. A print that jams against a limit is a failure to execute, not a cost \u2014 the client does not get filled at all.",
+   "url": "https://www.twse.com.tw/rwd/en/afterTrading/MI_INDEX?date={date}&type=ALLBUT0999&response=json",
+   "sample": {
+    "date": "20260512"
+   }
+  }
+ ],
+ "Korea": [
+  {
+   "id": "krx_investor_by_issue",
+   "type": 3,
+   "status": "LIKELY",
+   "what": "Investor-type net by issue, daily. The single highest-value non-Taiwan target: it replicates N1-N2 in a second market.",
+   "url": "http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd",
+   "note": "POST with bld=dbms/MDC/STAT/standard/MDCSTAT02401 and a trdDd param. Confirm the bld code by watching the site's own network calls before writing a parser.",
+   "manual": true
+  },
+  {
+   "id": "krx_short_balance",
+   "type": 2,
+   "status": "LIKELY",
+   "what": "Short-selling balance by issue, daily",
+   "url": "http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd",
+   "note": "Same loader, different bld code.",
+   "manual": true
+  }
+ ],
+ "HongKong": [
+  {
+   "id": "hkex_ccass",
+   "type": 3,
+   "status": "LIKELY",
+   "what": "CCASS shareholding by participant, daily, per stock. Nothing else in the region shows WHICH custodian's holding changed, so passive accumulation is directly observable.",
+   "url": "https://www3.hkexnews.hk/sdw/search/searchsdw.aspx",
+   "note": "ASP.NET form with __VIEWSTATE \u2014 needs a session, not a plain GET. Script it with a session that first fetches the form.",
+   "manual": true
+  },
+  {
+   "id": "hkex_short_turnover",
+   "type": 2,
+   "status": "LIKELY",
+   "what": "Short-selling turnover by stock, daily",
+   "url": "https://www.hkex.com.hk/eng/stat/smstat/ssturnover/ncms/SS{date}.htm",
+   "sample": {
+    "date": "260512"
+   }
+  }
+ ],
+ "China": [
+  {
+   "id": "connect_northbound",
+   "type": 3,
+   "status": "LIKELY",
+   "what": "Stock Connect Northbound holdings per A-share, daily. The closest thing to a foreign/passive positioning series for the mainland.",
+   "url": "https://www3.hkexnews.hk/sdw/search/mutualmarket.aspx?t=sh&d={date}",
+   "sample": {
+    "date": "2026/05/12"
+   }
+  }
+ ],
+ "Japan": [
+  {
+   "id": "jpx_short_balance",
+   "type": 2,
+   "status": "LIKELY",
+   "what": "Short-selling balance ratio by issue",
+   "url": "https://www.jpx.co.jp/markets/statistics-equities/short-selling/index.html",
+   "note": "Landing page lists dated files; resolve the file list first."
+  },
+  {
+   "id": "jpx_investor_type",
+   "type": 3,
+   "status": "RESEARCH",
+   "what": "Trading by type of investors",
+   "url": "https://www.jpx.co.jp/markets/statistics-equities/investor-type/index.html",
+   "note": "CHECK GRANULARITY FIRST. Believed weekly and BY MARKET, not by stock. If so it fails the granularity test, cannot answer N1, and should be recorded as unusable rather than harvested."
+  }
+ ],
+ "India": [
+  {
+   "id": "nse_delivery",
+   "type": 3,
+   "status": "LIKELY",
+   "what": "Security-wise delivery position, daily. No Taiwan equivalent: traded volume with flat delivery is churn, not accumulation.",
+   "url": "https://nsearchives.nseindia.com/archives/equities/mto/MTO_{date}.DAT",
+   "sample": {
+    "date": "12052026"
+   }
+  },
+  {
+   "id": "nse_bulk_deals",
+   "type": 3,
+   "status": "LIKELY",
+   "what": "Bulk and block deals \u2014 occasionally names the tracker outright",
+   "url": "https://nsearchives.nseindia.com/content/equities/bulk.csv"
+  }
+ ],
+ "Australia": [
+  {
+   "id": "asic_short",
+   "type": 2,
+   "status": "HAVE",
+   "what": "Daily aggregated short positions, delisted-safe",
+   "url": "https://download.asic.gov.au/short-selling/RR{date}-001-SSDailyAggShortPos.csv",
+   "sample": {
+    "date": "20260512"
+   }
+  }
+ ],
+ "Thailand": [
+  {
+   "id": "set_nvdr",
+   "type": 3,
+   "status": "LIKELY",
+   "what": "NVDR trading by stock \u2014 Thailand's foreign flow instrument. There is no substitute.",
+   "url": "https://www.set.or.th/en/market/product/stock/quotation/{code}/nvdr",
+   "sample": {
+    "code": "PTT"
+   }
+  }
+ ],
+ "Indonesia": [
+  {
+   "id": "idx_foreign_net",
+   "type": 3,
+   "status": "LIKELY",
+   "what": "Foreign net buy/sell by stock, daily. Indonesia is the violence outlier (p90 13.9%), so attribution matters more here.",
+   "url": "https://www.idx.co.id/primary/TradingSummary/GetStockSummary?date={date}",
+   "sample": {
+    "date": "20260512"
+   }
+  }
+ ],
+ "Singapore": [
+  {
+   "id": "sgx_short",
+   "type": 2,
+   "status": "LIKELY",
+   "what": "Daily short-sell report by counter",
+   "url": "https://links.sgx.com/1.0.0/short-sell/{date}"
+  }
+ ],
+ "Malaysia": [
+  {
+   "id": "bursa_short",
+   "type": 2,
+   "status": "RESEARCH",
+   "what": "Daily short-selling report",
+   "url": "https://www.bursamalaysia.com/market_information/equities_prices"
+  }
+ ]
+}

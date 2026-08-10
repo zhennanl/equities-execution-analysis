@@ -36,11 +36,11 @@ OUT = ROOT / "data" / "delete_pool_validation.json"
 
 def ladder(asof):
     cache = json.loads((ROOT / "data" / "tw_vintage_cache.json")
-                       .read_text())
+                       .read_text(encoding="utf-8"))
     ev = json.loads((ROOT / "data" / "msci_tw_events.json")
-                    .read_text())
+                    .read_text(encoding="utf-8"))
     ewt = set(json.loads((ROOT / "data" / "ewt_members.json")
-                         .read_text())["codes"])
+                         .read_text(encoding="utf-8"))["codes"])
     mem = {c: True for c in ewt if c not in FLAGGED}
     for e in ev.values():
         if e["ann"] <= asof:
@@ -67,7 +67,7 @@ def ladder(asof):
 
 def main():
     ev = json.loads((ROOT / "data" / "msci_tw_events.json")
-                    .read_text())
+                    .read_text(encoding="utf-8"))
     out = {}
     for season, asof, gmsr in (("May26", "2026-05-01", 4.64),
                                ("Nov25", "2025-11-01", None)):
@@ -85,7 +85,7 @@ def main():
             "bottom": lad[:14]}
         print(f"{season}: {n_in}/{len(dels)} deletions in "
               f"reconstructed ladder; bottom ranks {ranks}")
-    OUT.write_text(json.dumps(out, indent=1))
+    OUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print("wrote", OUT)
 
 

@@ -99,4 +99,4 @@ def test_audit_pack_contents_and_roundtrip(basket, tmp_path):
     save_audit_pack(pack, p)
     save_audit_pack(pack, p)
     import json
-    assert len(json.loads(p.read_text())) == 2
+    assert len(json.loads(p.read_text(encoding="utf-8"))) == 2

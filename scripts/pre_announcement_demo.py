@@ -22,7 +22,7 @@ from scripts.funnel_demo import MAY26_ADDS, MAY26_DELS  # noqa: E402
 
 def tw_short_cache():
     d = json.loads(
-        (ROOT / "data" / "event_data_cache.json").read_text())
+        (ROOT / "data" / "event_data_cache.json").read_text(encoding="utf-8"))
     return {"short": d.get("short", {})}
 
 
@@ -78,7 +78,7 @@ def main():
                   "crowd_asof": (w2["asof"].iloc[0]
                                  if len(w2) else None)}
     (ROOT / "data" / "preann_tw.json").write_text(
-        json.dumps(out, indent=1, default=str))
+        json.dumps(out, indent=1, default=str), encoding="utf-8")
     print("AUG:", json.dumps(out["aug"], default=str))
     print("packs written")
 

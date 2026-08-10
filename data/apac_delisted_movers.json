@@ -1,0 +1,214 @@
+{
+ "generated": "2026-08-08",
+ "why": "movers we could not price. Kept as a list so a deletion study can state its blind spot rather than inherit it silently.",
+ "summary": {
+  "Australia": {
+   "movers_without_data": 1,
+   "deletion_events": 22,
+   "deletion_events_blind": 1,
+   "deletion_blind_rate": 0.045
+  },
+  "HongKong": {
+   "movers_without_data": 0,
+   "deletion_events": 16,
+   "deletion_events_blind": 0,
+   "deletion_blind_rate": 0.0
+  },
+  "India": {
+   "movers_without_data": 8,
+   "deletion_events": 40,
+   "deletion_events_blind": 3,
+   "deletion_blind_rate": 0.075
+  },
+  "Indonesia": {
+   "movers_without_data": 2,
+   "deletion_events": 33,
+   "deletion_events_blind": 1,
+   "deletion_blind_rate": 0.03
+  },
+  "Japan": {
+   "movers_without_data": 0,
+   "deletion_events": 147,
+   "deletion_events_blind": 0,
+   "deletion_blind_rate": 0.0
+  },
+  "Korea": {
+   "movers_without_data": 1,
+   "deletion_events": 60,
+   "deletion_events_blind": 1,
+   "deletion_blind_rate": 0.017
+  },
+  "Malaysia": {
+   "movers_without_data": 0,
+   "deletion_events": 26,
+   "deletion_events_blind": 0,
+   "deletion_blind_rate": 0.0
+  },
+  "NewZealand": {
+   "movers_without_data": 0,
+   "deletion_events": 8,
+   "deletion_events_blind": 0,
+   "deletion_blind_rate": 0.0
+  },
+  "Singapore": {
+   "movers_without_data": 0,
+   "deletion_events": 13,
+   "deletion_events_blind": 0,
+   "deletion_blind_rate": 0.0
+  },
+  "Thailand": {
+   "movers_without_data": 0,
+   "deletion_events": 26,
+   "deletion_events_blind": 0,
+   "deletion_blind_rate": 0.0
+  }
+ },
+ "markets": {
+  "Australia": [
+   {
+    "code": "BOQPG",
+    "name": "BANK OF QUEENSLAND",
+    "review": "Nov19",
+    "action": "DEL",
+    "ann": "2019-11-07",
+    "eff": "2019-11-26",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   }
+  ],
+  "HongKong": [],
+  "India": [
+   {
+    "code": "TMCV",
+    "name": "TATA MOTORS A",
+    "review": "Nov23",
+    "action": "ADD",
+    "ann": "2023-11-14",
+    "eff": "2023-11-30",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   },
+   {
+    "code": "ENRIN",
+    "name": "SIEMENS INDIA",
+    "review": "Nov19",
+    "action": "ADD",
+    "ann": "2019-11-07",
+    "eff": "2019-11-26",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   },
+   {
+    "code": "ENRIN",
+    "name": "SIEMENS INDIA",
+    "review": "Nov18",
+    "action": "DEL",
+    "ann": "2018-11-13",
+    "eff": "2018-11-30",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   },
+   {
+    "code": "IDFCFIRSTB",
+    "name": "IDFC BANK",
+    "review": "May18",
+    "action": "DEL",
+    "ann": "2018-05-14",
+    "eff": "2018-05-31",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   },
+   {
+    "code": "TMCV",
+    "name": "TATA MOTORS A",
+    "review": "May18",
+    "action": "DEL",
+    "ann": "2018-05-14",
+    "eff": "2018-05-31",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   },
+   {
+    "code": "BANKBETF",
+    "name": "BAJAJ FINSERV",
+    "review": "Nov16",
+    "action": "ADD",
+    "ann": "2016-11-14",
+    "eff": "2016-11-30",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   },
+   {
+    "code": "IDFCFIRSTB",
+    "name": "IDFC BANK",
+    "review": "Nov16",
+    "action": "ADD",
+    "ann": "2016-11-14",
+    "eff": "2016-11-30",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   },
+   {
+    "code": "TMCV",
+    "name": "TATA MOTORS A",
+    "review": "Nov15",
+    "action": "ADD",
+    "ann": "2015-11-12",
+    "eff": "2015-11-30",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   }
+  ],
+  "Indonesia": [
+   {
+    "code": "WSKT",
+    "name": "WASKITA KARYA PERSERO",
+    "review": "Nov18",
+    "action": "DEL",
+    "ann": "2018-11-13",
+    "eff": "2018-11-30",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   },
+   {
+    "code": "WSKT",
+    "name": "WASKITA KARYA PERSERO",
+    "review": "May16",
+    "action": "ADD",
+    "ann": "2016-05-12",
+    "eff": "2016-05-31",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   }
+  ],
+  "Japan": [],
+  "Korea": [
+   {
+    "code": "456040",
+    "name": "OCI COMPANY",
+    "review": "May20",
+    "action": "DEL",
+    "ann": "2020-05-12",
+    "eff": "2020-05-29",
+    "likely_delisted": true,
+    "evidence": "no price data and no reachable exchange register \u2014 could be a delisting OR a ticker we spelled wrong",
+    "evidence_strength": "weak"
+   }
+  ],
+  "Malaysia": [],
+  "NewZealand": [],
+  "Singapore": [],
+  "Thailand": []
+ }
+}

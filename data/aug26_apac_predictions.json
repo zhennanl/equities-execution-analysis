@@ -1,0 +1,133 @@
+{
+ "generated": "2026-08-08",
+ "registered_probabilities": {
+  "del_float_gate": 0.85,
+  "del_deep": 0.85,
+  "del_below_buffer": 0.7,
+  "del_proximity": 0.35,
+  "add_guaranteed": 0.85,
+  "add_queue": 0.45
+ },
+ "haircuts": {
+  "fif_estimated": 0.9,
+  "cutoff_proxy": 0.9,
+  "count_flex": 0.85,
+  "partial_map": 0.8
+ },
+ "markets": {
+  "Taiwan": {
+   "market": "Taiwan",
+   "asof": "2026-07-31",
+   "cutoff_used_usd_b": [
+    6.73,
+    6.73
+   ],
+   "cutoff_source": "engine rank-77 (universe measured)",
+   "n_members_scored": 77,
+   "haircut_applied": 0.85,
+   "channel_covered": "size-floor + float-gate only",
+   "channel_missing": "DISPLACEMENT \u2014 members pushed out when additions take their slots under count stability. This produced 5 of Taiwan's 6 declared deletions and cannot be seen without the universe.",
+   "deletions": [
+    {
+     "code": "2615",
+     "name": "WAN HAI LINES",
+     "action": "DELETE",
+     "rule": "del_float_gate",
+     "robust_across_corridor": true,
+     "full_cap_usd_b": 7.34,
+     "float_cap_usd_b": 1.84,
+     "fif": 0.251,
+     "prob": 0.72,
+     "why": "full cap $7.34B, float cap $1.84B (FIF 0.251). Against the cutoff $6.73B measured by our engine: rule del_float_gate; breaches across the WHOLE corridor"
+    },
+    {
+     "code": "6919",
+     "name": "CALIWAY BIOPHARMA",
+     "action": "DELETE",
+     "rule": "del_proximity",
+     "robust_across_corridor": true,
+     "full_cap_usd_b": 4.95,
+     "float_cap_usd_b": 2.98,
+     "fif": 0.601,
+     "prob": 0.3,
+     "why": "full cap $4.95B, float cap $2.98B (FIF 0.601). Against the cutoff $6.73B measured by our engine: rule del_proximity; breaches across the WHOLE corridor"
+    }
+   ],
+   "additions": {
+    "status": "NO_CALL",
+    "reason": "additions come from NON-members; no listed-universe file for Taiwan"
+   }
+  },
+  "NewZealand": {
+   "market": "NewZealand",
+   "status": "NO_CALL",
+   "reason": "flags a top-quartile member \u2014 the cutoff corridor is a GLOBAL size range, not this market's cutoff",
+   "n_members_scored": 5,
+   "suppressed_flags": [
+    "FPH",
+    "AIA",
+    "IFT",
+    "CEN",
+    "MEL"
+   ],
+   "unblock": "measure this market's own 85% crossing from its listed universe (exchange bulk files), as Taiwan does"
+  },
+  "Singapore": {
+   "market": "Singapore",
+   "status": "NO_CALL",
+   "reason": "flags 3/8 members \u2014 implausible; cutoff not measured",
+   "n_members_scored": 8,
+   "suppressed_flags": [
+    "9CI",
+    "F34",
+    "U96"
+   ],
+   "unblock": "measure this market's own 85% crossing from its listed universe (exchange bulk files), as Taiwan does"
+  },
+  "Korea": {
+   "market": "Korea",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market Korea"
+  },
+  "Australia": {
+   "market": "Australia",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market Australia"
+  },
+  "HongKong": {
+   "market": "HongKong",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market HongKong"
+  },
+  "India": {
+   "market": "India",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market India"
+  },
+  "Japan": {
+   "market": "Japan",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market Japan"
+  },
+  "Indonesia": {
+   "market": "Indonesia",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market Indonesia"
+  },
+  "Malaysia": {
+   "market": "Malaysia",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market Malaysia"
+  },
+  "Thailand": {
+   "market": "Thailand",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market Thailand"
+  },
+  "China": {
+   "market": "China",
+   "status": "NO_DATA",
+   "need": "member FIFs \u2014 run apac_fif_inversion.py market China"
+  }
+ }
+}

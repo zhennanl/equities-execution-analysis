@@ -1,0 +1,562 @@
+{
+ "generated": "2026-08-08",
+ "method": "same metric definitions as the Taiwan study, so markets are comparable",
+ "markets": {
+  "Taiwan": {
+   "market": "Taiwan",
+   "n": 157,
+   "n_add": 64,
+   "n_del": 93,
+   "survivorship": "DELISTED-SAFE",
+   "flows": "t86 foreign net + SBL borrow + margin",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0029,
+    "DEL_eff_day": -0.016
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.0326,
+    "ADD_gap1": 0.0069
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": -0.0238,
+    "ADD_frac_reverting": 0.688,
+    "DEL_revert5": 0.0
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 12.3362
+   },
+   "H1_alpha": {
+    "ADD_total": 0.0349,
+    "DEL_total": -0.0257,
+    "ADD_by_era": {
+     "2010-14": 0.0218,
+     "2015-18": 0.0487,
+     "2019-22": 0.0759,
+     "2023-26": 0.0293
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.8629
+   },
+   "H4_reversal": {
+    "short_ADD_edge": 0.0238,
+    "short_ADD_hit": 0.688
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": 0.0376,
+    "DEL_pre_drift": -0.0251
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.719,
+    "DEL_alpha_hit": 0.634
+   },
+   "conditionals_NEEDS": "RUN \u2014 see event_conditional_tw.json / strategist_tw.json"
+  },
+  "Australia": {
+   "market": "Australia",
+   "n": 25,
+   "n_add": 10,
+   "n_del": 15,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "ASIC daily shorts only",
+   "P1_close_cost": {
+    "ADD_eff_day": -0.0051,
+    "DEL_eff_day": 0.0039
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.0258,
+    "ADD_gap1": 0.0122
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": 0.0051,
+    "ADD_frac_reverting": 0.4,
+    "DEL_revert5": -0.0048
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 15.0513
+   },
+   "H1_alpha": {
+    "ADD_total": 0.0502,
+    "DEL_total": 0.04,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": 0.0443,
+     "2019-22": 0.0171,
+     "2023-26": 0.079
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.8736
+   },
+   "H4_reversal": {
+    "short_ADD_edge": -0.0051,
+    "short_ADD_hit": 0.4
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": 0.0239,
+    "DEL_pre_drift": 0.0
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.7,
+    "DEL_alpha_hit": 0.133
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: ASIC daily shorts only."
+  },
+  "HongKong": {
+   "market": "HongKong",
+   "n": 10,
+   "n_add": 1,
+   "n_del": 9,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "none harvested",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0127,
+    "DEL_eff_day": -0.0054
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.0823,
+    "ADD_gap1": 0.0615
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": 0.0223,
+    "ADD_frac_reverting": 0.0,
+    "DEL_revert5": -0.0084
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 15.6233
+   },
+   "H1_alpha": {
+    "ADD_total": 0.1489,
+    "DEL_total": -0.0365,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": null,
+     "2019-22": 0.1489,
+     "2023-26": null
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.5724
+   },
+   "H4_reversal": {
+    "short_ADD_edge": -0.0223,
+    "short_ADD_hit": 0.0
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": -0.0128,
+    "DEL_pre_drift": 0.0209
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 1.0,
+    "DEL_alpha_hit": 0.667
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: none."
+  },
+  "India": {
+   "market": "India",
+   "n": 156,
+   "n_add": 120,
+   "n_del": 36,
+   "survivorship": "DELISTED-SAFE",
+   "flows": "none harvested",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0072,
+    "DEL_eff_day": -0.0067
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.014,
+    "ADD_gap1": -0.0013
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": 0.0012,
+    "ADD_frac_reverting": 0.467,
+    "DEL_revert5": 0.0207
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 16.5038
+   },
+   "H1_alpha": {
+    "ADD_total": 0.0086,
+    "DEL_total": -0.0135,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": 0.0458,
+     "2019-22": 0.0086,
+     "2023-26": 0.0079
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.77
+   },
+   "H4_reversal": {
+    "short_ADD_edge": -0.0012,
+    "short_ADD_hit": 0.467
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": 0.0169,
+    "DEL_pre_drift": -0.0273
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.575,
+    "DEL_alpha_hit": 0.611
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: none."
+  },
+  "Indonesia": {
+   "market": "Indonesia",
+   "n": 44,
+   "n_add": 15,
+   "n_del": 29,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "none harvested",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0127,
+    "DEL_eff_day": -0.0417
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.0295,
+    "ADD_gap1": 0.0376
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": -0.0365,
+    "ADD_frac_reverting": 0.667,
+    "DEL_revert5": 0.0446
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 25.5573
+   },
+   "H1_alpha": {
+    "ADD_total": 0.0861,
+    "DEL_total": -0.0708,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": 0.0859,
+     "2019-22": 0.1194,
+     "2023-26": 0.0861
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.3661
+   },
+   "H4_reversal": {
+    "short_ADD_edge": 0.0365,
+    "short_ADD_hit": 0.667
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": 0.0061,
+    "DEL_pre_drift": -0.0429
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.8,
+    "DEL_alpha_hit": 0.793
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: none."
+  },
+  "Japan": {
+   "market": "Japan",
+   "n": 199,
+   "n_add": 52,
+   "n_del": 147,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "none harvested",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0,
+    "DEL_eff_day": -0.0012
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.0192,
+    "ADD_gap1": 0.0073
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": -0.0015,
+    "ADD_frac_reverting": 0.5,
+    "DEL_revert5": 0.0
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 10.8982
+   },
+   "H1_alpha": {
+    "ADD_total": 0.038,
+    "DEL_total": -0.0056,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": 0.0249,
+     "2019-22": 0.0618,
+     "2023-26": 0.0311
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.8014
+   },
+   "H4_reversal": {
+    "short_ADD_edge": 0.0015,
+    "short_ADD_hit": 0.5
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": 0.033,
+    "DEL_pre_drift": 0.0082
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.673,
+    "DEL_alpha_hit": 0.544
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: none."
+  },
+  "Korea": {
+   "market": "Korea",
+   "n": 76,
+   "n_add": 30,
+   "n_del": 46,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "pending (kr_flow_harvest.py)",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0035,
+    "DEL_eff_day": -0.012
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.0164,
+    "ADD_gap1": -0.0015
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": -0.0531,
+    "ADD_frac_reverting": 0.8,
+    "DEL_revert5": -0.0042
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 9.3858
+   },
+   "H1_alpha": {
+    "ADD_total": 0.0116,
+    "DEL_total": -0.0309,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": 0.0115,
+     "2019-22": 0.0291,
+     "2023-26": -0.0085
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.6733
+   },
+   "H4_reversal": {
+    "short_ADD_edge": 0.0531,
+    "short_ADD_hit": 0.8
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": 0.0139,
+    "DEL_pre_drift": 0.0051
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.533,
+    "DEL_alpha_hit": 0.652
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: pending (kr_flow_harvest.py)."
+  },
+  "Malaysia": {
+   "market": "Malaysia",
+   "n": 29,
+   "n_add": 8,
+   "n_del": 21,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "none harvested",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0105,
+    "DEL_eff_day": -0.0096
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.0079,
+    "ADD_gap1": 0.0018
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": -0.0405,
+    "ADD_frac_reverting": 0.75,
+    "DEL_revert5": 0.0
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 28.1731
+   },
+   "H1_alpha": {
+    "ADD_total": 0.0148,
+    "DEL_total": -0.0885,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": -0.0302,
+     "2019-22": 0.0614,
+     "2023-26": 0.1379
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.8098
+   },
+   "H4_reversal": {
+    "short_ADD_edge": 0.0405,
+    "short_ADD_hit": 0.75
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": 0.0024,
+    "DEL_pre_drift": -0.0075
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.625,
+    "DEL_alpha_hit": 0.667
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: none."
+  },
+  "NewZealand": {
+   "market": "NewZealand",
+   "n": 5,
+   "n_add": 3,
+   "n_del": 2,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "none harvested",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0038,
+    "DEL_eff_day": -0.0109
+   },
+   "P2_early_cost": {
+    "ADD_drift": -0.0283,
+    "ADD_gap1": -0.0054
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": 0.0107,
+    "ADD_frac_reverting": 0.333,
+    "DEL_revert5": -0.0039
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 47.4335
+   },
+   "H1_alpha": {
+    "ADD_total": -0.0312,
+    "DEL_total": -0.0225,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": -0.091,
+     "2019-22": null,
+     "2023-26": -0.0312
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.8284
+   },
+   "H4_reversal": {
+    "short_ADD_edge": -0.0107,
+    "short_ADD_hit": 0.333
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": -0.02,
+    "DEL_pre_drift": 0.0012
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.0,
+    "DEL_alpha_hit": 1.0
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: none."
+  },
+  "Philippines": {
+   "market": "Philippines",
+   "status": "INSUFFICIENT",
+   "n_windows_with_prices": 0,
+   "need": "more harvested windows"
+  },
+  "Singapore": {
+   "market": "Singapore",
+   "n": 12,
+   "n_add": 3,
+   "n_del": 9,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "none harvested",
+   "P1_close_cost": {
+    "ADD_eff_day": 0.0218,
+    "DEL_eff_day": -0.04
+   },
+   "P2_early_cost": {
+    "ADD_drift": -0.069,
+    "ADD_gap1": 0.0068
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": -0.0293,
+    "ADD_frac_reverting": 0.667,
+    "DEL_revert5": 0.0075
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 18.2155
+   },
+   "H1_alpha": {
+    "ADD_total": -0.0698,
+    "DEL_total": -0.0441,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": -0.0727,
+     "2019-22": 0.0726,
+     "2023-26": -0.0698
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.9447
+   },
+   "H4_reversal": {
+    "short_ADD_edge": 0.0293,
+    "short_ADD_hit": 0.667
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": 0.0407,
+    "DEL_pre_drift": -0.0236
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.333,
+    "DEL_alpha_hit": 0.889
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: none."
+  },
+  "Thailand": {
+   "market": "Thailand",
+   "n": 33,
+   "n_add": 12,
+   "n_del": 21,
+   "survivorship": "SURVIVORS ONLY \u2014 deletion stats biased toward names that lived",
+   "flows": "pending (th_nvdr_harvest.py)",
+   "P1_close_cost": {
+    "ADD_eff_day": -0.0232,
+    "DEL_eff_day": 0.0
+   },
+   "P2_early_cost": {
+    "ADD_drift": 0.0611,
+    "ADD_gap1": 0.0196
+   },
+   "P3_close_reverts": {
+    "ADD_revert5": 0.0116,
+    "ADD_frac_reverting": 0.417,
+    "DEL_revert5": 0.0
+   },
+   "P4_close_capacity": {
+    "eff_day_vol_x_ADV": 8.5765
+   },
+   "H1_alpha": {
+    "ADD_total": 0.0913,
+    "DEL_total": 0.0,
+    "ADD_by_era": {
+     "2010-14": null,
+     "2015-18": 0.1044,
+     "2019-22": 0.0913,
+     "2023-26": null
+    }
+   },
+   "H2_entry_timing": {
+    "ADD_capture": 0.8201
+   },
+   "H4_reversal": {
+    "short_ADD_edge": -0.0116,
+    "short_ADD_hit": 0.417
+   },
+   "H5_front_running": {
+    "ADD_pre_drift": -0.0388,
+    "DEL_pre_drift": 0.0
+   },
+   "H6_hit_rates": {
+    "ADD_alpha_hit": 0.833,
+    "DEL_alpha_hit": 0.286
+   },
+   "conditionals_NEEDS": "accumulation-vs-froth, borrow crowding and excess-vs-sector-tide need per-name flow series. This market has: pending (th_nvdr_harvest.py)."
+  }
+ }
+}

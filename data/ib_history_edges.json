@@ -1,0 +1,9 @@
+{
+ "Taiwan": {
+  "contract": "2330@TWSE",
+  "no_data_on_or_before": "2023-04-23",
+  "data_by": "2023-04-27",
+  "measured": "2026-08-08",
+  "method": "bisection, 5-day probe window, TRADES 5-min, useRTH"
+ }
+}

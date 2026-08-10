@@ -1,0 +1,107 @@
+{
+ "market": "Taiwan",
+ "review": "Aug25",
+ "keys": {
+  "gmsr_dm": 13.35,
+  "em_range": [
+   3.34,
+   7.68
+  ],
+  "ceiling": 7.68,
+  "floor": 5.12,
+  "bar": 11.52,
+  "price_date": "2025-07-16",
+  "source": "Aug2025"
+ },
+ "fx_used": 29.828,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "6919",
+   "security": "CALIWAY BIOPHARMA",
+   "action": "ADD",
+   "pit_cap_busd": 6.33,
+   "verdict": "NOT-EXPLAINED: 6.33B well below bar"
+  },
+  {
+   "code": "2059",
+   "security": "KING SLIDE WORKS CO",
+   "action": "ADD",
+   "pit_cap_busd": 6.98,
+   "verdict": "NOT-EXPLAINED: 6.98B well below bar"
+  },
+  {
+   "code": "9904",
+   "security": "POU CHEN CORP",
+   "action": "DEL",
+   "pit_cap_busd": 2.81,
+   "verdict": "EXPLAINED: 2.81B is 45% below the 5.12B floor"
+  },
+  {
+   "code": "9945",
+   "security": "RUENTEX DEVELOPMENT CO",
+   "action": "DEL",
+   "pit_cap_busd": 2.78,
+   "verdict": "EXPLAINED: 2.78B is 46% below the 5.12B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "6415": 4.53,
+   "2353": 3.15,
+   "2834": 5.06,
+   "1102": 4.76,
+   "2324": 4.27,
+   "9910": 3.97,
+   "3481": 3.0,
+   "1326": 4.51,
+   "2347": 3.79,
+   "2356": 5.11,
+   "8464": 3.97,
+   "9904": 2.81,
+   "1504": 3.41,
+   "2105": 4.29,
+   "2409": 3.05,
+   "3702": 4.13,
+   "2474": 4.59,
+   "4958": 3.59,
+   "6409": 3.69,
+   "9945": 2.78,
+   "1476": 3.63,
+   "2377": 4.06,
+   "2610": 4.3
+  },
+  "hits": [
+   "9904",
+   "9945"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1102",
+   "1326",
+   "1476",
+   "1504",
+   "2105",
+   "2324",
+   "2347",
+   "2353",
+   "2356",
+   "2377",
+   "2409",
+   "2474",
+   "2610",
+   "2834",
+   "3481",
+   "3702",
+   "4958",
+   "6409",
+   "6415",
+   "8464",
+   "9910"
+  ]
+ }
+}

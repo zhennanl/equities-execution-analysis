@@ -58,7 +58,7 @@ def main(tag):
     out = ROOT / "data" / f"post_event_{tag}.json"
     pack = build_pack(cfg["event"], cfg["provider"], cfg["ann"],
                       cfg["t_day"], cfg["names"], event_tag=tag)
-    out.write_text(json.dumps(pack, indent=1))
+    out.write_text(json.dumps(pack, indent=1), encoding="utf-8")
     (ROOT / "docs" / "case_studies" /
      f"TCA_LETTERS_{tag.upper()}_TW.md").write_text(
         render_tca_letters(pack), encoding="utf-8")

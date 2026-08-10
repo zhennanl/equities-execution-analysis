@@ -202,7 +202,7 @@ def main():
         {"n_name_days": len(df),
          "n_events": int(df["event"].nunique()),
          "cells": json.loads(t.reset_index().to_json(
-             orient="records"))}, indent=1, default=str))
+             orient="records"))}, indent=1, default=str), encoding="utf-8")
     print(f"{len(df)} T-day observations, "
           f"{df['event'].nunique()} events")
     print(t.to_string())

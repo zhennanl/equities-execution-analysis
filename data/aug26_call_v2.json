@@ -1,0 +1,302 @@
+{
+ "declared": "2026-08-09 (corrected thresholds; grades Aug-12)",
+ "supersedes": "the call declared 2026-08-05, which is kept intact in aug26_cutoff_calc.json and graded alongside this one",
+ "why": "thresholds were computed off the ceiling of the global EM size range instead of Taiwan's Market Size-Segment Cutoff; the addition buffer used the market-stress 1.8x multiple; and the minimum float test used half the addition bar instead of half the cutoff",
+ "citations": {
+  "buffers": "GIMI May-2026 \u00a73.1.5.1 p.44 \u2014 buffer zones of 2/3 and 1.5 times the Market Size-Segment Cutoff",
+  "light": "GIMI May-2026 fn24 p.44 with p.107 \u2014 the 1.8x buffer applies only under a declared 'light rebalancing' (market stress), not to quarterly reviews",
+  "float_cap": "GIMI May-2026 \u00a72.3.6.1 p.30 \u2014 free float-adjusted cap of at least 50% of the Market Size-Segment Cutoff",
+  "fif": "GIMI May-2026 \u00a72.2.6 \u2014 global minimum FIF of 0.15",
+  "room": "GIMI May-2026 \u00a72.2.8 \u2014 foreign room of at least 15%",
+  "cutoff": "GIMI May-2026 \u00a72.3.3 p.26 \u2014 the 85% walk over the Market Investable Equity Universe, bounded into the Global Minimum Size Range"
+ },
+ "thresholds": {
+  "market_size_segment_cutoff_busd": 6.74,
+  "lower_buffer_busd": 4.49,
+  "upper_buffer_busd": 10.11,
+  "min_float_cap_busd": 3.37
+ },
+ "superseded_thresholds": {
+  "add_bar_busd": 12.14,
+  "add_bar_rule": "1.8x (Aug = QUARTERLY review)",
+  "deletion_grace_busd": 4.5,
+  "page_lower_from_em_ceiling_busd": 6.29,
+  "page_upper_from_em_ceiling_busd": 14.16
+ },
+ "adds": [
+  {
+   "code": "2408",
+   "name": "",
+   "cap_usd_b": 34.37,
+   "ff": 0.456,
+   "float_cap_usd_b": 15.67,
+   "foreign_room": 0.88,
+   "x_upper_buffer": 3.4,
+   "gates": {
+    "above upper buffer": true,
+    "FIF >= 0.15": true,
+    "float cap >= 50% of cutoff": true,
+    "foreign room >= 15%": true
+   },
+   "verdict": "QUALIFIES",
+   "was": "QUALIFIES \u2014 all gates"
+  },
+  {
+   "code": "6505",
+   "name": "",
+   "cap_usd_b": 20.75,
+   "ff": 0.12,
+   "float_cap_usd_b": 2.49,
+   "foreign_room": 0.93,
+   "x_upper_buffer": 2.05,
+   "gates": {
+    "above upper buffer": true,
+    "FIF >= 0.15": false,
+    "float cap >= 50% of cutoff": false,
+    "foreign room >= 15%": true
+   },
+   "verdict": "blocked: FIF >= 0.15, float cap >= 50% of cutoff",
+   "was": "BLOCKED \u2014 float < 0.15 (GIMI float floor)"
+  },
+  {
+   "code": "8046",
+   "name": "",
+   "cap_usd_b": 18.29,
+   "ff": 0.381,
+   "float_cap_usd_b": 6.97,
+   "foreign_room": 0.87,
+   "x_upper_buffer": 1.81,
+   "gates": {
+    "above upper buffer": true,
+    "FIF >= 0.15": true,
+    "float cap >= 50% of cutoff": true,
+    "foreign room >= 15%": true
+   },
+   "verdict": "QUALIFIES",
+   "was": "QUALIFIES \u2014 all gates"
+  },
+  {
+   "code": "2344",
+   "name": "",
+   "cap_usd_b": 18.0,
+   "ff": 0.69,
+   "float_cap_usd_b": 12.42,
+   "foreign_room": 0.83,
+   "x_upper_buffer": 1.78,
+   "gates": {
+    "above upper buffer": true,
+    "FIF >= 0.15": true,
+    "float cap >= 50% of cutoff": true,
+    "foreign room >= 15%": true
+   },
+   "verdict": "QUALIFIES",
+   "was": "QUALIFIES \u2014 all gates"
+  },
+  {
+   "code": "8299",
+   "name": "",
+   "cap_usd_b": 11.16,
+   "ff": 0.852,
+   "float_cap_usd_b": 9.51,
+   "foreign_room": 0.61,
+   "x_upper_buffer": 1.1,
+   "gates": {
+    "above upper buffer": true,
+    "FIF >= 0.15": true,
+    "float cap >= 50% of cutoff": true,
+    "foreign room >= 15%": true
+   },
+   "verdict": "QUALIFIES",
+   "was": "below add bar"
+  },
+  {
+   "code": "3189",
+   "name": "",
+   "cap_usd_b": 10.3,
+   "ff": 0.604,
+   "float_cap_usd_b": 6.22,
+   "foreign_room": 0.8,
+   "x_upper_buffer": 1.02,
+   "gates": {
+    "above upper buffer": true,
+    "FIF >= 0.15": true,
+    "float cap >= 50% of cutoff": true,
+    "foreign room >= 15%": true
+   },
+   "verdict": "QUALIFIES",
+   "was": "below add bar"
+  },
+  {
+   "code": "6770",
+   "name": "",
+   "cap_usd_b": 7.9,
+   "ff": 0.79,
+   "float_cap_usd_b": 6.24,
+   "foreign_room": 0.88,
+   "x_upper_buffer": 0.78,
+   "gates": {
+    "above upper buffer": false,
+    "FIF >= 0.15": true,
+    "float cap >= 50% of cutoff": true,
+    "foreign room >= 15%": true
+   },
+   "verdict": "blocked: above upper buffer",
+   "was": "below add bar"
+  },
+  {
+   "code": "2337",
+   "name": "",
+   "cap_usd_b": 6.13,
+   "ff": 0.924,
+   "float_cap_usd_b": 5.66,
+   "foreign_room": 0.76,
+   "x_upper_buffer": 0.61,
+   "gates": {
+    "above upper buffer": false,
+    "FIF >= 0.15": true,
+    "float cap >= 50% of cutoff": true,
+    "foreign room >= 15%": true
+   },
+   "verdict": "blocked: above upper buffer",
+   "was": "below add bar"
+  }
+ ],
+ "deletes": [
+  {
+   "code": "6919",
+   "name": "CALIWAY BIOPHARMACEUTI",
+   "cap_usd_b": 4.94,
+   "x_lower_buffer": 1.1,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "2834",
+   "name": "TAIWAN BUSINESS BANK L",
+   "cap_usd_b": 5.44,
+   "x_lower_buffer": 1.21,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "2609",
+   "name": "YANG MING MARINE TRANS",
+   "cap_usd_b": 5.46,
+   "x_lower_buffer": 1.22,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "1101",
+   "name": "TAIWAN CEMENT",
+   "cap_usd_b": 5.63,
+   "x_lower_buffer": 1.25,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "3529",
+   "name": "EMEMORY TECHNOLOGY INC",
+   "cap_usd_b": 5.69,
+   "x_lower_buffer": 1.27,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "5871",
+   "name": "CHAILEASE HOLDING LTD",
+   "cap_usd_b": 5.87,
+   "x_lower_buffer": 1.31,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "3533",
+   "name": "LOTES",
+   "cap_usd_b": 6.42,
+   "x_lower_buffer": 1.43,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "8069",
+   "name": "E INK HOLDINGS",
+   "cap_usd_b": 6.71,
+   "x_lower_buffer": 1.49,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "3293",
+   "name": "INTERNATIONAL GAMES SY",
+   "cap_usd_b": 6.73,
+   "x_lower_buffer": 1.5,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "below cutoff \u2014 sweep zone"
+  },
+  {
+   "code": "5876",
+   "name": "SHANGHAI COMMERCIAL",
+   "cap_usd_b": 6.8,
+   "x_lower_buffer": 1.51,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "buffer 1.0-1.15x \u2014 watch"
+  },
+  {
+   "code": "2356",
+   "name": "INVENTEC",
+   "cap_usd_b": 6.82,
+   "x_lower_buffer": 1.52,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "buffer 1.0-1.15x \u2014 watch"
+  },
+  {
+   "code": "1519",
+   "name": "FORTUNE ELECTRIC",
+   "cap_usd_b": 6.85,
+   "x_lower_buffer": 1.53,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "buffer 1.0-1.15x \u2014 watch"
+  },
+  {
+   "code": "2376",
+   "name": "GIGABYTE TECHNOLOGY LT",
+   "cap_usd_b": 6.94,
+   "x_lower_buffer": 1.55,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "buffer 1.0-1.15x \u2014 watch"
+  },
+  {
+   "code": "4938",
+   "name": "PEGATRON",
+   "cap_usd_b": 6.97,
+   "x_lower_buffer": 1.55,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "buffer 1.0-1.15x \u2014 watch"
+  },
+  {
+   "code": "2912",
+   "name": "PRESIDENT CHAIN STORE ",
+   "cap_usd_b": 7.17,
+   "x_lower_buffer": 1.6,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "buffer 1.0-1.15x \u2014 watch"
+  },
+  {
+   "code": "2618",
+   "name": "EVA AIRWAYS",
+   "cap_usd_b": 7.2,
+   "x_lower_buffer": 1.6,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "buffer 1.0-1.15x \u2014 watch"
+  },
+  {
+   "code": "2615",
+   "name": "WAN HAI LINES",
+   "cap_usd_b": 7.31,
+   "x_lower_buffer": 1.63,
+   "verdict": "inside the buffer \u2014 held",
+   "was": "buffer 1.0-1.15x \u2014 watch"
+  }
+ ]
+}

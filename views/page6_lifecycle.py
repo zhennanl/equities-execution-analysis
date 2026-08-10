@@ -29,7 +29,7 @@ def _truncated_tw_cache(upto: str) -> dict:
     """TW short archive truncated for the PIT replay — nothing after
     the announcement date enters the crowding read."""
     try:
-        c = json.loads((DATA / "event_data_cache.json").read_text())
+        c = json.loads((DATA / "event_data_cache.json").read_text(encoding="utf-8"))
         return {"short": {d: v for d, v in c.get("short", {}).items()
                           if d <= upto}}
     except Exception:
@@ -53,11 +53,11 @@ def _run_event_engine(event, markets):
     pit = event["engine"] == "pit"
     ledger_files = ("feb26",) if pit else ("feb26", "may26")
     ledgers = [parse_msci_public_list(
-        (DATA / f"msci_{p}_public_list.txt").read_text())
+        (DATA / f"msci_{p}_public_list.txt").read_text(encoding="utf-8"))
         for p in ledger_files]
     try:
         event_cache = json.loads(
-            (DATA / "event_flow_study.json").read_text())
+            (DATA / "event_flow_study.json").read_text(encoding="utf-8"))
     except Exception:
         event_cache = None
     if pit:
@@ -103,7 +103,7 @@ def _walk_expander():
     p = Path("data/gmsr_walk_may26.json")
     if not p.exists():
         return
-    d = json.loads(p.read_text())
+    d = json.loads(p.read_text(encoding="utf-8"))
     with st.expander("📐 Show the walk — how the size line is "
                      "computed, judge it yourself (May-2026 frame)"):
         den = d["denominator"]
@@ -310,9 +310,9 @@ def _workbench_expander():
              "May-2026 SAIR — PIT validation (data frozen at "
              "Apr-30, graded vs the official result)"))
         if run == "pit" and pit.exists():
-            _workbench_pit(json.loads(pit.read_text()))
+            _workbench_pit(json.loads(pit.read_text(encoding="utf-8")))
             return
-        b = json.loads(p.read_text())
+        b = json.loads(p.read_text(encoding="utf-8"))
         thr = b["thresholds"]
         st.markdown(
             f"**The arithmetic, name by name** (as-of {b['asof']}): "
@@ -408,7 +408,7 @@ def _funnel_expander():
         return
     with st.expander("🔻 Screening funnel — how ~500 names become "
                      "the call sheet (Taiwan)"):
-        blob = json.loads(p.read_text())
+        blob = json.loads(p.read_text(encoding="utf-8"))
         st.caption(
             "Starts at **engine Step 1 — universe acquisition**: "
             "caps from price × shares (yfinance, FX→USD), free-float "
@@ -483,7 +483,7 @@ def _tday_cards_expander():
         return
     with st.expander("🃏 T-day forecast cards — Aug-2026 TW "
                      "shortlist (transparent methodology)"):
-        blob = json.loads(p.read_text())
+        blob = json.loads(p.read_text(encoding="utf-8"))
         from agents.tday_cards import METHOD
         with st.popover("METHOD — how every number is calculated"):
             for m, d in METHOD.items():
@@ -527,7 +527,7 @@ def _sentinel_strip():
                    "agents.sentinels` (daily). See "
                    "docs/SENTINELS_GUIDE.md")
         return
-    rep = json.loads(p.read_text())
+    rep = json.loads(p.read_text(encoding="utf-8"))
     icon = {"OK": "🟢", "CHANGED": "🟡", "ALERT": "🔴",
             "DEGRADED": "⚫"}
     head = (f"{icon.get(rep['overall'], '❓')} Sentinels: "
@@ -565,7 +565,7 @@ def _constituents_expander():
     p = Path("data/apac_members.json")
     if not p.exists():
         return
-    blob = json.loads(p.read_text())
+    blob = json.loads(p.read_text(encoding="utf-8"))
     mkts = blob["markets"]
     with st.expander("🌏 Current MSCI constituents by market "
                      "(cached, sentinel-refreshed)", expanded=False):
@@ -1182,7 +1182,7 @@ def _playbook_expander():
         return
     with st.expander("📖 Situations playbook — 'you are here at "
                      "noon → history says' (96 T-days, 24 events)"):
-        blob = json.loads(p.read_text())
+        blob = json.loads(p.read_text(encoding="utf-8"))
         c1, c2, c3 = st.columns(3)
         side = c1.selectbox("Side", ["Sell", "Buy"], key="pb_side")
         tape = c2.selectbox("Tape by noon",
@@ -1343,7 +1343,7 @@ def _post_event_expander():
     with st.expander("🌙 Post-event pack (no fills needed) — "
                      "May-2026 demo: strips, leaderboard, estimate "
                      "ledger, reversal paths"):
-        d = json.loads(p.read_text())
+        d = json.loads(p.read_text(encoding="utf-8"))
         rows = [r for r in d["names"] if "note" not in r]
         st.dataframe(
             [{"name": f"{r['side']} {r['code']}",
@@ -1467,7 +1467,7 @@ def _tab4_posttrade():
                    "reads only — MED and no-data never count).")
         try:
             cache = json.loads(
-                (DATA / "event_flow_study.json").read_text())
+                (DATA / "event_flow_study.json").read_text(encoding="utf-8"))
         except Exception:
             cache = {"events": []}
         priors = update_priors(dict(cache), [])

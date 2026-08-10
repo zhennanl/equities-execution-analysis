@@ -47,12 +47,12 @@ def _get(dataset, data_id, start, end):
 
 
 def _load():
-    return json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    return json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
 
 
 def _save(d):
     tmp = CACHE.with_suffix(".tmp")
-    tmp.write_text(json.dumps(d))
+    tmp.write_text(json.dumps(d), encoding="utf-8")
     tmp.replace(CACHE)
 
 
@@ -62,14 +62,14 @@ def harvest_names():
     names = set()
     ev = ROOT / "data" / "msci_tw_events.json"
     if ev.exists():
-        d = json.loads(ev.read_text())
+        d = json.loads(ev.read_text(encoding="utf-8"))
         for season in d.values():          # {season: {adds:{code:name}}}
             for k in ("adds", "dels"):
                 for code in season.get(k, {}):
                     names.add(str(code).split(".")[0])
     br = ROOT / "data" / "decade_bridge.json"
     if br.exists():
-        d = json.loads(br.read_text()).get("map", {})
+        d = json.loads(br.read_text(encoding="utf-8")).get("map", {})
         for key, code in d.items():        # {"TW|NAME": "2330.TW"}
             if key.startswith("TW|") and str(code).endswith(
                     (".TW", ".TWO")):
@@ -86,7 +86,7 @@ def harvest_names():
     # members were previously unpriced at past dates)
     ewt = ROOT / "data" / "ewt_members.json"
     if ewt.exists():
-        names.update(json.loads(ewt.read_text())["codes"])
+        names.update(json.loads(ewt.read_text(encoding="utf-8"))["codes"])
     return sorted(n for n in names if n and n[0].isdigit())
 
 

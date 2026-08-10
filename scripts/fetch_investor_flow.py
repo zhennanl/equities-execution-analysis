@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
 """Cached TWSE institutional-flow fetch for the 2026 event windows.
-One call per trading day (all stocks). Re-run until ALL CACHED."""
+One call per trading day (all stocks). Re-run until ALL CACHED.
+
+SUPERSEDED (c-291) — use scripts/tw_t86_harvest.py instead.
+
+This script fetches a HARDCODED list of 22 dates and keeps 15 tickers,
+which is why data/twse_institutional.json is 22 days deep and why the
+Taiwan case study had to report foreign net buy as unavailable. It also
+predates the discovery that TWSE has shipped three different T86 column
+layouts, so anything it fetched for a pre-2018 date would have been
+silently mis-parsed — irrelevant here only because every date in its
+list is 2026.
+
+Left on disk rather than deleted: it is the provenance of the existing
+cache file, and deleting it would make that file's origin unexplainable.
+"""
 import datetime as dt
 import json
 import sys
@@ -21,7 +35,7 @@ BATCH = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5
 
 
 def main():
-    cache = json.loads(CACHE_PATH.read_text()) if CACHE_PATH.exists() else {}
+    cache = json.loads(CACHE_PATH.read_text(encoding="utf-8")) if CACHE_PATH.exists() else {}
     done = 0
     for ds in DATES:
         if ds in cache or done >= BATCH:
@@ -39,7 +53,7 @@ def main():
             print(f"ERR {ds}: {e}")
         done += 1
         CACHE_PATH.parent.mkdir(exist_ok=True)
-        CACHE_PATH.write_text(json.dumps(cache, indent=1))
+        CACHE_PATH.write_text(json.dumps(cache, indent=1), encoding="utf-8")
         time.sleep(1.5)
     rem = [d for d in DATES if d not in cache]
     print(f"cached {len([d for d in DATES if d in cache])}/{len(DATES)}"

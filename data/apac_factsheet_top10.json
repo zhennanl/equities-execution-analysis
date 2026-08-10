@@ -1,0 +1,653 @@
+{
+ "Australia": [
+  {
+   "name": "BHP GROUP (AU)",
+   "float_cap_usd_b": 215.24,
+   "weight_pct": 14.66
+  },
+  {
+   "name": "COMMONWEALTH BANK OF AUS",
+   "float_cap_usd_b": 208.66,
+   "weight_pct": 14.21
+  },
+  {
+   "name": "WESTPAC BANKING",
+   "float_cap_usd_b": 90.97,
+   "weight_pct": 6.2
+  },
+  {
+   "name": "NATIONAL AUSTRALIA BANK",
+   "float_cap_usd_b": 89.05,
+   "weight_pct": 6.07
+  },
+  {
+   "name": "ANZ GROUP HOLDINGS",
+   "float_cap_usd_b": 78.99,
+   "weight_pct": 5.38
+  },
+  {
+   "name": "WESFARMERS",
+   "float_cap_usd_b": 71.25,
+   "weight_pct": 4.85
+  },
+  {
+   "name": "MACQUARIE GROUP",
+   "float_cap_usd_b": 64.36,
+   "weight_pct": 4.38
+  },
+  {
+   "name": "RIO TINTO LTD (AU)",
+   "float_cap_usd_b": 44.54,
+   "weight_pct": 3.03
+  },
+  {
+   "name": "WOODSIDE ENERGY GROUP",
+   "float_cap_usd_b": 44.0,
+   "weight_pct": 3.0
+  },
+  {
+   "name": "CSL",
+   "float_cap_usd_b": 41.95,
+   "weight_pct": 2.86
+  }
+ ],
+ "China": [
+  {
+   "name": "TENCENT HOLDINGS LI (CN)",
+   "float_cap_usd_b": 373.28,
+   "weight_pct": 14.61
+  },
+  {
+   "name": "ALIBABA GRP HLDG (HK)",
+   "float_cap_usd_b": 249.8,
+   "weight_pct": 9.77
+  },
+  {
+   "name": "CHINA CONSTRUCTION BK H",
+   "float_cap_usd_b": 98.83,
+   "weight_pct": 3.87
+  },
+  {
+   "name": "XIAOMI CORP B",
+   "float_cap_usd_b": 62.92,
+   "weight_pct": 2.46
+  },
+  {
+   "name": "ICBC H",
+   "float_cap_usd_b": 62.34,
+   "weight_pct": 2.44
+  },
+  {
+   "name": "MEITUAN B",
+   "float_cap_usd_b": 59.4,
+   "weight_pct": 2.32
+  },
+  {
+   "name": "PDD HOLDINGS A ADR",
+   "float_cap_usd_b": 50.29,
+   "weight_pct": 1.97
+  },
+  {
+   "name": "PING AN INSURANCE H",
+   "float_cap_usd_b": 48.74,
+   "weight_pct": 1.91
+  },
+  {
+   "name": "BANK OF CHINA H",
+   "float_cap_usd_b": 47.01,
+   "weight_pct": 1.84
+  },
+  {
+   "name": "NETEASE",
+   "float_cap_usd_b": 46.5,
+   "weight_pct": 1.82
+  }
+ ],
+ "HongKong": [
+  {
+   "name": "AIA GROUP",
+   "float_cap_usd_b": 106.2,
+   "weight_pct": 25.8
+  },
+  {
+   "name": "HONGKONG EXCH & CLEARING",
+   "float_cap_usd_b": 62.76,
+   "weight_pct": 15.25
+  },
+  {
+   "name": "CK HUTCHISON HOLDINGS",
+   "float_cap_usd_b": 25.16,
+   "weight_pct": 6.11
+  },
+  {
+   "name": "BOC HONG KONG HOLDINGS",
+   "float_cap_usd_b": 24.63,
+   "weight_pct": 5.98
+  },
+  {
+   "name": "TECHTRONIC INDUSTRIES CO",
+   "float_cap_usd_b": 23.1,
+   "weight_pct": 5.61
+  },
+  {
+   "name": "SUN HUNG KAI PROPERTIES",
+   "float_cap_usd_b": 20.49,
+   "weight_pct": 4.98
+  },
+  {
+   "name": "CLP HOLDINGS",
+   "float_cap_usd_b": 16.36,
+   "weight_pct": 3.97
+  },
+  {
+   "name": "LINK REIT",
+   "float_cap_usd_b": 13.05,
+   "weight_pct": 3.17
+  },
+  {
+   "name": "JARDINE MATHESON (USD)",
+   "float_cap_usd_b": 10.7,
+   "weight_pct": 2.6
+  },
+  {
+   "name": "CK ASSET HOLDINGS",
+   "float_cap_usd_b": 10.68,
+   "weight_pct": 2.59
+  }
+ ],
+ "India": [
+  {
+   "name": "HDFC BANK",
+   "float_cap_usd_b": 89.32,
+   "weight_pct": 6.41
+  },
+  {
+   "name": "RELIANCE INDUSTRIES",
+   "float_cap_usd_b": 83.47,
+   "weight_pct": 5.99
+  },
+  {
+   "name": "ICICI BANK",
+   "float_cap_usd_b": 79.72,
+   "weight_pct": 5.72
+  },
+  {
+   "name": "BHARTI AIRTEL",
+   "float_cap_usd_b": 56.67,
+   "weight_pct": 4.06
+  },
+  {
+   "name": "INFOSYS",
+   "float_cap_usd_b": 36.03,
+   "weight_pct": 2.58
+  },
+  {
+   "name": "MAHINDRA & MAHINDRA",
+   "float_cap_usd_b": 31.0,
+   "weight_pct": 2.22
+  },
+  {
+   "name": "BAJAJ FINANCE",
+   "float_cap_usd_b": 29.77,
+   "weight_pct": 2.14
+  },
+  {
+   "name": "AXIS BANK",
+   "float_cap_usd_b": 29.64,
+   "weight_pct": 2.13
+  },
+  {
+   "name": "LARSEN & TOUBRO",
+   "float_cap_usd_b": 27.83,
+   "weight_pct": 2.0
+  },
+  {
+   "name": "KOTAK MAHINDRA BANK",
+   "float_cap_usd_b": 22.38,
+   "weight_pct": 1.6
+  }
+ ],
+ "Indonesia": [
+  {
+   "name": "BANK CENTRAL ASIA",
+   "float_cap_usd_b": 17.33,
+   "weight_pct": 29.43
+  },
+  {
+   "name": "BANK RAKYAT INDONESIA",
+   "float_cap_usd_b": 10.24,
+   "weight_pct": 17.39
+  },
+  {
+   "name": "BANK MANDIRI",
+   "float_cap_usd_b": 8.69,
+   "weight_pct": 14.76
+  },
+  {
+   "name": "TELKOM INDONESIA",
+   "float_cap_usd_b": 6.52,
+   "weight_pct": 11.06
+  },
+  {
+   "name": "ASTRA INTERNATIONAL",
+   "float_cap_usd_b": 4.59,
+   "weight_pct": 7.79
+  },
+  {
+   "name": "BANK NEGARA INDONESIA",
+   "float_cap_usd_b": 2.56,
+   "weight_pct": 4.35
+  },
+  {
+   "name": "GOTO GOJEK TOKOPEDIA",
+   "float_cap_usd_b": 2.48,
+   "weight_pct": 4.22
+  },
+  {
+   "name": "BARITO PACIFIC",
+   "float_cap_usd_b": 1.97,
+   "weight_pct": 3.35
+  },
+  {
+   "name": "BUMI RESOURCES MINERALS",
+   "float_cap_usd_b": 1.77,
+   "weight_pct": 3.0
+  },
+  {
+   "name": "UNITED TRACTORS",
+   "float_cap_usd_b": 1.61,
+   "weight_pct": 2.74
+  }
+ ],
+ "Japan": [
+  {
+   "name": "MITSUBISHI UFJ FIN GRP",
+   "float_cap_usd_b": 239.55,
+   "weight_pct": 4.67
+  },
+  {
+   "name": "TOYOTA MOTOR CORP",
+   "float_cap_usd_b": 182.55,
+   "weight_pct": 3.56
+  },
+  {
+   "name": "TOKYO ELECTRON",
+   "float_cap_usd_b": 156.17,
+   "weight_pct": 3.05
+  },
+  {
+   "name": "SUMITOMO MITSUI FINL GRP",
+   "float_cap_usd_b": 155.61,
+   "weight_pct": 3.04
+  },
+  {
+   "name": "ADVANTEST CORP",
+   "float_cap_usd_b": 149.41,
+   "weight_pct": 2.91
+  },
+  {
+   "name": "HITACHI",
+   "float_cap_usd_b": 146.28,
+   "weight_pct": 2.85
+  },
+  {
+   "name": "SONY GROUP CORP",
+   "float_cap_usd_b": 138.95,
+   "weight_pct": 2.71
+  },
+  {
+   "name": "SOFTBANK GROUP CORP",
+   "float_cap_usd_b": 122.65,
+   "weight_pct": 2.39
+  },
+  {
+   "name": "MIZUHO FINANCIAL GROUP",
+   "float_cap_usd_b": 121.32,
+   "weight_pct": 2.37
+  },
+  {
+   "name": "RECRUIT HOLDINGS CO",
+   "float_cap_usd_b": 104.46,
+   "weight_pct": 2.04
+  }
+ ],
+ "Korea": [
+  {
+   "name": "SAMSUNG ELECTRONICS CO",
+   "float_cap_usd_b": 861.13,
+   "weight_pct": 35.44
+  },
+  {
+   "name": "SK HYNIX",
+   "float_cap_usd_b": 665.59,
+   "weight_pct": 27.39
+  },
+  {
+   "name": "SAMSUNG ELECTRONICS PREF",
+   "float_cap_usd_b": 107.49,
+   "weight_pct": 4.42
+  },
+  {
+   "name": "SK SQUARE CO",
+   "float_cap_usd_b": 67.25,
+   "weight_pct": 2.77
+  },
+  {
+   "name": "SAMSUNG ELECTRO-MECH. CO",
+   "float_cap_usd_b": 44.87,
+   "weight_pct": 1.85
+  },
+  {
+   "name": "KB FINANCIAL GROUP",
+   "float_cap_usd_b": 41.86,
+   "weight_pct": 1.72
+  },
+  {
+   "name": "HYUNDAI MOTOR CO",
+   "float_cap_usd_b": 36.22,
+   "weight_pct": 1.49
+  },
+  {
+   "name": "SHINHAN FINANCIAL GROUP",
+   "float_cap_usd_b": 29.34,
+   "weight_pct": 1.21
+  },
+  {
+   "name": "HANA FINANCIAL HOLDINGS",
+   "float_cap_usd_b": 23.87,
+   "weight_pct": 0.98
+  },
+  {
+   "name": "KIA CORP",
+   "float_cap_usd_b": 21.67,
+   "weight_pct": 0.89
+  }
+ ],
+ "Malaysia": [
+  {
+   "name": "PUBLIC BANK",
+   "float_cap_usd_b": 18.42,
+   "weight_pct": 15.9
+  },
+  {
+   "name": "MALAYAN BANKING",
+   "float_cap_usd_b": 15.32,
+   "weight_pct": 13.23
+  },
+  {
+   "name": "CIMB GROUP HOLDINGS",
+   "float_cap_usd_b": 15.12,
+   "weight_pct": 13.06
+  },
+  {
+   "name": "TENAGA NASIONAL",
+   "float_cap_usd_b": 9.37,
+   "weight_pct": 8.09
+  },
+  {
+   "name": "PRESS METAL ALUMINIUM",
+   "float_cap_usd_b": 7.22,
+   "weight_pct": 6.24
+  },
+  {
+   "name": "GAMUDA",
+   "float_cap_usd_b": 5.29,
+   "weight_pct": 4.57
+  },
+  {
+   "name": "AMMB HOLDINGS",
+   "float_cap_usd_b": 4.11,
+   "weight_pct": 3.55
+  },
+  {
+   "name": "RHB BANK",
+   "float_cap_usd_b": 3.88,
+   "weight_pct": 3.35
+  },
+  {
+   "name": "IHH HEALTHCARE",
+   "float_cap_usd_b": 3.52,
+   "weight_pct": 3.04
+  },
+  {
+   "name": "SUNWAY",
+   "float_cap_usd_b": 3.52,
+   "weight_pct": 3.04
+  }
+ ],
+ "NewZealand": [
+  {
+   "name": "FISHER & PAYKEL HEALTH",
+   "float_cap_usd_b": 14.04,
+   "weight_pct": 35.11
+  },
+  {
+   "name": "AUCKLAND INTL AIRPORT",
+   "float_cap_usd_b": 8.7,
+   "weight_pct": 21.75
+  },
+  {
+   "name": "INFRATIL",
+   "float_cap_usd_b": 7.81,
+   "weight_pct": 19.53
+  },
+  {
+   "name": "CONTACT ENERGY",
+   "float_cap_usd_b": 5.01,
+   "weight_pct": 12.52
+  },
+  {
+   "name": "MERIDIAN ENERGY",
+   "float_cap_usd_b": 4.44,
+   "weight_pct": 11.09
+  }
+ ],
+ "Philippines": [
+  {
+   "name": "ICTSI INTL CONTAINER",
+   "float_cap_usd_b": 15.09,
+   "weight_pct": 42.06
+  },
+  {
+   "name": "BDO UNIBANK",
+   "float_cap_usd_b": 4.61,
+   "weight_pct": 12.85
+  },
+  {
+   "name": "BANK OF PHIL ISLANDS",
+   "float_cap_usd_b": 2.88,
+   "weight_pct": 8.01
+  },
+  {
+   "name": "SM PRIME HOLDINGS",
+   "float_cap_usd_b": 2.81,
+   "weight_pct": 7.82
+  },
+  {
+   "name": "SM INVESTMENTS",
+   "float_cap_usd_b": 2.13,
+   "weight_pct": 5.94
+  },
+  {
+   "name": "AYALA CORP",
+   "float_cap_usd_b": 1.94,
+   "weight_pct": 5.41
+  },
+  {
+   "name": "METROPOLITAN BANK &TRUST",
+   "float_cap_usd_b": 1.93,
+   "weight_pct": 5.38
+  },
+  {
+   "name": "AYALA LAND",
+   "float_cap_usd_b": 1.58,
+   "weight_pct": 4.4
+  },
+  {
+   "name": "PLDT",
+   "float_cap_usd_b": 1.5,
+   "weight_pct": 4.19
+  },
+  {
+   "name": "MANILA ELECTRIC CO B",
+   "float_cap_usd_b": 1.41,
+   "weight_pct": 3.94
+  }
+ ],
+ "Singapore": [
+  {
+   "name": "DBS GROUP HOLDINGS",
+   "float_cap_usd_b": 118.88,
+   "weight_pct": 29.81
+  },
+  {
+   "name": "OCBC BANK",
+   "float_cap_usd_b": 74.27,
+   "weight_pct": 18.62
+  },
+  {
+   "name": "UNITED OVERSEAS BANK",
+   "float_cap_usd_b": 40.82,
+   "weight_pct": 10.23
+  },
+  {
+   "name": "SEA A ADR",
+   "float_cap_usd_b": 40.13,
+   "weight_pct": 10.06
+  },
+  {
+   "name": "SINGAPORE TELECOM",
+   "float_cap_usd_b": 25.64,
+   "weight_pct": 6.43
+  },
+  {
+   "name": "SINGAPORE EXCHANGE",
+   "float_cap_usd_b": 15.31,
+   "weight_pct": 3.84
+  },
+  {
+   "name": "KEPPEL",
+   "float_cap_usd_b": 12.61,
+   "weight_pct": 3.16
+  },
+  {
+   "name": "SINGAPORE TECH ENGR",
+   "float_cap_usd_b": 12.26,
+   "weight_pct": 3.07
+  },
+  {
+   "name": "CAPITALAND INTEGRATED",
+   "float_cap_usd_b": 11.83,
+   "weight_pct": 2.97
+  },
+  {
+   "name": "SINGAPORE AIRLINES",
+   "float_cap_usd_b": 8.99,
+   "weight_pct": 2.26
+  }
+ ],
+ "Taiwan": [
+  {
+   "name": "TAIWAN SEMICONDUCTOR MFG",
+   "float_cap_usd_b": 1848.51,
+   "weight_pct": 58.07
+  },
+  {
+   "name": "MEDIATEK INC",
+   "float_cap_usd_b": 158.78,
+   "weight_pct": 4.99
+  },
+  {
+   "name": "DELTA ELECTRONICS",
+   "float_cap_usd_b": 98.86,
+   "weight_pct": 3.11
+  },
+  {
+   "name": "HON HAI PRECISION IND CO",
+   "float_cap_usd_b": 94.71,
+   "weight_pct": 2.98
+  },
+  {
+   "name": "ASE TECHNOLOGY HOLDING",
+   "float_cap_usd_b": 57.28,
+   "weight_pct": 1.8
+  },
+  {
+   "name": "UNITED MICROELECTRONICS",
+   "float_cap_usd_b": 42.38,
+   "weight_pct": 1.33
+  },
+  {
+   "name": "ELITE MATERIAL CO",
+   "float_cap_usd_b": 42.09,
+   "weight_pct": 1.32
+  },
+  {
+   "name": "FUBON FINANCIAL HOLDING",
+   "float_cap_usd_b": 33.81,
+   "weight_pct": 1.06
+  },
+  {
+   "name": "CTBC FINANCIAL HOLDING",
+   "float_cap_usd_b": 33.59,
+   "weight_pct": 1.06
+  },
+  {
+   "name": "ACCTON TECHNOLOGY CORP",
+   "float_cap_usd_b": 33.2,
+   "weight_pct": 1.04
+  }
+ ],
+ "Thailand": [
+  {
+   "name": "DELTA ELECTRONICS THAI",
+   "float_cap_usd_b": 25.96,
+   "weight_pct": 21.78
+  },
+  {
+   "name": "PTT",
+   "float_cap_usd_b": 11.53,
+   "weight_pct": 9.67
+  },
+  {
+   "name": "ADVANCED INFO SERVICE",
+   "float_cap_usd_b": 11.0,
+   "weight_pct": 9.23
+  },
+  {
+   "name": "AIRPORTS OF THAILAND",
+   "float_cap_usd_b": 7.5,
+   "weight_pct": 6.29
+  },
+  {
+   "name": "GULF DEVELOPMENT",
+   "float_cap_usd_b": 7.47,
+   "weight_pct": 6.26
+  },
+  {
+   "name": "CP ALL PCL",
+   "float_cap_usd_b": 7.42,
+   "weight_pct": 6.23
+  },
+  {
+   "name": "BANGKOK DUSIT MED. SVCS",
+   "float_cap_usd_b": 6.17,
+   "weight_pct": 5.18
+  },
+  {
+   "name": "SIAM CEMENT",
+   "float_cap_usd_b": 5.48,
+   "weight_pct": 4.6
+  },
+  {
+   "name": "PTT EXPLORATION & PROD",
+   "float_cap_usd_b": 5.31,
+   "weight_pct": 4.46
+  },
+  {
+   "name": "KRUNG THAI BANK",
+   "float_cap_usd_b": 4.63,
+   "weight_pct": 3.88
+  }
+ ]
+}

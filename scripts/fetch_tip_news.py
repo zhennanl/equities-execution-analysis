@@ -49,14 +49,14 @@ def fetch_one(i):
 
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "status"
-    idx = json.loads(IDX.read_text()) if IDX.exists() else {}
+    idx = json.loads(IDX.read_text(encoding="utf-8")) if IDX.exists() else {}
     if mode == "index":
         lo, hi = int(sys.argv[2]), int(sys.argv[3])
         todo = [i for i in range(lo, hi + 1) if str(i) not in idx]
         with cf.ThreadPoolExecutor(max_workers=10) as ex:
             for i, r in ex.map(fetch_one, todo):
                 idx[str(i)] = r
-        IDX.write_text(json.dumps(idx, ensure_ascii=False))
+        IDX.write_text(json.dumps(idx, ensure_ascii=False), encoding="utf-8")
         kept = sum(1 for v in idx.values() if v.get("kept"))
         print(f"indexed {len(idx)}, review-pages kept {kept}")
     else:

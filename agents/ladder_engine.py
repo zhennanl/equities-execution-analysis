@@ -19,7 +19,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FX = 29.5   # c-94: corrected from stale 32.5 — MSCI factsheet-implied ~29.3 (TSMC full cap check); the 32.5 understated USD caps ~10%
+FX = 32.214   # c-108: LIVE TWD=X series (fx_twd_history.json). The 29.5 'fix' (c-94/Q67) was CIRCULAR — factsheet-implied FIF assumed the FX it was solving for. TSMC holder facts (gov 6.3%) -> FIF 0.95 -> FX ~32.0, matching the live series.
 BUFFER_EDGE = 1.15          # pool cutoff: generous buffer-band edge
 API = "https://api.finmindtrade.com/api/v4/data"
 

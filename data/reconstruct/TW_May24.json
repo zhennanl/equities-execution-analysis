@@ -1,0 +1,92 @@
+{
+ "market": "Taiwan",
+ "review": "May24",
+ "keys": {
+  "gmsr_dm": 10.19,
+  "em_range": [
+   2.55,
+   5.86
+  ],
+  "ceiling": 5.86,
+  "floor": 3.907,
+  "bar": 8.79,
+  "price_date": "2024-04-19",
+  "source": "May2024"
+ },
+ "fx_used": 32.434,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "3017",
+   "security": "ASIA VITAL COMPONENTS",
+   "action": "ADD",
+   "pit_cap_busd": 7.45,
+   "verdict": "NEAR-MISS: 7.45B is 15% below the bar"
+  },
+  {
+   "code": "1519",
+   "security": "FORTUNE ELECTRIC CO",
+   "action": "ADD",
+   "pit_cap_busd": 7.36,
+   "verdict": "NEAR-MISS: 7.36B is 16% below the bar"
+  },
+  {
+   "code": "8046",
+   "security": "NAN YA PRINTED CIRCUIT",
+   "action": "DEL",
+   "pit_cap_busd": 3.42,
+   "verdict": "EXPLAINED: 3.42B is 13% below the 3.907B floor"
+  },
+  {
+   "code": "4966",
+   "security": "PARADE TECHNOLOGIES",
+   "action": "DEL",
+   "pit_cap_busd": 2.0,
+   "verdict": "EXPLAINED: 2.00B is 49% below the 3.907B floor"
+  },
+  {
+   "code": "6770",
+   "security": "POWERCHIP SEMICONDUCTOR",
+   "action": "DEL",
+   "pit_cap_busd": 2.78,
+   "verdict": "EXPLAINED: 2.78B is 29% below the 3.907B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "4966": 2.0,
+   "8046": 3.42,
+   "3481": 3.79,
+   "6446": 3.0,
+   "2344": 3.27,
+   "8464": 3.3,
+   "6770": 2.78,
+   "9904": 3.21,
+   "2615": 3.74,
+   "4958": 3.27,
+   "9945": 3.17,
+   "2610": 3.61
+  },
+  "hits": [
+   "4966",
+   "6770",
+   "8046"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "2344",
+   "2610",
+   "2615",
+   "3481",
+   "4958",
+   "6446",
+   "8464",
+   "9904",
+   "9945"
+  ]
+ }
+}

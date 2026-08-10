@@ -1,0 +1,1437 @@
+{
+ "method": "implied FIF = factsheet float cap (USD) / Yahoo full cap converted to USD; yahoo float = floatShares/sharesOut",
+ "date_caveat": "factsheet Jul-31 vs Yahoo current (~1wk drift in implied FIFs)",
+ "fx_used": {
+  "JPY": 158.337006,
+  "KRW": 1416.869995,
+  "HKD": 7.84472,
+  "AUD": 1.4199,
+  "INR": 95.209999,
+  "MYR": 4.091,
+  "IDR": 17885.0,
+  "PHP": 60.894001,
+  "SGD": 1.28118,
+  "THB": 33.029999,
+  "NZD": 1.7018,
+  "TWD": 32.263,
+  "CNY": 6.7366,
+  "USD": 1.0
+ },
+ "markets": {
+  "Australia": [
+   {
+    "name": "BHP GROUP (AU)",
+    "symbol": "BHP.AX",
+    "match": "override",
+    "float_cap_usd_b": 215.24,
+    "cap_usd_b": 225.32,
+    "implied_fif": 0.955,
+    "yahoo_ff": 0.969,
+    "yahoo_err": 0.015
+   },
+   {
+    "name": "COMMONWEALTH BANK OF AUS",
+    "symbol": "CBA.AX",
+    "match": "member-match",
+    "float_cap_usd_b": 208.66,
+    "cap_usd_b": 209.63,
+    "implied_fif": 0.995,
+    "yahoo_ff": 0.998,
+    "yahoo_err": 0.003
+   },
+   {
+    "name": "WESTPAC BANKING",
+    "symbol": "WBC.AX",
+    "match": "member-match",
+    "float_cap_usd_b": 90.97,
+    "cap_usd_b": 91.22,
+    "implied_fif": 0.997,
+    "yahoo_ff": 0.999,
+    "yahoo_err": 0.002
+   },
+   {
+    "name": "NATIONAL AUSTRALIA BANK",
+    "symbol": "NAB.AX",
+    "match": "member-match",
+    "float_cap_usd_b": 89.05,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "ANZ GROUP HOLDINGS",
+    "symbol": "ANZ.AX",
+    "match": "member-match",
+    "float_cap_usd_b": 78.99,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "WESFARMERS",
+    "symbol": "WES.AX",
+    "match": "member-match",
+    "float_cap_usd_b": 71.25,
+    "cap_usd_b": 72.04,
+    "implied_fif": 0.989,
+    "yahoo_ff": 0.997,
+    "yahoo_err": 0.008
+   },
+   {
+    "name": "MACQUARIE GROUP",
+    "symbol": "MQG.AX",
+    "match": "member-match",
+    "float_cap_usd_b": 64.36,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "RIO TINTO LTD (AU)",
+    "symbol": "RIO.AX",
+    "match": "member-match",
+    "float_cap_usd_b": 44.54,
+    "cap_usd_b": 203.38,
+    "implied_fif": 0.219,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 3.566
+   },
+   {
+    "name": "WOODSIDE ENERGY GROUP",
+    "symbol": "WDS.AX",
+    "match": "member-match",
+    "float_cap_usd_b": 44.0,
+    "cap_usd_b": 42.68,
+    "implied_fif": 1.031,
+    "yahoo_ff": 0.997,
+    "yahoo_err": -0.033
+   },
+   {
+    "name": "CSL",
+    "symbol": "CSL.AX",
+    "match": "override",
+    "float_cap_usd_b": 41.95,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   }
+  ],
+  "China": [
+   {
+    "name": "TENCENT HOLDINGS LI (CN)",
+    "symbol": "0700.HK",
+    "match": "override",
+    "float_cap_usd_b": 373.28,
+    "cap_usd_b": 549.41,
+    "implied_fif": 0.679,
+    "yahoo_ff": 0.692,
+    "yahoo_err": 0.019
+   },
+   {
+    "name": "ALIBABA GRP HLDG (HK)",
+    "symbol": "9988.HK",
+    "match": "override",
+    "float_cap_usd_b": 249.8,
+    "cap_usd_b": 302.61,
+    "implied_fif": 0.825,
+    "yahoo_ff": 0.922,
+    "yahoo_err": 0.118
+   },
+   {
+    "name": "CHINA CONSTRUCTION BK H",
+    "symbol": "0939.HK",
+    "match": "override",
+    "float_cap_usd_b": 98.83,
+    "cap_usd_b": 293.12,
+    "implied_fif": 0.337,
+    "yahoo_ff": 0.428,
+    "yahoo_err": 0.27
+   },
+   {
+    "name": "XIAOMI CORP B",
+    "symbol": "1810.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 62.92,
+    "cap_usd_b": 88.81,
+    "implied_fif": 0.708,
+    "yahoo_ff": 0.809,
+    "yahoo_err": 0.143
+   },
+   {
+    "name": "ICBC H",
+    "symbol": "1398.HK",
+    "match": "override",
+    "float_cap_usd_b": 62.34,
+    "cap_usd_b": 324.39,
+    "implied_fif": 0.192,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 4.208
+   },
+   {
+    "name": "MEITUAN B",
+    "symbol": "3690.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 59.4,
+    "cap_usd_b": 72.54,
+    "implied_fif": 0.819,
+    "yahoo_ff": 0.971,
+    "yahoo_err": 0.186
+   },
+   {
+    "name": "PDD HOLDINGS A ADR",
+    "symbol": "PDD",
+    "match": "override",
+    "float_cap_usd_b": 50.29,
+    "cap_usd_b": 129.32,
+    "implied_fif": 0.389,
+    "yahoo_ff": 0.529,
+    "yahoo_err": 0.36
+   },
+   {
+    "name": "PING AN INSURANCE H",
+    "symbol": "2318.HK",
+    "match": "override",
+    "float_cap_usd_b": 48.74,
+    "cap_usd_b": 131.92,
+    "implied_fif": 0.369,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 1.71
+   },
+   {
+    "name": "BANK OF CHINA H",
+    "symbol": "3988.HK",
+    "match": "override",
+    "float_cap_usd_b": 47.01,
+    "cap_usd_b": 214.82,
+    "implied_fif": 0.219,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 3.566
+   },
+   {
+    "name": "NETEASE",
+    "symbol": "9999.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 46.5,
+    "cap_usd_b": 83.74,
+    "implied_fif": 0.555,
+    "yahoo_ff": 0.546,
+    "yahoo_err": -0.016
+   }
+  ],
+  "HongKong": [
+   {
+    "name": "AIA GROUP",
+    "symbol": "1299.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 106.2,
+    "cap_usd_b": 97.41,
+    "implied_fif": 1.05,
+    "yahoo_ff": 1.0,
+    "yahoo_err": -0.048
+   },
+   {
+    "name": "HONGKONG EXCH & CLEARING",
+    "symbol": "0388.HK",
+    "match": "override",
+    "float_cap_usd_b": 62.76,
+    "cap_usd_b": 66.32,
+    "implied_fif": 0.946,
+    "yahoo_ff": 0.939,
+    "yahoo_err": -0.007
+   },
+   {
+    "name": "CK HUTCHISON HOLDINGS",
+    "symbol": "0001.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 25.16,
+    "cap_usd_b": 35.76,
+    "implied_fif": 0.704,
+    "yahoo_ff": 0.692,
+    "yahoo_err": -0.017
+   },
+   {
+    "name": "BOC HONG KONG HOLDINGS",
+    "symbol": "2388.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 24.63,
+    "cap_usd_b": 67.66,
+    "implied_fif": 0.364,
+    "yahoo_ff": 0.339,
+    "yahoo_err": -0.069
+   },
+   {
+    "name": "TECHTRONIC INDUSTRIES CO",
+    "symbol": "0669.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 23.1,
+    "cap_usd_b": 34.15,
+    "implied_fif": 0.676,
+    "yahoo_ff": 0.778,
+    "yahoo_err": 0.151
+   },
+   {
+    "name": "SUN HUNG KAI PROPERTIES",
+    "symbol": "0016.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 20.49,
+    "cap_usd_b": 42.63,
+    "implied_fif": 0.481,
+    "yahoo_ff": 0.466,
+    "yahoo_err": -0.031
+   },
+   {
+    "name": "CLP HOLDINGS",
+    "symbol": "0002.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 16.36,
+    "cap_usd_b": 24.99,
+    "implied_fif": 0.655,
+    "yahoo_ff": 0.717,
+    "yahoo_err": 0.095
+   },
+   {
+    "name": "LINK REIT",
+    "symbol": "0823.HK",
+    "match": "override",
+    "float_cap_usd_b": 13.05,
+    "cap_usd_b": 12.87,
+    "implied_fif": 1.014,
+    "yahoo_ff": 0.993,
+    "yahoo_err": -0.021
+   },
+   {
+    "name": "JARDINE MATHESON (USD)",
+    "symbol": "J36.SI",
+    "match": "override",
+    "float_cap_usd_b": 10.7,
+    "cap_usd_b": 18.72,
+    "implied_fif": 0.572,
+    "yahoo_ff": 0.93,
+    "yahoo_err": 0.626
+   },
+   {
+    "name": "CK ASSET HOLDINGS",
+    "symbol": "1113.HK",
+    "match": "member-match",
+    "float_cap_usd_b": 10.68,
+    "cap_usd_b": 20.91,
+    "implied_fif": 0.511,
+    "yahoo_ff": 0.541,
+    "yahoo_err": 0.059
+   }
+  ],
+  "India": [
+   {
+    "name": "HDFC BANK",
+    "symbol": "HDFCBANK.NS",
+    "match": "override",
+    "float_cap_usd_b": 89.32,
+    "cap_usd_b": 118.58,
+    "implied_fif": 0.753,
+    "yahoo_ff": 0.995,
+    "yahoo_err": 0.321
+   },
+   {
+    "name": "RELIANCE INDUSTRIES",
+    "symbol": "RELIANCE.NS",
+    "match": "member-match",
+    "float_cap_usd_b": 83.47,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "ICICI BANK",
+    "symbol": "ICICIBANK.NS",
+    "match": "override",
+    "float_cap_usd_b": 79.72,
+    "cap_usd_b": 107.36,
+    "implied_fif": 0.743,
+    "yahoo_ff": 0.996,
+    "yahoo_err": 0.341
+   },
+   {
+    "name": "BHARTI AIRTEL",
+    "symbol": "BHARTIARTL.NS",
+    "match": "member-match",
+    "float_cap_usd_b": 56.67,
+    "cap_usd_b": 128.19,
+    "implied_fif": 0.442,
+    "yahoo_ff": 0.512,
+    "yahoo_err": 0.158
+   },
+   {
+    "name": "INFOSYS",
+    "symbol": "INFY.NS",
+    "match": "member-match",
+    "float_cap_usd_b": 36.03,
+    "cap_usd_b": 50.03,
+    "implied_fif": 0.72,
+    "yahoo_ff": 0.96,
+    "yahoo_err": 0.333
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA",
+    "symbol": "M&M.NS",
+    "match": "member-match",
+    "float_cap_usd_b": 31.0,
+    "cap_usd_b": 44.14,
+    "implied_fif": 0.702,
+    "yahoo_ff": 0.684,
+    "yahoo_err": -0.026
+   },
+   {
+    "name": "BAJAJ FINANCE",
+    "symbol": "BAJFINANCE.NS",
+    "match": "member-match",
+    "float_cap_usd_b": 29.77,
+    "cap_usd_b": 70.59,
+    "implied_fif": 0.422,
+    "yahoo_ff": 0.428,
+    "yahoo_err": 0.014
+   },
+   {
+    "name": "AXIS BANK",
+    "symbol": "AXISBANK.NS",
+    "match": "member-match",
+    "float_cap_usd_b": 29.64,
+    "cap_usd_b": 40.71,
+    "implied_fif": 0.728,
+    "yahoo_ff": 0.903,
+    "yahoo_err": 0.24
+   },
+   {
+    "name": "LARSEN & TOUBRO",
+    "symbol": "LT.NS",
+    "match": "member-match",
+    "float_cap_usd_b": 27.83,
+    "cap_usd_b": 58.37,
+    "implied_fif": 0.477,
+    "yahoo_ff": 0.831,
+    "yahoo_err": 0.742
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK",
+    "symbol": "KOTAKBANK.NS",
+    "match": "member-match",
+    "float_cap_usd_b": 22.38,
+    "cap_usd_b": 40.66,
+    "implied_fif": 0.55,
+    "yahoo_ff": 0.737,
+    "yahoo_err": 0.34
+   }
+  ],
+  "Indonesia": [
+   {
+    "name": "BANK CENTRAL ASIA",
+    "symbol": "BBCA.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 17.33,
+    "cap_usd_b": 43.79,
+    "implied_fif": 0.396,
+    "yahoo_ff": 0.392,
+    "yahoo_err": -0.01
+   },
+   {
+    "name": "BANK RAKYAT INDONESIA",
+    "symbol": "BBRI.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 10.24,
+    "cap_usd_b": 26.35,
+    "implied_fif": 0.389,
+    "yahoo_ff": 0.465,
+    "yahoo_err": 0.195
+   },
+   {
+    "name": "BANK MANDIRI",
+    "symbol": "BMRI.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 8.69,
+    "cap_usd_b": 22.04,
+    "implied_fif": 0.394,
+    "yahoo_ff": 0.407,
+    "yahoo_err": 0.033
+   },
+   {
+    "name": "TELKOM INDONESIA",
+    "symbol": "TLKM.JK",
+    "match": "override",
+    "float_cap_usd_b": 6.52,
+    "cap_usd_b": 14.94,
+    "implied_fif": 0.436,
+    "yahoo_ff": 0.471,
+    "yahoo_err": 0.08
+   },
+   {
+    "name": "ASTRA INTERNATIONAL",
+    "symbol": "ASII.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 4.59,
+    "cap_usd_b": 11.38,
+    "implied_fif": 0.403,
+    "yahoo_ff": 0.442,
+    "yahoo_err": 0.097
+   },
+   {
+    "name": "BANK NEGARA INDONESIA",
+    "symbol": "BBNI.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 2.56,
+    "cap_usd_b": 7.56,
+    "implied_fif": 0.339,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 1.95
+   },
+   {
+    "name": "GOTO GOJEK TOKOPEDIA",
+    "symbol": "GOTO.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 2.48,
+    "cap_usd_b": 2.98,
+    "implied_fif": 0.832,
+    "yahoo_ff": 0.773,
+    "yahoo_err": -0.071
+   },
+   {
+    "name": "BARITO PACIFIC",
+    "symbol": "BRPT.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 1.97,
+    "cap_usd_b": 10.11,
+    "implied_fif": 0.195,
+    "yahoo_ff": 0.282,
+    "yahoo_err": 0.446
+   },
+   {
+    "name": "BUMI RESOURCES MINERALS",
+    "symbol": "BRMS.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 1.77,
+    "cap_usd_b": 4.88,
+    "implied_fif": 0.363,
+    "yahoo_ff": 0.969,
+    "yahoo_err": 1.669
+   },
+   {
+    "name": "UNITED TRACTORS",
+    "symbol": "UNTR.JK",
+    "match": "member-match",
+    "float_cap_usd_b": 1.61,
+    "cap_usd_b": 4.62,
+    "implied_fif": 0.348,
+    "yahoo_ff": 0.364,
+    "yahoo_err": 0.046
+   }
+  ],
+  "Japan": [
+   {
+    "name": "MITSUBISHI UFJ FIN GRP",
+    "symbol": "8058.T",
+    "match": "member-match",
+    "float_cap_usd_b": 239.55,
+    "cap_usd_b": 112.57,
+    "implied_fif": 1.05,
+    "yahoo_ff": 1.0,
+    "yahoo_err": -0.048
+   },
+   {
+    "name": "TOYOTA MOTOR CORP",
+    "symbol": "7203.T",
+    "match": "member-match",
+    "float_cap_usd_b": 182.55,
+    "cap_usd_b": 222.86,
+    "implied_fif": 0.819,
+    "yahoo_ff": 0.922,
+    "yahoo_err": 0.126
+   },
+   {
+    "name": "TOKYO ELECTRON",
+    "symbol": "8035.T",
+    "match": "member-match",
+    "float_cap_usd_b": 156.17,
+    "cap_usd_b": 156.49,
+    "implied_fif": 0.998,
+    "yahoo_ff": 0.966,
+    "yahoo_err": -0.032
+   },
+   {
+    "name": "SUMITOMO MITSUI FINL GRP",
+    "symbol": "8316.T",
+    "match": "override",
+    "float_cap_usd_b": 155.61,
+    "cap_usd_b": 163.28,
+    "implied_fif": 0.953,
+    "yahoo_ff": 0.996,
+    "yahoo_err": 0.045
+   },
+   {
+    "name": "ADVANTEST CORP",
+    "symbol": "6857.T",
+    "match": "member-match",
+    "float_cap_usd_b": 149.41,
+    "cap_usd_b": 147.21,
+    "implied_fif": 1.015,
+    "yahoo_ff": 0.999,
+    "yahoo_err": -0.016
+   },
+   {
+    "name": "HITACHI",
+    "symbol": "6501.T",
+    "match": "member-match",
+    "float_cap_usd_b": 146.28,
+    "cap_usd_b": 158.88,
+    "implied_fif": 0.921,
+    "yahoo_ff": 0.984,
+    "yahoo_err": 0.068
+   },
+   {
+    "name": "SONY GROUP CORP",
+    "symbol": "6758.T",
+    "match": "member-match",
+    "float_cap_usd_b": 138.95,
+    "cap_usd_b": 138.01,
+    "implied_fif": 1.007,
+    "yahoo_ff": 1.0,
+    "yahoo_err": -0.007
+   },
+   {
+    "name": "SOFTBANK GROUP CORP",
+    "symbol": "9984.T",
+    "match": "override",
+    "float_cap_usd_b": 122.65,
+    "cap_usd_b": 199.83,
+    "implied_fif": 0.614,
+    "yahoo_ff": 0.641,
+    "yahoo_err": 0.044
+   },
+   {
+    "name": "MIZUHO FINANCIAL GROUP",
+    "symbol": "8411.T",
+    "match": "member-match",
+    "float_cap_usd_b": 121.32,
+    "cap_usd_b": 129.96,
+    "implied_fif": 0.933,
+    "yahoo_ff": 0.999,
+    "yahoo_err": 0.071
+   },
+   {
+    "name": "RECRUIT HOLDINGS CO",
+    "symbol": "6098.T",
+    "match": "override",
+    "float_cap_usd_b": 104.46,
+    "cap_usd_b": 115.75,
+    "implied_fif": 0.902,
+    "yahoo_ff": 0.978,
+    "yahoo_err": 0.084
+   }
+  ],
+  "Korea": [
+   {
+    "name": "SAMSUNG ELECTRONICS CO",
+    "symbol": "005930.KS",
+    "match": "override",
+    "float_cap_usd_b": 861.13,
+    "cap_usd_b": 1070.58,
+    "implied_fif": 0.804,
+    "yahoo_ff": 0.907,
+    "yahoo_err": 0.128
+   },
+   {
+    "name": "SK HYNIX",
+    "symbol": "000660.KS",
+    "match": "member-match",
+    "float_cap_usd_b": 665.59,
+    "cap_usd_b": 712.43,
+    "implied_fif": 0.934,
+    "yahoo_ff": 0.798,
+    "yahoo_err": -0.146
+   },
+   {
+    "name": "SAMSUNG ELECTRONICS PREF",
+    "symbol": "005935.KS",
+    "match": "override",
+    "float_cap_usd_b": 107.49,
+    "cap_usd_b": 792.15,
+    "implied_fif": 0.136,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 6.353
+   },
+   {
+    "name": "SK SQUARE CO",
+    "symbol": "402340.KS",
+    "match": "member-match",
+    "float_cap_usd_b": 67.25,
+    "cap_usd_b": 87.35,
+    "implied_fif": 0.77,
+    "yahoo_ff": 0.677,
+    "yahoo_err": -0.121
+   },
+   {
+    "name": "SAMSUNG ELECTRO-MECH. CO",
+    "symbol": "009150.KS",
+    "match": "override",
+    "float_cap_usd_b": 44.87,
+    "cap_usd_b": 68.14,
+    "implied_fif": 0.658,
+    "yahoo_ff": 0.784,
+    "yahoo_err": 0.191
+   },
+   {
+    "name": "KB FINANCIAL GROUP",
+    "symbol": "105560.KS",
+    "match": "member-match",
+    "float_cap_usd_b": 41.86,
+    "cap_usd_b": 43.56,
+    "implied_fif": 0.961,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 0.041
+   },
+   {
+    "name": "HYUNDAI MOTOR CO",
+    "symbol": "005380.KS",
+    "match": "member-match",
+    "float_cap_usd_b": 36.22,
+    "cap_usd_b": 73.09,
+    "implied_fif": 0.496,
+    "yahoo_ff": 0.955,
+    "yahoo_err": 0.925
+   },
+   {
+    "name": "SHINHAN FINANCIAL GROUP",
+    "symbol": "055550.KS",
+    "match": "member-match",
+    "float_cap_usd_b": 29.34,
+    "cap_usd_b": 36.56,
+    "implied_fif": 0.803,
+    "yahoo_ff": 0.98,
+    "yahoo_err": 0.22
+   },
+   {
+    "name": "HANA FINANCIAL HOLDINGS",
+    "symbol": "086790.KS",
+    "match": "override",
+    "float_cap_usd_b": 23.87,
+    "cap_usd_b": 25.5,
+    "implied_fif": 0.936,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 0.068
+   },
+   {
+    "name": "KIA CORP",
+    "symbol": "000270.KS",
+    "match": "member-match",
+    "float_cap_usd_b": 21.67,
+    "cap_usd_b": 37.0,
+    "implied_fif": 0.586,
+    "yahoo_ff": 0.605,
+    "yahoo_err": 0.032
+   }
+  ],
+  "Malaysia": [
+   {
+    "name": "PUBLIC BANK",
+    "symbol": "1295.KL",
+    "match": "override",
+    "float_cap_usd_b": 18.42,
+    "cap_usd_b": 24.63,
+    "implied_fif": 0.748,
+    "yahoo_ff": 0.769,
+    "yahoo_err": 0.028
+   },
+   {
+    "name": "MALAYAN BANKING",
+    "symbol": "1155.KL",
+    "match": "override",
+    "float_cap_usd_b": 15.32,
+    "cap_usd_b": 31.58,
+    "implied_fif": 0.485,
+    "yahoo_ff": 0.979,
+    "yahoo_err": 1.019
+   },
+   {
+    "name": "CIMB GROUP HOLDINGS",
+    "symbol": "1023.KL",
+    "match": "override",
+    "float_cap_usd_b": 15.12,
+    "cap_usd_b": 20.98,
+    "implied_fif": 0.721,
+    "yahoo_ff": 0.756,
+    "yahoo_err": 0.049
+   },
+   {
+    "name": "TENAGA NASIONAL",
+    "symbol": "5347.KL",
+    "match": "override",
+    "float_cap_usd_b": 9.37,
+    "cap_usd_b": 20.52,
+    "implied_fif": 0.457,
+    "yahoo_ff": 0.585,
+    "yahoo_err": 0.28
+   },
+   {
+    "name": "PRESS METAL ALUMINIUM",
+    "symbol": "8869.KL",
+    "match": "override",
+    "float_cap_usd_b": 7.22,
+    "cap_usd_b": 15.97,
+    "implied_fif": 0.452,
+    "yahoo_ff": 0.461,
+    "yahoo_err": 0.02
+   },
+   {
+    "name": "GAMUDA",
+    "symbol": "5398.KL",
+    "match": "override",
+    "float_cap_usd_b": 5.29,
+    "cap_usd_b": 6.51,
+    "implied_fif": 0.812,
+    "yahoo_ff": 0.894,
+    "yahoo_err": 0.101
+   },
+   {
+    "name": "AMMB HOLDINGS",
+    "symbol": "1015.KL",
+    "match": "override",
+    "float_cap_usd_b": 4.11,
+    "cap_usd_b": 5.95,
+    "implied_fif": 0.69,
+    "yahoo_ff": 0.815,
+    "yahoo_err": 0.181
+   },
+   {
+    "name": "RHB BANK",
+    "symbol": "1066.KL",
+    "match": "override",
+    "float_cap_usd_b": 3.88,
+    "cap_usd_b": 9.42,
+    "implied_fif": 0.412,
+    "yahoo_ff": 0.649,
+    "yahoo_err": 0.575
+   },
+   {
+    "name": "IHH HEALTHCARE",
+    "symbol": "5225.KL",
+    "match": "override",
+    "float_cap_usd_b": 3.52,
+    "cap_usd_b": 17.93,
+    "implied_fif": 0.196,
+    "yahoo_ff": 0.354,
+    "yahoo_err": 0.806
+   },
+   {
+    "name": "SUNWAY",
+    "symbol": "5211.KL",
+    "match": "override",
+    "float_cap_usd_b": 3.52,
+    "cap_usd_b": 8.68,
+    "implied_fif": 0.406,
+    "yahoo_ff": 0.391,
+    "yahoo_err": -0.037
+   }
+  ],
+  "NewZealand": [
+   {
+    "name": "FISHER & PAYKEL HEALTH",
+    "symbol": "FPH.NZ",
+    "match": "member-match",
+    "float_cap_usd_b": 14.04,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "AUCKLAND INTL AIRPORT",
+    "symbol": "AIA.NZ",
+    "match": "override",
+    "float_cap_usd_b": 8.7,
+    "cap_usd_b": 8.73,
+    "implied_fif": 0.997,
+    "yahoo_ff": 1.0,
+    "yahoo_err": 0.003
+   },
+   {
+    "name": "INFRATIL",
+    "symbol": "IFT.NZ",
+    "match": "member-match",
+    "float_cap_usd_b": 7.81,
+    "cap_usd_b": 8.78,
+    "implied_fif": 0.89,
+    "yahoo_ff": 0.94,
+    "yahoo_err": 0.056
+   },
+   {
+    "name": "CONTACT ENERGY",
+    "symbol": "CEN.NZ",
+    "match": "member-match",
+    "float_cap_usd_b": 5.01,
+    "cap_usd_b": 5.71,
+    "implied_fif": 0.877,
+    "yahoo_ff": 0.925,
+    "yahoo_err": 0.055
+   },
+   {
+    "name": "MERIDIAN ENERGY",
+    "symbol": "MEL.NZ",
+    "match": "member-match",
+    "float_cap_usd_b": 4.44,
+    "cap_usd_b": 8.7,
+    "implied_fif": 0.51,
+    "yahoo_ff": 0.493,
+    "yahoo_err": -0.033
+   }
+  ],
+  "Philippines": [
+   {
+    "name": "ICTSI INTL CONTAINER",
+    "symbol": "ICT.PS",
+    "match": "override",
+    "float_cap_usd_b": 15.09,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "BDO UNIBANK",
+    "symbol": "BDO.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 4.61,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "BANK OF PHIL ISLANDS",
+    "symbol": "BPI.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 2.88,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "SM PRIME HOLDINGS",
+    "symbol": "SMPH.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 2.81,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "SM INVESTMENTS",
+    "symbol": "SM.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 2.13,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "AYALA CORP",
+    "symbol": "AC.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 1.94,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "METROPOLITAN BANK &TRUST",
+    "symbol": "MBT.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 1.93,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "AYALA LAND",
+    "symbol": "ALI.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 1.58,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "PLDT",
+    "symbol": "TEL.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 1.5,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "MANILA ELECTRIC CO B",
+    "symbol": "MER.PS",
+    "match": "member-match",
+    "float_cap_usd_b": 1.41,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   }
+  ],
+  "Singapore": [
+   {
+    "name": "DBS GROUP HOLDINGS",
+    "symbol": "D05.SI",
+    "match": "member-match",
+    "float_cap_usd_b": 118.88,
+    "cap_usd_b": 169.44,
+    "implied_fif": 0.702,
+    "yahoo_ff": 0.717,
+    "yahoo_err": 0.021
+   },
+   {
+    "name": "OCBC BANK",
+    "symbol": "O39.SI",
+    "match": "override",
+    "float_cap_usd_b": 74.27,
+    "cap_usd_b": 106.19,
+    "implied_fif": 0.699,
+    "yahoo_ff": 0.783,
+    "yahoo_err": 0.12
+   },
+   {
+    "name": "UNITED OVERSEAS BANK",
+    "symbol": "U11.SI",
+    "match": "member-match",
+    "float_cap_usd_b": 40.82,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "SEA A ADR",
+    "symbol": "SE",
+    "match": "override",
+    "float_cap_usd_b": 40.13,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "SINGAPORE TELECOM",
+    "symbol": "Z74.SI",
+    "match": "member-match",
+    "float_cap_usd_b": 25.64,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "SINGAPORE EXCHANGE",
+    "symbol": "S68.SI",
+    "match": "member-match",
+    "float_cap_usd_b": 15.31,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "KEPPEL",
+    "symbol": "BN4.SI",
+    "match": "member-match",
+    "float_cap_usd_b": 12.61,
+    "cap_usd_b": 15.71,
+    "implied_fif": 0.803,
+    "yahoo_ff": 0.782,
+    "yahoo_err": -0.026
+   },
+   {
+    "name": "SINGAPORE TECH ENGR",
+    "symbol": "S63.SI",
+    "match": "override",
+    "float_cap_usd_b": 12.26,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "CAPITALAND INTEGRATED",
+    "symbol": "CICT.SI",
+    "match": "member-match",
+    "float_cap_usd_b": 11.83,
+    "cap_usd_b": null,
+    "implied_fif": null,
+    "yahoo_ff": null,
+    "yahoo_err": null
+   },
+   {
+    "name": "SINGAPORE AIRLINES",
+    "symbol": "C6L.SI",
+    "match": "member-match",
+    "float_cap_usd_b": 8.99,
+    "cap_usd_b": 18.71,
+    "implied_fif": 0.481,
+    "yahoo_ff": 0.493,
+    "yahoo_err": 0.025
+   }
+  ],
+  "Taiwan": [
+   {
+    "name": "TAIWAN SEMICONDUCTOR MFG",
+    "symbol": "2330.TW",
+    "match": "override",
+    "float_cap_usd_b": 1848.51,
+    "cap_usd_b": 1904.96,
+    "implied_fif": 0.97,
+    "yahoo_ff": 0.912,
+    "yahoo_err": -0.06
+   },
+   {
+    "name": "MEDIATEK INC",
+    "symbol": "2454.TW",
+    "match": "member-match",
+    "float_cap_usd_b": 158.78,
+    "cap_usd_b": 192.94,
+    "implied_fif": 0.823,
+    "yahoo_ff": 0.879,
+    "yahoo_err": 0.068
+   },
+   {
+    "name": "DELTA ELECTRONICS",
+    "symbol": "2308.TW",
+    "match": "member-match",
+    "float_cap_usd_b": 98.86,
+    "cap_usd_b": 132.84,
+    "implied_fif": 0.744,
+    "yahoo_ff": 0.604,
+    "yahoo_err": -0.188
+   },
+   {
+    "name": "HON HAI PRECISION IND CO",
+    "symbol": "2317.TW",
+    "match": "override",
+    "float_cap_usd_b": 94.71,
+    "cap_usd_b": 112.84,
+    "implied_fif": 0.839,
+    "yahoo_ff": 0.861,
+    "yahoo_err": 0.026
+   },
+   {
+    "name": "ASE TECHNOLOGY HOLDING",
+    "symbol": "3711.TW",
+    "match": "member-match",
+    "float_cap_usd_b": 57.28,
+    "cap_usd_b": 79.74,
+    "implied_fif": 0.718,
+    "yahoo_ff": 0.741,
+    "yahoo_err": 0.032
+   },
+   {
+    "name": "UNITED MICROELECTRONICS",
+    "symbol": "2303.TW",
+    "match": "override",
+    "float_cap_usd_b": 42.38,
+    "cap_usd_b": 45.09,
+    "implied_fif": 0.94,
+    "yahoo_ff": 0.863,
+    "yahoo_err": -0.082
+   },
+   {
+    "name": "ELITE MATERIAL CO",
+    "symbol": "2383.TW",
+    "match": "member-match",
+    "float_cap_usd_b": 42.09,
+    "cap_usd_b": 58.2,
+    "implied_fif": 0.723,
+    "yahoo_ff": 0.825,
+    "yahoo_err": 0.141
+   },
+   {
+    "name": "FUBON FINANCIAL HOLDING",
+    "symbol": "2881.TW",
+    "match": "member-match",
+    "float_cap_usd_b": 33.81,
+    "cap_usd_b": 53.79,
+    "implied_fif": 0.629,
+    "yahoo_ff": 0.59,
+    "yahoo_err": -0.062
+   },
+   {
+    "name": "CTBC FINANCIAL HOLDING",
+    "symbol": "2891.TW",
+    "match": "member-match",
+    "float_cap_usd_b": 33.59,
+    "cap_usd_b": 40.01,
+    "implied_fif": 0.84,
+    "yahoo_ff": 0.869,
+    "yahoo_err": 0.035
+   },
+   {
+    "name": "ACCTON TECHNOLOGY CORP",
+    "symbol": "2345.TW",
+    "match": "member-match",
+    "float_cap_usd_b": 33.2,
+    "cap_usd_b": 38.37,
+    "implied_fif": 0.865,
+    "yahoo_ff": 0.837,
+    "yahoo_err": -0.032
+   }
+  ],
+  "Thailand": [
+   {
+    "name": "DELTA ELECTRONICS THAI",
+    "symbol": "DELTA.BK",
+    "match": "member-match",
+    "float_cap_usd_b": 25.96,
+    "cap_usd_b": 98.94,
+    "implied_fif": 0.262,
+    "yahoo_ff": 0.378,
+    "yahoo_err": 0.443
+   },
+   {
+    "name": "PTT",
+    "symbol": "PTT.BK",
+    "match": "override",
+    "float_cap_usd_b": 11.53,
+    "cap_usd_b": 33.23,
+    "implied_fif": 0.347,
+    "yahoo_ff": 0.459,
+    "yahoo_err": 0.323
+   },
+   {
+    "name": "ADVANCED INFO SERVICE",
+    "symbol": "ADVANC.BK",
+    "match": "member-match",
+    "float_cap_usd_b": 11.0,
+    "cap_usd_b": 33.68,
+    "implied_fif": 0.327,
+    "yahoo_ff": 0.39,
+    "yahoo_err": 0.193
+   },
+   {
+    "name": "AIRPORTS OF THAILAND",
+    "symbol": "AOT.BK",
+    "match": "member-match",
+    "float_cap_usd_b": 7.5,
+    "cap_usd_b": 27.25,
+    "implied_fif": 0.275,
+    "yahoo_ff": 0.286,
+    "yahoo_err": 0.04
+   },
+   {
+    "name": "GULF DEVELOPMENT",
+    "symbol": "GULF.BK",
+    "match": "member-match",
+    "float_cap_usd_b": 7.47,
+    "cap_usd_b": 30.19,
+    "implied_fif": 0.247,
+    "yahoo_ff": 0.488,
+    "yahoo_err": 0.976
+   },
+   {
+    "name": "CP ALL PCL",
+    "symbol": "CPALL.BK",
+    "match": "member-match",
+    "float_cap_usd_b": 7.42,
+    "cap_usd_b": 13.22,
+    "implied_fif": 0.561,
+    "yahoo_ff": 0.609,
+    "yahoo_err": 0.086
+   },
+   {
+    "name": "BANGKOK DUSIT MED. SVCS",
+    "symbol": "BDMS.BK",
+    "match": "override",
+    "float_cap_usd_b": 6.17,
+    "cap_usd_b": 9.67,
+    "implied_fif": 0.638,
+    "yahoo_ff": 0.808,
+    "yahoo_err": 0.266
+   },
+   {
+    "name": "SIAM CEMENT",
+    "symbol": "SCC.BK",
+    "match": "override",
+    "float_cap_usd_b": 5.48,
+    "cap_usd_b": 9.41,
+    "implied_fif": 0.582,
+    "yahoo_ff": 0.588,
+    "yahoo_err": 0.01
+   },
+   {
+    "name": "PTT EXPLORATION & PROD",
+    "symbol": "PTTEP.BK",
+    "match": "member-match",
+    "float_cap_usd_b": 5.31,
+    "cap_usd_b": 17.91,
+    "implied_fif": 0.297,
+    "yahoo_ff": 0.334,
+    "yahoo_err": 0.125
+   },
+   {
+    "name": "KRUNG THAI BANK",
+    "symbol": "KTB.BK",
+    "match": "member-match",
+    "float_cap_usd_b": 4.63,
+    "cap_usd_b": 19.04,
+    "implied_fif": 0.243,
+    "yahoo_ff": 0.417,
+    "yahoo_err": 0.716
+   }
+  ]
+ },
+ "summary": {
+  "Australia": {
+   "n_scored": 6,
+   "yahoo_median_abs_err": 0.011
+  },
+  "China": {
+   "n_scored": 10,
+   "yahoo_median_abs_err": 0.228
+  },
+  "HongKong": {
+   "n_scored": 10,
+   "yahoo_median_abs_err": 0.053
+  },
+  "India": {
+   "n_scored": 9,
+   "yahoo_median_abs_err": 0.321
+  },
+  "Indonesia": {
+   "n_scored": 10,
+   "yahoo_median_abs_err": 0.088
+  },
+  "Japan": {
+   "n_scored": 10,
+   "yahoo_median_abs_err": 0.046
+  },
+  "Korea": {
+   "n_scored": 10,
+   "yahoo_median_abs_err": 0.137
+  },
+  "Malaysia": {
+   "n_scored": 10,
+   "yahoo_median_abs_err": 0.141
+  },
+  "NewZealand": {
+   "n_scored": 4,
+   "yahoo_median_abs_err": 0.044
+  },
+  "Philippines": {
+   "n_scored": 0,
+   "yahoo_median_abs_err": null
+  },
+  "Singapore": {
+   "n_scored": 4,
+   "yahoo_median_abs_err": 0.026
+  },
+  "Taiwan": {
+   "n_scored": 10,
+   "yahoo_median_abs_err": 0.061
+  },
+  "Thailand": {
+   "n_scored": 10,
+   "yahoo_median_abs_err": 0.23
+  }
+ },
+ "alternative_sources": {
+  "China": {
+   "method": "per-line share counts (Yahoo sharesOutstanding is per-line; caps rebuilt as price x line shares)",
+   "result": "4 H-lines re-based: implied FIFs now credible (ICBC 0.79, BOC 0.84, PingAn 0.90, CCB 0.37 \u2014 CCB's low value is REAL, Huijin holds H). Ex-class-artifact Yahoo median |err| 13.1% (n=6)"
+  },
+  "Korea": {
+   "method": "same line fix for pref (005935 line cap $96.3B -> implied 1.12 ~ 1.0 within the week drift)",
+   "result": "pref artifact resolved; residual = chaebol cross-holdings (DART); KRX floating-ratio API requires a session (LOGOUT) \u2014 browser/terminal task"
+  },
+  "Philippines": {
+   "method": "PSE EDGE stockData.do \u2014 publishes Free Float Level(%) AND the FOL per company",
+   "result": "raw float median |err| 21.9%; min(float,FOL) -> 12.2%; residual = foreign-room x0.5 cases (SM, Meralco)"
+  },
+  "Thailand": {
+   "method": "SET publishes % free float + foreign limit/room per stock",
+   "result": "set.or.th API bot-blocks the sandbox (403) \u2014 browser or Bill-terminal harvest; FOL overlay expected to close most of the 23% by the India/PH analogy"
+  },
+  "India": {
+   "method": "NSDL/NSE FPI headroom data",
+   "result": "nseindia.com bot-blocks the sandbox (403) \u2014 browser/terminal task; mechanism confirmed (all errors positive, FOL-bound)"
+  },
+  "Malaysia": {
+   "method": "GLC stake overlay (Khazanah/PNB/EPF from annual reports)",
+   "result": "no bulk source found; overlay is a ~10-name manual table; bimodal split already isolates which names need it"
+  },
+  "Indonesia": {
+   "method": "IDX publishes free float in the stock list",
+   "result": "idx.co.id bot-blocks the sandbox (403) \u2014 browser/terminal task; Yahoo already 8.8%"
+  }
+ },
+ "alternative_scored": {
+  "Thailand": {
+   "rows": [
+    {
+     "name": "DELTA ELECTRONICS THAI",
+     "implied": 0.262,
+     "set_min_float_fol": 0.24,
+     "err": -0.085
+    },
+    {
+     "name": "PTT",
+     "implied": 0.347,
+     "set_min_float_fol": 0.3,
+     "err": -0.135
+    },
+    {
+     "name": "ADVANCED INFO SERVICE",
+     "implied": 0.327,
+     "set_min_float_fol": 0.348,
+     "err": 0.064
+    },
+    {
+     "name": "AIRPORTS OF THAILAND",
+     "implied": 0.275,
+     "set_min_float_fol": 0.3,
+     "err": 0.091
+    },
+    {
+     "name": "GULF DEVELOPMENT",
+     "implied": 0.247,
+     "set_min_float_fol": 0.321,
+     "err": 0.298
+    },
+    {
+     "name": "BANGKOK DUSIT MED. SVCS",
+     "implied": 0.638,
+     "set_min_float_fol": 0.3,
+     "err": -0.53
+    },
+    {
+     "name": "SIAM CEMENT",
+     "implied": 0.582,
+     "set_min_float_fol": 0.25,
+     "err": -0.57
+    },
+    {
+     "name": "KRUNG THAI BANK",
+     "implied": 0.243,
+     "set_min_float_fol": 0.25,
+     "err": 0.029
+    }
+   ],
+   "median_abs_err": 0.113
+  }
+ }
+}

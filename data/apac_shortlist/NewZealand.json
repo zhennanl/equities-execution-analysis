@@ -1,0 +1,105 @@
+{
+ "market": "NewZealand",
+ "cutoff_usd_b": 8.727,
+ "cutoff_derivation": {
+  "member_coverage": 0.8,
+  "members_unsized": 1,
+  "coverage_gate": "DO NOT PUBLISH \u2014 too many members unsized",
+  "confidence": "OK",
+  "flagged_fraction_of_checked": null,
+  "count_anchor_usd_b": 8.727,
+  "n_members": 5,
+  "n_members_source": "fund holdings",
+  "country_flagged_excluded": 0,
+  "country_check_run": false,
+  "smallest_member_usd_b": 5.731,
+  "members_matched": "4/5",
+  "note": "seed only \u2014 the binding cutoff comes from the stage-2 float-coverage walk"
+ },
+ "band": [
+  0.5,
+  2.0
+ ],
+ "n": 7,
+ "of_universe": 114,
+ "next": "stage 2 \u2014 float (\u00a72.2.4/\u00a72.2.6), ATVR (\u00a72.2.5), foreign room (\u00a72.2.8) for these names only",
+ "rows": {
+  "IFT.NZ": {
+   "name": "Infratil Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 14.9397,
+   "cap_usd_b": 8.8072,
+   "shares": 999312470,
+   "price": 14.95,
+   "exchange": "NZSE",
+   "rank": 3
+  },
+  "AIA.NZ": {
+   "name": "Auckland International Airport Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 14.8493,
+   "cap_usd_b": 8.754,
+   "shares": 1695129603,
+   "price": 8.76,
+   "exchange": "NZSE",
+   "rank": 4
+  },
+  "MEL.NZ": {
+   "name": "Meridian Energy Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 14.8035,
+   "cap_usd_b": 8.7269,
+   "shares": 2638773336,
+   "price": 5.61,
+   "exchange": "NZSE",
+   "rank": 5
+  },
+  "FCG.NZ": {
+   "name": "Fonterra Co-operative Group Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 10.2267,
+   "cap_usd_b": 6.0288,
+   "shares": 2406285832,
+   "price": 4.25,
+   "exchange": "NZSE",
+   "rank": 6
+  },
+  "AFI.NZ": {
+   "name": "Australian Foundation Investment Company Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 9.8783,
+   "cap_usd_b": 5.8234,
+   "shares": 1227117155,
+   "price": 8.05,
+   "exchange": "NZSE",
+   "rank": 7
+  },
+  "MCY.NZ": {
+   "name": "Mercury NZ Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 9.7375,
+   "cap_usd_b": 5.7404,
+   "shares": 1417393024,
+   "price": 6.87,
+   "exchange": "NZSE",
+   "rank": 8
+  },
+  "CEN.NZ": {
+   "name": "Contact Energy Limited",
+   "cap_basis": "marketCap",
+   "identity_flag": null,
+   "cap_local_b": 9.7213,
+   "cap_usd_b": 5.7309,
+   "shares": 1070627153,
+   "price": 9.08,
+   "exchange": "NZSE",
+   "rank": 9
+  }
+ }
+}

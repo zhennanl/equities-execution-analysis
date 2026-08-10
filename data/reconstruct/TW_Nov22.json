@@ -1,0 +1,78 @@
+{
+ "market": "Taiwan",
+ "review": "Nov22",
+ "keys": {
+  "gmsr_dm": 7.06,
+  "em_range": [
+   1.77,
+   4.06
+  ],
+  "ceiling": 4.06,
+  "floor": 2.707,
+  "bar": 6.09,
+  "price_date": "2022-10-18",
+  "source": "Nov2022"
+ },
+ "fx_used": 32.114,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "6446",
+   "security": "PHARMAESSENTIA",
+   "action": "ADD",
+   "pit_cap_busd": 4.21,
+   "verdict": "NOT-EXPLAINED: 4.21B well below bar"
+  },
+  {
+   "code": "2834",
+   "security": "TAIWAN BUSINESS BANK",
+   "action": "ADD",
+   "pit_cap_busd": 3.0,
+   "verdict": "NOT-EXPLAINED: 3.00B well below bar"
+  },
+  {
+   "code": "5269",
+   "security": "ASMEDIA TECHNOLOGY",
+   "action": "DEL",
+   "pit_cap_busd": 1.34,
+   "verdict": "EXPLAINED: 1.34B is 50% below the 2.707B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "4966": 1.73,
+   "2353": 2.13,
+   "2356": 2.54,
+   "2344": 2.58,
+   "8464": 2.26,
+   "9904": 2.57,
+   "1504": 1.84,
+   "3529": 2.49,
+   "5269": 1.34,
+   "3702": 2.38,
+   "3105": 1.69,
+   "9921": 2.53
+  },
+  "hits": [
+   "5269"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1504",
+   "2344",
+   "2353",
+   "2356",
+   "3105",
+   "3529",
+   "3702",
+   "4966",
+   "8464",
+   "9904",
+   "9921"
+  ]
+ }
+}

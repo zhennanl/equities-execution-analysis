@@ -96,7 +96,7 @@ def detect_event(quotes, candidates):
 
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "report"
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     quotes = load_hist("quotes")
 
     if mode == "detect":
@@ -115,7 +115,7 @@ def main():
             print(f"VALIDATION {label}: recall "
                   f"{len(got & truth)}/{len(truth)}, "
                   f"false+ {sorted(got - truth)}")
-        CACHE.write_text(json.dumps(cache))
+        CACHE.write_text(json.dumps(cache), encoding="utf-8")
         return
 
     if mode == "predict":
@@ -123,9 +123,9 @@ def main():
         # reconstructed keys (within-universe, coverage stated)
         from scripts.pit_may2026_asia import UNIVERSES
         from scripts.run_full_review_asia import pit_screen
-        shares = json.loads(Path("data/tw_shares.json").read_text())
+        shares = json.loads(Path("data/tw_shares.json").read_text(encoding="utf-8"))
         pitc = json.loads(
-            Path("data/pit_may26_asia_cache.json").read_text())
+            Path("data/pit_may26_asia_cache.json").read_text(encoding="utf-8"))
         FX = 32.5
         # membership back-roll: pre-May-2026 state, reverse Feb-2026
         # (the four deletions were members before Feb; add unmapped)
@@ -175,7 +175,7 @@ def main():
                 "hits": sorted({d.split(".")[0] for d in dels
                                 + adds} & det)}
             print(label, out[label])
-        CACHE.write_text(json.dumps(cache))
+        CACHE.write_text(json.dumps(cache), encoding="utf-8")
         return
 
     if mode == "report":

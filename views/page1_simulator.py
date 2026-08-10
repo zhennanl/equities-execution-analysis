@@ -2,6 +2,7 @@
 from views.common import *          # noqa: F401,F403 — shared imports
 from views.common import (_badge, _AC, _VC, _TC, _cached_fetch,  # noqa: F401
                           kdb_source_expander, fetch_any)
+from views import design
 
 
 def render():
@@ -866,7 +867,7 @@ def render():
                     _prev = []
                     try:
                         _prev = [r for r in _msj.loads(
-                            DEFAULT_STRUCTURE_PATH.read_text())
+                            DEFAULT_STRUCTURE_PATH.read_text(encoding="utf-8"))
                             if r.get("ticker") == _fp.ticker]
                     except Exception:
                         _prev = []
@@ -1235,7 +1236,10 @@ def render():
                                      mode="lines+markers", line=dict(color="#9467bd", width=2),
                                      marker=dict(size=7), name="κT grid",
                                      text=[f"κT={k}" for k in comp.ac_frontier["kappa_T"]],
-                                     hovertemplate="%{text}<br>Risk (norm): %{x:.2f}<br>% in first third: %{y:.0f}%<extra></extra>"))
+                                     hovertemplate=design.hover(
+                                         "%{text}", eyebrow="efficient frontier",
+                                         rows=[("risk (norm)", "%{x:.2f}"),
+                                               ("% in first third", "%{y:.0f}%")])))
             if cur_kt is not None:
                 cur_row = comp.ac_frontier.iloc[(comp.ac_frontier["kappa_T"] - cur_kt).abs().argsort()[:1]]
                 fac.add_trace(go.Scatter(x=cur_row["risk_score_norm"], y=cur_row["pct_in_first_third"],

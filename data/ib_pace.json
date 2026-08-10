@@ -1,0 +1,104 @@
+{
+ "measured": "2026-08-08",
+ "fastest_clean_seconds": 0.1,
+ "safe_seconds": 0.15,
+ "chunk_days": 120,
+ "concurrency": 8,
+ "margin": "1.5x the fastest clean interval",
+ "note": "the ladder bottomed out without failing, so the true limit is FASTER than anything tested \u2014 this is a floor on our speed, not IB's",
+ "ladder": [
+  {
+   "gap": 8.0,
+   "clean": true,
+   "ok": 12
+  },
+  {
+   "gap": 5.0,
+   "clean": true,
+   "ok": 12
+  },
+  {
+   "gap": 3.0,
+   "clean": true,
+   "ok": 12
+  },
+  {
+   "gap": 2.0,
+   "clean": true,
+   "ok": 12
+  },
+  {
+   "gap": 1.5,
+   "clean": true,
+   "ok": 12
+  },
+  {
+   "gap": 1.0,
+   "clean": true,
+   "ok": 12
+  },
+  {
+   "gap": 0.5,
+   "clean": true,
+   "ok": 12
+  },
+  {
+   "gap": 0.25,
+   "clean": true,
+   "ok": 12
+  },
+  {
+   "gap": 0.1,
+   "clean": true,
+   "ok": 12
+  }
+ ],
+ "chunk_ladder": [
+  {
+   "days": 30,
+   "bars": 1650,
+   "err": null
+  },
+  {
+   "days": 45,
+   "bars": 2475,
+   "err": null
+  },
+  {
+   "days": 60,
+   "bars": 3300,
+   "err": null
+  },
+  {
+   "days": 90,
+   "bars": 4950,
+   "err": null
+  },
+  {
+   "days": 120,
+   "bars": 6600,
+   "err": null
+  }
+ ],
+ "concurrency_ladder": [
+  {
+   "n": 2,
+   "returned": 2,
+   "seconds": 10.9,
+   "pacing_error": false
+  },
+  {
+   "n": 4,
+   "returned": 4,
+   "seconds": 23.9,
+   "pacing_error": false
+  },
+  {
+   "n": 8,
+   "returned": 8,
+   "seconds": 5.9,
+   "pacing_error": false
+  }
+ ],
+ "rule": "5-minute bars are above IB's 30-second threshold, so the hard 60-per-10-minutes cap does not apply \u2014 only an unpublished soft throttle, which is what this measures. IB documents 50 simultaneous open historical requests as the ceiling."
+}

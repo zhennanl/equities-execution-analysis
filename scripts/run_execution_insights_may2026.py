@@ -30,7 +30,7 @@ ANN, EFF = "2026-05-12", "2026-05-29"          # announce / eff close
 
 
 def truncated_cache(upto: str) -> dict:
-    c = json.loads(Path("data/event_data_cache.json").read_text())
+    c = json.loads(Path("data/event_data_cache.json").read_text(encoding="utf-8"))
     return {"short": {d: v for d, v in c.get("short", {}).items()
                       if d <= upto}}
 
@@ -99,7 +99,7 @@ def main():
             "est_cost_bps": 12.0})                   # DEMO estimate
     tca = tca_vs_estimate(pd.DataFrame(tca_rows))
     # --- 4.5 priors (in-memory copy — demo does NOT persist)
-    cache = json.loads(Path("data/event_flow_study.json").read_text())
+    cache = json.loads(Path("data/event_flow_study.json").read_text(encoding="utf-8"))
     realized = [{"provider": "MSCI", "side": "Sell",
                  "t_mult": round(float(r["t_mult"]), 1),
                  "auction_share": None,

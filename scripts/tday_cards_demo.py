@@ -43,7 +43,7 @@ def main():
     DOC.write_text(md, encoding="utf-8")
     OUT.write_text(json.dumps(
         {"event": "MSCI Aug-2026 QIR Taiwan", "cards": cards},
-        indent=1, default=str))
+        indent=1, default=str), encoding="utf-8")
     print(f"{len(cards)} cards -> {DOC}")
     for c in cards:
         if "note" in c:

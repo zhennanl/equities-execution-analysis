@@ -463,7 +463,9 @@
  "Feb26": {
   "ann": "2026-02-10",
   "eff": "2026-02-26",
-  "adds": {},
+  "adds": {
+   "7769": "HONPRECISION"
+  },
   "dels": {
    "2105": "CHENG SHIN RUBBER IND",
    "1476": "ECLAT TEXTILE COMPANY",
@@ -478,7 +480,10 @@
    "1476": 0.878,
    "9910": 0.886,
    "8464": 0.823
-  }
+  },
+  "_amended": [
+   "7769 ADD added from msci_changes_db (tw_recover c-269)"
+  ]
  },
  "May26": {
   "ann": "2026-05-12",

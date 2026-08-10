@@ -3,14 +3,14 @@
  "derivation": {
   "A_global": {
    "dm_reference_may_published_busd": 15.75,
-   "dm_move_proxy": "+4.2% (ACWI-IMI 3-mo, band \u00b12pp)",
+   "dm_move_proxy": "+4.2% (ACWI-IMI 3-mo, band ±2pp)",
    "dm_aug_busd": 16.41,
    "em_reference_busd": 8.21,
    "em_range_busd": [
     4.1,
     9.44
    ],
-   "how": "May-2026 book worked example published $15.75B (Apr-20 data); scaled by DM market move to Aug price cutoff; EM = half of DM (GIMI \u00a72.3.2.1)"
+   "how": "May-2026 book worked example published $15.75B (Apr-20 data); scaled by DM market move to Aug price cutoff; EM = half of DM (GIMI §2.3.2.1)"
   },
   "B_taiwan_walk": {
    "named_float_adj_busd": 3486.0,
@@ -23,12 +23,21 @@
    "how": "85% walk over named universe (150) + count-anchored body (400); crossing = full cap at 85% cumulative"
   },
   "C_cutoff": {
-   "cutoff_busd": 6.74,
-   "constraint": "raw crossing bounded into the global EM range (\u00a72.3.5) \u2014 binding side: none",
-   "add_bar_busd": 12.14,
-   "add_bar_rule": "1.8x (Aug = QUARTERLY review)",
-   "deletion_grace_busd": 4.5,
-   "watch_hi_busd": 7.75
+   "cutoff_busd": 7.22,
+   "method": "MSCI factsheet inversion: index free-float value $3,183.01B (MSCI Taiwan Index, 31 Jul 2026) / 0.85 stated coverage = $3,744.7B investable universe; 85% of that is reached at rank 69 of the screened universe, whose full market value is $7.22B",
+   "factsheet_index_busd": 3183.00839,
+   "factsheet_asof": "2026-07-31",
+   "implied_universe_busd": 3744.7,
+   "crossing_rank": 69,
+   "band_busd": [
+    5.89,
+    8.79
+   ],
+   "band_note": "83% to 86% assumed coverage; the factsheet says 'approximately 85%'. 1pp of coverage is worth 8-10% of the cutoff",
+   "supersedes": "6.74 (bottom-up denominator, 3.8% short) and 11.16/11.22 (our own float sum)",
+   "deletion_floor_busd": 4.81,
+   "addition_bar_busd": 10.83,
+   "min_float_busd": 3.61
   }
  },
  "add_candidates": [
@@ -41,7 +50,7 @@
    "ffsrc": "v2-insiders",
    "float_cap_vs_halfbar": 2.58,
    "foreign_room": 0.88,
-   "verdict": "QUALIFIES \u2014 all gates"
+   "verdict": "QUALIFIES — all gates"
   },
   {
    "code": "6505",
@@ -52,7 +61,7 @@
    "ffsrc": "v2-insiders",
    "float_cap_vs_halfbar": 0.41,
    "foreign_room": 0.93,
-   "verdict": "BLOCKED \u2014 float < 0.15 (GIMI float floor)"
+   "verdict": "BLOCKED — float < 0.15 (GIMI float floor)"
   },
   {
    "code": "8046",
@@ -63,7 +72,7 @@
    "ffsrc": "v2-insiders",
    "float_cap_vs_halfbar": 1.15,
    "foreign_room": 0.87,
-   "verdict": "QUALIFIES \u2014 all gates"
+   "verdict": "QUALIFIES — all gates"
   },
   {
    "code": "2344",
@@ -74,7 +83,7 @@
    "ffsrc": "v2-insiders",
    "float_cap_vs_halfbar": 2.05,
    "foreign_room": 0.83,
-   "verdict": "QUALIFIES \u2014 all gates"
+   "verdict": "QUALIFIES — all gates"
   },
   {
    "code": "8299",
@@ -127,119 +136,119 @@
    "company": "CALIWAY BIOPHARMACEUTI",
    "cap_usd_b": 4.94,
    "x_cutoff": 0.73,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "2834",
    "company": "TAIWAN BUSINESS BANK L",
    "cap_usd_b": 5.44,
    "x_cutoff": 0.81,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "2609",
    "company": "YANG MING MARINE TRANS",
    "cap_usd_b": 5.46,
    "x_cutoff": 0.81,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "1101",
    "company": "TAIWAN CEMENT",
    "cap_usd_b": 5.63,
    "x_cutoff": 0.84,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "3529",
    "company": "EMEMORY TECHNOLOGY INC",
    "cap_usd_b": 5.69,
    "x_cutoff": 0.84,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "5871",
    "company": "CHAILEASE HOLDING LTD",
    "cap_usd_b": 5.87,
    "x_cutoff": 0.87,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "3533",
    "company": "LOTES",
    "cap_usd_b": 6.42,
    "x_cutoff": 0.95,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "8069",
    "company": "E INK HOLDINGS",
    "cap_usd_b": 6.71,
    "x_cutoff": 1.0,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "3293",
    "company": "INTERNATIONAL GAMES SY",
    "cap_usd_b": 6.73,
    "x_cutoff": 1.0,
-   "tier": "below cutoff \u2014 sweep zone"
+   "tier": "below cutoff — sweep zone"
   },
   {
    "code": "5876",
    "company": "SHANGHAI COMMERCIAL",
    "cap_usd_b": 6.8,
    "x_cutoff": 1.01,
-   "tier": "buffer 1.0-1.15x \u2014 watch"
+   "tier": "buffer 1.0-1.15x — watch"
   },
   {
    "code": "2356",
    "company": "INVENTEC",
    "cap_usd_b": 6.82,
    "x_cutoff": 1.01,
-   "tier": "buffer 1.0-1.15x \u2014 watch"
+   "tier": "buffer 1.0-1.15x — watch"
   },
   {
    "code": "1519",
    "company": "FORTUNE ELECTRIC",
    "cap_usd_b": 6.85,
    "x_cutoff": 1.02,
-   "tier": "buffer 1.0-1.15x \u2014 watch"
+   "tier": "buffer 1.0-1.15x — watch"
   },
   {
    "code": "2376",
    "company": "GIGABYTE TECHNOLOGY LT",
    "cap_usd_b": 6.94,
    "x_cutoff": 1.03,
-   "tier": "buffer 1.0-1.15x \u2014 watch"
+   "tier": "buffer 1.0-1.15x — watch"
   },
   {
    "code": "4938",
    "company": "PEGATRON",
    "cap_usd_b": 6.97,
    "x_cutoff": 1.03,
-   "tier": "buffer 1.0-1.15x \u2014 watch"
+   "tier": "buffer 1.0-1.15x — watch"
   },
   {
    "code": "2912",
    "company": "PRESIDENT CHAIN STORE ",
    "cap_usd_b": 7.17,
    "x_cutoff": 1.06,
-   "tier": "buffer 1.0-1.15x \u2014 watch"
+   "tier": "buffer 1.0-1.15x — watch"
   },
   {
    "code": "2618",
    "company": "EVA AIRWAYS",
    "cap_usd_b": 7.2,
    "x_cutoff": 1.07,
-   "tier": "buffer 1.0-1.15x \u2014 watch"
+   "tier": "buffer 1.0-1.15x — watch"
   },
   {
    "code": "2615",
    "company": "WAN HAI LINES",
    "cap_usd_b": 7.31,
    "x_cutoff": 1.08,
-   "tier": "buffer 1.0-1.15x \u2014 watch"
+   "tier": "buffer 1.0-1.15x — watch"
   }
  ],
  "cadence_note": "Aug is a QUARTERLY review: the migration sweep is NOT armed (decade: 62-90% of deletions at semi-annuals). Same-review deletion probability for the pool is LOW; the pool is the Nov-2026 SAIR watchlist. Decade Aug-QIR base: 7/11 changed, median ~2, typically below-visible or corporate-event.",
@@ -251,32 +260,32 @@
    {
     "code": "2408",
     "name": "NANYA TECHNOLOGY",
-    "strength": "STRONG \u2014 FRAME-ROBUST",
+    "strength": "STRONG — FRAME-ROBUST",
     "why": "qualifies under BOTH denominators: x_bar 2.84 (bottom-up frame) and 1.71 (MSCI-implied frame); float-cap 2.59x/1.56x the half-bar; float 0.456 real (parent named); room 88%; churn expired"
    },
    {
     "code": "2344",
     "name": "WINBOND",
     "strength": "FRAME-SENSITIVE (declared, not called)",
-    "why": "qualifies in the bottom-up frame (1.49x) but sits at 0.90x under the MSCI-implied frame \u2014 inside the uncertainty, not above it"
+    "why": "qualifies in the bottom-up frame (1.49x) but sits at 0.90x under the MSCI-implied frame — inside the uncertainty, not above it"
    },
    {
     "code": "8046",
     "name": "NAN YA PCB",
     "strength": "FRAME-SENSITIVE (declared, not called)",
-    "why": "1.51x vs 0.91x across frames and float-cap marginal in both \u2014 two ways to fail"
+    "why": "1.51x vs 0.91x across frames and float-cap marginal in both — two ways to fail"
    }
   ],
   "blocked_demonstration": {
    "code": "6505",
    "name": "FORMOSA PETROCHEMICAL",
-   "why": "2344x... 1.71x the bar on size but 88% insider-held -> float 0.12 < 0.15 floor: BLOCKED \u2014 demonstrates why size alone never adds it back"
+   "why": "2344x... 1.71x the bar on size but 88% insider-held -> float 0.12 < 0.15 floor: BLOCKED — demonstrates why size alone never adds it back"
   },
   "governance": "The LOCKED Aug-26 registry call (zero visible adds + probabilistic shortlist) remains the call of record; this shadow call is published beside it BEFORE the announcement so Aug-12 grades both engines honestly.",
-  "frame_note": "Under the MSCI-implied denominator the top ~54 companies already deliver 85% coverage \u2014 structural pressure for the review to ADD the large outsiders and let the segment-count/buffer rules absorb the bottom. This makes the 2408 call STRONGER, not weaker."
+  "frame_note": "Under the MSCI-implied denominator the top ~54 companies already deliver 85% coverage — structural pressure for the review to ADD the large outsiders and let the segment-count/buffer rules absorb the bottom. This makes the 2408 call STRONGER, not weaker."
  },
  "denominator_reconciliation": {
-  "msci_definition": "the Market Investable Equity Universe's free float-adjusted capitalization \u2014 every Taiwan security PASSING the investability screens (min size, float>=0.15, liquidity, foreign room), valued at price x shares x float factor (GIMI \u00a72.2, \u00a72.3.5). NOT the whole listed market: sub-screen names are excluded.",
+  "msci_definition": "the Market Investable Equity Universe's free float-adjusted capitalization — every Taiwan security PASSING the investability screens (min size, float>=0.15, liquidity, foreign room), valued at price x shares x float factor (GIMI §2.2, §2.3.5). NOT the whole listed market: sub-screen names are excluded.",
   "D1_bottom_up_busd": 4173.0,
   "D1_line_busd": 6.73,
   "D2_msci_implied_busd": 3745.0,
@@ -289,6 +298,6 @@
    11.16
   ],
   "challenge_credit": "user challenged the modeled-body denominator; the better number existed in the factsheet all along",
-  "ill_conditioning_note": "The crossing is ILL-CONDITIONED near the boundary: an 11% denominator gap moves the raw line from $6.7B to $11.2B because the cumulative curve is nearly flat in the tail. MSCI's own procedure absorbs this with slack the point-estimate hides: the coverage TARGET is an AREA (85% +/-5%, GIMI \u00a72.3.1), the cutoff lives in the global corridor, and buffers retain members far below it. Practical consequence: candidate verdicts must be tested under BOTH frames; only frame-ROBUST verdicts ship as calls."
+  "ill_conditioning_note": "The crossing is ILL-CONDITIONED near the boundary: an 11% denominator gap moves the raw line from $6.7B to $11.2B because the cumulative curve is nearly flat in the tail. MSCI's own procedure absorbs this with slack the point-estimate hides: the coverage TARGET is an AREA (85% +/-5%, GIMI §2.3.1), the cutoff lives in the global corridor, and buffers retain members far below it. Practical consequence: candidate verdicts must be tested under BOTH frames; only frame-ROBUST verdicts ship as calls."
  }
 }

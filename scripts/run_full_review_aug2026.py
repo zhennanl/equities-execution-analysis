@@ -19,7 +19,7 @@ AS_OF = "2026-07-28"
 
 
 def load_universe(market):
-    cache = json.loads(Path("data/qir_universe_cache.json").read_text())
+    cache = json.loads(Path("data/qir_universe_cache.json").read_text(encoding="utf-8"))
     fx = FX[market]
     rows = []
     for t, m in UNIVERSES[market]:
@@ -36,12 +36,12 @@ def load_universe(market):
 
 def main():
     ledgers = [parse_msci_public_list(
-        Path(f"data/msci_{p}_public_list.txt").read_text())
+        Path(f"data/msci_{p}_public_list.txt").read_text(encoding="utf-8"))
         for p in ("feb26", "may26")]
     short_cache = json.loads(
-        Path("data/event_data_cache.json").read_text())
+        Path("data/event_data_cache.json").read_text(encoding="utf-8"))
     event_cache = json.loads(
-        Path("data/event_flow_study.json").read_text())
+        Path("data/event_flow_study.json").read_text(encoding="utf-8"))
 
     tw_risk = pd.DataFrame([
         {"ticker": "3443.TW", "side": "Buy", "adv_days": 5.0,

@@ -206,7 +206,7 @@ def build_bridge():
                     else:
                         misses.append((key, sc))
     BRIDGE.write_text(json.dumps(
-        {"map": bridge, "misses": misses}, ensure_ascii=False))
+        {"map": bridge, "misses": misses}, ensure_ascii=False), encoding="utf-8")
     print(f"bridge: {len(bridge)} matched, {len(misses)} unmatched")
     return bridge, misses
 
@@ -221,8 +221,8 @@ def _win(ev):
 
 
 def jobs(kind):
-    br = json.loads(BRIDGE.read_text())["map"]
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    br = json.loads(BRIDGE.read_text(encoding="utf-8"))["map"]
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     out = []
     for ev in events():
         for mkt, ch in ev["mkts"].items():
@@ -258,10 +258,10 @@ def fetch_cn(budget=200):
                 rows.append([d, float(cl), float(v)])
         cache[k] = {"side": side, "rows": rows}
         if (i + 1) % 8 == 0:
-            CACHE.write_text(json.dumps(cache))
+            CACHE.write_text(json.dumps(cache), encoding="utf-8")
             print(f"  ...{i + 1}", flush=True)
     bs.logout()
-    CACHE.write_text(json.dumps(cache))
+    CACHE.write_text(json.dumps(cache), encoding="utf-8")
     print("cached total:", len(cache))
 
 
@@ -279,16 +279,16 @@ def fetch_jphk(budget=150):
             rows = []
         cache[k] = {"side": side, "rows": rows}
         if (i + 1) % 8 == 0:
-            CACHE.write_text(json.dumps(cache))
+            CACHE.write_text(json.dumps(cache), encoding="utf-8")
             print(f"  ...{i + 1}", flush=True)
-    CACHE.write_text(json.dumps(cache))
+    CACHE.write_text(json.dumps(cache), encoding="utf-8")
     print("cached total:", len(cache))
 
 
 # ----------------------------------------------------------------- factors
 def panel():
     """Per name-event: drift/counterfactuals + alias print-validation."""
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     evs = {e["season"]: e for e in events()}
     rows = []
     for k, v in cache.items():
@@ -365,7 +365,7 @@ def report():
     df = panel()
     ok = df[df["print_ok"]]
     sus = df[~df["print_ok"]]
-    br = json.loads(BRIDGE.read_text())
+    br = json.loads(BRIDGE.read_text(encoding="utf-8"))
     print(f"{len(df)} name-events, {len(ok)} print-validated, "
           f"{len(sus)} no-material-print excluded")
     agg = ok.groupby(["mkt", "side"]).agg(

@@ -1,0 +1,6 @@
+{
+ "asof": "2026-08-08",
+ "formula": "12 x median(monthly traded shares / shares outstanding) / FIF, matching scripts/tw_atvr.py",
+ "bar_pct": 15.0,
+ "rows": {}
+}

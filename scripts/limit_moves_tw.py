@@ -92,7 +92,7 @@ def fetch_day(date):
 
 
 def fetch():
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     days = BASE_DAYS + list(EVENT_DAYS)
     todo = [d for d in days if d not in cache]
     print(f"{len(todo)} days missing")
@@ -102,7 +102,7 @@ def fetch():
         if rows:
             cache[d] = rows
         print(d, len(rows), flush=True)
-        CACHE.write_text(json.dumps(cache))
+        CACHE.write_text(json.dumps(cache), encoding="utf-8")
 
 
 def day_stats(rows):
@@ -131,7 +131,7 @@ def day_stats(rows):
 
 
 def table():
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     rows = []
     for d in sorted(cache):
         s = day_stats(cache[d])

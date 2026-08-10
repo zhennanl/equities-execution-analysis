@@ -47,7 +47,7 @@ BATCH = (int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 4)
 def main_traj():
     """Second pass: positioning trajectories (A->T day-by-day) for events
     already summary-cached. Run: fetch_event_flow.py traj [batch]."""
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     from agents.rebalancing_event_study import run_event_study
     from agents.event_flow_study import positioning_trajectory
     batch = int(sys.argv[2]) if len(sys.argv) > 2 else 4
@@ -68,7 +68,7 @@ def main_traj():
             cache[label]["traj"] = {"available": False, "reason": str(e)[:100]}
             print(f"ERR {label}: {e}")
         done += 1
-        CACHE.write_text(json.dumps(cache, indent=1))
+        CACHE.write_text(json.dumps(cache, indent=1), encoding="utf-8")
         time.sleep(1.2)
     rem = [e[0] for e in EVENTS if e[0] in cache
            and cache[e[0]].get("available") and "traj" not in cache[e[0]]]
@@ -76,7 +76,7 @@ def main_traj():
 
 
 def main():
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     from agents.rebalancing_event_study import run_event_study
     from agents.event_flow_study import summarize_event, grade_strategies
     done = 0
@@ -101,7 +101,7 @@ def main():
             print(f"ERR {label}: {e}")
         done += 1
         CACHE.parent.mkdir(exist_ok=True)
-        CACHE.write_text(json.dumps(cache, indent=1))
+        CACHE.write_text(json.dumps(cache, indent=1), encoding="utf-8")
         time.sleep(1.2)
     remaining = [e[0] for e in EVENTS if e[0] not in cache]
     print(f"\ncached {len(cache)}/{len(EVENTS)}"

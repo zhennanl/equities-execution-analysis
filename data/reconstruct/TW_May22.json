@@ -1,0 +1,100 @@
+{
+ "market": "Taiwan",
+ "review": "May22",
+ "keys": {
+  "gmsr_dm": 8.56,
+  "em_range": [
+   2.14,
+   4.92
+  ],
+  "ceiling": 4.92,
+  "floor": 3.28,
+  "bar": 7.38,
+  "price_date": "2022-04-19",
+  "source": "May2022"
+ },
+ "fx_used": 29.434,
+ "labels": [
+  "floats current-vintage (full-cap tests only; half-bar skipped)",
+  "cutoff = EM ceiling (TW corridor-binding assumption)",
+  "membership reverse-rolled (2 known off-cycle noise cases)"
+ ],
+ "verdicts": [
+  {
+   "code": "2610",
+   "security": "CHINA AIRLINES",
+   "action": "ADD",
+   "pit_cap_busd": 5.32,
+   "verdict": "NOT-EXPLAINED: 5.32B well below bar"
+  },
+  {
+   "code": "2618",
+   "security": "EVA AIRWAYS CORP",
+   "action": "ADD",
+   "pit_cap_busd": 6.35,
+   "verdict": "NEAR-MISS: 6.35B is 14% below the bar"
+  },
+  {
+   "code": "6770",
+   "security": "POWERCHIP SEMICONDUCTOR",
+   "action": "ADD",
+   "pit_cap_busd": 6.32,
+   "verdict": "NEAR-MISS: 6.32B is 14% below the bar"
+  },
+  {
+   "code": "1605",
+   "security": "WALSIN LIHWA CORP",
+   "action": "ADD",
+   "pit_cap_busd": 4.98,
+   "verdict": "NOT-EXPLAINED: 4.98B well below bar"
+  },
+  {
+   "code": "2354",
+   "security": "FOXCONN TECHNOLOGY CO",
+   "action": "DEL",
+   "pit_cap_busd": 2.89,
+   "verdict": "EXPLAINED: 2.89B is 12% below the 3.28B floor"
+  },
+  {
+   "code": "2049",
+   "security": "HIWIN TECHNOLOGIES CORP",
+   "action": "DEL",
+   "pit_cap_busd": 2.58,
+   "verdict": "EXPLAINED: 2.58B is 21% below the 3.28B floor"
+  },
+  {
+   "code": "4743",
+   "security": "ONENESS BIOTECH",
+   "action": "DEL",
+   "pit_cap_busd": 2.56,
+   "verdict": "EXPLAINED: 2.56B is 22% below the 3.28B floor"
+  }
+ ],
+ "grading": {
+  "pool": {
+   "2049": 2.58,
+   "2353": 2.92,
+   "2356": 3.1,
+   "8464": 3.02,
+   "9904": 3.05,
+   "1504": 2.39,
+   "4743": 2.56,
+   "3702": 3.21,
+   "2354": 2.89
+  },
+  "hits": [
+   "2049",
+   "2354",
+   "4743"
+  ],
+  "misses": [],
+  "false_alarms": [
+   "1504",
+   "2353",
+   "2356",
+   "3702",
+   "8464",
+   "9904"
+  ]
+ }
+}

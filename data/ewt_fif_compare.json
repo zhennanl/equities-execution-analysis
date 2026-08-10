@@ -1,0 +1,784 @@
+{
+ "summary": {
+  "ewt_asof": "Aug 06, 2026",
+  "calib_c": 0.007558,
+  "n_members": 77,
+  "n_in_ewt": 77,
+  "n_missing_from_ewt": [],
+  "clean_median_abs_diff_pp": 19.1,
+  "clean_p90_abs_diff_pp": 34.7,
+  "within_2.5pp_one_grid_step": 0.053
+ },
+ "rows": [
+  {
+   "code": "2330",
+   "name": "TAIWAN SEMICONDUCTOR MFG",
+   "weight_plain_pct": 54.780022,
+   "fif_weights": 0.952,
+   "in_ewt": true,
+   "cap_cohort": true,
+   "fif_ewt": 0.16,
+   "diff_pp": -79.2
+  },
+  {
+   "code": "2454",
+   "name": "MEDIATEK INC",
+   "weight_plain_pct": 6.208293,
+   "fif_weights": 0.902,
+   "in_ewt": true,
+   "cap_cohort": true,
+   "fif_ewt": 0.469,
+   "diff_pp": -43.3
+  },
+  {
+   "code": "2308",
+   "name": "DELTA ELECTRONICS",
+   "weight_plain_pct": 4.451458,
+   "fif_weights": 0.752,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.405,
+   "diff_pp": -34.7
+  },
+  {
+   "code": "2317",
+   "name": "HON HAI PRECISION IND CO",
+   "weight_plain_pct": 3.386069,
+   "fif_weights": 0.873,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.466,
+   "diff_pp": -40.7
+  },
+  {
+   "code": "3711",
+   "name": "ASE TECHNOLOGY HOLDING",
+   "weight_plain_pct": 1.892643,
+   "fif_weights": 0.748,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.49,
+   "diff_pp": -25.8
+  },
+  {
+   "code": "2303",
+   "name": "UNITED MICROELECTRONICS",
+   "weight_plain_pct": 1.560587,
+   "fif_weights": 0.902,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.583,
+   "diff_pp": -31.9
+  },
+  {
+   "code": "2383",
+   "name": "ELITE MATERIAL CO",
+   "weight_plain_pct": 1.37225,
+   "fif_weights": 0.802,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.595,
+   "diff_pp": -20.7
+  },
+  {
+   "code": "3037",
+   "name": "UNIMICRON TECHNOLOGY",
+   "weight_plain_pct": 1.327694,
+   "fif_weights": 0.845,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.654,
+   "diff_pp": -19.1
+  },
+  {
+   "code": "2345",
+   "name": "ACCTON TECHNOLOGY CORP",
+   "weight_plain_pct": 1.196832,
+   "fif_weights": 0.902,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.691,
+   "diff_pp": -21.1
+  },
+  {
+   "code": "2327",
+   "name": "YAGEO CORP",
+   "weight_plain_pct": 1.159694,
+   "fif_weights": 0.752,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.653,
+   "diff_pp": -9.9
+  },
+  {
+   "code": "2891",
+   "name": "CTBC FINANCIAL HOLDING",
+   "weight_plain_pct": 0.980732,
+   "fif_weights": 0.852,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.562,
+   "diff_pp": -29.0
+  },
+  {
+   "code": "2382",
+   "name": "QUANTA COMPUTER",
+   "weight_plain_pct": 0.950977,
+   "fif_weights": 0.702,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.459,
+   "diff_pp": -24.3
+  },
+  {
+   "code": "2360",
+   "name": "CHROMA ATE",
+   "weight_plain_pct": 0.880525,
+   "fif_weights": 0.852,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.658,
+   "diff_pp": -19.4
+  },
+  {
+   "code": "2881",
+   "name": "FUBON FINANCIAL HOLDING",
+   "weight_plain_pct": 0.876865,
+   "fif_weights": 0.601,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.403,
+   "diff_pp": -19.8
+  },
+  {
+   "code": "3017",
+   "name": "ASIA VITAL COMPONENTS",
+   "weight_plain_pct": 0.850797,
+   "fif_weights": 0.826,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.692,
+   "diff_pp": -13.4
+  },
+  {
+   "code": "2882",
+   "name": "CATHAY FINANCIAL HOLDING",
+   "weight_plain_pct": 0.794057,
+   "fif_weights": 0.652,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.405,
+   "diff_pp": -24.7
+  },
+  {
+   "code": "2885",
+   "name": "YUANTA FINANCIAL HOLDING",
+   "weight_plain_pct": 0.596132,
+   "fif_weights": 0.802,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.618,
+   "diff_pp": -18.4
+  },
+  {
+   "code": "7769",
+   "name": "HONPRECISION ",
+   "weight_plain_pct": 0.574524,
+   "fif_weights": 0.451,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.343,
+   "diff_pp": -10.8
+  },
+  {
+   "code": "6669",
+   "name": "WIWYNN CORPORATION",
+   "weight_plain_pct": 0.532246,
+   "fif_weights": 0.551,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.58,
+   "diff_pp": 2.9
+  },
+  {
+   "code": "2357",
+   "name": "ASUSTEK COMPUTER",
+   "weight_plain_pct": 0.528299,
+   "fif_weights": 0.902,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.725,
+   "diff_pp": -17.7
+  },
+  {
+   "code": "5274",
+   "name": "ASPEED TECHNOLOGY",
+   "weight_plain_pct": 0.528259,
+   "fif_weights": 0.802,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.767,
+   "diff_pp": -3.5
+  },
+  {
+   "code": "2412",
+   "name": "CHUNGHWA TELECOM CO",
+   "weight_plain_pct": 0.504259,
+   "fif_weights": 0.491,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.333,
+   "diff_pp": -15.8
+  },
+  {
+   "code": "3231",
+   "name": "WISTRON CORP",
+   "weight_plain_pct": 0.496386,
+   "fif_weights": 0.952,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.729,
+   "diff_pp": -22.3
+  },
+  {
+   "code": "2887",
+   "name": "TS FINANCIAL HOLDING CO",
+   "weight_plain_pct": 0.490942,
+   "fif_weights": 0.852,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.763,
+   "diff_pp": -8.9
+  },
+  {
+   "code": "1303",
+   "name": "NAN YA PLASTIC",
+   "weight_plain_pct": 0.482993,
+   "fif_weights": 0.601,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.564,
+   "diff_pp": -3.7
+  },
+  {
+   "code": "6223",
+   "name": "MPI CORP",
+   "weight_plain_pct": 0.459793,
+   "fif_weights": 0.877,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.618,
+   "diff_pp": -25.9
+  },
+  {
+   "code": "2886",
+   "name": "MEGA FINANCIAL HOLDING",
+   "weight_plain_pct": 0.449914,
+   "fif_weights": 0.777,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.558,
+   "diff_pp": -21.9
+  },
+  {
+   "code": "2301",
+   "name": "LITE-ON TECHNOLOGY CORP",
+   "weight_plain_pct": 0.436022,
+   "fif_weights": 0.852,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.72,
+   "diff_pp": -13.2
+  },
+  {
+   "code": "2884",
+   "name": "E.SUN FINANCIAL HOLDINGS",
+   "weight_plain_pct": 0.420251,
+   "fif_weights": 0.877,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.637,
+   "diff_pp": -24.0
+  },
+  {
+   "code": "2368",
+   "name": "GOLD CIRCUIT ELECTRONICS",
+   "weight_plain_pct": 0.415158,
+   "fif_weights": 0.643,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.589,
+   "diff_pp": -5.4
+  },
+  {
+   "code": "3481",
+   "name": "INNOLUX CORP",
+   "weight_plain_pct": 0.391445,
+   "fif_weights": 0.927,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.271,
+   "diff_pp": 34.4
+  },
+  {
+   "code": "4958",
+   "name": "ZHEN DING TECHNOLOGY",
+   "weight_plain_pct": 0.387764,
+   "fif_weights": 0.702,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.93,
+   "diff_pp": 22.8
+  },
+  {
+   "code": "3443",
+   "name": "GLOBAL UNICHIP CORP",
+   "weight_plain_pct": 0.382859,
+   "fif_weights": 0.652,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.743,
+   "diff_pp": 9.1
+  },
+  {
+   "code": "3661",
+   "name": "ALCHIP TECHNOLOGIES",
+   "weight_plain_pct": 0.35507,
+   "fif_weights": 0.946,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.792,
+   "diff_pp": -15.4
+  },
+  {
+   "code": "3665",
+   "name": "BIZLINK HOLDING",
+   "weight_plain_pct": 0.351439,
+   "fif_weights": 0.902,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.831,
+   "diff_pp": -7.1
+  },
+  {
+   "code": "2890",
+   "name": "SINOPAC HOLDINGS",
+   "weight_plain_pct": 0.34375,
+   "fif_weights": 0.826,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.741,
+   "diff_pp": -8.5
+  },
+  {
+   "code": "3008",
+   "name": "LARGAN PRECISION CO",
+   "weight_plain_pct": 0.338302,
+   "fif_weights": 0.716,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.722,
+   "diff_pp": 0.6
+  },
+  {
+   "code": "1216",
+   "name": "UNI-PRESIDENT ENT.",
+   "weight_plain_pct": 0.336087,
+   "fif_weights": 0.852,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.683,
+   "diff_pp": -16.9
+  },
+  {
+   "code": "2449",
+   "name": "KING YUAN ELECTRONICS CO",
+   "weight_plain_pct": 0.330422,
+   "fif_weights": 0.902,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.807,
+   "diff_pp": -9.5
+  },
+  {
+   "code": "2883",
+   "name": "KGI FINANCIAL HOLDING CO",
+   "weight_plain_pct": 0.326723,
+   "fif_weights": 0.902,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.701,
+   "diff_pp": -20.1
+  },
+  {
+   "code": "3653",
+   "name": "JENTECH PRECISION INDL",
+   "weight_plain_pct": 0.319207,
+   "fif_weights": 0.601,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.603,
+   "diff_pp": 0.2
+  },
+  {
+   "code": "2892",
+   "name": "FIRST FINANCIAL HLDG CO",
+   "weight_plain_pct": 0.291992,
+   "fif_weights": 0.777,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.657,
+   "diff_pp": -12.0
+  },
+  {
+   "code": "2379",
+   "name": "REALTEK SEMICONDUCTOR",
+   "weight_plain_pct": 0.281607,
+   "fif_weights": 0.952,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.89,
+   "diff_pp": -6.2
+  },
+  {
+   "code": "2059",
+   "name": "KING SLIDE WORKS CO",
+   "weight_plain_pct": 0.281545,
+   "fif_weights": 0.601,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.672,
+   "diff_pp": 7.1
+  },
+  {
+   "code": "2880",
+   "name": "HUA NAN FINANCIAL HLDGS",
+   "weight_plain_pct": 0.28058,
+   "fif_weights": 0.652,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.58,
+   "diff_pp": -7.2
+  },
+  {
+   "code": "3034",
+   "name": "NOVATEK MICROELECTRS",
+   "weight_plain_pct": 0.263872,
+   "fif_weights": 0.927,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.927,
+   "diff_pp": 0.0
+  },
+  {
+   "code": "6446",
+   "name": "PHARMAESSENTIA",
+   "weight_plain_pct": 0.258809,
+   "fif_weights": 0.752,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.823,
+   "diff_pp": 7.1
+  },
+  {
+   "code": "5880",
+   "name": "TAIWAN COPR FINL HLDG",
+   "weight_plain_pct": 0.23682,
+   "fif_weights": 0.702,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.679,
+   "diff_pp": -2.3
+  },
+  {
+   "code": "6488",
+   "name": "GLOBALWAFERS",
+   "weight_plain_pct": 0.235874,
+   "fif_weights": 0.551,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.801,
+   "diff_pp": 25.0
+  },
+  {
+   "code": "2395",
+   "name": "ADVANTECH CO",
+   "weight_plain_pct": 0.23246,
+   "fif_weights": 0.55,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.688,
+   "diff_pp": 13.8
+  },
+  {
+   "code": "2603",
+   "name": "EVERGREEN MARINE CORP",
+   "weight_plain_pct": 0.228954,
+   "fif_weights": 0.501,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.531,
+   "diff_pp": 3.0
+  },
+  {
+   "code": "3533",
+   "name": "LOTES CO",
+   "weight_plain_pct": 0.213174,
+   "fif_weights": 0.752,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.975,
+   "diff_pp": 22.3
+  },
+  {
+   "code": "2002",
+   "name": "CHINA STEEL CORP COMMON",
+   "weight_plain_pct": 0.212824,
+   "fif_weights": 0.752,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.793,
+   "diff_pp": 4.1
+  },
+  {
+   "code": "5347",
+   "name": "VANGUARD INTL SC",
+   "weight_plain_pct": 0.205147,
+   "fif_weights": 0.652,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.846,
+   "diff_pp": 19.4
+  },
+  {
+   "code": "3529",
+   "name": "EMEMORY TECHNOLOGY",
+   "weight_plain_pct": 0.196606,
+   "fif_weights": 0.852,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.171,
+   "diff_pp": 31.9
+  },
+  {
+   "code": "2376",
+   "name": "GIGABYTE TECHNOLOGY CO",
+   "weight_plain_pct": 0.195824,
+   "fif_weights": 0.802,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.123,
+   "diff_pp": 32.1
+  },
+  {
+   "code": "3045",
+   "name": "TAIWAN MOBILE",
+   "weight_plain_pct": 0.186757,
+   "fif_weights": 0.467,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.511,
+   "diff_pp": 4.4
+  },
+  {
+   "code": "2356",
+   "name": "INVENTEC CO",
+   "weight_plain_pct": 0.183049,
+   "fif_weights": 0.702,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.06,
+   "diff_pp": 35.8
+  },
+  {
+   "code": "1301",
+   "name": "FORMOSA PLASTIC CORP",
+   "weight_plain_pct": 0.180316,
+   "fif_weights": 0.601,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.718,
+   "diff_pp": 11.7
+  },
+  {
+   "code": "1590",
+   "name": "AIRTAC INTERNATIONAL",
+   "weight_plain_pct": 0.178453,
+   "fif_weights": 0.702,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.798,
+   "diff_pp": 9.6
+  },
+  {
+   "code": "4938",
+   "name": "PEGATRON",
+   "weight_plain_pct": 0.173223,
+   "fif_weights": 0.752,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.974,
+   "diff_pp": 22.2
+  },
+  {
+   "code": "8069",
+   "name": "E INK HOLDINGS",
+   "weight_plain_pct": 0.17137,
+   "fif_weights": 0.7,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.866,
+   "diff_pp": 16.6
+  },
+  {
+   "code": "1326",
+   "name": "FORMOSA CHEMICALS FIBRE",
+   "weight_plain_pct": 0.171198,
+   "fif_weights": 0.576,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.758,
+   "diff_pp": 18.2
+  },
+  {
+   "code": "3293",
+   "name": "INTL GAMES SYSTEM C",
+   "weight_plain_pct": 0.16369,
+   "fif_weights": 0.802,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.999,
+   "diff_pp": 19.7
+  },
+  {
+   "code": "4904",
+   "name": "FAR EASTONE TELECOM. CO",
+   "weight_plain_pct": 0.162042,
+   "fif_weights": 0.491,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.591,
+   "diff_pp": 10.0
+  },
+  {
+   "code": "5871",
+   "name": "CHAILEASE HOLDING",
+   "weight_plain_pct": 0.153411,
+   "fif_weights": 0.877,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.112,
+   "diff_pp": 23.5
+  },
+  {
+   "code": "1101",
+   "name": "TAIWAN CEMENT CORP",
+   "weight_plain_pct": 0.14823,
+   "fif_weights": 0.852,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.103,
+   "diff_pp": 25.1
+  },
+  {
+   "code": "5876",
+   "name": "SHANGHAI COMM & SAV BANK",
+   "weight_plain_pct": 0.141588,
+   "fif_weights": 0.777,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.027,
+   "diff_pp": 25.0
+  },
+  {
+   "code": "2801",
+   "name": "CHANG HWA COMMERCIAL BK",
+   "weight_plain_pct": 0.136313,
+   "fif_weights": 0.601,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.834,
+   "diff_pp": 23.3
+  },
+  {
+   "code": "2207",
+   "name": "HOTAI MOTOR COMPANY",
+   "weight_plain_pct": 0.124534,
+   "fif_weights": 0.501,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.728,
+   "diff_pp": 22.7
+  },
+  {
+   "code": "1519",
+   "name": "FORTUNE ELECTRIC CO",
+   "weight_plain_pct": 0.116766,
+   "fif_weights": 0.451,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.812,
+   "diff_pp": 36.1
+  },
+  {
+   "code": "2912",
+   "name": "PRESIDENT CHAIN STORE",
+   "weight_plain_pct": 0.111658,
+   "fif_weights": 0.501,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.787,
+   "diff_pp": 28.6
+  },
+  {
+   "code": "2834",
+   "name": "TAIWAN BUSINESS BANK",
+   "weight_plain_pct": 0.104053,
+   "fif_weights": 0.702,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.246,
+   "diff_pp": 54.4
+  },
+  {
+   "code": "2618",
+   "name": "EVA AIRWAYS CORP",
+   "weight_plain_pct": 0.096118,
+   "fif_weights": 0.501,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.865,
+   "diff_pp": 36.4
+  },
+  {
+   "code": "2609",
+   "name": "YANG MING MARINE TRANSP",
+   "weight_plain_pct": 0.090509,
+   "fif_weights": 0.501,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.862,
+   "diff_pp": 36.1
+  },
+  {
+   "code": "6919",
+   "name": "CALIWAY BIOPHARMA",
+   "weight_plain_pct": 0.086987,
+   "fif_weights": 0.601,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 1.036,
+   "diff_pp": 43.5
+  },
+  {
+   "code": "2615",
+   "name": "WAN HAI LINES",
+   "weight_plain_pct": 0.055906,
+   "fif_weights": 0.251,
+   "in_ewt": true,
+   "cap_cohort": false,
+   "fif_ewt": 0.432,
+   "diff_pp": 18.1
+  }
+ ]
+}

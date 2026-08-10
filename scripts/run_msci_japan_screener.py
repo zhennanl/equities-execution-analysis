@@ -31,7 +31,7 @@ def main(argv=None):
     ap.add_argument("--nonmembers", nargs="*", default=["285A.T", "4385.T"],
                     help="tickers assumed NOT in the index (verify!)")
     a = ap.parse_args(argv)
-    tickers = (Path(a.tickers).read_text().split() if a.tickers
+    tickers = (Path(a.tickers).read_text(encoding="utf-8").split() if a.tickers
                else DEFAULT_TICKERS)
     import numpy as np
     import pandas as pd

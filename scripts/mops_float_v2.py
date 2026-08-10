@@ -42,7 +42,7 @@ def members():
 
 def harvest(limit=None):
     import yfinance as yf
-    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     mem = members()
     todo = [r["code"] for r in mem if r["code"] not in cache]
     if limit:
@@ -65,7 +65,7 @@ def harvest(limit=None):
         cache[c] = got or {"insiders": None}
         if (i + 1) % 5 == 0 or i == len(todo) - 1:
             tmp = CACHE.with_suffix(".tmp")
-            tmp.write_text(json.dumps(cache))
+            tmp.write_text(json.dumps(cache), encoding="utf-8")
             tmp.replace(CACHE)
         time.sleep(0.4)
     print("cached:", sum(1 for v in cache.values()
@@ -74,10 +74,10 @@ def harvest(limit=None):
 
 def grade():
     import statistics as st
-    cache = json.loads(CACHE.read_text())
+    cache = json.loads(CACHE.read_text(encoding="utf-8"))
     mem = members()
     tdcc = {r["code"]: r for r in json.loads(
-        (ROOT / "data" / "tw_float_tdcc.json").read_text())["rows"]}
+        (ROOT / "data" / "tw_float_tdcc.json").read_text(encoding="utf-8"))["rows"]}
     rows, miss = [], []
     for r in mem:
         c = r["code"]
@@ -118,7 +118,7 @@ def grade():
                "residual67_v2_busd": round(res2, 0),
                "residual67_old_busd": round(reso, 0),
                "residual67_target_busd": 739.8}}
-    OUT.write_text(json.dumps(out, indent=1))
+    OUT.write_text(json.dumps(out, indent=1), encoding="utf-8")
     g = out["grading"]
     print(f"v2 mean abs err {g['mean_abs_err_v2']} | incumbent "
           f"{g['mean_abs_err_old']} | TDCC v1 0.143")

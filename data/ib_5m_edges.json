@@ -1,0 +1,58 @@
+{
+ "Taiwan": {
+  "edge": "2023-04-26",
+  "bracket": [
+   "2023-04-23",
+   "2023-04-26"
+  ],
+  "requests": 11,
+  "measured": "2026-08-08"
+ },
+ "Taiwan_TPEx": {
+  "edge": "2025-11-21",
+  "bracket": [
+   "2025-11-18",
+   "2025-11-21"
+  ],
+  "requests": 11,
+  "measured": "2026-08-08"
+ },
+ "HongKong": {
+  "edge": "2010-01-01",
+  "note": "reaches the 2010 search floor"
+ },
+ "Korea": {
+  "edge": "2010-01-01",
+  "note": "reaches the 2010 search floor"
+ },
+ "Singapore": {
+  "edge": "2011-08-26",
+  "bracket": [
+   "2011-08-23",
+   "2011-08-26"
+  ],
+  "requests": 11,
+  "measured": "2026-08-08"
+ },
+ "Australia": {
+  "edge": "2010-01-01",
+  "note": "reaches the 2010 search floor"
+ },
+ "India": {
+  "edge": "2010-01-01",
+  "note": "reaches the 2010 search floor"
+ },
+ "China": {
+  "edge": "2014-11-15",
+  "bracket": [
+   "2014-11-12",
+   "2014-11-15"
+  ],
+  "requests": 11,
+  "measured": "2026-08-08"
+ },
+ "Japan": {
+  "edge": "2010-01-01",
+  "note": "reaches the 2010 search floor"
+ }
+}

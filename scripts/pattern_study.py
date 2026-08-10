@@ -36,12 +36,12 @@ RNG = np.random.default_rng(7)
 
 def build_panel():
     cache = json.loads((ROOT / "data" / "tw_vintage_cache.json")
-                       .read_text())
+                       .read_text(encoding="utf-8"))
     events = json.loads((ROOT / "data" / "msci_tw_events.json")
-                        .read_text())
+                        .read_text(encoding="utf-8"))
     base_panel = {(r["season"], r["code"]): r for r in json.loads(
         (ROOT / "data" / "liquidity_panel_tw.json")
-        .read_text())["panel"]}
+        .read_text(encoding="utf-8"))["panel"]}
     rows = []
     for season, ev in sorted(events.items(),
                              key=lambda kv: kv[1]["ann"]):
@@ -193,7 +193,7 @@ def main():
            "tests": tests, "ml": ml,
            "panel": df.to_dict("records")}
     (ROOT / "data" / "pattern_study_tw.json").write_text(
-        json.dumps(out, indent=1))
+        json.dumps(out, indent=1), encoding="utf-8")
     for tag, t in tests.items():
         s = t["spearman"]
         q = t["quartiles"]

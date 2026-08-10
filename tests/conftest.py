@@ -26,6 +26,37 @@ if str(REPO_ROOT) not in sys.path:
 FIXTURE_DIR = Path(__file__).resolve().parent / "fixtures"
 
 
+def real_streamlit():
+    """Undo any stub another test installed, then let the real
+    package load.
+
+    c-290: this logic was written in c-203 inside
+    test_review_db_page.py and, being private to that file, was
+    never adopted by the other AppTest suites. The result was 21
+    errors in test_apac_panel.py that appear ONLY in a full-suite
+    run and never when the file is run alone — the exact failure
+    c-203 warned about, reproduced because the fix was not
+    shared. It lives here now so any new page test gets it by
+    importing rather than by remembering.
+
+    THE MECHANISM. Several tests import views.* without a display
+    by putting a bare ModuleType into sys.modules["streamlit"].
+    That is fine for them and fatal for anything that later needs
+    `streamlit.testing`, which cannot be imported from a stub —
+    "No module named 'streamlit.testing'; 'streamlit' is not a
+    package". Dropping the stub and every module that imported it
+    is order-independent, which depending on file order is not.
+    """
+    mod = sys.modules.get("streamlit")
+    if mod is not None and getattr(mod, "__file__", None):
+        return                                    # already real
+    for name in [n for n in list(sys.modules)
+                 if n == "streamlit"
+                 or n.startswith("streamlit.")
+                 or n.startswith("views")]:
+        del sys.modules[name]
+
+
 # ── Intraday / daily synthetic builders ────────────────────────────────────
 
 def _one_day_bars(date: pd.Timestamp, n_bars: int, base: float,

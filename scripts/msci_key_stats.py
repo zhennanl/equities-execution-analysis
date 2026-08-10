@@ -135,7 +135,7 @@ def main():
     n_seasons = len({r["season"] for r in rows})
     stats = {"n_reviews": n_seasons, "cadence": cadence(rows),
              "churn": churn(rows), "waves": waves(rows)}
-    OUT.write_text(json.dumps(stats, indent=1))
+    OUT.write_text(json.dumps(stats, indent=1), encoding="utf-8")
     c = stats["cadence"]
     print(f"{n_seasons} reviews parsed")
     print(f"{'market':13s} {'dels':>5s} {'SAIR%':>6s} "

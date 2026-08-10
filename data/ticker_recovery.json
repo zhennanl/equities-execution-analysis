@@ -1,0 +1,3745 @@
+{
+ "proposals": {
+  "China|SHUI ON LAND (CN)": {
+   "market": "China",
+   "security": "SHUI ON LAND (CN)",
+   "rows": 3,
+   "reviews": [
+    "Aug20",
+    "May18",
+    "Nov16"
+   ],
+   "first_ann": "2016-11-30",
+   "last_ann": "2020-08-31",
+   "kind": "LINE",
+   "base": "SHUI ON LAND",
+   "ticker": "0272.HK",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "Chinese H/CN line, base name in the HK map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 20023082
+   }
+  },
+  "China|WHARF HOLDINGS (CN)": {
+   "market": "China",
+   "security": "WHARF HOLDINGS (CN)",
+   "rows": 2,
+   "reviews": [
+    "Nov19",
+    "Nov22"
+   ],
+   "first_ann": "2019-11-29",
+   "last_ann": "2022-11-30",
+   "kind": "LINE",
+   "base": "WHARF HOLDINGS",
+   "ticker": "0004.HK",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "Chinese H/CN line, base name in the HK map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 76141362
+   }
+  },
+  "HongKong|WHARF HOLDINGS(HK)": {
+   "market": "HongKong",
+   "security": "WHARF HOLDINGS(HK)",
+   "rows": 2,
+   "reviews": [
+    "May26",
+    "Nov23"
+   ],
+   "first_ann": "2023-11-30",
+   "last_ann": "2026-05-29",
+   "kind": "LINE",
+   "base": "WHARF HOLDINGS",
+   "ticker": "0004.HK",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 52,
+    "median_turnover_local": 43983670
+   }
+  },
+  "Korea|HANMI PHARM CO (NEW)": {
+   "market": "Korea",
+   "security": "HANMI PHARM CO (NEW)",
+   "rows": 2,
+   "reviews": [
+    "Feb25",
+    "May15"
+   ],
+   "first_ann": "2015-05-29",
+   "last_ann": "2025-02-28",
+   "kind": "",
+   "base": "HANMI PHARM CO",
+   "ticker": "128940.KS",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 88927396875
+   }
+  },
+  "Korea|BGF RETAIL (NEW)": {
+   "market": "Korea",
+   "security": "BGF RETAIL (NEW)",
+   "rows": 1,
+   "reviews": [
+    "Nov23"
+   ],
+   "first_ann": "2023-11-30",
+   "last_ann": "2023-11-30",
+   "kind": "",
+   "base": "BGF RETAIL",
+   "ticker": "282330.KS",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 7710221000
+   }
+  },
+  "Korea|LG H&H PREF": {
+   "market": "Korea",
+   "security": "LG H&H PREF",
+   "rows": 1,
+   "reviews": [
+    "Nov22"
+   ],
+   "first_ann": "2022-11-30",
+   "last_ann": "2022-11-30",
+   "kind": "PREF",
+   "base": "LG H H",
+   "ticker": "051900.KS",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 43439184000
+   }
+  },
+  "Korea|ORION CORP (NEW)": {
+   "market": "Korea",
+   "security": "ORION CORP (NEW)",
+   "rows": 1,
+   "reviews": [
+    "Nov25"
+   ],
+   "first_ann": "2025-11-28",
+   "last_ann": "2025-11-28",
+   "kind": "",
+   "base": "ORION CORP",
+   "ticker": "271560.KS",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 12344387950
+   }
+  },
+  "Philippines|MANILA ELECTRIC CO B": {
+   "market": "Philippines",
+   "security": "MANILA ELECTRIC CO B",
+   "rows": 1,
+   "reviews": [
+    "Nov17"
+   ],
+   "first_ann": "2017-11-30",
+   "last_ann": "2017-11-30",
+   "kind": "AB",
+   "base": "MANILA ELECTRIC CO",
+   "ticker": "MER",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|COSCO SHIPPING ENERGY H": {
+   "market": "China",
+   "security": "COSCO SHIPPING ENERGY H",
+   "rows": 5,
+   "reviews": [
+    "May18",
+    "May23",
+    "May25",
+    "May26",
+    "Nov20"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2026-05-29",
+   "kind": "H",
+   "base": "COSCO SHIPPING ENERGY",
+   "ticker": "1138.HK",
+   "source": "yahoo-search",
+   "confidence": 0.8,
+   "evidence": "COSCO SHIPPING Energy Transportation Co., Ltd. — shared=['COSCO', 'ENERGY', 'SHIPPI'] extra=['TRANSP']",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 52,
+    "median_turnover_local": 29137507
+   }
+  },
+  "China|MINTH GROUP (CN)": {
+   "market": "China",
+   "security": "MINTH GROUP (CN)",
+   "rows": 4,
+   "reviews": [
+    "Feb24",
+    "May17",
+    "Nov17",
+    "Nov20"
+   ],
+   "first_ann": "2017-05-31",
+   "last_ann": "2024-02-29",
+   "kind": "LINE",
+   "base": "MINTH GROUP",
+   "ticker": "0425.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Minth Group Limited — shared=['MINTH'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 136807693
+   }
+  },
+  "China|AKESO (CN)": {
+   "market": "China",
+   "security": "AKESO (CN)",
+   "rows": 3,
+   "reviews": [
+    "Feb23",
+    "May21",
+    "May22"
+   ],
+   "first_ann": "2021-05-31",
+   "last_ann": "2023-02-28",
+   "kind": "LINE",
+   "base": "AKESO",
+   "ticker": "9926.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Akeso, Inc. — shared=['AKESO'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 195874871
+   }
+  },
+  "China|FANG HOLDINGS ADR": {
+   "market": "China",
+   "security": "FANG HOLDINGS ADR",
+   "rows": 3,
+   "reviews": [
+    "May18",
+    "Nov16",
+    "Nov18"
+   ],
+   "first_ann": "2016-11-30",
+   "last_ann": "2018-11-30",
+   "kind": "ADR",
+   "base": "FANG HOLDINGS",
+   "ticker": "SFUNY",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Fang Holdings Limited — shared=['FANG'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 11124833
+   }
+  },
+  "China|LUFAX HOLDING ADR": {
+   "market": "China",
+   "security": "LUFAX HOLDING ADR",
+   "rows": 3,
+   "reviews": [
+    "Feb22",
+    "Feb24",
+    "Nov21"
+   ],
+   "first_ann": "2021-11-30",
+   "last_ann": "2024-02-29",
+   "kind": "ADR",
+   "base": "LUFAX HOLDING",
+   "ticker": "LU",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Lufax Holding Ltd — shared=['LUFAX'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 40427730
+   }
+  },
+  "Singapore|JARDINE CYCLE & CARRIAGE": {
+   "market": "Singapore",
+   "security": "JARDINE CYCLE & CARRIAGE",
+   "rows": 3,
+   "reviews": [
+    "May24",
+    "Nov20",
+    "Nov22"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2024-05-31",
+   "kind": "",
+   "base": "JARDINE CYCLE CARRIAGE",
+   "ticker": "C07.SI",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Jardine Cycle & Carriage Limited — shared=['CARRIA', 'CYCLE', 'JARDIN'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 15124670
+   }
+  },
+  "China|AUTOHOME ADR": {
+   "market": "China",
+   "security": "AUTOHOME ADR",
+   "rows": 2,
+   "reviews": [
+    "Feb26",
+    "May17"
+   ],
+   "first_ann": "2017-05-31",
+   "last_ann": "2026-02-27",
+   "kind": "ADR",
+   "base": "AUTOHOME",
+   "ticker": "ATHM",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Autohome Inc. — shared=['AUTOHO'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 49681379
+   }
+  },
+  "China|BAOZUN ADR": {
+   "market": "China",
+   "security": "BAOZUN ADR",
+   "rows": 2,
+   "reviews": [
+    "Aug18",
+    "Nov21"
+   ],
+   "first_ann": "2018-08-31",
+   "last_ann": "2021-11-30",
+   "kind": "ADR",
+   "base": "BAOZUN",
+   "ticker": "BZUN",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Baozun Inc. — shared=['BAOZUN'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 83233435
+   }
+  },
+  "China|CANSINO BIOLOGICS H": {
+   "market": "China",
+   "security": "CANSINO BIOLOGICS H",
+   "rows": 2,
+   "reviews": [
+    "May20",
+    "Nov22"
+   ],
+   "first_ann": "2020-05-29",
+   "last_ann": "2022-11-30",
+   "kind": "H",
+   "base": "CANSINO BIOLOGICS",
+   "ticker": "688185.SS",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "CanSino Biologics Inc. — shared=['BIOLOG', 'CANSIN'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|CHINA SUNTIEN GREEN H": {
+   "market": "China",
+   "security": "CHINA SUNTIEN GREEN H",
+   "rows": 2,
+   "reviews": [
+    "Nov21",
+    "Nov22"
+   ],
+   "first_ann": "2021-11-30",
+   "last_ann": "2022-11-30",
+   "kind": "H",
+   "base": "CHINA SUNTIEN GREEN",
+   "ticker": "600956.SS",
+   "source": "yahoo-search",
+   "confidence": 0.8,
+   "evidence": "China Suntien Green Energy Corporation Limited — shared=['CHINA', 'GREEN', 'SUNTIE'] extra=['ENERGY']",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 258803407
+   }
+  },
+  "China|DOUYU INTERNATIONAL ADR": {
+   "market": "China",
+   "security": "DOUYU INTERNATIONAL ADR",
+   "rows": 2,
+   "reviews": [
+    "Aug21",
+    "Nov20"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2021-08-31",
+   "kind": "ADR",
+   "base": "DOUYU INTERNATIONAL",
+   "ticker": "DOYU",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "DouYu International Holdings Limited — shared=['DOUYU', 'INTERN'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 37057596
+   }
+  },
+  "China|FULLSHARE HOLDINGS (CN)": {
+   "market": "China",
+   "security": "FULLSHARE HOLDINGS (CN)",
+   "rows": 2,
+   "reviews": [
+    "Aug19",
+    "Nov16"
+   ],
+   "first_ann": "2016-11-30",
+   "last_ann": "2019-08-30",
+   "kind": "LINE",
+   "base": "FULLSHARE HOLDINGS",
+   "ticker": "0607.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Fullshare Holdings Limited — shared=['FULLSH'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 187377068
+   }
+  },
+  "China|HANGZHOU TIGERMED H": {
+   "market": "China",
+   "security": "HANGZHOU TIGERMED H",
+   "rows": 2,
+   "reviews": [
+    "Aug23",
+    "Nov20"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2023-08-31",
+   "kind": "H",
+   "base": "HANGZHOU TIGERMED",
+   "ticker": "300347.SZ",
+   "source": "yahoo-search",
+   "confidence": 0.567,
+   "evidence": "Hangzhou Tigermed Consulting Co., Ltd — shared=['HANGZH', 'TIGERM'] extra=['CONSUL']",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 57,
+    "median_turnover_local": 698646068
+   }
+  },
+  "China|IQIYI ADR A": {
+   "market": "China",
+   "security": "IQIYI ADR A",
+   "rows": 2,
+   "reviews": [
+    "Feb19",
+    "Nov24"
+   ],
+   "first_ann": "2019-02-28",
+   "last_ann": "2024-11-29",
+   "kind": "ADR",
+   "base": "IQIYI",
+   "ticker": "IQ",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "iQIYI, Inc. — shared=['IQIYI'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 209119920
+   }
+  },
+  "China|NOAH HOLDINGS ADR": {
+   "market": "China",
+   "security": "NOAH HOLDINGS ADR",
+   "rows": 2,
+   "reviews": [
+    "May18",
+    "May22"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2022-05-31",
+   "kind": "ADR",
+   "base": "NOAH HOLDINGS",
+   "ticker": "6686.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Noah Holdings Limited — shared=['NOAH'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|RLX TECHNOLOGY ADR": {
+   "market": "China",
+   "security": "RLX TECHNOLOGY ADR",
+   "rows": 2,
+   "reviews": [
+    "Feb23",
+    "Nov22"
+   ],
+   "first_ann": "2022-11-30",
+   "last_ann": "2023-02-28",
+   "kind": "ADR",
+   "base": "RLX TECHNOLOGY",
+   "ticker": "RLX",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "RLX Technology Inc. — shared=['RLX', 'TECHNO'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 30756044
+   }
+  },
+  "China|SHENZHEN EXPRESSWAY H": {
+   "market": "China",
+   "security": "SHENZHEN EXPRESSWAY H",
+   "rows": 2,
+   "reviews": [
+    "Nov19",
+    "Nov20"
+   ],
+   "first_ann": "2019-11-29",
+   "last_ann": "2020-11-30",
+   "kind": "H",
+   "base": "SHENZHEN EXPRESSWAY",
+   "ticker": "600548.SS",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Shenzhen Expressway Corporation Limited — shared=['EXPRES', 'SHENZH'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 39311996
+   }
+  },
+  "China|WEIBO CORP ADR": {
+   "market": "China",
+   "security": "WEIBO CORP ADR",
+   "rows": 2,
+   "reviews": [
+    "Feb24",
+    "Nov16"
+   ],
+   "first_ann": "2016-11-30",
+   "last_ann": "2024-02-29",
+   "kind": "ADR",
+   "base": "WEIBO CORP",
+   "ticker": "WB",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Weibo Corporation — shared=['WEIBO'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 78928339
+   }
+  },
+  "HongKong|MINTH GROUP (HK)": {
+   "market": "HongKong",
+   "security": "MINTH GROUP (HK)",
+   "rows": 2,
+   "reviews": [
+    "May19",
+    "Nov17"
+   ],
+   "first_ann": "2017-11-30",
+   "last_ann": "2019-05-31",
+   "kind": "LINE",
+   "base": "MINTH GROUP",
+   "ticker": "0425.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Minth Group Limited — shared=['MINTH'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 93510855
+   }
+  },
+  "Korea|AMOREPAC CORP PREF (NEW)": {
+   "market": "Korea",
+   "security": "AMOREPAC CORP PREF (NEW)",
+   "rows": 2,
+   "reviews": [
+    "May15",
+    "Nov20"
+   ],
+   "first_ann": "2015-05-29",
+   "last_ann": "2020-11-30",
+   "kind": "PREF",
+   "base": "AMOREPAC CORP",
+   "ticker": "090430.KS",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Amorepacific Corporation — shared=['AMOREP'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 104795198375
+   }
+  },
+  "Korea|SK CHEMICALS (NEW)": {
+   "market": "Korea",
+   "security": "SK CHEMICALS (NEW)",
+   "rows": 2,
+   "reviews": [
+    "Nov20",
+    "Nov22"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2022-11-30",
+   "kind": "",
+   "base": "SK CHEMICALS",
+   "ticker": "285130.KS",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "SK Chemicals Co.,Ltd — shared=['CHEMIC', 'SK'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 148005588635
+   }
+  },
+  "Australia|AURIZON HOLDINGS": {
+   "market": "Australia",
+   "security": "AURIZON HOLDINGS",
+   "rows": 1,
+   "reviews": [
+    "Aug24"
+   ],
+   "first_ann": "2024-08-30",
+   "last_ann": "2024-08-30",
+   "kind": "",
+   "base": "AURIZON HOLDINGS",
+   "ticker": "AZJ.AX",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Aurizon Holdings Limited — shared=['AURIZO'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 57,
+    "median_turnover_local": 24303050
+   }
+  },
+  "China|BAIDU ADR": {
+   "market": "China",
+   "security": "BAIDU ADR",
+   "rows": 1,
+   "reviews": [
+    "Nov15"
+   ],
+   "first_ann": "2015-11-30",
+   "last_ann": "2015-11-30",
+   "kind": "ADR",
+   "base": "BAIDU",
+   "ticker": "BIDU",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Baidu, Inc. — shared=['BAIDU'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 729596752
+   }
+  },
+  "China|FOSUN INTL(CN)": {
+   "market": "China",
+   "security": "FOSUN INTL(CN)",
+   "rows": 1,
+   "reviews": [
+    "Feb26"
+   ],
+   "first_ann": "2026-02-27",
+   "last_ann": "2026-02-27",
+   "kind": "LINE",
+   "base": "FOSUN INTL",
+   "ticker": "0656.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Fosun International Limited — shared=['FOSUN', 'INTERN'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 51,
+    "median_turnover_local": 74191456
+   }
+  },
+  "China|HUTCHMED (CHINA) ADR": {
+   "market": "China",
+   "security": "HUTCHMED (CHINA) ADR",
+   "rows": 1,
+   "reviews": [
+    "Nov22"
+   ],
+   "first_ann": "2022-11-30",
+   "last_ann": "2022-11-30",
+   "kind": "ADR",
+   "base": "HUTCHMED CHINA",
+   "ticker": "HCM",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "HUTCHMED (China) Limited — shared=['CHINA', 'HUTCHM'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 5354058
+   }
+  },
+  "China|JIANGSU EXPRESSWAY CO H": {
+   "market": "China",
+   "security": "JIANGSU EXPRESSWAY CO H",
+   "rows": 1,
+   "reviews": [
+    "May26"
+   ],
+   "first_ann": "2026-05-29",
+   "last_ann": "2026-05-29",
+   "kind": "H",
+   "base": "JIANGSU EXPRESSWAY CO",
+   "ticker": "600377.SS",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Jiangsu Expressway Company Limited — shared=['EXPRES', 'JIANGS'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 103693458
+   }
+  },
+  "China|JOYY INC ADR": {
+   "market": "China",
+   "security": "JOYY INC ADR",
+   "rows": 1,
+   "reviews": [
+    "Feb24"
+   ],
+   "first_ann": "2024-02-29",
+   "last_ann": "2024-02-29",
+   "kind": "ADR",
+   "base": "JOYY INC",
+   "ticker": "JOYY",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "JOYY Inc. — shared=['JOYY'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 15528564
+   }
+  },
+  "China|KINGBOARD HOLDINGS (CN)": {
+   "market": "China",
+   "security": "KINGBOARD HOLDINGS (CN)",
+   "rows": 1,
+   "reviews": [
+    "May24"
+   ],
+   "first_ann": "2024-05-31",
+   "last_ann": "2024-05-31",
+   "kind": "LINE",
+   "base": "KINGBOARD HOLDINGS",
+   "ticker": "0148.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Kingboard Holdings Limited — shared=['KINGBO'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 73661539
+   }
+  },
+  "China|LEGEND BIOTECH CORP ADR": {
+   "market": "China",
+   "security": "LEGEND BIOTECH CORP ADR",
+   "rows": 1,
+   "reviews": [
+    "Nov21"
+   ],
+   "first_ann": "2021-11-30",
+   "last_ann": "2021-11-30",
+   "kind": "ADR",
+   "base": "LEGEND BIOTECH CORP",
+   "ticker": "LEGN",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Legend Biotech Corporation — shared=['BIOTEC', 'LEGEND'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 25545536
+   }
+  },
+  "China|LI AUTO ADR": {
+   "market": "China",
+   "security": "LI AUTO ADR",
+   "rows": 1,
+   "reviews": [
+    "Feb21"
+   ],
+   "first_ann": "2021-02-26",
+   "last_ann": "2021-02-26",
+   "kind": "ADR",
+   "base": "LI AUTO",
+   "ticker": "LI",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Li Auto Inc. — shared=['AUTO', 'LI'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 391285590
+   }
+  },
+  "China|NEW ORIENTAL EDUCAT ADR": {
+   "market": "China",
+   "security": "NEW ORIENTAL EDUCAT ADR",
+   "rows": 1,
+   "reviews": [
+    "Nov15"
+   ],
+   "first_ann": "2015-11-30",
+   "last_ann": "2015-11-30",
+   "kind": "ADR",
+   "base": "ORIENTAL EDUCAT",
+   "ticker": "EDU",
+   "source": "yahoo-search",
+   "confidence": 0.567,
+   "evidence": "New Oriental Education & Technology Group Inc. — shared=['EDUCAT', 'ORIENT'] extra=['TECHNO']",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 41524775
+   }
+  },
+  "China|ORIENT OVERSEAS (CN)": {
+   "market": "China",
+   "security": "ORIENT OVERSEAS (CN)",
+   "rows": 1,
+   "reviews": [
+    "May22"
+   ],
+   "first_ann": "2022-05-31",
+   "last_ann": "2022-05-31",
+   "kind": "LINE",
+   "base": "ORIENT OVERSEAS",
+   "ticker": "0316.HK",
+   "source": "yahoo-search",
+   "confidence": 0.567,
+   "evidence": "Orient Overseas (International) Limited — shared=['ORIENT', 'OVERSE'] extra=['INTERN']",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 399531924
+   }
+  },
+  "China|VIPSHOP HOLDINGS ADR": {
+   "market": "China",
+   "security": "VIPSHOP HOLDINGS ADR",
+   "rows": 1,
+   "reviews": [
+    "Nov15"
+   ],
+   "first_ann": "2015-11-30",
+   "last_ann": "2015-11-30",
+   "kind": "ADR",
+   "base": "VIPSHOP HOLDINGS",
+   "ticker": "VIPS",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Vipshop Holdings Limited — shared=['VIPSHO'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 135402148
+   }
+  },
+  "China|XIAOMI CORP B": {
+   "market": "China",
+   "security": "XIAOMI CORP B",
+   "rows": 1,
+   "reviews": [
+    "Feb19"
+   ],
+   "first_ann": "2019-02-28",
+   "last_ann": "2019-02-28",
+   "kind": "AB",
+   "base": "XIAOMI CORP",
+   "ticker": "1810.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Xiaomi Corporation — shared=['XIAOMI'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 52,
+    "median_turnover_local": 991479737
+   }
+  },
+  "China|ZAI LAB ADR": {
+   "market": "China",
+   "security": "ZAI LAB ADR",
+   "rows": 1,
+   "reviews": [
+    "Feb20"
+   ],
+   "first_ann": "2020-02-28",
+   "last_ann": "2020-02-28",
+   "kind": "ADR",
+   "base": "ZAI LAB",
+   "ticker": "ZLAB",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Zai Lab Limited — shared=['LAB', 'ZAI'] extra=[]",
+   "line": "ADR",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 19863750
+   }
+  },
+  "China|ZTO EXPRESS ADR A": {
+   "market": "China",
+   "security": "ZTO EXPRESS ADR A",
+   "rows": 1,
+   "reviews": [
+    "Feb19"
+   ],
+   "first_ann": "2019-02-28",
+   "last_ann": "2019-02-28",
+   "kind": "ADR",
+   "base": "ZTO EXPRESS",
+   "ticker": "2057.HK",
+   "source": "yahoo-search",
+   "confidence": 0.567,
+   "evidence": "ZTO Express (Cayman) Inc. — shared=['EXPRES', 'ZTO'] extra=['CAYMAN']",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "India|TUBE INVESTMENT (NEW)": {
+   "market": "India",
+   "security": "TUBE INVESTMENT (NEW)",
+   "rows": 1,
+   "reviews": [
+    "Nov22"
+   ],
+   "first_ann": "2022-11-30",
+   "last_ann": "2022-11-30",
+   "kind": "",
+   "base": "TUBE INVESTMENT",
+   "ticker": "TIINDIA.BO",
+   "source": "yahoo-search",
+   "confidence": 0.567,
+   "evidence": "Tube Investments of India Limited — shared=['INVEST', 'TUBE'] extra=['INDIA']",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 45025632
+   }
+  },
+  "Japan|AOZORA BANK": {
+   "market": "Japan",
+   "security": "AOZORA BANK",
+   "rows": 1,
+   "reviews": [
+    "Nov20"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2020-11-30",
+   "kind": "",
+   "base": "AOZORA BANK",
+   "ticker": "8304.T",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Aozora Bank, Ltd. — shared=['AOZORA', 'BANK'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 2345743600
+   }
+  },
+  "Japan|JGC HOLDINGS CORP": {
+   "market": "Japan",
+   "security": "JGC HOLDINGS CORP",
+   "rows": 1,
+   "reviews": [
+    "Nov20"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2020-11-30",
+   "kind": "",
+   "base": "JGC HOLDINGS CORP",
+   "ticker": "1963.T",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "JGC Holdings Corporation — shared=['JGC'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 2015989325
+   }
+  },
+  "Japan|KURARAY CO": {
+   "market": "Japan",
+   "security": "KURARAY CO",
+   "rows": 1,
+   "reviews": [
+    "May21"
+   ],
+   "first_ann": "2021-05-31",
+   "last_ann": "2021-05-31",
+   "kind": "",
+   "base": "KURARAY CO",
+   "ticker": "3405.T",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Kuraray Co., Ltd. — shared=['KURARA'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 2339831250
+   }
+  },
+  "Japan|MEIJI HOLDINGS CO": {
+   "market": "Japan",
+   "security": "MEIJI HOLDINGS CO",
+   "rows": 1,
+   "reviews": [
+    "Nov25"
+   ],
+   "first_ann": "2025-11-28",
+   "last_ann": "2025-11-28",
+   "kind": "",
+   "base": "MEIJI HOLDINGS CO",
+   "ticker": "2269.T",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Meiji Holdings Co., Ltd. — shared=['MEIJI'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 52,
+    "median_turnover_local": 5822368375
+   }
+  },
+  "Japan|SANTEN PHARMACEUTICAL CO": {
+   "market": "Japan",
+   "security": "SANTEN PHARMACEUTICAL CO",
+   "rows": 1,
+   "reviews": [
+    "May22"
+   ],
+   "first_ann": "2022-05-31",
+   "last_ann": "2022-05-31",
+   "kind": "",
+   "base": "SANTEN PHARMACEUTICAL CO",
+   "ticker": "4536.T",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Santen Pharmaceutical Co., Ltd. — shared=['PHARMA', 'SANTEN'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 2962540700
+   }
+  },
+  "Japan|SUMITOMO PHARMA CO": {
+   "market": "Japan",
+   "security": "SUMITOMO PHARMA CO",
+   "rows": 1,
+   "reviews": [
+    "May22"
+   ],
+   "first_ann": "2022-05-31",
+   "last_ann": "2022-05-31",
+   "kind": "",
+   "base": "SUMITOMO PHARMA CO",
+   "ticker": "4506.T",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Sumitomo Pharma Co., Ltd. — shared=['PHARMA', 'SUMITO'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 1761320000
+   }
+  },
+  "Japan|YAKULT HONSHA CO": {
+   "market": "Japan",
+   "security": "YAKULT HONSHA CO",
+   "rows": 1,
+   "reviews": [
+    "Nov25"
+   ],
+   "first_ann": "2025-11-28",
+   "last_ann": "2025-11-28",
+   "kind": "",
+   "base": "YAKULT HONSHA CO",
+   "ticker": "2267.T",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Yakult Honsha Co.,Ltd. — shared=['HONSHA', 'YAKULT'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 52,
+    "median_turnover_local": 4242622250
+   }
+  },
+  "Korea|LG CHEM PREF": {
+   "market": "Korea",
+   "security": "LG CHEM PREF",
+   "rows": 1,
+   "reviews": [
+    "Feb25"
+   ],
+   "first_ann": "2025-02-28",
+   "last_ann": "2025-02-28",
+   "kind": "PREF",
+   "base": "LG CHEM",
+   "ticker": "051915.KS",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "LG Chem, Ltd. — shared=['CHEMIC', 'LG'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 52,
+    "median_turnover_local": 6524421375
+   }
+  },
+  "Thailand|CP AXTRA (NEW)": {
+   "market": "Thailand",
+   "security": "CP AXTRA (NEW)",
+   "rows": 1,
+   "reviews": [
+    "Feb26"
+   ],
+   "first_ann": "2026-02-27",
+   "last_ann": "2026-02-27",
+   "kind": "",
+   "base": "CP AXTRA",
+   "ticker": "CPAXT.BK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "CP Axtra Public Company Limited — shared=['AXTRA', 'CP'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 310180632
+   }
+  },
+  "China|MAANSHAN IRON A (HK-C)": {
+   "market": "China",
+   "security": "MAANSHAN IRON A (HK-C)",
+   "rows": 4,
+   "reviews": [
+    "May18",
+    "May22",
+    "Nov20",
+    "Nov22"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2022-11-30",
+   "kind": "AB",
+   "base": "MAANSHAN IRON A",
+   "ticker": "600808.SS",
+   "source": "openfigi",
+   "confidence": 0.51,
+   "evidence": "MAANSHAN IRON & STEEL-A @CH — shared=['IRON', 'MAANSH'] extra=['STEEL']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 182394125
+   }
+  },
+  "China|MIDEA GROUP CO A (HK-C)": {
+   "market": "China",
+   "security": "MIDEA GROUP CO A (HK-C)",
+   "rows": 4,
+   "reviews": [
+    "Feb20",
+    "Feb21",
+    "Feb24",
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2024-02-29",
+   "kind": "AB",
+   "base": "MIDEA GROUP CO A",
+   "ticker": "000333.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "MIDEA GROUP CO LTD-A @CH — shared=['MIDEA'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|TANGSHAN JIDONG A (HK-C)": {
+   "market": "China",
+   "security": "TANGSHAN JIDONG A (HK-C)",
+   "rows": 4,
+   "reviews": [
+    "Feb24",
+    "May22",
+    "Nov19",
+    "Nov21"
+   ],
+   "first_ann": "2019-11-29",
+   "last_ann": "2024-02-29",
+   "kind": "AB",
+   "base": "TANGSHAN JIDONG A",
+   "ticker": "000856.SS",
+   "source": "openfigi",
+   "confidence": 0.51,
+   "evidence": "TANGSHAN JIDONG EQUIPMENT-A @CH — shared=['JIDONG', 'TANGSH'] extra=['EQUIPM']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|DATANG INTL POWER H": {
+   "market": "China",
+   "security": "DATANG INTL POWER H",
+   "rows": 3,
+   "reviews": [
+    "May16",
+    "May18",
+    "May20"
+   ],
+   "first_ann": "2016-05-31",
+   "last_ann": "2020-05-29",
+   "kind": "H",
+   "base": "DATANG INTL POWER",
+   "ticker": "601991.SS",
+   "source": "openfigi",
+   "confidence": 0.81,
+   "evidence": "DATANG INTL POWER GEN CO-A @CH — shared=['DATANG', 'INTERN', 'POWER'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 36413895
+   }
+  },
+  "Korea|HYUNDAI MIPO DOCKYARD": {
+   "market": "Korea",
+   "security": "HYUNDAI MIPO DOCKYARD",
+   "rows": 3,
+   "reviews": [
+    "Aug15",
+    "Feb24",
+    "Nov22"
+   ],
+   "first_ann": "2015-08-31",
+   "last_ann": "2024-02-29",
+   "kind": "",
+   "base": "HYUNDAI MIPO DOCKYARD",
+   "ticker": "010620.KS",
+   "source": "openfigi",
+   "confidence": 0.45,
+   "evidence": "HD HYUNDAI MIPO @KS — shared=['HYUNDA', 'MIPO'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Australia|MINERAL RESOURCES": {
+   "market": "Australia",
+   "security": "MINERAL RESOURCES",
+   "rows": 2,
+   "reviews": [
+    "Feb22",
+    "Feb25"
+   ],
+   "first_ann": "2022-02-28",
+   "last_ann": "2025-02-28",
+   "kind": "",
+   "base": "MINERAL RESOURCES",
+   "ticker": "MIN.AX",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "MINERAL RESOURCES LTD @AU — shared=['MINERA', 'RESOUR'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 57,
+    "median_turnover_local": 73090923
+   }
+  },
+  "China|BILIBILI ADR Z": {
+   "market": "China",
+   "security": "BILIBILI ADR Z",
+   "rows": 2,
+   "reviews": [
+    "Feb19",
+    "May20"
+   ],
+   "first_ann": "2019-02-28",
+   "last_ann": "2020-05-29",
+   "kind": "ADR",
+   "base": "BILIBILI Z",
+   "ticker": "9626.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BILIBILI INC-CLASS Z @HK — shared=['BILIBI'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|FLAT GLASS GROUP A(HK-C)": {
+   "market": "China",
+   "security": "FLAT GLASS GROUP A(HK-C)",
+   "rows": 2,
+   "reviews": [
+    "Feb26",
+    "May21"
+   ],
+   "first_ann": "2021-05-31",
+   "last_ann": "2026-02-27",
+   "kind": "",
+   "base": "FLAT GLASS GROUP A",
+   "ticker": "601865.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "FLAT GLASS GROUP CO LTD-A @CH — shared=['FLAT', 'GLASS'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 603470966
+   }
+  },
+  "China|GREAT WALL MOTOR A(HK-C)": {
+   "market": "China",
+   "security": "GREAT WALL MOTOR A(HK-C)",
+   "rows": 2,
+   "reviews": [
+    "Feb26",
+    "Nov20"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2026-02-27",
+   "kind": "",
+   "base": "GREAT WALL MOTOR A",
+   "ticker": "601633.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "GREAT WALL MOTOR CO LTD-A @CG — shared=['GREAT', 'MOTOR', 'WALL'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 57,
+    "median_turnover_local": 1156132761
+   }
+  },
+  "China|HAICHANG OCEAN PARK HLDG": {
+   "market": "China",
+   "security": "HAICHANG OCEAN PARK HLDG",
+   "rows": 2,
+   "reviews": [
+    "Feb23",
+    "Nov22"
+   ],
+   "first_ann": "2022-11-30",
+   "last_ann": "2023-02-28",
+   "kind": "",
+   "base": "HAICHANG OCEAN PARK HLDG",
+   "ticker": "2255.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HAICHANG OCEAN PARK HOLDINGS @HK — shared=['HAICHA', 'OCEAN', 'PARK'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|SHANGHAI JUNSHI A (HK-C)": {
+   "market": "China",
+   "security": "SHANGHAI JUNSHI A (HK-C)",
+   "rows": 2,
+   "reviews": [
+    "May24",
+    "Nov21"
+   ],
+   "first_ann": "2021-11-30",
+   "last_ann": "2024-05-31",
+   "kind": "AB",
+   "base": "SHANGHAI JUNSHI A",
+   "ticker": "688180.SS",
+   "source": "openfigi",
+   "confidence": 0.51,
+   "evidence": "SHANGHAI JUNSHI BIOSCIENCE-A @CH — shared=['JUNSHI', 'SHANGH'] extra=['BIOSCI']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 272897953
+   }
+  },
+  "China|SHENZHEN INTL HOLDINGS": {
+   "market": "China",
+   "security": "SHENZHEN INTL HOLDINGS",
+   "rows": 2,
+   "reviews": [
+    "May18",
+    "Nov23"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2023-11-30",
+   "kind": "",
+   "base": "SHENZHEN INTL HOLDINGS",
+   "ticker": "152.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "SHENZHEN INTL HOLDINGS @HK — shared=['INTERN', 'SHENZH'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|SINOCHEM INTL A (HK-C)": {
+   "market": "China",
+   "security": "SINOCHEM INTL A (HK-C)",
+   "rows": 2,
+   "reviews": [
+    "May20",
+    "Nov19"
+   ],
+   "first_ann": "2019-11-29",
+   "last_ann": "2020-05-29",
+   "kind": "AB",
+   "base": "SINOCHEM INTL A",
+   "ticker": "600500.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "SINOCHEM INTL CORP-A @CH — shared=['INTERN', 'SINOCH'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 45209164
+   }
+  },
+  "India|JINDAL STEEL & POWER": {
+   "market": "India",
+   "security": "JINDAL STEEL & POWER",
+   "rows": 2,
+   "reviews": [
+    "Aug15",
+    "May22"
+   ],
+   "first_ann": "2015-08-31",
+   "last_ann": "2022-05-31",
+   "kind": "",
+   "base": "JINDAL STEEL POWER",
+   "ticker": "JINDALST.NS",
+   "source": "openfigi",
+   "confidence": 0.6,
+   "evidence": "JINDAL STEEL LTD @IS — shared=['JINDAL', 'STEEL'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Korea|DONGSUH COMPANIES": {
+   "market": "Korea",
+   "security": "DONGSUH COMPANIES",
+   "rows": 2,
+   "reviews": [
+    "Aug15",
+    "Nov18"
+   ],
+   "first_ann": "2015-08-31",
+   "last_ann": "2018-11-30",
+   "kind": "",
+   "base": "DONGSUH COMPANIES",
+   "ticker": "026960.KS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "DONGSUH COMPANIES INC @KS — shared=['COMPAN', 'DONGSU'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 12987952500
+   }
+  },
+  "Korea|HANJIN KAL CORP": {
+   "market": "Korea",
+   "security": "HANJIN KAL CORP",
+   "rows": 2,
+   "reviews": [
+    "Feb24",
+    "May26"
+   ],
+   "first_ann": "2024-02-29",
+   "last_ann": "2026-05-29",
+   "kind": "",
+   "base": "HANJIN KAL CORP",
+   "ticker": "180640.KS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HANJIN KAL CORP @KS — shared=['HANJIN', 'KAL'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 8025582000
+   }
+  },
+  "Malaysia|MR DIY GROUP": {
+   "market": "Malaysia",
+   "security": "MR DIY GROUP",
+   "rows": 2,
+   "reviews": [
+    "May22",
+    "May26"
+   ],
+   "first_ann": "2022-05-31",
+   "last_ann": "2026-05-29",
+   "kind": "",
+   "base": "MR DIY GROUP",
+   "ticker": "MRDIY.KL",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "MR DIY GROUP M BHD @MK — shared=['DIY', 'MR'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Malaysia|NESTLE (MALAYSIA)": {
+   "market": "Malaysia",
+   "security": "NESTLE (MALAYSIA)",
+   "rows": 2,
+   "reviews": [
+    "May26",
+    "Nov17"
+   ],
+   "first_ann": "2017-11-30",
+   "last_ann": "2026-05-29",
+   "kind": "",
+   "base": "NESTLE MALAYSIA",
+   "ticker": "NESZ.KL",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "NESTLE (MALAYSIA) BERHAD @MK — shared=['MALAYS', 'NESTLE'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Australia|ALS": {
+   "market": "Australia",
+   "security": "ALS",
+   "rows": 1,
+   "reviews": [
+    "May15"
+   ],
+   "first_ann": "2015-05-29",
+   "last_ann": "2015-05-29",
+   "kind": "",
+   "base": "ALS",
+   "ticker": "ALQ.AX",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "ALS LTD @AU — shared=['ALS'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 13892045
+   }
+  },
+  "Australia|HARDIE (JAMES) IND CDI": {
+   "market": "Australia",
+   "security": "HARDIE (JAMES) IND CDI",
+   "rows": 1,
+   "reviews": [
+    "Nov25"
+   ],
+   "first_ann": "2025-11-28",
+   "last_ann": "2025-11-28",
+   "kind": "",
+   "base": "HARDIE JAMES IND CDI",
+   "ticker": "JHXCD.AX",
+   "source": "openfigi",
+   "confidence": 0.495,
+   "evidence": "JAMES HARDIE IND-CUM DIVIDEN @AU — shared=['HARDIE', 'INDUST', 'JAMES'] extra=['DIVIDE']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Australia|WORLEYPARSONS": {
+   "market": "Australia",
+   "security": "WORLEYPARSONS",
+   "rows": 1,
+   "reviews": [
+    "Nov15"
+   ],
+   "first_ann": "2015-11-30",
+   "last_ann": "2015-11-30",
+   "kind": "",
+   "base": "WORLEYPARSONS",
+   "ticker": "WOR.AX",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "WORLEY LTD @AU — shared=['WORLEY'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 11166230
+   }
+  },
+  "China|BANK OF CHINA A (HK-C)": {
+   "market": "China",
+   "security": "BANK OF CHINA A (HK-C)",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "AB",
+   "base": "BANK OF CHINA A",
+   "ticker": "601988.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BANK OF CHINA LTD-A @CH — shared=['BANK', 'CHINA'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 354731274
+   }
+  },
+  "China|BYD CO A (HK-C)": {
+   "market": "China",
+   "security": "BYD CO A (HK-C)",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "AB",
+   "base": "BYD CO A",
+   "ticker": "002594.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BYD CO LTD -A @CH — shared=['BYD'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|BYD ELECTRONIC INTL": {
+   "market": "China",
+   "security": "BYD ELECTRONIC INTL",
+   "rows": 1,
+   "reviews": [
+    "Nov17"
+   ],
+   "first_ann": "2017-11-30",
+   "last_ann": "2017-11-30",
+   "kind": "",
+   "base": "BYD ELECTRONIC INTL",
+   "ticker": "285.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BYD ELECTRONIC INTL CO LTD @HK — shared=['BYD', 'ELECTR', 'INTERN'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|CHINA VANKE CO A (HK-C)": {
+   "market": "China",
+   "security": "CHINA VANKE CO A (HK-C)",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "AB",
+   "base": "CHINA VANKE CO A",
+   "ticker": "000002.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "CHINA VANKE CO LTD -A @CH — shared=['CHINA', 'VANKE'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 418338422
+   }
+  },
+  "China|HESTEEL CO A (HK-C)": {
+   "market": "China",
+   "security": "HESTEEL CO A (HK-C)",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "AB",
+   "base": "HESTEEL CO A",
+   "ticker": "000709.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HESTEEL CO LTD-A @CH — shared=['HESTEE'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|HUAXIA BANK A (HK-C)": {
+   "market": "China",
+   "security": "HUAXIA BANK A (HK-C)",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "AB",
+   "base": "HUAXIA BANK A",
+   "ticker": "600015.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HUAXIA BANK CO LTD-A @CH — shared=['BANK', 'HUAXIA'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 143938144
+   }
+  },
+  "China|NIO A ADR": {
+   "market": "China",
+   "security": "NIO A ADR",
+   "rows": 1,
+   "reviews": [
+    "May19"
+   ],
+   "first_ann": "2019-05-31",
+   "last_ann": "2019-05-31",
+   "kind": "ADR",
+   "base": "NIO A",
+   "ticker": "9866.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "NIO INC-CLASS A @HK — shared=['NIO'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "China|SHANGHAI ELECTRIC GRP H": {
+   "market": "China",
+   "security": "SHANGHAI ELECTRIC GRP H",
+   "rows": 1,
+   "reviews": [
+    "Nov20"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2020-11-30",
+   "kind": "H",
+   "base": "SHANGHAI ELECTRIC GRP",
+   "ticker": "601727.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "SHANGHAI ELECTRIC GRP CO L-A @CH — shared=['ELECTR', 'SHANGH'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 57,
+    "median_turnover_local": 190812729
+   }
+  },
+  "China|TENCENT MUSIC ENT A ADR": {
+   "market": "China",
+   "security": "TENCENT MUSIC ENT A ADR",
+   "rows": 1,
+   "reviews": [
+    "Feb19"
+   ],
+   "first_ann": "2019-02-28",
+   "last_ann": "2019-02-28",
+   "kind": "ADR",
+   "base": "TENCENT MUSIC ENT A",
+   "ticker": "1698.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "TENCENT MUSIC ENT - CLASS A @HK — shared=['ENT', 'MUSIC', 'TENCEN'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "HongKong|BANK EAST ASIA": {
+   "market": "HongKong",
+   "security": "BANK EAST ASIA",
+   "rows": 1,
+   "reviews": [
+    "Aug21"
+   ],
+   "first_ann": "2021-08-31",
+   "last_ann": "2021-08-31",
+   "kind": "",
+   "base": "BANK EAST ASIA",
+   "ticker": "23.HK",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BANK OF EAST ASIA LTD @HK — shared=['ASIA', 'BANK', 'EAST'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Indonesia|HM SAMPOERNA": {
+   "market": "Indonesia",
+   "security": "HM SAMPOERNA",
+   "rows": 1,
+   "reviews": [
+    "Nov20"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2020-11-30",
+   "kind": "",
+   "base": "HM SAMPOERNA",
+   "ticker": "HMSP.JK",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HM SAMPOERNA TBK PT @IJ — shared=['HM', 'SAMPOE'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 51,
+    "median_turnover_local": 195758363000
+   }
+  },
+  "Japan|HACHIJUNI BANK": {
+   "market": "Japan",
+   "security": "HACHIJUNI BANK",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "",
+   "base": "HACHIJUNI BANK",
+   "ticker": "8359.T",
+   "source": "openfigi",
+   "confidence": 0.51,
+   "evidence": "HACHIJUNI NAGANO BANK LTD @JP — shared=['BANK', 'HACHIJ'] extra=['NAGANO']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 1239053050
+   }
+  },
+  "Japan|M3": {
+   "market": "Japan",
+   "security": "M3",
+   "rows": 1,
+   "reviews": [
+    "May26"
+   ],
+   "first_ann": "2026-05-29",
+   "last_ann": "2026-05-29",
+   "kind": "",
+   "base": "M3",
+   "ticker": "2413.T",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "M3 INC @JT — shared=['M3'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 7111562400
+   }
+  },
+  "Japan|TEIJIN": {
+   "market": "Japan",
+   "security": "TEIJIN",
+   "rows": 1,
+   "reviews": [
+    "May21"
+   ],
+   "first_ann": "2021-05-31",
+   "last_ann": "2021-05-31",
+   "kind": "",
+   "base": "TEIJIN",
+   "ticker": "3401.T",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "TEIJIN LTD @JT — shared=['TEIJIN'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 2340772775
+   }
+  },
+  "Korea|HITE JINRO CO": {
+   "market": "Korea",
+   "security": "HITE JINRO CO",
+   "rows": 1,
+   "reviews": [
+    "May15"
+   ],
+   "first_ann": "2015-05-29",
+   "last_ann": "2015-05-29",
+   "kind": "",
+   "base": "HITE JINRO CO",
+   "ticker": "000087.KS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HITE JINRO @KS — shared=['HITE', 'JINRO'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 53055600
+   }
+  },
+  "Korea|HYUNDAI DEPT STORE": {
+   "market": "Korea",
+   "security": "HYUNDAI DEPT STORE",
+   "rows": 1,
+   "reviews": [
+    "Aug20"
+   ],
+   "first_ann": "2020-08-31",
+   "last_ann": "2020-08-31",
+   "kind": "",
+   "base": "HYUNDAI DEPT STORE",
+   "ticker": "069960.KS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HYUNDAI DEPT STORE CO @KS — shared=['DEPT', 'HYUNDA', 'STORE'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 8946080000
+   }
+  },
+  "Korea|MERITZ SECURITIES CO": {
+   "market": "Korea",
+   "security": "MERITZ SECURITIES CO",
+   "rows": 1,
+   "reviews": [
+    "May19"
+   ],
+   "first_ann": "2019-05-31",
+   "last_ann": "2019-05-31",
+   "kind": "",
+   "base": "MERITZ SECURITIES CO",
+   "ticker": "008560.KS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "MERITZ SECURITIES CO LTD @KP — shared=['MERITZ', 'SECURI'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Philippines|GLOBE TELECOM": {
+   "market": "Philippines",
+   "security": "GLOBE TELECOM",
+   "rows": 1,
+   "reviews": [
+    "Feb23"
+   ],
+   "first_ann": "2023-02-28",
+   "last_ann": "2023-02-28",
+   "kind": "",
+   "base": "GLOBE TELECOM",
+   "ticker": "GLO.PS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "GLOBE TELECOM INC @PM — shared=['GLOBE', 'TELECO'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Philippines|JOLLIBEE FOODS CORP": {
+   "market": "Philippines",
+   "security": "JOLLIBEE FOODS CORP",
+   "rows": 1,
+   "reviews": [
+    "May26"
+   ],
+   "first_ann": "2026-05-29",
+   "last_ann": "2026-05-29",
+   "kind": "",
+   "base": "JOLLIBEE FOODS CORP",
+   "ticker": "JFC.PS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "JOLLIBEE FOODS CORP @PM — shared=['FOODS', 'JOLLIB'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  },
+  "Singapore|GOLDEN AGRI RESOURCES": {
+   "market": "Singapore",
+   "security": "GOLDEN AGRI RESOURCES",
+   "rows": 1,
+   "reviews": [
+    "Nov19"
+   ],
+   "first_ann": "2019-11-29",
+   "last_ann": "2019-11-29",
+   "kind": "",
+   "base": "GOLDEN AGRI RESOURCES",
+   "ticker": "GGR.SI",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "GOLDEN AGRI-RESOURCES LTD @SP — shared=['AGRI', 'GOLDEN', 'RESOUR'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   }
+  }
+ },
+ "held": [
+  {
+   "market": "Australia",
+   "security": "HARDIE (JAMES) IND CDI",
+   "rows": 1,
+   "reviews": [
+    "Nov25"
+   ],
+   "first_ann": "2025-11-28",
+   "last_ann": "2025-11-28",
+   "kind": "",
+   "base": "HARDIE JAMES IND CDI",
+   "ticker": "JHXCD.AX",
+   "source": "openfigi",
+   "confidence": 0.495,
+   "evidence": "JAMES HARDIE IND-CUM DIVIDEN @AU — shared=['HARDIE', 'INDUST', 'JAMES'] extra=['DIVIDE']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Australia",
+   "security": "WORLEYPARSONS",
+   "rows": 1,
+   "reviews": [
+    "Nov15"
+   ],
+   "first_ann": "2015-11-30",
+   "last_ann": "2015-11-30",
+   "kind": "",
+   "base": "WORLEYPARSONS",
+   "ticker": "WOR.AX",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "WORLEY LTD @AU — shared=['WORLEY'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 11166230
+   },
+   "held_because": "ticker already maps to Australia|WORLEY"
+  },
+  {
+   "market": "China",
+   "security": "BILIBILI ADR Z",
+   "rows": 2,
+   "reviews": [
+    "Feb19",
+    "May20"
+   ],
+   "first_ann": "2019-02-28",
+   "last_ann": "2020-05-29",
+   "kind": "ADR",
+   "base": "BILIBILI Z",
+   "ticker": "9626.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BILIBILI INC-CLASS Z @HK — shared=['BILIBI'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "BYD CO A (HK-C)",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "AB",
+   "base": "BYD CO A",
+   "ticker": "002594.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BYD CO LTD -A @CH — shared=['BYD'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "BYD ELECTRONIC INTL",
+   "rows": 1,
+   "reviews": [
+    "Nov17"
+   ],
+   "first_ann": "2017-11-30",
+   "last_ann": "2017-11-30",
+   "kind": "",
+   "base": "BYD ELECTRONIC INTL",
+   "ticker": "285.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BYD ELECTRONIC INTL CO LTD @HK — shared=['BYD', 'ELECTR', 'INTERN'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "CANSINO BIOLOGICS H",
+   "rows": 2,
+   "reviews": [
+    "May20",
+    "Nov22"
+   ],
+   "first_ann": "2020-05-29",
+   "last_ann": "2022-11-30",
+   "kind": "H",
+   "base": "CANSINO BIOLOGICS",
+   "ticker": "688185.SS",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "CanSino Biologics Inc. — shared=['BIOLOG', 'CANSIN'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "FOSUN INTL(CN)",
+   "rows": 1,
+   "reviews": [
+    "Feb26"
+   ],
+   "first_ann": "2026-02-27",
+   "last_ann": "2026-02-27",
+   "kind": "LINE",
+   "base": "FOSUN INTL",
+   "ticker": "0656.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Fosun International Limited — shared=['FOSUN', 'INTERN'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 51,
+    "median_turnover_local": 74191456
+   },
+   "held_because": "ticker already maps to HongKong|FOSUN INT L"
+  },
+  {
+   "market": "China",
+   "security": "HAICHANG OCEAN PARK HLDG",
+   "rows": 2,
+   "reviews": [
+    "Feb23",
+    "Nov22"
+   ],
+   "first_ann": "2022-11-30",
+   "last_ann": "2023-02-28",
+   "kind": "",
+   "base": "HAICHANG OCEAN PARK HLDG",
+   "ticker": "2255.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HAICHANG OCEAN PARK HOLDINGS @HK — shared=['HAICHA', 'OCEAN', 'PARK'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "HANGZHOU TIGERMED H",
+   "rows": 2,
+   "reviews": [
+    "Aug23",
+    "Nov20"
+   ],
+   "first_ann": "2020-11-30",
+   "last_ann": "2023-08-31",
+   "kind": "H",
+   "base": "HANGZHOU TIGERMED",
+   "ticker": "300347.SZ",
+   "source": "yahoo-search",
+   "confidence": 0.567,
+   "evidence": "Hangzhou Tigermed Consulting Co., Ltd — shared=['HANGZH', 'TIGERM'] extra=['CONSUL']",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 57,
+    "median_turnover_local": 698646068
+   },
+   "held_because": "ticker already maps to China|HANGZHOU TIGER A HK C"
+  },
+  {
+   "market": "China",
+   "security": "HESTEEL CO A (HK-C)",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "AB",
+   "base": "HESTEEL CO A",
+   "ticker": "000709.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "HESTEEL CO LTD-A @CH — shared=['HESTEE'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "MAANSHAN IRON A (HK-C)",
+   "rows": 4,
+   "reviews": [
+    "May18",
+    "May22",
+    "Nov20",
+    "Nov22"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2022-11-30",
+   "kind": "AB",
+   "base": "MAANSHAN IRON A",
+   "ticker": "600808.SS",
+   "source": "openfigi",
+   "confidence": 0.51,
+   "evidence": "MAANSHAN IRON & STEEL-A @CH — shared=['IRON', 'MAANSH'] extra=['STEEL']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 182394125
+   },
+   "held_because": "confidence 0.51 below 0.55"
+  },
+  {
+   "market": "China",
+   "security": "MIDEA GROUP CO A (HK-C)",
+   "rows": 4,
+   "reviews": [
+    "Feb20",
+    "Feb21",
+    "Feb24",
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2024-02-29",
+   "kind": "AB",
+   "base": "MIDEA GROUP CO A",
+   "ticker": "000333.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "MIDEA GROUP CO LTD-A @CH — shared=['MIDEA'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "NIO A ADR",
+   "rows": 1,
+   "reviews": [
+    "May19"
+   ],
+   "first_ann": "2019-05-31",
+   "last_ann": "2019-05-31",
+   "kind": "ADR",
+   "base": "NIO A",
+   "ticker": "9866.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "NIO INC-CLASS A @HK — shared=['NIO'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "NOAH HOLDINGS ADR",
+   "rows": 2,
+   "reviews": [
+    "May18",
+    "May22"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2022-05-31",
+   "kind": "ADR",
+   "base": "NOAH HOLDINGS",
+   "ticker": "6686.HK",
+   "source": "yahoo-search",
+   "confidence": 1.0,
+   "evidence": "Noah Holdings Limited — shared=['NOAH'] extra=[]",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "SHANGHAI JUNSHI A (HK-C)",
+   "rows": 2,
+   "reviews": [
+    "May24",
+    "Nov21"
+   ],
+   "first_ann": "2021-11-30",
+   "last_ann": "2024-05-31",
+   "kind": "AB",
+   "base": "SHANGHAI JUNSHI A",
+   "ticker": "688180.SS",
+   "source": "openfigi",
+   "confidence": 0.51,
+   "evidence": "SHANGHAI JUNSHI BIOSCIENCE-A @CH — shared=['JUNSHI', 'SHANGH'] extra=['BIOSCI']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 272897953
+   },
+   "held_because": "confidence 0.51 below 0.55"
+  },
+  {
+   "market": "China",
+   "security": "SHENZHEN INTL HOLDINGS",
+   "rows": 2,
+   "reviews": [
+    "May18",
+    "Nov23"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2023-11-30",
+   "kind": "",
+   "base": "SHENZHEN INTL HOLDINGS",
+   "ticker": "152.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "SHENZHEN INTL HOLDINGS @HK — shared=['INTERN', 'SHENZH'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "SHUI ON LAND (CN)",
+   "rows": 3,
+   "reviews": [
+    "Aug20",
+    "May18",
+    "Nov16"
+   ],
+   "first_ann": "2016-11-30",
+   "last_ann": "2020-08-31",
+   "kind": "LINE",
+   "base": "SHUI ON LAND",
+   "ticker": "0272.HK",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "Chinese H/CN line, base name in the HK map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 20023082
+   },
+   "held_because": "ticker already maps to HongKong|SHUI ON LAND"
+  },
+  {
+   "market": "China",
+   "security": "TANGSHAN JIDONG A (HK-C)",
+   "rows": 4,
+   "reviews": [
+    "Feb24",
+    "May22",
+    "Nov19",
+    "Nov21"
+   ],
+   "first_ann": "2019-11-29",
+   "last_ann": "2024-02-29",
+   "kind": "AB",
+   "base": "TANGSHAN JIDONG A",
+   "ticker": "000856.SS",
+   "source": "openfigi",
+   "confidence": 0.51,
+   "evidence": "TANGSHAN JIDONG EQUIPMENT-A @CH — shared=['JIDONG', 'TANGSH'] extra=['EQUIPM']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "TENCENT MUSIC ENT A ADR",
+   "rows": 1,
+   "reviews": [
+    "Feb19"
+   ],
+   "first_ann": "2019-02-28",
+   "last_ann": "2019-02-28",
+   "kind": "ADR",
+   "base": "TENCENT MUSIC ENT A",
+   "ticker": "1698.SS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "TENCENT MUSIC ENT - CLASS A @HK — shared=['ENT', 'MUSIC', 'TENCEN'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "China",
+   "security": "WHARF HOLDINGS (CN)",
+   "rows": 2,
+   "reviews": [
+    "Nov19",
+    "Nov22"
+   ],
+   "first_ann": "2019-11-29",
+   "last_ann": "2022-11-30",
+   "kind": "LINE",
+   "base": "WHARF HOLDINGS",
+   "ticker": "0004.HK",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "Chinese H/CN line, base name in the HK map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 76141362
+   },
+   "held_because": "ticker already maps to HongKong|WHARF HOLDINGS"
+  },
+  {
+   "market": "China",
+   "security": "ZTO EXPRESS ADR A",
+   "rows": 1,
+   "reviews": [
+    "Feb19"
+   ],
+   "first_ann": "2019-02-28",
+   "last_ann": "2019-02-28",
+   "kind": "ADR",
+   "base": "ZTO EXPRESS",
+   "ticker": "2057.HK",
+   "source": "yahoo-search",
+   "confidence": 0.567,
+   "evidence": "ZTO Express (Cayman) Inc. — shared=['EXPRES', 'ZTO'] extra=['CAYMAN']",
+   "line": "local",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "HongKong",
+   "security": "BANK EAST ASIA",
+   "rows": 1,
+   "reviews": [
+    "Aug21"
+   ],
+   "first_ann": "2021-08-31",
+   "last_ann": "2021-08-31",
+   "kind": "",
+   "base": "BANK EAST ASIA",
+   "ticker": "23.HK",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "BANK OF EAST ASIA LTD @HK — shared=['ASIA', 'BANK', 'EAST'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "HongKong",
+   "security": "WHARF HOLDINGS(HK)",
+   "rows": 2,
+   "reviews": [
+    "May26",
+    "Nov23"
+   ],
+   "first_ann": "2023-11-30",
+   "last_ann": "2026-05-29",
+   "kind": "LINE",
+   "base": "WHARF HOLDINGS",
+   "ticker": "0004.HK",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 52,
+    "median_turnover_local": 43983670
+   },
+   "held_because": "ticker already maps to HongKong|WHARF HOLDINGS"
+  },
+  {
+   "market": "India",
+   "security": "JINDAL STEEL & POWER",
+   "rows": 2,
+   "reviews": [
+    "Aug15",
+    "May22"
+   ],
+   "first_ann": "2015-08-31",
+   "last_ann": "2022-05-31",
+   "kind": "",
+   "base": "JINDAL STEEL POWER",
+   "ticker": "JINDALST.NS",
+   "source": "openfigi",
+   "confidence": 0.6,
+   "evidence": "JINDAL STEEL LTD @IS — shared=['JINDAL', 'STEEL'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Japan",
+   "security": "HACHIJUNI BANK",
+   "rows": 1,
+   "reviews": [
+    "May18"
+   ],
+   "first_ann": "2018-05-31",
+   "last_ann": "2018-05-31",
+   "kind": "",
+   "base": "HACHIJUNI BANK",
+   "ticker": "8359.T",
+   "source": "openfigi",
+   "confidence": 0.51,
+   "evidence": "HACHIJUNI NAGANO BANK LTD @JP — shared=['BANK', 'HACHIJ'] extra=['NAGANO']",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 56,
+    "median_turnover_local": 1239053050
+   },
+   "held_because": "confidence 0.51 below 0.55"
+  },
+  {
+   "market": "Korea",
+   "security": "BGF RETAIL (NEW)",
+   "rows": 1,
+   "reviews": [
+    "Nov23"
+   ],
+   "first_ann": "2023-11-30",
+   "last_ann": "2023-11-30",
+   "kind": "",
+   "base": "BGF RETAIL",
+   "ticker": "282330.KS",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 53,
+    "median_turnover_local": 7710221000
+   },
+   "held_because": "ticker already maps to Korea|BGF RETAIL"
+  },
+  {
+   "market": "Korea",
+   "security": "HANMI PHARM CO (NEW)",
+   "rows": 2,
+   "reviews": [
+    "Feb25",
+    "May15"
+   ],
+   "first_ann": "2015-05-29",
+   "last_ann": "2025-02-28",
+   "kind": "",
+   "base": "HANMI PHARM CO",
+   "ticker": "128940.KS",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 88927396875
+   },
+   "held_because": "ticker already maps to Korea|HANMI PHARM CO"
+  },
+  {
+   "market": "Korea",
+   "security": "HYUNDAI MIPO DOCKYARD",
+   "rows": 3,
+   "reviews": [
+    "Aug15",
+    "Feb24",
+    "Nov22"
+   ],
+   "first_ann": "2015-08-31",
+   "last_ann": "2024-02-29",
+   "kind": "",
+   "base": "HYUNDAI MIPO DOCKYARD",
+   "ticker": "010620.KS",
+   "source": "openfigi",
+   "confidence": 0.45,
+   "evidence": "HD HYUNDAI MIPO @KS — shared=['HYUNDA', 'MIPO'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Korea",
+   "security": "LG H&H PREF",
+   "rows": 1,
+   "reviews": [
+    "Nov22"
+   ],
+   "first_ann": "2022-11-30",
+   "last_ann": "2022-11-30",
+   "kind": "PREF",
+   "base": "LG H H",
+   "ticker": "051900.KS",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 55,
+    "median_turnover_local": 43439184000
+   },
+   "held_because": "ticker already maps to Korea|LG H H"
+  },
+  {
+   "market": "Korea",
+   "security": "MERITZ SECURITIES CO",
+   "rows": 1,
+   "reviews": [
+    "May19"
+   ],
+   "first_ann": "2019-05-31",
+   "last_ann": "2019-05-31",
+   "kind": "",
+   "base": "MERITZ SECURITIES CO",
+   "ticker": "008560.KS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "MERITZ SECURITIES CO LTD @KP — shared=['MERITZ', 'SECURI'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Korea",
+   "security": "ORION CORP (NEW)",
+   "rows": 1,
+   "reviews": [
+    "Nov25"
+   ],
+   "first_ann": "2025-11-28",
+   "last_ann": "2025-11-28",
+   "kind": "",
+   "base": "ORION CORP",
+   "ticker": "271560.KS",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": true,
+    "G4_liquid_enough": true
+   },
+   "verified": true,
+   "probe": {
+    "days": 54,
+    "median_turnover_local": 12344387950
+   },
+   "held_because": "ticker already maps to Korea|ORION CORP"
+  },
+  {
+   "market": "Malaysia",
+   "security": "MR DIY GROUP",
+   "rows": 2,
+   "reviews": [
+    "May22",
+    "May26"
+   ],
+   "first_ann": "2022-05-31",
+   "last_ann": "2026-05-29",
+   "kind": "",
+   "base": "MR DIY GROUP",
+   "ticker": "MRDIY.KL",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "MR DIY GROUP M BHD @MK — shared=['DIY', 'MR'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Malaysia",
+   "security": "NESTLE (MALAYSIA)",
+   "rows": 2,
+   "reviews": [
+    "May26",
+    "Nov17"
+   ],
+   "first_ann": "2017-11-30",
+   "last_ann": "2026-05-29",
+   "kind": "",
+   "base": "NESTLE MALAYSIA",
+   "ticker": "NESZ.KL",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "NESTLE (MALAYSIA) BERHAD @MK — shared=['MALAYS', 'NESTLE'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Philippines",
+   "security": "GLOBE TELECOM",
+   "rows": 1,
+   "reviews": [
+    "Feb23"
+   ],
+   "first_ann": "2023-02-28",
+   "last_ann": "2023-02-28",
+   "kind": "",
+   "base": "GLOBE TELECOM",
+   "ticker": "GLO.PS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "GLOBE TELECOM INC @PM — shared=['GLOBE', 'TELECO'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Philippines",
+   "security": "JOLLIBEE FOODS CORP",
+   "rows": 1,
+   "reviews": [
+    "May26"
+   ],
+   "first_ann": "2026-05-29",
+   "last_ann": "2026-05-29",
+   "kind": "",
+   "base": "JOLLIBEE FOODS CORP",
+   "ticker": "JFC.PS",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "JOLLIBEE FOODS CORP @PM — shared=['FOODS', 'JOLLIB'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Philippines",
+   "security": "MANILA ELECTRIC CO B",
+   "rows": 1,
+   "reviews": [
+    "Nov17"
+   ],
+   "first_ann": "2017-11-30",
+   "last_ann": "2017-11-30",
+   "kind": "AB",
+   "base": "MANILA ELECTRIC CO",
+   "ticker": "MER",
+   "source": "structural",
+   "confidence": 0.9,
+   "evidence": "base name already in the map",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  },
+  {
+   "market": "Singapore",
+   "security": "GOLDEN AGRI RESOURCES",
+   "rows": 1,
+   "reviews": [
+    "Nov19"
+   ],
+   "first_ann": "2019-11-29",
+   "last_ann": "2019-11-29",
+   "kind": "",
+   "base": "GOLDEN AGRI RESOURCES",
+   "ticker": "GGR.SI",
+   "source": "openfigi",
+   "confidence": 0.9,
+   "evidence": "GOLDEN AGRI-RESOURCES LTD @SP — shared=['AGRI', 'GOLDEN', 'RESOUR'] extra=[]",
+   "gates": {
+    "G1_exchange": true,
+    "G2_name": true,
+    "G3_prices_at_event": false,
+    "G4_liquid_enough": false
+   },
+   "verified": false,
+   "probe": {
+    "days": 0,
+    "median_turnover_local": 0
+   },
+   "held_because": "failed a gate"
+  }
+ ]
+}

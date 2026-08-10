@@ -23,7 +23,7 @@ def main():
     from scripts.run_full_review_asia import (cap_refresh,
                                               post_may_universe)
     cache = json.loads(
-        (ROOT / "data" / "pit_may26_asia_cache.json").read_text())
+        (ROOT / "data" / "pit_may26_asia_cache.json").read_text(encoding="utf-8"))
     ratios = cap_refresh()
     fx = FX["Taiwan"]
     u = post_may_universe("Taiwan")
@@ -82,7 +82,7 @@ def main():
                        "1.15x (SAIR); deletion floor 0.5x GMSR"},
         "rows": sorted(rows, key=lambda r: -r["cap_usd_b_now"])}
     p = ROOT / "data" / "universe_workbench_tw.json"
-    p.write_text(json.dumps(out, indent=1))
+    p.write_text(json.dumps(out, indent=1), encoding="utf-8")
     print("wrote", p)
     for r in out["rows"]:
         print(f"  {r['ticker']:9s} mem={int(r['member'])} "

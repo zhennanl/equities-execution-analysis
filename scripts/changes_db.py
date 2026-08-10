@@ -66,7 +66,6 @@ def parse_file(path):
         hm = re.fullmatch(r"MSCI ([A-Z][A-Z ]+?) INDEX", line)
         if hm and hm.group(1) in MARKET_HDRS:
             market = MARKET_HDRS[hm.group(1)]
-            # find the Additions/Deletions header line
             j = i + 1
             off = None
             while j < min(i + 6, len(lines)):
@@ -89,11 +88,17 @@ def parse_file(path):
                     j += 1
                     continue
                 if not s:
-                    # blank: section may continue (page wraps);
-                    # stop only at two consecutive blanks
                     if j + 1 < len(lines) and \
                             not lines[j + 1].strip():
                         break
+                    j += 1
+                    continue
+                toks = re.split(r"\s{2,}", s)
+                if len(toks) == 2 and "None" in toks:
+                    nm = toks[1] if toks[0] == "None" else toks[0]
+                    act = "DEL" if toks[0] == "None" else "ADD"
+                    rows.append((review, rtype, year, month,
+                                 market, act, nm))
                     j += 1
                     continue
                 left = raw[:off].strip()
@@ -119,11 +124,36 @@ def build():
     df = pd.DataFrame(all_rows, columns=[
         "review", "review_type", "year", "month", "market",
         "action", "security"])
+    # c-112: apply the per-cell PATCH LAYER (21 defective
+    # cells repaired against MSCI's own count tables; see
+    # scripts/parse_repair.py — patches replace those cells'
+    # rows wholesale, the parser itself stays untouched)
+    pp = ROOT / "data" / "changes_db_patches.json"
+    if pp.exists():
+        patches = json.loads(pp.read_text(encoding="utf-8"))["patches"]
+        drop = set()
+        extra = []
+        for key, p in patches.items():
+            rev, mkt = key.split("|")
+            drop.add((rev, mkt))
+            row0 = df[(df.review == rev)]
+            yr = int("20" + rev[3:])
+            mo = MONTHS[rev[:3]]
+            rt = "SAIR" if rev[:3] in ("May", "Nov") else "QIR"
+            for nm in p["adds"]:
+                extra.append((rev, rt, yr, mo, mkt, "ADD", nm))
+            for nm in p["dels"]:
+                extra.append((rev, rt, yr, mo, mkt, "DEL", nm))
+        df = df[~df.apply(lambda r: (r.review, r.market)
+                          in drop, axis=1)]
+        df = pd.concat([df, pd.DataFrame(extra,
+                        columns=df.columns)],
+                       ignore_index=True)
     df["eff_date_est"] = [
         _eff_est(y, mo) for y, mo in zip(df.year, df.month)]
     # join TW codes from the independent registry
     ev = json.loads((ROOT / "data" / "msci_tw_events.json")
-                    .read_text())
+                    .read_text(encoding="utf-8"))
     name2code = {}
     for v in ev.values():
         for c, n in {**v.get("adds", {}),
@@ -138,7 +168,7 @@ def build():
     tmap = {}
     tp = ROOT / "data" / "security_ticker_map.json"
     if tp.exists():
-        tmap = json.loads(tp.read_text())
+        tmap = json.loads(tp.read_text(encoding="utf-8"))
     import re as _re
 
     def _norm(s):
@@ -158,7 +188,9 @@ def build():
     # published; the registry fix (local code resolution) is a
     # registered task — NOT silently patched here.
     KNOWN_REGISTRY_GAPS_ADDS = 1
-    tw = df[df.market == "Taiwan"]
+    # c-104: archive extended to Feb-2006; the TW registry
+    # covers 2015+ only, so validation scopes to that era
+    tw = df[(df.market == "Taiwan") & (df.year >= 2015)]
     reg_adds = sum(len(v.get("adds", {})) for v in ev.values())
     reg_dels = sum(len(v.get("dels", {})) for v in ev.values())
     got_adds = int((tw.action == "ADD").sum())
@@ -200,3 +232,53 @@ if __name__ == "__main__":
     else:
         query(" ".join(sys.argv[2:]) if cmd == "query"
               else cmd)
+
+
+def validate_counts():
+    """c-109: exhaustive validation vs MSCI's OWN per-country
+    count tables in every list — the systematic answer to 'did
+    we omit review entries?'. Known state: 21 defective cells
+    of 590 (3.6%), enumerated below; repair = careful per-cell
+    re-parse (a naive page-aware rewrite REGRESSED to 93 and
+    was reverted — c-109 lesson)."""
+    import re as _re
+    from pathlib import Path as _P
+
+    import pandas as pd
+    CN = {"TAIWAN": "Taiwan", "JAPAN": "Japan",
+          "AUSTRALIA": "Australia", "HONG KONG": "HongKong",
+          "KOREA": "Korea", "CHINA": "China", "INDIA": "India",
+          "MALAYSIA": "Malaysia", "INDONESIA": "Indonesia",
+          "PHILIPPINES": "Philippines",
+          "NEW ZEALAND": "NewZealand",
+          "SINGAPORE": "Singapore", "THAILAND": "Thailand"}
+    df = pd.read_pickle(ROOT / "data" / "msci_changes_db.pkl")
+    ours = df.groupby(["review", "market", "action"]).size()
+    mism, checked = [], 0
+    for p in sorted((ROOT / "data" / "msci_archive")
+                    .glob("*STPublicList.txt")):
+        rev = _re.match(r"MSCI_([A-Za-z]{3}\d{2})_",
+                        p.name).group(1)
+        for m in _re.finditer(
+                r"^\s{4,}([A-Z][A-Z ]+?)\s{2,}(\d+)\s{2,}"
+                r"(\d+)\s*$", p.read_text(errors="ignore"),
+                _re.M):
+            c = m.group(1).strip()
+            if c not in CN:
+                continue
+            mkt = CN[c]
+            oa, od = int(m.group(2)), int(m.group(3))
+            pa = int(ours.get((rev, mkt, "ADD"), 0))
+            pdd = int(ours.get((rev, mkt, "DEL"), 0))
+            checked += 1
+            if (oa, od) != (pa, pdd):
+                mism.append({"review": rev, "market": mkt,
+                             "official": [oa, od],
+                             "parsed": [pa, pdd]})
+    out = {"cells_checked": checked, "mismatches": mism,
+           "n_mismatch": len(mism)}
+    (ROOT / "data" / "changes_db_validation.json").write_text(
+        json.dumps(out, indent=1), encoding="utf-8")
+    print(f"{checked} cells | {len(mism)} mismatches "
+          "-> data/changes_db_validation.json")
+    return out

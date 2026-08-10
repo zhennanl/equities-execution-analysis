@@ -1,0 +1,101 @@
+{
+ "date": "2026-07-31",
+ "fx": 32.395,
+ "median_abs_err": {
+  "yahoo": 0.0271,
+  "tdcc_raw": 0.1627,
+  "tdcc_cal": 0.1712
+ },
+ "rows": [
+  {
+   "code": "2330",
+   "name": "TSMC",
+   "cap_jul31": 1941.23,
+   "implied": 0.9522,
+   "yahoo": 0.9121,
+   "tdcc": 0.8455,
+   "tdcc_cal": 0.9859
+  },
+  {
+   "code": "2454",
+   "name": "MediaTek",
+   "cap_jul31": 176.01,
+   "implied": 0.9021,
+   "yahoo": 0.8793,
+   "tdcc": 0.9098,
+   "tdcc_cal": 1.0
+  },
+  {
+   "code": "2308",
+   "name": "Delta",
+   "cap_jul31": 131.5,
+   "implied": 0.7518,
+   "yahoo": 0.6042,
+   "tdcc": 0.8819,
+   "tdcc_cal": 1.0
+  },
+  {
+   "code": "2317",
+   "name": "Hon Hai",
+   "cap_jul31": 108.48,
+   "implied": 0.8731,
+   "yahoo": 0.8607,
+   "tdcc": 0.7401,
+   "tdcc_cal": 0.863
+  },
+  {
+   "code": "3711",
+   "name": "ASE",
+   "cap_jul31": 76.59,
+   "implied": 0.7479,
+   "yahoo": 0.7406,
+   "tdcc": 0.9535,
+   "tdcc_cal": 1.0
+  },
+  {
+   "code": "2303",
+   "name": "UMC",
+   "cap_jul31": 46.98,
+   "implied": 0.9021,
+   "yahoo": 0.8634,
+   "tdcc": 0.6898,
+   "tdcc_cal": 0.8043
+  },
+  {
+   "code": "2383",
+   "name": "Elite Material",
+   "cap_jul31": 52.48,
+   "implied": 0.802,
+   "yahoo": 0.8251,
+   "tdcc": 0.8486,
+   "tdcc_cal": 0.9895
+  },
+  {
+   "code": "2881",
+   "name": "Fubon",
+   "cap_jul31": 56.21,
+   "implied": 0.6015,
+   "yahoo": 0.5905,
+   "tdcc": 0.342,
+   "tdcc_cal": 0.3988
+  },
+  {
+   "code": "2891",
+   "name": "CTBC",
+   "cap_jul31": 39.42,
+   "implied": 0.8521,
+   "yahoo": 0.8687,
+   "tdcc": 0.558,
+   "tdcc_cal": 0.6506
+  },
+  {
+   "code": "2345",
+   "name": "Accton",
+   "cap_jul31": 36.81,
+   "implied": 0.902,
+   "yahoo": 0.8371,
+   "tdcc": 1,
+   "tdcc_cal": 1.0
+  }
+ ]
+}

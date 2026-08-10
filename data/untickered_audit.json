@@ -1,0 +1,164 @@
+{
+ "total_rows": 3146,
+ "untickered_rows": 894,
+ "untickered_names": 599,
+ "buckets": [
+  {
+   "bucket": "ADR_GDR",
+   "rows": 91,
+   "names": 65,
+   "in_delisted_safe_market": 0,
+   "why": "US or offshore depositary line. The ticker is a US symbol, and the security trades on a US calendar \u2014 so the effective-day close is a US close, not an Asian one. Recoverable with a small ADR table, but the event study must handle the different session.",
+   "cost": "EASY"
+  },
+  {
+   "bucket": "LINE_QUALIFIER",
+   "rows": 68,
+   "names": 39,
+   "in_delisted_safe_market": 1,
+   "why": "MSCI's marker for WHICH LINE of a dual-listed company. The base name usually resolves; the qualifier says which listing to use. Recoverable, but only if the resolver is taught that the qualifier selects a venue rather than being noise to strip.",
+   "cost": "MEDIUM"
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "rows": 367,
+   "names": 263,
+   "in_delisted_safe_market": 29,
+   "why": "An ordinary company name that the map simply does not contain. Overwhelmingly renames and delistings: Alps Electric became Alps Alpine, Start Today became ZOZO, Cadila Healthcare became Zydus, Bharti Infratel became Indus Towers, Daewoo Shipbuilding became Hanwha Ocean. A map built from CURRENT listings can never contain the name a company used to have. Fixing this needs a point-in-time identifier source (OpenFIGI, exchange historical listing files, or a paid identifier service) \u2014 not better string matching.",
+   "cost": "HARD"
+  },
+  {
+   "bucket": "PREFERENCE",
+   "rows": 3,
+   "names": 3,
+   "in_delisted_safe_market": 0,
+   "why": "Preference line. Should arguably be out of an equity rebalance sample entirely \u2014 see the BOQPG case at c-259.",
+   "cost": "EASY"
+  },
+  {
+   "bucket": "SHARE_CLASS",
+   "rows": 365,
+   "names": 229,
+   "in_delisted_safe_market": 0,
+   "why": "H-share, A-share or B-share line. The suffix names the exchange: H is Hong Kong, A and B are mainland. Recoverable with a suffix rule plus a mainland listings file.",
+   "cost": "MEDIUM"
+  }
+ ],
+ "by_market": [
+  {
+   "bucket": "ADR_GDR",
+   "market": "China",
+   "rows": 86
+  },
+  {
+   "bucket": "ADR_GDR",
+   "market": "HongKong",
+   "rows": 4
+  },
+  {
+   "bucket": "ADR_GDR",
+   "market": "Singapore",
+   "rows": 1
+  },
+  {
+   "bucket": "LINE_QUALIFIER",
+   "market": "China",
+   "rows": 42
+  },
+  {
+   "bucket": "LINE_QUALIFIER",
+   "market": "HongKong",
+   "rows": 11
+  },
+  {
+   "bucket": "LINE_QUALIFIER",
+   "market": "India",
+   "rows": 1
+  },
+  {
+   "bucket": "LINE_QUALIFIER",
+   "market": "Japan",
+   "rows": 1
+  },
+  {
+   "bucket": "LINE_QUALIFIER",
+   "market": "Korea",
+   "rows": 12
+  },
+  {
+   "bucket": "LINE_QUALIFIER",
+   "market": "Thailand",
+   "rows": 1
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "Australia",
+   "rows": 27
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "China",
+   "rows": 101
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "HongKong",
+   "rows": 13
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "India",
+   "rows": 29
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "Indonesia",
+   "rows": 14
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "Japan",
+   "rows": 64
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "Korea",
+   "rows": 66
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "Malaysia",
+   "rows": 19
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "Philippines",
+   "rows": 9
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "Singapore",
+   "rows": 9
+  },
+  {
+   "bucket": "PLAIN_NAME",
+   "market": "Thailand",
+   "rows": 16
+  },
+  {
+   "bucket": "PREFERENCE",
+   "market": "Korea",
+   "rows": 3
+  },
+  {
+   "bucket": "SHARE_CLASS",
+   "market": "China",
+   "rows": 364
+  },
+  {
+   "bucket": "SHARE_CLASS",
+   "market": "Philippines",
+   "rows": 1
+  }
+ ]
+}
