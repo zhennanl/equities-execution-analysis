@@ -45,15 +45,16 @@ HOW INSTITUTIONS MODEL THIS, from the published record
 
 This file implements 2 + 3 + 4 on this project's own data:
 
-    P(add) = P_size(name)  x  P_gates
-             ^ Monte Carlo    ^ empirical, shared
+    P(add) = P_size(name)        (c-360: discretion is a NAMED
+             ^ Monte Carlo        unpriced risk, multiplied
+                                  nowhere — see main())
 
 ────────────────────────────────────────────────────────────────
 LENS 1 — P_size BY MONTE CARLO, name by name
 
-Each draw perturbs the three inputs the size verdict rests on,
-each with a MEASURED error distribution, and asks whether the
-name still clears both bars:
+Each draw perturbs the two inputs of the size verdict that are
+genuinely unknowable before the announcement, and asks whether
+the name still clears both bars:
 
   cutoff        uniform +-5% — the site's standing band on the
                 85% coverage walk over an estimated float stack.
@@ -70,17 +71,19 @@ name still clears both bars:
                 scaled sqrt(d) x the name's own realised daily
                 vol (`prevol` from the scenarios file).
 
-  free float    full cap is price x shares and essentially
-                exact; the FLOAT cap is full cap x FIF, and FIF
-                is ours, not MSCI's. The error distribution is
-                measured in data/tw_fif_aligned_jul31.json —
+  free float    NOT drawn (c-365, Bill). The error study —
                 Yahoo FIF vs the FIF implied by MSCI's own
-                factsheet weights, ten Taiwan large caps, same
-                date: mean -3.7%, sd 6.0%. Drawn normal with
-                BOTH the bias and the spread, per name.
+                factsheet weights (tw_fif_aligned_jul31.json:
+                mean -3.7%, sd 6.0%) — has n=10, too thin to
+                parameterize a distribution, so drawing from it
+                dressed two shaky moments as measurement. The
+                FIF is taken as computed; float-stack error is
+                what the ±5% cutoff band already generalizes
+                over, since the cutoff is struck ON that stack.
+                The study stays recorded as evidence, unused.
 
   P_size = share of 20,000 draws clearing BOTH the full-cap
-  addition bar and the free-float minimum.
+  addition bar and the free-float minimum (at the computed FIF).
 
 WHY THIS IS THE RUSSELL METHOD AND NOT A NEW IDEA: the rule
 stays sharp inside every draw; only the inputs move. The output
@@ -88,7 +91,8 @@ is the probability that the TRUE inputs sit on the passing side
 of a rule we can see exactly.
 
 ────────────────────────────────────────────────────────────────
-LENS 2 — P_gates FROM THE BACKTEST, shared across names
+LENS 2 — DISCRETION (formerly P_gates; NOT multiplied since
+c-360, kept here as the reasoning record)
 
 The 32-review backtest (data/backtest_taiwan.json) counts, at
 each clearance threshold, how many crossers were added and how
@@ -137,11 +141,11 @@ That is the behaviour the old model could not produce, and it is
 the point: the probability now RESPONDS to the same evidence the
 size chart shows.
 
-HONEST LIMITS. n=10 for the FIF error study; the gate haircuts
-are judgement calibrated on few events; the empirical bands
-carry Wilson intervals wide enough to drive a truck through; and
-none of this prices an off-cycle corporate action between now
-and the effective date. With MSCI's licensed files, lens 1
+HONEST LIMITS. The FIF is taken as computed — its error exists
+but is measured on too few names to draw from; the empirical
+bands carry Wilson intervals wide enough to drive a truck
+through; and none of this prices an off-cycle corporate action
+between now and the effective date. With MSCI's licensed files, lens 1
 collapses to near-certainty and the whole question reduces to
 discretion — which is what "institutional data access" buys.
 """
@@ -225,9 +229,11 @@ def _empirical_bands():
     return bands
 
 
-def p_size(row, prevol, fif_err, rng):
+def p_size(row, prevol, rng):
     """Monte Carlo share of draws where the TRUE inputs clear
-    both bars. The rule stays sharp inside each draw."""
+    both bars. The rule stays sharp inside each draw. Two dice
+    only (c-365): the FIF is taken as computed — see the module
+    docstring for why the n=10 error study is not drawn from."""
     full = row["full_cap_usd_b"]
     fif = row["fif"]
     ok = 0
@@ -237,11 +243,8 @@ def p_size(row, prevol, fif_err, rng):
         px_shock = (rng.gauss(0, prevol * math.sqrt(d))
                     if d else 0.0)
         cap = full * (1 + px_shock)
-        true_fif = fif / (1 + rng.gauss(fif_err["mean"],
-                                        fif_err["sd"]))
-        true_fif = min(1.0, max(0.05, true_fif))
         if (cap >= ADD_BAR_X * cut
-                and cap * true_fif >= FLOAT_BAR_X * cut):
+                and cap * fif >= FLOAT_BAR_X * cut):
             ok += 1
     return ok / DRAWS
 
@@ -283,6 +286,50 @@ def p_del_size(cap, vol, rng):
         if cap * (1 + px_shock) < DEL_FLOOR_X * cut:
             ok += 1
     return ok / DRAWS
+
+
+def conversion_curve(vol, fif):
+    """P_size swept over hypothetical clearance multiples — the
+    picture of how distance from the bar converts to probability
+    (c-367, Bill asked to SEE the conversion). The rule is sharp
+    at 1.5x; the cutoff band and the price-date draw blur it
+    into an S-curve, and the curve IS that blur.
+
+    Drawn at one representative vol and FIF (the candidates'
+    medians) — each actual name's dot is its own full draw, so a
+    name with unusual vol sits a little off the curve, which is
+    itself informative. OWN RNG, seeded: adding the curve must
+    not shift the registered per-name numbers by consuming their
+    stream."""
+    rng = random.Random(SEED ^ 0xC0FFEE)
+    pts = []
+    x = 0.80
+    while x <= 5.001:
+        row = {"full_cap_usd_b": 7.22 * x, "fif": fif}
+        pts.append({"x": round(x, 2),
+                    "p": round(p_size(row, vol, rng), 4)})
+        x += 0.05
+    return pts
+
+
+def del_conversion_curve(vol):
+    """The deletion mirror of `conversion_curve` (c-369, Bill):
+    P(delete) swept over hypothetical distances from the floor.
+    x is full cap ÷ the deletion floor (2/3 x cutoff); at
+    exactly 1.0x the two symmetric dice make it a coin toss, by
+    the same construction that puts the addition curve at 50% on
+    its bar. Drawn at the border member's own vol — there is one
+    dot, so there is no median to prefer. Own seeded rng."""
+    rng = random.Random(SEED ^ 0xDE1E7E)
+    floor = DEL_FLOOR_X * 7.22
+    pts = []
+    x = 0.70
+    while x <= 1.601:
+        pts.append({"x": round(x, 2),
+                    "p": round(p_del_size(x * floor, vol, rng),
+                               4)})
+        x += 0.02
+    return pts
 
 
 def border_deletions(rng):
@@ -329,7 +376,11 @@ def main():
             raise SystemExit(f"missing {p.name}")
     call = json.loads(CALL.read_text(encoding="utf-8"))
     scn = json.loads(SCN.read_text(encoding="utf-8"))
-    fif_err = _fif_error()
+    # c-365, Bill: the FIF die comes OUT of the draw. The study
+    # is still computed and recorded — it is the evidence for the
+    # decision — but n=10 is too thin to parameterize a
+    # distribution, so the model no longer draws from it.
+    fif_study = _fif_error()
     rng = random.Random(SEED)
 
     # c-360, Bill: P_gates COMES OUT OF THE PRODUCT. The model
@@ -359,7 +410,7 @@ def main():
         if r["action"] != "ADD":
             continue
         s = scn["names"][str(r["code"])]
-        ps = p_size(r, s["prevol"], fif_err, rng)
+        ps = p_size(r, s["prevol"], rng)
         names.append({
             "code": str(r["code"]),
             "name": s["name"],
@@ -376,6 +427,25 @@ def main():
 
     dels = border_deletions(rng)
 
+    vols = sorted(r["prevol_daily"] for r in names)
+    fifs = sorted(r["fif"] for r in names)
+    med_vol = vols[len(vols) // 2]
+    med_fif = fifs[len(fifs) // 2]
+    curve = {"vol_daily": med_vol, "fif": med_fif,
+             "note": "curve at the candidates' median vol and "
+                     "FIF; each name's dot is its own full "
+                     "draw, so unusual vol sits slightly off "
+                     "the curve",
+             "points": conversion_curve(med_vol, med_fif)}
+    del_curve = None
+    if dels:
+        del_curve = {
+            "vol_daily": dels[0]["vol_daily"],
+            "floor_usd_b": round(DEL_FLOOR_X * 7.22, 4),
+            "note": "drawn at the border member's own vol; x is "
+                    "full cap over the deletion floor",
+            "points": del_conversion_curve(dels[0]["vol_daily"])}
+
     o = {"_what": "P(add) = the Monte Carlo probability that "
                   "the rule fires given the measured errors in "
                   "its inputs; MSCI discretion is a named "
@@ -388,11 +458,22 @@ def main():
              "addition_bar_x": ADD_BAR_X,
              "float_bar_x": FLOAT_BAR_X,
              "price_window_days": PRICE_WINDOW_DAYS,
-             "fif_error": fif_err,
+             "fif_treatment": {
+                 "drawn": False,
+                 "reason": "removed at c-365 — the error study "
+                           "has n=10 datapoints, too thin to "
+                           "parameterize a distribution; the FIF "
+                           "is taken as computed, and float-"
+                           "stack error is generalized by the "
+                           "±5% cutoff band, which is struck on "
+                           "that same stack",
+                 "study_kept_as_evidence": fif_study},
              "unpriced_discretion": unpriced},
          "empirical_bands": _empirical_bands(),
          "names": names,
          "border_deletions": dels,
+         "conversion_curve": curve,
+         "del_conversion_curve": del_curve,
          "reading": [
              "The three carried names separate from Phison "
              "because P_size responds to clearance distance — "
@@ -410,14 +491,19 @@ def main():
          "## Model", "",
          "```", "P(add) = P_size   (discretion NOT priced)",
          "```", "",
-         "`P_size`: 20,000 Monte Carlo draws over the three "
-         "measured input errors — cutoff ±5%, MSCI's "
-         "one-of-ten price dates scaled by each name's realised "
-         "daily vol, and our FIF error against MSCI's implied "
-         f"FIF (n={fif_err['n']}, mean {fif_err['mean']:+.1%}, "
-         f"sd {fif_err['sd']:.1%}). The rule stays sharp in "
-         "every draw; only inputs move — the Russell-literature "
-         "fuzzy-threshold method.", "",
+         "`P_size`: 20,000 Monte Carlo draws over the two "
+         "inputs unknowable before the announcement — the "
+         "cutoff (±5%, the site's standing band on an estimated "
+         "float stack) and MSCI's one-of-ten price dates, "
+         "scaled by each name's realised daily vol. The rule "
+         "stays sharp in every draw; only inputs move — the "
+         "Russell-literature fuzzy-threshold method.", "",
+         "**Free float is taken as computed** (c-365): the FIF "
+         "error study against MSCI's implied FIFs "
+         f"(n={fif_study['n']}) is too thin to parameterize a "
+         "distribution, so it is recorded as evidence and not "
+         "drawn from. Float-stack error is generalized by the "
+         "cutoff band, which is struck on that same stack.", "",
          "**Not priced:** MSCI discretion — the member count "
          "can flex (§2.3.3) and ATVR runs on MSCI's own data. "
          "Stated wherever the probability is shown, multiplied "
@@ -446,8 +532,10 @@ def main():
           "gates before any probability is struck.", ""]
     DOC.write_text("\n".join(d), encoding="utf-8")
 
-    print(f"fif error  n={fif_err['n']} mean={fif_err['mean']:+.1%} "
-          f"sd={fif_err['sd']:.1%}   (discretion unpriced)")
+    print(f"two dice: cutoff ±{CUTOFF_BAND:.0%}, price date "
+          f"1-of-{PRICE_WINDOW_DAYS} x vol   (FIF as computed; "
+          f"n={fif_study['n']} study recorded, not drawn; "
+          f"discretion unpriced)")
     for r in names:
         print(f"{r['code']} {r['name'][:22]:24} "
               f"x={r['x_cutoff']:4.2f}  P_size={r['p_size_mc']:6.1%}  "

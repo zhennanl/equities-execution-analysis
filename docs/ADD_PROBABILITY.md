@@ -1,6 +1,6 @@
 # P(Addition), From Evidence
 
-Generated 2026-08-11T06:00:23 by `scripts/tw_add_probability.py` — nothing typed.
+Generated 2026-08-11T19:26:40 by `scripts/tw_add_probability.py` — nothing typed.
 
 ## Model
 
@@ -8,7 +8,9 @@ Generated 2026-08-11T06:00:23 by `scripts/tw_add_probability.py` — nothing typ
 P(add) = P_size   (discretion NOT priced)
 ```
 
-`P_size`: 20,000 Monte Carlo draws over the three measured input errors — cutoff ±5%, MSCI's one-of-ten price dates scaled by each name's realised daily vol, and our FIF error against MSCI's implied FIF (n=10, mean -3.7%, sd 6.0%). The rule stays sharp in every draw; only inputs move — the Russell-literature fuzzy-threshold method.
+`P_size`: 20,000 Monte Carlo draws over the two inputs unknowable before the announcement — the cutoff (±5%, the site's standing band on an estimated float stack) and MSCI's one-of-ten price dates, scaled by each name's realised daily vol. The rule stays sharp in every draw; only inputs move — the Russell-literature fuzzy-threshold method.
+
+**Free float is taken as computed** (c-365): the FIF error study against MSCI's implied FIFs (n=10) is too thin to parameterize a distribution, so it is recorded as evidence and not drawn from. Float-stack error is generalized by the cutoff band, which is struck on that same stack.
 
 **Not priced:** MSCI discretion — the member count can flex (§2.3.3) and ATVR runs on MSCI's own data. Stated wherever the probability is shown, multiplied nowhere.
 
@@ -17,7 +19,7 @@ P(add) = P_size   (discretion NOT priced)
 | Nanya Technology Corpora (2408) | 4.78x | **100%** | 62% |
 | Nan Ya Printed Circuit B (8046) | 2.54x | **99%** | 62% |
 | Winbond Electronics Corp (2344) | 2.50x | **100%** | 62% |
-| Phison Electronics Corp. (8299) | 1.55x | **66%** | 37% |
+| Phison Electronics Corp. (8299) | 1.55x | **65%** | 37% |
 
 ## The backtest's warning
 

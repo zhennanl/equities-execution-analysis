@@ -1,6 +1,6 @@
 {
  "_what": "the passive tracker's three questions, per name, for the Aug-2026 MSCI Taiwan additions",
- "generated": "2026-08-10",
+ "generated": "2026-08-11",
  "conditional_on": "MSCI adding the name; the probability of that is carried separately",
  "capacity_model": {
   "ordinary_close_share": 0.094814,
@@ -89,7 +89,7 @@
    "pre_ann_percentile": 0.038461538461538464,
    "prob_of_addition": 0.6177,
    "index_weight_pct": 0.5115457115928369,
-   "capacity_rank": 2
+   "capacity_rank": 3
   },
   "8046": {
    "carried": true,
@@ -105,7 +105,7 @@
    "pre_ann_percentile": 0.15384615384615385,
    "prob_of_addition": 0.6177,
    "index_weight_pct": 0.22276782909205153,
-   "capacity_rank": 3
+   "capacity_rank": 4
   },
   "2344": {
    "carried": true,
@@ -121,7 +121,7 @@
    "pre_ann_percentile": 0.019230769230769232,
    "prob_of_addition": 0.6177,
    "index_weight_pct": 0.39583097706566134,
-   "capacity_rank": 1
+   "capacity_rank": 2
   },
   "8299": {
    "carried": false,
@@ -137,7 +137,7 @@
    "pre_ann_percentile": 0.019230769230769232,
    "prob_of_addition": 0.3706,
    "index_weight_pct": 0.2778196669808357,
-   "capacity_rank": null
+   "capacity_rank": 1
   }
  }
 }

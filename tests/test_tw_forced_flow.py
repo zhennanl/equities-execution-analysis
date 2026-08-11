@@ -60,16 +60,23 @@ def test_the_flow_reconciles_to_its_three_inputs(d):
                    - r["expected_flow_usd_m"]) < 0.15
 
 
-def test_the_aum_is_the_sourced_floor_not_the_old_constant(d):
-    """The whole point of c-349. If this ever reads 180 again,
-    the framework is being run on a number nobody can source."""
+def test_the_aum_is_the_sourced_estimate_not_the_old_constant(d):
+    """The whole point of c-349 — and c-400 moved the basis to
+    MSCI's disclosed non-ETF pool (USD ~125bn all-in). The guard
+    is not the LEVEL, it is the SOURCE: the input must equal the
+    mandate JSON's estimate exactly, and must never be the
+    unsourced 180 the framework once carried."""
     md = ROOT / "data" / "tw_mandate_size.json"
     if not md.exists():
         pytest.skip("run scripts/tw_mandate_size.py")
-    want = json.loads(md.read_text(encoding="utf-8"))[
-        "taiwan"]["estimate_always_buys_usd_b"]
-    assert d["inputs"]["tracking_aum_usd_b"] == want
-    assert d["inputs"]["tracking_aum_usd_b"] < 100
+    tw = json.loads(md.read_text(encoding="utf-8"))["taiwan"]
+    assert d["inputs"]["tracking_aum_usd_b"] == \
+        tw["estimate_always_buys_usd_b"]
+    assert d["inputs"]["tracking_aum_usd_b"] != 180.0
+    # and the floor variant sits below it, so the downside case
+    # is still available to quote
+    assert tw["floor_variant_usd_b"] < \
+        d["inputs"]["tracking_aum_usd_b"]
 
 
 def test_conditional_and_expected_are_both_reported(d):

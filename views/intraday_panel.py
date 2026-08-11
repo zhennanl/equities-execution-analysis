@@ -160,6 +160,171 @@ def _note(txt):
         unsafe_allow_html=True)
 
 
+def _two_sides(n):
+    """The trade's two sides and the two numbers both run on.
+
+    c-368, Bill: *"explain the two important metrics for both
+    liquidity seeker/consumers of the rebalance trade, which is
+    passive index trackers, and liquidity providers, hedge funds
+    like millennium ... create a visualization for these two
+    relationships, then provide the perspective for both
+    parties."* DRAFT — Bill will refine the wording; the
+    structure is formulas -> the flow drawn -> one card per
+    party.
+    """
+    design.sect(n, "Two Sides of the Rebalance Trade",
+                # c-370, Bill: the subtitle names the two roles.
+                "The liquidity consumer and the liquidity "
+                "provider of the trade")
+    INK = design.INK
+    # c-387 drew two columns with an Alpha band; c-389, Bill:
+    # the ALPHA BAND IS DELETED, the CLOSING-AUCTION box returns
+    # to the centre linking the two parties (the c-370 form),
+    # and the behaviour texts ride ALONG the converging arrows
+    # as captions instead of sitting in boxes. Below the trio,
+    # each party keeps its quantity: trackers -> Expected Flow
+    # -> P \u00d7 \u0394w \u00d7 AUM; hedge funds -> Available Liquidity.
+
+    def _wrap(txt, n):
+        words, line, out = txt.split(" "), "", []
+        for w_ in words:
+            if len(line) + len(w_) > n:
+                out.append(line)
+                line = w_
+            else:
+                line = (line + " " + w_).strip()
+        out.append(line)
+        return out
+
+    def _sides_svg():
+        W = 952
+        p_ = [f'<svg viewBox="0 0 {W} 324" width="100%" '
+              f'xmlns="http://www.w3.org/2000/svg" '
+              f'style="max-width:952px;display:block;'
+              f'margin:.2rem auto .6rem">'
+              f'<defs><marker id="sfa" viewBox="0 0 10 10" '
+              f'refX="9" refY="5" markerWidth="7" '
+              f'markerHeight="7" orient="auto-start-reverse">'
+              f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{MUTED}"/>'
+              f'</marker></defs>']
+
+        def box(x, y, w, h, fill, stroke):
+            p_.append(f'<rect x="{x}" y="{y}" width="{w}" '
+                      f'height="{h}" rx="4" fill="{fill}" '
+                      f'stroke="{stroke}" stroke-width="1.4"/>')
+
+        def ctext(cx, y, txt, size, fill, weight=None,
+                  family="Inter,sans-serif"):
+            wgt = f' font-weight="{weight}"' if weight else ""
+            p_.append(f'<text x="{cx}" y="{y}" '
+                      f'text-anchor="middle" '
+                      f'font-family="{family}" '
+                      f'font-size="{size}"{wgt} '
+                      f'fill="{fill}">{txt}</text>')
+
+        # \u2500\u2500 row 1: trackers -> closing auction <- funds \u2500\u2500
+        for x, cx, name, sub in (
+                (8, 148, "Passive index trackers",
+                 "liquidity consumer"),
+                (664, 804, "Hedge funds",
+                 "liquidity provider")):
+            box(x, 8, 280, 56, design.CARD, NAVY)
+            ctext(cx, 30, name, 13.5, INK, weight=600)
+            ctext(cx, 48, sub, 10, MUTED)
+        box(336, 8, 280, 56, NAVY, NAVY)
+        ctext(476, 30, "Closing auction", 13.5, "#ffffff",
+              weight=600, family=design.SERIF)
+        ctext(476, 48, "effective day, 13:30", 10, "#cfd8e3")
+        p_.append(f'<line x1="288" y1="36" x2="330" y2="36" '
+                  f'stroke="{MUTED}" stroke-width="1.6" '
+                  f'marker-end="url(#sfa)"/>')
+        p_.append(f'<line x1="664" y1="36" x2="622" y2="36" '
+                  f'stroke="{MUTED}" stroke-width="1.6" '
+                  f'marker-end="url(#sfa)"/>')
+
+        # \u2500\u2500 the behaviours, riding along their arrows \u2500\u2500
+        beh_l = ["rebalances to match the updated index,",
+                 "mostly as market-on-close orders,",
+                 "to minimise tracking error"]
+        beh_r = ["accumulates inventory before the",
+                 "effective day, supplies liquidity",
+                 "into the market close"]
+        for cx, lines in ((312, beh_l), (640, beh_r)):
+            for j, ln in enumerate(lines):
+                ctext(cx, 84 + j * 14, ln, 10.5, MUTED)
+
+        # -- each party's quantity, below its box --
+        # c-392, Bill: title-only navy bars -- Expected DEMAND
+        # under the trackers, Expected SUPPLY under the funds;
+        # the descriptions come off.
+        for pcx, y1 in ((148, 64), (804, 64)):
+            p_.append(f'<line x1="{pcx}" y1="{y1}" x2="{pcx}" '
+                      f'y2="139" stroke="{MUTED}" '
+                      f'stroke-width="1.4" '
+                      f'marker-end="url(#sfa)"/>')
+        for x, cx, name in ((8, 148, "Expected Demand"),
+                            (664, 804, "Expected Supply")):
+            box(x, 142, 280, 44, NAVY, NAVY)
+            ctext(cx, 170, name, 14, "#ffffff",
+                  family=design.SERIF)
+        # c-399, Bill: this arrow runs slightly longer — the
+        # factor row drops 12 units to give it room.
+        p_.append(f'<line x1="148" y1="186" x2="148" y2="211" '
+                  f'stroke="{MUTED}" stroke-width="1.4" '
+                  f'marker-end="url(#sfa)"/>')
+
+        # -- the decomposition, under Expected Demand --
+        # c-392, Bill: P reworded; \u0394w carries the ACTIVE-
+        # WEIGHT formula (benchmark weight minus current
+        # portfolio weight); Tracking AUM ends "accordingly".
+        # c-394, Bill: P's accent goes NAVY to match the other
+        # boxes; \u0394w carries the formula as a maths line of its
+        # own (serif italic) over the plain-words reading.
+        facs = [
+            (NAVY, "P(add / delete)", None,
+             "The probability that the stock gets added or "
+             "deleted at the MSCI index review."),
+            (NAVY, "\u0394w",
+             # c-395, Bill: w_index, not w_benchmark
+             "\u0394w = w_index \u2212 w_portfolio",
+             "the weight the index review assigns minus the "
+             "weight currently held in portfolio."),
+            (NAVY, "Tracking AUM", None,
+             "The money that tracks the index and must buy "
+             "or sell accordingly."),
+        ]
+        fw = 130
+        fx = [8, 158, 308]
+        for k, (acc, name, formula, desc) in enumerate(facs):
+            x = fx[k]
+            box(x, 214, fw, 96, design.CARD, NAVY)
+            p_.append(f'<rect x="{x}" y="214" width="{fw}" '
+                      f'height="3" fill="{acc}"/>')
+            ctext(x + fw / 2, 234, name, 11.5, NAVY,
+                  family=design.SERIF)
+            dy = 250
+            if formula:
+                p_.append(
+                    f'<text x="{x + fw / 2}" y="{dy}" '
+                    f'text-anchor="middle" '
+                    f'font-family="{design.SERIF}" '
+                    f'font-style="italic" font-size="9.5" '
+                    f'fill="{INK}">{formula}</text>')
+                dy += 14
+            for j, ln in enumerate(_wrap(desc, 24)[:5]):
+                ctext(x + fw / 2, dy + j * 12, ln, 8.5, MUTED)
+            if k < 2:
+                ctext(fx[k] + fw + 10, 264, "\u00d7", 15, MUTED,
+                      family=design.SERIF)
+        p_.append("</svg>")
+        return "".join(p_)
+
+    st.markdown(_sides_svg(), unsafe_allow_html=True)
+    # c-373, Bill: the two per-party cards are REMOVED — the
+    # captions under each box in the diagram carry the read
+    # now, attached to the party they describe.
+
+
 def _pctl(xs, q):
     xs = sorted(x for x in xs if x is not None and x == x)
     if not xs:
@@ -217,7 +382,9 @@ def sections(start_n=1):
     design.sect(nxt(), "Data Review",
                 "How the stock trades before and after its index "
                 "review, measured from 5-minute bars")
-    dts = sorted(e["eff"] for e in ev)
+    # c-378: `dts` went with the hard-coded date range — the
+    # caveat now states IB's edge and "now" rather than the
+    # panel's own first/last effective dates.
     # c-330, Bill: the four-card table is deleted. Every figure it
     # carried — the event count, the period, the bar count and the
     # control-day median — is stated in the prose below, where it
@@ -244,17 +411,30 @@ def sections(start_n=1):
         # other way round would have a reader thinking the data
         # runs out before the present, which is the opposite of
         # the constraint.
-        "<b>The dataset:</b> For companies added to or deleted "
+        # c-366, Bill's wording again, with one correction to
+        # it. His draft said the window is "20 sessions before
+        # the announcement and 20 sessions after the effective
+        # date" — that is the DAILY panel's window. This
+        # harvest's is wider: PRE_ANN_DAYS = POST_EFF_DAYS = 45
+        # calendar days (~31 trading sessions a side) in
+        # scripts/ib_5m_events.py, so the page states those.
+        "<b>The dataset:</b> for companies added to or deleted "
         "from the MSCI Taiwan index at a quarterly review, "
-        "5-minute bar data is collected across a window spanning "
-        "the announcement and the effective date. The panel runs "
-        f"from {dts[0]} to {dts[-1]}, as Interactive Brokers' "
+        "5-minute bar data is collected across a window, 45 "
+        "calendar days before the announcement and 45 calendar "
+        "days after the effective date. The panel runs "
+        # c-378, Bill: the range reads 2023-05-01 to now — the
+        # start is IB's history edge, the end is wherever the
+        # latest review sits.
+        "from 2023-05-01 to now, as Interactive Brokers' "
         "5-minute history for Taiwanese stocks begins around May "
         "2023."
         "<br><br>"
-        "<b>Data collected:</b> Open, high, low, close and volume "
+        "<b>Data collected:</b> open, high, low, close and volume "
         "on each bar, from Interactive Brokers, during regular "
         "trading hours, including the closing auction.")
+
+    _two_sides(nxt())
 
     # ---- 2 · where the volume prints ------------------------
     design.sect(nxt(), "Where the Volume Actually Prints",
@@ -263,8 +443,10 @@ def sections(start_n=1):
     good = [e for e in ev if e.get("close_share") is not None
             and e.get("close_share_control")]
     fig = go.Figure()
-    for act, colour, nm in (("ADD", GREEN, "additions"),
-                            ("DEL", RED, "deletions")):
+    # c-368, Bill: capitalised legend labels, matching the
+    # foreign-flow section's
+    for act, colour, nm in (("ADD", GREEN, "Additions"),
+                            ("DEL", RED, "Deletions")):
         g = [e for e in good if e["action"] == act]
         if not g:
             continue
@@ -303,10 +485,13 @@ def sections(start_n=1):
     design.caveat(
         "<b>On the effective day, the five-minute closing auction "
         "takes up most of the volume.</b> The typical index mover "
-        f"routes {M['close_share_eff']['p50']:.0%} of that day's "
-        "trading through the 13:30 call, where the same stock "
-        f"normally puts {M['close_share_ctrl']['p50']:.1%} through "
-        f"it — a {M['close_share_lift']['p50']:.0f}x lift, and "
+        # c-366, Bill: the two numbers that carry the claim are
+        # bold — the share routed through the call, and the lift.
+        f"routes <b>{M['close_share_eff']['p50']:.0%}</b> of "
+        "that day's trading through the 13:30 call, where the "
+        "same stock normally puts "
+        f"{M['close_share_ctrl']['p50']:.1%} through it — a "
+        f"<b>{M['close_share_lift']['p50']:.0f}x lift</b>, and "
         f"{sum(1 for e in good if e['close_share'] > .5)} of "
         f"{len(good)} events put more than half of the day's "
         "volume in the close.")
@@ -344,8 +529,8 @@ def sections(start_n=1):
         yaxis=dict(title="share of the day's volume",
                    tickformat=".0%"))
     design.chart(fig)
-    _note(f"Each line is the median across {len(ev)} Taiwan "
-          f"index events.")
+    _note(f"Each line is the median 5-minute trading volume "
+          f"across {len(ev)} Taiwan index events.")
 
     # ---- 3 · the close against fair value -------------------
     design.sect(nxt(), "Market on Close vs VWAP",
@@ -511,14 +696,20 @@ def sections(start_n=1):
     # so, which is why the question had to be asked. Every one of
     # the 2,815 trading days in TWSE's 5-second file falls in
     # exactly one of the three bars.
+    # c-367, Bill: the mechanics sentence LEADS and the scope
+    # sentence follows it, with the load-bearing phrases bold \u2014
+    # what is measured (the auction's volume), what it is
+    # divided by, and the number the example turns on.
     design.caveat(
-        "<b>This chart sums the volume for the whole "
-        "exchange.</b> Each bar takes the volume traded in the "
-        "13:25\u201313:30 closing auction across every listed "
-        "company, and divides it by the volume traded in the "
-        f"whole session. Ex. a median of {MC['neither']['p50']:.1%} "
-        f"means that on a normal day, {MC['neither']['p50']:.1%} "
-        "of a full session's trading happens in those final five "
+        "Each bar takes the volume traded in the "
+        "<b>13:25\u201313:30 closing auction</b> across every "
+        "listed company, and divides it by the volume traded "
+        "in the <b>whole session</b>. This chart sums the "
+        "volume for the <b>whole exchange</b>. Ex. a median of "
+        f"<b>{MC['neither']['p50']:.1%}</b> means that on a "
+        # c-371, Bill: both occurrences bold
+        f"normal day, <b>{MC['neither']['p50']:.1%}</b> of a "
+        "full session's trading happens in those final five "
         "minutes.")
     # c-329, Bill: the three prose blocks under this chart are
     # deleted. NOTHING IS LOST FROM THE PROJECT — the month-end

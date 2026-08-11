@@ -6,8 +6,9 @@ registered haircut for MSCI's discretion. The failure modes worth
 guarding are not arithmetic slips — they are the quiet edits that
 would turn an evidence-based number back into a vibe:
 
-  * the FIF error losing its BIAS (our floats run ~4% low; a
-    zero-centred draw flatters every float verdict);
+  * the FIF die creeping back into the draw (removed at c-365:
+    n=10 is too thin to parameterize; the study must stay
+    recorded as evidence, unused);
   * the float haircut creeping back in beside the Monte Carlo,
     double-counting the same risk;
   * the probabilities collapsing back to one flat number per
@@ -66,24 +67,39 @@ def test_probability_responds_to_clearance_distance(d):
     assert nearest["p_size_mc"] < 0.9, nearest
 
 
-def test_the_fif_error_keeps_its_measured_bias(d):
-    """Our floats run LOW against MSCI's implied FIFs. Centring
-    the error at zero would flatter every float verdict, so the
-    recorded distribution must keep both moments of the actual
-    comparison, re-derived here from the source file."""
-    fe = d["method"]["fif_error"]
+def test_the_fif_die_is_removed_but_the_evidence_kept(d):
+    """c-365, Bill: the FIF draw is OUT — n=10 datapoints is too
+    thin to parameterize a distribution, so drawing from it
+    dressed two shaky moments as measurement. Two things must
+    both hold, and they pull in opposite directions:
+
+      1. no draw: the method block records fif as NOT drawn and
+         says why (the n), and no `fif_error` input survives
+         anywhere in the output;
+      2. no amnesia: the n=10 study stays recorded as the
+         EVIDENCE for the decision, re-derived here from its
+         source file — deleting the study would turn a reasoned
+         removal into an unexplained one."""
+    ft = d["method"]["fif_treatment"]
+    assert ft["drawn"] is False
+    assert "n=10" in ft["reason"]
+    assert "fif_error" not in json.dumps(d["method"])
     src = ROOT / "data" / "tw_fif_aligned_jul31.json"
     if not src.exists():
         pytest.skip("fif comparison missing")
     rows = json.loads(src.read_text(encoding="utf-8"))["rows"]
     errs = [r["yahoo"] / r["implied"] - 1 for r in rows
             if r.get("yahoo") and r.get("implied")]
+    study = ft["study_kept_as_evidence"]
+    assert study["n"] == len(errs)
     mu = sum(errs) / len(errs)
     sd = math.sqrt(sum((e - mu) ** 2 for e in errs) / len(errs))
-    assert fe["n"] == len(errs)
-    assert abs(fe["mean"] - mu) < 5e-4
-    assert abs(fe["sd"] - sd) < 5e-4
-    assert fe["mean"] < -0.01, "the bias is the point"
+    assert abs(study["mean"] - mu) < 5e-4
+    assert abs(study["sd"] - sd) < 5e-4
+    # and at source level: the draw itself takes no fif error
+    import inspect
+    import tw_add_probability as M
+    assert "fif_err" not in inspect.signature(M.p_size).parameters
 
 
 def test_discretion_is_named_but_never_multiplied(d):
@@ -164,10 +180,18 @@ def test_the_page_renders_the_json_numbers():
         want = (">95%" if r["p_add"] > 0.95
                 else f"{r['p_add']:.0%}")
         assert want in s, r["code"]
-        assert f"{r['x_cutoff']:.2f}x" in s, r["code"]
-    # the method expander exists (its LABEL is not markdown, so
-    # it is asserted on the expander widget) and names its inputs
-    # in the body
+        # c-383: the drawn distance is in BAR multiples (the
+        # flowchart and both chart axes share that scale); the
+        # cutoff multiple lives on in the registered why text
+        # with its own registered formatting
+        assert f"{r['x_cutoff'] / 1.5:.2f}x" in s, r["code"]
+    # c-380, Bill: the two Calculation EXPANDERS are gone —
+    # merged with the clearance explainer into one amber box
+    # that bridges the multiple and the simulation. The box is
+    # markdown, so it is asserted on `s`; no Calculation
+    # expander may survive; and the deleted method text (the
+    # price-date bullet, the free-float paragraph) stays
+    # deleted on the page while living on in the JSON and doc.
     try:
         h.write_text(
             f"import sys; sys.path.insert(0, {str(ROOT)!r})\n"
@@ -177,9 +201,60 @@ def test_the_page_renders_the_json_numbers():
         labs = [e.label for e in at2.expander]
     finally:
         h.unlink(missing_ok=True)
-    assert any("how P(addition) is built" in x for x in labs), labs
-    for token in ("20,000", "cutoff", "price date", "free float"):
-        assert token in s, token
+    assert not any("P(addition) is built" in x for x in labs), labs
+    assert not any("P(deletion) is built" in x for x in labs), labs
+    # c-381 made the amber box a flowchart; c-383, Bill: THREE
+    # steps, bars first — estimate the bars and why they need
+    # simulating, measure the distance, convert distance to
+    # probability. The SVG rides in markdown, so its box text
+    # is assertable here.
+    # c-391: the boxes take step 3's grammar — bold title over
+    # a STEP-n eyebrow — and both headings carry Bill's titles
+    for token in ("20,000", "Simulate estimation errors",
+                  "Measure the distance",
+                  "Convert distance to probability",
+                  "STEP 1", "STEP 3",
+                  "How to Calculate the Probability",
+                  "Probability Of Addition &amp; Deletion "
+                  "— Derived From The Monte Carlo"):
+        assert token in s or token.replace("&amp;", "&") in s, \
+            token
+    for gone_fc in ("ESTIMATE THE CUTOFF", "REDRAW THE CUTOFF",
+                    "COUNT THE SURVIVALS", "ESTIMATE THE BARS",
+                    "SIMULATE THE BARS",
+                    "SIMULATE ESTIMATION ERRORS",
+                    "From draws to probability",
+                    "Calculating the Probability of"):
+        assert gone_fc not in s, gone_fc
+    # c-392, Bill: the box bodies are PLAIN — no bold spans,
+    # and above all no leaked "**" markers (the c-385 tokenizer
+    # let markers through when punctuation followed them); and
+    # STEP 1 ends at the estimation-error sentence
+    for leak in ("band**", "cap**", "test**", "floor**",
+                 "simulations**"):
+        assert leak not in s, leak
+    assert "Simulate whether the shortlisted" not in s
+    assert "different threshold" not in s
+    # c-384, Bill: the WORKING TABLE under the floor chart —
+    # the draws-passing count is what makes the conversion
+    # auditable, so it is re-derived here per name and must
+    # appear with its probability on one row
+    dd = json.loads(SRC.read_text(encoding="utf-8"))
+    draws_ = dd["method"]["draws"]
+    for r in dd["names"] + dd["border_deletions"]:
+        assert f"{round(r['p_size_mc'] * draws_):,}" in s, \
+            r["code"]
+    for gone in ("price date", "free float is taken as computed",
+                 "The free float is taken"):
+        assert gone not in s, gone
+    # the deletion side's distance lives in the flowchart too.
+    # Pinned as TOKENS, not a phrase — the SVG wraps its box
+    # text at ~27 characters, so a multi-word phrase can split
+    # across text nodes while every token survives.
+    for r in d["border_deletions"]:
+        assert f"{r['x_floor']:.2f}x" in s, r["code"]
+        assert r["code"] in s
+    assert "floor" in s
 
 
 def test_border_deletions_are_priced_symmetrically(d):
@@ -237,11 +312,11 @@ def test_the_table_carries_the_probability_column():
         # false ranking among 99s
         want = (">95%" if r["p_add"] > 0.95
                 else f"{r['p_add']:.0%}")
-        assert f"P(add) {want}" in s, r["code"]
+        assert f"P(add) = {want}" in s, r["code"]
     for bad in ("P 100%", "P(add) 100%", ">99%"):
         assert bad not in s, bad
     for r in d["border_deletions"]:
-        assert f"P(delete) {r['p_delete']:.0%}" in s, r["code"]
+        assert f"P(delete) = {r['p_delete']:.0%}" in s, r["code"]
 
 
 def test_the_doc_quotes_the_json(d):
@@ -252,3 +327,60 @@ def test_the_doc_quotes_the_json(d):
         assert r["code"] in doc
         assert f"{r['p_add']:.0%}" in doc
     assert "discretion NOT priced" in doc
+
+
+def test_the_conversion_curve_is_the_model_drawn(d):
+    """c-367, Bill: *"is there a way we can visualize the clear
+    at x times to probability conversion on a graph?"* The curve
+    is the same 20,000-draw machine swept over hypothetical
+    clearances at the candidates' median vol/FIF. Guarded on the
+    shape the model implies, loosely enough to survive a
+    re-measured vol:
+
+      * ~0 far below the bar, ~1 far above it;
+      * ~50% AT the bar — the cutoff band is symmetric, so a
+        name exactly on 1.5x is a coin toss by construction;
+      * non-decreasing within Monte Carlo noise;
+      * OWN seeded rng — adding the curve must not have moved
+        any registered per-name number (pinned by the dot-on-
+        curve coupling: each name's dot is its own draw)."""
+    cc = d["conversion_curve"]
+    pts = cc["points"]
+    assert pts[0]["x"] <= 0.85 and pts[-1]["x"] >= 4.9
+    assert pts[0]["p"] < 0.01
+    assert pts[-1]["p"] > 0.99
+    at_bar = [p["p"] for p in pts if abs(p["x"] - 1.5) < 1e-6]
+    assert at_bar and 0.42 < at_bar[0] < 0.58, at_bar
+    for a, b in zip(pts, pts[1:]):
+        assert b["p"] >= a["p"] - 0.02, (a, b)
+    # the view draws it: the slot that waited since c-358 is
+    # filled by the curve, reading this JSON
+    src = (ROOT / "views" / "walkthrough.py").read_text(
+        encoding="utf-8")
+    assert "_conversion_chart(d)" in src
+    assert "conversion_curve" in src
+    assert "TODO(c-358)" not in src
+
+
+def test_the_deletion_curve_mirrors_the_addition_curve(d):
+    """c-369, Bill: the deletion side gets the same picture and
+    the same expander. Guarded on the mirror shape: ~1 far below
+    the floor, ~0 far above, a coin toss exactly ON the floor
+    (symmetric dice, same construction as the addition side's
+    50% on its bar), non-increasing within Monte Carlo noise —
+    and the view draws it with its own calculation expander."""
+    dc = d["del_conversion_curve"]
+    pts = dc["points"]
+    assert pts[0]["x"] <= 0.75 and pts[-1]["x"] >= 1.55
+    assert pts[0]["p"] > 0.99
+    assert pts[-1]["p"] < 0.01
+    at_floor = [p["p"] for p in pts if abs(p["x"] - 1.0) < 1e-6]
+    assert at_floor and 0.42 < at_floor[0] < 0.58, at_floor
+    for a, b in zip(pts, pts[1:]):
+        assert b["p"] <= a["p"] + 0.02, (a, b)
+    src = (ROOT / "views" / "walkthrough.py").read_text(
+        encoding="utf-8")
+    assert "_del_probability_block(d)" in src
+    # c-380: the deletion expander is merged into the amber box;
+    # the chart survives and still reads the curve
+    assert "del_conversion_curve" in src

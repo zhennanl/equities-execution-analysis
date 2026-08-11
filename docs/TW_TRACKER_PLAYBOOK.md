@@ -12,9 +12,10 @@ An MSCI index mover puts about 79% of its effective-day volume through Taiwan's 
 
 | | name | index demand | ADV days | × its normal close |
 |---|---|---|---|---|
-| 1 | Winbond Electronics Corporation (2344) | 176.6m shares | 1.27 | **13.4×** |
-| 2 | Nanya Technology Corporation (2408) | 82.3m shares | 1.02 | **10.8×** |
-| 3 | Nan Ya Printed Circuit Board Corporation (8046) | 14.0m shares | 0.80 | **8.4×** |
+| 1 | Phison Electronics Corp. (8299) | 9.8m shares | 2.08 | **21.9×** |
+| 2 | Winbond Electronics Corporation (2344) | 176.6m shares | 1.27 | **13.4×** |
+| 3 | Nanya Technology Corporation (2408) | 82.3m shares | 1.02 | **10.8×** |
+| 4 | Nan Ya Printed Circuit Board Corporation (8046) | 14.0m shares | 0.80 | **8.4×** |
 
 Ten times the normal close is a different conversation from one times, and neither is visible in a days-of-ADV number.
 

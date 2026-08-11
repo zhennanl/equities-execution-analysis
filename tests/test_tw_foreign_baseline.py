@@ -146,12 +146,14 @@ def test_the_page_renders_the_section(d):
     assert f"{A['eff']['p50']:+.1f}×" in s
     assert f"{D['eff']['p50']:+.1f}×" in s
     # c-361 cut the deletion-tail and netting paragraphs from
-    # the caveat; the tail multiple survives on its card and the
-    # netting caveat in the JSON/doc, but the box is one
-    # paragraph now and the cut stays cut
-    assert f"{D['post']['p50']:+.1f}×" in s      # the card
+    # the caveat; c-370, Bill cut the post-print CARD too — the
+    # tail now lives only in the chart's post-phase bar and the
+    # doc, so its multiple must NOT appear in the page markdown
+    assert f"{D['post']['p50']:+.1f}×" not in s
     assert "Deletions keep selling" not in s
     assert "UNDERSTATE" not in s
+    # and the c-368 instrument note is off again (c-370)
+    assert "Deeper file, bigger sample" not in s
     # the baseline card went at c-359. The band label moved
     # inside the band and was renamed at c-361 — it lives in the
     # FIGURE, not the markdown, so it is asserted on the view
@@ -160,11 +162,14 @@ def test_the_page_renders_the_section(d):
         encoding="utf-8")
     assert "normal day band" in src_
     assert 'annotation_text="\\u00b11 = a normal day"' not in src_
-    # ordering: after positioning, before the order sizing
+    # ordering — c-368, Bill: foreign flow MOVES AHEAD of the
+    # positioning read. What usually happens through the window,
+    # then what is happening now, then the order.
     i_pos = s.index("Market Positioning Before Announcement")
     i_fb = s.index("Foreign Flow Through the Rebalance Window")
-    i_ord = s.index("How Big Is the Market on Close Order")
-    assert i_pos < i_fb < i_ord
+    i_ord = s.index("Estimated Trading Volume on the "
+                    "Effective Day")
+    assert i_fb < i_pos < i_ord
 
 
 def test_the_doc_quotes_the_json(d):

@@ -1,0 +1,211 @@
+{
+ "_what": "tracking AUM revealed by excess effective-day close volume, per event \u2014 registers cannot see internal indexing; the close can",
+ "generated": "2026-08-11T16:05:57",
+ "method": {
+  "formula": "excess close $ / delta-w, delta-w = float cap / index float value",
+  "index_float_usd_b": 3183.00839,
+  "index_float_asof": "2026-07",
+  "usd_twd": 32.214,
+  "approximations": [
+   "float cap struck at the MOPS as-of date, not the event date \u2014 price drift between the two is the dominant error",
+   "float factor is today's (Yahoo); no public float history exists",
+   "index float value is today's factsheet",
+   "the close-only definition EXCLUDES tracker volume worked outside the auction, so the reading errs low"
+  ]
+ },
+ "coverage": {
+  "events_used": 9,
+  "events_skipped": 21,
+  "skipped": [
+   {
+    "key": "May26|1102",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "May26|2474",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "May26|2610",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "May26|2324",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "May26|1402",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "May26|2633",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "May26|1504",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Nov25|1504",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Nov25|2353",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Nov25|2409",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Nov25|2377",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Nov25|6415",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Nov25|2347",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Nov25|6409",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Nov25|3702",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Feb26|2105",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Feb26|1476",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Feb26|9910",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Feb26|8464",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Aug25|9904",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   },
+   {
+    "key": "Aug25|9945",
+    "why": "no on-disk float cap (MOPS+Yahoo cover current members only)"
+   }
+  ]
+ },
+ "revealed_aum_usd_b": {
+  "median": 147.1,
+  "p25": 104.2,
+  "p75": 192.4,
+  "by_side": {
+   "ADD": 147.1,
+   "DEL": null
+  }
+ },
+ "anchors": {
+  "bottom_up_floor_usd_b": 60,
+  "t86_flow_revealed_median_usd_b": 180
+ },
+ "events": [
+  {
+   "key": "May26|6223",
+   "code": "6223",
+   "rev": "May26",
+   "action": "ADD",
+   "excess_close_usd_m": 24.4,
+   "float_cap_usd_b": 13.73,
+   "delta_w_pct": 0.4313,
+   "revealed_aum_usd_b": 5.7
+  },
+  {
+   "key": "Nov25|5274",
+   "code": "5274",
+   "rev": "Nov25",
+   "action": "ADD",
+   "excess_close_usd_m": 23.2,
+   "float_cap_usd_b": 13.31,
+   "delta_w_pct": 0.4182,
+   "revealed_aum_usd_b": 5.5
+  },
+  {
+   "key": "Nov25|3665",
+   "code": "3665",
+   "rev": "Nov25",
+   "action": "ADD",
+   "excess_close_usd_m": 555.1,
+   "float_cap_usd_b": 11.15,
+   "delta_w_pct": 0.3502,
+   "revealed_aum_usd_b": 158.5
+  },
+  {
+   "key": "Nov25|2360",
+   "code": "2360",
+   "rev": "Nov25",
+   "action": "ADD",
+   "excess_close_usd_m": 760.1,
+   "float_cap_usd_b": 22.52,
+   "delta_w_pct": 0.7075,
+   "revealed_aum_usd_b": 107.4
+  },
+  {
+   "key": "Nov25|2368",
+   "code": "2368",
+   "rev": "Nov25",
+   "action": "ADD",
+   "excess_close_usd_m": 376.6,
+   "float_cap_usd_b": 8.15,
+   "delta_w_pct": 0.2559,
+   "revealed_aum_usd_b": 147.1
+  },
+  {
+   "key": "Nov25|2449",
+   "code": "2449",
+   "rev": "Nov25",
+   "action": "ADD",
+   "excess_close_usd_m": 601.8,
+   "float_cap_usd_b": 7.49,
+   "delta_w_pct": 0.2353,
+   "revealed_aum_usd_b": 255.8
+  },
+  {
+   "key": "Aug25|6919",
+   "code": "6919",
+   "rev": "Aug25",
+   "action": "ADD",
+   "excess_close_usd_m": 298.1,
+   "float_cap_usd_b": 3.64,
+   "delta_w_pct": 0.1145,
+   "revealed_aum_usd_b": 260.4
+  },
+  {
+   "key": "Aug25|2059",
+   "code": "2059",
+   "rev": "Aug25",
+   "action": "ADD",
+   "excess_close_usd_m": 415.6,
+   "float_cap_usd_b": 12.69,
+   "delta_w_pct": 0.3986,
+   "revealed_aum_usd_b": 104.2
+  },
+  {
+   "key": "Feb26|7769",
+   "code": "7769",
+   "rev": "Feb26",
+   "action": "ADD",
+   "excess_close_usd_m": 940.6,
+   "float_cap_usd_b": 15.56,
+   "delta_w_pct": 0.4888,
+   "revealed_aum_usd_b": 192.4
+  }
+ ]
+}

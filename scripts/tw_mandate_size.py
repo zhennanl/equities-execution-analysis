@@ -20,14 +20,15 @@ issuer pages. This file asks what is missing and bounds it from
 MSCI's own filings.
 
 ────────────────────────────────────────────────────────────────
-THE THREE THINGS MSCI DISCLOSES THAT MAKE THIS ANSWERABLE
+THE FOUR THINGS MSCI DISCLOSES THAT MAKE THIS ANSWERABLE
 
 Every input below is from MSCI Inc.'s own Q2 2026 reporting for
-the quarter ended 30 June 2026 — the 8-K earnings release and the
-earnings presentation, both filed 21 July 2026. MSCI is a public
-company reporting to the SEC on the assets its indexes are
-licensed against, which makes it the one source on this question
-that carries an audit trail.
+the quarter ended 30 June 2026 — the 8-K earnings release, the
+earnings presentation (both filed 21 July 2026), and management's
+statements on the earnings call. MSCI is a public company
+reporting to the SEC on the assets its indexes are licensed
+against, which makes it the one source on this question that
+carries an audit trail.
 
   1. ETF AUM linked to MSCI equity indexes: USD 2,818bn at
      quarter end, of which USD 841bn sits in the "Emerging
@@ -47,32 +48,43 @@ that carries an audit trail.
   3. The fee rate MSCI earns on ETFs: 2.28 basis points at
      period end, on quarterly average AUM of USD 2,706bn.
 
+  4. c-400: the non-ETF pool itself. Management put the non-ETF
+     indexed AUM at ABOUT USD 5 TRILLION as of 30 June on the
+     Q2 2026 earnings call — client-reported, one quarter in
+     arrears. This is the number the file used to have to infer.
+
 ────────────────────────────────────────────────────────────────
-THE INFERENCE, AND WHY ITS ERROR RUNS ONE WAY
+THE ANCHOR, AND THE FLOOR IT RETIRES (c-400)
 
-MSCI does not publish the AUM behind the non-ETF indexed line. It
-publishes the REVENUE. So invert it at a fee rate:
+Earlier versions of this file had no asset figure for the
+non-ETF line, so they inverted the USD 56.0m of quarterly
+revenue at the ETF fee rate. That was a floor by construction —
+mandates pay less per dollar than ETFs, so dividing by a rate
+that is too high returns an AUM that is too small. It landed at
+roughly USD 940bn, or 0.33x the ETF pool.
 
-    non-ETF indexed AUM  =  non-ETF ABF revenue / fee rate
+The disclosed USD 5tn replaces the inversion as the anchor:
 
-and the only question is which rate. This file uses the ETF rate,
-2.38bp annualised from the same quarter's revenue and average
-AUM. That choice is deliberate and it is the conservative one:
+    5,000 / 2,818  =  1.77x the ETF pool
 
-    AN INSTITUTIONAL INDEX MANDATE PAYS AN INDEX PROVIDER LESS
-    PER DOLLAR THAN A RETAIL ETF DOES.
+— for every dollar of MSCI-linked ETF money there is about
+USD 1.77 of MSCI-linked mandate money with no ticker on it.
+The revenue line the old floor was built from now works the
+other way, as the CROSS-CHECK on the disclosure:
 
-Mandates are larger, negotiated one at a time, and tiered — the
-opposite of a fund-level licence struck once and applied to every
-share sold. So the true non-ETF rate is BELOW the ETF rate, and
-dividing by a rate that is too high returns an AUM that is too
-small. The number this file prints is therefore a floor on the
-non-ETF pool, not an estimate of it, and the direction of the
-error is fixed rather than unknown.
+    56.0m x 4 / 5,000bn  =  0.45bp
 
-It lands at roughly USD 940bn, or 0.33x the ETF pool — for every
-dollar of MSCI-linked ETF money there is at least 33 cents of
-MSCI-linked mandate money with no ticker on it.
+— roughly a fifth of the 2.28bp ETF rate, which is exactly the
+mandates-pay-less relationship the floor argument asserted. The
+two disclosures are consistent with each other, and the old
+inversion is kept in the output as `floor_variant` (basis
+~USD 60bn) for anyone who wants the number that needs no
+call-transcript citation.
+
+The one assumption the anchor adds: the USD 5tn spans every MSCI
+index family, so applying the aggregate ratio to the
+Taiwan-relevant ETF pool assumes the mandate mix mirrors the ETF
+mix. That is the step a licensed mandate census would replace.
 
 ────────────────────────────────────────────────────────────────
 WHAT THIS FILE DELIBERATELY DOES NOT DO
@@ -120,15 +132,17 @@ WHAT TO DO WITH THE ANSWER
 
 The headline is a pair, and the pair is the honest form:
 
-  * ALWAYS BUYS, conservative:  named ETFs x the non-ETF floor.
+  * ALWAYS BUYS: named ETFs x (1 + the disclosed non-ETF/ETF
+    ratio). The floor variant — the old fee inversion — rides
+    along in the output for the downside case.
   * IF NEW TO THE IMI: the same, with the IMI trackers added at
     their 1.16x weight discount.
 
-Both are still floors. Nothing here reaches the sovereign wealth
-and pension money that indexes internally and reports to nobody,
-and nothing reaches a mandate whose benchmark is MSCI EM but
-whose manager licenses through a third party. The estimate is
-built to be defended, not to be impressive.
+Nothing here reaches the sovereign wealth and pension money that
+indexes internally and reports to nobody, and nothing reaches a
+mandate whose benchmark is MSCI EM but whose manager licenses
+through a third party. The estimate is built to be defended, not
+to be impressive.
 """
 from __future__ import annotations
 
@@ -147,6 +161,9 @@ REL = ("https://ir.msci.com/news-releases/news-release-details/"
 PRES = "https://ir.msci.com/static-files/65e23650-540f-4ec1-a089-9526ba54c1b9"
 SEC8K = ("https://www.sec.gov/Archives/edgar/data/0001408198/"
          "000140819826000044/exhibit991earningsrelease-.htm")
+CALL = ("https://www.investing.com/news/transcripts/earnings-"
+        "call-transcript-msci-tops-q2-2026-estimates-but-shares-"
+        "fall-93CH-4803910")
 
 # ── MSCI Inc. Q2 2026, quarter ended 2026-06-30 ────────────────
 #
@@ -166,8 +183,14 @@ MSCI = {
     "abf_non_etf_indexed_usd_m": 56.0,   # presentation p13, 2Q26
     "abf_futures_options_usd_m": 16.1,   # presentation p13, 2Q26
     "abf_total_usd_m": 233.1,            # 8-K Table 5
+    # c-400: MSCI DISCLOSES the non-ETF pool now — management
+    # put it at "about $5 trillion as of June 30" on the Q2
+    # 2026 earnings call (client-reported AUM, one quarter in
+    # arrears). This replaces the fee inversion as the anchor;
+    # the inversion survives below as the floor variant.
+    "non_etf_aum_disclosed_usd_b": 5000.0,   # Q2-26 call
     "sources": {"release": REL, "presentation": PRES,
-                "sec_8k": SEC8K},
+                "sec_8k": SEC8K, "earnings_call": CALL},
 }
 
 
@@ -203,17 +226,41 @@ def non_etf_floor():
     bp = (m["abf_etf_usd_m"] * 4) / (m["etf_aum_avg_usd_b"] * 1000
                                      ) * 10000
     aum = (m["abf_non_etf_indexed_usd_m"] * 4) / (bp / 10000) / 1000
+    # c-400, Bill: THE ANCHOR MOVES TO THE DISCLOSED NUMBER.
+    # MSCI now states the non-ETF pool outright (~USD 5tn, Q2-26
+    # call), so the estimate uses the disclosed AUM directly and
+    # the derived NON-ETF fee rate becomes the cross-check:
+    #     56.0m x 4 / 5,000bn = 0.45bp
+    # against 2.28bp on ETFs — mandates pay roughly a fifth per
+    # dollar, which is exactly why the old inversion (at the ETF
+    # rate) was a floor. That inversion is KEPT below as the
+    # floor variant.
+    disc = m["non_etf_aum_disclosed_usd_b"]
+    non_etf_bp = (m["abf_non_etf_indexed_usd_m"] * 4) / (
+        disc * 1000) * 10000
     return {
         "etf_effective_bp_annualised": round(bp, 3),
         "etf_bp_disclosed_period_end": m["etf_bp_fee_period_end"],
+        "non_etf_aum_disclosed_usd_b": disc,
+        "non_etf_bp_derived": round(non_etf_bp, 3),
+        "multiplier_disclosed": round(
+            disc / m["etf_aum_total_usd_b"], 4),
         "non_etf_indexed_aum_floor_usd_b": round(aum, 1),
         "multiplier_floor": round(aum / m["etf_aum_total_usd_b"], 4),
-        "why_it_is_a_floor":
-            "Priced at the ETF fee rate. Institutional index "
-            "mandates are larger, negotiated and tiered, so they "
-            "pay an index provider LESS per dollar than a retail "
-            "ETF does — dividing by a rate that is too high "
-            "returns an AUM that is too low.",
+        "why_the_floor_was_a_floor":
+            "The old inversion priced the USD 56.0m at the ETF "
+            "fee rate. Mandates are larger, negotiated and "
+            "tiered — the disclosed pool implies they actually "
+            "pay ~0.45bp, a fifth of the ETF rate — so dividing "
+            "by the ETF rate understated their assets by "
+            "construction.",
+        "assumption":
+            "Applying the aggregate non-ETF/ETF ratio to the "
+            "Taiwan-relevant ETF pool assumes the mandate mix "
+            "mirrors the ETF mix at the index-family level. "
+            "MSCI does not break the USD 5tn out by index, so "
+            "this is the step a licensed mandate census would "
+            "replace.",
     }
 
 
@@ -230,7 +277,10 @@ def taiwan(a, nef):
     # trackers.
     always_etf = T["standard_tw"] + T["family"]
     imi_etf = T["imi_tw"] / ratio
-    mult = 1.0 + nef["multiplier_floor"]
+    # c-400: the multiplier is the DISCLOSED ratio; the old
+    # fee-inverted 0.33x survives as the floor variant.
+    mult = 1.0 + nef["multiplier_disclosed"]
+    mult_floor = 1.0 + nef["multiplier_floor"]
     return {
         "named_etf_aum_usd_b": round(named_etf_aum, 1),
         "disclosed_em_ac_etf_aum_usd_b":
@@ -245,6 +295,10 @@ def taiwan(a, nef):
         "estimate_always_buys_usd_b": round(always_etf * mult, 1),
         "estimate_if_new_to_imi_usd_b":
             round((always_etf + imi_etf) * mult, 1),
+        # the c-349 fee-inversion floor, kept as the downside
+        # variant of the same arithmetic
+        "floor_variant_multiplier": round(mult_floor, 4),
+        "floor_variant_usd_b": round(always_etf * mult_floor, 1),
         "coverage_note":
             "The named ETFs are "
             f"{named_etf_aum / MSCI['etf_aum_em_ac_usd_b']:.0%} of "
@@ -273,9 +327,11 @@ def main():
          "non_etf_indexed": nef,
          "taiwan": tw,
          "reading": [
-             "Every figure is a FLOOR. The error in each step "
-             "runs one way, and it is stated where the step is "
-             "taken.",
+             "Every input is MSCI's own disclosure; the one "
+             "assumption (mandate mix mirrors ETF mix) is "
+             "stated where it is taken, and the old "
+             "fee-inversion floor rides along as the downside "
+             "variant.",
              "The ranking between candidate names is unaffected "
              "by the level — the level is a common "
              "multiplier.",
@@ -305,17 +361,32 @@ def main():
         f"presentation p13 |",
         f"| Period-end ETF basis point fee | "
         f"{MSCI['etf_bp_fee_period_end']:.2f} bp | 8-K Table 7 |",
+        f"| Non-ETF indexed AUM | ~USD "
+        f"{MSCI['non_etf_aum_disclosed_usd_b']:,.0f}bn | Q2-26 "
+        f"earnings call |",
         "",
-        "## The one inference",
+        "## The anchor, and the floor it retires",
         "",
-        f"MSCI publishes the REVENUE on non-ETF indexed funds and "
-        f"not the assets. Inverting it at the ETF rate "
-        f"({nef['etf_effective_bp_annualised']:.2f}bp annualised "
-        f"from the same quarter) gives **USD "
-        f"{nef['non_etf_indexed_aum_floor_usd_b']:,.0f}bn**, or "
-        f"**{nef['multiplier_floor']:.2f}x** the ETF pool.",
+        f"MSCI stated the non-ETF indexed pool at **~USD "
+        f"{MSCI['non_etf_aum_disclosed_usd_b']:,.0f}bn** on the "
+        f"Q2 2026 call — "
+        f"**{nef['multiplier_disclosed']:.2f}x** the ETF pool. "
+        f"The revenue line is the cross-check: USD "
+        f"{MSCI['abf_non_etf_indexed_usd_m']:.1f}m x 4 / USD "
+        f"{MSCI['non_etf_aum_disclosed_usd_b']:,.0f}bn = "
+        f"**{nef['non_etf_bp_derived']:.2f}bp**, about a fifth "
+        f"of the {MSCI['etf_bp_fee_period_end']:.2f}bp ETF rate.",
         "",
-        nef["why_it_is_a_floor"],
+        f"The old inversion of that revenue at the ETF rate "
+        f"({nef['etf_effective_bp_annualised']:.2f}bp annualised) "
+        f"gave USD "
+        f"{nef['non_etf_indexed_aum_floor_usd_b']:,.0f}bn, or "
+        f"{nef['multiplier_floor']:.2f}x — kept as the floor "
+        f"variant.",
+        "",
+        nef["why_the_floor_was_a_floor"],
+        "",
+        nef["assumption"],
         "",
         "## Taiwan",
         "",
@@ -324,10 +395,14 @@ def main():
         f"(includes the USD {tw['taiwan_dedicated_etf_usd_b']:,.1f}"
         f"bn on the MSCI Taiwan indexes themselves, which "
         f"`tw_tracking_aum.py` omitted).",
-        f"- With the mandate multiplier: **USD "
+        f"- With the mandate multiplier "
+        f"({tw['mandate_multiplier']:.2f}x): **USD "
         f"{tw['estimate_always_buys_usd_b']:,.0f}bn**.",
         f"- If the name is new to the IMI: **USD "
         f"{tw['estimate_if_new_to_imi_usd_b']:,.0f}bn**.",
+        f"- Floor variant (fee inversion, "
+        f"{tw['floor_variant_multiplier']:.2f}x): USD "
+        f"{tw['floor_variant_usd_b']:,.0f}bn.",
         "",
         "## What is deliberately not claimed",
         "",
@@ -336,7 +411,11 @@ def main():
     ]
     DOC.write_text("\n".join(d), encoding="utf-8")
 
-    print(f"non-ETF indexed floor   USD "
+    print(f"non-ETF pool, disclosed USD "
+          f"{nef['non_etf_aum_disclosed_usd_b']:,.0f}bn "
+          f"({nef['multiplier_disclosed']:.3f}x ETFs), implied "
+          f"{nef['non_etf_bp_derived']:.2f}bp")
+    print(f"floor variant (invert)  USD "
           f"{nef['non_etf_indexed_aum_floor_usd_b']:,.0f}bn "
           f"({nef['multiplier_floor']:.3f}x ETFs) at "
           f"{nef['etf_effective_bp_annualised']:.2f}bp")

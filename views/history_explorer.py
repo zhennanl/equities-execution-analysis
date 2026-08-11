@@ -388,7 +388,7 @@ def _apac_strip(df, markets):
             break
     if not last:
         return
-    _sect(1, f"Latest Review — {_rlabel(last)}",
+    _sect(1, f"Latest Review — {_rlabel(last)}, Asia Pacific",
           "Hover a market to see the index review changes.")
     cur = df[df.review == last]
     cells = []
@@ -1038,14 +1038,14 @@ def render():
         st.markdown(
             "<p style='font-size:0.82rem;color:#5b6770;"
             "line-height:1.55;margin:0'>"
-            "<b>These labels describe the old rules, not "
-            "today's.</b><br><br>"
+            "<b>These labels describe the old rules, before "
+            "2023.</b><br><br>"
             "MSCI moved the Global Investable Market Indexes to "
             "a <b>Quarterly Comprehensive Index Review</b> "
             "schedule from the February 2023 review, after a "
             "market consultation. The February and August "
             "reviews now get the same comprehensive treatment "
-            "the May and November reviews always had.<br><br>"
+            "as May and November.<br><br>"
             "Until February 2023, MSCI ran two different kinds "
             "of review. The <b>Semi-Annual Index Review</b>, "
             "each May and November, rebuilt the index from "
@@ -1065,8 +1065,8 @@ def render():
             "&nbsp;<i>(roughly equal)</i><br><br>"
             "MSCI now applies the full semi-annual method "
             "every quarter, so a February or August review is "
-            "as likely to move the index as any other "
-            "quarterly review.</p>",
+            "as likely to move the index as a May or November "
+            "review.</p>",
             unsafe_allow_html=True)
     sub = df if mkt == ALL else df[df.market == mkt]
     if rt.startswith("Semi-Annual"):
@@ -1618,7 +1618,7 @@ def render():
                                        "security": "Security"}),
                     first_width="26%")
         with cols[1]:
-            st.subheader(f"All-APAC — {_rlabel(pick)}")
+            st.subheader(f"APAC — {_rlabel(pick)}")
             ctx = (df[df.review == pick]
                    .groupby(["market", "action"]).size()
                    .unstack(fill_value=0)

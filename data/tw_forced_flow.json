@@ -1,8 +1,8 @@
 {
  "_what": "P(add) x delta-weight x AUM, over the liquidity that is actually there when the flow arrives",
- "generated": "2026-08-11T04:39:07",
+ "generated": "2026-08-11T19:49:28",
  "inputs": {
-  "tracking_aum_usd_b": 60.1,
+  "tracking_aum_usd_b": 124.9,
   "aum_basis": "scripts/tw_mandate_size.py \u2014 named ETFs plus a floor on non-ETF indexed mandates from MSCI's reported fee revenue",
   "index_float_value_usd_b": 3183.0,
   "usd_twd": 32.214,
@@ -11,40 +11,52 @@
  },
  "names": [
   {
+   "code": "8299",
+   "name": "Phison Electronics Corp.",
+   "p_add": 0.3706,
+   "delta_weight_pct": 0.2778196669808357,
+   "forced_flow_usd_m": 347.0,
+   "forced_flow_shares_m": 6.82,
+   "alpha_ratio_day": 1.4435,
+   "alpha_ratio_close": 15.225,
+   "expected_flow_usd_m": 128.6,
+   "expected_alpha_ratio_day": 0.535
+  },
+  {
    "code": "2344",
    "name": "Winbond Electronics Corporation",
    "p_add": 0.6177,
    "delta_weight_pct": 0.39583097706566134,
-   "forced_flow_usd_m": 237.9,
-   "forced_flow_shares_m": 58.95,
-   "alpha_ratio_day": 0.4251,
-   "alpha_ratio_close": 4.484,
-   "expected_flow_usd_m": 146.9,
-   "expected_alpha_ratio_day": 0.2626
+   "forced_flow_usd_m": 494.4,
+   "forced_flow_shares_m": 122.51,
+   "alpha_ratio_day": 0.8835,
+   "alpha_ratio_close": 9.318,
+   "expected_flow_usd_m": 305.4,
+   "expected_alpha_ratio_day": 0.5457
   },
   {
    "code": "2408",
    "name": "Nanya Technology Corporation",
    "p_add": 0.6177,
    "delta_weight_pct": 0.5115457115928369,
-   "forced_flow_usd_m": 307.4,
-   "forced_flow_shares_m": 27.47,
-   "alpha_ratio_day": 0.3408,
-   "alpha_ratio_close": 3.594,
-   "expected_flow_usd_m": 189.9,
-   "expected_alpha_ratio_day": 0.2105
+   "forced_flow_usd_m": 638.9,
+   "forced_flow_shares_m": 57.09,
+   "alpha_ratio_day": 0.7082,
+   "alpha_ratio_close": 7.469,
+   "expected_flow_usd_m": 394.7,
+   "expected_alpha_ratio_day": 0.4375
   },
   {
    "code": "8046",
    "name": "Nan Ya Printed Circuit Board Corporation",
    "p_add": 0.6177,
    "delta_weight_pct": 0.22276782909205153,
-   "forced_flow_usd_m": 133.9,
-   "forced_flow_shares_m": 4.69,
-   "alpha_ratio_day": 0.2664,
-   "alpha_ratio_close": 2.81,
-   "expected_flow_usd_m": 82.7,
-   "expected_alpha_ratio_day": 0.1646
+   "forced_flow_usd_m": 278.2,
+   "forced_flow_shares_m": 9.74,
+   "alpha_ratio_day": 0.5537,
+   "alpha_ratio_close": 5.839,
+   "expected_flow_usd_m": 171.9,
+   "expected_alpha_ratio_day": 0.342
   }
  ],
  "pools_of_forced_demand": [

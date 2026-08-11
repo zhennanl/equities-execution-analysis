@@ -559,7 +559,6 @@ def test_a_figure_row_is_ruled_off_from_the_text_below(at):
     """Bill: "there isn't any divider between this header and
     the text box below." The steps used st.metric, the one
     figure treatment on the site with no rule under it."""
-    md = " ".join(str(m.value) for m in at.markdown)
     # c-268: steps 1, 2 and 3 have no figure row now — their
     # diagrams carry those numbers, with the reason for each,
     # which a row of values cannot. The assertion is about the
@@ -931,7 +930,6 @@ def test_card_four_gets_the_arguments_it_prints():
     several revisions. So the test asserts the WIRING, not just
     that the figure draws.
     """
-    import re
     import walkthrough_story as WS
     from views import diagrams as D
     s = WS.story()
@@ -1318,10 +1316,21 @@ def test_step_five_shows_the_result_and_not_a_second_chart(at):
     from views import walkthrough as W
     assert not hasattr(W, "_lever"), "_lever is still defined"
     md = " ".join(str(m.value) for m in at.markdown)
-    assert "Index Review Prediction" not in md
+    # c-384: Bill titled the two conversion-curve strips
+    # "Visualize Index Review Prediction — Addition/Deletion",
+    # so the old bare-phrase guard would block his own words.
+    # What c-320 actually banned was the deleted BAR CHART —
+    # guarded above by `_lever` being gone — so the string
+    # guard narrows to the old chart's exact title.
+    assert "Index Review Prediction</b>" not in md.replace(
+        "Visualize Index Review Prediction", "")
     # the call rows carry a market cap, not a percentage
     assert "USD 34.37bn" in md or "USD 34.48bn" in md
-    assert "The companies selected for index review change" in md
+    # c-379, Bill: the subtitle names the OUTPUT; c-395:
+    # singular
+    assert "addition and deletion predicted" in md
+    assert "additions and deletions predicted" not in md
+    assert "companies selected for index review" not in md
 
 
 # ── c-322: the band, the carried list, and the reasoning ─────────────
@@ -1421,9 +1430,15 @@ def test_the_screen_results_moved_behind_a_click(at):
     """c-358, Bill: the five whys move from an always-open amber
     block into an expander shaped like Rulebook References. Five
     screen results are reference material — a reader checks the
-    one name they care about."""
+    one name they care about. c-373: the label now says what
+    the reader gets — Reasons for Addition / Deletion."""
     labs = [e.label for e in at.expander]
-    assert any("Screen Results" in x for x in labs), labs
+    # c-382, Bill: the label names WHICH screen these checks
+    # belong to
+    assert any("Addition & Deletion — Size Checks" in x
+               for x in labs), labs
+    assert not any("Screen Results" in x for x in labs), labs
+    assert not any("Reasons for" in x for x in labs), labs
     md = " ".join(str(m.value) for m in at.markdown)
     # every call's why is inside it, including the generated
     # border-deletion why
@@ -1431,6 +1446,21 @@ def test_the_screen_results_moved_behind_a_click(at):
         assert f"({code}) — ADD" in md, code
     assert ") — DEL" in md
     assert "deletion floor by" in md
+    # c-373, Bill: an ADD inside the addition bar's ±5% band
+    # carries the same generated band structure the deletion
+    # does — name-free in source, attached by arithmetic, so it
+    # follows whichever name sits in the band after a re-run
+    assert "band-borderline addition" in md
+    assert "addition bar by" in md
+    # the band sentence is generated, not typed: the generating
+    # block names no company, so it attaches to whichever ADD
+    # sits inside the bar band after a re-run
+    src_ = (ROOT / "views" / "walkthrough.py").read_text(
+        encoding="utf-8")
+    # source anchor split-tolerant: c-374 rewrapped the literal,
+    # so anchor on the stem (the ADD block is the first hit)
+    i_ = src_.index("band-borderline ")
+    assert "Phison" not in src_[i_ - 1200:i_ + 200]
 
 
 def test_the_reasoning_is_not_hidden_behind_a_click(at):

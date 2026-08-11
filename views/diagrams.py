@@ -378,13 +378,13 @@ def review_flow(announced, close, announced_time=None,
              f'font-size="{FS_EYEBROW}" letter-spacing=".6" '
              f'font-weight="600" fill="{GREEN}">MUST '
              f'TRADE</text>')
-    # c-266: "Forced buying and selling" named the mechanism;
-    # "Replication" names the DUTY, which is what a client
-    # recognises. The body now says WHY the close is the
-    # target price rather than restating that the trade is
-    # compulsory — the two arrows above already carry that.
+    # c-266 renamed "Forced buying and selling" to "Replication"
+    # (the duty). c-366, Bill: "Rebalance" — the EVENT. It is the
+    # word the rest of the site already uses (the daily-data page,
+    # the case study's "rebalance window"), so the timeline stops
+    # introducing a third term for the same day.
     s.append(_box(
-        xF, top + bh + gap, wB, bh, "Replication",
+        xF, top + bh + gap, wB, bh, "Rebalance",
         "on the effective date",
         _bodies[2],
         accent=RED))
@@ -1085,7 +1085,8 @@ def size_ladder_steps(dm_ref, em_ref, lo, hi, cutoff, lower,
               f"totals:\n\n"
               f"`{d}{pub_idx:,.0f}B / {coverage:.2f} = "
               f"{d}{uni:,.0f}B`\n\n"
-              + (f"Ranking {screened} screened companies by size "
+              + (f"Ranking {screened} companies that pass the "
+                 f"investability screens by size "
                  if screened else "Ranking by size ")
               + f"and accumulating free-float value, "
               f"{coverage:.0%} of {d}{uni:,.0f}B is reached at "
@@ -1316,27 +1317,30 @@ def size_ladder(dm_ref, em_ref, lo, hi, cutoff, lower, upper,
          "Taiwan's own coverage test", RED,
          _wrap("Sum the free-float market cap of Taiwan's "
                "largest companies, in size order, until 85% of "
-               "the market is covered. The company where that "
-               "total is reached sets the cutoff.", WRAP)),
+               "the market is covered. The last company added "
+               "to reach 85% \u2014 its full market cap \u2014 "
+               "becomes the cutoff.", WRAP)),
     ]
     branch = [("5 · Deletion floor", f"${lower}B", "× 2/3", RED,
-               "A member is removed only once it falls below "
+               "A member is removed only if it falls below "
                "this, not when it crosses the cutoff, so small "
-               "price moves do not push names in and out every "
+               "price moves do not push companies in and out every "
                "quarter."),
               ("6 · Addition bar", f"${upper}B", "× 1.5", GREEN,
                "A non-member "
-               "has to clear this to join, so a name sitting on "
+               "has to clear this higher bar \u2014 not just the "
+               "cutoff \u2014 to join, so a company sitting near "
                "the cutoff is not added one quarter and deleted "
                "the next.")]
     if min_float:
         branch.append(
             ("7 · Minimum free-float value", f"${min_float}B",
              "× 0.5", MUTED,
-             "A new constituent also needs enough free float, "
-             "because a large company whose shares are mostly "
-             "locked up cannot absorb the buying an addition "
-             "brings."))
+             "A new constituent also needs enough shares "
+             "available in free float \u2014 a large company "
+             "whose shares are mostly locked up does not have "
+             "enough freely tradable shares for index tracking "
+             "funds to buy."))
 
     # c-276: cards 5-7 share the chain's left edge and width.
     # They were indented to x=26 to read as a branch off the
@@ -1670,7 +1674,7 @@ def cutoff_timeline(universe, liquidity, price_from, price_to,
                    ["The share price used to calculate "
                     "market cap",
                     "What percentage of shares foreigners may own",
-                    "How much foreign inclusion is left",
+                    "How much foreign ownership limit is left",
                     "The total number of shares"]))
     # THE RED LINE BELONGS TO THE PRICE MARK, not floating over
     # the axis. As a free-standing headline it collided with

@@ -80,21 +80,27 @@ def screen():
 # asserts what is ON THE PAGE, which is a different question from
 # what the project knows.
 SECTIONS = ["Data Review",
+            # c-368, Bill: the framing section — the two
+            # formulas both sides of the trade run on — sits
+            # straight after the data review, before any chart.
+            # c-394, Bill: "The" dropped
+            "Two Sides of the Rebalance Trade",
             "Where the Volume Actually Prints",
             "Volume Profile on the Effective Day",
             "Market on Close vs VWAP",
             "How Much Volume the Close Can Absorb",
-            # c-326: the pre-positioning read sits between the
-            # history and the sizing — it is the bridge from
-            # "what usually happens" to "what is happening now".
-            "Market Positioning Before Announcement Day",
-            # c-357: the flow-vs-normal study sits between the
-            # positioning read and the sizing — it is what makes
-            # the sizing's denominator concrete. A normal day's
-            # foreign traffic is the yardstick the order lands
-            # against.
+            # c-368, Bill: foreign flow MOVES AHEAD of the
+            # positioning read — what usually happens through
+            # the window, then what is happening now.
             "Foreign Flow Through the Rebalance Window",
-            "How Big Is the Market on Close Order"]
+            "Market Positioning Before Announcement Day",
+            # c-381, Bill: renamed for what it estimates
+            "Estimated Trading Volume on the Effective Day",
+            # c-370, Bill: the borrow check is retitled as the
+            # deletion half of the positioning pair and sits
+            # directly under the addition half.
+            "Market Positioning Before Announcement Day "
+            "— Deletion"]
 
 
 GONE = ["How Big Is the Order, in Closes",
@@ -335,18 +341,15 @@ def test_the_peer_set_is_a_hundred_and_says_what_it_is(screen):
 
 
 def test_the_derivation_is_one_dropdown_per_name(screen):
-    """c-347, Bill: the four-step chain moves out of a paragraph
-    and into a dropdown per name, in the shape the Predict page
-    already uses for the size ladder.
-
-    WHY PER NAME. The old block worked the largest order only, so
-    every other bar on the chart was a number the reader had to
-    take on trust. Three dropdowns cost nothing closed and remove
-    the trust step. All four steps must survive, because a
-    derivation missing its middle is worse than none — it looks
-    checked."""
-    for step in ("Index weight", "Money that must buy", "Shares",
-                 "Against the stock's own volume"):
+    """c-347 put the four-step chain in a dropdown per name;
+    c-386, Bill: the dropdowns FOLD INTO ONE TABLE in the
+    call-row grammar — the four steps become four columns, one
+    row per name. The derivation must still be complete: every
+    step has a column, and the conversion inputs stay visible
+    on the page (in the note under the table), or the
+    arithmetic is unverifiable."""
+    for step in ("Index weight", "Must buy", "Shares",
+                 "Share of ADV"):
         assert step in screen, step
     # the inputs the chain rests on have to be visible, or the
     # arithmetic is unverifiable from the page
@@ -378,10 +381,17 @@ def test_one_calculation_dropdown_per_sized_name():
         h.unlink(missing_ok=True)
     calc = [x for x in labs if x.startswith("Calculation")]
     per_name = [x for x in calc if "of ADV" in x]
-    assert len(per_name) == 3, labs
-    # the mandate working leads, because it is the multiplier
-    # every per-name bar rests on
-    assert calc[0].endswith("why it is a floor"), calc
+    # c-386, Bill: the four per-name dropdowns FOLD INTO ONE
+    # TABLE in the call-row grammar — no per-name Calculation
+    # expander may survive, and the table must carry all four
+    # names' derivations (the agreement test below re-derives
+    # the cells; here the shape is pinned).
+    assert len(per_name) == 0, labs
+    # the mandate working keeps its dropdown — it is the
+    # multiplier every row rests on. c-400: relabelled for the
+    # disclosed anchor; per-number sourcing is the promise.
+    assert calc and calc[0].endswith(
+        "where each number comes from"), calc
     assert "mandate" in calc[0]
 
 
@@ -407,14 +417,31 @@ def test_the_demand_is_priced_off_a_sourced_number(screen):
     # the unsourced constant must not be driving anything
     assert "180bn" not in screen
     assert "assets tracking the index" not in screen
-    # the headline orders are well under one day's volume — a
-    # card reading >100% of ADV means the page has quietly gone
-    # back to the old multiplier
+    # c-400: at the disclosed-anchor basis the largest order
+    # (Phison) runs to ~1.5 days' volume — over 100% of ADV is
+    # now correct, not drift. The guard becomes: the cards must
+    # equal weight x THIS basis re-derived from the JSONs, not
+    # merely look plausible.
     got = re.findall(r"(?:Largest|Smallest) order</div>"
                      r"<div class='v'>(\d+)% of ADV", screen)
     assert len(got) == 2, got
-    assert all(0 < int(x) < 100 for x in got), got
-    assert int(got[0]) > int(got[1]), got
+    assert int(got[0]) > int(got[1]) > 0, got
+    pb = json.loads((ROOT / "data" / "tw_tracker_playbook.json"
+                     ).read_text(encoding="utf-8"))
+    sc = json.loads((ROOT / "data" / "aug26_scenarios.json"
+                     ).read_text(encoding="utf-8"))
+    usd_twd = sc["assumptions"]["usd_twd"]
+    xs = []
+    for code, r in pb["names"].items():
+        if not r.get("capacity_rank"):
+            continue
+        s = sc["names"][code]
+        sh = (r["index_weight_pct"] / 100 * basis * 1e9
+              * usd_twd / s["last_close_twd"])
+        xs.append(sh / r["adv_shares"])
+    xs.sort()
+    assert int(got[0]) == round(xs[-1] * 100), (got, xs)
+    assert int(got[1]) == round(xs[0] * 100), (got, xs)
 
 
 def test_the_mandate_estimate_shows_its_filing(screen):
@@ -432,56 +459,71 @@ def test_the_mandate_estimate_shows_its_filing(screen):
         pytest.skip("run scripts/tw_mandate_size.py")
     M = json.loads(md.read_text(encoding="utf-8"))
     D = M["msci_disclosure"]
-    for v in (D["etf_aum_total_usd_b"], D["etf_aum_em_ac_usd_b"]):
+    # c-400: the figures the estimate rests on are the total ETF
+    # pool and the DISCLOSED non-ETF pool (the EM/AC bucket is
+    # context, not an input, and lives in the doc)
+    for v in (D["etf_aum_total_usd_b"],
+              D["non_etf_aum_disclosed_usd_b"]):
         assert f"USD {v:,.0f}bn" in screen, v
     for v in (D["abf_etf_usd_m"],
               D["abf_non_etf_indexed_usd_m"]):
         assert f"USD {v:,.1f}m" in screen, v
     assert D["as_of"] in screen and D["filed"] in screen
     assert "ir.msci.com" in screen
+    assert "earnings call" in screen
 
 
-def test_the_estimate_is_labelled_a_floor(screen):
-    """A FLOOR IS ONLY HONEST IF IT IS CALLED ONE.
+def test_the_estimate_names_its_anchor(screen):
+    """AN ESTIMATE IS ONLY HONEST IF IT SAYS WHAT IT RESTS ON.
 
-    c-351 cut the two paragraphs that argued the case on the page
-    — the fee-rate direction and the coverage-ratio trap. Both
-    reasons still exist and are still tested, in
-    test_tw_mandate_size.py and in docs/TW_MANDATE_SIZE.md; what
-    the page keeps is the WORD, because a number presented as an
-    estimate invites a reader to treat it as a midpoint and this
-    one is not."""
+    c-400: the basis is no longer a floor — it is anchored on
+    MSCI's disclosed ~USD 5tn non-ETF pool — so the page must
+    say WHOSE number the anchor is. c-401, Bill: the old
+    fee-inversion floor comes OFF the page entirely; it
+    survives in the JSON (`floor_variant`), the doc and the
+    Q&A bank as the downside case, and the JSON-level guards
+    live in test_tw_mandate_size.py."""
     md = ROOT / "data" / "tw_mandate_size.json"
     if not md.exists():
         pytest.skip("run scripts/tw_mandate_size.py")
     tw = json.loads(md.read_text(encoding="utf-8"))["taiwan"]
-    assert "FLOOR" in screen or "floor" in screen
+    assert "disclosed" in screen or "disclose" in screen
     assert f"USD {tw['estimate_always_buys_usd_b']:.0f}bn" in screen
+    # the retired floor is off the page but not out of the data
+    assert tw["floor_variant_usd_b"] < \
+        tw["estimate_always_buys_usd_b"]
     # the argument survives off-page, where it is generated
     doc = (ROOT / "docs" / "TW_MANDATE_SIZE.md").read_text(
         encoding="utf-8")
     assert "single-country" in doc and "no Taiwan" in doc
-    assert "LESS per dollar" in doc
+    assert "a fifth of the ETF rate" in doc
+    assert "mirrors the ETF mix" in doc
 
 
 def test_the_multiplier_shows_its_own_division(screen):
-    """c-351, Bill: *"we need to show how we derive 0.33x of the
-    ETF pool."*
+    """c-351, Bill: *"we need to show how we derive [the
+    multiplier] of the ETF pool"* \u2014 and c-400 moved the
+    multiplier to the disclosed ratio.
 
-    The inversion produced USD 941bn and the page then asserted
-    0.33x, which is a second calculation the reader was asked to
-    take on faith. Both divisions are now on screen."""
+    The page must show the division that produces 1.77x and
+    the derived 0.45bp fee rate \u2014 no ratio asserted without
+    its arithmetic on screen. (c-401, Bill: the retired
+    inversion's numbers are off the page; they live in the
+    JSON and doc.)"""
     md = ROOT / "data" / "tw_mandate_size.json"
     if not md.exists():
         pytest.skip("run scripts/tw_mandate_size.py")
     M = json.loads(md.read_text(encoding="utf-8"))
     n, D = M["non_etf_indexed"], M["msci_disclosure"]
-    # the inversion
-    assert f"{n['non_etf_indexed_aum_floor_usd_b']:,.0f}bn" in screen
-    assert f"{n['etf_effective_bp_annualised']:.2f}bp" in screen
-    # and the ratio it is turned into
+    # the disclosed division
     assert f"{D['etf_aum_total_usd_b']:,.0f}bn = " \
-           f"{n['multiplier_floor']:.2f}\u00d7" in screen
+           f"{n['multiplier_disclosed']:.2f}\u00d7" in screen
+    # the derived rate
+    assert f"{n['non_etf_bp_derived']:.2f}bp" in screen
+    # the old inversion's artifacts must NOT resurface on-page
+    assert f"{n['non_etf_indexed_aum_floor_usd_b']:,.0f}bn" \
+        not in screen
+    assert f"{n['multiplier_floor']:.2f}\u00d7" not in screen
 
 
 def test_the_mandate_arithmetic_ties_on_the_page(screen):
@@ -548,10 +590,11 @@ def test_the_imi_case_is_off_the_page_but_not_out_of_the_project(
 
 def test_the_dropdowns_stay_at_four_steps(screen):
     """What the per-name working must still contain after the
-    cut: the chain, and nothing decorative. Four steps in, four
-    steps out."""
-    for step in ("Index weight", "Money that must buy", "Shares",
-                 "Against the stock's own volume"):
+    c-386 fold into one table: the chain's four steps as four
+    columns, and nothing decorative. Four steps in, four
+    columns out."""
+    for step in ("Index weight", "Must buy", "Shares",
+                 "Share of ADV"):
         assert step in screen, step
     # and the two paragraphs that were cut stay cut
     assert "What that is at the close" not in screen
@@ -583,7 +626,8 @@ def test_the_chart_and_its_dropdowns_cannot_disagree(screen, d):
     sized = sorted([kv for kv in P["names"].items()
                     if kv[1].get("capacity_rank")],
                    key=lambda kv: kv[1]["capacity_rank"])
-    assert len(sized) == 3
+    # c-368: four sized names (Phison joins the ladder)
+    assert len(sized) == 4
     for code, r in sized:
         usd_m = r["index_weight_pct"] / 100 * floor * 1000
         sh = usd_m * 1e6 * A["usd_twd"] / S["names"][code][

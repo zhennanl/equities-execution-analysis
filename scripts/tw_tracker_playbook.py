@@ -120,12 +120,15 @@ def main():
             "prob_of_addition": r["prob_of_addition"],
             "index_weight_pct": r["index_weight_pct"],
         }
-    # RANK THE CARRIED NAMES 1..N. c-325: the rank used to be
-    # assigned over ALL names and the page then filtered one out,
-    # which left the chart numbered 2, 3, 4 — a rank with a hole
-    # in it reads as a missing row rather than as a name that was
-    # deliberately excluded. Rank after filtering, not before.
-    ranked = sorted([kv for kv in names.items() if kv[1]["carried"]],
+    # RANK 1..N. c-325 ranked only the carried names — Phison's
+    # verdict flipped inside the ±5% band, and sizing from a name
+    # you are not standing behind was the wrong default THEN.
+    # c-368, Bill: the call is now four additions with a
+    # per-name P(add) (Phison 65% by Monte Carlo, not a
+    # coin-flip zone), so ALL call names are ranked and the page
+    # sizes all four. `carried` survives on each row for anyone
+    # who wants the old cut.
+    ranked = sorted(list(names.items()),
                     key=lambda kv: -(kv[1]["order_in_normal_closes"]
                                      or 0))
     for i, (code, r) in enumerate(ranked, 1):

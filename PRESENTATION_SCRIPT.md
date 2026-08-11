@@ -335,34 +335,38 @@ the room knows it.*
 > Second, and this is the part I like — the indexed money that has
 > no ticker. Separate accounts, index mutual funds, pension
 > mandates. MSCI is a public company, so it reports the fee
-> revenue it earns on that money to the SEC every quarter. It just
-> never reports the assets.
+> revenue it earns on that money to the SEC every quarter. And on
+> the last earnings call, management put a size on the pool
+> itself: about five trillion dollars.
 >
-> But you can invert it. Take the fee revenue, divide by the fee
-> rate MSCI earned on ETFs that same quarter, and you get the
-> assets. It works out to at least a third of the ETF pool.
+> Five trillion against two point eight trillion of ETF money.
+> So for every dollar sitting in an MSCI-linked ETF, there's
+> about a dollar seventy-seven of mandate money with no ticker
+> on it. Apply that ratio to the Taiwan ETFs I just named.
 >
-> Add the two together and you land at USD 60 billion.
+> Add the two together and you land at USD 125 billion.
 
 **[Only if pressed — but have it ready.]**
 
-> Every step in that errs low, which is the only reason I'll
-> defend the number. Institutional mandates negotiate their index
-> fees down, so pricing them at the ETF rate understates what's
-> there. And I deliberately didn't scale up for the ETFs I
-> couldn't enumerate, because a lot of them are single-country
-> China and India funds that hold no Taiwan at all.
+> The fee revenue is my check on the five trillion. Fifty-six
+> million a quarter on five trillion of assets is about 0.45
+> basis points, a fifth of what MSCI earns on ETFs. That's the
+> right shape — mandates negotiate their fees down — so the two
+> disclosures agree with each other.
 >
-> The fourth pool is missing entirely, too. Benchmark-aware
-> active money buys some of this and I can't see any of it
-> without holdings data. So sixty billion is a floor in at least
-> three separate ways.
+> One assumption, and I'll say it before you do: the five
+> trillion spans every MSCI index, so I'm assuming the mandate
+> mix looks like the ETF mix. If you don't want that assumption,
+> invert the fee revenue at the ETF rate instead and you get a
+> hard floor of sixty billion. The ranking of the names doesn't
+> move either way. And the fourth pool, benchmark-aware active,
+> is still missing from both numbers entirely.
 
 **[Back to the bars.]**
 
-> Run that through and each of the three names needs somewhere
-> between a quarter and a half of a normal day's volume — all
-> arriving in an auction that usually handles a tenth of the day.
+> Run that through and the four names need somewhere between
+> half a day's volume and one and a half days' — all arriving in
+> an auction that usually handles a tenth of the day.
 >
 > And every name has its own dropdown with the full working:
 > weight, dollars, shares, divided by that name's own ADV. Nothing
@@ -457,10 +461,13 @@ the room knows it.*
 > that land inside it I flag as coin-flips rather than calls.
 
 **"That AUM figure is a guess."**
-> It's a floor, and I can name every dollar in it. The ETF side is
-> summed fund by fund from published assets. The rest comes off
-> MSCI's own filings. Every approximation in it pushes the answer
-> down, not up, and I'm happy to walk through them.
+> It's MSCI's own numbers, multiplied. The ETF side is summed
+> fund by fund from published assets. The multiplier is the five
+> trillion MSCI disclosed against its own ETF pool, and the fee
+> revenue checks it. One assumption in the chain, the mandate
+> mix, and I flag it. If you'd rather have the number with no
+> assumption at all, the fee inversion gives sixty billion, and
+> the names rank the same.
 
 **"You're only covering part of the fund universe. Why not scale
 up?"**

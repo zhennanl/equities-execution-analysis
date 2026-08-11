@@ -202,8 +202,8 @@ def build():
 <h1>The Walk — MSCI Taiwan, August 2026</h1>
 <p class='sub'>Every screened company in full-market-cap order,
 cumulating free-float value until 85&#37; of the investable market
-is covered. The company where that total is reached sets the
-cutoff. Generated {dt.date.today().isoformat()} from
+is covered. The last company added to reach 85&#37; &mdash; its
+full market cap &mdash; becomes the cutoff. Generated {dt.date.today().isoformat()} from
 data/tw_mieu_universe.json — no figure on this page is typed.</p>
 <div class='k'>{keys}</div>
 <table><thead><tr>

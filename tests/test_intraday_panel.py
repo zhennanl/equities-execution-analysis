@@ -60,7 +60,10 @@ def test_page_renders(at):
     # c-327: FIVE. A Data Review section leads, saying what the
     # dataset is and why it is only 43 events, before anything
     # drawn from it is shown.
-    assert md.count("class='dsect") == 5
+    # c-368: SIX. The Two Sides of the Rebalance Trade — the
+    # framing section with the two formulas both sides run on —
+    # sits between the Data Review and the first chart.
+    assert md.count("class='dsect") == 6
     assert "5-Minute Data Analysis" in md
 
 

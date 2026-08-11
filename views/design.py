@@ -539,11 +539,17 @@ def stats(items):
         # default because most long values really are phrases.
         if len(str(i["v"])) > 12 and not kind:
             kind = "txt"
+        # c-394, Bill: a card WITHOUT a sub-line renders no
+        # placeholder row — the &nbsp; default drew a blank
+        # line under the figure. Cards in one row either all
+        # carry subs or none do, so alignment is unaffected.
+        sub_ = i.get("s")
         out.append(f"<div class='dstat {kind}'>"
                    f"<div class='k'>{i['k']}</div>"
                    f"<div class='v'>{i['v']}</div>"
-                   f"<div class='s'>{i.get('s', '&nbsp;')}</div>"
-                   "</div>")
+                   + (f"<div class='s'>{sub_}</div>" if sub_
+                      else "")
+                   + "</div>")
     st.markdown("<div class='dstats'>" + "".join(out) + "</div>",
                 unsafe_allow_html=True)
 

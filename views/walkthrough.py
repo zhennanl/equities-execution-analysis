@@ -23,6 +23,7 @@ reconstructed review) and the page rewrites itself, including
 the step-6 scoreboard.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -482,6 +483,216 @@ def _scan_chart(sc, k):
         "in the cutoff-value calculation.")
 
 
+def _prob_flowchart(d):
+    """The probability calculation as three drawn steps.
+
+    c-391, Bill: the boxes take STEP 3's exact grammar \u2014 the
+    diagrams module's fonts and card recipe (Inter, 880-unit
+    viewBox, bold title over a small-caps eyebrow, 3px left
+    accent, 12.3px body) \u2014 so step 5's flowchart and step 3's
+    reference cards read as one family. c-392, Bill: the box
+    bodies are plain text \u2014 no bold spans.
+    """
+    from views import design
+    from views import diagrams as DG
+    m = d["method"]
+    band = m["cutoff_band"]
+    # c-392, Bill: everything UNBOLD, and STEP 1 ends at the
+    # estimation-error sentence.
+    boxes = [
+        ("Simulate estimation errors", "STEP 1",
+         f"Apply Monte Carlo simulation to our estimated "
+         f"addition bar and deletion floor, each with a "
+         f"\u00b1{band:.0%} band, to account for possible "
+         f"errors in our estimation."),
+        ("Measure the distance", "STEP 2",
+         "Use each company's full market cap, divided by "
+         "the addition bar or the deletion floor, to "
+         "measure how far each name sits from its threshold"),
+        ("Convert distance to probability", "STEP 3",
+         f"After running {m['draws']:,} Monte Carlo "
+         f"simulations, count how many times each "
+         f"shortlisted company clears the size test, and "
+         f"convert that count to probability"),
+    ]
+    # c-395, Bill: the boxes shrink to their content — the
+    # c-392 trim left dead space under the shortest body. Five
+    # body lines maximum at 16px leading under the 63px head.
+    W, H = 880, 172
+    box_w, box_h, y = 272, 156, 8
+    xs = [8, 304, 600]
+    p = [f'<svg viewBox="0 0 {W} {H}" '
+         f'xmlns="http://www.w3.org/2000/svg" '
+         f'style="width:100%;height:auto;display:block;'
+         f'margin:.2rem 0 .9rem" '
+         f'font-family="{DG.SANS}">']
+    for i, (title, sub, body) in enumerate(boxes):
+        x = xs[i]
+        p.append(f'<rect x="{x}" y="{y}" width="{box_w}" '
+                 f'height="{box_h}" rx="3" fill="{DG.CARD}" '
+                 f'stroke="{design.RULE}"/>')
+        p.append(f'<rect x="{x}" y="{y}" width="3" '
+                 f'height="{box_h}" fill="{design.NAVY}"/>')
+        p.append(f'<text x="{x + 16}" y="{y + 24}" '
+                 f'font-size="{DG.FS_TITLE}" font-weight="700" '
+                 f'fill="{design.INK}">{title}</text>')
+        p.append(f'<text x="{x + 16}" y="{y + 41}" '
+                 f'font-size="{DG.FS_EYEBROW}" '
+                 f'letter-spacing="1.1" '
+                 f'fill="{design.FAINT}">{sub}</text>')
+        words, line, lines = body.split(" "), "", []
+        for w_ in words:
+            if len(line) + len(w_) > 33:
+                lines.append(line)
+                line = w_
+            else:
+                line = (line + " " + w_).strip()
+        lines.append(line)
+        for j, ln in enumerate(lines[:8]):
+            p.append(f'<text x="{x + 16}" '
+                     f'y="{y + 63 + j * 16}" '
+                     f'font-size="{DG.FS_BODY}" '
+                     f'fill="{design.MUTED}">{ln}</text>')
+        if i < 2:
+            x1, x2 = x + box_w, xs[i + 1]
+            ym = y + box_h / 2
+            p.append(f'<line x1="{x1 + 4}" y1="{ym}" '
+                     f'x2="{x2 - 10}" y2="{ym}" '
+                     f'stroke="{design.RULE}" '
+                     f'stroke-width="1.5"/>')
+            p.append(f'<path d="M{x2 - 10},{ym} l-7,-4 l0,8 z" '
+                     f'fill="{design.RULE}"/>')
+    p.append("</svg>")
+    return "".join(p)
+
+
+def _conversion_chart(d):
+    """Clearance -> P(add), drawn (c-367, Bill: *"is there a way
+    we can visualize the clear at x times to probability
+    conversion on a graph?"*).
+
+    WHAT THE PICTURE SAYS. The rule is sharp: 1.5x the cutoff,
+    pass or fail. But two inputs stay unknown until MSCI speaks
+    — the cutoff itself (±5% band) and which of ten July
+    sessions the caps were struck on — so the probability that
+    the TRUE inputs clear rises as an S-curve through the bar
+    region rather than stepping 0 to 1. The curve is that
+    S-curve, computed by the same 20,000-draw machine as the
+    table, at the candidates' median vol and FIF; each name's
+    dot is its own full draw at its own vol.
+    """
+    cc = d.get("conversion_curve")
+    if not cc:
+        return
+    import plotly.graph_objects as go
+    from views import design
+    # c-380 merged three blocks into one amber box; c-381,
+    # Bill: the box becomes a FLOWCHART \u2014 the five steps of the
+    # calculation, drawn, with the per-name distances and the
+    # draw count inside the boxes. A modest bold line above it
+    # names the sub-section without resurrecting the header
+    # c-362 cut.
+    # c-382, Bill: the sub-head and both chart titles take the
+    # amber-strip treatment, and the chart titles say what is
+    # being graphed.
+    # c-386, Bill: the heading inside the strip matches the
+    # step titles' typography (design.css .dsect .t — serif,
+    # 1.5rem, weight 600).
+    # c-391, Bill's title, whole sentence bold
+    design.caveat(
+        f"<b><span style='font-family:{design.SERIF};"
+        f"font-size:1.5rem;font-weight:700'>How to Calculate "
+        f"the Probability</span></b>")
+    st.markdown(_prob_flowchart(d), unsafe_allow_html=True)
+    # c-384, Bill's title
+    design.caveat("<b>Visualize Index Review Prediction "
+                  "— Addition</b>")
+    fig = go.Figure()
+    # c-376, Bill: the x-axis is FULL MARKET CAP ÷ ADDITION BAR
+    # — the same scale the deletion chart uses against its
+    # floor, so the two mirrors finally share one grammar: the
+    # decisive line sits at 1.0 on both. The clearance TABLE
+    # and expander keep speaking in cutoff multiples (4.78x);
+    # this axis divides those by the bar's own 1.5.
+    _BX = 1.5
+    # the bar region: the cutoff's own ±5% band around 1.0
+    fig.add_vrect(x0=0.95, x1=1.05,
+                  fillcolor=design.AMBER, opacity=0.10,
+                  line_width=0, layer="below")
+    fig.add_vline(x=1.0, line_dash="dot", line_color=design.MUTED,
+                  annotation_text="addition bar",
+                  annotation_position="top left")
+    # c-369, Bill: the anchor made explicit — ON the bar, the
+    # two symmetric dice make the verdict a coin toss.
+    fig.add_scatter(
+        x=[1.0], y=[0.5], mode="markers",
+        marker=dict(size=9, color=design.NAVY, symbol="x"),
+        showlegend=False,
+        hovertemplate=design.hover(
+            "Exactly on the bar", eyebrow="by construction",
+            rows=[("clears the bar at", "1.00×"),
+                  ("P(add)", "50%")]))
+    fig.add_annotation(
+        x=1.0, y=0.5, xanchor="left", yanchor="top",
+        ax=28, ay=22, showarrow=True, arrowcolor=design.MUTED,
+        arrowwidth=1, text="on the bar = 50%",
+        font=dict(size=10.5, color=design.MUTED))
+    fig.add_scatter(
+        x=[p["x"] / _BX for p in cc["points"]],
+        y=[p["p"] for p in cc["points"]],
+        mode="lines", name="conversion curve",
+        line=dict(color=design.NAVY, width=2.5),
+        # c-374, Bill: no title on the curve's hover — the rows
+        # speak for themselves
+        hovertemplate=design.hover(
+            "", eyebrow="conversion curve",
+            rows=[("clears the bar at", "%{x:.2f}×"),
+                  ("P(add)", "%{y:.0%}")]))
+    # c-374, Bill: 2344 and 8046 sit 0.03x apart and their
+    # labels collided; c-376: the flipped label went "top left"
+    # and clipped against the chart's ceiling for dots near
+    # P=1, so the flip now goes BELOW-left — visible at any y.
+    # Positions assigned by arithmetic, not by name, so the fix
+    # follows whichever names crowd after a re-run.
+    _xs = [r["x_cutoff"] / _BX for r in d["names"]]
+    _pos = ["bottom right"] * len(_xs)
+    _ord = sorted(range(len(_xs)), key=lambda i: _xs[i])
+    for _a, _b in zip(_ord, _ord[1:]):
+        if _xs[_b] - _xs[_a] < 0.20 and \
+                _pos[_a] == "bottom right":
+            # middle-left: clear of the neighbour's below-right
+            # label AND clear of the chart ceiling for dots
+            # sitting near P=1
+            _pos[_b] = "middle left"
+    fig.add_scatter(
+        x=_xs,
+        y=[r["p_add"] for r in d["names"]],
+        mode="markers+text",
+        # c-373, Bill: the dot labels are TICKERS, not names
+        text=[r["code"] for r in d["names"]],
+        textposition=_pos,
+        textfont=dict(size=11, color=design.INK),
+        name="August candidates",
+        marker=dict(size=11, color=design.GREEN,
+                    line=dict(color="white", width=1)),
+        hovertemplate=design.hover(
+            "%{text}", eyebrow="candidate",
+            rows=[("clears the bar at", "%{x:.2f}×"),
+                  ("P(add)", "%{y:.0%}")]))
+    fig.update_layout(
+        height=340, showlegend=False,
+        # c-382, Bill: the title moved into an amber strip
+        # ABOVE the chart, in the site's own grammar
+        # c-376, Bill's axis title
+        xaxis=dict(title="Full Market Cap ÷ Addition Bar"),
+        yaxis=dict(title="P(add)", tickformat=".0%",
+                   range=[-0.04, 1.06]))
+    design.chart(fig)
+    # c-374, Bill: the caption under the curve is removed — the
+    # amber explainer above and the expander below carry the
+    # reading.
+
+
 def _add_probability_block():
     """P(addition) per name, from evidence (c-355).
 
@@ -510,49 +721,171 @@ def _add_probability_block():
     d = _load_add_probability(stamp)
     if not d:
         return
-    m = d["method"]
-    fe = m["fif_error"]
-    # c-358, Bill: the four stat cards are REMOVED. This slot
-    # renders a flowchart once its design is agreed; until then
-    # the per-name arithmetic lives in the Calculation expander
-    # below, so the numbers stay on the page without the card
-    # strip. TODO(c-358): flowchart here.
-    # c-362: the expander is the whole block now — the section
-    # header went with the stat cards, and the institutional
-    # framing, the unpriced-discretion essay, the per-name
-    # commentary and the backtest warning are all cut at Bill's
-    # request. What survives is the method and the per-name
-    # arithmetic: the three measured error sources, and each
-    # name's clearance -> probability line. The flowchart slot
-    # from c-358 stays open above this.
-    with st.expander("Calculation \u2014 how P(addition) is "
-                     "built"):
-        st.markdown(
-            f"**{m['draws']:,} Monte Carlo draws.** Each draw "
-            "perturbs three inputs by their measured errors and "
-            "re-runs the rule sharp:\n\n"
-            f"- the cutoff, uniform \u00b1{m['cutoff_band']:.0%} "
-            "\u2014 the site's standing band on the 85% coverage "
-            "walk; both derived bars move with it\n"
-            f"- the price date \u2014 MSCI uses one of the last "
-            f"{m['price_window_days']} sessions of July; a draw "
-            "picks one and moves the cap by that many days of "
-            "the name's own realised vol\n"
-            "- the free float \u2014 our FIF against the FIF "
-            "implied by MSCI's own factsheet, measured on "
-            f"{fe['n']} Taiwan large caps: mean "
-            f"{fe['mean']:+.1%}, sd {fe['sd']:.1%}\n\n"
-            "P(add) is the share of draws that clear both the "
-            "addition bar and the free-float minimum. Above 95% "
-            "the page prints \u201c>95%\u201d rather than a "
-            "false ranking among near-certainties.\n\n"
-            + "\n".join(
-                f"- **{r['name'].split()[0]} ({r['code']})** "
-                f"\u2014 clears at {r['x_cutoff']:.2f}x "
-                f"\u2192 **P(add) "
-                + (">95%" if r["p_add"] > 0.95
-                   else f"{r['p_add']:.0%}") + "**"
-                for r in d["names"]))
+    # c-358: stat cards removed; c-367: the conversion curve
+    # fills the slot. c-380, Bill: the "how P(addition) is
+    # built" and "how P(deletion) is built" EXPANDERS ARE GONE
+    # \u2014 merged, with the clearance explainer, into the one
+    # amber box _conversion_chart renders above the curves. The
+    # per-name clears-at lines live in that box; the full
+    # method (price-date draw, FIF treatment) stays in the JSON
+    # and docs/ADD_PROBABILITY.md.
+    _conversion_chart(d)
+    _del_probability_block(d)
+
+
+def _del_probability_block(d):
+    """The deletion mirror (c-369, Bill: *"draw the same graph
+    for deletion, and create a similar textbox ... for how
+    p(deletion) is built"*).
+
+    Same machine, opposite side: x is full cap over the DELETION
+    FLOOR (2/3 x the cutoff), a member is removed only when its
+    cap falls BELOW the floor, and the same two dice blur the
+    sharp rule into a falling S-curve — pinned through
+    (1.0, 50%) because on the floor exactly, symmetric dice make
+    it a coin toss. One dot: the call's border deletion.
+    """
+    dc = d.get("del_conversion_curve")
+    dels = d.get("border_deletions") or []
+    if not (dc and dels):
+        return
+    import plotly.graph_objects as go
+    from views import design
+    # c-384, Bill's title
+    design.caveat("<b>Visualize Index Review Prediction "
+                  "— Deletion</b>")
+    fig = go.Figure()
+    # the floor region: 1.0x times the cutoff's own ±5% band
+    fig.add_vrect(x0=0.95, x1=1.05,
+                  fillcolor=design.AMBER, opacity=0.10,
+                  line_width=0, layer="below")
+    # c-383, Bill: the "1.0×" comes off the label — the axis
+    # already says the floor sits at 1
+    fig.add_vline(x=1.0, line_dash="dot", line_color=design.MUTED,
+                  annotation_text="deletion floor",
+                  annotation_position="top right")
+    fig.add_scatter(
+        x=[p["x"] for p in dc["points"]],
+        y=[p["p"] for p in dc["points"]],
+        mode="lines", name="conversion curve",
+        line=dict(color=design.RED, width=2.5),
+        # c-374: blank title, same as the addition curve
+        hovertemplate=design.hover(
+            "", eyebrow="conversion curve",
+            rows=[("sits at", "%{x:.2f}× the floor"),
+                  ("P(delete)", "%{y:.0%}")]))
+    fig.add_scatter(
+        x=[1.0], y=[0.5], mode="markers",
+        marker=dict(size=9, color=design.NAVY, symbol="x"),
+        showlegend=False,
+        hovertemplate=design.hover(
+            "Exactly on the floor", eyebrow="by construction",
+            rows=[("sits at", "1.00×"),
+                  ("P(delete)", "50%")]))
+    fig.add_annotation(
+        x=1.0, y=0.5, xanchor="left", yanchor="bottom",
+        ax=30, ay=-20, showarrow=True, arrowcolor=design.MUTED,
+        arrowwidth=1, text="on the floor = 50%",
+        font=dict(size=10.5, color=design.MUTED))
+    fig.add_scatter(
+        x=[r["x_floor"] for r in dels],
+        y=[r["p_delete"] for r in dels],
+        mode="markers+text",
+        # c-373, Bill: tickers, not names — same as the
+        # addition curve
+        text=[r["code"] for r in dels],
+        textposition="top right",
+        textfont=dict(size=11, color=design.INK),
+        name="border member",
+        marker=dict(size=11, color=design.RED,
+                    line=dict(color="white", width=1)),
+        hovertemplate=design.hover(
+            "%{text}", eyebrow="member",
+            rows=[("sits at", "%{x:.2f}× the floor"),
+                  ("P(delete)", "%{y:.0%}")]))
+    fig.update_layout(
+        height=340, showlegend=False,
+        # c-382: title moved to the amber strip above
+        xaxis=dict(title="Full Market Cap ÷ Deletion Floor"),
+        yaxis=dict(title="P(delete)", tickformat=".0%",
+                   range=[-0.04, 1.06]))
+    design.chart(fig)
+    # c-374: caption removed; c-380: the deletion expander is
+    # gone. c-384, Bill: below the floor chart, the WORKING
+    # TABLE \u2014 how each probability is arrived at, one row per
+    # name, both sides: cap, threshold, distance, draws
+    # passing, probability. Every cell re-derives from the
+    # JSON, and the draws-passing column is what makes the
+    # conversion auditable: probability = that count \u00f7 the
+    # draw total.
+    # c-386, Bill: the working table takes the SAME visual
+    # grammar as the step-5 call table \u2014 the site CSS's drow
+    # rows under a flex header \u2014 and the explanatory caption
+    # under it is removed.
+    _dr = d["method"]["draws"]
+    _cut = d["method"]["cutoff_usd_b"]
+    # c-391, Bill's title; c-395: every word capitalised
+    st.markdown("**Probability Of Addition & Deletion \u2014 "
+                "Derived From The Monte Carlo Simulation**")
+
+    def _hd(label, flex):
+        return (f"<span style='flex:{flex};text-align:right;"
+                f"font-size:.62rem;letter-spacing:.11em;"
+                f"text-transform:uppercase;color:#a89c92;"
+                f"font-weight:600'>{label}</span>")
+    st.markdown(
+        "<div style='display:flex;align-items:baseline;"
+        "gap:.55rem;padding:.2rem 0 .3rem'>"
+        "<span style='flex:0 0 30px'></span>"
+        "<span style='flex:1 1 auto;font-size:.62rem;"
+        "letter-spacing:.11em;text-transform:uppercase;"
+        "color:#a89c92;font-weight:600'>Ticker</span>"
+        + _hd("Full market cap", "0 0 106px")
+        + _hd("Threshold", "0 0 118px")
+        + _hd("Distance", "0 0 66px")
+        + _hd(f"Tests Passed / {_dr:,}", "0 0 150px")
+        + _hd("Probability", "0 0 118px")
+        + "</div>", unsafe_allow_html=True)
+
+    def _wrow(kind, code, cap, thr, dist, n_pass, plabel, disp):
+        # c-396, Bill: the probability cell in the side's own
+        # contrasting hue, bold — same treatment as the call
+        # table above
+        _pc = design.GREEN if kind == "ADD" else design.RED
+        return (
+            f"<div class='drow'>"
+            f"<span class='dact {kind.lower()}'>{kind}</span>"
+            f"<span class='dnm'>{code}</span>"
+            f"<span class='dcode' style='flex:0 0 106px;"
+            f"text-align:right;font-weight:700;color:#1f4e79'>"
+            f"USD {cap:.2f}bn</span>"
+            f"<span class='dcode' style='flex:0 0 118px;"
+            f"text-align:right'>{thr}</span>"
+            f"<span class='dcode' style='flex:0 0 66px;"
+            f"text-align:right'>{dist:.2f}x</span>"
+            f"<span class='dcode' style='flex:0 0 150px;"
+            f"text-align:right'>{n_pass:,}</span>"
+            f"<span class='dcode' style='flex:0 0 118px;"
+            f"text-align:right;font-weight:700;color:{_pc}'>"
+            f"{plabel} = {disp}</span></div>")
+    _rows_html = []
+    for r in d["names"]:
+        disp = (">95%" if r["p_add"] > 0.95
+                else f"{r['p_add']:.0%}")
+        _rows_html.append(_wrow(
+            "ADD", r["code"], r["full_cap_usd_b"],
+            f"USD {_cut * 1.5:.2f}bn bar",
+            r["x_cutoff"] / 1.5,
+            round(r["p_size_mc"] * _dr), "P(add)", disp))
+    for r in dels:
+        disp = (">95%" if r["p_delete"] > 0.95
+                else f"{r['p_delete']:.0%}")
+        _rows_html.append(_wrow(
+            "DEL", r["code"], r["full_cap_usd_b"],
+            f"USD {_cut * 2 / 3:.2f}bn floor",
+            r["x_floor"],
+            round(r["p_size_mc"] * _dr), "P(delete)", disp))
+    st.markdown("".join(_rows_html), unsafe_allow_html=True)
 
 
 @st.cache_data(show_spinner=False)
@@ -832,6 +1165,32 @@ def _call_rows(rows, kind, caps, probs=None):
     probs = probs or {}
     _plabel = "P(add)" if kind == "ADD" else "P(delete)"
 
+    # c-369, Bill: a header row over the call table. The five
+    # columns were self-describing to whoever built them and to
+    # nobody else — the cap and the probability especially, since
+    # "USD 34.37bn" could be float cap and "P(add)" could be the
+    # zone number. The header uses the same flex widths as the
+    # rows below, so the labels sit over their own columns.
+    st.markdown(
+        "<div style='display:flex;align-items:baseline;gap:.55rem;"
+        "padding:.2rem 0 .3rem'>"
+        "<span style='flex:0 0 30px'></span>"
+        "<span style='flex:1 1 auto;font-size:.62rem;"
+        "letter-spacing:.11em;text-transform:uppercase;"
+        "color:#a89c92;font-weight:600'>Company</span>"
+        "<span style='flex:0 0 auto;font-size:.62rem;"
+        "letter-spacing:.11em;text-transform:uppercase;"
+        "color:#a89c92;font-weight:600'>Ticker</span>"
+        "<span style='flex:0 0 96px;text-align:right;"
+        "font-size:.62rem;letter-spacing:.11em;"
+        "text-transform:uppercase;color:#a89c92;"
+        "font-weight:600'>Full mkt cap</span>"
+        "<span style='flex:0 0 118px;text-align:right;"
+        "font-size:.62rem;letter-spacing:.11em;"
+        "text-transform:uppercase;color:#a89c92;"
+        "font-weight:600'>Probability</span></div>",
+        unsafe_allow_html=True)
+
     def _p(code):
         v = probs.get(str(code))
         if v is None:
@@ -844,6 +1203,12 @@ def _call_rows(rows, kind, caps, probs=None):
         # mechanically-safe names share one honest label
         # instead of a false ranking among 99s.
         return ">95%" if v > 0.95 else f"{v:.0%}"
+    # c-396, Bill: the probability cell takes a CONTRASTING
+    # colour — the side's own hue (green for additions, red
+    # for deletions), bold, so the model's output reads at a
+    # glance against the navy caps.
+    from views import design as _dz
+    _pcol = _dz.GREEN if kind == "ADD" else _dz.RED
     st.markdown(
         "".join(
             f"<div class='drow'>"
@@ -854,8 +1219,9 @@ def _call_rows(rows, kind, caps, probs=None):
             f"text-align:right;font-weight:700;color:#1f4e79'>"
             f"{_cap_txt(caps.get(str(r['code'])))}</span>"
             f"<span class='dcode' style='flex:0 0 118px;"
-            f"text-align:right'>"
-            f"{_plabel} {_p(r['code'])}</span></div>"
+            f"text-align:right;font-weight:700;"
+            f"color:{_pcol}'>"
+            f"{_plabel} = {_p(r['code'])}</span></div>"
             for r in rows),
         unsafe_allow_html=True)
 
@@ -974,6 +1340,38 @@ def _results(s):
         # markdown. This is the last place that renders it.
         why = _strip_clauses(
             _md_money(r.get("why", "")).replace("`", ""))
+        # c-382, Bill: bold the cutoff-vs-full-cap comparison —
+        # the cap, the multiple and the cutoff — by PATTERN, so
+        # the bolding follows the registered text through
+        # re-runs rather than being typed against today's
+        # numbers.
+        why = re.sub(
+            r"full market cap of USD ([\d.]+)B is "
+            r"([\d.]+)x the USD ([\d.]+)B cutoff",
+            r"full market cap of **USD \1B** is **\2x** "
+            r"the **USD \3B** cutoff", why)
+        # c-373, Bill: an ADD sitting inside the addition bar's
+        # ±5% band says so, in the same generated structure the
+        # border deletion uses — for the near-bar name the band
+        # IS the story, and the registered why predates the
+        # band frame. Name-free on purpose: the sentence
+        # attaches to whichever name sits in the band after a
+        # re-run.
+        cap_ = r.get("full_cap_usd_b")
+        if (r["action"] == "ADD" and cap_
+                and k["bar"] * (1 - BAND) <= cap_
+                < k["bar"] * (1 + BAND)):
+            off_ = cap_ / k["bar"] - 1
+            why += (
+                f"\n\nIts full market cap of **USD "
+                f"{cap_:.2f}B** sits "
+                f"{'above' if off_ >= 0 else 'below'} the "
+                f"**USD {k['bar']}B** addition bar by "
+                f"**{abs(off_):.1%}** — inside the "
+                f"±{BAND:.0%} band on the estimated addition "
+                f"bar. A slightly differently calculated bar "
+                f"excludes it, so it is reported as a "
+                f"band-borderline addition.")
         body.append(f"**{r['name']} ({r['code']}) — "
                     f"{r['action']}**\n\n{why}")
     # the band-borderline deletions carry a GENERATED why — the
@@ -985,15 +1383,16 @@ def _results(s):
         body.append(
             f"**{b['name'].title()} ({b['code']}) — DEL**\n\n"
             f"Currently in the index. Its full market cap of "
-            f"USD {b['cap_usd_b']:.2f}B sits above the USD "
-            f"{k['floor']}B deletion floor by {over:.1%} — "
-            f"inside the ±{BAND:.0%} band on a floor derived "
-            f"from an estimated float stack. A slightly "
-            f"differently calculated floor deletes it, so it is "
-            f"reported as a band-borderline deletion.")
+            f"**USD {b['cap_usd_b']:.2f}B** sits above the "
+            f"**USD {k['floor']}B** deletion floor by "
+            f"**{over:.1%}** — inside the ±{BAND:.0%} band on "
+            f"the estimated deletion bar. A slightly "
+            f"differently calculated floor deletes it, so it "
+            f"is reported as a band-borderline deletion.")
     if body:
-        with st.expander("Screen Results — why each name is on "
-                         "the list"):
+        # c-382, Bill: the label names WHICH screen these
+        # checks belong to.
+        with st.expander("Addition & Deletion — Size Checks"):
             for b_ in body:
                 st.markdown(b_)
 

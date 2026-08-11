@@ -142,9 +142,9 @@ def _mand_stamp():
 
 @st.cache_data(show_spinner=False)
 def _load_mandate(stamp=None):
-    """scripts/tw_mandate_size.py — MSCI's own Q2 2026 filings,
-    turned into a conservative floor on the indexed money that
-    must buy a Taiwan Standard addition."""
+    """scripts/tw_mandate_size.py — MSCI's own Q2 2026 filings
+    and earnings-call disclosure, turned into an estimate of the
+    indexed money that must buy a Taiwan Standard addition."""
     if not MAND_SRC.exists():
         return None
     return json.loads(MAND_SRC.read_text(encoding="utf-8"))
@@ -207,14 +207,61 @@ def _load_limits(stamp=None):
     return json.loads(LIM_SRC.read_text(encoding="utf-8"))
 
 
+VR_SRC = ROOT / "data" / "tw_volume_revealed_aum.json"
+TR_SRC = ROOT / "data" / "tw_tracker_replication.json"
+
+
+def _vr_stamp():
+    out = []
+    for p in (VR_SRC, TR_SRC):
+        try:
+            st_ = p.stat()
+            out.append((st_.st_mtime_ns, st_.st_size))
+        except OSError:
+            out.append((0, 0))
+    return tuple(out)
+
+
+@st.cache_data(show_spinner=False)
+def _load_aum_crosschecks(stamp=None):
+    """The two c-375 cross-checks on the AUM basis: the close's
+    own volume inverted into revealed AUM, and the fund-by-fund
+    replication of the ETF slice."""
+    vr = (json.loads(VR_SRC.read_text(encoding="utf-8"))
+          if VR_SRC.exists() else None)
+    tr = (json.loads(TR_SRC.read_text(encoding="utf-8"))
+          if TR_SRC.exists() else None)
+    return vr, tr
+
+
+DB_SRC = ROOT / "data" / "tw_deletion_borrow.json"
+
+
+def _db_stamp():
+    try:
+        st_ = DB_SRC.stat()
+        return (st_.st_mtime_ns, st_.st_size)
+    except OSError:
+        return (0, 0)
+
+
+@st.cache_data(show_spinner=False)
+def _load_del_borrow(stamp=None):
+    if not DB_SRC.exists():
+        return None
+    return json.loads(DB_SRC.read_text(encoding="utf-8"))
+
+
 def _pc(v, f="{:+.2%}"):
     return f.format(v) if v is not None else "—"
 
 
 def _note(txt):
+    # c-401, Bill: left-aligned — both callers are numbered
+    # multi-line Notes now, and a centred list reads ragged.
     st.markdown(
         f"<p style='font-size:.8rem;color:{MUTED};margin:"
-        f".1rem 0 .5rem;text-align:center'>{txt}</p>",
+        f".1rem 0 .5rem;text-align:left'>{txt}</p>",
         unsafe_allow_html=True)
 
 
@@ -254,6 +301,133 @@ def render():
     # the August section needs the scenarios.
     ADD, SCN = _load_addition(_add_stamp())
 
+    # ---- foreign flow vs a normal day (c-357) ---------------
+    #
+    # Bill: can we measure daily foreign net buying for
+    # index-change stocks ON the effective date, against normal
+    # times — and ideally the whole window, before the
+    # announcement and after the effective date?
+    #
+    # YES, AND THE BASELINE WAS THE MISSING PIECE. The phase
+    # aggregates existed in the addition study; what nothing on
+    # the site had was the yardstick that makes them readable —
+    # each stock's OWN normal day, measured over the 100 sessions
+    # ending 21 before its announcement. With phases converted to
+    # per-session rates the comparison is finally one unit, and
+    # the answer is sharp: the pre and mid phases sit INSIDE the
+    # normal range; the flow lands on the effective day.
+    FB = _load_foreign_baseline(_fb_stamp())
+    _fb = 0
+    if FB:
+        _fb = 1
+        design.sect(_used + 1,
+                    "Foreign Flow Through the Rebalance Window",
+                    "Daily foreign net buying by phase, as a "
+                    "multiple of the same stock's own normal day")
+        A_fb = FB["sides"]["ADD"]
+        D_fb = FB["sides"]["DEL"]
+        # c-359, Bill: the "A normal day / 8% of ADV" card is
+        # off. The baseline still exists — it is the DENOMINATOR
+        # of every multiple on the chart and stays in the hover
+        # and the doc — but as a headline card it read as a
+        # finding, and it is a yardstick.
+        design.stats([
+            {"k": "Effective day, additions",
+             "v": f"{A_fb['x_normal']['eff']['p50']:+.1f}\u00d7",
+             "s": f"a normal day \u00b7 n={A_fb['n']}"},
+            {"k": "Effective day, deletions",
+             "v": f"{D_fb['x_normal']['eff']['p50']:+.1f}\u00d7",
+             "s": f"a normal day \u00b7 n={D_fb['n']}"},
+            # c-370, Bill: the post-print card is OFF. The
+            # deletion tail survives in the chart's post-phase
+            # bar and in the doc.
+        ])
+        _phases = [("pre", "30 sessions before announcement"),
+                   ("mid", "announcement \u2192 effective"),
+                   ("eff", "the effective day"),
+                   ("post", "10 sessions after")]
+        fig = go.Figure()
+        for side, col, sd in (("ADD", GREEN, A_fb),
+                              ("DEL", RED, D_fb)):
+            xs = [sd["x_normal"][ph]["p50"] for ph, _ in _phases]
+            fig.add_bar(
+                y=[lab for _, lab in _phases][::-1],
+                x=xs[::-1], orientation="h",
+                # c-368, Bill: full words on the legend, matching
+                # the volume sections' legends
+                name=("Additions" if side == "ADD"
+                      else "Deletions"),
+                marker_color=col, marker_line_width=0,
+                # c-370, Bill: the IQR row and the per-session
+                # disclosure are OFF the hover \u2014 three rows, two
+                # significant figures each.
+                customdata=[[sd["rates_adv"][ph]["p50"] * 100,
+                             sd["n"]]
+                            for ph, _ in _phases][::-1],
+                # c-378, Bill: every hover figure at TWO
+                # significant figures \u2014 the deletions'
+                # effective-day rate was printing three
+                # ("-77.2% of ADV"); d3's .2g trims all of
+                # them to two.
+                hovertemplate=design.hover(
+                    "%{y}",
+                    eyebrow=("additions" if side == "ADD"
+                             else "deletions"),
+                    rows=[("median, \u00d7 a normal day",
+                           "%{x:+.2g}\u00d7"),
+                          ("flow per session",
+                           "%{customdata[0]:+.2g}% of ADV"),
+                          ("events", "%{customdata[1]}")]))
+        # c-361, Bill asked whether these n's should match the
+        # intraday sections'. NO, AND THE DIFFERENCE IS THE
+        # INSTRUMENT, NOT A MISTAKE. Sections 1-4 run on IB
+        # 5-minute bars, which reach back only to May 2023 — 43
+        # Taiwan events. This section runs on the daily T86 flow
+        # file, 2015-2026 — 107 events carry flow, and 97 also
+        # support a clean pre-event baseline. Forcing this
+        # section down to the intraday window would discard
+        # two-thirds of its own sample to match a limit it does
+        # not have. Each section uses the deepest history its
+        # source supports, and the Data Review section names
+        # each source.
+        fig.add_vline(x=1, line_color=RULE, line_width=1,
+                      line_dash="dot")
+        fig.add_vline(x=-1, line_color=RULE, line_width=1,
+                      line_dash="dot")
+        # c-361 put the label inside the band; c-368 moved it to
+        # the top of the plot area \u2014 where the first row's bars
+        # still ran over it. c-370, Bill: it goes ABOVE the plot
+        # entirely, into the top margin beside the legend, where
+        # no bar can reach it.
+        fig.add_annotation(
+            x=0, y=1.02, yref="paper", yanchor="bottom",
+            showarrow=False,
+            text="\u00b11 normal day band",
+            font=dict(size=10.5, color=MUTED))
+        fig.update_layout(
+            height=310, barmode="group",
+            legend=dict(orientation="h", yanchor="bottom",
+                        y=1.0, x=0),
+            xaxis=dict(title="median foreign net flow per "
+                             "session, \u00d7 the stock's own "
+                             "normal day"),
+            yaxis=dict(title=""),
+            # c-370: the top margin holds the legend AND the
+            # band label now
+            margin=dict(l=0, t=48, b=40))
+        design.chart(fig)
+        # c-370, Bill: the instrument note (c-368) is off the
+        # page again; the per-side n stays in the hover and on
+        # the cards.
+        design.caveat(
+            "On the effective day, the median addition "
+            f"draws <b>{A_fb['x_normal']['eff']['p50']:.1f}"
+            "\u00d7</b> the stock's normal day and the median "
+            "deletion prints "
+            f"<b>{D_fb['x_normal']['eff']['p50']:.1f}\u00d7</b>, "
+            "reflecting the same one-day concentration shown "
+            "in the volume chart above.")
+
     # ---- has anyone bought them yet? (c-326) ----------------
     PP = _load_prepos(_pp_stamp())
     _pre = 0
@@ -261,10 +435,14 @@ def render():
         _pre = 1
         W = PP["windows"]["20"]
         B = PP["historical_benchmark"]
-        design.sect(_used + 1,
-                    "Market Positioning Before Announcement Day",
-                    "Foreign flow into the three candidates for "
-                    "index inclusion, compared against other "
+        design.sect(_used + 1 + _fb,
+                    # c-370, Bill: the addition half of the
+                    # positioning pair — the deletion half (the
+                    # borrow) follows it.
+                    "Market Positioning Before Announcement "
+                    "Day — Addition",
+                    "Foreign flow into the candidates for "
+                    "index addition, compared against other "
                     "large caps over the same sessions")
         # c-334, Bill: *"the ADV days unit needs to be rewritten.
         # People don't associate this with volume unit right
@@ -347,13 +525,16 @@ def render():
                                "day's volume"),
             yaxis=dict(title=""), margin=dict(l=0, t=50, b=40))
         design.chart(fig)
-        _note(f"Peer set = the {W['peer_set_n']} largest "
-              f"companies listed on the TWSE, which publishes "
-              f"daily buying and selling by foreign and other "
-              f"investor types. A reading of "
-              f"1.00\u00d7 means net buying equal to one normal "
-              f"day's total volume in that stock, accumulated "
-              f"across all 20 sessions.")
+        # c-401, Bill: same numbered bold-Note grammar as the
+        # sizing table's note.
+        _note("<b>Note:</b><br>"
+              f"1. Peer set = the {W['peer_set_n']} largest "
+              "companies listed on the TWSE, which publishes "
+              "daily buying and selling by foreign and other "
+              "investor types.<br>"
+              "2. A reading of 1.00\u00d7 means net buying equal "
+              "to one normal day's total volume in that stock, "
+              "accumulated across all 20 sessions.")
         # c-343, Bill: use 2026-08-07.
         #
         # RECORDED SO A LATER READER IS NOT MISLED. The T86 flow
@@ -364,132 +545,109 @@ def render():
         # than read from PP["flow_data_to"] — which means it will
         # NOT move when the flow harvest advances. Anyone
         # re-running this should check both.
+        # c-370, Bill's wording: the volatility sentence and the
+        # TPEx qualifier are cut.
         design.caveat(
-            "All three candidates sat <b>BELOW the peer "
-            "median</b> for foreign net buying over the 20 "
-            "sessions to <b>2026-08-07</b>, while foreigners "
-            "were <b>net BUYERS of the peer set</b>, the 100 "
-            "largest companies listed on the TWSE. The Taiwan "
-            "market experienced <b>heightened "
-            "volatility</b> over the same period, which may "
-            "partly account for the net foreign selling in these "
-            "three names. For context, a typical Taiwan index "
-            "addition draws <b>"
+            "All three candidates for addition sat <b>BELOW "
+            "the peer median</b> for foreign net buying over "
+            "the 20 sessions to 2026-08-07, while "
+            "foreigners were <b>net BUYERS of the peer set</b>, "
+            "the 100 largest companies listed on the TWSE. For "
+            "context, a typical Taiwan index addition draws <b>"
             f"{B['foreign_pre_announcement_adv_days']['p50']:+.2f}"
             "\u00d7 a normal day's volume</b> of foreign buying in "
             "the 20 sessions before its announcement.")
 
-    # ---- foreign flow vs a normal day (c-357) ---------------
+    # ---- the deletion's footprint (c-368) --------------------
     #
-    # Bill: can we measure daily foreign net buying for
-    # index-change stocks ON the effective date, against normal
-    # times — and ideally the whole window, before the
-    # announcement and after the effective date?
-    #
-    # YES, AND THE BASELINE WAS THE MISSING PIECE. The phase
-    # aggregates existed in the addition study; what nothing on
-    # the site had was the yardstick that makes them readable —
-    # each stock's OWN normal day, measured over the 100 sessions
-    # ending 21 before its announcement. With phases converted to
-    # per-session rates the comparison is finally one unit, and
-    # the answer is sharp: the pre and mid phases sit INSIDE the
-    # normal range; the flow lands on the effective day.
-    FB = _load_foreign_baseline(_fb_stamp())
-    _fb = 0
-    if FB:
-        _fb = 1
-        design.sect(_used + 1 + _pre,
-                    "Foreign Flow Through the Rebalance Window",
-                    "Daily foreign net buying by phase, as a "
-                    "multiple of the same stock's own normal day")
-        A_fb = FB["sides"]["ADD"]
-        D_fb = FB["sides"]["DEL"]
-        # c-359, Bill: the "A normal day / 8% of ADV" card is
-        # off. The baseline still exists — it is the DENOMINATOR
-        # of every multiple on the chart and stays in the hover
-        # and the doc — but as a headline card it read as a
-        # finding, and it is a yardstick.
+    # Bill: the call carries one border deletion, Caliway 6919,
+    # P(delete) 36%. A fund positioned for it is SHORT, a short
+    # needs a borrow, and TWSE publishes every name's SBL balance
+    # daily — so if the trade is crowded, THIS series says so.
+    DB = _load_del_borrow(_db_stamp())
+    _db = 0
+    if DB:
+        _db = 1
+        L_ = DB["latest"]
+        C_ = DB["change"]
+        _lb = DB["lending_began"]
+        _lb_iso = f"{_lb[:4]}-{_lb[4:6]}-{_lb[6:]}"
+        # c-370, Bill: retitled as the deletion half of the
+        # positioning pair, and it sits directly under the
+        # addition half.
+        design.sect(_used + 1 + _pre + _fb,
+                    "Market Positioning Before Announcement "
+                    "Day — Deletion",
+                    "Securities-lending balance of the "
+                    "candidates for index deletion")
+        # c-376, Bill: both cards value-only, one format — the
+        # ADV multiple and the returned/built read move to the
+        # caveat's prose.
         design.stats([
-            {"k": "Effective day, additions",
-             "v": f"{A_fb['x_normal']['eff']['p50']:+.1f}\u00d7",
-             "s": f"a normal day \u00b7 n={A_fb['n']}"},
-            {"k": "Effective day, deletions",
-             "v": f"{D_fb['x_normal']['eff']['p50']:+.1f}\u00d7",
-             "s": f"a normal day \u00b7 n={D_fb['n']}"},
-            {"k": "After the print, deletions",
-             "v": f"{D_fb['x_normal']['post']['p50']:+.1f}\u00d7",
-             "s": "per session, for ten more sessions"},
+            # kind="num" on both: the change card's 13-character
+            # value would otherwise trip the phrase treatment
+            # and the two figures would render in two styles —
+            # the exact mismatch Bill asked to avoid.
+            {"k": "Borrow balance", "kind": "num",
+             "v": f"{L_['balance_shares'] / 1e6:.1f}m shares"},
+            {"k": f"Change, last {C_['sessions']} sessions",
+             "kind": "num",
+             "v": f"{C_['shares'] / 1e6:+.2f}m shares"},
         ])
-        _phases = [("pre", "20 sessions before announcement"),
-                   ("mid", "announcement \u2192 effective"),
-                   ("eff", "the effective day"),
-                   ("post", "10 sessions after")]
         fig = go.Figure()
-        for side, col, sd in (("ADD", GREEN, A_fb),
-                              ("DEL", RED, D_fb)):
-            xs = [sd["x_normal"][ph]["p50"] for ph, _ in _phases]
-            fig.add_bar(
-                y=[lab for _, lab in _phases][::-1],
-                x=xs[::-1], orientation="h", name=side,
-                marker_color=col, marker_line_width=0,
-                customdata=[[sd["x_normal"][ph]["p25"],
-                             sd["x_normal"][ph]["p75"],
-                             sd["rates_adv"][ph]["p50"] * 100,
-                             sd["n"]]
-                            for ph, _ in _phases][::-1],
-                hovertemplate=design.hover(
-                    "%{y}",
-                    eyebrow=("additions" if side == "ADD"
-                             else "deletions"),
-                    rows=[("median, \u00d7 a normal day",
-                           "%{x:+.1f}\u00d7"),
-                          ("IQR", "%{customdata[0]:+.1f} to "
-                                  "%{customdata[1]:+.1f}\u00d7"),
-                          ("flow per session",
-                           "%{customdata[2]:+.1f}% of ADV"),
-                          ("events", "%{customdata[3]}")],
-                    note="phases are per-session rates, so all "
-                         "four rows share one unit"))
-        # c-361, Bill asked whether these n's should match the
-        # intraday sections'. NO, AND THE DIFFERENCE IS THE
-        # INSTRUMENT, NOT A MISTAKE. Sections 1-4 run on IB
-        # 5-minute bars, which reach back only to May 2023 — 43
-        # Taiwan events. This section runs on the daily T86 flow
-        # file, 2015-2026 — 107 events carry flow, and 97 also
-        # support a clean pre-event baseline. Forcing this
-        # section down to the intraday window would discard
-        # two-thirds of its own sample to match a limit it does
-        # not have. Each section uses the deepest history its
-        # source supports, and the Data Review section names
-        # each source.
-        fig.add_vline(x=1, line_color=RULE, line_width=1,
-                      line_dash="dot")
-        fig.add_vline(x=-1, line_color=RULE, line_width=1,
-                      line_dash="dot")
-        # c-361, Bill: the label sits INSIDE the band it names,
-        # centred at zero, rather than hanging off the -1 line.
-        fig.add_annotation(
-            x=0, y=-0.13, yref="paper", showarrow=False,
-            text="\u00b11 normal day band",
-            font=dict(size=10.5, color=MUTED))
+        _ds = [f"{r['d'][:4]}-{r['d'][4:6]}-{r['d'][6:]}"
+               for r in DB["series"]]
+        fig.add_scatter(
+            x=_ds, y=[r["bal"] / 1e6 for r in DB["series"]],
+            mode="lines", line=dict(color=NAVY, width=2.2),
+            hovertemplate=design.hover(
+                DB["name"], eyebrow="SBL borrow balance",
+                rows=[("date", "%{x}"),
+                      ("on loan", "%{y:.2f}m shares")]))
         fig.update_layout(
-            height=310, barmode="group",
-            legend=dict(orientation="h", yanchor="bottom",
-                        y=1.0, x=0),
-            xaxis=dict(title="median foreign net flow per "
-                             "session, \u00d7 the stock's own "
-                             "normal day"),
-            yaxis=dict(title=""),
-            margin=dict(l=0, t=30, b=40))
+            height=300, showlegend=False,
+            # c-376, Bill: month-only ticks — the day of the
+            # month is noise on a five-month axis; the exact
+            # date stays in the hover.
+            xaxis=dict(title="", type="date",
+                       tickformat="%b %Y", dtick="M1"),
+            yaxis=dict(title="shares on loan (millions)"))
         design.chart(fig)
+        # c-376, Bill: the caveat leads with the RECENT TREND —
+        # the last three months, computed from the series — and
+        # mentions the zero-before-March fact briefly. The ADV
+        # multiple and the returned/built read move here from
+        # the cards.
+        _s = DB["series"]
+        _ref = _s[-min(63, len(_s))]
+        _ref_mon = {
+            "01": "January", "02": "February", "03": "March",
+            "04": "April", "05": "May", "06": "June",
+            "07": "July", "08": "August", "09": "September",
+            "10": "October", "11": "November",
+            "12": "December"}[_ref["d"][4:6]]
+        _chg3m = (L_["balance_shares"] / _ref["bal"] - 1
+                  if _ref["bal"] else None)
+        # c-385, Bill's two-sentence version: the trend, then
+        # the zero-before-March note — everything else is cut.
         design.caveat(
-            "On the effective day itself the median addition "
-            f"draws <b>{A_fb['x_normal']['eff']['p50']:.1f}"
-            "\u00d7</b> the stock's normal day and the median "
-            "deletion prints "
-            f"<b>{D_fb['x_normal']['eff']['p50']:.1f}\u00d7</b> "
-            "\u2014 the same one-day concentration shown in the "
-            "volume chart above.")
+            f"Over the past three months the borrow has been "
+            f"<b>steadily unwound</b>: from "
+            f"<b>{_ref['bal'] / 1e6:.1f}m shares</b> in early "
+            f"{_ref_mon} to "
+            f"<b>{L_['balance_shares'] / 1e6:.1f}m</b> "
+            f"(<b>{_chg3m:+.0%}</b>), falling "
+            f"(<b>{C_['pct']:+.0%}</b>) over the last "
+            f"{C_['sessions']} sessions. Note: the data "
+            f"extracted from TWSE shows a zero balance "
+            f"before {_lb_iso}."
+            if _chg3m is not None else
+            f"The balance stands at "
+            f"<b>{L_['balance_shares'] / 1e6:.1f}m shares</b> "
+            f"({C_['pct']:+.0%} over the last "
+            f"{C_['sessions']} sessions). Note: the data "
+            f"extracted from TWSE shows a zero balance before "
+            f"{_lb_iso}.")
 
     # ---- the tracker's capacity question (c-321) ------------
     PB = _load_playbook(_pb_stamp())
@@ -500,17 +658,18 @@ def render():
         # playbook, no sized names — and the close multiple is
         # still in the chart hover, computed per name from
         # `ordinary_close_shares` rather than from this median.
-        # c-325, Bill: Phison off the chart. Its addition verdict
-        # flips inside the ±5% band on the cutoff, and a capacity
-        # ladder is a SIZING tool — sizing a book from a name you
-        # are not standing behind is the wrong default. The rank
-        # is assigned after the filter, not before, so the chart
-        # reads 1-2-3 rather than 2-3-4.
+        # c-325 kept Phison off the chart while its verdict was
+        # a coin-flip zone. c-368, Bill: the call is FOUR
+        # additions with a per-name Monte Carlo P(add) — Phison
+        # prices at 65%, not a shrug — so the playbook now ranks
+        # all four and this ladder sizes all four.
         rows = sorted([kv for kv in PB["names"].items()
                        if kv[1].get("capacity_rank")],
                       key=lambda kv: kv[1]["capacity_rank"])
-        design.sect(_used + 1 + _pre + _fb,
-                    "How Big Is the Market on Close Order",
+        design.sect(_used + 1 + _pre + _fb + _db,
+                    # c-381, Bill: named for what it estimates.
+                    "Estimated Trading Volume on the "
+                    "Effective Day",
                     "Expected order size at the closing auction "
                     "on the effective day")
 
@@ -572,6 +731,17 @@ def render():
         #
         # 45.0 x 1.33 = 60. Every input is in
         # scripts/tw_mandate_size.py with its filing and table.
+        #
+        # c-400, Bill: "use 0.45bp as the fee rate, and update
+        # all estimates." THE BASIS MOVES FROM 60 TO 125. MSCI
+        # stated ~USD 5tn of NON-ETF indexed AUM on its Q2 2026
+        # call, which replaces the fee-inversion step: 5,000 /
+        # 2,818 = 1.77x per ETF dollar (not 0.33x), and the
+        # implied non-ETF fee rate is 56.0 x 4 / 5,000bn =
+        # 0.45bp -- a fifth of the 2.28bp ETF rate, which is
+        # WHY the inversion at the ETF rate was a floor. 45.0 x
+        # 2.77 = 125. The 60 survives in the JSON and in the
+        # expander as floor_variant.
         MAND = _load_mandate(_mand_stamp())
         TWM = MAND["taiwan"] if MAND else None
         BASIS = (TWM["estimate_always_buys_usd_b"] if TWM
@@ -610,85 +780,66 @@ def render():
         # drawn from. The IMI paragraph and the holdings test
         # live in the per-name dropdowns, where they attach to
         # the name they might apply to.
+        # c-381, Bill: the 13.4 line is shortened and now SAYS
+        # how it relates to the 0.08 (it contains it); the
+        # mandate money gets its own explicit line instead of
+        # hiding inside the 60; and the 60 line becomes the sum.
+        # c-397 cut the title and ETF bullets; c-398, Bill:
+        # they return in a new layout \u2014 each bold dollar label
+        # on its own line, the roster trimmed, and a summary
+        # line before the no-ticker money.
         design.caveat(
             "<b>Tracking AUM Calculation</b>"
             "<br><br>"
-            f"<b>USD {T_['uncapped']:.2f}bn:</b> tracks the "
-            "UNCAPPED MSCI Taiwan Index \u2014 two Taiwan-domiciled "
-            "ETFs, Yuanta 006203 and Fubon 0057."
+            f"<b>USD {T_['uncapped']:.2f}bn:</b><br>"
+            "Tracks the UNCAPPED MSCI Taiwan Index \u2014 two "
+            "Taiwan-domiciled ETFs, Yuanta 006203 and Fubon "
+            "0057."
             "<br><br>"
-            f"<b>USD {T_['family']:.1f}bn</b> is the total across "
-            "every MSCI Taiwan index, mostly iShares EWT on the "
-            "25/50 variant. These buy a Taiwan Standard addition "
-            "too \u2014 it enters the MSCI Taiwan Index and its "
-            "capped variants at the same review."
+            f"<b>USD {T_['family']:.1f}bn:</b><br>"
+            "Every ETF on the MSCI Taiwan indexes themselves "
+            "\u2014 the two uncapped funds above plus the capped "
+            "variants, led by iShares EWT. A Standard "
+            "addition enters all of these indexes at the "
+            "same review."
             "<br><br>"
-            f"<b>USD {T_['case_promotion']:.0f}bn:</b> Taiwan sits "
-            "inside MSCI EM and ACWI STANDARD trackers \u2014 EEM, "
-            "EMXC, the Xtrackers/Amundi/UBS/HSBC UCITS range, ACWI "
-            "and SSAC. Standard indexes have no small-cap segment, "
-            "so the addition is a new holding for every one of "
-            "them. With the Taiwan funds above, <b>USD "
-            f"{TWM['always_buys_named_etf_usd_b']:.0f}bn</b> of "
-            "named ETFs must buy."
+            f"<b>USD {T_['case_promotion']:.0f}bn:</b><br>"
+            "Taiwan sits inside MSCI EM and ACWI STANDARD "
+            "trackers (ex. EEM, EMXC). Standard indexes have "
+            "no small-cap segment, so the addition is a new "
+            "holding for every one of these tracking funds."
             "<br><br>"
-            f"<b>USD {BASIS:.0f}bn</b> is our conservative "
-            "estimate of the FLOOR on MSCI Taiwan tracking "
-            "assets, and the number every figure below is built "
-            "on. It adds the indexed money that "
-            "has no ticker \u2014 separate accounts, index mutual "
-            "funds, pension mandates \u2014 which MSCI reports "
-            "revenue on and assets for. See the working below."
+            "In total, approximately <b>USD "
+            f"{TWM['always_buys_named_etf_usd_b']:.0f}bn</b> "
+            "of ETFs track the Taiwan market."
+            "<br><br>"
+            f"<b>USD "
+            f"{BASIS - TWM['always_buys_named_etf_usd_b']:.0f}"
+            f"bn:</b><br>"
+            "The indexed money not in the form of ETFs \u2014 "
+            "separate accounts, index mutual funds, pension "
+            "mandates. MSCI disclosed this pool at ~USD 5 "
+            "trillion on its Q2 2026 earnings call, which is "
+            "1.77\u00d7 its ETF pool. Assuming that non-ETF to "
+            "ETF ratio holds for Taiwan, applying 1.77\u00d7 to "
+            "the USD 45bn of Taiwan ETFs above derives a "
+            "non-ETF pool of USD "
+            f"{BASIS - TWM['always_buys_named_etf_usd_b']:.0f}"
+            "bn. For more details, see the calculation below."
+            "<br><br>"
+            f"<b>USD {BASIS:.0f}bn = "
+            f"{TWM['always_buys_named_etf_usd_b']:.0f}bn + "
+            f"{BASIS - TWM['always_buys_named_etf_usd_b']:.0f}"
+            f"bn</b> \u2014 becomes our estimate of all MSCI "
+            "Taiwan tracking money."
             if TWM else
             "<b>Tracking AUM Calculation</b>"
             "<br><br>"
             f"<b>USD {BASIS:.0f}bn</b> of named ETFs must buy.")
 
-        design.stats([
-            {"k": "Tracking Fund AUM",
-             "v": f"USD {BASIS:.0f}bn",
-             "s": "conservative floor"},
-            {"k": "Largest order",
-             "v": f"{F_[rows[0][0]]['adv_x']:.0%} of ADV",
-             "s": f"{rows[0][1]['name'][:22]}"},
-            {"k": "Smallest order",
-             "v": f"{F_[rows[-1][0]]['adv_x']:.0%} of ADV",
-             "s": f"{rows[-1][1]['name'][:22]}"},
-        ])
-        fig = go.Figure()
-        fig.add_bar(
-            y=[f"{r['name'][:24]} ({c})" for c, r in rows][::-1],
-            x=[F_[c]["adv_x"] * 100 for c, _r in rows][::-1],
-            orientation="h", marker_color=NAVY,
-            marker_line_width=0,
-            text=[f"  {F_[c]['adv_x']:.0%}" for c, _r in rows][::-1],
-            textposition="outside",
-            textfont=dict(size=12, color=NAVY),
-            customdata=[[F_[c]["shares"] / 1e6, F_[c]["usd_m"],
-                         F_[c]["closes"], r["index_weight_pct"]]
-                        for c, r in rows][::-1],
-            hovertemplate=design.hover(
-                "%{y}", eyebrow=f"at USD {BASIS:.0f}bn",
-                rows=[("share of one day's volume", "%{x:.1f}%"),
-                      ("shares to buy",
-                       "%{customdata[0]:,.1f}m"),
-                      ("which is", "USD %{customdata[1]:,.0f}m"),
-                      ("ordinary closes",
-                       "%{customdata[2]:.1f}\u00d7"),
-                      ("index weight",
-                       "%{customdata[3]:.3f}%")],
-                note="The indexed money that must buy a "
-                     "Standard addition whatever size segment it "
-                     "came from \u2014 ETFs and mandates both"))
-        fig.update_layout(
-            height=300, showlegend=False,
-            xaxis=dict(title="index demand, as a % of the "
-                             "name's average daily volume",
-                       range=[0, max(F_[c]["adv_x"] for c, _r
-                                     in rows) * 118]),
-            yaxis=dict(title=""), margin=dict(l=0, t=16, b=0))
-        design.chart(fig)
-
+        # c-396, Bill: the mandate working sits DIRECTLY
+        # under the Tracking AUM Calculation it explains,
+        # before the stat cards and the chart.
         # c-347, Bill: the four-step derivation moves OUT of a
         # paragraph and into one dropdown per name, in the shape
         # the Predict page already uses for the size ladder.
@@ -709,105 +860,175 @@ def render():
             N_ = MAND["non_etf_indexed"]
             with st.expander(
                     f"Calculation \u2014 the USD {BASIS:.0f}bn "
-                    f"mandate, and why it is a floor"):
+                    f"mandate, and where each number comes "
+                    f"from"):
                 st.markdown(
-                    f"**Where the numbers come from.** MSCI Inc. "
-                    f"reports the assets its indexes are licensed "
-                    f"against to the SEC. These four figures are "
-                    f"from its Q2 2026 results for the quarter "
-                    f"ended {M_['as_of']}, filed "
-                    f"{M_['filed']}.\n\n"
-                    f"| Figure | Value |\n| --- | --- |\n"
+                    f"**Where the numbers come from.** Every "
+                    f"input is MSCI Inc.'s own Q2 2026 "
+                    f"reporting for the quarter ended "
+                    f"{M_['as_of']}, filed {M_['filed']}.\n\n"
+                    f"| Figure | Value | Source |\n"
+                    f"| --- | --- | --- |\n"
                     f"| ETF AUM linked to MSCI equity indexes | "
-                    f"USD {M_['etf_aum_total_usd_b']:,.0f}bn |\n"
-                    f"| of which Emerging Markets / All Country | "
-                    f"USD {M_['etf_aum_em_ac_usd_b']:,.0f}bn |\n"
+                    f"USD {M_['etf_aum_total_usd_b']:,.0f}bn | "
+                    f"8-K Table 7 |\n"
+                    f"| Non-ETF indexed AUM | ~USD "
+                    f"{M_['non_etf_aum_disclosed_usd_b']:,.0f}"
+                    f"bn | Q2-26 earnings call |\n"
                     f"| Quarterly fee revenue, ETFs | USD "
-                    f"{M_['abf_etf_usd_m']:,.1f}m |\n"
-                    f"| Quarterly fee revenue, NON-ETF indexed "
+                    f"{M_['abf_etf_usd_m']:,.1f}m | presentation "
+                    f"p13 |\n"
+                    f"| Quarterly fee revenue, non-ETF indexed "
                     f"funds | USD "
-                    f"{M_['abf_non_etf_indexed_usd_m']:,.1f}m "
-                    f"|\n\n"
+                    f"{M_['abf_non_etf_indexed_usd_m']:,.1f}m | "
+                    f"presentation p13 |\n\n"
                     f"**1 \u00b7 The ETFs that must buy.** USD "
                     f"{T_['case_promotion']:.1f}bn of Taiwan "
                     f"exposure inside Standard EM and ACWI "
-                    f"trackers, plus USD {T_['family']:.1f}bn of "
-                    f"ETFs on the MSCI Taiwan indexes themselves, "
-                    f"which enter the same addition at the same "
-                    f"review.\n\n"
+                    f"trackers, plus USD {T_['family']:.1f}bn "
+                    f"of ETFs on the MSCI Taiwan indexes "
+                    f"themselves.\n\n"
                     f"`USD {T_['case_promotion']:.1f}bn + USD "
                     f"{T_['family']:.1f}bn = USD "
-                    f"{TWM['always_buys_named_etf_usd_b']:.1f}bn`"
-                    f"\n\n"
-                    f"**2 \u00b7 The money with no ticker.** MSCI "
-                    f"publishes fee REVENUE on non-ETF indexed "
-                    f"funds \u2014 separate accounts, index mutual "
-                    f"funds, pension mandates \u2014 but not their "
-                    f"assets. Invert the revenue at the fee rate "
-                    f"MSCI actually earned on ETFs that quarter, "
-                    f"{N_['etf_effective_bp_annualised']:.2f} "
-                    f"basis points.\n\n"
-                    f"`USD {M_['abf_non_etf_indexed_usd_m']:,.1f}m "
-                    f"\u00d7 4 \u00f7 "
-                    f"{N_['etf_effective_bp_annualised']:.2f}bp = "
-                    f"USD "
-                    f"{N_['non_etf_indexed_aum_floor_usd_b']:,.0f}"
+                    f"{TWM['always_buys_named_etf_usd_b']:.1f}"
                     f"bn`\n\n"
-                    f"Against the ETF pool that is:\n\n"
+                    f"**2 \u00b7 Non-ETF size.** MSCI "
+                    f"now DISCLOSES the non-ETF indexed pool "
+                    f"\u2014 ~USD "
+                    f"{M_['non_etf_aum_disclosed_usd_b']:,.0f}"
+                    f"bn (stated on the Q2 2026 call). "
+                    f"Against the ETF pool:\n\n"
                     f"`USD "
-                    f"{N_['non_etf_indexed_aum_floor_usd_b']:,.0f}bn "
-                    f"\u00f7 USD "
+                    f"{M_['non_etf_aum_disclosed_usd_b']:,.0f}"
+                    f"bn \u00f7 USD "
                     f"{M_['etf_aum_total_usd_b']:,.0f}bn = "
-                    f"{N_['multiplier_floor']:.2f}\u00d7`\n\n"
-                    f"At least "
-                    f"{N_['multiplier_floor'] * 100:.0f} cents of "
-                    f"mandate money for every dollar in an "
-                    f"ETF.\n\n"
-                    f"**3 \u00b7 The estimate.**\n\n"
+                    f"{N_['multiplier_disclosed']:.2f}\u00d7`\n\n"
+                    f"The implied non-ETF fee rate:\n\n"
+                    f"`USD "
+                    f"{M_['abf_non_etf_indexed_usd_m']:,.1f}m "
+                    f"\u00d7 4 \u00f7 USD "
+                    f"{M_['non_etf_aum_disclosed_usd_b']:,.0f}"
+                    f"bn = {N_['non_etf_bp_derived']:.2f}bp`\n\n"
+                    f"**3 \u00b7 Total tracking AUM.**\n\n"
                     f"`USD "
                     f"{TWM['always_buys_named_etf_usd_b']:.1f}bn "
-                    f"\u00d7 {TWM['mandate_multiplier']:.2f} = USD "
-                    f"{BASIS:.0f}bn`\n\n"
-                    f"[MSCI Q2 2026 results]"
+                    f"\u00d7 {TWM['mandate_multiplier']:.2f} = "
+                    f"USD {BASIS:.0f}bn`\n\n"
+                    f"[Q2 2026 results]"
                     f"({M_['sources']['release']}) \u00b7 "
                     f"[earnings presentation]"
-                    f"({M_['sources']['presentation']})")
+                    f"({M_['sources']['presentation']}) \u00b7 "
+                    f"[earnings call]"
+                    f"({M_['sources']['earnings_call']})")
 
-        for _c, _r in rows:
-            f = F_[_c]
-            with st.expander(
-                    f"Calculation \u2014 {_r['capacity_rank']}. "
-                    f"{_r['name'][:30]} ({_c})  "
-                    f"{f['adv_x']:.0%} of ADV"):
-                st.markdown(
-                    f"**1 \u00b7 Index weight.** Free-float market "
-                    f"cap over the index's own free-float value.\n\n"
-                    f"`USD {f['float_cap']:.2f}bn \u00f7 USD "
-                    f"{A_['index_float_value_usd_b']:,.0f}bn = "
-                    f"{_r['index_weight_pct']:.3f}%`\n\n"
-                    f"Free float, not full cap \u2014 a tracker buys "
-                    f"the shares the index counts.\n\n"
-                    f"**2 \u00b7 Money that must buy.** That weight "
-                    f"\u00d7 the tracking assets with no choice: "
-                    f"USD {BASIS:.0f}bn of ETFs and indexed "
-                    f"mandates.\n\n"
-                    f"`{_r['index_weight_pct']:.3f}% \u00d7 USD "
-                    f"{BASIS:.0f}bn = USD {f['usd_m']:,.0f}m`\n\n"
-                    f"**3 \u00b7 Shares.** Converted at USD/TWD "
-                    f"{A_['usd_twd']:.2f} and divided by the last "
-                    f"close of TWD {f['px']:,.1f}.\n\n"
-                    f"`USD {f['usd_m']:,.0f}m \u00d7 "
-                    f"{A_['usd_twd']:.2f} \u00f7 TWD {f['px']:,.1f} "
-                    f"= {f['shares'] / 1e6:,.1f}m shares`\n\n"
-                    f"Price is why two names on similar weights "
-                    f"need very different share counts.\n\n"
-                    f"**4 \u00b7 Against the stock's own volume.** "
-                    f"Divided by its average daily volume of "
-                    f"{_r['adv_shares'] / 1e6:,.1f}m shares.\n\n"
-                    f"`{f['shares'] / 1e6:,.1f}m \u00f7 "
-                    f"{_r['adv_shares'] / 1e6:,.1f}m = "
-                    f"{f['adv_x']:.1%} of ADV`")
 
+
+        design.stats([
+            {"k": "Tracking AUM",
+             "v": f"USD {BASIS:.0f}bn",
+             "s": "estimate only"},
+            {"k": "Largest order",
+             "v": f"{F_[rows[0][0]]['adv_x']:.0%} of ADV",
+             "s": f"{rows[0][1]['name'][:22]}"},
+            {"k": "Smallest order",
+             "v": f"{F_[rows[-1][0]]['adv_x']:.0%} of ADV",
+             "s": f"{rows[-1][1]['name'][:22]}"},
+        ])
+        fig = go.Figure()
+        fig.add_bar(
+            y=[f"{r['name'][:24]} ({c})" for c, r in rows][::-1],
+            x=[F_[c]["adv_x"] * 100 for c, _r in rows][::-1],
+            orientation="h", marker_color=NAVY,
+            marker_line_width=0,
+            text=[f"  {F_[c]['adv_x']:.0%}" for c, _r in rows][::-1],
+            textposition="outside",
+            textfont=dict(size=12, color=NAVY),
+            customdata=[[F_[c]["shares"] / 1e6, F_[c]["usd_m"],
+                         F_[c]["closes"], r["index_weight_pct"]]
+                        for c, r in rows][::-1],
+            # c-401, Bill: eyebrow, note and the ordinary-closes
+            # row off; "which is" -> "notional amount".
+            hovertemplate=design.hover(
+                "%{y}",
+                rows=[("share of one day's volume", "%{x:.1f}%"),
+                      ("shares to buy",
+                       "%{customdata[0]:,.1f}m"),
+                      ("notional amount",
+                       "USD %{customdata[1]:,.0f}m"),
+                      ("index weight",
+                       "%{customdata[3]:.3f}%")]))
+        fig.update_layout(
+            height=300, showlegend=False,
+            xaxis=dict(title="index demand, as a % of the "
+                             "name's average daily volume",
+                       range=[0, max(F_[c]["adv_x"] for c, _r
+                                     in rows) * 118]),
+            yaxis=dict(title=""), margin=dict(l=0, t=16, b=0))
+        design.chart(fig)
+
+        # c-386, Bill: the four per-name Calculation dropdowns
+        # fold into ONE table in the step-5 call-table grammar \u2014
+        # the derivation's four steps become four columns, one
+        # row per name. The chart-vs-derivation agreement test
+        # re-derives every cell.
+        def _sz_hd(label, flex):
+            return (f"<span style='flex:{flex};"
+                    f"text-align:right;font-size:.62rem;"
+                    f"letter-spacing:.11em;text-transform:"
+                    f"uppercase;color:#a89c92;font-weight:600'>"
+                    f"{label}</span>")
+        st.markdown(
+            "<div style='display:flex;align-items:baseline;"
+            "gap:.55rem;padding:.4rem 0 .3rem'>"
+            "<span style='flex:0 0 30px'></span>"
+            "<span style='flex:1 1 auto;font-size:.62rem;"
+            "letter-spacing:.11em;text-transform:uppercase;"
+            "color:#a89c92;font-weight:600'>Company</span>"
+            "<span style='flex:0 0 auto;font-size:.62rem;"
+            "letter-spacing:.11em;text-transform:uppercase;"
+            "color:#a89c92;font-weight:600'>Ticker</span>"
+            + _sz_hd("Index weight", "0 0 92px")
+            + _sz_hd("Must buy", "0 0 96px")
+            + _sz_hd("Shares", "0 0 108px")
+            + _sz_hd("Share of ADV", "0 0 104px")
+            + "</div>", unsafe_allow_html=True)
+        st.markdown(
+            "".join(
+                f"<div class='drow'>"
+                f"<span class='dact add'>ADD</span>"
+                f"<span class='dnm'>{_r['name']}</span>"
+                f"<span class='dcode'>{_c}</span>"
+                f"<span class='dcode' style='flex:0 0 92px;"
+                f"text-align:right'>"
+                f"{_r['index_weight_pct']:.3f}%</span>"
+                f"<span class='dcode' style='flex:0 0 96px;"
+                f"text-align:right'>"
+                f"USD {F_[_c]['usd_m']:,.0f}m</span>"
+                f"<span class='dcode' style='flex:0 0 108px;"
+                f"text-align:right'>"
+                f"{F_[_c]['shares'] / 1e6:,.1f}m shares</span>"
+                f"<span class='dcode' style='flex:0 0 104px;"
+                f"text-align:right;font-weight:700;"
+                f"color:#1f4e79'>"
+                f"{F_[_c]['adv_x']:.1%} of ADV</span></div>"
+                for _c, _r in rows),
+            unsafe_allow_html=True)
+        # c-397, Bill: a numbered Note, its label bold.
+        _note("<b>Note:</b><br>"
+              "1. Index weight = float cap \u00f7 the index's own "
+              f"free-float value (USD "
+              f"{A_['index_float_value_usd_b']:,.0f}bn as of "
+              "31 July 2026)<br>"
+              f"2. Tracking AUM is estimated at USD "
+              f"{BASIS:.0f}bn<br>"
+              "3. USD/TWD conversion rate estimated at "
+              f"{A_['usd_twd']:.2f}")
+
+        # c-393, Bill: the volume-revealed expander is OFF the page
+        # too (the fund-by-fund one went at c-388). Both cross-
+        # checks survive as data-level evidence -- scripts, JSONs
+        # and reconciliation tests -- and in the Q&A bank; the
+        # page carries the disclosed-anchor estimate only.
 
     # c-344, Bill: SECTION 8 IS DELETED FROM THE PAGE.
     #

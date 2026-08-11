@@ -48,7 +48,7 @@ def _route(rows):
                f"text-transform:uppercase;color:{NAVY};"
                "border:1px solid " + RULE + ";border-radius:2px;"
                "padding:.08rem .32rem;margin-left:.5rem;"
-               "vertical-align:.08rem'>the analysis</span>"
+               "vertical-align:.08rem'>live example</span>"
                if lead else "")
         out.append(
             f"<div style='display:flex;gap:.85rem;align-items:"
@@ -109,19 +109,19 @@ def render():
     design.sect(1, "What Is on This Site")
     _route([
         ("MSCI Index Review Database",
-         "Every MSCI index change since 2006, rebuilt from index "
-         "review results.", False),
+         "Every MSCI index change for Asia Pacific since 2006, "
+         "rebuilt from index review results.", False),
         ("Predict MSCI Index Changes",
          "Apply the MSCI rulebook \u2014 universe, liquidity, "
          "size cutoff, buffers \u2014 to generate a prediction "
-         "for the August 2026 index review.", False),
+         "for the August 2026 Taiwan index review.", False),
         ("Index Rebalance Daily Data",
          "Analysis built on historical daily data across the "
          "rebalance window, covering trading volume and stock "
          "return.", False),
         ("Taiwan Case Study",
          "Assess market positioning and the expected order flow "
-         "for the August index review.", True),
+         "for the August 2026 index review.", True),
     ])
 
     # ── 2 · the limits ────────────────────────────────────────
@@ -129,16 +129,15 @@ def render():
     _cards([
         ("No MSCI data licence", "",
          "Without access to MSCI's index constituent and "
-         "free-float data, the size cutoff for a review is "
-         "calculated from estimates \u2014 and an inaccurate "
+         "free-float data, the size cutoff for an index review "
+         "is calculated from estimates, and an inaccurate "
          "estimate produces the wrong index change prediction."),
         ("No institutional data", "",
          "Institutional-level data \u2014 the prime-broker "
-         "borrow book, or fund-flow data showing what the index "
-         "trackers bought each day \u2014 is out of reach. "
-         "Positioning ahead of an index trade has to be pieced "
-         "together from exchange disclosure and public data "
-         "only."),
+         "borrow book, or fund-flow data \u2014 is not publicly "
+         "available. Positioning ahead of an index trade has to "
+         "be pieced together from exchange disclosure and "
+         "public data only."),
     ], design.AMBER, "#fdf8ee")
 
     # ── 3 · why Taiwan ────────────────────────────────────────
@@ -151,6 +150,6 @@ def render():
         ("A wide range of datasets", "",
          "TWSE publishes a comprehensive set of data \u2014 daily "
          "net buying by foreign investors per stock, securities "
-         "borrowing and lending balances \u2014 which feeds "
-         "directly into this analysis."),
+         "borrowing and lending balances \u2014 the closest "
+         "public substitute for the institutional data."),
     ], NAVY, "#f7f9fb")

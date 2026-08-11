@@ -133,11 +133,12 @@ def test_the_percentile_is_offered_only_where_it_earns_it(at):
     opts = [m.options for m in at.multiselect]
     assert ["Median", "Mean"] in opts, opts
     assert ["Median", "Mean", "90th percentile"] in opts, opts
-    # and it is ON by default where it exists, since a tail
-    # nobody switches on is a tail nobody sees
+    # c-366, Bill: the default drops to MEDIAN ONLY — the tail
+    # stays on the menu (its one home, per c-279) but waits to
+    # be switched on instead of opening two lines per side
     risk = [m for m in at.multiselect
             if "90th percentile" in m.options][0]
-    assert "90th percentile" in risk.value, risk.value
+    assert risk.value == ["Median"], risk.value
 
 
 def test_the_liquidity_threshold_is_an_input_not_a_constant(at):
@@ -149,7 +150,10 @@ def test_the_liquidity_threshold_is_an_input_not_a_constant(at):
     thr = [n for n in at.number_input
            if "Threshold" in str(n.label)]
     assert len(thr) == 1, [str(n.label) for n in at.number_input]
-    assert thr[0].value == 2.0
+    # c-366, Bill: default 5x, and the widget is integer-typed —
+    # a whole-number threshold is the one a desk actually quotes
+    assert thr[0].value == 5
+    assert isinstance(thr[0].value, int)
 
 
 def test_every_chart_states_the_adv_window(at):
@@ -818,3 +822,104 @@ def test_the_risk_chart_says_it_is_an_absolute_value(at):
     # the thing that must not vanish did not.
     md = " ".join(str(m.value) for m in at.markdown)
     assert "absolute value" in md
+
+
+def test_the_rebalance_window_can_strip_to_aggregates(at):
+    """c-366, Bill: a checkbox on section 2 shows the mean /
+    median series ONLY. Guarded in both states, on a FRESH
+    AppTest so the module-scoped page other tests share is
+    never left with the mesh hidden:
+
+      * default OFF — the spaghetti is the honesty layer (it
+        shows the dispersion the aggregate averages away), so
+        it must render unless the reader opts out;
+      * checked — the per-event mesh goes, and the axis note
+        stops counting paths that are not on screen and says
+        instead what the surviving lines aggregate.
+    """
+    from conftest import real_streamlit
+    real_streamlit()
+    from streamlit.testing.v1 import AppTest
+    a = AppTest.from_string(APP, default_timeout=300)
+    a.run()
+    assert not a.exception, [e.value for e in a.exception]
+    boxes = [c for c in a.checkbox
+             if "mean / median lines only" in c.label]
+    assert len(boxes) == 1, [c.label for c in a.checkbox]
+    txt = " ".join(str(m.value) for m in a.markdown)
+    assert "paths drawn" in txt
+    boxes[0].check().run()
+    assert not a.exception, [e.value for e in a.exception]
+    txt = " ".join(str(m.value) for m in a.markdown)
+    # c-371, Bill: capitalised, and the hover parenthetical cut
+    assert "Individual event paths hidden" in txt
+    assert "n per day on hover" not in txt
+    assert "paths drawn" not in txt
+
+
+def test_print_size_keeps_the_time_series_across_all_markets():
+    """c-366, Bill: with every market selected, section 3 keeps
+    the review-by-review series — one point per review computed
+    over the POOLED APAC events — instead of swapping to a bar
+    per market. The question does not change with the selection;
+    only the sample does.
+
+    Pinned at the function level (pooled grouping returns review
+    labels in time order even under ALL) and at the source level
+    (section 3 actually asks for it)."""
+    from views import apac_panel as P
+    import pandas as pd
+    df = pd.DataFrame({
+        "ord": [201502, 201502, 201505],
+        "market": ["Taiwan", "Korea", "Taiwan"],
+        "t_mult": [1.0, 2.0, 3.0]})
+    labels = {"201502": "Feb-2015", "201505": "May-2015"}
+    g = P._groups(df, ALL_, labels, pooled=True)
+    assert [lab for lab, _ in g] == ["Feb-2015", "May-2015"]
+    assert len(g[0][1]) == 2          # both markets, one review
+    xs, ax = P._time_x(g, ALL_, pooled=True)
+    assert ax["tickmode"] == "linear" and ax["dtick"] == 1
+    assert abs(xs[0] - 2015.0833) < 1e-3, xs
+    # without the flag ALL still means a market cross-section —
+    # sections that want per-market bars keep them
+    g2 = P._groups(df, ALL_, labels)
+    assert sorted(lab for lab, _ in g2) == ["Korea", "Taiwan"]
+    src = (ROOT / "views" / "apac_panel.py").read_text(
+        encoding="utf-8")
+    i = src.index("How Big Is the Print")
+    j = src.index("Volume Around the Effective Date")
+    assert src[i:j].count("pooled=True") == 2, "groups AND x"
+
+
+def test_thin_sides_draw_their_aggregate_anyway():
+    """c-367 suppressed a side below a 5-event floor and
+    captioned the absence; c-369, Bill: *"remove the minimum
+    events restriction. Even with 4 additions, we can display
+    the visualization."*
+
+    So the guard flips: on Hong Kong — 4 additions with paths,
+    the selection that exposed c-367 — the page renders with NO
+    too-thin caption, and the floor constant itself is pinned at
+    1 so a later edit cannot quietly re-raise it.
+
+    Fresh AppTest (shared state must not be left on HK)."""
+    from views import apac_panel as P
+    assert P.MIN_N_AT_OFFSET == 1
+    from conftest import real_streamlit
+    real_streamlit()
+    from streamlit.testing.v1 import AppTest
+    a = AppTest.from_string(APP, default_timeout=300)
+    a.run()
+    assert not a.exception, [e.value for e in a.exception]
+    mkt = [s for s in a.selectbox if s.key == "s1_mkt"][0]
+    mkt.select("HongKong").run()
+    assert not a.exception, [e.value for e in a.exception]
+    caps = " ".join(str(c.value) for c in a.caption)
+    md = " ".join(str(m.value) for m in a.markdown)
+    assert "No aggregate line" not in caps + md
+    # and the aggregate really is computable from 4 events —
+    # the function itself, on a 4-path frame, yields values
+    import pandas as pd
+    df = pd.DataFrame({"path": [[1.0, 2.0]] * 4})
+    ys, ns = P._path_series(df, [0, 1], "Median")
+    assert ys == [1.0, 2.0] and ns == [4, 4]

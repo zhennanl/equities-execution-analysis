@@ -1,6 +1,6 @@
 # Index Rebalancing, the Institutional Framing
 
-Generated 2026-08-11T04:39:07 by `scripts/tw_forced_flow.py`. Every figure below comes from the JSON that script writes; nothing here is typed.
+Generated 2026-08-11T19:49:28 by `scripts/tw_forced_flow.py`. Every figure below comes from the JSON that script writes; nothing here is typed.
 
 ## The framework
 
@@ -13,13 +13,14 @@ Alpha         = Expected Flow / Available Liquidity
 
 ## Applied to the August 2026 candidates
 
-AUM is **USD 60bn** — the sourced floor from `scripts/tw_mandate_size.py`, not the USD 180bn constant this project inherited. Weights are estimated free-float caps over the index's own free-float value, USD 3,183bn.
+AUM is **USD 125bn** — the sourced floor from `scripts/tw_mandate_size.py`, not the USD 180bn constant this project inherited. Weights are estimated free-float caps over the index's own free-float value, USD 3,183bn.
 
 | Name | P(add) | Weight | Forced flow | x ADV | x one close | Expected x ADV |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Winbond Electronics Corpor (2344) | 62% | 0.396% | USD 238m | 43% | 4.5x | 26% |
-| Nanya Technology Corporati (2408) | 62% | 0.512% | USD 307m | 34% | 3.6x | 21% |
-| Nan Ya Printed Circuit Boa (8046) | 62% | 0.223% | USD 134m | 27% | 2.8x | 16% |
+| Phison Electronics Corp. (8299) | 37% | 0.278% | USD 347m | 144% | 15.2x | 54% |
+| Winbond Electronics Corpor (2344) | 62% | 0.396% | USD 494m | 88% | 9.3x | 55% |
+| Nanya Technology Corporati (2408) | 62% | 0.512% | USD 639m | 71% | 7.5x | 44% |
+| Nan Ya Printed Circuit Boa (8046) | 62% | 0.223% | USD 278m | 55% | 5.8x | 34% |
 
 The **x ADV** column is the framework's ratio against a whole day's liquidity. The **x one close** column divides by the liquidity that is actually there when the flow arrives — on an effective day 79% of volume prints in the closing auction, and an ordinary close in these names takes only 9.5% of the day. That is the denominator a dealer should use, and it is about ten times smaller than a session.
 

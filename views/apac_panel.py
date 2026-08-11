@@ -231,16 +231,24 @@ def _axis(mkt):
     return "review" if mkt != ALL else "market"
 
 
-def _groups(sub, mkt, labels):
-    """[(label, frame)] in display order."""
-    if _axis(mkt) == "review":
+def _groups(sub, mkt, labels, pooled=False):
+    """[(label, frame)] in display order.
+
+    `pooled=True` (c-366, Bill) keeps the review axis even when
+    every market is selected — one group per review, computed
+    over the pooled APAC events — for the sections where the
+    question does not change with the selection, only the
+    sample does."""
+    if pooled or _axis(mkt) == "review":
         return [(labels[str(o)], g) for o, g in
                 sorted(sub.groupby("ord"))]
     return [(_pretty(m), g) for m, g in sub.groupby("market")]
 
 
-def _time_x(groups, mkt):
+def _time_x(groups, mkt, pooled=False):
     """(x values, axis kwargs) for a chart grouped by review.
+    `pooled=True` forces the review axis regardless of the
+    market selection — the companion of `_groups(pooled=True)`.
 
     c-284, Bill: *"the year label on the graph is still not
     properly aligned, the spacing between each label is not
@@ -258,7 +266,7 @@ def _time_x(groups, mkt):
     puts a tick on each one, and a review the panel is missing
     shows as a gap rather than being closed up.
     """
-    if _axis(mkt) != "review":
+    if not pooled and _axis(mkt) != "review":
         names = [g[0] for g in groups]
         return names, dict(tickmode="array", tickvals=names,
                            ticktext=names)
@@ -407,7 +415,15 @@ def _adv_note(extra=""):
         unsafe_allow_html=True)
 
 
-MIN_N_AT_OFFSET = 5
+# c-369, Bill: THE FLOOR IS OFF — *"remove the minimum events
+# restriction. Even with 4 additions, we can display the
+# visualization."* c-367's floor suppressed Hong Kong's 4-event
+# additions median entirely; Bill would rather see a thin
+# aggregate than none, and n rides in every hover so the reader
+# can see how thin. The cost accepted with it: at the ragged
+# right edge the line now continues on whatever few events reach
+# those days.
+MIN_N_AT_OFFSET = 1
 
 # how many individual event paths to draw before thinning. Past
 # a few hundred translucent lines the chart stops adding
@@ -486,11 +502,11 @@ def censored_median(filled, n_unfilled):
 def _path_series(sub, offsets, kind):
     """(y, n) per offset for one subset.
 
-    An offset is left EMPTY below MIN_N_AT_OFFSET rather than
-    plotted thin. The window lengths are ragged at the far right
-    — 2,175 events reach day +20 but only 1,771 reach day +40 —
-    so without a floor the line would keep going and quietly
-    become the median of whichever handful of markets happen to
+    c-369, Bill: the minimum-events floor is OFF
+    (MIN_N_AT_OFFSET = 1) — a 4-event Hong Kong median is worth
+    drawing, with its n in the hover. The cost, accepted with
+    the choice: window lengths are ragged at the far right, so
+    out there the line is the median of whichever few events
     have the longest windows.
     """
     paths = [r for r in sub["path"] if isinstance(r, list)]
@@ -597,7 +613,6 @@ def render():
                 "the panel.")
         return
     labels = d["review_labels"]
-    safe = set(d["delisted_safe"])
     offsets = d.get("path_offsets") or []
 
     # ---- 1 ------------------------------------------------
@@ -622,6 +637,13 @@ def render():
         "represents the effective date.")
     mkt, lo, hi, kinds, side = _controls(
         "s1", d, default_stats=["Median"], side=True)
+    # c-366, Bill: a reader can strip the event mesh and keep
+    # only the aggregate series. Default OFF — the spaghetti is
+    # the honesty layer (it shows the dispersion the aggregate
+    # averages away), so hiding it is a choice the reader makes,
+    # not one made for them.
+    agg_only = st.checkbox(
+        "Show mean / median lines only", key="s1_agg")
     sub = _sided(_slice(df, mkt, lo, hi), side)
     if sub.empty or not offsets:
         _empty()
@@ -645,7 +667,7 @@ def render():
         effs = [int(v) for v in sub["eff_off"]
                 if v is not None and v == v]
         drawn, capped = 0, False
-        for act, slab, colour in SIDES:
+        for act, slab, colour in (() if agg_only else SIDES):
             g = sub[sub.action == act]
             if g.empty:
                 continue
@@ -680,6 +702,10 @@ def render():
                 continue
             for k in (kinds or ["Median"]):
                 ys, ns = _path_series(g, offsets, k)
+                # c-367 suppressed a side below a 5-event floor
+                # and captioned the absence; c-369, Bill: the
+                # floor is off — a 4-event median draws, with
+                # its n in the hover.
                 fig.add_scatter(
                     x=offsets, y=ys, mode="lines",
                     # c-289: the statistic is back on the
@@ -721,6 +747,10 @@ def render():
             yaxis=dict(title="cumulative return (%)"))
         design.chart(fig)
         _axis_note(
+            f"Individual event paths hidden — the aggregate "
+            f"lines are computed from all {len(sub):,} events "
+            f"in the selection."
+            if agg_only else
             f"{drawn:,} of {len(sub):,} paths drawn"
             + (f" — thinned to keep the chart readable; the "
                f"bold median uses ALL {len(sub):,}."
@@ -735,13 +765,21 @@ def render():
     if sub.empty:
         _empty()
     else:
-        groups = _groups(sub, mkt, labels)
+        # c-366, Bill: ALL MARKETS KEEPS THE TIME SERIES. This
+        # section used to swap to one bar per market when every
+        # market was selected; now the axis stays review-by-
+        # review and each point is the statistic over the pooled
+        # APAC events at that review. The question — how big is
+        # the print — does not change with the selection; only
+        # the sample behind each point does, and n is on the
+        # hover.
+        groups = _groups(sub, mkt, labels, pooled=True)
         names = [lab for lab, _g in groups]
         ns = [int(g["t_mult"].notna().sum()) for _lab, g in groups]
         series = [(k, [_stat(g["t_mult"].tolist(), k, 50)
                        for _lab, g in groups], ns)
                   for k in (kinds or ["Median"])]
-        xs, xax = _time_x(groups, mkt)
+        xs, xax = _time_x(groups, mkt, pooled=True)
         design.chart(_dots(xs, series, "multiple of ADV",
                            fmt=".1f", xaxis=xax, labels=names))
         parts = [f"{k.lower()} <b>{_stat(sub['t_mult'].tolist(), k, 50):.1f}x</b>"
@@ -802,6 +840,8 @@ def render():
                     ys.append(_stat(vals, k, 50)
                               if len(vals) >= MIN_N_AT_OFFSET
                               else None)
+                # c-369: the c-367 floor-and-caption is out —
+                # thin sides draw, n in the hover.
                 fig.add_scatter(
                     x=rel, y=ys, mode="lines",
                     # c-289: restored, same reason as section 2
@@ -836,8 +876,10 @@ def render():
     with c1:
         mkt, lo, hi, _k, _sd = _controls("s5", d, stats=False)
     with c2:
-        thr = st.number_input("Threshold (× ADV)", 1.0, 20.0,
-                              2.0, 0.5, key="s5_thr")
+        # c-366, Bill: default 5x, whole numbers only — every
+        # argument an int so the widget itself refuses decimals.
+        thr = st.number_input("Threshold (× ADV)", 1, 20,
+                              5, 1, key="s5_thr")
     sub = _slice(df, mkt, lo, hi)
     if sub.empty:
         _empty()
@@ -918,12 +960,13 @@ def render():
     design.sect(6, "Effective-Day Risk",
                 "How far a name moves on the effective day.")
     mkt, lo, hi, kinds, side = _controls(
-        "s6", d, default_stats=["Median", "90th percentile"],
+        # c-366, Bill: the DEFAULT drops to median only. The
+        # 90th percentile keeps its one home on the MENU here
+        # (c-279 — the tail is the number a desk quotes to a
+        # client), but it now waits to be switched on rather
+        # than opening two lines per side.
+        "s6", d, default_stats=["Median"],
         side=True,
-        # c-279: the tail belongs HERE and only here. This is
-        # the risk carried into the close, and the 90th
-        # percentile is the number a desk quotes to a client —
-        # the median is the day you plan for.
         stat_options=["Median", "Mean", "90th percentile"])
     sub = _sided(_slice(df, mkt, lo, hi), side)
     if sub.empty:

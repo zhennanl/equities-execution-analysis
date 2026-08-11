@@ -117,20 +117,23 @@ def test_the_limits_of_the_capacity_model_are_stated(d):
 
 
 def test_the_doc_quotes_the_json(d):
-    """c-325: the CARRIED names only. Phison is in the file — its
-    capacity is still computed and still recorded — but it is not
-    in the ladder, because the ladder is a sizing tool and its
-    addition verdict flips inside the ±5% band on the cutoff."""
+    """c-325 ranked the carried names only; c-368, Bill: the
+    call is FOUR additions with a per-name Monte Carlo P(add),
+    so ALL call names rank and the ladder sizes all four. The
+    old exclusion survives as the `carried` flag on each row —
+    the record of the cut, without the cut."""
     t = DOC.read_text(encoding="utf-8")
     shown = [r for r in d["names"].values()
              if r.get("capacity_rank")]
-    assert len(shown) == 3, len(shown)
+    assert len(shown) == 4, len(shown)
     for r in shown:
         assert f"{r['order_in_normal_closes']:.1f}×" in t
-    # and the excluded name is still measured, not dropped
-    held = [r for r in d["names"].values()
-            if not r.get("capacity_rank")]
-    assert held and all(r["order_in_normal_closes"] for r in held)
+    # nothing is left unranked, and the old carried/not-carried
+    # distinction is still recorded per row
+    assert not [r for r in d["names"].values()
+                if not r.get("capacity_rank")]
+    assert {r["carried"] for r in d["names"].values()} == \
+        {True, False}
 
 
 def test_the_ladder_ranks_without_a_hole(d):

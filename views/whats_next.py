@@ -38,38 +38,55 @@ RULE_L, PAPER, CARD = design.RULE_L, design.PAPER, design.CARD
 # The four steps, in one place, so the diagram and the cards
 # below it cannot describe them differently.
 STEPS = [
-    ("1 · COLLECT", "The Collector", NAVY,
-     "Fetches the day's exchange files",
-     "Taiwan publishes late in the evening — who bought, who "
-     "sold, how much printed in the close."),
+    # c-369, Bill: "Collector" -> "Fetcher", "the day's" ->
+    # "today's", and the Analyst subtitle says the run is
+    # automatic and names what it analyses.
+    ("1 · COLLECT", "The Fetcher", NAVY,
+     "Fetches today's exchange files",
+     # c-376, Bill: lead with the act, then the files.
+     "Retrieves data published by TWSE — daily net buying "
+     "by foreign investors per stock, securities borrowing "
+     "and lending balances."),
     ("2 · RECALCULATE", "The Analyst", NAVY,
-     "Runs analysis, evaluates what moved",
-     "It applies the same analytical framework to the new "
-     "numbers and gives its own assessment of what changed."),
+     # c-371, Bill: shortened — STEPS is the single source, so
+     # the card and the diagram both pick this up.
+     "Runs the analysis automatically",
+     # c-377, Bill: data, and a read of market colour.
+     "Applies the same analytical framework to the new "
+     "data and gives its own read of the market colour."),
     ("3 · DRAFT", "The Author", GREEN,
-     "Writes the morning note",
-     "It turns analysis into a comment a desk would send to "
-     "clients, in the desk's own voice, with every sentence "
-     "pointing back at the file where its number came from."),
+     # c-377, Bill: report, not note.
+     "Writes the analysis report",
+     "Turns the analysis into a comment, in the format a desk "
+     "would send to clients, with every data reference "
+     "pointing back at the source."),
     ("4 · CHECK", "The Reviewer", AMBER,
-     "Blocks anything it cannot prove",
-     "Before the note leaves, a second agent re-reads it against "
-     "the source files. Any figure it cannot trace goes back for "
-     "a rerun and the note does not go out."),
+     "Reviews the draft and refines it for production",
+     # c-379, Bill: the body ends at the act — the flag itself.
+     "A second agent re-reads the draft. Any mismatched number "
+     "or flawed reasoning is flagged for a rerun."),
 ]
 
 EVENING = [
-    ("18:00", "Taipei", "The exchange files publish. The "
-     "collector pulls the day's trading, the investor-type flow "
-     "and the weekly custody file."),
+    # c-371, Bill: the row label names the STEP, not the city,
+    # and the body shortens to the act.
+    ("18:00", "collect", "The exchange files publish. The "
+     "fetcher pulls today's files."),
     ("18:10", "recalculate", "The pre-designed analytical "
      "framework reruns on the new data."),
-    ("18:25", "draft", "Four names moved enough to mention. The "
-     "author writes them up and cites the file behind each "
-     "figure."),
-    ("18:30", "check", "The reviewer ties every number back to a "
-     "file. When numbers do not match, that section is rerun "
-     "before anything is sent."),
+    # c-371, Bill (paraphrased): the example is an addition
+    # candidate moving unusually, not a count of names.
+    ("18:25", "draft", "The analysis detects unusual price and "
+     "volume movement in one of the candidates for addition. "
+     "The author notes the observation and cites the source "
+     "behind each figure."),
+    # c-373, Bill's intent stated plainly: if the AI slips in a
+    # calculation or its reasoning, a HUMAN looks before
+    # anything leaves.
+    ("18:30", "check", "The reviewer checks every number "
+     "against the source file. Any calculation error or flawed "
+     "reasoning is flagged for human review before anything "
+     "is sent."),
     ("07:00", "next morning", "The note is ready to send to "
      "the client's inbox before the open."),
 ]
@@ -106,9 +123,16 @@ def _loop_svg():
         # the plain-English line, wrapped by hand because SVG has
         # no text wrapping and a PT reader should not meet a
         # clipped sentence
+        # c-375, Bill asked whether the fetcher's and analyst's
+        # subtitles can sit on ONE line. They can: the box is
+        # 208px with 14px padding, and 11px Inter runs ~5.4px a
+        # character, so up to ~32 characters fit — both lines
+        # ("Fetches today's exchange files", 30; "Runs the
+        # analysis automatically", 31) clear it. The wrap
+        # threshold moves 26 -> 32.
         words, line, lines = does.split(" "), "", []
         for w_ in words:
-            if len(line) + len(w_) > 26:
+            if len(line) + len(w_) > 32:
                 lines.append(line)
                 line = w_
             else:
@@ -135,19 +159,16 @@ def _loop_svg():
              f'stroke-dasharray="4 3"/>')
     p.append(f'<path d="M{xs[0] + box_w / 2},{y + box_h + 8} '
              f'l-4,8 l8,0 z" fill="{RED}"/>')
+    # c-375, Bill: the arm names BOTH gates — an untraceable
+    # number and flawed reasoning.
     p.append(f'<text x="{(xs[0] + xs[3]) / 2 + box_w / 2}" '
              f'y="{ymid + 16}" text-anchor="middle" '
              f'font-family="Inter,sans-serif" font-size="11" '
-             f'fill="{RED}">a number does not match '
-             f'→ rerun</text>')
-    # c-351, Bill: the "it ties / the note goes out" caption
-    # comes off. The arrow alone carries it, and three lines of
-    # text in the right margin were the busiest thing on an
-    # otherwise clean diagram.
-    p.append(f'<path d="M{xs[3] + box_w + 6},{y + box_h / 2} '
-             f'l16,0" stroke="{GREEN}" stroke-width="1.5"/>')
-    p.append(f'<path d="M{xs[3] + box_w + 24},{y + box_h / 2} '
-             f'l-7,-4 l0,8 z" fill="{GREEN}"/>')
+             f'fill="{RED}">a number does not match, or the '
+             f'reasoning is flawed → rerun</text>')
+    # c-351 cut the exit caption; c-375, Bill: the green exit
+    # arrow itself goes too — the loop simply ends at the
+    # Reviewer, and the timeline below says what leaves.
     p.append("</svg>")
     return "".join(p)
 
@@ -178,33 +199,52 @@ def _evening():
     """One night, on the clock. The third register, and the one
     that makes the loop concrete — a dealer reads 18:00 Taipei
     and knows exactly which files that is."""
+    # c-377, Bill: *"Change the format to make it more aesthetic
+    # and more readable."* A TIMELINE, not a table: a vertical
+    # spine with a node per row, the time in the site's serif,
+    # the step as a small chip, and the body given room. The
+    # last row — the deliverable — gets the navy node.
     rows = []
-    for t, where, what in EVENING:
+    for i, (t, where, what) in enumerate(EVENING):
+        last = i == len(EVENING) - 1
+        node = NAVY if last else "#ffffff"
         rows.append(
-            f"<div style='display:flex;gap:1rem;align-items:"
-            f"baseline;padding:.5rem 0;border-top:1px solid "
-            f"{RULE_L}'>"
-            f"<div style='min-width:4.6rem;font-family:"
-            f"{design.MONO};font-size:.92rem;color:{NAVY};"
-            f"font-weight:600'>{t}</div>"
-            f"<div style='min-width:6.5rem;font-size:.72rem;"
-            f"letter-spacing:.09em;text-transform:uppercase;"
-            f"color:{FAINT};padding-top:.15rem'>{where}</div>"
-            f"<div style='font-size:.86rem;color:#4a4038;"
-            f"line-height:1.55'>{what}</div></div>")
+            f"<div style='display:flex;gap:0'>"
+            # the spine column: node + connecting line
+            f"<div style='width:1.9rem;display:flex;"
+            f"flex-direction:column;align-items:center'>"
+            f"<div style='width:11px;height:11px;"
+            f"border-radius:50%;border:2px solid {NAVY};"
+            f"background:{node};margin-top:.34rem;"
+            f"flex:0 0 auto'></div>"
+            + (f"<div style='width:1px;flex:1 1 auto;"
+               f"background:{RULE_L}'></div>" if not last else "")
+            + "</div>"
+            # the content column
+            f"<div style='flex:1;padding:0 0 1.05rem .5rem'>"
+            f"<div style='display:flex;gap:.6rem;"
+            f"align-items:baseline'>"
+            f"<span style='font-family:{design.SERIF};"
+            f"font-size:1.05rem;color:{NAVY}'>{t}</span>"
+            f"<span style='font-size:.62rem;letter-spacing:"
+            f".11em;text-transform:uppercase;color:{FAINT};"
+            f"border:1px solid {RULE_L};border-radius:2px;"
+            f"padding:.06rem .34rem'>{where}</span></div>"
+            f"<div style='font-size:.85rem;color:#4a4038;"
+            f"line-height:1.55;margin-top:.18rem;"
+            f"max-width:44rem'>{what}</div>"
+            f"</div></div>")
     st.markdown(
         f"<div style='font-size:.68rem;letter-spacing:.12em;"
         f"text-transform:uppercase;color:{FAINT};font-weight:600;"
-        f"margin:.2rem 0 .1rem'>One evening, end to end</div>"
-        + "".join(rows)
-        + f"<div style='border-top:1px solid {RULE_L};"
-          f"margin-bottom:1.2rem'></div>", unsafe_allow_html=True)
+        f"margin:.2rem 0 .55rem'>Example workflow</div>"
+        + "".join(rows), unsafe_allow_html=True)
 
 
 def render():
     design.css()
     st.markdown("# Agentic AI Workflow")
-    design.sect(1, "A Workflow That Could Run Itself")
+    design.sect(1, "Agentic AI Workflow That Runs Itself")
     st.markdown(_loop_svg(), unsafe_allow_html=True)
     _cards()
     _evening()

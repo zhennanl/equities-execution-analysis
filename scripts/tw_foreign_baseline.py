@@ -10,10 +10,11 @@ times"* — and, if possible, the whole window: before the
 announcement, after the effective date.
 
 WHAT ALREADY EXISTED, AND WHAT WAS MISSING. The addition study
-already measures foreign flow per event in four phases — the 20
-sessions before announcement, announcement to effective, the
-effective day itself, and the 10 sessions after — all in units
-of that name's own ADV. What it never had is the thing that
+already measures foreign flow per event in four phases — before
+the announcement (its stored window is 20 sessions; c-368
+recomputes this phase at 30 sessions from the raw file),
+announcement to effective, the effective day itself, and the 10
+sessions after — all in units of that name's own ADV. What it never had is the thing that
 makes those numbers READABLE: a baseline. "+0.16x ADV on the
 effective day" means nothing until you know what the same stock
 draws on an ordinary Tuesday.
@@ -27,7 +28,7 @@ own normal day.
 DESIGN DECISIONS, each of which moves the answer
 
 1. THE BASELINE IS PER-STOCK AND PRE-EVENT. For each event, the
-   baseline window is the 100 sessions ENDING 21 sessions before
+   baseline window is the 100 sessions ENDING 31 sessions before
    the announcement — clear of the event's own pre-drift window,
    and matched to the same regime rather than to a pooled
    all-history average. A stock's normal foreign traffic in 2016
@@ -41,9 +42,10 @@ DESIGN DECISIONS, each of which moves the answer
    the output for anyone who wants the drift.
 
 3. PHASES ARE CONVERTED TO PER-SESSION RATES before comparison.
-   The pre window is 20 sessions and the post window 10; the
-   effective day is one. Comparing a 20-session cumulation to a
-   single day flatters the cumulation 20x. Rates make the four
+   The pre window is 30 sessions (c-368; was 20) and the post
+   window 10; the effective day is one. Comparing a multi-week
+   cumulation to a single day flatters the cumulation by the
+   window length. Rates make the four
    phases and the baseline the same unit: flow per session, in
    ADV.
 
@@ -88,7 +90,14 @@ OUT = ROOT / "data" / "tw_foreign_baseline.json"
 DOC = ROOT / "docs" / "TW_FOREIGN_BASELINE.md"
 
 BASE_SESSIONS = 100     # baseline window length
-GAP_SESSIONS = 21       # ends this many sessions before the ann
+PRE_SESSIONS = 30       # c-368, Bill: pre phase widened from the
+#                         study's 20 sessions to 30. The study's
+#                         stored `foreign_pre_adv` is a 20-session
+#                         sum, so the pre rate is RECOMPUTED here
+#                         from the raw T86 file over the 30
+#                         sessions before the announcement.
+GAP_SESSIONS = PRE_SESSIONS + 1   # baseline ends clear of the
+#                                   pre window (31 before ann)
 MIN_COVER = 60          # baseline must cover at least this many
 
 
@@ -121,7 +130,7 @@ def main():
             continue
         code = str(e["code"])
         ann = e["ann"].replace("-", "")
-        # the baseline window: 100 sessions ending 21 before ann
+        # the baseline window: 100 sessions ending GAP_SESSIONS before ann
         before = [d for d in dates if d < ann]
         win = before[-(BASE_SESSIONS + GAP_SESSIONS):-GAP_SESSIONS] \
             if len(before) > BASE_SESSIONS + GAP_SESSIONS else []
@@ -134,13 +143,23 @@ def main():
         base_abs = stats.median(abs(x) for x in f)
         base_signed = stats.median(f)
         sess_mid = max(1, e.get("sessions_ann_to_eff") or 1)
+        # c-368: the pre rate over the 30 T86 sessions before
+        # the announcement, from the raw file — a true
+        # per-session rate over the covered days, so a coverage
+        # gap thins the sample instead of diluting the rate
+        pre_win = before[-PRE_SESSIONS:]
+        pre_f = [t86[d][code]["f"] / e["adv"] for d in pre_win
+                 if code in t86[d]
+                 and t86[d][code] and t86[d][code]["f"] is not None]
         r = {"key": e["key"], "code": code, "action": e["action"],
              "rev": e["rev"], "eff": e["eff"],
              "baseline_days": len(f),
              "baseline_abs_adv": round(base_abs, 5),
              "baseline_signed_adv": round(base_signed, 5),
              # per-session rates, all in ADV units
-             "rate_pre": e["foreign_pre_adv"] / 20,
+             "rate_pre": (sum(pre_f) / len(pre_f)) if pre_f
+             else e["foreign_pre_adv"] / 20,
+             "pre_sessions_covered": len(pre_f),
              "rate_mid": e["foreign_mid_adv"] / sess_mid,
              "rate_eff": e["foreign_eff_adv"],
              "rate_post": e["foreign_post_adv"] / 10,
@@ -162,8 +181,12 @@ def main():
                            f"{GAP_SESSIONS} before the announcement, "
                            f"per stock, requiring >= {MIN_COVER} "
                            f"covered sessions",
-               "phases_per_session": "pre /20, ann-to-eff /sessions, "
-                                     "effective day /1, post /10",
+               "phases_per_session": f"pre = mean over covered "
+                                     f"T86 sessions of the "
+                                     f"{PRE_SESSIONS} before ann "
+                                     f"(c-368), ann-to-eff "
+                                     f"/sessions, effective day "
+                                     f"/1, post /10",
                "netting_caveat": "T86 nets ALL foreign accounts to "
                                  "one number, so tracker buying "
                                  "netted against foreign selling "
@@ -199,7 +222,8 @@ def main():
          "| --- | --- | ---: | ---: |"]
     for side in ("ADD", "DEL"):
         s_ = out["sides"][side]
-        for ph, lab in (("pre", "20 sessions before ann"),
+        for ph, lab in (("pre", f"{PRE_SESSIONS} sessions "
+                                f"before ann"),
                         ("mid", "announcement to effective"),
                         ("eff", "the effective day"),
                         ("post", "10 sessions after")):

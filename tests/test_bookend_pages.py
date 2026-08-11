@@ -91,7 +91,11 @@ def test_the_intro_routes_a_busy_reader_to_the_case_study(intro):
         assert page in intro, page
     assert intro.index("Taiwan Case Study") > intro.index(
         "MSCI Index Review Database")
-    assert "the analysis" in intro          # the label
+    # c-364: the tag reads "live example" — the case study is
+    # the framework applied to a live review cycle, which is a
+    # description, not a ranking
+    assert "live example" in intro          # the label
+    assert ">the analysis</span>" not in intro
     # estimates and subtitles that were cut must not creep back
     for stale in ("1 min", "2 min", "the rest",
                   "Three pages of setup",
@@ -136,8 +140,11 @@ def test_the_loop_is_drawn_and_explained_in_plain_words(outro):
     would send a non-technical reader away — cron, pipeline, API
     — must not appear."""
     assert "<svg" in outro
-    for box in ("Collector", "Analyst", "Author", "Reviewer"):
+    # c-369, Bill: the Collector is renamed the Fetcher, and the
+    # old name must not creep back
+    for box in ("Fetcher", "Analyst", "Author", "Reviewer"):
         assert box in outro, box
+    assert "Collector" not in outro
     for jargon in ("cron", "pipeline", "API", "CSRF", "HTTP 200"):
         assert jargon not in outro, jargon
     # the loop is a loop: something has to come back
@@ -152,20 +159,49 @@ def test_the_gate_survives_the_cut(outro):
     publishing machine. What makes it a research one is that the
     fourth can stop the note. If the reviewer ever becomes a
     formatting step, this page is selling something."""
-    assert "Blocks anything it cannot prove" in outro
-    assert "cannot trace" in outro
-    assert "does not go out" in outro
+    # c-375, Bill: the subtitle carries the outcome — but the
+    # BODY must still carry the gate, because a reviewer that
+    # only refines is a formatting step. c-377 rewrote the body:
+    # the gate is now "mismatched number or flawed reasoning →
+    # flagged for a rerun", and that pair is what must survive.
+    assert "Reviews the draft and refines it for production" \
+        in outro
+    assert "Blocks anything" not in outro
+    assert "mismatched number" in outro
+    assert "flagged for a rerun" in outro
+    # c-375: both failure gates on the arm, and the green EXIT
+    # ARROW is gone — the loop ends at the Reviewer. GREEN
+    # itself stays in the SVG (it colours the Author box), so
+    # the assertion targets the arrow's own geometry: its
+    # arrowhead was the only green-filled "l-7,-4 l0,8 z" path.
+    assert "reasoning is flawed" in outro
+    from views import design as _dz
+    i_svg = outro.index("<svg")
+    svg = outro[i_svg:outro.index("</svg>")]
+    assert f'l-7,-4 l0,8 z" fill="{_dz.GREEN}"' not in svg
+    assert 'l16,0' not in svg          # the arrow's shaft
 
 
 def test_the_evening_timeline_is_concrete(outro):
-    """The second register. A dealer reads "18:00 Taipei" and
-    knows exactly which files those are — an abstract loop does
-    not survive that translation, and this is where it is
+    """The second register. A dealer reads "18:00 — collect"
+    and knows exactly which files those are — an abstract loop
+    does not survive that translation, and this is where it is
     tested."""
-    assert "One evening" in outro
+    # c-370, Bill: the timeline heading is "Example workflow";
+    # c-371: the first row's label is the STEP, not the city
+    assert "Example workflow" in outro
+    assert "One evening" not in outro
     for stamp in ("18:00", "07:00"):
         assert stamp in outro, stamp
-    assert "Taipei" in outro
+    assert "collect" in outro
+    assert "Taipei" not in outro
+    # c-371: the worked example is an unusual mover; c-373: an
+    # AI slip in calculation or reasoning goes to a HUMAN —
+    # that phrase is the page's whole safety argument, so it is
+    # pinned
+    assert "unusual price and volume movement" in outro
+    assert "flagged for human review" in outro
+    assert "illogical argument" not in outro
     # it ends where the reader's day starts
     assert "inbox" in outro or "before the open" in outro
 

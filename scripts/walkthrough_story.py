@@ -660,9 +660,11 @@ def story(market="Taiwan", review="Aug26"):
                 # point — size, float, foreign room, the buffers
                 # and the error bar on the cutoff — and this step
                 # is where they resolve into a list.
-                "The companies selected for index review change, "
-                "after every screen and adjustment has been "
-                "applied",
+                # c-379, Bill: the subtitle names the OUTPUT;
+                # c-395: singular.
+                "The index addition and deletion predicted "
+                "for the review, after every screen and "
+                "adjustment has been applied",
                 # c-306, Bill: the addition call, the deletion
                 # watchlist, the conviction-chain explainer, the
                 # calibration warning and the blind-band line are
