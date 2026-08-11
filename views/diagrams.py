@@ -62,8 +62,14 @@ VIEW_W = 880
 
 
 def _px(rem):
-    """The site's rem size, in viewBox units."""
-    return round(rem * 16 * VIEW_W / COL_PX, 1)
+    """The site's rem size, in viewBox units.
+
+    c-405, Bill: the root moved from the browser's 16px to 20px
+    at c-402, and the diagrams — whose whole point (c-250) is
+    that their type matches the page's — were still deriving
+    from 16. One constant, and every diagram's body text is
+    again exactly the size of a beat."""
+    return round(rem * 20 * VIEW_W / COL_PX, 1)
 
 
 FS_TITLE = _px(1.0)            # a node's name
@@ -322,7 +328,10 @@ def review_flow(announced, close, announced_time=None,
         ["Funds are benchmarked against the",
          "close price on the effective date."]]
     bh, top = 112, 16
-    wB = _fitw([ln for b in _bodies for ln in b], FS_CAP)
+    # c-405: fitted at FS_BODY — the size `_box` actually draws
+    # bodies at. Fitting at FS_CAP was a latent mismatch the
+    # 20px root exposed as a right-edge overflow.
+    wB = _fitw([ln for b in _bodies for ln in b], FS_BODY)
     # xF DERIVED, not fixed: the right column ends where the
     # canvas does. The ticks already track box centres
     # (tA, tC = wB/2, xF + wB/2), so both follow automatically.

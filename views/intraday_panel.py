@@ -197,8 +197,51 @@ def _two_sides(n):
         return out
 
     def _sides_svg():
+        # c-405, Bill: the diagram's type moves to 1.25x with
+        # the rest of the site (c-402 root). The factor boxes
+        # widen 130 -> 170 so the serif formula and the wrapped
+        # descriptions fit the larger face, the description
+        # wrap is MEASURED (DG._linew) rather than counted in
+        # characters, and the box height and canvas derive
+        # from the deepest body instead of being pinned.
+        from views import diagrams as DG
+
+        facs = [
+            (NAVY, "P(add / delete)", None,
+             "The probability that the stock gets added or "
+             "deleted at the MSCI index review."),
+            (NAVY, "\u0394w",
+             "\u0394w = w_index \u2212 w_portfolio",
+             "the weight the index review assigns minus the "
+             "weight currently held in portfolio."),
+            (NAVY, "Tracking AUM", None,
+             "The money that tracks the index and must buy "
+             "or sell accordingly."),
+        ]
+        fw = 170
+        fx = [8, 198, 388]
+
+        def _wrapm(txt, fs, budget):
+            words, line, out = txt.split(" "), "", []
+            for w_ in words:
+                t_ = (line + " " + w_).strip()
+                if line and DG._linew(t_, fs) > budget:
+                    out.append(line)
+                    line = w_
+                else:
+                    line = t_
+            out.append(line)
+            return out[:5]
+
+        _descs = [_wrapm(d_, 10.6, fw - 24)
+                  for _c, _n, _f, d_ in facs]
+        _ends = [(268 if f_ else 252) + (len(ls) - 1) * 15
+                 for (_c, _n, f_, _d), ls in zip(facs, _descs)]
+        fh = max(_ends) - 214 + 14
+        H = 214 + fh + 10
+
         W = 952
-        p_ = [f'<svg viewBox="0 0 {W} 324" width="100%" '
+        p_ = [f'<svg viewBox="0 0 {W} {H}" width="100%" '
               f'xmlns="http://www.w3.org/2000/svg" '
               f'style="max-width:952px;display:block;'
               f'margin:.2rem auto .6rem">'
@@ -229,12 +272,12 @@ def _two_sides(n):
                 (664, 804, "Hedge funds",
                  "liquidity provider")):
             box(x, 8, 280, 56, design.CARD, NAVY)
-            ctext(cx, 30, name, 13.5, INK, weight=600)
-            ctext(cx, 48, sub, 10, MUTED)
+            ctext(cx, 31, name, 16.9, INK, weight=600)
+            ctext(cx, 50, sub, 12.5, MUTED)
         box(336, 8, 280, 56, NAVY, NAVY)
-        ctext(476, 30, "Closing auction", 13.5, "#ffffff",
+        ctext(476, 31, "Closing auction", 16.9, "#ffffff",
               weight=600, family=design.SERIF)
-        ctext(476, 48, "effective day, 13:30", 10, "#cfd8e3")
+        ctext(476, 50, "effective day, 13:30", 12.5, "#cfd8e3")
         p_.append(f'<line x1="288" y1="36" x2="330" y2="36" '
                   f'stroke="{MUTED}" stroke-width="1.6" '
                   f'marker-end="url(#sfa)"/>')
@@ -251,7 +294,7 @@ def _two_sides(n):
                  "into the market close"]
         for cx, lines in ((312, beh_l), (640, beh_r)):
             for j, ln in enumerate(lines):
-                ctext(cx, 84 + j * 14, ln, 10.5, MUTED)
+                ctext(cx, 84 + j * 17, ln, 13.1, MUTED)
 
         # -- each party's quantity, below its box --
         # c-392, Bill: title-only navy bars -- Expected DEMAND
@@ -265,7 +308,7 @@ def _two_sides(n):
         for x, cx, name in ((8, 148, "Expected Demand"),
                             (664, 804, "Expected Supply")):
             box(x, 142, 280, 44, NAVY, NAVY)
-            ctext(cx, 170, name, 14, "#ffffff",
+            ctext(cx, 171, name, 17.5, "#ffffff",
                   family=design.SERIF)
         # c-399, Bill: this arrow runs slightly longer — the
         # factor row drops 12 units to give it room.
@@ -274,47 +317,29 @@ def _two_sides(n):
                   f'marker-end="url(#sfa)"/>')
 
         # -- the decomposition, under Expected Demand --
-        # c-392, Bill: P reworded; \u0394w carries the ACTIVE-
-        # WEIGHT formula (benchmark weight minus current
-        # portfolio weight); Tracking AUM ends "accordingly".
-        # c-394, Bill: P's accent goes NAVY to match the other
-        # boxes; \u0394w carries the formula as a maths line of its
-        # own (serif italic) over the plain-words reading.
-        facs = [
-            (NAVY, "P(add / delete)", None,
-             "The probability that the stock gets added or "
-             "deleted at the MSCI index review."),
-            (NAVY, "\u0394w",
-             # c-395, Bill: w_index, not w_benchmark
-             "\u0394w = w_index \u2212 w_portfolio",
-             "the weight the index review assigns minus the "
-             "weight currently held in portfolio."),
-            (NAVY, "Tracking AUM", None,
-             "The money that tracks the index and must buy "
-             "or sell accordingly."),
-        ]
-        fw = 130
-        fx = [8, 158, 308]
+        # c-392/c-394/c-395 wording and accents unchanged; only
+        # the type and the box metrics moved at c-405.
         for k, (acc, name, formula, desc) in enumerate(facs):
             x = fx[k]
-            box(x, 214, fw, 96, design.CARD, NAVY)
+            box(x, 214, fw, fh, design.CARD, NAVY)
             p_.append(f'<rect x="{x}" y="214" width="{fw}" '
                       f'height="3" fill="{acc}"/>')
-            ctext(x + fw / 2, 234, name, 11.5, NAVY,
+            ctext(x + fw / 2, 236, name, 14.4, NAVY,
                   family=design.SERIF)
-            dy = 250
+            dy = 252
             if formula:
                 p_.append(
                     f'<text x="{x + fw / 2}" y="{dy}" '
                     f'text-anchor="middle" '
                     f'font-family="{design.SERIF}" '
-                    f'font-style="italic" font-size="9.5" '
+                    f'font-style="italic" font-size="11.9" '
                     f'fill="{INK}">{formula}</text>')
-                dy += 14
-            for j, ln in enumerate(_wrap(desc, 24)[:5]):
-                ctext(x + fw / 2, dy + j * 12, ln, 8.5, MUTED)
+                dy += 16
+            for j, ln in enumerate(_descs[k]):
+                ctext(x + fw / 2, dy + j * 15, ln, 10.6, MUTED)
             if k < 2:
-                ctext(fx[k] + fw + 10, 264, "\u00d7", 15, MUTED,
+                ctext(fx[k] + fw + 15, 214 + fh / 2 + 5,
+                      "\u00d7", 18.8, MUTED,
                       family=design.SERIF)
         p_.append("</svg>")
         return "".join(p_)
@@ -532,6 +557,19 @@ def sections(start_n=1):
     _note(f"Each line is the median 5-minute trading volume "
           f"across {len(ev)} Taiwan index events.")
 
+    # ---- (deleted) how much the close can absorb -----------
+    #
+    # c-407, Bill: THE SECTION IS DELETED FROM THE PAGE, chart,
+    # caveat and all. Nothing is lost from the project: the
+    # 11-year auction file, the month-end control and the
+    # 9.5%-vs-79% close share all live in
+    # scripts/ib_auction_reharvest.py,
+    # data/tw_auction_microstructure.json and
+    # docs/TW_AUCTION_MICROSTRUCTURE.md, and the loaders
+    # (_load_auction/_auc_stamp) stay on disk -- restoring the
+    # block is a git revert, deleting a working section's
+    # machinery is not.
+
     # ---- 3 · the close against fair value -------------------
     design.sect(nxt(), "Market on Close vs VWAP",
                 "The closing price against the day's own VWAP, "
@@ -638,100 +676,5 @@ def sections(start_n=1):
         f"{_pctl([e['next_open_gap'] for e in ng_d], .5):+.2%} on "
         "deletions.")
     design.caveat(body)
-
-    # ---- 5 to 7: TWSE's own 5-second auction file --------------
-    AU = _load_auction(_auc_stamp())
-    if not AU:
-        return
-    # c-323: `A` and `RT` went with the two deleted sections.
-    # c-329: `CAP` went with the four-card table.
-    MC = AU["month_end_control"]
-
-    design.sect(nxt(), "How Much Volume the Close Can Absorb",
-                "Comparison of closing auction as a percentage of "
-                "the day's volume")
-    # c-329, Bill: the four-card table is deleted. Every number it
-    # carried is on the chart below or in its hover, and CAP is
-    # still read from the file — see the note under the chart.
-    fig = go.Figure()
-    for lab, key, colour in (
-            ("normal day", "neither", FAINT),
-            ("month-end, not MSCI", "month_end_not_msci", NAVY),
-            ("MSCI effective date", "msci_effective", RED)):
-        b = MC[key]
-        fig.add_bar(x=[lab], y=[b["p50"]], marker_color=colour,
-                    marker_line_width=0, name=lab,
-                    # c-329, Bill: "I don't see the whiskers."
-                    # They were drawn — in the SAME colour as the
-                    # bar. The lower half sits inside the bar and
-                    # is invisible by construction, and the upper
-                    # half was a 1.2px light-grey line on cream
-                    # for the "normal day" bar. Ink, thicker,
-                    # with an explicit cap width.
-                    error_y=dict(type="data", symmetric=False,
-                                 array=[b["p75"] - b["p50"]],
-                                 arrayminus=[b["p50"] - b["p25"]],
-                                 color=INK, thickness=1.6, width=9),
-                    customdata=[[b["n"], b["p25"], b["p75"]]],
-                    hovertemplate=design.hover(
-                        "%{x}", eyebrow="closing auction",
-                        rows=[("median share", "%{y:.1%}"),
-                              ("quartiles",
-                               "%{customdata[1]:.1%} – "
-                               "%{customdata[2]:.1%}"),
-                              ("sessions", "%{customdata[0]:,}")]))
-    fig.update_layout(
-        height=330, showlegend=False,
-        yaxis=dict(title="closing auction, share of the day's "
-                         "value", tickformat=".0%"),
-        xaxis=dict(title=""), margin=dict(t=20))
-    design.chart(fig)
-    st.markdown(
-        f"<p style='font-size:.8rem;color:{MUTED};margin:"
-        f".1rem 0 .5rem;text-align:center'>Bars represent medians, "
-        f"whiskers represent the interquartile range</p>",
-        unsafe_allow_html=True)
-    # c-333, Bill asked what the 114 month-end datapoints are.
-    # They are SESSIONS, not stocks — and nothing on the page said
-    # so, which is why the question had to be asked. Every one of
-    # the 2,815 trading days in TWSE's 5-second file falls in
-    # exactly one of the three bars.
-    # c-367, Bill: the mechanics sentence LEADS and the scope
-    # sentence follows it, with the load-bearing phrases bold \u2014
-    # what is measured (the auction's volume), what it is
-    # divided by, and the number the example turns on.
-    design.caveat(
-        "Each bar takes the volume traded in the "
-        "<b>13:25\u201313:30 closing auction</b> across every "
-        "listed company, and divides it by the volume traded "
-        "in the <b>whole session</b>. This chart sums the "
-        "volume for the <b>whole exchange</b>. Ex. a median of "
-        f"<b>{MC['neither']['p50']:.1%}</b> means that on a "
-        # c-371, Bill: both occurrences bold
-        f"normal day, <b>{MC['neither']['p50']:.1%}</b> of a "
-        "full session's trading happens in those final five "
-        "minutes.")
-    # c-329, Bill: the three prose blocks under this chart are
-    # deleted. NOTHING IS LOST FROM THE PROJECT — the month-end
-    # control (26/30 of MSCI dates are month-ends; month-end alone
-    # lifts the close to 11.2% and the review lifts it again to
-    # 30.3%, p<0.0001), the market-wide caveat and the
-    # May/November-versus-February/August split all live in
-    # docs/TW_AUCTION_MICROSTRUCTURE.md and in
-    # data/tw_auction_microstructure.json, and the middle bar is
-    # still ON THE CHART, which is where the control does its
-    # work. What went is prose, not evidence.
-
-    # c-323, Bill: "The Review Type Is a Capacity Input" and
-    # "What the 5-Second File Cannot Tell You" are deleted.
-    #
-    # NEITHER FINDING IS LOST. The May/November-versus-
-    # February/August split (31.4% against 19.3%, p=0.0005) and
-    # the column-identification limits both live in
-    # docs/TW_AUCTION_MICROSTRUCTURE.md and in
-    # data/tw_auction_microstructure.json, which the section
-    # above still reads from. What went is two blocks of prose on
-    # a page Bill is shortening to the four charts that carry
-    # themselves.
 
     return _n[0] - start_n + 1

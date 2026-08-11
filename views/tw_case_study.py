@@ -578,7 +578,11 @@ def render():
         design.sect(_used + 1 + _pre + _fb,
                     "Market Positioning Before Announcement "
                     "Day — Deletion",
-                    "Securities-lending balance of the "
+                    # c-408, Bill: "borrowing", not "lending" —
+                    # TWT93U is ONE number (shares out on loan),
+                    # and the deletion trade's actor is the
+                    # borrower.
+                    "Securities-borrowing balance of the "
                     "candidates for index deletion")
         # c-376, Bill: both cards value-only, one format — the
         # ADV multiple and the returned/built read move to the
@@ -863,6 +867,32 @@ def render():
                     f"mandate, and where each number comes "
                     f"from"):
                 st.markdown(
+                    # c-403, Bill: the expander OPENS with the
+                    # aggregation behind the USD 45bn ETF pool,
+                    # mirroring the caveat's bullets, before the
+                    # MSCI sources table.
+                    f"**The USD "
+                    f"{TWM['always_buys_named_etf_usd_b']:.0f}bn "
+                    f"ETF pool, aggregated.** Summed fund by "
+                    f"fund from published assets:\n\n"
+                    f"| Pool | AUM |\n| --- | --- |\n"
+                    f"| Uncapped MSCI Taiwan Index ETFs "
+                    f"(Yuanta 006203, Fubon 0057) | USD "
+                    f"{T_['uncapped']:.2f}bn |\n"
+                    f"| Every ETF on the MSCI Taiwan indexes "
+                    f"(incl. the uncapped pair above, led by "
+                    f"iShares EWT) | USD {T_['family']:.1f}bn "
+                    f"|\n"
+                    f"| Taiwan inside MSCI EM and ACWI Standard "
+                    f"trackers (EEM, EMXC, …) | USD "
+                    f"{T_['case_promotion']:.1f}bn |\n\n"
+                    f"The USD {T_['uncapped']:.2f}bn sits "
+                    f"inside the USD {T_['family']:.1f}bn, so "
+                    f"it is not added twice:\n\n"
+                    f"`USD {T_['case_promotion']:.1f}bn + USD "
+                    f"{T_['family']:.1f}bn = USD "
+                    f"{TWM['always_buys_named_etf_usd_b']:.1f}"
+                    f"bn`\n\n"
                     f"**Where the numbers come from.** Every "
                     f"input is MSCI Inc.'s own Q2 2026 "
                     f"reporting for the quarter ended "
@@ -882,16 +912,10 @@ def render():
                     f"funds | USD "
                     f"{M_['abf_non_etf_indexed_usd_m']:,.1f}m | "
                     f"presentation p13 |\n\n"
-                    f"**1 \u00b7 The ETFs that must buy.** USD "
-                    f"{T_['case_promotion']:.1f}bn of Taiwan "
-                    f"exposure inside Standard EM and ACWI "
-                    f"trackers, plus USD {T_['family']:.1f}bn "
-                    f"of ETFs on the MSCI Taiwan indexes "
-                    f"themselves.\n\n"
-                    f"`USD {T_['case_promotion']:.1f}bn + USD "
-                    f"{T_['family']:.1f}bn = USD "
-                    f"{TWM['always_buys_named_etf_usd_b']:.1f}"
-                    f"bn`\n\n"
+                    f"**1 \u00b7 The ETFs that must buy.** The USD "
+                    f"{TWM['always_buys_named_etf_usd_b']:.1f}bn "
+                    f"aggregated at the top \u2014 every fund of it "
+                    f"named.\n\n"
                     f"**2 \u00b7 Non-ETF size.** MSCI "
                     f"now DISCLOSES the non-ETF indexed pool "
                     f"\u2014 ~USD "

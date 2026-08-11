@@ -691,8 +691,8 @@ def test_a_note_label_is_bolded_but_a_timestamp_is_not(at):
         'the list')
     assert D._lead_bold("Index funds: complete the switch")\
         .startswith('<tspan font-weight="700">Index funds:</tspan>')
-    for plain in ("Central European Summer Time — 05:00 Hong Kong",
-                  "time the following morning, 13 August.",
+    for plain in ("Central European Summer Time — 05:00",
+                  "Hong Kong time the next morning, 13 August.",
                   "as of the close of 31 Aug 2026."):
         assert "<tspan" not in D._lead_bold(plain), plain
 
@@ -1435,7 +1435,7 @@ def test_the_screen_results_moved_behind_a_click(at):
     labs = [e.label for e in at.expander]
     # c-382, Bill: the label names WHICH screen these checks
     # belong to
-    assert any("Addition & Deletion — Size Checks" in x
+    assert any("Addition & Deletion — Investability Checks" in x
                for x in labs), labs
     assert not any("Screen Results" in x for x in labs), labs
     assert not any("Reasons for" in x for x in labs), labs

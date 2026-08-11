@@ -63,7 +63,9 @@ def test_page_renders(at):
     # c-368: SIX. The Two Sides of the Rebalance Trade — the
     # framing section with the two formulas both sides run on —
     # sits between the Data Review and the first chart.
-    assert md.count("class='dsect") == 6
+    # c-407: five, down from six — the absorb section is
+    # deleted from the page.
+    assert md.count("class='dsect") == 5
     assert "5-Minute Data Analysis" in md
 
 
@@ -149,19 +151,19 @@ def test_the_page_shows_taiwan_alone(at):
         assert bad not in labels, f"{bad} is a data label"
 
 
-def test_the_auction_sections_reach_the_screen(at):
+def test_the_auction_sections_stay_off_the_screen(at):
     """c-319 added three sections built on TWSE's own 5-second
-    file; c-323 cut two of them. The one that remains carries the
-    eleven-year Taiwanese close, and a page that silently drops it
-    is back to three graphs off 43 windows.
+    file; c-323 cut two; c-407, Bill: the last one — the absorb
+    chart — is deleted too, so ALL THREE stay off the page.
 
-    The deleted blocks are not lost — the review-type split and
-    the column-identification limits live in
-    docs/TW_AUCTION_MICROSTRUCTURE.md and are asserted by
+    None of the findings are lost — the eleven-year close, the
+    review-type split and the column-identification limits live
+    in docs/TW_AUCTION_MICROSTRUCTURE.md and
+    data/tw_auction_microstructure.json, asserted by
     test_tw_auction_microstructure.py."""
     md = " ".join(str(m.value) for m in at.markdown)
-    assert "How Much Volume the Close Can Absorb" in md
-    for gone in ("The Review Type Is a Capacity Input",
+    for gone in ("How Much Volume the Close Can Absorb",
+                 "The Review Type Is a Capacity Input",
                  "What the 5-Second File Cannot Tell You"):
         assert gone not in md, gone
 
@@ -210,31 +212,11 @@ def test_the_close_vs_vwap_section_is_split_by_side(at):
     assert "from the close · n=43" not in md
 
 
-def test_the_auction_error_bars_are_not_drawn_in_the_bar_colour(
-        monkeypatch):
-    """c-329, Bill: *"I don't see the bars and whiskers."* They
-    were there — in the same colour as the bar they sat on, so
-    the lower half was invisible inside the bar and the upper
-    half was a hairline in the bar's own tint. A chart caption
-    that promises whiskers has to produce visible ones.
-
-    AppTest exposes markdown but not chart objects, so this
-    renders the sections with design.chart intercepted and
-    inspects the Figure directly. That is the only way to assert
-    on a colour rather than on the string that sets it."""
-    from views import design, intraday_panel
-    figs = []
-    monkeypatch.setattr(design, "chart", lambda f, **k: figs.append(f))
-    intraday_panel.sections(1)
-    bars = [tr for f in figs for tr in f.data
-            if getattr(tr, "error_y", None) is not None
-            and tr.error_y.array is not None]
-    assert bars, "no error bars found at all"
-    for tr in bars:
-        assert tr.error_y.color == design.INK, (
-            f"error bar drawn in {tr.error_y.color}; the bar's "
-            f"own colour is {tr.marker.color}")
-        assert tr.error_y.color != tr.marker.color
+# c-407: test_the_auction_error_bars_are_not_drawn_in_the_bar
+# _colour is DELETED WITH ITS CHART — the absorb section was
+# the only figure on this page carrying error_y whiskers, and
+# a guard with no subject fails as noise. If the section ever
+# returns, revive the whisker-colour rule with it (c-329).
 
 
 def test_the_box_traces_do_not_pop_a_fence_summary(monkeypatch):

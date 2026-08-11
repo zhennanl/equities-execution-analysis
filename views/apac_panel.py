@@ -992,13 +992,26 @@ def render():
                              g[g.action == act]["eff_day"]
                              if v is not None and v == v], k, 50)
                       for _lab, g in groups]
+                # c-404, Bill: a point at exactly ZERO means the
+                # review carried no measurable index change for
+                # this market, not a zero-risk print — drawn as
+                # a HOLLOW dot so the two are not confused.
+                # (Open plotly symbols draw only their outline,
+                # whose thickness is marker.line — without it
+                # they vanish, and on solid dots a same-colour
+                # outline changes nothing.)
+                _base = STAT_MARK.get(k, "circle")
+                _syms = [_base if y else f"{_base}-open"
+                         for y in ys]
                 fig.add_scatter(
                     x=names, y=ys, mode="markers+lines",
                     name=f"{slab} — {k.lower()}",
                     line=dict(width=1, color=colour,
                               dash=STAT_DASH.get(k)),
                     marker=dict(size=9, color=colour,
-                                symbol=STAT_MARK.get(k, "circle")),
+                                symbol=_syms,
+                                line=dict(width=1.2,
+                                          color=colour)),
                     # c-313: see `_dots` — the label cannot come
                     # from `%{x}` on a numeric review axis.
                     customdata=names,

@@ -516,10 +516,32 @@ def _prob_flowchart(d):
          f"convert that count to probability"),
     ]
     # c-395, Bill: the boxes shrink to their content — the
-    # c-392 trim left dead space under the shortest body. Five
-    # body lines maximum at 16px leading under the 63px head.
-    W, H = 880, 172
-    box_w, box_h, y = 272, 156, 8
+    # c-392 trim left dead space under the shortest body.
+    # c-405: the type moved to the 20px root with the rest of
+    # the site, so the wrap is now MEASURED against the box
+    # (DG._linew) instead of counted in characters, the leading
+    # opens from 16 to 20, and the box height is derived from
+    # the deepest body rather than pinned at a number tuned for
+    # the smaller face.
+    box_w, y = 272, 8
+    _maxw = box_w - 16 - 12       # text x-inset and right pad
+
+    def _wrapw(body):
+        words, line, lines = body.split(" "), "", []
+        for w_ in words:
+            t_ = (line + " " + w_).strip()
+            if line and DG._linew(t_, DG.FS_BODY) > _maxw:
+                lines.append(line)
+                line = w_
+            else:
+                line = t_
+        lines.append(line)
+        return lines[:8]
+
+    _wrapped = [_wrapw(b) for _t, _s, b in boxes]
+    _nmax = max(len(ls) for ls in _wrapped)
+    box_h = 63 + (_nmax - 1) * 20 + 14
+    W, H = 880, y + box_h + 8
     xs = [8, 304, 600]
     p = [f'<svg viewBox="0 0 {W} {H}" '
          f'xmlns="http://www.w3.org/2000/svg" '
@@ -540,17 +562,9 @@ def _prob_flowchart(d):
                  f'font-size="{DG.FS_EYEBROW}" '
                  f'letter-spacing="1.1" '
                  f'fill="{design.FAINT}">{sub}</text>')
-        words, line, lines = body.split(" "), "", []
-        for w_ in words:
-            if len(line) + len(w_) > 33:
-                lines.append(line)
-                line = w_
-            else:
-                line = (line + " " + w_).strip()
-        lines.append(line)
-        for j, ln in enumerate(lines[:8]):
+        for j, ln in enumerate(_wrapped[i]):
             p.append(f'<text x="{x + 16}" '
-                     f'y="{y + 63 + j * 16}" '
+                     f'y="{y + 63 + j * 20}" '
                      f'font-size="{DG.FS_BODY}" '
                      f'fill="{design.MUTED}">{ln}</text>')
         if i < 2:
@@ -1392,7 +1406,7 @@ def _results(s):
     if body:
         # c-382, Bill: the label names WHICH screen these
         # checks belong to.
-        with st.expander("Addition & Deletion — Size Checks"):
+        with st.expander("Addition & Deletion — Investability Checks"):
             for b_ in body:
                 st.markdown(b_)
 

@@ -88,7 +88,6 @@ SECTIONS = ["Data Review",
             "Where the Volume Actually Prints",
             "Volume Profile on the Effective Day",
             "Market on Close vs VWAP",
-            "How Much Volume the Close Can Absorb",
             # c-368, Bill: foreign flow MOVES AHEAD of the
             # positioning read — what usually happens through
             # the window, then what is happening now.
@@ -103,7 +102,11 @@ SECTIONS = ["Data Review",
             "— Deletion"]
 
 
-GONE = ["How Big Is the Order, in Closes",
+GONE = [
+        # c-407, Bill: the absorb section is deleted outright;
+        # its evidence lives in docs/ and data/, off the page.
+        "How Much Volume the Close Can Absorb",
+        "How Big Is the Order, in Closes",
         "August 2026, If They Are Added",
         "Has Anyone Already Bought Them",
         "How Much the Taiwanese Close Can Absorb",
