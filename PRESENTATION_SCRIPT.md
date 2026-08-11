@@ -18,10 +18,10 @@ carry the argument.
 | 0 | Opening | 0:20 | This is built for a dealer, not a PM |
 | 1 | Start Here | 0:40 | The constraints, up front |
 | 2 | Review Database | 0:45 | Every past change, searchable |
-| 3 | Predict Changes | 1:30 | The rulebook, reproducible end to end |
-| 4 | Daily Data | 1:00 | Cross-market context, and why I narrowed |
+| 3 | Predict Changes | 1:30 | The rulebook end to end, and a per-name probability |
+| 4 | Daily Data | 1:00 | The print is one day; venues differ |
 | 5 | **Taiwan Case Study** | **7:00** | **The close is the venue. Here's the order.** |
-| 6 | Agentic Workflow | 1:00 | Most of this could run overnight |
+| 6 | Agentic Workflow | 1:00 | Fetcher, Analyst, Author, Reviewer — three of four built |
 | — | Close | 0:15 | Four sentences, then stop |
 
 **Three rules for delivering it.**
@@ -53,10 +53,9 @@ you say.]**
 > everyone can see it coming.
 >
 > And the buying isn't a view. A tracker buys the name because
-> its benchmark now contains it, full stop. That's forced demand
-> rather than fundamental demand, and it behaves completely
-> differently — it's price-insensitive, and it turns up on a
-> known date.
+> its benchmark now contains it. That's forced demand rather than
+> fundamental demand, and it behaves differently — it's
+> price-insensitive, and it turns up on a known date.
 >
 > So I wasn't trying to work out whether the stock goes up. That's
 > a PM's question. I wanted the dealer's version: how much has to
@@ -133,7 +132,8 @@ you say.]**
 *90 seconds. The credibility page. Slow down in the middle.*
 
 > This walks MSCI's methodology one step at a time and ends with a
-> call for August.
+> call for August — announcement on the 12th, effective at the
+> close on the 31st.
 
 **[Steps 1 and 2, briskly.]**
 
@@ -149,20 +149,32 @@ you say.]**
 >
 > And every step has one of these dropdowns with the arithmetic
 > in it. There isn't a number on this page I typed in by hand. You
-> can follow the chain yourself, which is the point.
+> can follow the chain yourself, end to end.
 
 **[Step 4.]**
 
 > Then each candidate against the cutoff and its buffers. The
-> buffer matters more than the cutoff, honestly. MSCI doesn't add
-> you when you cross the line, they add you when you clear it by a
-> margin, and that's what makes any of this predictable.
+> buffer matters more than the cutoff. MSCI doesn't add you when
+> you cross the line, they add you when you clear it by a margin,
+> and that's what makes any of this predictable.
 
-**[Step 5.]**
+**[Step 5 — the call.]**
 
-> Last step is the call for August, with a confidence band rather
-> than a yes or no. That band is the float problem from page one
-> showing up again.
+> Last step is the call, and it's a probability per name rather
+> than a yes or no. Under the hood it's twenty thousand simulated
+> reviews. The rule itself is sharp — what gets shaken is the two
+> inputs I can't observe: where the cutoff lands inside MSCI's own
+> five percent band, and which of the ten pricing dates they
+> strike it on.
+>
+> Four names are in reach. Three clear the bar by enough that the
+> simulation barely wavers — better than 95. Phison sits closer
+> in, at 65. And on the other side there's a border deletion
+> hanging over the floor at 36.
+>
+> What that number doesn't price is MSCI's discretion — they can
+> flex the count, and there's a liquidity screen I take as passed.
+> I'd rather volunteer that than be caught by it.
 
 ---
 
@@ -224,92 +236,123 @@ the room knows it.*
 > section further down runs on eleven years of the exchange's own
 > file.
 
-## 5.2 · Where the volume actually prints
+## 5.2 · The two sides of the trade
+
+**[The diagram — parties left and right, the auction in the
+middle.]**
+
+> One page of framing, because it tells you what to measure.
+>
+> On one side, the trackers. Their demand is three numbers
+> multiplied: the probability of the change, the weight gap — what
+> the index will assign minus what they hold — and the money
+> tracking the index. They consume liquidity at the close, because
+> printing in the benchmark is zero tracking error by definition.
+>
+> On the other side, whoever supplies it — prop desks, hedge
+> funds, index-rebalance pods. They accumulate inventory
+> beforehand and provide liquidity into that same auction.
+>
+> Probability came from the page before. Weight I rebuild. The
+> money tracking the index is the hard number, and it gets its own
+> section at the end. Everything in between is about the venue
+> where the two sides meet.
+
+## 5.3 · Where the volume actually prints
 
 > This is the finding everything else sits on.
 >
-> A Taiwanese stock normally puts about a tenth of its daily
-> volume through the closing auction. On its index effective day,
-> it's closer to four fifths.
+> On a normal day, a Taiwanese stock puts about nine and a half
+> percent of its volume through the closing auction. On its index
+> effective day, 79 percent.
 >
 > That changes what you're even trading. Most of the day's
-> business goes through one five-minute call. If you're working
-> that order, the continuous session barely matters.
+> business goes through one call at half past one. If you're
+> working that order, the continuous session barely matters.
 
-## 5.3 · The same thing, through the session
+## 5.4 · The same thing, through the session
 
 > Here's the intraday shape. Normal days build gradually. Index
-> days sit flat all afternoon and then hit a wall at half past
-> one. There's nowhere quiet to hide the trade.
+> days sit flat all afternoon and then hit a wall at the close.
+> There's nowhere quiet to hide the trade.
 
-## 5.4 · What the close costs — and where I corrected myself
+## 5.5 · What the close costs — and where I corrected myself
 
 > So what does it cost you? Measured against the day's VWAP,
-> almost nothing. Which sounds great, and I didn't believe it.
+> minus six basis points. Which sounds great, and I didn't
+> believe it.
 >
-> If the auction is four fifths of the day's volume, it's also
-> four fifths of the day's VWAP. I was comparing the close against
-> a benchmark that mostly is the close. It was always going to
-> come out near zero.
+> If the auction is 79 percent of the day's volume, it's also 79
+> percent of the day's VWAP. I was comparing the close against a
+> benchmark that mostly is the close. It was always going to come
+> out near zero.
 >
 > So I rebuilt it — the jump from the last continuous price into
 > the auction print, where the auction's own volume isn't inside
-> the benchmark. That gives a real number, and it's about five
-> times bigger.
+> the benchmark. That reads about minus 25 basis points on
+> additions.
 >
-> The two versions reconcile arithmetically, which is how I know I
-> found the right explanation rather than a convenient one.
+> And the two versions reconcile: minus six divided by the one
+> minus 79 percent the benchmark has left is roughly the direct
+> number. That's how I know I found the right explanation rather
+> than a convenient one.
 
-## 5.5 · How much the close can absorb
+## 5.6 · How much the close can absorb
 
-> Now the bigger sample. Eleven years of the exchange's five-second
-> auction file, every listed company.
+> Now the bigger sample. Different instrument, deeper history —
+> eleven years of the exchange's own auction file, 2,815 sessions.
 >
 > On an index day the typical impact is still close to zero. But
 > the spread around it is three to five times wider than the same
-> name's ordinary auctions.
+> name's ordinary auctions, and nine prints in ten still land
+> inside about one point eight percent.
 >
-> So the honest version isn't "the close is cheap." It's that the
-> close is cheap on average and a lot less predictable when an
-> index trade is in it. That's a sizing input. It isn't a view on
-> price.
+> So the fair reading is that the close is cheap on average and
+> a lot less predictable when an index trade is in it. That's a
+> sizing input, not a price forecast.
 
-## 5.6 · Has anyone bought them already?
+## 5.7 · Foreign flow on the day itself
 
-> Three names look likely to go in this month, so the obvious
-> question is whether the market's already there.
+> Taiwan publishes daily foreign buying and selling per stock, so
+> you can see the print land.
 >
-> A typical addition draws real foreign buying in the weeks before
-> the announcement. These three didn't — they sat below their
-> peers, while foreigners were buying the peer group overall.
+> I scaled each event day by that stock's own normal foreign
+> activity. On the effective day, additions take about three
+> times a normal day's net buying. Deletions are sharper — five
+> times normal selling, and they keep bleeding at almost twice
+> normal for two weeks after. Outside the effective day, both
+> sides sit inside the noise.
 >
-> Flow data only shows you trading, though, not holding. So I also
-> pulled the depository's weekly census of custody accounts, which
-> shows whether the large-holder bucket is growing. If passive
-> money were building a position quietly, you'd see it there. It
-> isn't showing up in either place.
->
-> That cuts both ways and I'd say so. Less crowding to unwind, but
-> also nobody agreeing with me yet.
+> One caveat I'd volunteer: that file nets all foreign accounts
+> against each other, so if foreign prop is providing liquidity to
+> foreign trackers, these multiples understate the gross index
+> flow.
 
-## 5.7 · How big is the order
+## 5.8 · Has anyone bought them already?
 
-> Last section, and the one you'd actually use.
+> So is the market already positioned this time?
 >
-> The way the platforms frame this is a two-line model. Expected
-> flow is the probability of the add, times the weight it comes
-> in at, times the money tracking the index. And then what you
-> actually care about is that flow divided by the liquidity
-> available to absorb it — a billion dollars into a name that
-> trades ten billion a day is nothing, and into a name that
-> trades two hundred million it's a week of volume.
+> A typical confirmed addition drifts up seven percent against
+> the market before the announcement, on real foreign buying. The
+> three adds I can see in the flow file sit below their peer
+> median instead — the fourth trades on the TPEx and isn't in the
+> file at all. The depository's weekly census of large holders
+> shows nothing unusual either. And Nanya has drifted 17.6
+> percent the wrong way.
 >
-> Weight I can build. Liquidity I've just spent five minutes on.
-> The money tracking the index was the hard part, and that's
-> where most of the time went.
+> Price and flow together are pricing this at roughly zero, and
+> the rule says better than 95. That gap is the thesis. It cuts
+> both ways and I'd say so — less crowding to unwind, but also
+> nobody agreeing with me yet.
+
+## 5.9 · How big is the order
+
+> Last big section, and the one you'd actually use. Weight I
+> build. Liquidity I've just spent five minutes on. What's left is
+> the money tracking the index, and that's where the time went.
 >
-> The number this project started with was USD 180 billion,
-> which someone had typed into a script years ago as a proxy with
+> The number this project started with was USD 180 billion, which
+> someone had typed into a script years ago as a proxy with
 > nothing behind it. I threw it out.
 
 **[Open the mandate dropdown.]**
@@ -330,14 +373,13 @@ the room knows it.*
 > funds on the MSCI Taiwan indexes themselves. That last group
 > was missing from the earlier version, and it shouldn't have
 > been, because a new constituent goes into those at the same
-> review.
+> review. Call it 45 billion.
 >
-> Second, and this is the part I like — the indexed money that has
-> no ticker. Separate accounts, index mutual funds, pension
-> mandates. MSCI is a public company, so it reports the fee
-> revenue it earns on that money to the SEC every quarter. And on
-> the last earnings call, management put a size on the pool
-> itself: about five trillion dollars.
+> Second, the indexed money that isn't an ETF. Separate accounts,
+> index mutual funds, pension mandates. MSCI is a public company,
+> so it reports the fee revenue it earns on that money to the SEC
+> every quarter. And on the last earnings call, management put a
+> size on the pool itself: about five trillion dollars.
 >
 > Five trillion against two point eight trillion of ETF money.
 > So for every dollar sitting in an MSCI-linked ETF, there's
@@ -364,18 +406,35 @@ the room knows it.*
 
 **[Back to the bars.]**
 
-> Run that through and the four names need somewhere between
-> half a day's volume and one and a half days' — all arriving in
-> an auction that usually handles a tenth of the day.
+> Run that through and the four names need somewhere between half
+> a day's volume and one and a half days' — all arriving in an
+> auction that usually handles a tenth of the day. Phison is the
+> tightest print, just under a day and a half of its own volume,
+> and it's also the least certain add, at 65. Those two facts
+> belong in the same sentence.
 >
-> And every name has its own dropdown with the full working:
+> And the table underneath carries the full working per name:
 > weight, dollars, shares, divided by that name's own ADV. Nothing
 > on this page is asserted. It's arithmetic you can check while
 > I'm talking.
 
-## 5.8 · The result that didn't work
+## 5.10 · The deletion, and the borrow check
 
-> One more, and I'd rather volunteer it.
+> The border deletion gets its own check, because the trade there
+> is a short, and a short needs borrow.
+>
+> Taiwan publishes securities-lending balances daily. Caliway's
+> sits at nine and a half million shares — the 18th percentile of
+> its own covered history, and down about twelve percent over the
+> last month. Nobody's building a borrow into this.
+>
+> Caveat: that file only sees the lending channel. Margin shorts
+> and synthetic shorts are invisible, so this is the absence of
+> evidence, not proof of absence.
+
+## 5.11 · The result that didn't work
+
+> One more, and I'd rather volunteer it than be caught by it.
 >
 > I tested a handful of rules for whether any of this predicts
 > direction. Fitted them on the older events, scored them on the
@@ -406,35 +465,37 @@ the room knows it.*
 
 *60 seconds.*
 
-> Last page. Everything here is generated by a script with a named
-> input and a checked output, which is most of what you need to
-> make it run on its own.
+> Last page. Everything on this site is generated by a script with
+> a named input and a checked output, which is most of what you
+> need to make it run itself.
 
 **[The loop.]**
 
-> Four steps. Something to fetch the exchange files when they
-> publish in the evening. Something to rerun the analysis and tell
-> you what actually changed. Something to draft the note in the
-> desk's voice, with every line traceable to the file it came
-> from. And then a checker that reads the draft back against those
-> files and won't let anything through that it can't tie out.
+> Four agents. A Fetcher that retrieves what TWSE publishes in the
+> evening — the daily net buying by investor type, the lending
+> balances. An Analyst that reruns the framework on the new data
+> and gives its own read of the market colour. An Author that
+> writes the report, every line pointing back at the source. And a
+> Reviewer that reads the draft against those files — if a number
+> doesn't match, or the reasoning is flawed, it goes back for a
+> rerun rather than out the door.
 
 **[The timeline.]**
 
-> On the clock, it's an evening's work: files land, the framework
-> reruns, the draft gets written and checked, and it's ready to go
-> before the open.
+> On the clock it's an evening's work: files land, the framework
+> recalculates, the draft flags anything unusual, the review
+> either passes it or kicks it to a human, and it's sitting there
+> at seven in the morning.
 
 **[Not on the page — say it.]**
 
-> I'll be straight about where this actually stands. The
-> harvesters, the analysis and the test suite all exist today. The
-> scheduler, the writer and the checker don't. Three of the four
-> boxes are real.
+> Where it actually stands: three of the four are built. The
+> fetching, the analysis and the reporting exist today; the
+> reviewer is the one I'd finish first.
 >
-> And it's the fourth one that matters. Three agents that fetch,
-> compute and write give you a publishing machine. What makes it
-> research is that the last one can stop the note.
+> Because that's the box that matters. Fetch, compute and write
+> gives you a publishing machine. What makes it research is that
+> the last one can stop the note.
 
 ---
 
@@ -442,13 +503,13 @@ the room knows it.*
 
 *15 seconds. Four sentences, then stop talking.*
 
-> So, to pull it together. The close is where the trade happens,
-> and most of an index day goes through it. It's cheap on average
-> but a lot less predictable when there's an index order in the
-> book. Nobody's pre-positioned these three names on either
-> measure I could check. And the order is a meaningful slice of a
-> normal day's volume, priced off a number I can source line by
-> line.
+> So, to pull it together. In Taiwan the close is where an index
+> day happens — cheap on average, three to five times less
+> predictable with an index order in it. Four additions and a
+> border deletion are live for August, and neither the flow file
+> nor the depository shows anyone positioned yet. And the order
+> behind them is half a day to a day and a half of each name's
+> volume, priced off MSCI's own disclosures line by line.
 >
 > Happy to dig into any of it.
 
@@ -482,19 +543,12 @@ up?"**
 > the auction work uses eleven years of exchange data, not the
 > broker feed.
 
-**"What would you do with a terminal?"**
-> Four things, roughly in order of value. Licensed index files, so
-> free float is real and the weight stops being an estimate.
-> Mandate data, which reaches the institutional passive money
-> directly instead of me backing it out of MSCI's fee revenue.
-> Holdings data on benchmark-aware active funds, which is the one
-> pool of forced buying I can't see at all. And a borrow book, so
-> I can watch crowding form instead of reading about it a week
-> later.
->
-> With the first of those I could finally build the feature I
-> actually want to test — expected forced flow over available
-> liquidity, per event, back a decade.
+**"Is Nanya really better than 95?"**
+> That's the rule applied to my best inputs, with the two I can't
+> observe simulated. What it doesn't include is MSCI's
+> discretion — the count flex, the liquidity screen. I could fake
+> a haircut for that, but I'd rather show the clean number and
+> name what's outside it.
 
 **"Would you trade it?"**
 > I'd size it, not direct it. The order is a known fraction of a
@@ -502,3 +556,16 @@ up?"**
 > the close — printing in the benchmark is zero tracking error by
 > definition. Working the session only helps if you're right about
 > direction, and nothing I found predicts direction.
+
+**"What would you do with a terminal?"**
+> Four things, roughly in order of value. Licensed index files, so
+> free float is real and the weight stops being an estimate.
+> Mandate data, which retires the one assumption in the AUM
+> chain. Holdings data on benchmark-aware active funds, which is
+> the one pool of forced buying I can't see at all. And a borrow
+> book, so I can watch crowding form instead of reading about it a
+> week later.
+>
+> With the first of those I could finally build the feature I
+> actually want to test — expected forced flow over available
+> liquidity, per event, back a decade.

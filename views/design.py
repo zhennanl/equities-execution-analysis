@@ -74,6 +74,15 @@ CSS = f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
+/* c-402, Bill: ALL TYPE MOVES TO 1.25x. One rule, not eighty —
+   every font size on this site is written in rem, so raising
+   the root from the browser's 16px to 20px scales body text,
+   headings, cards, tables, notes and expanders in step while
+   keeping the hierarchy ratios exactly as designed. Plotly
+   figures are px-based and are raised separately in CHART,
+   hover() and chart(). */
+html{{font-size:20px!important}}
+
 html, body, [class*="css"], .stApp {{ font-family:{SANS} }}
 .stApp {{ background:{PAPER} }}
 .block-container{{padding-top:{S6}!important;
@@ -263,7 +272,7 @@ div[class*="st-key-dmore_"] li{{color:{MUTED};font-size:.9rem;
 # Charts sit ON the paper, not on a white card, so a figure
 # reads as part of the page rather than pasted onto it.
 CHART = dict(
-    font=dict(family="Inter, sans-serif", size=12, color=MUTED),
+    font=dict(family="Inter, sans-serif", size=15, color=MUTED),
     plot_bgcolor=PAPER, paper_bgcolor=PAPER,
     margin=dict(l=8, r=8, t=30, b=8),
     # c-338, Bill: *"the axis labels for all graphs are very
@@ -278,14 +287,14 @@ CHART = dict(
     # and colour still carry most of the improvement.
     xaxis=dict(showgrid=False, linecolor=RULE, ticks="outside",
                tickcolor=RULE, ticklen=4,
-               tickfont=dict(size=11, color=MUTED),
-               title_font=dict(size=11.5, color=MUTED, weight=600)),
+               tickfont=dict(size=13.75, color=MUTED),
+               title_font=dict(size=14.4, color=MUTED, weight=600)),
     yaxis=dict(gridcolor=RULE_L, zerolinecolor=RULE,
                zerolinewidth=1, linecolor="rgba(0,0,0,0)",
-               tickfont=dict(size=11, color=MUTED),
-               title_font=dict(size=11.5, color=MUTED, weight=600)),
+               tickfont=dict(size=13.75, color=MUTED),
+               title_font=dict(size=14.4, color=MUTED, weight=600)),
     legend=dict(orientation="h", yanchor="bottom", y=1.02,
-                xanchor="right", x=1, font=dict(size=11),
+                xanchor="right", x=1, font=dict(size=13.75),
                 bgcolor="rgba(0,0,0,0)"),
     # c-282: ONE HOVER DESIGN FOR THE WHOLE SITE.
     #
@@ -326,7 +335,7 @@ CHART = dict(
     hoverlabel=dict(bgcolor=CARD, bordercolor="#d9cbbb",
                     align="left", namelength=-1,
                     font=dict(family="Inter, sans-serif",
-                              size=12.5, color=INK)),
+                              size=15.6, color=INK)),
     colorway=[NAVY, GREEN, RED, AMBER, FAINT],
 )
 
@@ -432,10 +441,10 @@ def hover(title, rows=(), eyebrow=None, note=None):
     """
     out = []
     if eyebrow:
-        out.append(f"<span style='font-size:10px;color:{FAINT}'>"
+        out.append(f"<span style='font-size:12.5px;color:{FAINT}'>"
                    f"{str(eyebrow).upper()}</span>")
     if title:
-        out.append(f"<span style='font-size:13.5px;color:{INK}'>"
+        out.append(f"<span style='font-size:17px;color:{INK}'>"
                    f"<b>{title}</b></span>")
     if rows:
         out.append(f"<span style='color:{RULE}'>{_HOVER_RULE}</span>")
@@ -444,7 +453,7 @@ def hover(title, rows=(), eyebrow=None, note=None):
                 f"<span style='color:{MUTED}'>{label}</span>  "
                 f"<span style='color:{NAVY}'><b>{value}</b></span>")
     if note:
-        out.append(f"<span style='font-size:10.5px;color:{FAINT}'>"
+        out.append(f"<span style='font-size:13px;color:{FAINT}'>"
                    f"<i>{note}</i></span>")
     return "<br>".join(out) + "<extra></extra>"
 
@@ -469,6 +478,22 @@ def chart(fig, height=None, zoom=False, select=False, key=None):
     # got 8px back and the bar landed on the plot. The caller
     # knows things about its figure that a site-wide default
     # cannot: the theme sets a default, it does not overrule.
+    # c-402, Bill: all site type moves to 1.25x. The CSS root
+    # rule covers everything in rem and the CHART theme covers
+    # the axis, legend and hover faces — but a font size a VIEW
+    # set explicitly on an annotation or a bar label is px and
+    # sits outside both. Scaled here, in the one chokepoint
+    # every figure already passes through. Figures are rebuilt
+    # each rerun, so this cannot compound.
+    for _a in fig.layout.annotations:
+        if _a.font is not None and _a.font.size:
+            _a.font.size = round(_a.font.size * 1.25, 1)
+    for _tr in fig.data:
+        _tf = getattr(_tr, "textfont", None)
+        if _tf is not None and isinstance(
+                getattr(_tf, "size", None), (int, float)):
+            _tf.size = round(_tf.size * 1.25, 1)
+
     _own = fig.layout.margin
     _set = {k: getattr(_own, k) for k in ("l", "r", "t", "b")
             if getattr(_own, k) is not None}
