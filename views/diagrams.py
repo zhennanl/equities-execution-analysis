@@ -30,9 +30,8 @@ the figures scale with the column instead of fixing a size.
 import calendar as _cal
 import datetime as _dt
 
-from views.design import (AMBER, CARD, FAINT, GREEN, INK, MUTED,
-                          NAVY,
-                          RED, RULE)
+from views.design import (CARD, FAINT, GREEN, INK, MUTED,
+                          NAVY, RED, RULE)
 
 SANS = "Inter, -apple-system, 'Segoe UI', Roboto, sans-serif"
 MONO = "'JetBrains Mono', ui-monospace, Menlo, monospace"
@@ -446,8 +445,15 @@ def review_flow(announced, close, announced_time=None,
 
 
 def _mark(y, x, colour, width, top, date, note, anchor="middle",
-          above=False):
-    """One dated tick on a timeline, labelled below or above."""
+          above=False, fs_note=None):
+    """One dated tick on a timeline, labelled below or above.
+
+    c-409, Bill: `fs_note` lets a caller step ONLY the note
+    lines down a size. cutoff_timeline's five ticks sit close
+    enough that at the c-405 face their second note row
+    overlapped; the titles and dates still fit and keep
+    FS_SMALL."""
+    fs_note = fs_note or FS_CAP
     # ABOVE STILL READS DOWNWARDS. First render simply negated
     # the offsets, which stacked the label in reverse — notes,
     # then date, then title — so the eye met the detail before
@@ -465,7 +471,7 @@ def _mark(y, x, colour, width, top, date, note, anchor="middle",
              f'font-family="{MONO}" fill="{colour}">{date}</text>')
     for i, line in enumerate(note):
         o.append(f'<text x="{x}" y="{base + 36 + i * 15}" '
-                 f'font-size="{FS_CAP}" text-anchor="{anchor}" '
+                 f'font-size="{fs_note}" text-anchor="{anchor}" '
                  f'fill="{MUTED}">{_lead_bold(line)}</text>')
     return "".join(o)
 
@@ -1401,7 +1407,6 @@ def size_ladder(dm_ref, em_ref, lo, hi, cutoff, lower, upper,
         tops.append(y)
         y += _card_h(len(c[4]),
                      len(_lab_lines((i + 1, c[0])))) + GAP
-    by0 = y - GAP
     brow, y = [], y
     for w in bwhy:
         brow.append(y)
@@ -1671,20 +1676,26 @@ def cutoff_timeline(universe, liquidity, price_from, price_to,
     s.append(f'<rect x="{pA}" y="{y - 13}" width="{_r(pB - pA)}" '
              f'height="26" fill="#f6e7e3" stroke="{RED}" '
              f'stroke-dasharray="3 3"/>')
+    # c-409, Bill: the three cutoff ticks pass fs_note one
+    # size down — their second note row was overlapping at the
+    # c-405 face.
     s.append(_mark(y, xU, NAVY, 2, "Equity Universe Cutoff",
                    universe,
                    ["Which companies exist and",
-                    "are big enough to be considered"], "start"))
+                    "are big enough to be considered"], "start",
+                   fs_note=_px(0.66)))
     s.append(_mark(y, xL, GREEN, 2, "Liquidity Cutoff", liquidity,
                    ["How much of the company",
-                    "actually trades, and how often"]))
+                    "actually trades, and how often"],
+                   fs_note=_px(0.66)))
     s.append(_mark(y, _r((pA + pB) / 2), RED, 0, "Price Cutoff",
                    f"{price_from} – {price_to}",
                    ["The share price used to calculate "
                     "market cap",
                     "What percentage of shares foreigners may own",
                     "How much foreign ownership limit is left",
-                    "The total number of shares"]))
+                    "The total number of shares"],
+                   fs_note=_px(0.66)))
     # THE RED LINE BELONGS TO THE PRICE MARK, not floating over
     # the axis. As a free-standing headline it collided with
     # whichever label happened to be above the axis nearby.
